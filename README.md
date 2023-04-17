@@ -3,5 +3,5 @@
 
 ## 각 파트의 브랜치 구조는 다음과 같은 형태로 구성해주세요.
 
-Main -> front -> front_featureName
-Main -> back -> back_featureName
+- Main -> front -> front_featureName
+- Main -> back -> back_featureName
