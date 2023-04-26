@@ -1,0 +1,114 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@600&family=Open+Sans:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Open+Sans:wght@300&display=swap");
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+html, body, div, span, object, iframe, figure, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, code, em, img, small, strike, strong, sub, sup, tt, b, u, i, ol, ul, li, fieldset, form, label, table, caption, tbody, tfoot, thead, tr, th, td, main, canvas, embed, footer, header, nav, section, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: none;
+     -moz-text-size-adjust: none;
+          text-size-adjust: none;
+}
+
+footer, header, nav, section, main {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+input {
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+.login-modal {
+  border: 1.5px solid black;
+  border-radius: 20px;
+  text-align: center;
+  width: 500px;
+  height: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-logo-img {
+  border: 1.5px solid black;
+  width: 100px;
+  height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.login-heading {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 60px;
+  padding: 15px;
+}
+
+.login-text {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 20px;
+  color: #9AAD84;
+  line-height: 1.7;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.login-button-wrapper {
+  width: 350px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.login-button {
+  width: 70px;
+  height: 70px;
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.login-button-google {
+  background-image: url("../../assets/google-login-button-img.png");
+}
+.login-button-kakao {
+  background-image: url("../../assets/kakao-login-button-img.png");
+}
+.login-button-naver {
+  background-image: url("../../assets/naver-login-button-img.png");
+}/*# sourceMappingURL=project-full-care.css.map */

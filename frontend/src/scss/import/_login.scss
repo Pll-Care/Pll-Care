@@ -1,0 +1,69 @@
+.login-modal {
+    border: $border;
+    border-radius: 20px;
+    text-align: center;
+    width: 500px;
+    height: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-logo-img {
+    border: $border;
+    width: 100px;
+    height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-heading {
+    font-family: $heading-font;
+    font-size: $heading-font-size;
+    padding: 15px;
+}
+
+.login-text {
+    font-family: $body-font;
+    font-size: $body-font-size;
+    color: #9AAD84;
+    line-height: $line-height;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.login-button-wrapper {
+    width: 350px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.login-button {
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+    border-radius: 10px;
+    border: none;
+
+    background: {
+        position: center;
+        repeat: no-repeat;
+        size: 100% 100%;
+    }
+
+    &-google {
+        background-image: url('../../assets/google-login-button-img.png');
+    }
+
+    &-kakao {   
+        background-image: url('../../assets/kakao-login-button-img.png');
+    }
+
+    &-naver {
+        background-image: url('../../assets/naver-login-button-img.png');
+    }
+}

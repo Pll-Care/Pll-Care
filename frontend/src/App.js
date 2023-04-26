@@ -1,4 +1,4 @@
-import './css/project-full-care.css';
+import './scss/project-full-care.css';
 
 import Login from './components/Login';
 
