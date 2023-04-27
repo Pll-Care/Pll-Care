@@ -1,13 +1,25 @@
 import axios from "axios";
 
 const Login = () => {
-    const handleNaverLogin = async () => {
+    const handleLogin = async (auth) => {
         try {
-            const response = await axios.get('localhost:8080/oauth2/authorization/naver');
+            const response = await axios.get(`localhost:8080/oauth2/authorization/${auth}`);
             console.log(response);
         } catch (error) {
             console.log(error);
         }
+    }
+
+    const handleGoogleLogin = () => {
+        handleLogin('google');
+    }
+
+    const handleKakaoLogin = () => {
+        handleLogin('kakao');
+    }
+
+    const handleNaverLogin = () => {
+        handleLogin('naver');
     }
 
     return (
@@ -25,8 +37,8 @@ const Login = () => {
                     </p>
                 </div>
                 <div className='login-button-wrapper'>
-                    <button className='login-button login-button-google'></button>
-                    <button className='login-button login-button-kakao'></button>
+                    <button className='login-button login-button-google' onClick={handleGoogleLogin}></button>
+                    <button className='login-button login-button-kakao' onClick={handleKakaoLogin}></button>
                     <button className='login-button login-button-naver' onClick={handleNaverLogin}></button>
                 </div>
             </div>
