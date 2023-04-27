@@ -1,4 +1,15 @@
+import axios from "axios";
+
 const Login = () => {
+    const handleNaverLogin = async () => {
+        try {
+            const response = await axios.get('localhost:8080/oauth2/authorization/naver');
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <div className='login-modal-wrapper'>
             <div className='login-modal'>
@@ -16,7 +27,7 @@ const Login = () => {
                 <div className='login-button-wrapper'>
                     <button className='login-button login-button-google'></button>
                     <button className='login-button login-button-kakao'></button>
-                    <button className='login-button login-button-naver'></button>
+                    <button className='login-button login-button-naver' onClick={handleNaverLogin}></button>
                 </div>
             </div>
         </div>
