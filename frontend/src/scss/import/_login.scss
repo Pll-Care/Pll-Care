@@ -2,16 +2,16 @@
     border: $border;
     border-radius: 20px;
     text-align: center;
-    width: 500px;
-    height: 500px;
+    width: 480px;
+    height: 480px;
     @include putCenter;
     @include displayFlex(column);
 }
 
 .login-logo-img {
     border: $border;
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     @include putCenter;
 }
 
@@ -20,7 +20,7 @@
         family: $heading-font;
         size: $heading-font-size;
     }
-    padding: 15px;
+    padding: 12px;
 }
 
 .login-text {
@@ -30,12 +30,12 @@
     }
     color: #9AAD84;
     line-height: $line-height;
-    padding: 10px;
-    margin-bottom: 20px;
+    padding: 12px;
+    margin-bottom: 30px;
 }
 
 .login-button-wrapper {
-    width: 350px;
+    width: 298px;
     padding: 10px;
     @include displayFlex(row, space-around);
 }
@@ -46,6 +46,7 @@
     cursor: pointer;
     border-radius: 10px;
     border: none;
+    box-shadow: 2px 2px 9px rgb(189, 186, 186);
     background: {
         position: center;
         repeat: no-repeat;
