@@ -3,7 +3,9 @@ package fullcare.backend.oauth2;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.domain.MemberRole;
 import fullcare.backend.member.repository.MemberRepository;
+import fullcare.backend.oauth2.domain.CustomOAuth2User;
 import fullcare.backend.oauth2.domain.OAuth2Attributes;
+import fullcare.backend.oauth2.domain.OAuth2UserInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,7 +33,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     private final MemberRepository memberRepository;
 
     @Override
-    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+    public OAuth2User loadUser(OAuth2UserRequest userRequest) {
         log.info("CustomOAuth2UserService 진입");
 
         // authorization code를 이용하여 이미 access token을 받았고, 해당 access 토큰은 userRequest에 저장되어있음.
@@ -50,6 +52,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
+
         // OAuth2 Provider로부터 가져온 사용자 정보
         String name = oAuth2User.getName();
         Map<String, Object> attributes = oAuth2User.getAttributes();
@@ -60,34 +63,48 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         // 사용자 정보를 토대로, Member 엔티티를 만드는데 필요한 정보만 추출
         OAuth2Attributes oAuth2Attributes = OAuth2Attributes.of(registrationId, userNameAttributeName, attributes);
+        String nameAttributeKey = oAuth2Attributes.getNameAttributeKey();
+        OAuth2UserInfo oAuth2UserInfo = oAuth2Attributes.getOAuth2UserInfo();
+
 
         // OAuth2Attributes와 registrationId 를 이용하여 기존 사용자가 존재하는지 찾고, 없다면 새로 만들어서 반환
         Member loginMember = getMember(oAuth2Attributes, registrationId);
-
-        System.out.println("loginMember = " + loginMember);
-
+        log.info("loginMember = {}", loginMember);
 
         // todo loginMember를 OAuth2User로 변환하여 return 해야함
-
-
         // 여기서 반환한 객체가 OAuth2SuccessHandler의 authentication로 전달된다.
-        return new DefaultOAuth2User(authorities,attributes,userNameAttributeName);
+        // 굳이 DefaultOAuth2User를 사용할 필요가 없기 때문에 토큰을 만들 때 필요한 정보만을 담은 OAuth2User를 구현한 클래스를 만들어도 됌.
+
+        return CustomOAuth2User.create(loginMember,oAuth2User.getAttributes());
     }
 
     private Member getMember(OAuth2Attributes oAuth2Attributes, String oAuth2ProviderName) {
-        String oAuth2Id = oAuth2ProviderName + oAuth2Attributes.getOAuth2UserInfo().getId();
+        String oAuth2Id = oAuth2ProviderName + "_" + oAuth2Attributes.getOAuth2UserInfo().getId();
+        log.info("oAuth2Id = {}",oAuth2Id);
+
         Member findMember = memberRepository.findByoAuth2Id(oAuth2Id).orElse(null);
 
         if (findMember == null){
-            log.info("Create New Member!");
             return newMember(oAuth2Attributes, oAuth2ProviderName);
         }
 
+        updateMember(findMember, oAuth2Attributes,oAuth2ProviderName);
         return findMember;
     }
 
+    private void updateMember(Member member, OAuth2Attributes oAuth2Attributes, String oAuth2ProviderName) {
+        String oAuth2Id = oAuth2ProviderName + "_"+ oAuth2Attributes.getOAuth2UserInfo().getId();
+        member.updateOAuth2Id(oAuth2Id);
+        member.updateName(oAuth2Attributes.getOAuth2UserInfo().getName());
+        member.updateEmail(oAuth2Attributes.getOAuth2UserInfo().getEmail());
+
+        // ! Dirty checking에 의해 반영이 될텐데, 굳이 save를 호출해야하는 이유가 있나?
+//        return memberRepository.save(member);
+
+    }
+
     private Member newMember(OAuth2Attributes oAuth2Attributes, String oAuth2providerName) {
-        Member newMember = oAuth2Attributes.toEntity(oAuth2providerName, MemberRole.GUEST);
+        Member newMember = oAuth2Attributes.toEntity(oAuth2providerName, MemberRole.USER);
 
         return memberRepository.save(newMember);
     }

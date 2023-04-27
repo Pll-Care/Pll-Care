@@ -29,8 +29,9 @@ public class Member {
     @Column(name = "member_email")
     private String email;
 
-    @Column(name = "member_authority")
-    private String authority;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "member_role")
+    private MemberRole role;
 
     @Column(name = "member_signup_date")
     private LocalDateTime signupDate;
@@ -38,6 +39,21 @@ public class Member {
     @Column(name = "member_refreshToken")
     private String refreshToken;
 
-//    @Column
+    //    @Column
 //    private String profileContent;
+
+
+    public void updateOAuth2Id(String oAuth2Id) {
+        this.oAuth2Id = oAuth2Id;
+    }
+
+    public void updateName(String name) {
+        this.name = name;
+    }
+
+    public void updateEmail(String email) {
+        this.email = email;
+    }
+
+    public void updateRefreshToken(String refreshToken) { this.refreshToken = refreshToken; }
 }

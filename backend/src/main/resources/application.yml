@@ -1,14 +1,13 @@
 # Database
-#spring:
-#  datasource:
-#    url: jdbc:h2:tcp://localhost/~/userdb
-#    username: sa
-#    password:
-#    driver-class-name: org.h2.Driver
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/userdb
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
 
 # JPA
 spring.jpa.hibernate.ddl-auto: create
-
 
 # OAuth2
 spring.security.oauth2.client:
@@ -58,7 +57,7 @@ jwt:
 
   access:
     header: Authorization
-    token-validity-in-seconds: 86400
+    token-validity-in-seconds: 3600
 
 
   refresh:
@@ -70,3 +69,4 @@ jwt:
 logging:
   level:
     root: info
+
