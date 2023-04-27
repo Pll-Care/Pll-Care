@@ -3,7 +3,7 @@ import axios from "axios";
 const Login = () => {
     const handleLogin = async (auth) => {
         try {
-            const response = await axios.get(`localhost:8080/oauth2/authorization/${auth}`);
+            const response = await axios.get(`http://localhost:8080/oauth2/authorization/${auth}`);
             console.log(response);
         } catch (error) {
             console.log(error);
