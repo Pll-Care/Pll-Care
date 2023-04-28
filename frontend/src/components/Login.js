@@ -3,6 +3,12 @@ import { Link } from "react-router-dom";
 import { googleAuthUrl, kakaoAuthUrl, naverAuthUrl } from '../utils/auth';
 
 const Login = () => {
+    const handleLoginWindow = (url) => {
+        const left = (window.innerWidth-472) / 2;
+
+        window.open(url, '_blank', `width=450, height=500, top=55px, left=${left}`);
+    }
+
     return (
         <div className='login-modal-wrapper'>
             <div className='login-modal'>
@@ -18,9 +24,24 @@ const Login = () => {
                     </p>
                 </div>
                 <div className='login-button-wrapper'>
-                    <Link to={googleAuthUrl} className='login-button login-button-google'></Link>
-                    <Link to={kakaoAuthUrl} className='login-button login-button-kakao'></Link>
-                    <Link to={naverAuthUrl} className='login-button login-button-naver'></Link>
+                    <Link 
+                        to={googleAuthUrl} 
+                        target="_blank" 
+                        className='login-button login-button-google'
+                        onClick={() => handleLoginWindow(googleAuthUrl)}
+                    />
+                    <Link 
+                        to={kakaoAuthUrl} 
+                        target="_blank"
+                        className='login-button login-button-kakao' 
+                        onClick={() => handleLoginWindow(kakaoAuthUrl)}
+                    />
+                    <Link 
+                        to={naverAuthUrl} 
+                        target="_blank"
+                        className='login-button login-button-naver'
+                        onClick={() => handleLoginWindow(naverAuthUrl)}
+                    />
                 </div>
             </div>
         </div>
