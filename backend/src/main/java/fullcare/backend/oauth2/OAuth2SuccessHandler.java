@@ -63,11 +63,10 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         log.info("member.refreshToken = {}",member.getRefreshToken());
 
         // 토큰을 돌려줄 URL 경로
-        String successUrl = UriComponentsBuilder.fromUriString("success")
+        String successUrl = UriComponentsBuilder.fromUriString("http://localhost:3000/token")
                 .queryParam("access_token", accessToken)
                 .queryParam("refresh_token", refreshToken)
                 .build().toUriString();
-
 
         getRedirectStrategy().sendRedirect(request,response,successUrl);
     }

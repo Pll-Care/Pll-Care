@@ -13,9 +13,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
-@EnableWebSecurity
 @RequiredArgsConstructor
+@EnableWebSecurity
+@Configuration
 public class SecurityConfig {
 
     private final CustomOAuth2UserService oAuth2UserService;
@@ -30,6 +30,8 @@ public class SecurityConfig {
     @Order(2)
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.cors();
+
 
         http
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
