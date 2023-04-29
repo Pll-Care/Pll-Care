@@ -47,21 +47,16 @@
     border-radius: 10px;
     border: none;
     box-shadow: 2px 2px 9px rgb(189, 186, 186);
-    background: {
-        position: center;
-        repeat: no-repeat;
-        size: 100% 100%;
-    }
 
     &-google {
-        background-image: url('../../assets/google-login-button-img.png');
+        @include backgroundImage('../../assets/google-login-button-img.png', center, no-repeat, 100%, 100%);
     }
 
-    &-kakao {   
-        background-image: url('../../assets/kakao-login-button-img.png');
+    &-kakao {  
+        @include backgroundImage('../../assets/kakao-login-button-img.png', center, no-repeat, 100%, 100%); 
     }
 
     &-naver {
-        background-image: url('../../assets/naver-login-button-img.png');
+        @include backgroundImage('../../assets/naver-login-button-img.png', center, no-repeat, 100%, 100%);
     }
 }

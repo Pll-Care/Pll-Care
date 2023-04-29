@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { googleAuthUrl, kakaoAuthUrl, naverAuthUrl } from '../utils/auth';
 
@@ -28,19 +28,25 @@ const Login = () => {
                         to={googleAuthUrl} 
                         target="_blank" 
                         className='login-button login-button-google'
-                        onClick={() => handleLoginWindow(googleAuthUrl)}
+                        onClick={() => {
+                            handleLoginWindow(googleAuthUrl);
+                        }}
                     />
                     <Link 
                         to={kakaoAuthUrl} 
-                        target="_blank"
+                        target="_blank"  
                         className='login-button login-button-kakao' 
-                        onClick={() => handleLoginWindow(kakaoAuthUrl)}
+                        onClick={() => {
+                            handleLoginWindow(kakaoAuthUrl);
+                        }}
                     />
                     <Link 
                         to={naverAuthUrl} 
                         target="_blank"
                         className='login-button login-button-naver'
-                        onClick={() => handleLoginWindow(naverAuthUrl)}
+                        onClick={() => {
+                            handleLoginWindow(naverAuthUrl);
+                        }}
                     />
                 </div>
             </div>

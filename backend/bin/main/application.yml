@@ -9,7 +9,6 @@
 # JPA
 spring.jpa.hibernate.ddl-auto: create
 
-
 # OAuth2
 spring.security.oauth2.client:
   registration:
@@ -58,7 +57,7 @@ jwt:
 
   access:
     header: Authorization
-    token-validity-in-seconds: 86400
+    token-validity-in-seconds: 3600
 
 
   refresh:
@@ -70,3 +69,4 @@ jwt:
 logging:
   level:
     root: info
+

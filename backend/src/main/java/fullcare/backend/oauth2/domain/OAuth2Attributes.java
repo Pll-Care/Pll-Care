@@ -32,7 +32,7 @@ public class OAuth2Attributes {
 
         return OAuth2Attributes.builder()
                 .nameAttributeKey(nameAttributeKey)
-                .oAuth2UserInfo(new GoogleOAuth2Info(attributes))
+                .oAuth2UserInfo(new GoogleOAuthUser2Info(attributes))
                 .build();
 
     }
@@ -41,7 +41,7 @@ public class OAuth2Attributes {
 
         return OAuth2Attributes.builder()
                 .nameAttributeKey(nameAttributeKey)
-                .oAuth2UserInfo(new NaverOAuth2Info(attributes))
+                .oAuth2UserInfo(new NaverOAuthUser2Info(attributes))
                 .build();
 
     }
@@ -50,16 +50,16 @@ public class OAuth2Attributes {
 
         return OAuth2Attributes.builder()
                 .nameAttributeKey(nameAttributeKey)
-                .oAuth2UserInfo(new KakaoOAuth2Info(attributes))
+                .oAuth2UserInfo(new KakaoOAuth2UserInfo(attributes))
                 .build();
     }
 
     public Member toEntity(String oAuth2ProviderName, MemberRole role) {
         return Member.builder()
-                .oAuth2Id(oAuth2ProviderName + this.oAuth2UserInfo.getId() )
-                .nickname(null)
+                .oAuth2Id(oAuth2ProviderName +"_"+ this.oAuth2UserInfo.getId())
+                .nickname(this.oAuth2UserInfo.getName())
                 .name(this.oAuth2UserInfo.getName())
-                .authority(role.toString())
+                .role(role)
                 .signupDate(LocalDateTime.now())
                 .email(this.oAuth2UserInfo.getEmail())
                 .build();

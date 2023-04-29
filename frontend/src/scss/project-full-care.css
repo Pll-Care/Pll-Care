@@ -102,16 +102,22 @@ input {
   border-radius: 10px;
   border: none;
   box-shadow: 2px 2px 9px rgb(189, 186, 186);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
 }
 .login-button-google {
   background-image: url("../../assets/google-login-button-img.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%, 100%;
 }
 .login-button-kakao {
   background-image: url("../../assets/kakao-login-button-img.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%, 100%;
 }
 .login-button-naver {
   background-image: url("../../assets/naver-login-button-img.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%, 100%;
 }/*# sourceMappingURL=project-full-care.css.map */
