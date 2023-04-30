@@ -1,7 +1,9 @@
+import MainHeader from "../components/MainHeader";
+
 const Home = () => {
     return (
         <div>
-            <h1>Home</h1>
+            <MainHeader />
         </div>
     )
 }

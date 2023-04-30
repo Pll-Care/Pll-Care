@@ -55,6 +55,10 @@ input {
   text-align: center;
   width: 480px;
   height: 480px;
+  position: absolute;
+  top: 50px;
+  left: calc(50% - 240px);
+  background-color: white;
   margin-left: auto;
   margin-right: auto;
   display: flex;
@@ -62,22 +66,19 @@ input {
   justify-content: center;
   align-items: center;
 }
-
-.login-logo-img {
+.login-modal .login-logo-img {
   border: 1.5px solid black;
   width: 80px;
   height: 80px;
   margin-left: auto;
   margin-right: auto;
 }
-
-.login-heading {
+.login-modal .login-heading {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 60px;
   padding: 12px;
 }
-
-.login-text {
+.login-modal .login-text {
   font-family: "Noto Sans KR", sans-serif;
   font-size: 20px;
   color: #9AAD84;
@@ -85,8 +86,7 @@ input {
   padding: 12px;
   margin-bottom: 30px;
 }
-
-.login-button-wrapper {
+.login-modal .login-button-wrapper {
   width: 298px;
   padding: 10px;
   display: flex;
@@ -94,8 +94,7 @@ input {
   justify-content: space-around;
   align-items: center;
 }
-
-.login-button {
+.login-modal .login-button-wrapper .login-button {
   width: 70px;
   height: 70px;
   cursor: pointer;
@@ -103,21 +102,77 @@ input {
   border: none;
   box-shadow: 2px 2px 9px rgb(189, 186, 186);
 }
-.login-button-google {
-  background-image: url("../../assets/google-login-button-img.png");
+.login-modal .login-button-wrapper .login-button-google {
+  background-image: url("../assets/google-login-button-img.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%, 100%;
 }
-.login-button-kakao {
-  background-image: url("../../assets/kakao-login-button-img.png");
+.login-modal .login-button-wrapper .login-button-kakao {
+  background-image: url("../assets/kakao-login-button-img.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%, 100%;
 }
-.login-button-naver {
-  background-image: url("../../assets/naver-login-button-img.png");
+.login-modal .login-button-wrapper .login-button-naver {
+  background-image: url("../assets/naver-login-button-img.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%, 100%;
-}/*# sourceMappingURL=project-full-care.css.map */
+}
+
+.main-header {
+  border: 1.5px solid black;
+  height: 90px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.main-header-left-col {
+  margin-left: 20px;
+}
+.main-header-left-col .main-header-logo-img {
+  border: 1.5px solid black;
+  width: 60px;
+  height: 60px;
+}
+.main-header-link {
+  width: 400px;
+  height: 70px;
+  margin-left: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.main-header-link > a {
+  font-size: 25px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  color: black;
+  text-decoration: none;
+}
+.main-header-right-col {
+  margin-right: 20px;
+  width: 150px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.main-header-right-col Button {
+  cursor: pointer;
+}
+.main-header-right-col .main-header-user-profile-img {
+  border: 1.5px solid black;
+  border-radius: 35%;
+  width: 40px;
+  height: 40px;
+}
+
+.button {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  border-radius: 10px;
+  padding: 2px 10px;
+}/*# sourceMappingURL=fullcare.css.map */

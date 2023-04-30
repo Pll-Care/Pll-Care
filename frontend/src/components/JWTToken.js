@@ -8,13 +8,15 @@ const JWTToken = () => {
     const refreshToken = searchParams.get('refresh_token');
 
     useEffect(() => {
-        localStorage.clear();
-        localStorage.setItem('access_token', accessToken);
-        localStorage.setItem('refresh_token', refreshToken);
+        if (accessToken && refreshToken) {
+            localStorage.clear();
+            localStorage.setItem('access_token', accessToken);
+            localStorage.setItem('refresh_token', refreshToken);
 
-        window.close();
+            window.close();
 
-        window.opener.document.location.href= '/';
+            window.opener.document.location.href= '/';
+        }
     }, []);
 
     return (
