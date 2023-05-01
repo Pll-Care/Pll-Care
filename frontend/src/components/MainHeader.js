@@ -29,7 +29,12 @@ const MainHeader = () => {
                     <Link className='main-header-user-profile-img' to={'./profile'} />
                 </div>
             </header>
-            {isLoginModalVisible && <Login />}
+            {isLoginModalVisible && (
+                <Login 
+                    isLoginModalVisible={isLoginModalVisible} 
+                    setIsLoginModalVisible={setIsLoginModalVisible}
+                />
+            )}
         </>
     )
 }

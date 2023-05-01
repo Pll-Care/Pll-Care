@@ -1,16 +1,25 @@
 import { Link } from "react-router-dom";
 
 import { googleAuthUrl, kakaoAuthUrl, naverAuthUrl } from '../utils/auth';
+import { useRef } from "react";
 
-const Login = () => {
+const Login = ({ setIsLoginModalVisible }) => {
+    const modalOutside = useRef();
+
     const handleLoginWindow = (url) => {
         const left = (window.innerWidth-472) / 2;
 
         window.open(url, '_blank', `width=450, height=500, top=55px, left=${left}`);
     }
 
+    const handleModalClose = (e) => {
+        if (e.target === modalOutside.current) {
+            setIsLoginModalVisible(false);
+        }
+    }
+
     return (
-        <div className='login-modal-wrapper'>
+        <div className='login-modal-wrapper' ref={modalOutside} onClick={handleModalClose}>
             <div className='login-modal'>
                 <div className='login-logo-img'>
                     
