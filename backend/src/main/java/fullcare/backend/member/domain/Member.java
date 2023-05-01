@@ -1,9 +1,16 @@
 package fullcare.backend.member.domain;
 
+import fullcare.backend.evaluation.domain.Evaluation;
+import fullcare.backend.likes.Likes;
+import fullcare.backend.post.domain.Post;
+import fullcare.backend.projectmember.domain.ProjectMember;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @Builder
 @Getter
@@ -14,33 +21,47 @@ import java.time.LocalDateTime;
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "member_id")
     private Long id;
 
     @Column(name = "oauth2_id")
     private String oAuth2Id;
 
-    @Column(name = "member_nickname")
+    @Column(name = "nickname")
     private String nickname;
 
-    @Column(name = "member_name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "member_email")
+    @Column(name = "email")
     private String email;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "member_role")
+    @Column(name = "role")
     private MemberRole role;
 
-    @Column(name = "member_signup_date")
+    @Column(name = "signup_date")
     private LocalDateTime signupDate;
 
-    @Column(name = "member_refreshToken")
+    @Column(name = "refreshToken")
     private String refreshToken;
 
     //    @Column
 //    private String profileContent;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private ArrayList<Post> posts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private Set<Likes> likes = new HashSet<>();
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private ArrayList<Evaluation> evaluations = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private ArrayList<ProjectMember> projectMembers = new ArrayList<>();
+
+
 
 
     public void updateOAuth2Id(String oAuth2Id) {

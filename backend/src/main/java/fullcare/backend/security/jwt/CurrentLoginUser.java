@@ -1,4 +1,4 @@
-package fullcare.backend.jwt;
+package fullcare.backend.security.jwt;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 

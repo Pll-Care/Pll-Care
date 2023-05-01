@@ -1,4 +1,4 @@
-package fullcare.backend.oauth2.domain;
+package fullcare.backend.security.oauth2.domain;
 
 import java.util.Map;
 

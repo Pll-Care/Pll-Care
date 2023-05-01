@@ -1,4 +1,4 @@
-package fullcare.backend.jwt;
+package fullcare.backend.security.jwt;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

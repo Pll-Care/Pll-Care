@@ -1,8 +1,8 @@
-package fullcare.backend.jwt;
+package fullcare.backend.security.jwt;
 
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
-import fullcare.backend.oauth2.domain.CustomOAuth2User;
+import fullcare.backend.security.oauth2.domain.CustomOAuth2User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -16,7 +16,6 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
-import java.security.Provider;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -85,6 +84,10 @@ public class JwtTokenService {
 
 
     private void reIssueAccessToken() {
+
+    }
+
+    private void reIssueRefreshToken() {
 
     }
 

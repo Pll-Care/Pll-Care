@@ -1,9 +1,9 @@
-package fullcare.backend.oauth2;
+package fullcare.backend.security.oauth2;
 
-import fullcare.backend.jwt.JwtTokenService;
+import fullcare.backend.security.jwt.JwtTokenService;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
-import fullcare.backend.oauth2.domain.CustomOAuth2User;
+import fullcare.backend.security.oauth2.domain.CustomOAuth2User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;

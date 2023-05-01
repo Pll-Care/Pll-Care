@@ -1,4 +1,4 @@
-package fullcare.backend.oauth2;
+package fullcare.backend.security.oauth2;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

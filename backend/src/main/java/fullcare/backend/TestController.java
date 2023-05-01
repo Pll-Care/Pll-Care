@@ -1,7 +1,7 @@
 package fullcare.backend;
 
-import fullcare.backend.jwt.CurrentLoginUser;
-import fullcare.backend.oauth2.domain.CustomOAuth2User;
+import fullcare.backend.security.jwt.CurrentLoginUser;
+import fullcare.backend.security.oauth2.domain.CustomOAuth2User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

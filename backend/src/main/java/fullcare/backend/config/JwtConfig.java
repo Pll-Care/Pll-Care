@@ -1,11 +1,11 @@
 package fullcare.backend.config;
 
-import fullcare.backend.jwt.JwtAccessDeniedHandler;
-import fullcare.backend.jwt.JwtAuthenticationEntryPoint;
-import fullcare.backend.jwt.JwtAuthenticationFilter;
-import fullcare.backend.oauth2.CustomOAuth2UserService;
-import fullcare.backend.oauth2.OAuth2FailureHandler;
-import fullcare.backend.oauth2.OAuth2SuccessHandler;
+import fullcare.backend.security.jwt.JwtAccessDeniedHandler;
+import fullcare.backend.security.jwt.JwtAuthenticationEntryPoint;
+import fullcare.backend.security.jwt.JwtAuthenticationFilter;
+import fullcare.backend.security.oauth2.CustomOAuth2UserService;
+import fullcare.backend.security.oauth2.OAuth2FailureHandler;
+import fullcare.backend.security.oauth2.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

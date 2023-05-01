@@ -1,8 +1,8 @@
 package fullcare.backend.config;
 
-import fullcare.backend.oauth2.CustomOAuth2UserService;
-import fullcare.backend.oauth2.OAuth2FailureHandler;
-import fullcare.backend.oauth2.OAuth2SuccessHandler;
+import fullcare.backend.security.oauth2.CustomOAuth2UserService;
+import fullcare.backend.security.oauth2.OAuth2FailureHandler;
+import fullcare.backend.security.oauth2.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

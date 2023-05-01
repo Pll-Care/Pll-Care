@@ -1,15 +1,11 @@
-package fullcare.backend.jwt;
+package fullcare.backend.security.jwt;
 
-import fullcare.backend.member.repository.MemberRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -38,6 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if(refreshToken != null && jwtTokenService.validateJwtToken(refreshToken)){
                 // refreshToken이 정상일 경우
 //                reIssueAccessToken();
+//                reIssueRefreshToken();
                 return;
             }else{
 
