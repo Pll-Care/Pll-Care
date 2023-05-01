@@ -1,6 +1,11 @@
+import MainHeader from "../components/MainHeader";
+
 const Management = () => {
     return (
-        <div>Management</div>
+        <div>
+            <MainHeader />
+            <div>Management</div>
+        </div>
     )
 }
 

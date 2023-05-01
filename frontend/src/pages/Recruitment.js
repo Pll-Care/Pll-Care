@@ -1,6 +1,11 @@
+import MainHeader from "../components/MainHeader";
+
 const Recruitment = () => {
     return (
-        <div>recruitment</div>
+        <div>
+            <MainHeader />
+            <div>Recruitment</div>
+        </div>
     )
 }
 

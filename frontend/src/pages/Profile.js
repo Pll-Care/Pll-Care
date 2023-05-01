@@ -1,6 +1,11 @@
+import MainHeader from "../components/MainHeader";
+
 const Profile = () => {
     return (
-        <div>Profile</div>
+        <div>
+            <MainHeader />
+            <div>Management</div>
+        </div>
     )
 }
 
