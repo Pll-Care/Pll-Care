@@ -6,6 +6,7 @@ import Button from './Button';
 
 const MainHeader = () => {
     const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
+    const [isLogin, setIsLogin] = useState(false);
 
     const handleLogin = () => {
         setIsLoginModalVisible(true);
@@ -21,13 +22,22 @@ const MainHeader = () => {
                     <Link to={'./management'}>프로젝트 관리</Link>
                     <Link to={'./recruitment'}>인원 모집</Link>
                 </div>
-                <div className='main-header-right-col'>
-                    <Button 
-                        text={'로그인'}
-                        onClick={handleLogin}
-                    />
-                    <Link className='main-header-user-profile-img' to={'./profile'} />
-                </div>
+                {isLogin ? (
+                    <div className='main-header-right-col main-header-logout-col'>
+                        <Button 
+                            text={'log out'}
+                            onClick={handleLogin}
+                        />
+                        <Link className='main-header-user-profile-img' to={'./profile'} />
+                    </div>
+                ) : (
+                    <div className='main-header-right-col main-header-login-col'>
+                        <Button 
+                            text={'log in'}
+                            onClick={handleLogin}
+                        />
+                    </div>
+                )}
             </header>
             {isLoginModalVisible && (
                 <Login 

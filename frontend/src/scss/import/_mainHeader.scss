@@ -1,5 +1,5 @@
 .main-header {
-    border: $border;
+    border-bottom: $border;
     height: 90px;
     @include displayFlex(row, space-between, center);
 
@@ -29,7 +29,7 @@
 
     &-right-col {
         margin-right: 20px;
-        width: 150px;
+        width: 170px;
         @include displayFlex(row, space-between);
 
         Button {
@@ -41,6 +41,12 @@
             border-radius: 35%;
             width: 40px;
             height: 40px;
+        }
+    }
+
+    &-login-col {
+        Button {
+            margin-left: auto;
         }
     }
 }
