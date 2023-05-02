@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 
@@ -29,22 +30,34 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try{
-             String refreshToken = getRefreshToken(request);
-
+            String refreshToken = getRefreshToken(request);
+            String accessToken = getAccessToken(request);
             if(refreshToken != null && jwtTokenService.validateJwtToken(refreshToken)){
+//                Authentication authentication = jwtTokenService.getAuthentication(refreshToken);
                 // refreshToken이 정상일 경우
-//                reIssueAccessToken();
-//                reIssueRefreshToken();
+                //reIssueAccessToken();
+                String[] newTokens = jwtTokenService.reIssueTokens(refreshToken); // 리프레쉬 토큰이 DB와 일치 시 access, refresh 재발급
+
+                String successUrl = UriComponentsBuilder.fromUriString("http://localhost:3000/token")
+                        .queryParam("access_token", newTokens[0])
+                        .queryParam("refresh_token", newTokens[1])
+                        .build().toUriString();
+                System.out.println("successUrl = " + successUrl);
+                //SecurityContextHolder.getContext().setAuthentication(authentication);
+                response.sendRedirect(successUrl);
                 return;
             }else{
 
-                String accessToken = getAccessToken(request);
 
                 if (accessToken != null && jwtTokenService.validateJwtToken(accessToken)){
                     Authentication authentication = jwtTokenService.getAuthentication(accessToken);
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }else {
                     log.info("No Access Token!");
+                    //response.sendError(400,"로그인이 필요합니다.");
+                    response.sendRedirect("http://localhost:3000");
+                    return;
+
                 }
 
             }

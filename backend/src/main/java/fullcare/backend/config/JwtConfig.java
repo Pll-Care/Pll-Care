@@ -43,7 +43,10 @@ public class JwtConfig {
                         .anyRequest().authenticated())
 
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+
+
                 .exceptionHandling().authenticationEntryPoint(new JwtAuthenticationEntryPoint())
+
                 .accessDeniedHandler(new JwtAccessDeniedHandler());
 
 

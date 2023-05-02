@@ -11,13 +11,14 @@ import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Optional;
 
 @Service // 따로 데이터베이스에 Token 엔티티를 저장하지 않는데 Service인가 Provider인가?
 @Slf4j
@@ -70,14 +71,19 @@ public class JwtTokenService {
 
     }
 
-    public String createRefreshToken(OAuth2User oAuth2User){
+    public String createRefreshToken(CustomOAuth2User oAuth2User){
         // TODO:  JWT 토큰에 어떤 데이터를 넣을 것인지 결정 필요
 
         long now = (new Date()).getTime();
         Date validity = new Date(now + refreshTokenValidationMilliseconds);
-
+        HashMap<String, Object> claims = new HashMap<>();
+        claims.put("sub",oAuth2User.getName());
+        claims.put("role",oAuth2User.getAuthorities());
+//        System.out.println("nickname"+ oAuth2User.getUsername());
+//        System.out.println("claims = " + claims);
         return Jwts.builder()
                 .setExpiration(validity)
+                .addClaims(claims)
                 .signWith(key,SignatureAlgorithm.HS512)
                 .compact();
     }
@@ -87,7 +93,28 @@ public class JwtTokenService {
 
     }
 
-    private void reIssueRefreshToken() {
+    public String[] reIssueTokens(String refreshToken) {
+        String[] tokens = new String[2];
+        Authentication authentication = getAuthentication(refreshToken);
+
+        CustomOAuth2User user = (CustomOAuth2User)authentication.getPrincipal();
+//        System.out.println("authentication = " + user.getName());
+//        System.out.println("authentication = " + user.getUsername());
+        Optional<Member> findMember = memberRepository.findById(Long.parseLong(user.getName()));
+        if(findMember.isPresent()){
+            if(findMember.get().getRefreshToken().equals(refreshToken)){ // refreshToken이 동일할 경우
+                String newRefreshToken = createRefreshToken(user);
+                String newAccessToken = createAccessToken(user);
+                tokens[0] = newAccessToken;
+                tokens[1] = newRefreshToken;
+                findMember.get().updateRefreshToken(newRefreshToken);
+                return tokens;
+            }
+        }
+
+
+        throw new UsernameNotFoundException("등록된 사용자가 아닙니다.");
+
 
     }
 
