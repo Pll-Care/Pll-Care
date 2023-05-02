@@ -1,9 +1,17 @@
 package fullcare.backend.member.domain;
 
+import fullcare.backend.evaluation.domain.Evaluation;
+import fullcare.backend.likes.domain.Likes;
+import fullcare.backend.post.domain.Post;
+import fullcare.backend.projectmember.domain.ProjectMember;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Builder
 @Getter
@@ -14,30 +22,60 @@ import java.time.LocalDateTime;
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "member_id")
     private Long id;
 
     @Column(name = "oauth2_id")
     private String oAuth2Id;
 
-    @Column(name = "member_nickname")
+    @Column(name = "nickname")
     private String nickname;
 
-    @Column(name = "member_name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "member_email")
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "member_authority")
-    private String authority;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private MemberRole role;
 
-    @Column(name = "member_signup_date")
+    @Column(name = "signup_date")
     private LocalDateTime signupDate;
 
-    @Column(name = "member_refreshToken")
+    @Column(name = "refreshToken")
     private String refreshToken;
 
-//    @Column
+    //    @Column
 //    private String profileContent;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Post> posts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+    private Set<Likes> likes = new HashSet<>();
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Evaluation> evaluations = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<ProjectMember> projectMembers = new ArrayList<>();
+
+
+
+
+    public void updateOAuth2Id(String oAuth2Id) {
+        this.oAuth2Id = oAuth2Id;
+    }
+
+    public void updateName(String name) {
+        this.name = name;
+    }
+
+    public void updateEmail(String email) {
+        this.email = email;
+    }
+
+    public void updateRefreshToken(String refreshToken) { this.refreshToken = refreshToken; }
 }
