@@ -93,9 +93,9 @@ public class JwtTokenService {
 
     }
 
-    public String[] reIssueTokens(String refreshToken) {
+    public String[] reIssueTokens(String refreshToken, Authentication authentication) {
         String[] tokens = new String[2];
-        Authentication authentication = getAuthentication(refreshToken);
+//        Authentication authentication = getAuthentication(refreshToken);
 
         CustomOAuth2User user = (CustomOAuth2User)authentication.getPrincipal();
 //        System.out.println("authentication = " + user.getName());

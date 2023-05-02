@@ -33,17 +33,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String refreshToken = getRefreshToken(request);
             String accessToken = getAccessToken(request);
             if(refreshToken != null && jwtTokenService.validateJwtToken(refreshToken)){
-//                Authentication authentication = jwtTokenService.getAuthentication(refreshToken);
+                Authentication authentication = jwtTokenService.getAuthentication(refreshToken);
                 // refreshToken이 정상일 경우
                 //reIssueAccessToken();
-                String[] newTokens = jwtTokenService.reIssueTokens(refreshToken); // 리프레쉬 토큰이 DB와 일치 시 access, refresh 재발급
+                String[] newTokens = jwtTokenService.reIssueTokens(refreshToken, authentication); // 리프레쉬 토큰이 DB와 일치 시 access, refresh 재발급
 
                 String successUrl = UriComponentsBuilder.fromUriString("http://localhost:3000/token")
                         .queryParam("access_token", newTokens[0])
                         .queryParam("refresh_token", newTokens[1])
                         .build().toUriString();
                 System.out.println("successUrl = " + successUrl);
-                //SecurityContextHolder.getContext().setAuthentication(authentication);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
                 response.sendRedirect(successUrl);
                 return;
             }else{
