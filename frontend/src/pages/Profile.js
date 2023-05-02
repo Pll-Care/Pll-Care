@@ -4,7 +4,7 @@ const Profile = () => {
     return (
         <div>
             <MainHeader />
-            <div>Management</div>
+            <div>Profile</div>
         </div>
     )
 }

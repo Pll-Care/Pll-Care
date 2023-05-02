@@ -1,12 +1,20 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import Login from './Login';
 import Button from './Button';
+import { AuthDispatchContext, AuthStateContext } from '../App';
 
 const MainHeader = () => {
     const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
-    const [isLogin, setIsLogin] = useState(false);
+    const [isLogin, setIsLogin] = useState(true);
+
+    const { onLogout } = useContext(AuthDispatchContext);
+
+    const handleLogout = () => {
+        onLogout();
+        setIsLoginModalVisible(false);
+    }
 
     const handleLogin = () => {
         setIsLoginModalVisible(true);
@@ -26,7 +34,7 @@ const MainHeader = () => {
                     <div className='main-header-right-col main-header-logout-col'>
                         <Button 
                             text={'log out'}
-                            onClick={handleLogin}
+                            onClick={handleLogout}
                         />
                         <Link className='main-header-user-profile-img' to={'/profile'} />
                     </div>
