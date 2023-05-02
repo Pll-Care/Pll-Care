@@ -1,9 +1,9 @@
 package fullcare.backend.post.domain;
 
-import fullcare.backend.likes.Likes;
+import fullcare.backend.likes.domain.Likes;
 import fullcare.backend.member.domain.Member;
-import fullcare.backend.project.Project;
-import fullcare.backend.project.State;
+import fullcare.backend.project.domain.Project;
+import fullcare.backend.project.domain.State;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -43,7 +43,7 @@ public class Post {
     @Column(name = "modified_dt", nullable = false)
     private LocalDateTime modifiedDate;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<Likes> likes = new HashSet<>();
 
     @Column(name = "likes_count", nullable = false)

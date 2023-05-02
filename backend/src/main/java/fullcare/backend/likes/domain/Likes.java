@@ -1,4 +1,4 @@
-package fullcare.backend.likes;
+package fullcare.backend.likes.domain;
 
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.post.domain.Post;

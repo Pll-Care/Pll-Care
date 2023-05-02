@@ -1,8 +1,7 @@
 package fullcare.backend.projectmember.domain;
 
 import fullcare.backend.member.domain.Member;
-import fullcare.backend.member.domain.MemberRole;
-import fullcare.backend.project.Project;
+import fullcare.backend.project.domain.Project;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

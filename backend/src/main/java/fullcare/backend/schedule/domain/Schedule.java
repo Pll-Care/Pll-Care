@@ -1,8 +1,8 @@
 package fullcare.backend.schedule.domain;
 
 
-import fullcare.backend.project.Project;
-import fullcare.backend.project.State;
+import fullcare.backend.project.domain.Project;
+import fullcare.backend.project.domain.State;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

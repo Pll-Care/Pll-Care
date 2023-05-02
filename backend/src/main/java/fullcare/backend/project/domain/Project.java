@@ -1,8 +1,8 @@
-package fullcare.backend.project;
+package fullcare.backend.project.domain;
 
 
 import fullcare.backend.evaluation.domain.Evaluation;
-import fullcare.backend.memo.Memo;
+import fullcare.backend.memo.domain.Memo;
 import fullcare.backend.post.domain.Post;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.schedule.domain.Schedule;
@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -37,20 +38,20 @@ public class Project {
     @Column(name = "create_dt", nullable = false)
     private LocalDateTime createDate;
 
-    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
-    private ArrayList<Evaluation> evaluations = new ArrayList<>();
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Evaluation> evaluations = new ArrayList<>();
 
-    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
-    private ArrayList<Schedule> schedules = new ArrayList<>();
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Schedule> schedules = new ArrayList<>();
 
-    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
-    private ArrayList<Memo> memos = new ArrayList<>();
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Memo> memos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
-    private ArrayList<Post> posts = new ArrayList<>();
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Post> posts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
-    private ArrayList<ProjectMember> projectMembers = new ArrayList<>();
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<ProjectMember> projectMembers = new ArrayList<>();
 
 
 }

@@ -1,7 +1,6 @@
-package fullcare.backend.memo;
+package fullcare.backend.memo.domain;
 
-import fullcare.backend.project.Project;
-import fullcare.backend.project.State;
+import fullcare.backend.project.domain.Project;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
