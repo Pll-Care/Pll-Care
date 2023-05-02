@@ -1,0 +1,52 @@
+.main-header {
+    border-bottom: $border;
+    height: 90px;
+    @include displayFlex(row, space-between, center);
+
+    &-left-col {
+        margin-left: 20px;
+
+        .main-header-logo-img {
+            border: $border;
+            width: 60px;
+            height: 60px;
+        }
+    }
+
+    &-link {
+        width: 400px;
+        height: 70px;
+        margin-left: 50px;
+        @include displayFlex(row, space-between);
+
+        &>a {
+            font-size: $link-font-size;
+            font-family: $link-font;
+            color: black;
+            text-decoration: none;
+        }
+    }
+
+    &-right-col {
+        margin-right: 20px;
+        width: 170px;
+        @include displayFlex(row, space-between);
+
+        Button {
+            cursor: pointer;
+        }
+    
+        .main-header-user-profile-img {
+            border: $border;
+            border-radius: 35%;
+            width: 40px;
+            height: 40px;
+        }
+    }
+
+    &-login-col {
+        Button {
+            margin-left: auto;
+        }
+    }
+}
