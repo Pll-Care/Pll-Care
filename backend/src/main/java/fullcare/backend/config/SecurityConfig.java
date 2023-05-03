@@ -7,14 +7,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -26,31 +26,26 @@ public class SecurityConfig {
     private final OAuth2FailureHandler failureHandler;
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    public SecurityFilterChain globalFilterChain(HttpSecurity http) throws Exception {
 
-    @Order(2)
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-        http.httpBasic().disable();
+        // ! cors 설정
+        http.cors(withDefaults());
 
 
+        // ! session 미사용 설정
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+
+        // ! HTTP 경로 관련 설정
         http
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .csrf().disable()
-                .formLogin().disable()
-                .httpBasic().disable();
-
-
-        http
-//                .securityMatcher("/error","/", "/test_lilac","/login/**")
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll());
+                        .requestMatchers("/login/oauth2/**").permitAll()
+                        .requestMatchers("/authorization/oauth2/**").permitAll()
+                        .anyRequest().denyAll())
+                        .exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
 
 
+        // ! OAuth2 로그인 관련 설정
         http
                 .oauth2Login()
                 .redirectionEndpoint().baseUri("/login/oauth2/**")
@@ -59,6 +54,11 @@ public class SecurityConfig {
                 .and()
                 .successHandler(successHandler)
                 .failureHandler(failureHandler);
+
+
+        // ! 그 외의 부가 설정
+        http.httpBasic().disable().formLogin().disable()
+                .csrf().disable().headers().frameOptions().disable();
 
 
         return http.build();

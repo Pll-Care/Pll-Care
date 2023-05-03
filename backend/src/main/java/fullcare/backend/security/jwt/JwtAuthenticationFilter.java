@@ -51,7 +51,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         .queryParam("refresh_token", newTokens[1])
                         .queryParam("redirect_uri", requestURI)
                         .build().toUriString();
+                System.out.println("successUrl = " + successUrl);
+
+                // todo 이건 왜 필요한가?
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+
+                // ? 토큰이 성공적으로 재발급되었을 때, 바로 이어서 API 접근을 가능하게 할 것 인지, 리다이렉션 시킬 것인지 고민이 필요함
                 response.sendRedirect(successUrl);
                 return;
             }else{

@@ -66,6 +66,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
 
         // OAuth2Attributes와 registrationId 를 이용하여 기존 사용자가 존재하는지 찾고, 없다면 새로 만들어서 반환
+        // todo 최초 로그인 회원과 기존 회원을 어떻게 구분할 것인가?
         Member loginMember = getMember(oAuth2Attributes, registrationId);
         log.info("loginMember = {}", loginMember);
 
