@@ -33,9 +33,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String refreshToken = getRefreshToken(request);
             String accessToken = getAccessToken(request);
             if(refreshToken != null && jwtTokenService.validateJwtToken(refreshToken)){
+
                 Authentication authentication = jwtTokenService.getAuthentication(refreshToken);
-                // refreshToken이 정상일 경우
-                //reIssueAccessToken();
                 String[] newTokens = jwtTokenService.reIssueTokens(refreshToken, authentication); // 리프레쉬 토큰이 DB와 일치 시 access, refresh 재발급
 
                 String successUrl = UriComponentsBuilder.fromUriString("http://localhost:3000/token")
@@ -43,7 +42,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         .queryParam("refresh_token", newTokens[1])
                         .build().toUriString();
                 System.out.println("successUrl = " + successUrl);
+
+                // todo 이건 왜 필요한가?
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+
+                // ? 토큰이 성공적으로 재발급되었을 때, 바로 이어서 API 접근을 가능하게 할 것 인지, 리다이렉션 시킬 것인지 고민이 필요함
                 response.sendRedirect(successUrl);
                 return;
             }else{
@@ -54,6 +57,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }else {
                     log.info("No Access Token!");
+
+                    // todo 리다이렉션 시키는게 맞나?
                     //response.sendError(400,"로그인이 필요합니다.");
                     response.sendRedirect("http://localhost:3000");
                     return;

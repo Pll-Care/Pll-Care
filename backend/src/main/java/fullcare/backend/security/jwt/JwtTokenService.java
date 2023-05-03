@@ -10,6 +10,7 @@ import io.jsonwebtoken.security.SecurityException;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -52,9 +53,8 @@ public class JwtTokenService {
     }
 
     public String createAccessToken(CustomOAuth2User oAuth2User){
-        // TODO:  JWT 토큰에 어떤 데이터를 넣을 것인지 결정 필요
 
-        long now = (new Date()).getTime();
+        long now = new Date().getTime();
         Date validity = new Date(now + accessTokenValidationMilliseconds);
 
         HashMap<String, Object> claims = new HashMap<>();
@@ -72,12 +72,14 @@ public class JwtTokenService {
     }
 
     public String createRefreshToken(CustomOAuth2User oAuth2User){
-        // TODO:  JWT 토큰에 어떤 데이터를 넣을 것인지 결정 필요
 
-        long now = (new Date()).getTime();
+        long now = new Date().getTime();
         Date validity = new Date(now + refreshTokenValidationMilliseconds);
+
         HashMap<String, Object> claims = new HashMap<>();
         claims.put("sub",oAuth2User.getName());
+
+        // todo 이건 왜 필요?
         claims.put("role",oAuth2User.getAuthorities());
 //        System.out.println("nickname"+ oAuth2User.getUsername());
 //        System.out.println("claims = " + claims);
@@ -86,11 +88,6 @@ public class JwtTokenService {
                 .addClaims(claims)
                 .signWith(key,SignatureAlgorithm.HS512)
                 .compact();
-    }
-
-
-    private void reIssueAccessToken() {
-
     }
 
     public String[] reIssueTokens(String refreshToken, Authentication authentication) {
@@ -144,14 +141,16 @@ public class JwtTokenService {
                 .getBody();
 
         String memberId = claims.getSubject();
-        Member member = memberRepository.findById(Long.valueOf(memberId)).orElse(null);
-        int i = member.getOAuth2Id().indexOf('_');
-        String providerName = member.getOAuth2Id().substring(0, i);
 
-        // todo Authentication 객체 만들어서 반환
-
+        // todo Transactional 적용은 어디에서 해야하는가?
+        Member member = memberRepository.findById(Long.valueOf(memberId)).orElseThrow(() -> new UsernameNotFoundException("등록된 사용자가 아닙니다."));
         CustomOAuth2User oAuth2User = CustomOAuth2User.create(member);
-        return new OAuth2AuthenticationToken(oAuth2User, oAuth2User.getAuthorities(), providerName);
+        return new UsernamePasswordAuthenticationToken(oAuth2User, null, oAuth2User.getAuthorities());
+
+        // * 구버전
+//        int i = member.getOAuth2Id().indexOf('_');
+//        String providerName = member.getOAuth2Id().substring(0, i);
+//        return new OAuth2AuthenticationToken(oAuth2User, oAuth2User.getAuthorities(), providerName);
     }
 
 }
