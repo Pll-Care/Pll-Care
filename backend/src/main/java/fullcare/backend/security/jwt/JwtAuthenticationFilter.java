@@ -1,5 +1,7 @@
 package fullcare.backend.security.jwt;
 
+import fullcare.backend.security.jwt.exception.CustomJwtException;
+import fullcare.backend.security.jwt.exception.JwtErrorCode;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,10 +16,17 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+
 @Slf4j
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-
+    private static String MALFORMED_TOKEN = "잘못된 JWT 서명입니다.";
+    private static String EXPIRED_TOKEN="만료된 JWT 토큰입니다.";
+    private static String UNSUPPORTED_TOKEN="지원되지 않는 JWT 서명입니다.";
+    private static String ILLEGAL_TOKEN="JWT 토큰이 잘못되었습니다.";
+    private static String NOT_FOUND_USER= "등록되지 않은 사용자입니다.";
     public static final String ACCESS_TOKEN_AUTHORIZATION_HEADER = "Authorization";
     public static final String REFRESH_TOKEN_AUTHORIZATION_HEADER = "Authorization_refresh";
 
@@ -34,38 +43,47 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String accessToken = getAccessToken(request);
             if(refreshToken != null && jwtTokenService.validateJwtToken(refreshToken)){
                 Authentication authentication = jwtTokenService.getAuthentication(refreshToken);
-                // refreshToken이 정상일 경우
-                //reIssueAccessToken();
-                String[] newTokens = jwtTokenService.reIssueTokens(refreshToken, authentication); // 리프레쉬 토큰이 DB와 일치 시 access, refresh 재발급
 
+                String[] newTokens = jwtTokenService.reIssueTokens(refreshToken, authentication); // 리프레쉬 토큰이 DB와 일치 시 access, refresh 재발급
+                String requestURI = request.getRequestURI();
                 String successUrl = UriComponentsBuilder.fromUriString("http://localhost:3000/token")
                         .queryParam("access_token", newTokens[0])
                         .queryParam("refresh_token", newTokens[1])
+                        .queryParam("redirect_uri", requestURI)
                         .build().toUriString();
-                System.out.println("successUrl = " + successUrl);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 response.sendRedirect(successUrl);
                 return;
             }else{
-
-
                 if (accessToken != null && jwtTokenService.validateJwtToken(accessToken)){
                     Authentication authentication = jwtTokenService.getAuthentication(accessToken);
                     SecurityContextHolder.getContext().setAuthentication(authentication);
-                }else {
-                    log.info("No Access Token!");
-                    //response.sendError(400,"로그인이 필요합니다.");
-                    response.sendRedirect("http://localhost:3000");
-                    return;
-
                 }
-
             }
-        } catch (Exception e) {
+        }
+        catch (CustomJwtException e){
+            setRequestAttribute(request, e.getMessage());
+
+        }
+        catch (Exception e) {
             throw new RuntimeException(e);
         }
 
         filterChain.doFilter(request,response);
+    }
+
+    private void setRequestAttribute(HttpServletRequest request, String message) {
+        if (message.equals(MALFORMED_TOKEN)) {
+            request.setAttribute("message", MALFORMED_TOKEN);
+        }else if (message.equals(EXPIRED_TOKEN)) {
+            request.setAttribute("message", EXPIRED_TOKEN);
+        }else if (message.equals(UNSUPPORTED_TOKEN)) {
+            request.setAttribute("message", UNSUPPORTED_TOKEN);
+        }else if (message.equals(ILLEGAL_TOKEN)) {
+            request.setAttribute("message", ILLEGAL_TOKEN);
+        }else if (message.equals(NOT_FOUND_USER)) {
+            request.setAttribute("message", NOT_FOUND_USER);
+        }
     }
 
     private String getAccessToken(HttpServletRequest request) {

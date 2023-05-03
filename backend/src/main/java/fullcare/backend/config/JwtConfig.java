@@ -23,7 +23,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @RequiredArgsConstructor
 @EnableWebSecurity
 public class JwtConfig {
-
     private final CustomOAuth2UserService oAuth2UserService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final OAuth2SuccessHandler successHandler;
@@ -48,7 +47,7 @@ public class JwtConfig {
         http
                 .securityMatcher("/api/**","/wow/**","/lilac/**")
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/**").hasRole("USER")
+                        .requestMatchers("/api/**").hasRole("ADMIN")
                         .requestMatchers("/test/**").permitAll()
                         .requestMatchers("/wow/**").denyAll()
                         .anyRequest().authenticated())
