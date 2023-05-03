@@ -1,40 +1,40 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import './scss/fullcare.css';
+import "./scss/fullcare.css";
 
-import Home from './pages/Home';
-import JWTToken from './components/JWTToken';
-import Profile from './pages/Profile';
-import Management from './pages/Management';
-import Recruitment from './pages/Recruitment';
-import React, { useReducer } from 'react';
+import Home from "./pages/Home";
+import JWTToken from "./components/JWTToken";
+import Profile from "./pages/Profile";
+import Management from "./pages/Management";
+import Recruitment from "./pages/Recruitment";
+import React, { useReducer } from "react";
 
 export const AuthStateContext = React.createContext();
 export const AuthDispatchContext = React.createContext();
 
 const authStateReducer = (state, action) => {
   switch (action.type) {
-    case 'LOGIN': {
-      const accessTokenData = localStorage.getItem('access_token');
-      const refreshTokenData = localStorage.getItem('refresh_token');
+    case "LOGIN": {
+      const accessTokenData = localStorage.getItem("access_token");
+      const refreshTokenData = localStorage.getItem("refresh_token");
 
       const newState = {
         ...state,
         accessToken: accessTokenData,
-        refreshToken: refreshTokenData
+        refreshToken: refreshTokenData,
       };
 
       console.log(newState);
       return newState;
     }
-    case 'LOGOUT': {
+    case "LOGOUT": {
       localStorage.clear();
 
       const newState = {
         ...state,
-        accessToken: '',
-        refreshToken: ''
-      }
+        accessToken: "",
+        refreshToken: "",
+      };
 
       console.log(newState);
       return newState;
@@ -42,8 +42,8 @@ const authStateReducer = (state, action) => {
     default: {
       return {
         ...state,
-        accessToken: '',
-        refreshToken: ''
+        accessToken: "",
+        refreshToken: "",
       };
     }
   }
@@ -51,36 +51,38 @@ const authStateReducer = (state, action) => {
 
 function App() {
   const [authState, authStateDispatch] = useReducer(authStateReducer, {
-      accessToken: '',
-      refreshToken: ''
+    accessToken: "",
+    refreshToken: "",
   });
 
   const onLogin = () => {
     authStateDispatch({
-      type: 'LOGIN'
-    })
-  }
-  
+      type: "LOGIN",
+    });
+  };
+
   const onLogout = () => {
     authStateDispatch({
-      type: 'LOGOUT'
-    })
-  }
+      type: "LOGOUT",
+    });
+  };
 
   return (
     <AuthStateContext.Provider value={authState}>
-      <AuthDispatchContext.Provider value={{
-        onLogin,
-        onLogout
-      }}>
+      <AuthDispatchContext.Provider
+        value={{
+          onLogin,
+          onLogout,
+        }}
+      >
         <BrowserRouter>
           <div className="App">
             <Routes>
-              <Route path={'/'} element={<Home />} />
-              <Route path={'/token'} element={<JWTToken />} />
-              <Route path={'/profile'} element={<Profile />} />
-              <Route path={'/management'} element={<Management />} />
-              <Route path={'/recruitment'} element={<Recruitment />} />
+              <Route path={"/"} element={<Home />} />
+              <Route path={"/token"} element={<JWTToken />} />
+              <Route path={"/profile"} element={<Profile />} />
+              <Route path={"/management"} element={<Management />} />
+              <Route path={"/recruitment"} element={<Recruitment />} />
             </Routes>
           </div>
         </BrowserRouter>
