@@ -143,7 +143,7 @@ public class JwtTokenService {
         String memberId = claims.getSubject();
 
         // todo Transactional 적용은 어디에서 해야하는가?
-        Member member = memberRepository.findById(Long.valueOf(memberId)).orElseThrow(() -> new UsernameNotFoundException("등록된 사용자가 아닙니다."));
+        Member member = memberRepository.findById(Long.valueOf(memberId)).orElseThrow(() -> new CustomJwtException("등록되지 않은 사용자입니다.",  JwtErrorCode.NOT_FOUND_USER));
         CustomOAuth2User oAuth2User = CustomOAuth2User.create(member);
         return new UsernamePasswordAuthenticationToken(oAuth2User, null, oAuth2User.getAuthorities());
 
