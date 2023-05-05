@@ -1,13 +1,12 @@
-import { Outlet } from "react-router-dom";
+// components
 import MainHeader from "../components/MainHeader";
-import ManagementHeader from "../components/ManagementHeader";
+import MyProjectHeader from "../components/MyProjectHeader";
 
 const Management = () => {
   return (
     <div>
       <MainHeader />
-      <ManagementHeader />
-      <Outlet />
+      <MyProjectHeader />
     </div>
   );
 };

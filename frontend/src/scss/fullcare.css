@@ -76,7 +76,7 @@ input {
   align-items: center;
 }
 .login-modal-wrapper .login-modal .login-logo-img {
-  border: 2px solid #01E89E;
+  border: 2px solid #01e89e;
   width: 80px;
   height: 80px;
   margin-left: auto;
@@ -131,7 +131,7 @@ input {
 }
 
 .main-header {
-  border-bottom: 2px solid #01E89E;
+  border-bottom: 2px solid #01e89e;
   height: 90px;
   display: flex;
   flex-direction: row;
@@ -142,7 +142,7 @@ input {
   margin-left: 20px;
 }
 .main-header-left-col .main-header-logo-img {
-  border: 2px solid #01E89E;
+  border: 2px solid #01e89e;
   width: 60px;
   height: 60px;
 }
@@ -173,7 +173,7 @@ input {
   cursor: pointer;
 }
 .main-header-right-col .main-header-user-profile-img {
-  border: 2px solid #01E89E;
+  border: 2px solid #01e89e;
   border-radius: 35%;
   width: 40px;
   height: 40px;
@@ -198,7 +198,7 @@ input {
   height: 60px;
   margin-top: 30px;
   background-color: white;
-  border: 2px solid #01E89E;
+  border: 2px solid #01e89e;
   border-radius: 40px;
   display: flex;
   flex-direction: row;
@@ -213,4 +213,53 @@ input {
   font-size: 25px;
   color: black;
   padding: 30px;
+}
+
+.myproject-header {
+  height: 200px;
+  background-color: #01e89e;
+  border-end-start-radius: 80px;
+  border-end-end-radius: 80px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.myproject-header-left {
+  margin-left: 70px;
+  margin-top: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.myproject-header-left-participation-project {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 40px;
+  color: white;
+  margin-right: 30px;
+}
+.myproject-header-right {
+  margin-right: 70px;
+  margin-top: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.myproject-header-right-total-btn {
+  margin-right: 30px;
+}
+
+.button2 {
+  background-color: white;
+  border-radius: 47px;
+  border: 0 solid #7a7a7a;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }/*# sourceMappingURL=fullcare.css.map */
