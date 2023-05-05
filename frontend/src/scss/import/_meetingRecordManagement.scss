@@ -2,13 +2,13 @@
 .meeting-record {
     &-management {
         border: $border;
-        height: 180vh;
+        height: 185vh;
         width: 1150px;
         display: flex;
         justify-content: space-between;
         border-radius: 35px;
         background-color: $background-color;
-        h1 {
+        .meeting-record-heading {
             color: white;
             font-family: $heading-font;
             font-size: $sub-heading-font-size;
@@ -26,13 +26,43 @@
         }
     }
 
+    /* MEETING RECORD LIST EDITOR */
     &-list-editor {
         width: 65%;
         padding: 10px;
         border-radius: 35px;
         background-color: white;
+        
+        .meeting-record-heading {
+            color: #01E89E;
+            margin-bottom: 25px;
+        }
+
+        .meeting-record-initial-state {
+            width: 100%;
+            height: 100%;
+
+            @include displayFlex(column);
+        }
+
+        .meeting-record-new-meeting-record {
+            height: 100%;
+        }
+
+        /* MEETING RECORD NEW MEETING RECORD */
+        .meeting-record-new-meeting-record-editor {
+            height: 100%;
+            width: 95%;
+
+            @include putCenter;
+
+            .react-quill {
+                height: 95%;
+            }
+        }
     }
 
+    /* MEETING RECORD BOOK MARKED RECORD LIST */
     &-book-marked-record-list {
         border: 2px solid green;
         padding-top: 10px;

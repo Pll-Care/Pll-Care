@@ -12,7 +12,7 @@ const Pagination = ({ currentPage, setCurrentPage, recordDatasPerPage, totalData
     }
 
     const handleIncreasePageIndex = () => {
-        pageIndex !== Math.ceil(totalPages / maxDataNumbers) && setPageIndex((prevPageIndex) => prevPageIndex += maxDataNumbers);
+        pageIndex < (Math.ceil(totalPages / maxDataNumbers) - 1) && setPageIndex((prevPageIndex) => prevPageIndex += maxDataNumbers);
     }
 
     for (let i = 1; i <= totalPages; i++) {

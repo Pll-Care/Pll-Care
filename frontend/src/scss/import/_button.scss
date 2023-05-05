@@ -1,9 +1,17 @@
 .button {
     font-family: $button-font;
     font-size: $button-font-size;
-    color: white;
-    background-color: #01E89E;
-    border-radius: 10px;
-    border: none;
+    background-color: white;
+    color: #01E89E;
+    border-radius: 45px;
+    border: 2px solid #01E89E;
     padding: 5px 25px;
+    cursor: pointer;
+
+    &_positive {
+        color: white;
+        background-color: #01E89E;
+    }
 }
+
+

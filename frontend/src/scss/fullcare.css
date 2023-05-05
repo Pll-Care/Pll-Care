@@ -49,6 +49,10 @@ input {
   border-radius: 0;
 }
 
+html {
+  height: 230vh;
+}
+
 .login-modal-wrapper {
   background: rgba(0, 0, 0, 0.8);
   -webkit-backdrop-filter: blur(5px);
@@ -185,11 +189,16 @@ input {
 .button {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
+  background-color: white;
+  color: #01E89E;
+  border-radius: 45px;
+  border: 2px solid #01E89E;
+  padding: 5px 25px;
+  cursor: pointer;
+}
+.button_positive {
   color: white;
   background-color: #01E89E;
-  border-radius: 10px;
-  border: none;
-  padding: 5px 25px;
 }
 
 /* ManagementHeader */
@@ -218,11 +227,13 @@ input {
 
 /* MEETING RECORD MANAGEMENT */
 .meeting-record {
+  /* MEETING RECORD LIST EDITOR */
+  /* MEETING RECORD BOOK MARKED RECORD LIST */
   /* ALL MEETING RECORD LIST */
 }
 .meeting-record-management {
   border: 2px solid #01E89E;
-  height: 180vh;
+  height: 185vh;
   width: 1150px;
   display: flex;
   justify-content: space-between;
@@ -231,7 +242,7 @@ input {
   margin-left: auto;
   margin-right: auto;
 }
-.meeting-record-management h1 {
+.meeting-record-management .meeting-record-heading {
   color: white;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 25px;
@@ -247,6 +258,31 @@ input {
   padding: 10px;
   border-radius: 35px;
   background-color: white;
+  /* MEETING RECORD NEW MEETING RECORD */
+}
+.meeting-record-list-editor .meeting-record-heading {
+  color: #01E89E;
+  margin-bottom: 25px;
+}
+.meeting-record-list-editor .meeting-record-initial-state {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.meeting-record-list-editor .meeting-record-new-meeting-record {
+  height: 100%;
+}
+.meeting-record-list-editor .meeting-record-new-meeting-record-editor {
+  height: 100%;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.meeting-record-list-editor .meeting-record-new-meeting-record-editor .react-quill {
+  height: 95%;
 }
 .meeting-record-book-marked-record-list {
   border: 2px solid green;
@@ -305,8 +341,8 @@ input {
 }
 
 .control-menu {
-  width: 150px;
-  height: 50px;
+  width: 135px;
+  height: 40px;
   border-radius: 55px;
   border: none;
   font-family: "IBM Plex Sans KR", sans-serif;
@@ -325,6 +361,7 @@ input {
 .pagination {
   width: 250px;
   margin-top: 8px;
+  margin-bottom: 10px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

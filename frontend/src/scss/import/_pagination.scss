@@ -1,8 +1,7 @@
 .pagination {
     width: 250px;
     margin-top: 8px;
-
-    @include displayFlex(row, space-between);
+    margin-bottom: 10px;
 
     button {
         border: none;
@@ -32,4 +31,6 @@
             padding: 5px;
         }
     }
+
+    @include displayFlex(row, space-between);
 }

@@ -2,7 +2,8 @@ import { useContext, useState } from 'react';
 import { MeetingRecordStateContext } from '../pages/MeetingRecordManagement';
 
 import AllMeetingRecordListData from './AllMeetingRecordData';
-import Pagination from './Pagination';
+import Pagination from '../utils/Pagination';
+import ControlMenu from '../utils/ControlMenu';
 
 const filterOptionList = [
     {
@@ -16,20 +17,6 @@ const filterOptionList = [
         value: 'oldest'
     },
 ]
-
-const ControlMenu = ({ onChange, value, optionList }) => {
-    return (
-        <select
-            className='control-menu'
-            onChange={(e) => onChange(e.target.value)}
-            value={value}
-        >
-            {optionList.map((opt) => (
-                <option key={opt.id} value={opt.value}>{opt.name}</option>
-            ))}
-        </select>
-    )
-}
 
 const AllMeetingRecordList = () => {
     const [sortType, setSortType] = useState('latest');
@@ -63,7 +50,7 @@ const AllMeetingRecordList = () => {
     return (
         <div className="meeting-record-all-meeting-record-list">
             <div className='meeting-record-all-meeting-record-list-header'>
-                <h1>전체</h1>
+                <h1 className='meeting-record-heading'>전체</h1>
                 <ControlMenu
                     value={sortType}
                     onChange={setSortType}
