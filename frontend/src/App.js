@@ -87,24 +87,16 @@ function App() {
               <Route path={"/"} element={<Home />} />
               <Route path={"/token"} element={<JWTToken />} />
               <Route path={"/profile"} element={<Profile />} />
-              <Route path={"/management"} element={<Management />} />
               <Route path={"/recruitment"} element={<Recruitment />} />
-              <Route
-                path="/management/overview"
-                element={<OverviewManagement />}
-              />
-              <Route
-                path="/management/meetingRecord"
-                element={<MeetingRecordManagement />}
-              ></Route>
-              <Route
-                path="/management/schedule"
-                element={<ScheduleManagement />}
-              ></Route>
-              <Route
-                path="/management/evaluation"
-                element={<EvaluationManagement />}
-              ></Route>
+              <Route path={"/management"} element={<Management />}>
+                <Route path="overview" element={<OverviewManagement />} />
+                <Route
+                  path={"meetingRecord"}
+                  element={<MeetingRecordManagement />}
+                />
+                <Route path={"schedule"} element={<ScheduleManagement />} />
+                <Route path={"evaluation"} element={<EvaluationManagement />} />
+              </Route>
             </Routes>
           </div>
         </BrowserRouter>

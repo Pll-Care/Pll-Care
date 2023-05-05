@@ -1,3 +1,4 @@
+import { Outlet } from "react-router-dom";
 import MainHeader from "../components/MainHeader";
 import ManagementHeader from "../components/ManagementHeader";
 
@@ -7,6 +8,7 @@ const Management = () => {
       <MainHeader />
       <ManagementHeader />
       <div>Management</div>
+      <Outlet />
     </div>
   );
 };

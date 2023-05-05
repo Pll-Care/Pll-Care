@@ -194,23 +194,23 @@ input {
 
 /* ManagementHeader */
 .management-header {
+  width: 1150px;
+  height: 60px;
   margin-top: 30px;
-  margin-bottom: 30px;
-  margin-left: 50px;
-  margin-right: 50px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-left: 30px;
-  padding-right: 30px;
   background-color: white;
-  border: 2px solid #01e89e;
-  border-radius: 20px;
+  border: 2px solid #01E89E;
+  border-radius: 40px;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.management-header > div > a {
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 20px;
+.management-header div a {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 25px;
   color: black;
+  padding: 30px;
 }/*# sourceMappingURL=fullcare.css.map */
