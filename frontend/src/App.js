@@ -9,6 +9,12 @@ import Management from "./pages/Management";
 import Recruitment from "./pages/Recruitment";
 import React, { useReducer } from "react";
 
+// Pages
+import OverviewManagement from "./pages/OverviewManagement";
+import MeetingRecordManagement from "./pages/MeetingRecordManagement";
+import ScheduleManagement from "./pages/ScheduleManagement";
+import EvaluationManagement from "./pages/EvaluationManagement";
+
 export const AuthStateContext = React.createContext();
 export const AuthDispatchContext = React.createContext();
 
@@ -81,8 +87,13 @@ function App() {
               <Route path={"/"} element={<Home />} />
               <Route path={"/token"} element={<JWTToken />} />
               <Route path={"/profile"} element={<Profile />} />
-              <Route path={"/management"} element={<Management />} />
               <Route path={"/recruitment"} element={<Recruitment />} />
+              <Route path={"/management"} element={<Management />}>
+                <Route path={"overview"} element={<OverviewManagement />} />
+                <Route path={"meetingRecord"} element={<MeetingRecordManagement />} />
+                <Route path={"schedule"} element={<ScheduleManagement />} />
+                <Route path={"evaluation"} element={<EvaluationManagement />} />
+              </Route>
             </Routes>
           </div>
         </BrowserRouter>

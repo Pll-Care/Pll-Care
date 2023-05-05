@@ -1,62 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@600&family=Open+Sans:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Open+Sans:wght@300&display=swap");
-*,
-*:before,
-*:after {
+*, *:before, *:after {
   box-sizing: border-box;
 }
 
-html,
-body,
-div,
-span,
-object,
-iframe,
-figure,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-code,
-em,
-img,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-b,
-u,
-i,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-main,
-canvas,
-embed,
-footer,
-header,
-nav,
-section,
-video {
+html, body, div, span, object, iframe, figure, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, code, em, img, small, strike, strong, sub, sup, tt, b, u, i, ol, ul, li, fieldset, form, label, table, caption, tbody, tfoot, thead, tr, th, td, main, canvas, embed, footer, header, nav, section, video {
   margin: 0;
   padding: 0;
   border: 0;
@@ -66,15 +14,11 @@ video {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: none;
-  -moz-text-size-adjust: none;
-  text-size-adjust: none;
+     -moz-text-size-adjust: none;
+          text-size-adjust: none;
 }
 
-footer,
-header,
-nav,
-section,
-main {
+footer, header, nav, section, main {
   display: block;
 }
 
@@ -82,20 +26,15 @@ body {
   line-height: 1;
 }
 
-ol,
-ul {
+ol, ul {
   list-style: none;
 }
 
-blockquote,
-q {
+blockquote, q {
   quotes: none;
 }
 
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
+blockquote:before, blockquote:after, q:before, q:after {
   content: "";
   content: none;
 }
@@ -113,7 +52,7 @@ input {
 .login-modal-wrapper {
   background: rgba(0, 0, 0, 0.8);
   -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
   opacity: 90%;
   position: absolute;
   top: 0;
@@ -137,7 +76,7 @@ input {
   align-items: center;
 }
 .login-modal-wrapper .login-modal .login-logo-img {
-  border: 2px solid #01e89e;
+  border: 2px solid #01E89E;
   width: 80px;
   height: 80px;
   margin-left: auto;
@@ -150,8 +89,8 @@ input {
 }
 .login-modal-wrapper .login-modal .login-text {
   font-family: "Noto Sans KR", sans-serif;
-  font-size: 20px;
-  color: #9aad84;
+  font-size: 15px;
+  color: #9AAD84;
   line-height: 1.7;
   padding: 12px;
   margin-bottom: 30px;
@@ -192,7 +131,7 @@ input {
 }
 
 .main-header {
-  border-bottom: 2px solid #01e89e;
+  border-bottom: 2px solid #01E89E;
   height: 90px;
   display: flex;
   flex-direction: row;
@@ -203,7 +142,7 @@ input {
   margin-left: 20px;
 }
 .main-header-left-col .main-header-logo-img {
-  border: 2px solid #01e89e;
+  border: 2px solid #01E89E;
   width: 60px;
   height: 60px;
 }
@@ -234,7 +173,7 @@ input {
   cursor: pointer;
 }
 .main-header-right-col .main-header-user-profile-img {
-  border: 2px solid #01e89e;
+  border: 2px solid #01E89E;
   border-radius: 35%;
   width: 40px;
   height: 40px;
@@ -247,33 +186,175 @@ input {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
   color: white;
-  background-color: #01e89e;
+  background-color: #01E89E;
   border-radius: 10px;
   border: none;
   padding: 5px 25px;
-} /*# sourceMappingURL=fullcare.css.map */
+}
 
 /* ManagementHeader */
 .management-header {
+  width: 1150px;
+  height: 60px;
   margin-top: 30px;
   margin-bottom: 30px;
-  margin-left: 50px;
-  margin-right: 50px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-left: 30px;
-  padding-right: 30px;
-
   background-color: white;
-  border: 2px solid #01e89e;
-  border-radius: 20px;
+  border: 2px solid #01E89E;
+  border-radius: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
 
+.management-header div a {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 25px;
+  color: black;
+  padding: 30px;
+}
+
+/* MEETING RECORD MANAGEMENT */
+.meeting-record {
+  /* ALL MEETING RECORD LIST */
+}
+.meeting-record-management {
+  border: 2px solid #01E89E;
+  height: 180vh;
+  width: 1150px;
   display: flex;
   justify-content: space-between;
+  border-radius: 35px;
+  background-color: #01E89E;
+  margin-left: auto;
+  margin-right: auto;
+}
+.meeting-record-management h1 {
+  color: white;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 25px;
+}
+.meeting-record-list {
+  width: 35%;
+  padding: 10px;
+  border-top-left-radius: 35px;
+  border-bottom-left-radius: 35px;
+}
+.meeting-record-list-editor {
+  width: 65%;
+  padding: 10px;
+  border-radius: 35px;
+  background-color: white;
+}
+.meeting-record-book-marked-record-list {
+  border: 2px solid green;
+  padding-top: 10px;
+  height: 40%;
+}
+.meeting-record-all-meeting-record-list {
+  height: 56%;
+}
+.meeting-record-all-meeting-record-list-header {
+  width: 370px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.meeting-record-all-meeting-record-list-item-wrapper {
+  padding-top: 20px;
+  height: 590px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.management-header > div > a {
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 20px;
-  color: black;
+/* MEETING RECORD ITEM */
+.meeting-record-item {
+  background-color: white;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  width: 370px;
+  height: 120px;
+  padding: 10px 20px;
+  color: #7A7A7A;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
 }
+.meeting-record-item-date {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 15px;
+}
+.meeting-record-item-title {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 25px;
+}
+.meeting-record-item-writer {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 15px;
+}
+
+.control-menu {
+  width: 150px;
+  height: 50px;
+  border-radius: 55px;
+  border: none;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  color: #01E89E;
+  text-align: center;
+  cursor: pointer;
+  -webkit-appearance: none; /* for chrome */
+  -moz-appearance: none; /*for firefox*/
+  appearance: none;
+}
+.control-menu::-ms-expand {
+  display: none; /*for IE10,11*/
+}
+
+.pagination {
+  width: 250px;
+  margin-top: 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.pagination button {
+  border: none;
+  cursor: pointer;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  color: white;
+  background-color: transparent;
+}
+.pagination ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.pagination ul .pagination-page-number-on {
+  cursor: pointer;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 25px;
+  color: white;
+  padding: 5px;
+}
+.pagination ul .pagination-page-number {
+  cursor: pointer;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  color: white;
+  padding: 5px;
+}/*# sourceMappingURL=fullcare.css.map */

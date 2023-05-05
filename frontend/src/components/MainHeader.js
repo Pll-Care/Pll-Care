@@ -10,6 +10,7 @@ const MainHeader = () => {
     const [isLogin, setIsLogin] = useState(true);
 
     const { onLogout } = useContext(AuthDispatchContext);
+    const authState = useContext(AuthStateContext);
 
     const handleLogout = () => {
         onLogout();

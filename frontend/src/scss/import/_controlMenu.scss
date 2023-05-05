@@ -1,0 +1,19 @@
+.control-menu {
+    width: 150px;
+    height: 50px;
+    border-radius: 55px;
+    border: none;
+    font-family: $button-font;
+    font-size: $button-font-size;
+    color: #01E89E;
+    text-align: center;
+    cursor: pointer;
+    -webkit-appearance:none;  /* for chrome */
+    -moz-appearance:none;  /*for firefox*/
+    appearance:none;
+
+    &::-ms-expand {
+        display: none;  /*for IE10,11*/
+    }
+    
+}

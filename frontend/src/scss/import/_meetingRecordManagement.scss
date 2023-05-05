@@ -1,0 +1,93 @@
+/* MEETING RECORD MANAGEMENT */
+.meeting-record {
+    &-management {
+        border: $border;
+        height: 180vh;
+        width: 1150px;
+        display: flex;
+        justify-content: space-between;
+        border-radius: 35px;
+        background-color: $background-color;
+        h1 {
+            color: white;
+            font-family: $heading-font;
+            font-size: $sub-heading-font-size;
+        }
+
+        @include putCenter;
+    }
+
+    &-list {
+        width: 35%;
+        padding: 10px;
+        border: {
+            top-left-radius: 35px;
+            bottom-left-radius: 35px;
+        }
+    }
+
+    &-list-editor {
+        width: 65%;
+        padding: 10px;
+        border-radius: 35px;
+        background-color: white;
+    }
+
+    &-book-marked-record-list {
+        border: 2px solid green;
+        padding-top: 10px;
+        height: 40%;
+    }
+
+    &-all-meeting-record-list {
+        height: 56%;
+    }
+
+    /* ALL MEETING RECORD LIST */
+    &-all-meeting-record-list {
+        &-header {
+            width: 370px;
+
+            @include displayFlex(row, space-between, center);
+            @include putCenter;
+        }
+
+        &-item-wrapper {
+            padding-top: 20px;
+            height: 590px;
+            
+            @include displayFlex(column, space-between);
+        }
+    }
+}
+
+
+/* MEETING RECORD ITEM */
+.meeting-record-item {
+    background-color: white;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    width: 370px;
+    height: 120px;
+    padding: 10px 20px;
+    color: #7A7A7A;
+    cursor: pointer;
+
+    @include putCenter;
+    @include displayFlex(column, space-around, flex-start);
+
+    &-date {
+        font-family: $body-font;
+        font-size: $body-font-size;
+    }
+
+    &-title {
+        font-family: $heading-font;
+        font-size: $sub-heading-font-size;
+    }
+
+    &-writer {
+        font-family: $body-font;
+        font-size: $body-font-size;
+    }
+}

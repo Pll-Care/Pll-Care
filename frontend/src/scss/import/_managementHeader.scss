@@ -1,0 +1,24 @@
+/* ManagementHeader */
+.management-header {
+  width: 1150px;
+  height: 60px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  background-color: white;
+  border: $border;
+  border-radius: 40px;
+
+  @include displayFlex(row, space-between, center);
+  @include putCenter;
+}
+
+.management-header {
+  div {
+    a {
+      font-family: $link-font;
+      font-size: $link-font-size;
+      color: black;
+      padding: 30px;
+    }
+  }
+}
