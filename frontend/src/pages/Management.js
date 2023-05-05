@@ -7,7 +7,6 @@ const Management = () => {
     <div>
       <MainHeader />
       <ManagementHeader />
-      <div>Management</div>
       <Outlet />
     </div>
   );

@@ -6,6 +6,7 @@
   background-color: white;
   border: $border;
   border-radius: 40px;
+
   @include displayFlex(row, space-between, center);
   @include putCenter;
 }
@@ -13,7 +14,7 @@
 .management-header {
   div {
     a {
-      font-family: $heading-font;
+      font-family: $link-font;
       font-size: $link-font-size;
       color: black;
       padding: 30px;
