@@ -16,4 +16,5 @@
         display: none;  /*for IE10,11*/
     }
     
+    @include backgroundImage('../assets/select-arrow-img.png', 88%, no-repeat, 10%, 10%);
 }
