@@ -79,6 +79,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     }
 
     // todo @Transactional이 적용되지 않는 이유는? -> Member 엔티티 Casacade.ALL 적용이 불필요한 쿼리 야기
+    // OpenEntityManagerInViewFilter
     private Member getMember(OAuth2Attributes oAuth2Attributes, String oAuth2ProviderName) {
         String oAuth2Id = oAuth2ProviderName + "_" + oAuth2Attributes.getOAuth2UserInfo().getId();
         log.info("oAuth2Id = {}",oAuth2Id);
