@@ -43,19 +43,21 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         else if(message.equals(JwtErrorCode.NOT_FOUND_USER.getMessage())) {
             setResponse(request, response, HttpServletResponse.SC_NOT_FOUND);
         }
-
     }
 
     private void setResponse(HttpServletRequest request, HttpServletResponse response, int status) throws IOException {
 //        String format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now());
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
         final Map<String, Object> body = new HashMap<>();
 //        body.put("timestamp", format);
         body.put("status", status);
         body.put("message", request.getAttribute("message"));
         body.put("path", request.getServletPath());
+
         final ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(response.getOutputStream(), body);
+
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpServletResponse.SC_OK);
     }
 }

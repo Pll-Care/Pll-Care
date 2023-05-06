@@ -6,6 +6,7 @@ import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.security.oauth2.domain.CustomOAuth2User;
 import fullcare.backend.security.oauth2.domain.OAuth2Attributes;
 import fullcare.backend.security.oauth2.domain.OAuth2UserInfo;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
@@ -77,6 +78,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         return CustomOAuth2User.create(loginMember,oAuth2User.getAttributes());
     }
 
+    // todo @Transactional이 적용되지 않는 이유는? -> Member 엔티티 Casacade.ALL 적용이 불필요한 쿼리 야기
     private Member getMember(OAuth2Attributes oAuth2Attributes, String oAuth2ProviderName) {
         String oAuth2Id = oAuth2ProviderName + "_" + oAuth2Attributes.getOAuth2UserInfo().getId();
         log.info("oAuth2Id = {}",oAuth2Id);
@@ -87,6 +89,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
             return newMember(oAuth2Attributes, oAuth2ProviderName);
         }
 
+
+        // updateMember()를 진짜 달라진 경우에만 호출하는 방식으로 고쳐야한다.
         updateMember(findMember, oAuth2Attributes,oAuth2ProviderName);
         return findMember;
     }
@@ -98,7 +102,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         member.updateEmail(oAuth2Attributes.getOAuth2UserInfo().getEmail());
 
         // ! Dirty checking에 의해 반영이 될텐데, 굳이 save를 호출해야하는 이유가 있나?
-//        return memberRepository.save(member);
+        memberRepository.save(member);
 
     }
 

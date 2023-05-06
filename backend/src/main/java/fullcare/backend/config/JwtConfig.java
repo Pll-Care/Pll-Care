@@ -38,19 +38,20 @@ public class JwtConfig {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 
-
         // ! HTTP 경로 관련 설정
         http
                 .securityMatcher("/api/**")
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/**").hasRole("USER"))
+
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .accessDeniedHandler(jwtAccessDeniedHandler);
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);
+//                .accessDeniedHandler(jwtAccessDeniedHandler);
 
 
         // ! 그 외의 부가 설정
         http.httpBasic().disable()
+//                .anonymous().disable()
                 .csrf().disable().headers().frameOptions().disable();
 
 

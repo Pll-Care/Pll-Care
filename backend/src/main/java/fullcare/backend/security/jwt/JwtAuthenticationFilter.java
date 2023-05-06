@@ -38,9 +38,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        // todo 토큰이 없어도 모두가 접근이 가능한 API와 토큰을 이용해 인증을 해야만 접근 가능한 API를 어떻게 구분해야하는가?
         try{
             String refreshToken = getRefreshToken(request);
             String accessToken = getAccessToken(request);
+
             if(refreshToken != null && jwtTokenService.validateJwtToken(refreshToken)){
                 Authentication authentication = jwtTokenService.getAuthentication(refreshToken);
 
@@ -53,22 +55,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         .build().toUriString();
                 System.out.println("successUrl = " + successUrl);
 
-                // todo 이건 왜 필요한가?
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-
-                // ? 토큰이 성공적으로 재발급되었을 때, 바로 이어서 API 접근을 가능하게 할 것 인지, 리다이렉션 시킬 것인지 고민이 필요함
                 response.sendRedirect(successUrl);
                 return;
-            }else{
-                if (accessToken != null && jwtTokenService.validateJwtToken(accessToken)){
-                    Authentication authentication = jwtTokenService.getAuthentication(accessToken);
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                }
+            } else if (accessToken != null && jwtTokenService.validateJwtToken(accessToken)){
+                Authentication authentication = jwtTokenService.getAuthentication(accessToken);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
         catch (CustomJwtException e){
             setRequestAttribute(request, e.getMessage());
-
         }
         catch (Exception e) {
             throw new RuntimeException(e);
@@ -97,6 +92,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")){
             return bearerToken.substring(7);
         }
+
         return null;
     }
 

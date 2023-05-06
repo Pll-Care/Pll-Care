@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Optional;
 
-@Service // 따로 데이터베이스에 Token 엔티티를 저장하지 않는데 Service인가 Provider인가?
+@Service
 @Slf4j
 public class JwtTokenService {
 
@@ -81,8 +81,6 @@ public class JwtTokenService {
         HashMap<String, Object> claims = new HashMap<>();
         claims.put("sub",oAuth2User.getName());
 
-        // todo 이건 왜 필요?
-        claims.put("role",oAuth2User.getAuthorities());
         return Jwts.builder()
                 .setExpiration(validity)
                 .addClaims(claims)
@@ -107,9 +105,6 @@ public class JwtTokenService {
         }
         log.info("등록되지 않은 사용자입니다.");
         throw new CustomJwtException("등록되지 않은 사용자입니다.",  JwtErrorCode.NOT_FOUND_USER);
-
-
-
     }
 
 
@@ -142,7 +137,6 @@ public class JwtTokenService {
 
         String memberId = claims.getSubject();
 
-        // todo Transactional 적용은 어디에서 해야하는가?
         Member member = memberRepository.findById(Long.valueOf(memberId)).orElseThrow(() -> new CustomJwtException("등록되지 않은 사용자입니다.",  JwtErrorCode.NOT_FOUND_USER));
         CustomOAuth2User oAuth2User = CustomOAuth2User.create(member);
         return new UsernamePasswordAuthenticationToken(oAuth2User, null, oAuth2User.getAuthorities());

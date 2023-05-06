@@ -9,6 +9,7 @@ import static org.springframework.http.HttpStatus.*;
 @Getter
 @AllArgsConstructor
 public enum JwtErrorCode {
+
     MALFORMED_TOKEN("잘못된 JWT 서명입니다."),
     EXPIRED_TOKEN("만료된 JWT 토큰입니다."),
     UNSUPPORTED_TOKEN("지원되지 않는 JWT 서명입니다."),
