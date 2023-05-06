@@ -142,6 +142,36 @@
 
             .meeting-record-all-meeting-record-list-data {
                 height: 80%;
+
+                /* MEETING RECORD ITEM */
+                .meeting-record-item {
+                    background-color: white;
+                    margin-bottom: 10px;
+                    border-radius: 20px;
+                    width: 370px;
+                    height: 120px;
+                    padding: 10px 20px;
+                    color: #7A7A7A;
+                    cursor: pointer;
+
+                    @include putCenter;
+                    @include displayFlex(column, space-around, flex-start);
+
+                    &-date {
+                        font-family: $body-font;
+                        font-size: $body-font-size;
+                    }
+
+                    &-title {
+                        font-family: $heading-font;
+                        font-size: $sub-heading-font-size;
+                    }
+
+                    &-writer {
+                        font-family: $body-font;
+                        font-size: $body-font-size;
+                    }
+                }
             }
 
             @include displayFlex(column);
@@ -164,36 +194,5 @@
             
             @include displayFlex(column, space-between);
         }
-    }
-}
-
-
-/* MEETING RECORD ITEM */
-.meeting-record-item {
-    background-color: white;
-    margin-bottom: 10px;
-    border-radius: 20px;
-    width: 370px;
-    height: 120px;
-    padding: 10px 20px;
-    color: #7A7A7A;
-    cursor: pointer;
-
-    @include putCenter;
-    @include displayFlex(column, space-around, flex-start);
-
-    &-date {
-        font-family: $body-font;
-        font-size: $body-font-size;
-    }
-
-    &-title {
-        font-family: $heading-font;
-        font-size: $sub-heading-font-size;
-    }
-
-    &-writer {
-        font-family: $body-font;
-        font-size: $body-font-size;
     }
 }
