@@ -89,11 +89,8 @@ function App() {
               <Route path={"/profile"} element={<Profile />} />
               <Route path={"/recruitment"} element={<Recruitment />} />
               <Route path={"/management"} element={<Management />}>
-                <Route path="overview" element={<OverviewManagement />} />
-                <Route
-                  path={"meetingRecord"}
-                  element={<MeetingRecordManagement />}
-                />
+                <Route path={"overview"} element={<OverviewManagement />} />
+                <Route path={"meetingRecord"} element={<MeetingRecordManagement />} />
                 <Route path={"schedule"} element={<ScheduleManagement />} />
                 <Route path={"evaluation"} element={<EvaluationManagement />} />
               </Route>

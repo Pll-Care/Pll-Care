@@ -1,4 +1,4 @@
-const Button = ({text, type, onClick}) => {
+const Button = ({ text, type, onClick }) => {
     const btnType = ['positive', 'negative'].includes(type) ? type : 'default';
 
     return (

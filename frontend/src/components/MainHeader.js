@@ -10,6 +10,7 @@ const MainHeader = () => {
     const [isLogin, setIsLogin] = useState(true);
 
     const { onLogout } = useContext(AuthDispatchContext);
+    const authState = useContext(AuthStateContext);
 
     const handleLogout = () => {
         onLogout();
@@ -34,6 +35,7 @@ const MainHeader = () => {
                     <div className='main-header-right-col main-header-logout-col'>
                         <Button 
                             text={'log out'}
+                            type={'positive'}
                             onClick={handleLogout}
                         />
                         <Link className='main-header-user-profile-img' to={'/profile'} />
@@ -42,6 +44,7 @@ const MainHeader = () => {
                     <div className='main-header-right-col main-header-login-col'>
                         <Button 
                             text={'log in'}
+                            type={'positive'}
                             onClick={handleLogin}
                         />
                     </div>
