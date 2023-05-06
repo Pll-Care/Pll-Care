@@ -5,10 +5,34 @@
   padding: 30px;
   border: $border;
   border-radius: 35px;
+  display: flex;
 
-  &-title {
-    font-weight: bold;
-    font-size: $link-font-size;
-    font-style: $link-font;
+  &-thumbnail {
+    background-color: gray;
+    width: 100px;
+    height: 100px;
+    border-radius: 45px;
+  }
+
+  &-info {
+    width: 600px;
+
+    &-title {
+      font-weight: bold;
+      font-size: $link-font-size;
+      font-style: $body-font;
+    }
+
+    &-content {
+      margin-top: 20px;
+      font-size: $button-font-size;
+      font-style: $body-font;
+    }
+
+    &-date {
+      margin-top: 20px;
+      font-size: $body-font-size;
+      float: right;
+    }
   }
 }

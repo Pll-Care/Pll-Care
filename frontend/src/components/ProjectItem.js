@@ -1,10 +1,15 @@
 const ProjectItem = ({ id, title, content, date }) => {
   return (
     <div className="project-item">
-      <div className="project-item-title">프로젝트명 : {title}</div>
-      <div className="project-item-content">내용 : {content}</div>
-      <div className="project-item-date">
-        생성일 : {new Date(date).toLocaleString()}{" "}
+      <div className="project-item-thumbnail">
+        <img />
+      </div>
+      <div className="project-item-info">
+        <div className="project-item-info-title">{title}</div>
+        <div className="project-item-info-content">{content}</div>
+        <div className="project-item-info-date">
+          {new Date(date).toLocaleString()}{" "}
+        </div>
       </div>
     </div>
   );
