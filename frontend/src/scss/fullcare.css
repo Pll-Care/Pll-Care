@@ -538,19 +538,44 @@ html {
   background-color: white;
   margin-top: 30px;
 }
-.project-list div {
+.project-list-pagination {
+  margin-top: 50px;
+}
+
+.pagination {
+  width: 600px;
   margin-left: auto;
   margin-right: auto;
+}
+.pagination li {
+  margin-right: 50px;
+  font-size: 20px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+}
+.pagination li:hover {
+  cursor: pointer;
+}
+
+.pagination_active a {
+  font-weight: bold;
+  color: #01e89e;
+}
+
+.pagination_disabled a {
+  color: #6c757d;
+  pointer-events: none;
 }
 
 .project-item {
   width: 800px;
-  background-color: white;
+  background-color: #ffffff;
   margin-bottom: 30px;
   padding: 30px;
   border: 2px solid #01e89e;
   border-radius: 35px;
   display: flex;
+  margin-left: auto;
+  margin-right: auto;
 }
 .project-item-thumbnail {
   background-color: gray;
@@ -560,19 +585,21 @@ html {
 }
 .project-item-info {
   width: 600px;
+  margin-left: 30px;
 }
 .project-item-info-title {
   font-weight: bold;
   font-size: 25px;
-  font-style: "Noto Sans KR", sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
 }
 .project-item-info-content {
   margin-top: 20px;
   font-size: 20px;
-  font-style: "Noto Sans KR", sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
 }
 .project-item-info-date {
   margin-top: 20px;
-  font-size: 15px;
+  font-size: 18px;
+  font-family: "Noto Sans KR", sans-serif;
   float: right;
 }/*# sourceMappingURL=fullcare.css.map */

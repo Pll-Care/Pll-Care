@@ -2,7 +2,34 @@
   background-color: white;
   margin-top: 30px;
 
-  div {
-    @include putCenter;
+  &-pagination {
+    margin-top: 50px;
   }
+}
+
+// react-paginate css
+.pagination {
+  width: 600px;
+
+  @include putCenter;
+
+  li {
+    margin-right: 50px;
+    font-size: $button-font-size;
+    font-family: $link-font;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.pagination_active a {
+  font-weight: bold;
+  color: $main-color;
+}
+
+.pagination_disabled a {
+  color: #6c757d;
+  pointer-events: none;
 }
