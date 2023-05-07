@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,19 +26,18 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         log.error("accessDeniedException.getMessage() = {}",accessDeniedException.getMessage());
-//        LocalDateTime now = LocalDateTime.now();
-
-
+        String format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now());
         final Map<String, Object> body = new HashMap<>();
-//        body.put("timestamp", now);
+        body.put("timestamp", format);
         body.put("status", HttpServletResponse.SC_FORBIDDEN);
         body.put("message", "인가된 사용자가 아닙니다.");
         body.put("path", request.getServletPath());
 
         final ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(response.getOutputStream(), body);
-
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        mapper.writeValue(response.getOutputStream(), body);
+
+
     }
 }

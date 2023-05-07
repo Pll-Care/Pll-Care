@@ -14,9 +14,10 @@ public enum JwtErrorCode {
     EXPIRED_TOKEN("만료된 JWT 토큰입니다."),
     UNSUPPORTED_TOKEN("지원되지 않는 JWT 서명입니다."),
     ILLEGAL_TOKEN("JWT 토큰이 잘못되었습니다."),
-    NOT_FOUND_USER("등록되지 않은 사용자입니다.")
+    NOT_FOUND_USER("등록되지 않은 사용자입니다."),
+    NOT_FOUND_TOKEN("토큰이 없습니다.")
     ;
 
-    private final String message;
+    public final String message;
 
 }

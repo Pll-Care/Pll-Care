@@ -13,6 +13,9 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,7 +31,10 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         String message = (String)request.getAttribute("message");
-        if(message.equals(JwtErrorCode.MALFORMED_TOKEN.getMessage())) {
+        if(message.equals(JwtErrorCode.NOT_FOUND_TOKEN.getMessage())){
+            setResponse(request, response, HttpServletResponse.SC_NOT_FOUND);
+        }
+        else if(message.equals(JwtErrorCode.MALFORMED_TOKEN.getMessage())) {
             setResponse(request, response, HttpServletResponse.SC_BAD_REQUEST);
         }
         else if(message.equals(JwtErrorCode.EXPIRED_TOKEN.getMessage())) {
@@ -46,18 +52,19 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     }
 
     private void setResponse(HttpServletRequest request, HttpServletResponse response, int status) throws IOException {
-//        String format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now());
-
+        String format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now());
         final Map<String, Object> body = new HashMap<>();
-//        body.put("timestamp", format);
+        body.put("timestamp", format);
         body.put("status", status);
         body.put("message", request.getAttribute("message"));
         body.put("path", request.getServletPath());
 
         final ObjectMapper mapper = new ObjectMapper();
+        response.setStatus(status);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         mapper.writeValue(response.getOutputStream(), body);
 
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.setStatus(HttpServletResponse.SC_OK);
+
+
     }
 }

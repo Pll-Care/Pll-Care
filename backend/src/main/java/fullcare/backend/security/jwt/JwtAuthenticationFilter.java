@@ -16,6 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 
+import static fullcare.backend.security.jwt.exception.JwtErrorCode.NOT_FOUND_TOKEN;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
@@ -27,6 +28,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private static String UNSUPPORTED_TOKEN="지원되지 않는 JWT 서명입니다.";
     private static String ILLEGAL_TOKEN="JWT 토큰이 잘못되었습니다.";
     private static String NOT_FOUND_USER= "등록되지 않은 사용자입니다.";
+    private static String NOT_FOUND_TOKEN= "토큰이 없습니다.";
     public static final String ACCESS_TOKEN_AUTHORIZATION_HEADER = "Authorization";
     public static final String REFRESH_TOKEN_AUTHORIZATION_HEADER = "Authorization_refresh";
 
@@ -60,6 +62,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             } else if (accessToken != null && jwtTokenService.validateJwtToken(accessToken)){
                 Authentication authentication = jwtTokenService.getAuthentication(accessToken);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+            } else{
+                //response.setStatus(401);
+                setRequestAttribute(request, NOT_FOUND_TOKEN);
             }
         }
         catch (CustomJwtException e){
@@ -83,6 +88,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             request.setAttribute("message", ILLEGAL_TOKEN);
         }else if (message.equals(NOT_FOUND_USER)) {
             request.setAttribute("message", NOT_FOUND_USER);
+        }else if (message.equals(NOT_FOUND_TOKEN)) {
+            request.setAttribute("message", NOT_FOUND_TOKEN);
         }
     }
 
