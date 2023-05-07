@@ -25,11 +25,13 @@ const Pagination = ({ currentPage, setCurrentPage, recordDatasPerPage, totalData
 
     return (
         <div className='pagination'>
-            <button
+            {pageNumbers?.length ? (<button
                 onClick={handleDecreasePageIndex}
             >
                 {'<'}
-            </button>
+            </button>) : (
+                null
+            )}
             <ul>
                 {pageNumbers.slice(pageIndex, pageIndex + maxDataNumbers).map((page) => (
                     <li
@@ -42,11 +44,13 @@ const Pagination = ({ currentPage, setCurrentPage, recordDatasPerPage, totalData
                     </li>
                 ))}
             </ul>
-            <button
+            {pageNumbers?.length ? (<button
                 onClick={handleIncreasePageIndex}
             >
                 {'>'}
-            </button>
+            </button>) : (
+                null
+            )}
         </div>
     )
 }

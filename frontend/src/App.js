@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { useEffect, useReducer } from "react";
+
 
 import "./scss/fullcare.css";
 
@@ -7,9 +9,6 @@ import JWTToken from "./components/JWTToken";
 import Profile from "./pages/Profile";
 import Management from "./pages/Management";
 import Recruitment from "./pages/Recruitment";
-import React, { useReducer } from "react";
-
-// Pages
 import OverviewManagement from "./pages/OverviewManagement";
 import MeetingRecordManagement from "./pages/MeetingRecordManagement";
 import ScheduleManagement from "./pages/ScheduleManagement";
@@ -28,9 +27,9 @@ const authStateReducer = (state, action) => {
         ...state,
         accessToken: accessTokenData,
         refreshToken: refreshTokenData,
+        isLoggedIn: true,
       };
 
-      console.log(newState);
       return newState;
     }
     case "LOGOUT": {
@@ -40,9 +39,9 @@ const authStateReducer = (state, action) => {
         ...state,
         accessToken: "",
         refreshToken: "",
+        isLoggedIn: false,
       };
 
-      console.log(newState);
       return newState;
     }
     default: {
@@ -50,6 +49,7 @@ const authStateReducer = (state, action) => {
         ...state,
         accessToken: "",
         refreshToken: "",
+        isLoggedIn: false,
       };
     }
   }
@@ -59,6 +59,7 @@ function App() {
   const [authState, authStateDispatch] = useReducer(authStateReducer, {
     accessToken: "",
     refreshToken: "",
+    isLoggedIn: false,
   });
 
   const onLogin = () => {
@@ -72,6 +73,16 @@ function App() {
       type: "LOGOUT",
     });
   };
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('access_token');
+    const refreshToken = localStorage.getItem('refresh_token');
+
+    if (accessToken && refreshToken) {
+      onLogin();
+    }
+  }, []);
+
 
   return (
     <AuthStateContext.Provider value={authState}>

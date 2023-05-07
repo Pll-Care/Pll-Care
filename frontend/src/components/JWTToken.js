@@ -5,23 +5,23 @@ import { AuthDispatchContext, AuthStateContext } from "../App";
 const JWTToken = () => {
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const accessToken = searchParams.get('access_token');
-    const refreshToken = searchParams.get('refresh_token');
-
     const { onLogin } = useContext(AuthDispatchContext);
     const authState = useContext(AuthStateContext);
 
+    const accessToken = searchParams.get('access_token');
+    const refreshToken = searchParams.get('refresh_token');
+
     useEffect(() => {
         if (accessToken && refreshToken) {
-            onLogin(accessToken, refreshToken);
+            onLogin();
 
             localStorage.clear();
             localStorage.setItem('access_token', accessToken);
             localStorage.setItem('refresh_token', refreshToken);
 
-            window.close();
+            window.opener.postMessage("login", "*");
 
-            window.opener.document.location.href= '/';
+            window.close();
         }
     }, []);
 

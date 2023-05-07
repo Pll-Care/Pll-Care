@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 
 import Login from './Login';
 import Button from './Button';
@@ -7,10 +7,9 @@ import { AuthDispatchContext, AuthStateContext } from '../App';
 
 const MainHeader = () => {
     const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
-    const [isLogin, setIsLogin] = useState(true);
 
-    const { onLogout } = useContext(AuthDispatchContext);
     const authState = useContext(AuthStateContext);
+    const { onLogout, onLogin } = useContext(AuthDispatchContext);
 
     const handleLogout = () => {
         onLogout();
@@ -19,6 +18,13 @@ const MainHeader = () => {
 
     const handleLogin = () => {
         setIsLoginModalVisible(true);
+
+        window.addEventListener("message", (event) => {
+            if (event.data === "login") {
+                onLogin();
+                setIsLoginModalVisible(false);
+            }
+        });
     }
 
     return (
@@ -31,7 +37,7 @@ const MainHeader = () => {
                     <Link to={'/management'}>프로젝트 관리</Link>
                     <Link to={'/recruitment'}>인원 모집</Link>
                 </div>
-                {isLogin ? (
+                {authState.isLoggedIn ? (
                     <div className='main-header-right-col main-header-logout-col'>
                         <Button 
                             text={'log out'}

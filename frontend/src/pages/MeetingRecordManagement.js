@@ -1,4 +1,4 @@
-import { createContext, useReducer, useRef } from 'react';
+import { createContext, useReducer, useRef, useState } from 'react';
 
 import MeetingRecordList from "../components/MeetingRecordList";
 import MeetingRecordListEditor from "../components/MeetingRecordListEditor";
@@ -12,10 +12,13 @@ const meetingRecordReducer = (state, action) => {
       return [...state, action.data];
     }
     case 'REMOVE': {
-      return state.filter((item) => item.id !== action.targetId);
+      return state.filter((item) => parseInt(item.id) !== parseInt(action.targetId));
     }
     case 'EDIT': {
-      return state.map((item) => item.id === action.data.id ? { ...action.data } : item);
+      return state.map((item) => parseInt(item.id) === parseInt(action.data.id) ? { ...action.data } : item);
+    }
+    case 'BOOKMARK': {
+      return state.map((item) => parseInt(item.id) === parseInt(action.data.id) ? { ...action.data } : item);
     }
     default: {
       return state;
@@ -25,222 +28,48 @@ const meetingRecordReducer = (state, action) => {
 
 export const MeetingRecordStateContext = createContext();
 export const MeetingRecordDispatchContext = createContext();
+export const SelectedMeetingRecordStateContext = createContext();
+export const SelectedMeetingRecordDispatchContext = createContext();
 
 const MeetingRecordManagement = () => {
   const [meetingRecordList, meetingRecordDispatch] = useReducer(meetingRecordReducer, [
     {
-      id: 0,
+      id: 1,
       writer: '홍서현',
       date: 1683162856400,
       title: '제목1',
-      content: '안녕1'
-    },
-    {
-      id: 1,
-      writer: '김도연',
-      date: 1683062857459,
-      title: '제목2',
-      content: '안녕2'
+      content: '안녕1',
+      bookMarked: false,
     },
     {
       id: 2,
-      writer: '이연제',
-      date: 1683292857459,
-      title: '제목3',
-      content: '안녕3'
+      writer: '김도연',
+      date: 1683062857459,
+      title: '제목2',
+      content: '안녕2',
+      bookMarked: false,
     },
     {
       id: 3,
-      writer: '조상욱',
-      date: 1682962857459,
-      title: '제목4',
-      content: '안녕4'
+      writer: '이연제',
+      date: 1683292857459,
+      title: '제목3',
+      content: '안녕3',
+      bookMarked: false,
     },
     {
       id: 4,
-      writer: '조상욱2',
-      date: 1682962857459,
-      title: '제목4',
-      content: '안녕4'
-    },
-    {
-      id: 5,
-      writer: '조상욱3',
-      date: 1682962857459,
-      title: '제목4',
-      content: '안녕4'
-    },
-    {
-      id: 6,
-      writer: '조상욱3',
-      date: 1682962857459,
-      title: '제목4',
-      content: '안녕4'
-    },
-    {
-      id: 7,
-      writer: '조상욱3',
-      date: 1682962857459,
-      title: '제목4',
-      content: '안녕4'
-    },
-    {
-      id: 8,
-      writer: '조상욱3',
-      date: 1682962857459,
-      title: '제목4',
-      content: '안녕4'
-    },
-    {
-      id: 9,
-      writer: '조상욱3',
-      date: 1682962857459,
-      title: '제목4',
-      content: '안녕4'
-    },
-    {
-      id: 10,
-      writer: '홍서현',
-      date: 1683162856400,
-      title: '제목1',
-      content: '안녕1'
-    },
-    {
-      id: 11,
-      writer: '김도연',
-      date: 1683062857459,
-      title: '제목2',
-      content: '안녕2'
-    },
-    {
-      id: 12,
-      writer: '이연제',
-      date: 1683292857459,
-      title: '제목3',
-      content: '안녕3'
-    },
-    {
-      id: 13,
       writer: '조상욱',
       date: 1682962857459,
       title: '제목4',
-      content: '안녕4'
-    },
-    {
-      id: 14,
-      writer: '조상욱2',
-      date: 1682962857459,
-      title: '제목4',
-      content: '안녕4'
-    },
-    {
-      id: 15,
-      writer: '조상욱3',
-      date: 1682962857459,
-      title: '제목4',
-      content: '안녕4'
-    },
-    {
-      id: 16,
-      writer: '조상욱3',
-      date: 1682962857459,
-      title: '제목4',
-      content: '안녕4'
-    },
-    {
-      id: 17,
-      writer: '조상욱3',
-      date: 1682962857459,
-      title: '제목4',
-      content: '안녕4'
-    },
-    {
-      id: 18,
-      writer: '조상욱3',
-      date: 1682962857459,
-      title: '제목4',
-      content: '안녕4'
-    },
-    {
-      id: 19,
-      writer: '조상욱3',
-      date: 1682962857459,
-      title: '제목4',
-      content: '안녕4'
-    },
-    {
-      id: 20,
-      writer: '홍서현',
-      date: 1683162856400,
-      title: '제목1',
-      content: '안녕1'
-    },
-    {
-      id: 21,
-      writer: '김도연',
-      date: 1683062857459,
-      title: '제목2',
-      content: '안녕2'
-    },
-    {
-      id: 22,
-      writer: '이연제',
-      date: 1683292857459,
-      title: '제목3',
-      content: '안녕3'
-    },
-    {
-      id: 23,
-      writer: '조상욱',
-      date: 1682962857459,
-      title: '제목4',
-      content: '안녕4'
-    },
-    {
-      id: 24,
-      writer: '조상욱2',
-      date: 1682962857459,
-      title: '제목4',
-      content: '안녕4'
-    },
-    {
-      id: 25,
-      writer: '조상욱3',
-      date: 1682962857459,
-      title: '제목4',
-      content: '안녕4'
-    },
-    {
-      id: 26,
-      writer: '조상욱3',
-      date: 1682962857459,
-      title: '제목4',
-      content: '안녕4'
-    },
-    {
-      id: 27,
-      writer: '조상욱3',
-      date: 1682962857459,
-      title: '제목4',
-      content: '안녕4'
-    },
-    {
-      id: 28,
-      writer: '조상욱3',
-      date: 1682962857459,
-      title: '제목4',
-      content: '안녕4'
-    },
-    {
-      id: 29,
-      writer: '조상욱3',
-      date: 1682962857459,
-      title: '제목4',
-      content: '안녕4'
+      content: '안녕4',
+      bookMarked: false,
     },
   ]);
 
-  const meetingRecordId = useRef(0);
+  let meetingRecordId = useRef(5);
+
+  const [selectedMeetingRecord, setSelectedMeetingRecord] = useState();
 
   // INITIALIZE 기능은 백엔드와 연결 시 추가 (useEffect 사용)
 
@@ -252,11 +81,12 @@ const MeetingRecordManagement = () => {
         writer,
         date: new Date(date).getTime(),
         title,
-        content
+        content,
+        bookMarked: false
       }
     });
 
-    meetingRecordId += 1;
+    meetingRecordId.current += 1;
   }
   
   const onRemoveMeetingRecord = (targetId) => {
@@ -266,7 +96,7 @@ const MeetingRecordManagement = () => {
     })
   }
   
-  const onEditMeetingRecord = (targetId, writer, date, title, content) => {
+  const onEditMeetingRecord = (targetId, writer, date, title, content, bookMarked) => {
     meetingRecordDispatch({
       type: 'EDIT',
       data: {
@@ -274,9 +104,24 @@ const MeetingRecordManagement = () => {
         writer,
         date: new Date(date).getTime(),
         title,
-        content
+        content,
+        bookMarked
       }
     })
+  }
+
+  const onBookMarkMeetingRecord = (targetId, writer, date, title, content, bookMarked) => {
+    meetingRecordDispatch({
+      type: 'BOOKMARK',
+      data: {
+        id: targetId,
+        writer,
+        date: new Date(date).getTime(),
+        title,
+        content,
+        bookMarked
+      }
+    });
   }
 
   return (
@@ -285,10 +130,15 @@ const MeetingRecordManagement = () => {
         <MeetingRecordDispatchContext.Provider value={{
           onCreateMeetingRecord,
           onEditMeetingRecord,
-          onRemoveMeetingRecord
-        }}> 
-          <MeetingRecordList />
-          <MeetingRecordListEditor />
+          onRemoveMeetingRecord,
+          onBookMarkMeetingRecord
+        }}>
+          <SelectedMeetingRecordStateContext.Provider value={selectedMeetingRecord}>
+            <SelectedMeetingRecordDispatchContext.Provider value={{ setSelectedMeetingRecord }}>
+              <MeetingRecordList />
+              <MeetingRecordListEditor />
+            </SelectedMeetingRecordDispatchContext.Provider>
+          </SelectedMeetingRecordStateContext.Provider>
         </MeetingRecordDispatchContext.Provider>
       </MeetingRecordStateContext.Provider>
     </div>
