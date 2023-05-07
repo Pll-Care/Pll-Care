@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import MeetingRecordListData from "./MeetingRecordData";
+import MeetingRecordData from "./MeetingRecordData";
 import { MeetingRecordStateContext } from "../pages/MeetingRecordManagement";
 import Pagination from "../utils/Pagination";
 
@@ -28,7 +28,7 @@ const BookMarkedMeetingRecordList = () => {
         <div className='meeting-record-book-marked-record-list'>
             <h1 className='meeting-record-heading'>북마크</h1>
             <div className='meeting-record-body'>
-                <MeetingRecordListData
+                <MeetingRecordData
                     sortedMeetingRecordList={getCurrentBookMarkedMeetingRecordList}
                     iseLoading={isLoading}
                 />

@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { MeetingRecordStateContext } from '../pages/MeetingRecordManagement';
 
-import MeetingRecordListData from './MeetingRecordData';
+import MeetingRecordData from './MeetingRecordData';
 import Pagination from '../utils/Pagination';
 import ControlMenu from '../utils/ControlMenu';
 
@@ -58,7 +58,7 @@ const AllMeetingRecordList = () => {
                 />
             </div>
             <div className='meeting-record-all-meeting-record-list-item-wrapper'>
-                <MeetingRecordListData
+                <MeetingRecordData
                     sortedMeetingRecordList={getCurrentSortedMeetingRecordList}
                     isloading={isLoading}
                 />

@@ -1,3 +1,5 @@
+import { Outlet } from "react-router-dom";
+
 // components
 import MainHeader from "../components/MainHeader";
 import MyProjectHeader from "../components/MyProjectHeader";
