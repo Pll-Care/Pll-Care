@@ -66,11 +66,11 @@ html {
 .login-modal-wrapper .login-modal {
   border-radius: 20px;
   text-align: center;
-  width: 480px;
-  height: 480px;
+  width: 380px;
+  height: 440px;
   position: absolute;
-  top: 50px;
-  left: calc(50% - 240px);
+  top: 80px;
+  left: calc(50% - 190px);
   background-color: white;
   margin-left: auto;
   margin-right: auto;
@@ -179,8 +179,13 @@ html {
 .main-header-right-col .main-header-user-profile-img {
   border: 2px solid #01e89e;
   border-radius: 35%;
+  background-color: #01e89e;
   width: 40px;
   height: 40px;
+  background-image: url("../assets/profile-default-img.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%, 100%;
 }
 .main-header-login-col Button {
   margin-left: auto;
@@ -357,7 +362,7 @@ html {
   margin-right: 10px;
 }
 .meeting-record-list-editor .meeting-record-content-editor .meeting-record-writer .control-menu {
-  border: 2px solid #01E89E;
+  border: 2px solid #01e89e;
   color: black;
 }
 .meeting-record-list-editor .meeting-record-content-editor .meeting-record-title {
@@ -418,6 +423,35 @@ html {
 }
 .meeting-record-book-marked-record-list .meeting-record-body .meeting-record-all-meeting-record-list-data {
   height: 80%;
+  /* MEETING RECORD ITEM */
+}
+.meeting-record-book-marked-record-list .meeting-record-body .meeting-record-all-meeting-record-list-data .meeting-record-item {
+  background-color: white;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  width: 370px;
+  height: 120px;
+  padding: 10px 20px;
+  color: #7A7A7A;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+.meeting-record-book-marked-record-list .meeting-record-body .meeting-record-all-meeting-record-list-data .meeting-record-item-date {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 18px;
+}
+.meeting-record-book-marked-record-list .meeting-record-body .meeting-record-all-meeting-record-list-data .meeting-record-item-title {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 25px;
+}
+.meeting-record-book-marked-record-list .meeting-record-body .meeting-record-all-meeting-record-list-data .meeting-record-item-writer {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 18px;
 }
 .meeting-record-all-meeting-record-list {
   height: 58%;
@@ -438,36 +472,6 @@ html {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-}
-
-/* MEETING RECORD ITEM */
-.meeting-record-item {
-  background-color: white;
-  margin-bottom: 10px;
-  border-radius: 20px;
-  width: 370px;
-  height: 120px;
-  padding: 10px 20px;
-  color: #7A7A7A;
-  cursor: pointer;
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: flex-start;
-}
-.meeting-record-item-date {
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 18px;
-}
-.meeting-record-item-title {
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
-}
-.meeting-record-item-writer {
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 18px;
 }
 
 .control-menu {

@@ -10,11 +10,11 @@
     .login-modal {
         border-radius: 20px;
         text-align: center;
-        width: 480px;
-        height: 480px;
+        width: 380px;
+        height: 440px;
         position: absolute;
-        top: 50px;
-        left: calc(50% - 240px);
+        top: 80px;
+        left: calc(50% - 190px);
         background-color: white;
         @include putCenter;
         @include displayFlex(column);
