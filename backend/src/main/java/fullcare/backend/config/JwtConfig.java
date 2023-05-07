@@ -42,7 +42,8 @@ public class JwtConfig {
         http
                 .securityMatcher("/api/**")
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/**").hasRole("USER"))
+                        .requestMatchers("/api/auth/**").hasRole("USER")
+                        .requestMatchers("api/all/**").permitAll())
 
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);

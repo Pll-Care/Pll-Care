@@ -28,18 +28,16 @@ public class OAuth2FailureHandler extends SimpleUrlAuthenticationFailureHandler 
         log.info("OAuth2FailureHandler.onAuthenticationFailure");
         log.info("OAuth2 Authentication Fail! :", exception);
 
+
+        final Map<String, Object> body = new HashMap<>();
+        body.put("status", HttpServletResponse.SC_BAD_REQUEST);
+        body.put("message", "OAuth2 로그인에 실패하였습니다.");
+        body.put("path", request.getServletPath());
+
+        final ObjectMapper mapper = new ObjectMapper();
+
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-
-//        final Map<String, Object> body = new HashMap<>();
-//        body.put("status", HttpServletResponse.SC_BAD_REQUEST);
-//        body.put("message", "OAuth2 로그인에 실패하였습니다.");
-//        body.put("path", request.getServletPath());
-//
-//        final ObjectMapper mapper = new ObjectMapper();
-//        mapper.writeValue(response.getOutputStream(), body);
-//
-//        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-//        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-
+        mapper.writeValue(response.getOutputStream(), body);
     }
 }

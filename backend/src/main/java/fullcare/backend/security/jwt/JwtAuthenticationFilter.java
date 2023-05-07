@@ -1,7 +1,6 @@
 package fullcare.backend.security.jwt;
 
 import fullcare.backend.security.jwt.exception.CustomJwtException;
-import fullcare.backend.security.jwt.exception.JwtErrorCode;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,19 +15,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 
-import static fullcare.backend.security.jwt.exception.JwtErrorCode.NOT_FOUND_TOKEN;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+import static fullcare.backend.security.jwt.exception.JwtErrorCode.*;
 
 @Slf4j
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    private static String MALFORMED_TOKEN = "잘못된 JWT 서명입니다.";
-    private static String EXPIRED_TOKEN="만료된 JWT 토큰입니다.";
-    private static String UNSUPPORTED_TOKEN="지원되지 않는 JWT 서명입니다.";
-    private static String ILLEGAL_TOKEN="JWT 토큰이 잘못되었습니다.";
-    private static String NOT_FOUND_USER= "등록되지 않은 사용자입니다.";
-    private static String NOT_FOUND_TOKEN= "토큰이 없습니다.";
     public static final String ACCESS_TOKEN_AUTHORIZATION_HEADER = "Authorization";
     public static final String REFRESH_TOKEN_AUTHORIZATION_HEADER = "Authorization_refresh";
 
@@ -48,7 +39,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if(refreshToken != null && jwtTokenService.validateJwtToken(refreshToken)){
                 Authentication authentication = jwtTokenService.getAuthentication(refreshToken);
 
-                String[] newTokens = jwtTokenService.reIssueTokens(refreshToken, authentication); // 리프레쉬 토큰이 DB와 일치 시 access, refresh 재발급
+                String[] newTokens = jwtTokenService.reIssueTokens(refreshToken, authentication); // * 리프레쉬 토큰이 DB와 일치 시 access, refresh 재발급
                 String requestURI = request.getRequestURI();
                 String successUrl = UriComponentsBuilder.fromUriString("http://localhost:3000/token")
                         .queryParam("access_token", newTokens[0])
@@ -64,7 +55,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } else{
                 //response.setStatus(401);
-                setRequestAttribute(request, NOT_FOUND_TOKEN);
+                setRequestAttribute(request, NOT_FOUND_TOKEN.getMessage());
             }
         }
         catch (CustomJwtException e){
@@ -78,18 +69,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private void setRequestAttribute(HttpServletRequest request, String message) {
-        if (message.equals(MALFORMED_TOKEN)) {
-            request.setAttribute("message", MALFORMED_TOKEN);
-        }else if (message.equals(EXPIRED_TOKEN)) {
-            request.setAttribute("message", EXPIRED_TOKEN);
-        }else if (message.equals(UNSUPPORTED_TOKEN)) {
-            request.setAttribute("message", UNSUPPORTED_TOKEN);
-        }else if (message.equals(ILLEGAL_TOKEN)) {
-            request.setAttribute("message", ILLEGAL_TOKEN);
-        }else if (message.equals(NOT_FOUND_USER)) {
-            request.setAttribute("message", NOT_FOUND_USER);
-        }else if (message.equals(NOT_FOUND_TOKEN)) {
-            request.setAttribute("message", NOT_FOUND_TOKEN);
+        if (message.equals(MALFORMED_TOKEN.getMessage())) {
+            request.setAttribute("message", MALFORMED_TOKEN.getMessage());
+        }else if (message.equals(EXPIRED_TOKEN.getMessage())) {
+            request.setAttribute("message", EXPIRED_TOKEN.getMessage());
+        }else if (message.equals(UNSUPPORTED_TOKEN.getMessage())) {
+            request.setAttribute("message", UNSUPPORTED_TOKEN.getMessage());
+        }else if (message.equals(ILLEGAL_TOKEN.getMessage())) {
+            request.setAttribute("message", ILLEGAL_TOKEN.getMessage());
+        }else if (message.equals(NOT_FOUND_USER.getMessage())) {
+            request.setAttribute("message", NOT_FOUND_USER.getMessage());
+        }else if (message.equals(NOT_FOUND_TOKEN.getMessage())) {
+            request.setAttribute("message", NOT_FOUND_TOKEN.getMessage());
         }
     }
 

@@ -38,6 +38,5 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         mapper.writeValue(response.getOutputStream(), body);
 
-
     }
 }

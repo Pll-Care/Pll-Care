@@ -6,6 +6,7 @@ import fullcare.backend.post.domain.Post;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.Set;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DynamicUpdate // ! 더티 체킹할 때 바뀐 필드만 변경
 @Table(name = "member")
 @Entity
 public class Member {
@@ -50,16 +52,16 @@ public class Member {
     //    @Column
 //    private String profileContent;
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE},orphanRemoval = true)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Post> posts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE},orphanRemoval = true)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<Likes> likes = new HashSet<>();
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE},orphanRemoval = true)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Evaluation> evaluations = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE},orphanRemoval = true)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
     private List<ProjectMember> projectMembers = new ArrayList<>();
 
 

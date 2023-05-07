@@ -17,9 +17,6 @@ public class CustomOAuth2User implements OAuth2User, UserDetails {
     private final String nickname;
     private final Collection<? extends GrantedAuthority> authorities;
     private Map<String, Object> attributes;
-
-    // ! private final Member member; 직접 Member를 넣어도 상관 없을듯
-
     public CustomOAuth2User(Long id, String nickname, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.nickname = nickname;
