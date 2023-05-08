@@ -19,6 +19,14 @@ const ProjectList = ({ projectList }) => {
   // 페이지가 변경될 때 호출되는 함수
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
+    // 클릭한 페이지로 스크롤 이동
+    const element = document.documentElement;
+    const options = {
+      behavior: "smooth",
+      block: "start",
+      inline: "nearest",
+    };
+    element.scrollIntoView(options);
   };
 
   // 전체 페이지의 개수를 계산

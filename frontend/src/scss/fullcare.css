@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@600&family=Open+Sans:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Open+Sans:wght@300&display=swap");
 *, *:before, *:after {
@@ -265,6 +266,31 @@ html {
 }
 .myproject-header-right-total-btn {
   margin-right: 30px;
+}
+
+.my-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* 배경을 반투명하게 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.my-modal-content {
+  border-radius: 40px;
+  background-color: white;
+  width: 600px;
+  height: 500px;
+  padding: 16px;
+}
+.my-modal-content .close-modal-btn {
+  font-size: 40px;
+  float: right;
+  cursor: pointer;
 }
 
 .button2 {
@@ -602,4 +628,30 @@ html {
   font-size: 18px;
   font-family: "Noto Sans KR", sans-serif;
   float: right;
+}
+
+.new-project-editor {
+  text-align: center;
+  padding: 20px;
+}
+.new-project-editor h2 {
+  margin-bottom: 30px;
+}
+.new-project-editor-head {
+  font-size: 25px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+}
+.new-project-editor-title input,
+.new-project-editor-title textarea, .new-project-editor-content input,
+.new-project-editor-content textarea {
+  margin-bottom: 30px;
+  padding: 15px;
+  width: 400px;
+}
+.new-project-editor-title textarea, .new-project-editor-content textarea {
+  height: 200px;
+}
+.new-project-editor-button Button {
+  text-align: center;
+  margin: 10px;
 }/*# sourceMappingURL=fullcare.css.map */

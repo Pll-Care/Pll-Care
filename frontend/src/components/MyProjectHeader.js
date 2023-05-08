@@ -1,7 +1,21 @@
+import React, { useRef, useState } from "react";
+import ReactDOM from "react-dom";
+
 // components
 import Button2 from "./Button2";
+import NewProjectEditor from "./NewProjectEditor";
 
-const MyProjectHeader = () => {
+const MyProjectHeader = (props) => {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const handleNewProjectButtonClick = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
   return (
     <header className="myproject-header">
       <div className="myproject-header-left">
@@ -11,7 +25,7 @@ const MyProjectHeader = () => {
         <div className="myprojcet-header-left-new-project">
           <Button2
             text={"새 프로젝트 생성"}
-            onClick={() => alert("새 프로젝트 버튼 클릭!")}
+            onClick={handleNewProjectButtonClick}
           />
         </div>
       </div>
@@ -24,6 +38,21 @@ const MyProjectHeader = () => {
           <Button2 text={"진행중"} onClick={() => alert("진행 중 버튼 클릭")} />
         </div>
       </div>
+      {modalVisible &&
+        ReactDOM.createPortal(
+          <div className="my-modal">
+            <div className="my-modal-content">
+              <span className="close-modal-btn" onClick={closeModal}>
+                &times;
+              </span>
+              <NewProjectEditor
+                onCreate={props.onCreate}
+                closeModal={closeModal}
+              />
+            </div>
+          </div>,
+          document.getElementById("root")
+        )}
     </header>
   );
 };

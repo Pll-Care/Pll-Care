@@ -1,0 +1,34 @@
+.new-project-editor {
+  text-align: center;
+  padding: 20px;
+
+  h2 {
+    margin-bottom: 30px;
+  }
+
+  &-head {
+    font-size: $link-font-size;
+    font-family: $link-font;
+  }
+
+  &-title,
+  &-content {
+    input,
+    textarea {
+      margin-bottom: 30px;
+      padding: 15px;
+      width: 400px;
+    }
+
+    textarea {
+      height: 200px;
+    }
+  }
+
+  &-button {
+    Button {
+      text-align: center;
+      margin: 10px;
+    }
+  }
+}
