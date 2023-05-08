@@ -30,7 +30,6 @@ const AllMeetingRecordList = () => {
     const indexOfLast = currentPage * recordDatasPerPage;
     const indexOfFirst = indexOfLast - recordDatasPerPage;
 
-    const initialState = useContext(InitialStateContext);
     const { setInitialState } = useContext(InitialStateDispatchContext);
 
     const getCurrentSortedMeetingRecordList = () => {

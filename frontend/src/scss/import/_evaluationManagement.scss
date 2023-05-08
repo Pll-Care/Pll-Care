@@ -1,0 +1,110 @@
+.evaluation-management {
+    height: 180vh;
+    width: 1150px;
+
+    &-ranking-wrapper {
+        height: 77vh;
+
+        .evaluation-management-show-evaluation-ranking {
+            border: $border;
+            border-radius: 30px;
+            margin-right: 10px;
+            height: 100%;
+            width: 65%;
+            font-family: $body-font;
+            font-size: $body-font-size;
+
+            @include displayFlex;
+        }
+
+        .evaluation-management-evaluation-ranking {
+            height: 100%;
+            width: 35%;
+            margin-left: 10px;
+
+            &-header {
+                font-family: $heading-font;
+                font-size: $sub-heading-font-size;
+                color: #01E89E;
+                padding: 10px;
+            }
+
+            &-body {
+                height: calc(100% - 45px);
+                background-color: #01E89E;
+                border-radius: 25px;
+                padding: 30px;
+                padding-bottom: 5px;
+                overflow-y: scroll;
+
+                .evaluation-management-evaluation-ranking-item {
+                    border-radius: 20px;
+                    padding: 10px;
+                    margin-bottom: 26px;
+                    background-color: white;
+                    height: 104px;
+
+                    .evaluation-management-left-col {
+                        figure {
+                            width: 40px;
+                            height: 40px;
+                            margin-right: 5px;
+
+                            @include backgroundImage('../assets/ranking-img.png')
+                        }
+
+                        .ranking {
+                            color: #01E89E;
+                            font-size: $sub-heading-font-size;
+                            font-family: $heading-font;
+                        }
+
+                        @include displayFlex(row, flex-start);
+                    }
+
+                    .evaluation-management-right-col {
+                        width: 49%;
+
+                        .name {
+                            font-size: $sub-heading-font-size;
+                            font-family: $heading-font;
+                            color: #01E89E;
+                            margin-bottom: 4px;
+                        }
+
+                        .score {
+                            font-size: $sub-body-font-size;
+                            font-family: $body-font;
+                            color: #7A7A7A;
+                        }
+
+                        @include displayFlex(column, center, flex-end);
+                    }
+
+                    @include displayFlex;
+                }
+
+                .evaluation-management-evaluation-ranking-item_1 {
+                    .evaluation-management-left-col {
+                        figure {
+                            @include backgroundImage('../assets/ranking-1-img.png', center, no-repeat, 85%, 85%);
+                        }
+                    }
+                }
+            }
+
+            &-body::-webkit-scrollbar {
+                display: none;
+            }         
+        }
+
+        @include displayFlex;
+    }
+
+    &-participant-wrapper {
+        border: 2px solid green;
+        height: 100vh;
+    }
+
+    @include putCenter;
+}

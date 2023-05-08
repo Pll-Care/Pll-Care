@@ -587,4 +587,112 @@ html {
   margin-top: 20px;
   font-size: 18px;
   float: right;
+}
+
+.evaluation-management {
+  height: 180vh;
+  width: 1150px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.evaluation-management-ranking-wrapper {
+  height: 77vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-ranking {
+  border: 2px solid #01e89e;
+  border-radius: 30px;
+  margin-right: 10px;
+  height: 100%;
+  width: 65%;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 18px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking {
+  height: 100%;
+  width: 35%;
+  margin-left: 10px;
+}
+.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-header {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 25px;
+  color: #01E89E;
+  padding: 10px;
+}
+.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body {
+  height: calc(100% - 45px);
+  background-color: #01E89E;
+  border-radius: 25px;
+  padding: 30px;
+  padding-bottom: 5px;
+  overflow-y: scroll;
+}
+.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item {
+  border-radius: 20px;
+  padding: 10px;
+  margin-bottom: 26px;
+  background-color: white;
+  height: 104px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-left-col {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-left-col figure {
+  width: 40px;
+  height: 40px;
+  margin-right: 5px;
+  background-image: url("../assets/ranking-img.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%, 100%;
+}
+.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-left-col .ranking {
+  color: #01E89E;
+  font-size: 25px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+}
+.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col {
+  width: 49%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col .name {
+  font-size: 25px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  color: #01E89E;
+  margin-bottom: 4px;
+}
+.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col .score {
+  font-size: 15px;
+  font-family: "Noto Sans KR", sans-serif;
+  color: #7A7A7A;
+}
+.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item_1 .evaluation-management-left-col figure {
+  background-image: url("../assets/ranking-1-img.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 85%, 85%;
+}
+.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body::-webkit-scrollbar {
+  display: none;
+}
+.evaluation-management-participant-wrapper {
+  border: 2px solid green;
+  height: 100vh;
 }/*# sourceMappingURL=fullcare.css.map */
