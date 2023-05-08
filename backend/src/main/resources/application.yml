@@ -1,15 +1,15 @@
 # Database
-spring:
-  datasource:
-    url: jdbc:h2:tcp://localhost/~/userdb
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
-  jpa:
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
+#spring:
+#  datasource:
+#    url: jdbc:h2:tcp://localhost/~/userdb
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
+#  jpa:
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
 
 # JPA
 spring.jpa.hibernate.ddl-auto: create

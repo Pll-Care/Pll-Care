@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { SelectedMeetingRecordDispatchContext } from "../pages/MeetingRecordManagement";
 import { flushSync } from "react-dom";
 
-const MeetingRecordListData = ({ sortedMeetingRecordList, isLoading }) => {
+const MeetingRecordData = ({ sortedMeetingRecordList, isLoading }) => {
     const { setSelectedMeetingRecord } = useContext(SelectedMeetingRecordDispatchContext);
 
     const handleClickMeetingRecord = (e) => {
@@ -22,7 +22,7 @@ const MeetingRecordListData = ({ sortedMeetingRecordList, isLoading }) => {
         <div className='meeting-record-all-meeting-record-list-data'>
             {sortedMeetingRecordList().map((record) => (
                 <div
-                    className='meeting-record-item'
+                    className='meeting-record-all-meeting-record-list-record-item meeting-record-item'
                     key={record.id}
                     onClick={handleClickMeetingRecord}
                     id={record.id}
@@ -46,4 +46,4 @@ const MeetingRecordListData = ({ sortedMeetingRecordList, isLoading }) => {
     )
 }
 
-export default MeetingRecordListData;
+export default MeetingRecordData;

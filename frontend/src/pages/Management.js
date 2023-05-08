@@ -1,3 +1,5 @@
+import { Outlet } from "react-router-dom";
+
 // components
 import { useRef, useState } from "react";
 import MainHeader from "../components/MainHeader";

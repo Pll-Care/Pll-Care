@@ -1,9 +1,10 @@
 import { useContext, useState } from 'react';
-import { MeetingRecordStateContext } from '../pages/MeetingRecordManagement';
+import { InitialStateContext, InitialStateDispatchContext, MeetingRecordStateContext } from '../pages/MeetingRecordManagement';
 
-import MeetingRecordListData from './MeetingRecordData';
+import MeetingRecordData from './MeetingRecordData';
 import Pagination from '../utils/Pagination';
 import ControlMenu from '../utils/ControlMenu';
+import Button from './Button';
 
 const filterOptionList = [
     {
@@ -29,6 +30,8 @@ const AllMeetingRecordList = () => {
     const indexOfLast = currentPage * recordDatasPerPage;
     const indexOfFirst = indexOfLast - recordDatasPerPage;
 
+    const { setInitialState } = useContext(InitialStateDispatchContext);
+
     const getCurrentSortedMeetingRecordList = () => {
         const compare = (a, b) => {
             if (sortType === 'latest') {
@@ -50,15 +53,23 @@ const AllMeetingRecordList = () => {
     return (
         <div className="meeting-record-all-meeting-record-list">
             <div className='meeting-record-all-meeting-record-list-header'>
-                <h1 className='meeting-record-heading'>전체</h1>
-                <ControlMenu
-                    value={sortType}
-                    onChange={setSortType}
-                    optionList={filterOptionList}
-                />
+                <div className='header-left-col'>
+                    <h1 className='meeting-record-heading'>전체</h1>
+                    <ControlMenu
+                        value={sortType}
+                        onChange={setSortType}
+                        optionList={filterOptionList}
+                    />
+                </div>
+                <div className='header-right-col'>
+                    <Button
+                        text={'새로운 회의록 작성하기'}
+                        onClick={() => { setInitialState(false) }}
+                    />
+                </div>
             </div>
             <div className='meeting-record-all-meeting-record-list-item-wrapper'>
-                <MeetingRecordListData
+                <MeetingRecordData
                     sortedMeetingRecordList={getCurrentSortedMeetingRecordList}
                     isloading={isLoading}
                 />

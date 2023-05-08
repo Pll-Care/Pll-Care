@@ -4,7 +4,7 @@ import Quill from 'quill';
 import ImageResize from 'quill-image-resize';
 import { useContext, useEffect, useState } from "react";
 import Button from "./Button";
-import { MeetingRecordDispatchContext } from "../pages/MeetingRecordManagement";
+import { InitialStateContext, InitialStateDispatchContext, MeetingRecordDispatchContext } from "../pages/MeetingRecordManagement";
 import ControlMenu from "../utils/ControlMenu";
 import { flushSync } from 'react-dom';
 Quill.register('modules/ImageResize', ImageResize);
@@ -32,10 +32,13 @@ const teamMembers = [
     }
 ]
 
-const MeetingRecordEditor = ({ isEdit, originData, initialState, setInitialState }) => {
+const MeetingRecordEditor = ({ isEdit, originData }) => {
     const [selectedMember, setSelectedMember] = useState('1');
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+
+    const { setInitialState }  = useContext(InitialStateDispatchContext);
+    const initialState = useContext(InitialStateContext);
 
     const handleInitialState = () => {
         setInitialState((prevState) => !prevState);

@@ -2,7 +2,7 @@
 .meeting-record {
     &-management {
         border: $border;
-        height: 185vh;
+        height: 200vh;
         width: 1150px;
         display: flex;
         justify-content: space-between;
@@ -142,36 +142,6 @@
 
             .meeting-record-all-meeting-record-list-data {
                 height: 80%;
-
-                /* MEETING RECORD ITEM */
-                .meeting-record-item {
-                    background-color: white;
-                    margin-bottom: 10px;
-                    border-radius: 20px;
-                    width: 370px;
-                    height: 120px;
-                    padding: 10px 20px;
-                    color: #7A7A7A;
-                    cursor: pointer;
-
-                    @include putCenter;
-                    @include displayFlex(column, space-around, flex-start);
-
-                    &-date {
-                        font-family: $body-font;
-                        font-size: $body-font-size;
-                    }
-
-                    &-title {
-                        font-family: $heading-font;
-                        font-size: $sub-heading-font-size;
-                    }
-
-                    &-writer {
-                        font-family: $body-font;
-                        font-size: $body-font-size;
-                    }
-                }
             }
 
             @include displayFlex(column);
@@ -180,9 +150,21 @@
 
     /* ALL MEETING RECORD LIST */
     &-all-meeting-record-list {
-        height: 58%;
+        height: 56%;
         &-header {
             width: 370px;
+            height: 100px;
+            flex-wrap: wrap;
+
+            .header-left-col {
+                width: 100%;
+
+                @include displayFlex(row, space-between);
+            }
+
+            .header-right-col {
+                margin-left: auto;
+            }
 
             @include displayFlex(row, space-between, center);
             @include putCenter;
@@ -190,9 +172,39 @@
 
         &-item-wrapper {
             padding-top: 20px;
-            height: 590px;
+            height: 615px;
             
             @include displayFlex(column, space-between);
+        }
+    }
+
+    /* MEETING RECORD ITEM */
+    &-item {
+        background-color: white;
+        margin-bottom: 10px;
+        border-radius: 20px;
+        width: 370px;
+        height: 120px;
+        padding: 10px 20px;
+        color: #7A7A7A;
+        cursor: pointer;
+
+        @include putCenter;
+        @include displayFlex(column, space-around, flex-start);
+
+        &-date {
+            font-family: $body-font;
+            font-size: $body-font-size;
+        }
+
+        &-title {
+            font-family: $heading-font;
+            font-size: $sub-heading-font-size;
+        }
+
+        &-writer {
+            font-family: $body-font;
+            font-size: $body-font-size;
         }
     }
 }
