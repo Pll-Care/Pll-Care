@@ -2,14 +2,17 @@ package fullcare.backend.projectmember.domain;
 
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity
+@Entity(name="project_member")
+@Table(name="project_member")
 public class ProjectMember {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,4 +29,10 @@ public class ProjectMember {
 
     @Enumerated(EnumType.STRING)
     private ProjectMemberRole role;
+    @Builder
+    public ProjectMember(Member member, Project project, ProjectMemberRole role) {
+        this.member = member;
+        this.project = project;
+        this.role = role;
+    }
 }
