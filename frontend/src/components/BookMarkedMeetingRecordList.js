@@ -30,7 +30,7 @@ const BookMarkedMeetingRecordList = () => {
             <div className='meeting-record-body'>
                 <MeetingRecordData
                     sortedMeetingRecordList={getCurrentBookMarkedMeetingRecordList}
-                    iseLoading={isLoading}
+                    isLoading={isLoading}
                 />
                 <Pagination
                     currentPage={currentPage}

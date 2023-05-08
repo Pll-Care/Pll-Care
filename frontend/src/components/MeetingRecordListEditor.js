@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { SelectedMeetingRecordStateContext } from '../pages/MeetingRecordManagement';
 
 import SelectedMeetingRecord from '../components/SelectedMeetingRecord';
@@ -6,7 +6,6 @@ import MeetingRecordEditor from './MeetingRecordEditor';
 
 const MeetingRecordListEditor = () => {
     const selectedMeetingRecord = useContext(SelectedMeetingRecordStateContext);
-    const [initialState, setInitialState] = useState(true);
 
     return (
         <div className="meeting-record-list-editor">
@@ -20,8 +19,6 @@ const MeetingRecordListEditor = () => {
                         <MeetingRecordEditor
                             isEdit={false}
                             originData={''}   
-                            initialState={initialState}
-                            setInitialState={setInitialState}    
                         />
                     </div>
                 )

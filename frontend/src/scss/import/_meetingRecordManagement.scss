@@ -2,7 +2,7 @@
 .meeting-record {
     &-management {
         border: $border;
-        height: 185vh;
+        height: 200vh;
         width: 1150px;
         display: flex;
         justify-content: space-between;
@@ -150,9 +150,21 @@
 
     /* ALL MEETING RECORD LIST */
     &-all-meeting-record-list {
-        height: 58%;
+        height: 56%;
         &-header {
             width: 370px;
+            height: 100px;
+            flex-wrap: wrap;
+
+            .header-left-col {
+                width: 100%;
+
+                @include displayFlex(row, space-between);
+            }
+
+            .header-right-col {
+                margin-left: auto;
+            }
 
             @include displayFlex(row, space-between, center);
             @include putCenter;
@@ -160,7 +172,7 @@
 
         &-item-wrapper {
             padding-top: 20px;
-            height: 590px;
+            height: 615px;
             
             @include displayFlex(column, space-between);
         }
