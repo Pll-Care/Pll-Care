@@ -4,12 +4,14 @@
 
   &-pagination {
     margin-top: 50px;
+    display: flex;
   }
 }
 
 // react-paginate css
 .pagination {
   width: 600px;
+  display: flex;
 
   @include putCenter;
 
@@ -17,6 +19,7 @@
     margin-right: 50px;
     font-size: $button-font-size;
     font-family: $link-font;
+    @include putCenter;
 
     &:hover {
       cursor: pointer;

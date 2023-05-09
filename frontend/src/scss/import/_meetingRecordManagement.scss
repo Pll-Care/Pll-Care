@@ -2,12 +2,13 @@
 .meeting-record {
     &-management {
         border: $border;
-        height: 200vh;
+        height: 200vh;  
         width: 1150px;
         display: flex;
         justify-content: space-between;
         border-radius: 35px;
         background-color: $background-color;
+
         .meeting-record-heading {
             color: white;
             font-family: $heading-font;

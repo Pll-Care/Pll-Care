@@ -18,7 +18,7 @@ const JWTToken = () => {
             localStorage.setItem('access_token', accessToken);
             localStorage.setItem('refresh_token', refreshToken);
 
-            window.opener.postMessage("login", "*");
+            window.opener?.postMessage("login", "*");
 
             window.close();
         }

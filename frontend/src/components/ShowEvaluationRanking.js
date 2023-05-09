@@ -13,7 +13,7 @@ const CustomTooltip = ({ active, payload, label }) => {
             justifyContent: 'center',
             alignItems: 'center'
           }}>
-          <p className="label">{`기여도 평점: ${payload[0].value}`}</p>
+            <p className="label">{`기여도 평점: ${payload[0].value}`}</p>
         </div>
       );
     }
@@ -24,18 +24,19 @@ const CustomTooltip = ({ active, payload, label }) => {
 const ShowEvaluationRanking = ({ getAverageEvaluationList }) => {    
     return (
         <div className='evaluation-management-show-evaluation-ranking'>
-            <BarChart
-                width={700}
-                height={430}
-                data={getAverageEvaluationList()}
-            >
-                <Tooltip
-                    content={<CustomTooltip />}
-                />
-                <XAxis dataKey="name" />
-                <YAxis dataKey="averageEvaluation" tickCount={4}/>
-                <Bar dataKey="averageEvaluation" fill="#01E89E" barSize={50} />
-            </BarChart>
+          <BarChart
+            className='chart'
+            width={700}
+            height={400}
+            data={getAverageEvaluationList()}
+          >
+            <Tooltip
+              content={<CustomTooltip />}
+            />
+            <XAxis dataKey="name" tickSize={2} />
+            <YAxis dataKey="averageEvaluation" domain={[0, 5]} tickCount={12} tickSize={10} />
+            <Bar dataKey="averageEvaluation" fill="#01E89E" barSize={50}/>
+          </BarChart>
         </div>
     )
 }

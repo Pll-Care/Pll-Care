@@ -534,7 +534,7 @@ html {
   display: none; /*for IE10,11*/
 }
 
-.pagination {
+.pagination-wrapper {
   width: 250px;
   margin-top: 8px;
   margin-bottom: 10px;
@@ -543,7 +543,7 @@ html {
   justify-content: space-between;
   align-items: center;
 }
-.pagination button {
+.pagination-wrapper button {
   border: none;
   cursor: pointer;
   font-family: "IBM Plex Sans KR", sans-serif;
@@ -551,20 +551,20 @@ html {
   color: white;
   background-color: transparent;
 }
-.pagination ul {
+.pagination-wrapper ul {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-.pagination ul .pagination-page-number-on {
+.pagination-wrapper ul .pagination-page-number-on {
   cursor: pointer;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 25px;
   color: white;
   padding: 5px;
 }
-.pagination ul .pagination-page-number {
+.pagination-wrapper ul .pagination-page-number {
   cursor: pointer;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
@@ -578,10 +578,12 @@ html {
 }
 .project-list-pagination {
   margin-top: 50px;
+  display: flex;
 }
 
 .pagination {
   width: 600px;
+  display: flex;
   margin-left: auto;
   margin-right: auto;
 }
@@ -589,6 +591,8 @@ html {
   margin-right: 50px;
   font-size: 20px;
   font-family: "IBM Plex Sans KR", sans-serif;
+  margin-left: auto;
+  margin-right: auto;
 }
 .pagination li:hover {
   cursor: pointer;
@@ -679,6 +683,8 @@ html {
 }
 .evaluation-management-ranking-wrapper {
   height: 77vh;
+  padding-bottom: 30px;
+  border-bottom: 2px solid #D9D9D9;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -692,6 +698,7 @@ html {
   width: 65%;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 18px;
+  overflow-x: hidden;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -775,6 +782,76 @@ html {
   display: none;
 }
 .evaluation-management-participant-wrapper {
-  border: 2px solid green;
   height: 100vh;
+  margin-top: 15px;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.evaluation-management-participant-wrapper h1 {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 25px;
+  color: #01E89E;
+  padding-top: 15px;
+}
+.evaluation-management-participant-wrapper .evaluation-management-participants {
+  flex-wrap: wrap;
+  padding-top: 20px;
+  margin-top: 10px;
+  padding-bottom: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant {
+  box-shadow: 0px 10px 20px 5px rgba(0, 0, 0, 0.07);
+  border-radius: 20px;
+  padding: 17px;
+  margin-bottom: 15px;
+  background-color: white;
+  height: 104px;
+  width: 48.8%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-left-col .evaluation-management-user-profile {
+  border: 2px solid #01e89e;
+  width: 70px;
+  height: 70px;
+  border-radius: 20px;
+  margin-top: auto;
+  margin-bottom: auto;
+  background-image: url("../assets/ranking-img.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%, 100%;
+}
+.evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col {
+  width: 100%;
+  height: 95%;
+  margin-left: 30px;
+  color: #7A7A7A;
+  font-size: 25px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col .evaluation-management-badges {
+  width: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col .evaluation-management-badges figure {
+  border: 2px solid #CCCCCC;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  background-color: #CCCCCC;
 }/*# sourceMappingURL=fullcare.css.map */
