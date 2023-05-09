@@ -1,6 +1,6 @@
 package fullcare.backend.project.controller;
 
-import fullcare.backend.project.domain.State;
+import fullcare.backend.global.State;
 import fullcare.backend.project.dto.ProjectCreateRequest;
 import fullcare.backend.project.dto.ProjectListResponse;
 import fullcare.backend.project.service.ProjectService;
@@ -55,7 +55,7 @@ public class ProjectController {
         Long memberId = Long.parseLong(user.getName());
 
         projectService.createProject(memberId, projectCreateRequest);
-        
+
         return new ResponseEntity(HttpStatus.OK);
     }
 }

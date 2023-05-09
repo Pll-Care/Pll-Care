@@ -20,8 +20,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 
 @Getter
 @RequiredArgsConstructor
@@ -52,7 +50,7 @@ public class MemoController {
 
     @PatchMapping
     public MemoDetailResponse update(@RequestBody MemoUpdateRequest memoUpdateRequest, @CurrentLoginUser CustomOAuth2User user) {
-        
+
         return memoService.updateMemo(memoUpdateRequest);
     }
 
@@ -63,8 +61,8 @@ public class MemoController {
 
     }
 
-    @GetMapping("/{projectId}")
-    public ResponseEntity<?> list(@PathVariable Long projectId, CustomPageRequest pageRequest, @CurrentLoginUser CustomOAuth2User user) {
+    @GetMapping("/list")
+    public ResponseEntity<?> list(@RequestParam Long projectId, CustomPageRequest pageRequest, @CurrentLoginUser CustomOAuth2User user) {
 
         PageRequest of = pageRequest.of();
         Pageable pageable = (Pageable) of;
@@ -80,10 +78,10 @@ public class MemoController {
         return memoService.findMemo(memoId);
     }
 
-    @GetMapping("{projectId}/recent")
-    public ResponseEntity<?> recent(@PathVariable Long projectId, @CurrentLoginUser CustomOAuth2User user) {
-        List<MemoListResponse> responses = memoService.findRecentMemos(projectId);
-
-        return new ResponseEntity<>(responses, HttpStatus.OK);
-    }
+//    @GetMapping("{projectId}/recent")
+//    public ResponseEntity<?> recent(@PathVariable Long projectId, @CurrentLoginUser CustomOAuth2User user) {
+//        List<MemoListResponse> responses = memoService.findRecentMemos(projectId);
+//
+//        return new ResponseEntity<>(responses, HttpStatus.OK);
+//    }
 }

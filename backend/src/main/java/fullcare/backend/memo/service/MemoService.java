@@ -36,6 +36,7 @@ public class MemoService {
         return new PageImpl<>(content, pageable, content.size());
     }
 
+
     public MemoDetailResponse createMemo(MemoCreateRequest request) {
         Project project = projectRepository.findById(request.getProjectId()).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트가 존재하지 않습니다."));
         Memo newMemo = Memo.createNewMemo()
@@ -64,9 +65,9 @@ public class MemoService {
     }
 
     public void deleteMemo(MemoDeleteRequest request) {
+
         // * 엔티티가 발견되지 않을 시, 예외 던지지 않음
         memoRepository.deleteById(request.getMemoId());
-
     }
 
     public MemoDetailResponse findMemo(Long memoId) {

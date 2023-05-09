@@ -1,9 +1,9 @@
 package fullcare.backend.post.domain;
 
+import fullcare.backend.global.State;
 import fullcare.backend.likes.domain.Likes;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
-import fullcare.backend.project.domain.State;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -23,11 +23,11 @@ public class Post {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "project_id",nullable = false)
+    @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name ="author_id", nullable = false)
+    @JoinColumn(name = "author_id", nullable = false)
     private Member member;
 
     @Column(name = "title", nullable = false)
@@ -43,7 +43,7 @@ public class Post {
     @Column(name = "modified_dt", nullable = false)
     private LocalDateTime modifiedDate;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Likes> likes = new HashSet<>();
 
     @Column(name = "likes_count", nullable = false)
@@ -56,11 +56,8 @@ public class Post {
     private State state;
 
     @Lob
-    @Column(name ="tech_stack", nullable = false)
+    @Column(name = "tech_stack", nullable = false)
     private String techStack;
-
-
-
 
 
 }

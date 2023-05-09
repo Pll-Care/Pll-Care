@@ -2,6 +2,7 @@ package fullcare.backend.project.domain;
 
 
 import fullcare.backend.evaluation.domain.Evaluation;
+import fullcare.backend.global.State;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.memo.domain.Memo;
 import fullcare.backend.post.domain.Post;
