@@ -63,8 +63,9 @@ public class ProjectController {
     public static class StateWrapper{
         List<State> states;
     }
-
+    // 프로젝트 생성 썸네일
     // 프로젝트 상태 변환 (진행 -> 완료)
     // 프로젝트 멤버 영입
-    //
+    // 프로젝트 삭제
+    // 프로젝트 업데이트
 }

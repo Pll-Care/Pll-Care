@@ -23,6 +23,6 @@ public class CustomPageRequest {
     }
 
     public PageRequest of() {
-        return PageRequest.of(page - 1, size, direction, "createDate");
+        return PageRequest.of(page - 1, size, direction, "createdDate");
     }
 }

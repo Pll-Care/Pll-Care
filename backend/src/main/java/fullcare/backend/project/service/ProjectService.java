@@ -51,10 +51,8 @@ public class ProjectService {
                 .endDate(request.getEndDate())
                 .build();
         
-        newProject.addMember(member, ProjectMemberRole.리더);
 
         newProject.addMember(member, new ProjectMemberRole(ProjectMemberRoleType.리더, ProjectMemberRoleType.미정));
-        newProject.updateState(State.진행중);
 
         projectRepository.save(newProject);
     }

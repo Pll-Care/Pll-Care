@@ -4,10 +4,12 @@ package fullcare.backend.projectmember.domain;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Embeddable
 @NoArgsConstructor
+@Getter
 public class ProjectMemberRole {
 
     @Enumerated(EnumType.STRING)

@@ -3,6 +3,7 @@ package fullcare.backend.project.domain;
 
 import fullcare.backend.evaluation.domain.Evaluation;
 import fullcare.backend.global.State;
+import fullcare.backend.global.entity.BaseEntity;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.memo.domain.Memo;
 import fullcare.backend.post.domain.Post;
@@ -24,7 +25,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name = "project")
 @Table(name = "project")
-public class Project{
+public class Project extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
