@@ -43,7 +43,7 @@ public class JwtConfig {
                 .securityMatcher("/api/**")
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").hasRole("USER")
-                        .requestMatchers("api/all/**", "/swagger-ui/**").permitAll())// 개발 단계동안 swagger 임시 허용
+                        .requestMatchers("api/all/**").permitAll())// 개발 단계동안 swagger 임시 허용
 
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);

@@ -14,6 +14,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,9 +60,9 @@ public class Project {
 
 
     @Column(name = "start_dt", nullable = false)
-    private LocalDateTime startDate;
+    private LocalDate startDate;
     @Column(name = "end_dt", nullable = false)
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
 
     public Project(ProjectCreateRequest request) {

@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,17 +31,16 @@ import java.util.List;
 @Tag(name="project", description = "프로젝트 API")
 public class ProjectController {
     private final ProjectService projectService;
-    @Operation(method = "get", summary = "프로젝트 리스트")
+    @Operation(method = "get", summary = "사용자 프로젝트 리스트")
     @ApiResponses(value = {
-            @ApiResponse(description = "프로젝트 리스트 조회 성공", responseCode = "200", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProjectListResponse.class))})
+            @ApiResponse(description = "사용자 프로젝트 리스트 조회 성공", responseCode = "200", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProjectListResponse.class))})
     })
     @GetMapping
-    public ResponseEntity<?> projectList(CustomPageRequest pageRequest, @RequestBody List<State> states, @CurrentLoginUser CustomOAuth2User user){
-        System.out.println("states.get(0) = " + states.get(0));
+    public ResponseEntity<?> projectList(CustomPageRequest pageRequest, @RequestBody StateWrapper stateWrapper, @CurrentLoginUser CustomOAuth2User user){
         Long memberId = Long.parseLong(user.getName());
         PageRequest of = pageRequest.of();
         Pageable pageable = (Pageable) of;
-        Page<ProjectListResponse> responses = projectService.findList(pageable, memberId, states);
+        Page<ProjectListResponse> responses = projectService.findMyProjectList(pageable, memberId, stateWrapper.getStates());
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
@@ -54,5 +54,9 @@ public class ProjectController {
         Long memberId = Long.parseLong(user.getName());
         projectService.createProject(request, memberId);
         return new ResponseEntity(HttpStatus.OK);
+    }
+    @Data
+    public static class StateWrapper{
+        List<State> states;
     }
 }

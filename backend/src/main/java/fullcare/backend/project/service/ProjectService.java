@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,8 +27,8 @@ import java.util.stream.Collectors;
 public class ProjectService {
     private final ProjectRepository projectRepository;
     private final MemberRepository memberRepository;
-
-    public Page<ProjectListResponse> findList(Pageable pageable, Long memberId, List<State> states){
+    @Transactional(readOnly = true)
+    public Page<ProjectListResponse> findMyProjectList(Pageable pageable, Long memberId, List<State> states){
 //        List<State> state = new ArrayList<>();
 //        state.add(State.예정);
 //        state.add(State.진행중);
