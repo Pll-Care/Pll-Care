@@ -1,8 +1,8 @@
 package fullcare.backend.schedule.domain;
 
 
+import fullcare.backend.global.State;
 import fullcare.backend.project.domain.Project;
-import fullcare.backend.project.domain.State;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -23,7 +23,7 @@ public abstract class Schedule {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "project_id",nullable = false)
+    @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
     // todo -> private ProjectMember author;

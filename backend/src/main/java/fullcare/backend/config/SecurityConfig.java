@@ -52,7 +52,7 @@ public class SecurityConfig {
                         .requestMatchers("/oauth2/authorization/**").permitAll()
                         // * 추후에 접근을 열어야하는 경로가 있다면 추가
                         .anyRequest().denyAll()) // ! 나머지 요청들은 접근 자체를 막아야함
-                        .exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)); // * 실제로 사용되지는 않지만, DefaultLoginPageGeneratingFilter를 없애줌
+                .exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)); // * 실제로 사용되지는 않지만, DefaultLoginPageGeneratingFilter를 없애줌
 //                        .accessDeniedHandler(new SimpleAccessDeniedHandler());
         // !별도의 AccessDeniedHandler 지정 안할 시, /error 로 재요청함/
 

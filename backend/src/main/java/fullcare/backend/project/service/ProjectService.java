@@ -1,13 +1,14 @@
 package fullcare.backend.project.service;
 
+import fullcare.backend.global.State;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.project.domain.Project;
-import fullcare.backend.project.domain.State;
 import fullcare.backend.project.dto.ProjectCreateRequest;
 import fullcare.backend.project.dto.ProjectListResponse;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
+import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -51,6 +52,10 @@ public class ProjectService {
                 .build();
         
         newProject.addMember(member, ProjectMemberRole.리더);
+
+        newProject.addMember(member, new ProjectMemberRole(ProjectMemberRoleType.리더, ProjectMemberRoleType.미정));
+        newProject.updateState(State.진행중);
+
         projectRepository.save(newProject);
     }
 }

@@ -27,8 +27,9 @@ public class ProjectMember {
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
-    @Enumerated(EnumType.STRING)
-    private ProjectMemberRole role;
+    @Embedded
+    private ProjectMemberRole role; // 리더 or 팀원
+
 
     @Builder(builderMethodName = "createNewProjectMember")
     public ProjectMember(Member member, Project project, ProjectMemberRole role) {
