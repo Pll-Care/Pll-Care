@@ -4,6 +4,8 @@
 
     &-ranking-wrapper {
         height: 77vh;
+        padding-bottom: 30px;
+        border-bottom: 2px solid #D9D9D9;
 
         .evaluation-management-show-evaluation-ranking {
             border: $border;
@@ -105,7 +107,6 @@
     &-participant-wrapper {
         height: 100vh;
         margin-top: 15px;
-        border-top: 2px solid #D9D9D9;
         width: 60%;
 
         h1 {
