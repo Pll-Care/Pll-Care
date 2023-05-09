@@ -16,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,28 +26,34 @@ import java.util.stream.Collectors;
 public class ProjectService {
     private final ProjectRepository projectRepository;
     private final MemberRepository memberRepository;
-    @Transactional(readOnly = true)
-    public Page<ProjectListResponse> findMyProjectList(Pageable pageable, Long memberId, List<State> states){
+
+    public Page<ProjectListResponse> findProjectList(Pageable pageable, Long memberId, List<State> states) {
 //        List<State> state = new ArrayList<>();
 //        state.add(State.예정);
 //        state.add(State.진행중);
         Page<Project> pageProject = projectRepository.findProjectList(pageable, memberId, states);
+
         List<ProjectListResponse> content = pageProject.stream().map(p -> ProjectListResponse.builder()
                 .projectId(p.getId())
                 .title(p.getTitle())
-                .content(p.getContent().length() > 20 ? p.getContent().substring(0,20)+"..." : p.getContent())
+                .content(p.getContent().length() > 20 ? p.getContent().substring(0, 20) + "..." : p.getContent())
                 .build()
         ).collect(Collectors.toList());
         return new PageImpl<>(content, pageable, content.size());
     }
 
-    public void createProject(ProjectCreateRequest request, Long memberId){
+    public void createProject(Long memberId, ProjectCreateRequest request) {
         Member member = memberRepository.findById(memberId).orElseThrow();
-        LocalDateTime createdDate = LocalDateTime.now();
-        Project project = new Project(request);
-        project.updateState(State.예정);
-        project.setCreateDate(createdDate);
-        project.addMember(member, ProjectMemberRole.리더);
-        projectRepository.save(project);
+
+        Project newProject = Project.createNewProject()
+                .title(request.getTitle())
+                .content(request.getContent())
+                .state(State.예정)
+                .build();
+
+        
+        newProject.addMember(member, ProjectMemberRole.리더);
+        newProject.updateState(State.진행중);
+        projectRepository.save(newProject);
     }
 }

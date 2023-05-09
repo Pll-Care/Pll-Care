@@ -49,6 +49,8 @@ public class Post {
     @Column(name = "likes_count", nullable = false)
     private long likesCount;
 
+    // todo -> private long viewCount;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false)
     private State state;
@@ -56,6 +58,9 @@ public class Post {
     @Lob
     @Column(name ="tech_stack", nullable = false)
     private String techStack;
+
+
+
 
 
 }
