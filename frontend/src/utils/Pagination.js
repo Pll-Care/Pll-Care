@@ -24,7 +24,7 @@ const Pagination = ({ currentPage, setCurrentPage, recordDatasPerPage, totalData
     }
 
     return (
-        <div className='pagination'>
+        <div className='pagination-wrapper'>
             {pageNumbers?.length ? (<button
                 onClick={handleDecreasePageIndex}
             >

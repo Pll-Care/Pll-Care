@@ -47,7 +47,7 @@ const EvaluationList = [
       punctuality: 4.5
     },
     averageEvaluation: 0
-  },
+  }
 ];
 
 const getAverageEvaluationList = () => {
