@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,19 +32,19 @@ import java.util.List;
 public class ProjectController {
     private final ProjectService projectService;
 
-    @Operation(method = "get", summary = "프로젝트 리스트")
+    @Operation(method = "get", summary = "사용자 프로젝트 리스트")
+
     @ApiResponses(value = {
-            @ApiResponse(description = "프로젝트 리스트 조회 성공", responseCode = "200", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProjectListResponse.class))})
+            @ApiResponse(description = "사용자 프로젝트 리스트 조회 성공", responseCode = "200", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProjectListResponse.class))})
     })
     @GetMapping
-    public ResponseEntity<?> list(CustomPageRequest pageRequest, @RequestBody List<State> states, @CurrentLoginUser CustomOAuth2User user) {
-        System.out.println("states.get(0) = " + states.get(0));
-        Long memberId = Long.parseLong(user.getName());
-        PageRequest of = pageRequest.of();
-        Pageable pageable = (Pageable) of;
-        Page<ProjectListResponse> responses = projectService.findProjectList(pageable, memberId, states);
-        return new ResponseEntity<>(responses, HttpStatus.OK);
-    }
+    public ResponseEntity<?> list(CustomPageRequest pageRequest, @RequestBody StateWrapper stateWrapper, @CurrentLoginUser CustomOAuth2User user){
+            Long memberId = Long.parseLong(user.getName());
+            PageRequest of = pageRequest.of();
+            Pageable pageable = (Pageable) of;
+            Page<ProjectListResponse> responses = projectService.findMyProjectList(pageable, memberId, stateWrapper.getStates());
+            return new ResponseEntity<>(responses, HttpStatus.OK);
+        }
 
 
     @Operation(method = "post", summary = "프로젝트 생성")
@@ -58,4 +59,12 @@ public class ProjectController {
         
         return new ResponseEntity(HttpStatus.OK);
     }
+    @Data
+    public static class StateWrapper{
+        List<State> states;
+    }
+
+    // 프로젝트 상태 변환 (진행 -> 완료)
+    // 프로젝트 멤버 영입
+    //
 }

@@ -26,11 +26,8 @@ import java.util.stream.Collectors;
 public class ProjectService {
     private final ProjectRepository projectRepository;
     private final MemberRepository memberRepository;
-
-    public Page<ProjectListResponse> findProjectList(Pageable pageable, Long memberId, List<State> states) {
-//        List<State> state = new ArrayList<>();
-//        state.add(State.예정);
-//        state.add(State.진행중);
+    @Transactional(readOnly = true)
+    public Page<ProjectListResponse> findMyProjectList(Pageable pageable, Long memberId, List<State> states) {
         Page<Project> pageProject = projectRepository.findProjectList(pageable, memberId, states);
 
         List<ProjectListResponse> content = pageProject.stream().map(p -> ProjectListResponse.builder()
@@ -48,12 +45,12 @@ public class ProjectService {
         Project newProject = Project.createNewProject()
                 .title(request.getTitle())
                 .content(request.getContent())
-                .state(State.예정)
+                .state(State.진행중)
+                .startDate(request.getStartDate())
+                .endDate(request.getEndDate())
                 .build();
-
         
         newProject.addMember(member, ProjectMemberRole.리더);
-        newProject.updateState(State.진행중);
         projectRepository.save(newProject);
     }
 }
