@@ -30,7 +30,7 @@ public class MemoService {
 
     public Page<MemoListResponse> findMemoList(Long projectId, Pageable pageable) {
         Page<Memo> pageMemo = memoRepository.findList(pageable, projectId);
-        List<MemoListResponse> content = pageMemo.stream().map(m -> MemoListResponse.entityToDto(m))
+        List<MemoListResponse> content = pageMemo.stream().map(MemoListResponse::entityToDto)
                 .collect(Collectors.toList());
 
         return new PageImpl<>(content, pageable, content.size());
@@ -43,7 +43,7 @@ public class MemoService {
                 .title(request.getTitle())
                 .content(request.getContent())
                 .build();
-        
+
         memoRepository.save(newMemo);
 
         // ? flush 해야하나?
@@ -76,9 +76,9 @@ public class MemoService {
     }
 
     public List<MemoListResponse> findRecentMemos(Long projectId) {
-
-        List<Memo> recentMemoList = memoRepository.findTop5ByProjectOrderByCreatedDateDesc(projectId);
-        return recentMemoList.stream().map(m -> MemoListResponse.entityToDto(m)).collect(Collectors.toList());
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트가 존재하지 않습니다."));
+        List<Memo> recentMemoList = memoRepository.findTop5ByProjectOrderByCreatedDateDesc(project);
+        return recentMemoList.stream().map(MemoListResponse::entityToDto).collect(Collectors.toList());
 
     }
 }

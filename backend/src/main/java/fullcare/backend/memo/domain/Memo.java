@@ -44,7 +44,7 @@ public class Memo {
         this.title = title;
         this.content = content;
 
-        project.getMemos().add(this); // ! 반영되는지 확인 필요 (무조건 확인해야함)
+        project.getMemos().add(this); // todo ! 반영되는지 확인 필요 (무조건 확인해야함)
     }
 
 //    public static Memo createNewMemo(Project project, String title, String content) {
