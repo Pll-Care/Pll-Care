@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React, { useEffect, useReducer } from "react";
 
-
 import "./scss/fullcare.css";
 
 import Home from "./pages/Home";
@@ -13,6 +12,7 @@ import OverviewManagement from "./pages/OverviewManagement";
 import MeetingRecordManagement from "./pages/MeetingRecordManagement";
 import ScheduleManagement from "./pages/ScheduleManagement";
 import EvaluationManagement from "./pages/EvaluationManagement";
+import ProjectDetailPage from "./pages/ProjectDetailPage";
 
 export const AuthStateContext = React.createContext();
 export const AuthDispatchContext = React.createContext();
@@ -75,14 +75,13 @@ function App() {
   };
 
   useEffect(() => {
-    const accessToken = localStorage.getItem('access_token');
-    const refreshToken = localStorage.getItem('refresh_token');
+    const accessToken = localStorage.getItem("access_token");
+    const refreshToken = localStorage.getItem("refresh_token");
 
     if (accessToken && refreshToken) {
       onLogin();
     }
   }, []);
-
 
   return (
     <AuthStateContext.Provider value={authState}>
@@ -99,9 +98,16 @@ function App() {
               <Route path={"/token"} element={<JWTToken />} />
               <Route path={"/profile"} element={<Profile />} />
               <Route path={"/recruitment"} element={<Recruitment />} />
-              <Route path={"/management"} element={<Management />}>
+              <Route path={"/management"} element={<Management />} />
+              <Route
+                path={"/management/:projectId"}
+                element={<ProjectDetailPage />}
+              >
                 <Route path={"overview"} element={<OverviewManagement />} />
-                <Route path={"meetingRecord"} element={<MeetingRecordManagement />} />
+                <Route
+                  path={"meetingRecord"}
+                  element={<MeetingRecordManagement />}
+                />
                 <Route path={"schedule"} element={<ScheduleManagement />} />
                 <Route path={"evaluation"} element={<EvaluationManagement />} />
               </Route>

@@ -36,7 +36,7 @@ const ProjectList = ({ projectList }) => {
     <div className="project-list">
       <div className="project-list-current">
         {currentData.map((it) => (
-          <ProjectItem key={it.id} {...it} />
+          <ProjectItem key={it.projectId} {...it} />
         ))}
       </div>
       <div className="project-list-pagination">

@@ -29,7 +29,6 @@ const NewProjectEditor = (props) => {
       return;
     }
 
-    console.log(state);
     onCreate(state.title, state.content);
     alert("작성 완료!");
     setState({

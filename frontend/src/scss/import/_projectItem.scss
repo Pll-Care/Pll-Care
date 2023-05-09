@@ -5,8 +5,8 @@
   padding: 30px;
   border: $border;
   border-radius: 35px;
-  display: flex;
 
+  @include displayFlex(row, center, center);
   @include putCenter;
 
   &-thumbnail {
