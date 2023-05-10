@@ -11,17 +11,14 @@ import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
 import fullcare.backend.schedule.domain.Schedule;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name = "project")
 @Table(name = "project")
@@ -69,7 +66,7 @@ public class Project extends BaseEntity {
 
 
     @Builder(builderMethodName = "createNewProject")
-    public Project(State state, String title, String content, LocalDate startDate,LocalDate endDate) {
+    public Project(State state, String title, String content, LocalDate startDate, LocalDate endDate) {
         this.title = title;
         this.content = content;
         this.state = state;

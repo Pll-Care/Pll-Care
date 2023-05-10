@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 public class ProjectService {
     private final ProjectRepository projectRepository;
     private final MemberRepository memberRepository;
+
     @Transactional(readOnly = true)
     public Page<ProjectListResponse> findMyProjectList(Pageable pageable, Long memberId, List<State> states) {
         Page<Project> pageProject = projectRepository.findProjectList(pageable, memberId, states);
@@ -50,10 +51,13 @@ public class ProjectService {
                 .startDate(request.getStartDate())
                 .endDate(request.getEndDate())
                 .build();
-        
+
 
         newProject.addMember(member, new ProjectMemberRole(ProjectMemberRoleType.리더, ProjectMemberRoleType.미정));
-
         projectRepository.save(newProject);
+    }
+
+    public void deleteProject(Long projectId) {
+        projectRepository.deleteById(projectId);
     }
 }

@@ -28,9 +28,9 @@ public class SecurityConfig {
 
     // * 정적 자원을 백엔드 서버에서 제공하는 경우 시큐리티 필터를 거치지 않게하기 위해 사용
     @Bean
-    public WebSecurityCustomizer webSecurityCustomizer(){
+    public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web
-                .ignoring().requestMatchers("/**", "/swagger-ui/**");
+                .ignoring().requestMatchers("/swagger-ui/**", "/v3/api-docs/**");
     }
 
 
