@@ -31,15 +31,15 @@ public class MemoBookmarkService {
         memoBookmarkRepository.save(memoBookmark);
     }
 
-    public void deleteBookmark(Long memberId, Long memoId) {
-        MemoBookmark memoBookmark = memoBookmarkRepository.findByMemberIdAndMemoId(memberId, memoId).orElseThrow();
-        memoBookmark.unmark();
-
-        memoBookmarkRepository.delete(memoBookmark);
-    }
-
-    public boolean isBookmarked(Long memberId, Long memoId) {
-        return memoBookmarkRepository.findByMemberIdAndMemoId(memberId, memoId).isPresent();
-    }
+//    public void deleteBookmark(Long memberId, Long memoId) {
+//        MemoBookmark memoBookmark = memoBookmarkRepository.findByMemberIdAndMemoId(memberId, memoId).orElseThrow();
+//        memoBookmark.unmark();
+//
+//        memoBookmarkRepository.delete(memoBookmark);
+//    }
+//
+//    public boolean isBookmarked(Long memberId, Long memoId) {
+//        return memoBookmarkRepository.findByMemberIdAndMemoId(memberId, memoId).isPresent();
+//    }
 
 }
