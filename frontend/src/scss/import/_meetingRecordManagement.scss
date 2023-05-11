@@ -58,6 +58,43 @@
 
         }
 
+        .meeting-record-not-edited-record {
+            height: 100%;
+            font-family: $body-font;
+            font-size: $body-font-size;
+            margin-bottom: 20px;
+            padding: 20px;
+
+            .meeting-record-body {
+                height: 96%;
+
+                h1 {
+                    margin-bottom: 20px;
+                }
+            }
+
+            .meeting-record-button-wrapper {
+                @include displayFlex(row, space-between);
+
+                .button-wrapper-right-col {
+                    width: 310px;
+
+                    @include displayFlex(row, space-between);
+                }
+            }
+        }
+
+        .meeting-record-edited-record {
+            font-family: $body-font;
+            font-size: $body-font-size;
+            height: 100%;
+            padding: 20px;
+
+            h1 {
+                margin-bottom: 20px;
+            }
+        }
+
         .meeting-record-content-editor {
             height: 100%;
 
@@ -107,14 +144,7 @@
             }
 
             .meeting-record-button-wrapper {
-                width: 100%;
-                @include displayFlex(row, space-between);
-
-                .meeting-record-button-right-col {
-                    width: 260px;
-
-                    @include displayFlex(row, space-between);
-                }
+                margin-right: 20px;
             }
 
             @include displayFlex(column, center, flex-end);
@@ -152,13 +182,19 @@
     /* ALL MEETING RECORD LIST */
     &-all-meeting-record-list {
         height: 56%;
-        &-header {
+        .meeting-record-list-header {
             width: 370px;
             height: 100px;
             flex-wrap: wrap;
 
             .header-left-col {
                 width: 100%;
+
+                .meeting-record-heading {
+                    height: 40px;
+                    margin-bottom: 20px;
+                    padding: 5px;
+                }
 
                 @include displayFlex(row, space-between);
             }
@@ -171,7 +207,7 @@
             @include putCenter;
         }
 
-        &-item-wrapper {
+        .record-list-item-wrapper {
             padding-top: 20px;
             height: 615px;
             

@@ -22,7 +22,7 @@ const MeetingRecordData = ({ sortedMeetingRecordList, isLoading }) => {
         <div className='meeting-record-all-meeting-record-list-data'>
             {sortedMeetingRecordList().map((record) => (
                 <div
-                    className='meeting-record-all-meeting-record-list-record-item meeting-record-item'
+                    className='meeting-record-item'
                     key={record.id}
                     onClick={handleClickMeetingRecord}
                     id={record.id}

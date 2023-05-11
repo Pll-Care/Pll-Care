@@ -4,7 +4,7 @@ import Quill from 'quill';
 import ImageResize from 'quill-image-resize';
 import { useContext, useEffect, useState } from "react";
 import Button from "./Button";
-import { InitialStateContext, InitialStateDispatchContext, MeetingRecordDispatchContext } from "../pages/MeetingRecordManagement";
+import { EditStateContext, EditStateDispatchContext, InitialStateContext, InitialStateDispatchContext, MeetingRecordDispatchContext } from "../pages/MeetingRecordManagement";
 import ControlMenu from "../utils/ControlMenu";
 import { flushSync } from 'react-dom';
 Quill.register('modules/ImageResize', ImageResize);
@@ -34,13 +34,23 @@ const teamMembers = [
 
 const MeetingRecordEditor = ({ isEdit, originData }) => {
     const [selectedMember, setSelectedMember] = useState('1');
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
+    const [writer, setWriter] = useState('');
+    const [date, setDate] = useState();
+
+    const { title } = useContext(EditStateContext);
+    const { setTitle } = useContext(EditStateDispatchContext);
+
+    const { content } = useContext(EditStateContext);
+    const { setContent } = useContext(EditStateDispatchContext);
 
     const { setInitialState }  = useContext(InitialStateDispatchContext);
     const initialState = useContext(InitialStateContext);
 
+    const { editState } = useContext(EditStateContext);
+    const { setEditState } = useContext(EditStateDispatchContext);
+
     const handleInitialState = () => {
+        setEditState('editing');
         setInitialState((prevState) => !prevState);
     }
 
@@ -48,16 +58,36 @@ const MeetingRecordEditor = ({ isEdit, originData }) => {
 
     const handleCreateMeetingRecord = () => {
         const writerObj = teamMembers.find((member) => parseInt(member.value) === parseInt(selectedMember));
+
+        const newDate = new Date().getTime();
+        
         flushSync(() => {
-            onCreateMeetingRecord(writerObj.name, new Date().getTime(), title, content);
+            onCreateMeetingRecord(writerObj.name, newDate, title, content);
         });
+
+        setWriter(writerObj.name);
+        setDate(newDate);
+        setTitle(title);
+        setContent(content);
+
+        setEditState('afterEdit');
     }
 
     const handleEditMeetingRecord = () => {
         const writerObj = teamMembers.find((member) => parseInt(member.value) === parseInt(selectedMember));
+
+        const newDate = new Date().getTime();
+
         flushSync(() => {
-            onEditMeetingRecord(originData.id, writerObj.name, new Date().getTime(), title, content, originData.bookMarked);
-        })
+            onEditMeetingRecord(originData.id, writerObj.name, newDate, title, content, originData.bookMarked);
+        });
+
+        setWriter(writerObj.name);
+        setDate(newDate);
+        setTitle(title);
+        setContent(content);
+
+        setEditState('afterEdit');
     }
 
     const handleRemoveMeetingRecord = () => {
@@ -78,12 +108,15 @@ const MeetingRecordEditor = ({ isEdit, originData }) => {
 
     useEffect(() => {
         if (isEdit) {
+            setEditState('beforeEdit');
             setContent(originData.content);
 
             const writerObj = teamMembers.find((member) => member.name === originData.writer);
             setSelectedMember(writerObj.id);
 
             setTitle(originData.title);
+            setWriter(originData.writer);
+            setDate(originData.date);
         }
     }, [isEdit, originData]);
 
@@ -98,75 +131,99 @@ const MeetingRecordEditor = ({ isEdit, originData }) => {
                             onClick={handleInitialState}
                         />
                     </div>
-                ) : (
-                        <div className='meeting-record-content-editor'>
-                            <div className='meeting-record-writer'>
-                                <h1>작성자: </h1>
-                                {isEdit ? (<ControlMenu
-                                    onChange={setSelectedMember}
-                                    value={selectedMember}
-                                    optionList={teamMembers}
-                                />) : (
-                                    <ControlMenu
-                                        onChange={setSelectedMember}
-                                        value={selectedMember}
-                                        optionList={teamMembers}
+                ) : ( editState === 'beforeEdit' ? (
+                        <div className='meeting-record-not-edited-record'>
+                            <div className='meeting-record-body'>
+                                <h1>제목: {title}</h1>
+                                <h1>작성자: {writer}</h1>
+                                <h1>작성일자: {new Date(date).toLocaleDateString()}</h1>
+                                <p dangerouslySetInnerHTML={{ __html: content }}></p>
+                            </div>
+                            <div className='meeting-record-button-wrapper'>
+                                <div className='button-wrapper-left-col'>
+                                    <Button
+                                        text={'북마크하기'}
+                                        onClick={handleBookMarkMeetingRecord}
                                     />
-                                )}
+                                </div>
+                                <div className='button-wrapper-right-col'>
+                                    <Button
+                                        text={'수정하러 가기'}
+                                        onClick={() => setEditState('editing')}
+                                    />
+                                    <Button
+                                        text={'삭제하기'}
+                                        onClick={handleRemoveMeetingRecord}
+                                    />
+                                </div>
                             </div>
-                            <div className='meeting-record-title'>
-                                <h1>제목: </h1>
-                                <input
-                                    value={title}
-                                    onChange={handleTitleChange}
-                                    type='text'
-                                    required
-                                    placeholder={'제목을 입력하세요'}
-                                />
-                            </div>
-                            <ReactQuill
-                                className='react-quill'
-                                value={content}
-                                onChange={setContent}
-                                modules={{
-                                    toolbar: [
-                                        [{ 'header': [1, 2, 3, false] }],
-                                        [{ 'size': ['small', false, 'large', 'huge'] }],
-                                        ['bold', 'italic', 'underline', 'strike'],
-                                        [{ 'align': [] }],
-                                        [{ 'color': [] }, { 'background': [] }],
-                                        ['link', 'image'],
-                                    ],
-                                    ImageResize: {
-                                        parchment: Quill.import('parchment')
-                                    }
-                                }} 
-                            />
-                            {!isEdit? (<Button
-                                text={'작성 완료하기'}
-                                onClick={handleCreateMeetingRecord}
-                            />) : (
-                                    <div className='meeting-record-button-wrapper'>
-                                        <div className='meeting-record-button-left-col'>
-                                            <Button
-                                                text={'북마크하기'}
-                                                onClick={handleBookMarkMeetingRecord}
+                        </div>
+                    ) : (
+                            editState === 'editing' ? (
+                                <div className='meeting-record-content-editor'>
+                                    <div className='meeting-record-writer'>
+                                        <h1>작성자: </h1>
+                                        {isEdit ? (<ControlMenu
+                                            onChange={setSelectedMember}
+                                            value={selectedMember}
+                                            optionList={teamMembers}
+                                        />) : (
+                                            <ControlMenu
+                                                onChange={setSelectedMember}
+                                                value={selectedMember}
+                                                optionList={teamMembers}
                                             />
-                                        </div>
-                                        <div className='meeting-record-button-right-col'>
+                                        )}
+                                    </div>
+                                    <div className='meeting-record-title'>
+                                        <h1>제목: </h1>
+                                        <input
+                                            value={title}
+                                            onChange={handleTitleChange}
+                                            type='text'
+                                            required
+                                            placeholder={'제목을 입력하세요'}
+                                        />
+                                    </div>
+                                    <ReactQuill
+                                        className='react-quill'
+                                        value={content}
+                                        onChange={setContent}
+                                        modules={{
+                                            toolbar: [
+                                                [{ 'header': [1, 2, 3, false] }],
+                                                [{ 'size': ['small', false, 'large', 'huge'] }],
+                                                ['bold', 'italic', 'underline', 'strike'],
+                                                [{ 'align': [] }],
+                                                [{ 'color': [] }, { 'background': [] }],
+                                                ['link', 'image'],
+                                            ],
+                                            ImageResize: {
+                                                parchment: Quill.import('parchment')
+                                            }
+                                        }} 
+                                    />
+                                    {!isEdit? (<Button
+                                        text={'작성 완료하기'}
+                                        onClick={handleCreateMeetingRecord}
+                                    />) : (
+                                        <div className='meeting-record-button-wrapper'>
                                             <Button
                                                 text={'수정하기'}
                                                 onClick={handleEditMeetingRecord}
                                             />
-                                            <Button
-                                                text={'삭제하기'}
-                                                onClick={handleRemoveMeetingRecord}
-                                            />
-                                    </div>
-                                </div>
-                            )}
-                    </div>
-                )
+                                        </div>
+                                    )}
+                            </div>
+                            ) : (
+                                <div className='meeting-record-edited-record'>
+                                    <h1>제목: {title}</h1>
+                                    <h1>작성자: {writer}</h1>
+                                    <h1>작성일자: {new Date(date).toLocaleDateString()}</h1>
+                                    <p dangerouslySetInnerHTML={{ __html: content }}></p>
+                                </div>       
+                        )
+                ))
             }
         </div>
     )

@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { InitialStateContext, InitialStateDispatchContext, MeetingRecordStateContext } from '../pages/MeetingRecordManagement';
+import { EditStateDispatchContext, InitialStateDispatchContext, MeetingRecordStateContext } from '../pages/MeetingRecordManagement';
 
 import MeetingRecordData from './MeetingRecordData';
 import Pagination from '../utils/Pagination';
@@ -31,6 +31,11 @@ const AllMeetingRecordList = () => {
     const indexOfFirst = indexOfLast - recordDatasPerPage;
 
     const { setInitialState } = useContext(InitialStateDispatchContext);
+    const { setEditState } = useContext(EditStateDispatchContext);
+
+    const { setTitle } = useContext(EditStateDispatchContext);
+
+    const { setContent } = useContext(EditStateDispatchContext);
 
     const getCurrentSortedMeetingRecordList = () => {
         const compare = (a, b) => {
@@ -52,7 +57,7 @@ const AllMeetingRecordList = () => {
 
     return (
         <div className="meeting-record-all-meeting-record-list">
-            <div className='meeting-record-all-meeting-record-list-header'>
+            <div className='meeting-record-list-header'>
                 <div className='header-left-col'>
                     <h1 className='meeting-record-heading'>전체</h1>
                     <ControlMenu
@@ -64,11 +69,11 @@ const AllMeetingRecordList = () => {
                 <div className='header-right-col'>
                     <Button
                         text={'새로운 회의록 작성하기'}
-                        onClick={() => { setInitialState(false) }}
+                        onClick={() => { setEditState('editing'); setInitialState(false); setContent(''); setTitle(''); }}
                     />
                 </div>
             </div>
-            <div className='meeting-record-all-meeting-record-list-item-wrapper'>
+            <div className='record-list-item-wrapper'>
                 <MeetingRecordData
                     sortedMeetingRecordList={getCurrentSortedMeetingRecordList}
                     isloading={isLoading}

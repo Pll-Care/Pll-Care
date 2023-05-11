@@ -32,6 +32,8 @@ export const SelectedMeetingRecordStateContext = createContext();
 export const SelectedMeetingRecordDispatchContext = createContext();
 export const InitialStateContext = createContext();
 export const InitialStateDispatchContext = createContext();
+export const EditStateContext = createContext();
+export const EditStateDispatchContext = createContext();
 
 const MeetingRecordManagement = () => {
   const [meetingRecordList, meetingRecordDispatch] = useReducer(meetingRecordReducer, [
@@ -74,6 +76,12 @@ const MeetingRecordManagement = () => {
   const [selectedMeetingRecord, setSelectedMeetingRecord] = useState();
 
   const [initialState, setInitialState] = useState(true);
+
+  const [editState, setEditState] = useState('beforeEdit');
+
+  const [title, setTitle] = useState('');
+
+  const [content, setContent] = useState('');
 
   // INITIALIZE 기능은 백엔드와 연결 시 추가 (useEffect 사용)
 
@@ -141,8 +149,12 @@ const MeetingRecordManagement = () => {
             <SelectedMeetingRecordDispatchContext.Provider value={{ setSelectedMeetingRecord }}>
               <InitialStateContext.Provider value={initialState}>
                 <InitialStateDispatchContext.Provider value={{ setInitialState }}>
-                  <MeetingRecordList />
-                  <MeetingRecordListEditor />
+                  <EditStateContext.Provider value={{ editState, title, content }}>
+                    <EditStateDispatchContext.Provider value={{ setEditState, setTitle, setContent }}>
+                      <MeetingRecordList />
+                      <MeetingRecordListEditor />
+                    </EditStateDispatchContext.Provider>
+                  </EditStateContext.Provider>
                 </InitialStateDispatchContext.Provider>
               </InitialStateContext.Provider>
             </SelectedMeetingRecordDispatchContext.Provider>
