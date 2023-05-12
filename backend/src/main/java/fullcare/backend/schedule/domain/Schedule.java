@@ -74,4 +74,18 @@ public abstract class Schedule {
             scheduleMembers.add(sm);
         });
     }
+
+
+
+    public void update(State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate) {
+        this.state = state;
+        this.title = title;
+        this.content = content;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    public void updateState(State state){
+        this.state = state;
+    }
 }
