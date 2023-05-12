@@ -22,7 +22,7 @@ public class CustomPageRequest {
         this.direction = direction;
     }
 
-    public PageRequest of() {
-        return PageRequest.of(page - 1, size, direction, "createdDate");
+    public PageRequest of(String... properties) {
+        return PageRequest.of(page - 1, size, direction, properties);
     }
 }

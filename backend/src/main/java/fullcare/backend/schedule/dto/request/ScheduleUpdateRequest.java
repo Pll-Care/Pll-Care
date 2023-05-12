@@ -15,8 +15,7 @@ import java.util.List;
 public class ScheduleUpdateRequest {
     @NotNull
     private Long projectId;
-    @NotNull
-    private Long scheduleId;
+
     @NotNull
     private State state;
     @NotNull

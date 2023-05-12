@@ -84,13 +84,13 @@ public class MemoService {
         return new PageImpl<>(content, pageable, content.size());
     }
 
-    public Page<MemoListResponse> findBookmarkMemoList(Long projectId, Long memberId, Pageable pageable) {
-        Page<Memo> bookmarkList = memoRepository.findBookmarkList(pageable, projectId, memberId);
-        List<MemoListResponse> content = bookmarkList.stream().map(MemoListResponse::entityToDto)
-                .collect(Collectors.toList());
-
-        return new PageImpl<>(content, pageable, content.size());
-    }
+//    public Page<MemoListResponse> findBookmarkMemoList(Long projectId, Long memberId, Pageable pageable) {
+//        Page<Memo> bookmarkList = memoRepository.findBookmarkList(pageable, projectId, memberId);
+//        List<MemoListResponse> content = bookmarkList.stream().map(MemoListResponse::entityToDto)
+//                .collect(Collectors.toList());
+//
+//        return new PageImpl<>(content, pageable, content.size());
+//    }
 
     public void bookmarkMemo(Long memberId, Long memoId) {
         // 페치조인으로 memobookmark 갖고올 때 memo까지 갖고와서 memo만 뽑아서 Dto로 바꾸고, 조작하면 될거같다.

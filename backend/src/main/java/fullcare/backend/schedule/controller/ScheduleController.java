@@ -1,16 +1,16 @@
 package fullcare.backend.schedule.controller;
 
+import fullcare.backend.global.exception.InvalidAccessException;
+import fullcare.backend.member.domain.Member;
+import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.schedule.ScheduleCategory;
 import fullcare.backend.schedule.dto.request.*;
-import fullcare.backend.schedule.dto.response.CustomResponseDto;
-import fullcare.backend.schedule.dto.response.ScheduleListResponse;
-import fullcare.backend.schedule.dto.response.ScheduleMonthResponse;
-import fullcare.backend.schedule.dto.response.ScheduleServingResponse;
+import fullcare.backend.schedule.dto.response.*;
 import fullcare.backend.schedule.service.MeetingService;
 import fullcare.backend.schedule.service.MilestoneService;
 import fullcare.backend.schedule.service.ScheduleService;
 import fullcare.backend.security.jwt.CurrentLoginUser;
-import fullcare.backend.security.oauth2.domain.CustomOAuth2User;
+import fullcare.backend.util.CustomPageRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -18,31 +18,32 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RequestMapping("/api/auth/schedule")
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "schedule", description = "일정 API")
+@Tag(name = "일정", description = "일정 관련 API")
 public class ScheduleController {
     private final MeetingService meetingService;
     private final MilestoneService milestoneService;
     private final ScheduleService scheduleService;
-    @Operation(method = "get", summary = "프로젝트 멤버")
+    private final ProjectMemberService projectMemberService;
+    @Operation(method = "get", summary = "프로젝트 멤버 조회")
     @ApiResponses(value = {
             @ApiResponse(description = "프로젝트 멤버 조회 성공", responseCode = "200", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ScheduleServingResponse.class))})
     })
     @GetMapping
-    public ResponseEntity<?> serving(@RequestParam(name="project_id") Long projectId){
-        List<ScheduleServingResponse> response = scheduleService.servingMember(projectId);
+    public ResponseEntity<?> projectMemberList(@RequestParam(name="project_id") Long projectId){
+        List<ScheduleServingResponse> response = scheduleService.findProjectMembers(projectId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -51,11 +52,15 @@ public class ScheduleController {
             @ApiResponse(description = "일정 생성 성공", responseCode = "200", content = {@Content(mediaType = "application/json")})
     })
     @PostMapping
-    public ResponseEntity create(@Valid @RequestBody ScheduleCreateRequest scheduleCreateRequest, @CurrentLoginUser CustomOAuth2User user){
+    public ResponseEntity create(@Valid @RequestBody ScheduleCreateRequest scheduleCreateRequest, @CurrentLoginUser  Member member){
+        if (!(projectMemberService.validateProjectMember(scheduleCreateRequest.getProjectId(), member.getId()))) {
+            throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
+        }
+
         if(scheduleCreateRequest.getCategory().equals(ScheduleCategory.개발일정)){
-            milestoneService.createMilestone(scheduleCreateRequest, user.getUsername());
+            milestoneService.createMilestone(scheduleCreateRequest, member.getName());
         }else if(scheduleCreateRequest.getCategory().equals(ScheduleCategory.미팅)){
-            meetingService.createMeeting(scheduleCreateRequest, user.getUsername());
+            meetingService.createMeeting(scheduleCreateRequest, member.getName());
         }else{
             throw new RuntimeException("없는 카테고리입니다.");
         }
@@ -65,10 +70,12 @@ public class ScheduleController {
     @ApiResponses(value = {
             @ApiResponse(description = "일정 변경 성공", responseCode = "200", content = {@Content(mediaType = "application/json")})
     })
-    @PutMapping
-    public ResponseEntity update(@Valid @RequestBody ScheduleUpdateRequest scheduleUpdateRequest, @CurrentLoginUser CustomOAuth2User user){
-        Long memberId = Long.parseLong(user.getName());
-        if (!scheduleService.updateSchedule(scheduleUpdateRequest, memberId)){
+    @PutMapping("/{scheduleId}")
+    public ResponseEntity update(@PathVariable Long scheduleId, @Valid @RequestBody ScheduleUpdateRequest scheduleUpdateRequest, @CurrentLoginUser Member member){
+        if (!(projectMemberService.validateProjectMember(scheduleUpdateRequest.getProjectId(), member.getId()))) {
+            throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
+        }
+        if (!scheduleService.updateSchedule(scheduleUpdateRequest, scheduleId)){
             throw new RuntimeException("해당 사용자는 일정을 변경할 수 없습니다.");
         }
         return new ResponseEntity(HttpStatus.OK);
@@ -77,55 +84,92 @@ public class ScheduleController {
     @ApiResponses(value = {
             @ApiResponse(description = "일정 삭제 성공", responseCode = "200", content = {@Content(mediaType = "application/json")})
     })
-    @DeleteMapping
-    public ResponseEntity delete(@Valid @RequestBody ScheduleDeleteRequest scheduleDeleteRequest, @CurrentLoginUser CustomOAuth2User user){
-        Long memberId = Long.parseLong(user.getName());
-        if (!scheduleService.deleteSchedule(scheduleDeleteRequest, memberId)){
-            throw new RuntimeException("해당 사용자는 일정을 변경할 수 없습니다.");
+    @DeleteMapping("/{scheduleId}")
+    public ResponseEntity delete(@PathVariable Long scheduleId, @Valid @RequestBody ScheduleDeleteRequest scheduleDeleteRequest, @CurrentLoginUser Member member){
+        if (!(projectMemberService.validateProjectMember(scheduleDeleteRequest.getProjectId(), member.getId()))) {
+            throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
         }
+        scheduleService.deleteSchedule(scheduleId);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @Operation(method = "get", summary = "일정 리스트 조회")
+    @Operation(method = "get", summary = "전체 일정 리스트 조회")
     @ApiResponses(value = {
-            @ApiResponse(description = "일정 리스트 조회 성공", responseCode = "200", content = {@Content(mediaType = "application/json",  schema = @Schema(implementation = CustomResponseDto.class))})
+            @ApiResponse(description = "전체 일정 리스트 조회 성공", responseCode = "200", content = {@Content(mediaType = "application/json",  schema = @Schema(implementation = CustomResponseDto.class))})
     })
     @GetMapping("/list")
     public ResponseEntity<?> list(@RequestParam(name="project_id") Long projectId){
         CustomResponseDto<ScheduleListResponse> response = scheduleService.findScheduleList(projectId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @Operation(method = "get", summary = "일정 월별 리스트 조회")
+
+
+    @Operation(method = "get", summary = "달력 조회")
     @ApiResponses(value = {
-            @ApiResponse(description = "일정 월별 리스트 조회 성공", responseCode = "200", content = {@Content(mediaType = "application/json",  schema = @Schema(implementation = ScheduleMonthResponse.class))})
+            @ApiResponse(description = "달력 조회 성공", responseCode = "200", content = {@Content(mediaType = "application/json",  schema = @Schema(implementation = ScheduleCalenderMonthResponse.class))})
     })
-    @GetMapping("/monthList")
-    public ResponseEntity<?> monthList(@Valid @RequestBody ScheduleMonthRequest scheduleMonthRequest){
-        ScheduleMonthResponse response = scheduleService.findScheduleMonthList(scheduleMonthRequest);
+    @GetMapping("/calenderList")
+    public ResponseEntity<?> calenderViewList(@Valid @RequestBody ScheduleMonthRequest scheduleMonthRequest, @CurrentLoginUser Member member){
+        if (!(projectMemberService.validateProjectMember(scheduleMonthRequest.getProjectId(), member.getId()))) {
+            throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
+        }
+        ScheduleCalenderMonthResponse response = scheduleService.findScheduleCalenderList(scheduleMonthRequest);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-
-
+    @Operation(method = "get", summary = "월별 리스트 조회")
+    @ApiResponses(value = {
+            @ApiResponse(description = "월별 리스트 조회 성공", responseCode = "200", content = {@Content(mediaType = "application/json",  schema = @Schema(implementation = ScheduleMonthResponse.class))})
+    })
+    @GetMapping("/monthList")
+    public ResponseEntity<?> calenderList(CustomPageRequest pageRequest, @Valid @RequestBody ScheduleMonthRequest scheduleMonthRequest, @CurrentLoginUser Member member){
+        PageRequest of = pageRequest.of("startDate");
+        Pageable pageable = (Pageable) of;
+        if (!(projectMemberService.validateProjectMember(scheduleMonthRequest.getProjectId(), member.getId()))) {
+            throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
+        }
+        Page<ScheduleMonthResponse> response = scheduleService.findScheduleMonthList(pageable, scheduleMonthRequest, member);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+//    @Operation(method = "get", summary = "일정 특정인 리스트 조회")
+//    @ApiResponses(value = {
+//            @ApiResponse(description = "일정 특정인 리스트 조회 성공", responseCode = "200", content = {@Content(mediaType = "application/json",  schema = @Schema(implementation = ScheduleCalenderMonthResponse.class))})
+//    })
+//    @GetMapping("/monthList")
+//    public ResponseEntity<?> monthList(CustomPageRequest pageRequest, @Valid @RequestBody ScheduleMonthListRequest scheduleMonthListRequest, @CurrentLoginUser Member member){
+//        PageRequest of = pageRequest.of("startDate");
+//        Pageable pageable = (Pageable) of;
+//        if (!(projectMemberService.validateProjectMember(scheduleMonthListRequest.getProjectId(), member.getId()))) {
+//            throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
+//        }
+//        Page<ScheduleMonthResponse> response = scheduleService.findScheduleMemberMonthList(pageable, scheduleMonthListRequest);
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
 
     @Operation(method = "post", summary = "일정 상태 변경")
     @ApiResponses(value = {
             @ApiResponse(description = "일정 상태 변경 성공", responseCode = "200", content = {@Content(mediaType = "application/json")})
     })
-    @PostMapping("/state")
-    public ResponseEntity updateState(@Valid @RequestBody ScheduleStateUpdateRequest scheduleStateUpdateRequest, @CurrentLoginUser CustomOAuth2User user){
-        Long memberId = Long.parseLong(user.getName());
-        if (!scheduleService.updateState(scheduleStateUpdateRequest, memberId)){
-            throw new RuntimeException("해당 사용자는 일정 상태 변경을 할 수 없습니다.");
+    @PostMapping("/{scheduleId}/state")
+    public ResponseEntity updateState( @PathVariable Long scheduleId,@Valid @RequestBody ScheduleStateUpdateRequest scheduleStateUpdateRequest, @CurrentLoginUser Member member){
+        if (!(projectMemberService.validateProjectMember(scheduleStateUpdateRequest.getProjectId(), member.getId()))) {
+            throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
         }
+        scheduleService.updateState(scheduleStateUpdateRequest,  scheduleId);
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @Operation(method = "get", summary = "개인 일정 조회")
+    @ApiResponses(value = {
+            @ApiResponse(description = "개인 일정 조회 성공", responseCode = "200", content = {@Content(mediaType = "application/json",  schema = @Schema(implementation = ScheduleMyListResponse.class))})
 
+    })
     @PostMapping("/mine")
-    public ResponseEntity find(@Valid @RequestBody ScheduleMonthRequest scheduleMonthRequest,@CurrentLoginUser CustomOAuth2User user){
-        Long memberId = Long.parseLong(user.getName());
-        scheduleService.findMySchedule(scheduleMonthRequest, memberId);
-        return new ResponseEntity(HttpStatus.OK);
+    public ResponseEntity find(@Valid @RequestBody ScheduleMonthRequest scheduleMonthRequest,@CurrentLoginUser Member member){
+        if (!(projectMemberService.validateProjectMember(scheduleMonthRequest.getProjectId(), member.getId()))) {
+            throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
+        }
+        ScheduleMyListResponse response = scheduleService.findMySchedule(scheduleMonthRequest, member.getId());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -16,6 +16,6 @@ public interface MemoRepository extends JpaRepository<Memo, Long> {
 
     List<Memo> findTop5ByProjectOrderByCreatedDateDesc(Project project);
 
-    @Query("select m from Memo m join m.bookmark bm on bm.member.id = :memberId where m.project.id = :projectId")
-    Page<Memo> findBookmarkList(Pageable pageable, @Param("projectId") Long projectId, @Param("memberId") Long memberId);
+//    @Query("select m from Memo m join m.bookmark bm on bm.member.id = :memberId where m.project.id = :projectId")
+//    Page<Memo> findBookmarkList(Pageable pageable, @Param("projectId") Long projectId, @Param("memberId") Long memberId);
 }

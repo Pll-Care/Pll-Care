@@ -1,14 +1,16 @@
 package fullcare.backend.schedule.dto.request;
 
-import fullcare.backend.global.State;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class ScheduleStateUpdateRequest {
+public class ScheduleMonthListRequest {
+    @NotNull
+    private int year;
+    @NotNull
+    private int month;
     @NotNull
     private Long projectId;
-
     @NotNull
-    private State state;
+    private Long memberId;
 }

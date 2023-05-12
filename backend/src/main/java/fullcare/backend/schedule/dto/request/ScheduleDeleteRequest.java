@@ -7,6 +7,5 @@ import lombok.Data;
 public class ScheduleDeleteRequest {
     @NotNull
     private Long projectId;
-    @NotNull
-    private Long scheduleId;
+
 }

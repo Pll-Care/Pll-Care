@@ -116,16 +116,16 @@ public class MemoController {
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
-    @PostMapping("/bookmarklist")
-    public ResponseEntity bookmarklist(@RequestParam("project_id") Long projectId, CustomPageRequest pageRequest, @CurrentLoginUser CustomOAuth2User user) {
-        Long memberId = Long.parseLong(user.getName());
-
-        PageRequest of = pageRequest.of();
-        Pageable pageable = (Pageable) of;
-        Page<MemoListResponse> responses = memoService.findBookmarkMemoList(projectId, memberId, pageable);
-
-        return new ResponseEntity<>(responses, HttpStatus.OK);
-    }
+//    @PostMapping("/bookmarklist")
+//    public ResponseEntity bookmarklist(@RequestParam("project_id") Long projectId, CustomPageRequest pageRequest, @CurrentLoginUser CustomOAuth2User user) {
+//        Long memberId = Long.parseLong(user.getName());
+//
+//        PageRequest of = pageRequest.of();
+//        Pageable pageable = (Pageable) of;
+//        Page<MemoListResponse> responses = memoService.findBookmarkMemoList(projectId, memberId, pageable);
+//
+//        return new ResponseEntity<>(responses, HttpStatus.OK);
+//    }
 
     @PostMapping("/{memoId}/bookmark")
     public ResponseEntity bookmark(@PathVariable Long memoId, @CurrentLoginUser CustomOAuth2User user) {

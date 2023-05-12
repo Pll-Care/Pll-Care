@@ -10,6 +10,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name = "schedule_member")
@@ -29,9 +31,12 @@ public class ScheduleMember {
     @JoinColumn(name = "schedule_id", nullable = false)
     private Schedule schedule;
 
+    private LocalDateTime recentView;
+
     @Builder
-    public ScheduleMember(Member member, Schedule schedule) {
+    public ScheduleMember(Member member, Schedule schedule, LocalDateTime recentView) {
         this.member = member;
         this.schedule = schedule;
+        this.recentView = recentView;
     }
 }
