@@ -28,7 +28,7 @@ import java.util.List;
 @RequestMapping("/api/auth/project")
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "project", description = "프로젝트 API")
+@Tag(name = "프로젝트", description = "프로젝트 관련 API")
 public class ProjectController {
     private final ProjectService projectService;
 
@@ -38,13 +38,13 @@ public class ProjectController {
             @ApiResponse(description = "사용자 프로젝트 리스트 조회 성공", responseCode = "200", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProjectListResponse.class))})
     })
     @GetMapping
-    public ResponseEntity<?> list(CustomPageRequest pageRequest, @RequestBody StateWrapper stateWrapper, @CurrentLoginUser CustomOAuth2User user){
-            Long memberId = Long.parseLong(user.getName());
-            PageRequest of = pageRequest.of();
-            Pageable pageable = (Pageable) of;
-            Page<ProjectListResponse> responses = projectService.findMyProjectList(pageable, memberId, stateWrapper.getStates());
-            return new ResponseEntity<>(responses, HttpStatus.OK);
-        }
+    public ResponseEntity<?> list(CustomPageRequest pageRequest, @RequestBody StateWrapper stateWrapper, @CurrentLoginUser CustomOAuth2User user) {
+        Long memberId = Long.parseLong(user.getName());
+        PageRequest of = pageRequest.of();
+        Pageable pageable = (Pageable) of;
+        Page<ProjectListResponse> responses = projectService.findMyProjectList(pageable, memberId, stateWrapper.getStates());
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
 
 
     @Operation(method = "post", summary = "프로젝트 생성")
@@ -59,8 +59,19 @@ public class ProjectController {
 
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @DeleteMapping("{projectId}")
+    public ResponseEntity delete(@PathVariable Long projectId, @CurrentLoginUser CustomOAuth2User user) {
+        // 삭제 권한이 있는지 검사
+
+        projectService.deleteProject(projectId);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+
     @Data
-    public static class StateWrapper{
+    public static class StateWrapper {
         List<State> states;
     }
     // 프로젝트 생성 썸네일
@@ -68,4 +79,6 @@ public class ProjectController {
     // 프로젝트 멤버 영입
     // 프로젝트 삭제
     // 프로젝트 업데이트
+
+
 }
