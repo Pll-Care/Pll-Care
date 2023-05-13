@@ -10,14 +10,13 @@ import fullcare.backend.schedule.ScheduleCategory;
 import fullcare.backend.schedule.domain.Meeting;
 import fullcare.backend.schedule.domain.Milestone;
 import fullcare.backend.schedule.domain.Schedule;
-import fullcare.backend.schedule.dto.MeetingDto;
-import fullcare.backend.schedule.dto.MilestoneDto;
-import fullcare.backend.schedule.dto.ScheduleDto;
-import fullcare.backend.schedule.dto.ScheduleMyDto;
+import fullcare.backend.schedule.dto.*;
 import fullcare.backend.schedule.dto.request.*;
 import fullcare.backend.schedule.dto.response.*;
 import fullcare.backend.schedule.repository.ScheduleRepository;
 import fullcare.backend.schedulemember.domain.ScheduleMember;
+import lombok.Builder;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -165,12 +164,12 @@ public class ScheduleService {
         LocalDateTime endDate = LocalDateTime.of(scheduleMonthRequest.getYear(), scheduleMonthRequest.getMonth(),lastDay,23,59,59  );
         List<Schedule> scheduleList = scheduleRepository.findMonthListByMember( memberId, startDate, endDate);
         List<ScheduleMyDto> scheduleDtos = new ArrayList<>();
-        Schedule nearSchedule = toMySchedule(member, scheduleList, scheduleDtos);
+        Schedule nearSchedule = toMySchedule(member, scheduleList, scheduleDtos);// 일정 리스트를 설정 및 가장 가까운 일정 반환
 
         ScheduleMyListResponse scheduleMyListResponse = new ScheduleMyListResponse();
         scheduleMyListResponse.setScheduleMyDtos(scheduleDtos);
 
-        ScheduleDto scheduleDto = ScheduleDto.builder()
+        ScheduleDto scheduleDto = ScheduleDto.builder()// 가장 가까운 일정을 응답값으로 변환
                 .projectId(nearSchedule.getProject().getId())
                 .scheduleId(nearSchedule.getId())
                 .title(nearSchedule.getTitle())
@@ -195,52 +194,32 @@ public class ScheduleService {
                 nearDate = schedule.getStartDate();
                 nearSchedule = schedule;
             }
+            scheduleMyDto = ScheduleMyDto.builder()
+                    .projectId(schedule.getProject().getId())
+                    .scheduleId(schedule.getId())
+                    .title(schedule.getTitle())
+                    .startDate(schedule.getStartDate())
+                    .endDate(schedule.getEndDate())
+                    .build();
+
+            Set<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();
+            for (ScheduleMember scheduleMember : scheduleMembers) {
+                if(scheduleMember.getMember() == member && scheduleMember.getRecentView().isBefore(schedule.getModifiedDate())){
+                    System.out.println("확인 못함" );
+                    scheduleMyDto.updateCheck(false);
+                }else if (scheduleMember.getMember() == member){
+                    System.out.println("확인 함" );
+                    scheduleMyDto.updateCheck(true);
+                }else{
+                    System.out.println("로그인한 멤버 정보가 아님");
+                }
+            }
             if (schedule instanceof Meeting){
                 Meeting meeting = (Meeting) schedule;
-                 scheduleMyDto = ScheduleMyDto.builder()
-                        .projectId(meeting.getProject().getId())
-                        .scheduleId(meeting.getId())
-                        .title(meeting.getTitle())
-                        .startDate(meeting.getStartDate())
-                        .endDate(meeting.getEndDate())
-                        .scheduleCategory(ScheduleCategory.미팅)
-                        .address(meeting.getAddress())
-                        .build();
-                Set<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();
-                for (ScheduleMember scheduleMember : scheduleMembers) {
-                    if(scheduleMember.getMember() == member && scheduleMember.getRecentView().isBefore(schedule.getModifiedDate())){
-                        System.out.println("확인 못함" );
-                        scheduleMyDto.updateCheck(false);
-                    }else if (scheduleMember.getMember() == member){
-                        System.out.println("확인 함" );
-                        scheduleMyDto.updateCheck(true);
-                    }else{
-                        System.out.println("로그인한 멤버 정보가 아님");
-                    }
-                }
-
+                scheduleMyDto.setAddress(meeting.getAddress());
+                scheduleMyDto.setScheduleCategory(ScheduleCategory.미팅);
             }else{
-                Milestone milestone = (Milestone) schedule;
-                scheduleMyDto = ScheduleMyDto.builder()
-                        .projectId(milestone.getProject().getId())
-                        .scheduleId(milestone.getId())
-                        .title(milestone.getTitle())
-                        .startDate(milestone.getStartDate())
-                        .endDate(milestone.getEndDate())
-                        .scheduleCategory(ScheduleCategory.개발일정)
-                        .build();
-                Set<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();
-                for (ScheduleMember scheduleMember : scheduleMembers) {
-                    if(scheduleMember.getMember() == member && scheduleMember.getRecentView().isBefore(schedule.getModifiedDate())){
-                        System.out.println("확인 못함" );
-                        scheduleMyDto.updateCheck(false);
-                    }else if (scheduleMember.getMember() == member){
-                        System.out.println("확인 함" );
-                        scheduleMyDto.updateCheck(true);
-                    }else{
-                        System.out.println("로그인한 멤버 정보가 아님");
-                    }
-                }
+                scheduleMyDto.setScheduleCategory(ScheduleCategory.개발일정);
             }
             scheduleDtos.add(scheduleMyDto);
         }
@@ -301,31 +280,22 @@ public class ScheduleService {
 
     private void addResponse(Page<Schedule> pageSchedule, List<ScheduleMonthResponse> scheduleMonthResponses, Member member) {
         for (Schedule schedule : pageSchedule) {
-            if (schedule instanceof Meeting){
-                Meeting meeting = (Meeting) schedule;
+            ScheduleMonthResponse scheduleResponse = ScheduleMonthResponse.builder()
+                    .scheduleId(schedule.getId())
+                    .title(schedule.getTitle())
+                    .startDate(schedule.getStartDate())
+                    .endDate(schedule.getEndDate()).build();
 
-                if(meeting.getAddress()!=null) { // 미팅 응답 생성
-                    ScheduleMonthResponse scheduleResponse = ScheduleMonthResponse.builder()
-                            .scheduleId(meeting.getId())
-                            .title(meeting.getTitle())
-                            .startDate(meeting.getStartDate())
-                            .endDate(meeting.getEndDate())
-                            .scheduleCategory(ScheduleCategory.미팅)
-                            .address(meeting.getAddress()).build();
-                    checkModify(member, schedule, scheduleResponse);
-                    scheduleMonthResponses.add(scheduleResponse);
-                }
+            checkModify(member, schedule, scheduleResponse);
+
+            if (schedule instanceof Meeting){
+                scheduleResponse.setAddress(scheduleResponse.getAddress());
+                scheduleResponse.setScheduleCategory(ScheduleCategory.미팅);
             }else{
-                ScheduleMonthResponse scheduleResponse = ScheduleMonthResponse.builder()
-                        .scheduleId(schedule.getId())
-                        .title(schedule.getTitle())
-                        .startDate(schedule.getStartDate())
-                        .endDate(schedule.getEndDate())
-                        .scheduleCategory(ScheduleCategory.개발일정)
-                        .build();
-                checkModify(member, schedule, scheduleResponse);
-                scheduleMonthResponses.add(scheduleResponse);
+                scheduleResponse.setScheduleCategory(ScheduleCategory.개발일정);
             }
+            scheduleMonthResponses.add(scheduleResponse);
+
         }
     }
 
@@ -345,5 +315,45 @@ public class ScheduleService {
             });
     }
 
+    @Transactional
+    public ScheduleDetailResponse findSchedule(Long projectId, Long scheduleId, Long memberId) {
+        Project project = projectRepository.findById(projectId).orElseThrow();
+        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow();
+        List<ProjectMember> projectMembers = project.getProjectMembers();
+        Set<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();
+
+        ScheduleDetailResponse scheduleDetailResponse = ScheduleDetailResponse.builder()
+                .projectId(projectId)
+                .title(schedule.getTitle())
+                .content(schedule.getContent())
+                .startDate(schedule.getStartDate())
+                .endDate(schedule.getEndDate())
+                .build();
+        for (ProjectMember projectMember : projectMembers) {
+            DetailMemberDto detailMemberDto = DetailMemberDto.builder().id(projectMember.getMember().getId())
+                    .name(projectMember.getMember().getName()).build();
+            for (ScheduleMember scheduleMember : scheduleMembers) {
+                if (projectMember.getMember() == scheduleMember.getMember()){
+                    detailMemberDto.setIn(true);
+                }
+                if(projectMember.getMember() == scheduleMember.getMember() && projectMember.getMember().getId() == memberId){ // 로그인한 사용자 최근 확인한 일정 갱신
+                    scheduleMember.updateRecentView();
+                }
+            }
+            scheduleDetailResponse.addMember(detailMemberDto);
+        }
+
+        if(schedule instanceof Meeting){
+            scheduleDetailResponse.setScheduleCategory(ScheduleCategory.미팅);
+            scheduleDetailResponse.setAddress(scheduleDetailResponse.getAddress());
+        }else{
+            scheduleDetailResponse.setScheduleCategory(ScheduleCategory.개발일정);
+        }
+
+
+
+        return scheduleDetailResponse;
+
+    }
 
 }
