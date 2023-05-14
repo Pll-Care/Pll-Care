@@ -1,10 +1,10 @@
 import { useContext, useState } from 'react';
-import { EditStateDispatchContext, InitialStateDispatchContext, MeetingRecordStateContext } from '../pages/MeetingRecordManagement';
+import { EditStateDispatchContext, InitialStateDispatchContext, MeetingRecordStateContext } from '../../pages/MeetingRecordManagement';
 
 import MeetingRecordData from './MeetingRecordData';
-import Pagination from '../utils/Pagination';
-import ControlMenu from '../utils/ControlMenu';
-import Button from './Button';
+import Pagination from '../Pagination';
+import ControlMenu from '../ControlMenu';
+import Button from '../Button';
 
 const filterOptionList = [
     {

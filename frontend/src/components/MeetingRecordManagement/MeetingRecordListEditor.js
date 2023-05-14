@@ -1,7 +1,7 @@
 import { useContext } from 'react';
-import { SelectedMeetingRecordStateContext } from '../pages/MeetingRecordManagement';
+import { SelectedMeetingRecordStateContext } from '../../pages/MeetingRecordManagement';
 
-import SelectedMeetingRecord from '../components/SelectedMeetingRecord';
+import SelectedMeetingRecord from './SelectedMeetingRecord';
 import MeetingRecordEditor from './MeetingRecordEditor';
 
 const MeetingRecordListEditor = () => {

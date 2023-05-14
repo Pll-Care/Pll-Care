@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useContext, useState } from 'react';
 
-import Login from './Login';
+import Login from './Login/Login';
 import Button from './Button';
 import { AuthDispatchContext, AuthStateContext } from '../App';
 

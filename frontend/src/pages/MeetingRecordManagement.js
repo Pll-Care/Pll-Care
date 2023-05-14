@@ -1,7 +1,7 @@
 import { createContext, useReducer, useRef, useState } from 'react';
 
-import MeetingRecordList from "../components/MeetingRecordList";
-import MeetingRecordListEditor from "../components/MeetingRecordListEditor";
+import MeetingRecordList from "../components/MeetingRecordManagement/MeetingRecordList";
+import MeetingRecordListEditor from "../components/MeetingRecordManagement/MeetingRecordListEditor";
 
 const meetingRecordReducer = (state, action) => {
   switch (action.type) {

@@ -1,12 +1,14 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import MainHeader from "../components/MainHeader";
-import ManagementHeader from "../components/ManagementHeader";
+import ManagementHeader from "../components/ProjectManagement/ManagementHeader";
 
 const ProjectDetailPage = () => {
+  const { id } = useParams(); 
+
   return (
     <div>
       <MainHeader />
-      <ManagementHeader />
+      <ManagementHeader id={id} />
       <Outlet />
     </div>
   );

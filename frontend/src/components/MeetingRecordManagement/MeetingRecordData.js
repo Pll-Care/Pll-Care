@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { SelectedMeetingRecordDispatchContext } from "../pages/MeetingRecordManagement";
+import { SelectedMeetingRecordDispatchContext } from "../../pages/MeetingRecordManagement";
 import { flushSync } from "react-dom";
 
 const MeetingRecordData = ({ sortedMeetingRecordList, isLoading }) => {

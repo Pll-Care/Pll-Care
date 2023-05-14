@@ -3,9 +3,9 @@ import 'react-quill/dist/quill.snow.css';
 import Quill from 'quill';
 import ImageResize from 'quill-image-resize';
 import { useContext, useEffect, useState } from "react";
-import Button from "./Button";
-import { EditStateContext, EditStateDispatchContext, InitialStateContext, InitialStateDispatchContext, MeetingRecordDispatchContext } from "../pages/MeetingRecordManagement";
-import ControlMenu from "../utils/ControlMenu";
+import Button from "../Button";
+import { EditStateContext, EditStateDispatchContext, InitialStateContext, InitialStateDispatchContext, MeetingRecordDispatchContext } from "../../pages/MeetingRecordManagement";
+import ControlMenu from "../ControlMenu";
 import { flushSync } from 'react-dom';
 Quill.register('modules/ImageResize', ImageResize);
 

@@ -1,5 +1,5 @@
 /* ManagementHeader */
-.management-header {
+.management-detail-header {
   width: 1150px;
   height: 60px;
   margin-top: 30px;
@@ -8,11 +8,6 @@
   border: $border;
   border-radius: 40px;
 
-  @include displayFlex(row, space-between, center);
-  @include putCenter;
-}
-
-.management-header {
   div {
     a {
       font-family: $link-font;
@@ -21,4 +16,7 @@
       padding: 30px;
     }
   }
+
+  @include displayFlex(row, space-between, center);
+  @include putCenter;
 }

@@ -1,4 +1,3 @@
-@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@600&family=Open+Sans:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Open+Sans:wght@300&display=swap");
 *, *:before, *:after {
@@ -85,7 +84,7 @@ input {
 }
 .login-modal-wrapper .login-modal .login-heading {
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 60px;
+  font-size: 40px;
   padding: 12px;
 }
 .login-modal-wrapper .login-modal .login-text {
@@ -201,10 +200,16 @@ input {
 .button_positive {
   color: white;
   background-color: #01E89E;
+  border: 2px solid #01E89E;
+}
+.button_positive_dark {
+  color: white;
+  background-color: #00AA72;
+  border: 2px solid #00AA72;
 }
 
 /* ManagementHeader */
-.management-header {
+.management-detail-header {
   width: 1150px;
   height: 60px;
   margin-top: 30px;
@@ -219,86 +224,11 @@ input {
   margin-left: auto;
   margin-right: auto;
 }
-
-.management-header div a {
+.management-detail-header div a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 25px;
   color: black;
   padding: 30px;
-}
-
-.myproject-header {
-  height: 200px;
-  background-color: #01e89e;
-  border-end-start-radius: 80px;
-  border-end-end-radius: 80px;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-.myproject-header-left {
-  margin-left: 70px;
-  margin-top: 100px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-.myproject-header-left-participation-project {
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 40px;
-  color: white;
-  margin-right: 30px;
-}
-.myproject-header-right {
-  margin-right: 70px;
-  margin-top: 100px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-.myproject-header-right-total-btn {
-  margin-right: 30px;
-}
-
-.my-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* 배경을 반투명하게 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.my-modal-content {
-  border-radius: 40px;
-  background-color: white;
-  width: 600px;
-  height: 500px;
-  padding: 16px;
-}
-.my-modal-content .close-modal-btn {
-  font-size: 40px;
-  float: right;
-  cursor: pointer;
-}
-
-.button2 {
-  background-color: white;
-  border-radius: 47px;
-  border: 0 solid #7a7a7a;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 20px;
-  padding-left: 25px;
-  padding-right: 25px;
-  padding-top: 5px;
-  padding-bottom: 5px;
 }
 
 /* MEETING RECORD MANAGEMENT */
@@ -597,109 +527,6 @@ input {
   padding: 5px;
 }
 
-.project-list {
-  background-color: white;
-  margin-top: 30px;
-}
-.project-list-pagination {
-  margin-top: 50px;
-  display: flex;
-}
-
-.pagination {
-  width: 600px;
-  display: flex;
-  margin-left: auto;
-  margin-right: auto;
-}
-.pagination li {
-  margin-right: 50px;
-  font-size: 20px;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  margin-left: auto;
-  margin-right: auto;
-}
-.pagination li:hover {
-  cursor: pointer;
-}
-
-.pagination_active a {
-  font-weight: bold;
-  color: #01e89e;
-}
-
-.pagination_disabled a {
-  color: #6c757d;
-  pointer-events: none;
-}
-
-.project-item {
-  width: 800px;
-  background-color: #ffffff;
-  margin-bottom: 30px;
-  padding: 30px;
-  border: 2px solid #01e89e;
-  border-radius: 35px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  margin-left: auto;
-  margin-right: auto;
-}
-.project-item-thumbnail {
-  background-color: gray;
-  width: 100px;
-  height: 100px;
-  border-radius: 45px;
-}
-.project-item-info {
-  width: 600px;
-  margin-left: 30px;
-}
-.project-item-info-title {
-  font-weight: bold;
-  font-size: 25px;
-  font-family: "Noto Sans KR", sans-serif;
-}
-.project-item-info-content {
-  margin-top: 20px;
-  font-size: 20px;
-  font-family: "Noto Sans KR", sans-serif;
-}
-.project-item-info-date {
-  margin-top: 20px;
-  font-size: 18px;
-  font-family: "Noto Sans KR", sans-serif;
-  float: right;
-}
-
-.new-project-editor {
-  text-align: center;
-  padding: 20px;
-}
-.new-project-editor h2 {
-  margin-bottom: 30px;
-}
-.new-project-editor-head {
-  font-size: 25px;
-  font-family: "IBM Plex Sans KR", sans-serif;
-}
-.new-project-editor-title input,
-.new-project-editor-title textarea, .new-project-editor-content input,
-.new-project-editor-content textarea {
-  margin-bottom: 30px;
-  padding: 15px;
-  width: 400px;
-}
-.new-project-editor-title textarea, .new-project-editor-content textarea {
-  height: 200px;
-}
-.new-project-editor-button Button {
-  text-align: center;
-  margin: 10px;
-}
-
 .evaluation-management {
   height: 180vh;
   width: 1150px;
@@ -879,4 +706,222 @@ input {
   width: 30px;
   height: 30px;
   background-color: #CCCCCC;
+}
+
+.management {
+  height: 100vh;
+}
+.management-main-header {
+  background-color: #01e89e;
+  font-size: 40px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  color: white;
+  height: 200px;
+  border-bottom-left-radius: 60px;
+  border-bottom-right-radius: 60px;
+  padding: 35px;
+  padding-top: 120px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.management-main-header-left-col {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.management-main-header-left-col h1 {
+  margin-right: 20px;
+}
+.management-main-header-right-col {
+  width: 220px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.management .project-list-wrapper {
+  padding: 30px;
+}
+.management .project-list-wrapper .project-list {
+  margin-top: 30px;
+}
+.management .project-list-wrapper .project-list .project-item {
+  border: 2px solid #01e89e;
+  border-radius: 20px;
+  width: 700px;
+  height: 160px;
+  margin-bottom: 30px;
+  padding: 20px;
+  text-decoration: none;
+  box-shadow: 0px 10px 30px 5px rgba(181, 181, 181, 0.2);
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.management .project-list-wrapper .project-list .project-item-left-col figure {
+  border: 2px solid #01e89e;
+  border-radius: 25px;
+  width: 70px;
+  height: 70px;
+  margin-right: 25px;
+}
+.management .project-list-wrapper .project-list .project-item-right-col {
+  height: 100%;
+  width: 100%;
+  color: #003B28;
+  font-size: 18px;
+  font-family: "Noto Sans KR", sans-serif;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.management .project-list-wrapper .project-list .project-item-right-col .project-item-heading {
+  font-size: 25px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  margin-bottom: 7px;
+}
+.management .project-list-wrapper .project-list .project-item-right-col .project-item-period,
+.management .project-list-wrapper .project-list .project-item-right-col .project-item-description {
+  margin-bottom: 7px;
+  width: 400px;
+}
+.management .project-list-wrapper .project-list .project-item-right-col .project-item-description {
+  line-height: 1.5;
+}
+.management .project-list-wrapper .project-list .project-item-right-col .project-item-button-wrapper {
+  width: 130px;
+  height: 88%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.management .new-project-modal-wrapper {
+  background: rgba(0, 0, 0, 0.8);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  opacity: 98%;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+.management .new-project-modal-wrapper .new-project {
+  border-radius: 40px;
+  background-color: white;
+  height: 470px;
+  width: 650px;
+  position: fixed;
+  top: 65px;
+  left: calc(50% - 325px);
+  padding: 0 20px;
+}
+.management .new-project-modal-wrapper .new-project-first-row {
+  height: 30%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.management .new-project-modal-wrapper .new-project-first-row figure {
+  border: 2px solid #01e89e;
+  border-radius: 15px;
+  width: 70px;
+  height: 70px;
+}
+.management .new-project-modal-wrapper .new-project-first-row .new-project-left-col {
+  width: 390px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.management .new-project-modal-wrapper .new-project-first-row .new-project-left-col input {
+  width: 300px;
+  border-radius: 15px;
+  border: none;
+  font-size: 25px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  padding: 5px;
+  background-color: white;
+}
+.management .new-project-modal-wrapper .new-project-first-row .new-project-left-col input::-moz-placeholder {
+  color: #9d9797;
+}
+.management .new-project-modal-wrapper .new-project-first-row .new-project-left-col input::placeholder {
+  color: #9d9797;
+}
+.management .new-project-modal-wrapper .new-project-second-row {
+  height: 70%;
+  padding: 20px;
+}
+.management .new-project-modal-wrapper .new-project-second-row .new-project-period {
+  padding: 20px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.management .new-project-modal-wrapper .new-project-second-row .new-project-period-left-col {
+  width: 118px;
+}
+.management .new-project-modal-wrapper .new-project-second-row .new-project-period-left-col h1 {
+  font-size: 18px;
+  font-family: "Noto Sans KR", sans-serif;
+  margin-right: 40px;
+}
+.management .new-project-modal-wrapper .new-project-second-row .new-project-period-right-col {
+  width: 330px;
+  padding: 0 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.management .new-project-modal-wrapper .new-project-second-row .new-project-period-right-col input {
+  font-size: 18px;
+  font-family: "Noto Sans KR", sans-serif;
+  border-radius: 15px;
+  padding: 0 10px;
+  height: 40px;
+  width: 160px;
+  margin-right: 10px;
+  background-color: #D9D9D9;
+  border: none;
+}
+.management .new-project-modal-wrapper .new-project-second-row .new-project-period-right-col input[type=date]::before {
+  content: attr(data-placeholder);
+  color: #9d9797;
+  width: 100%;
+}
+.management .new-project-modal-wrapper .new-project-second-row .new-project-period-right-col .new-project-period-start-date:valid::before,
+.management .new-project-modal-wrapper .new-project-second-row .new-project-period-right-col .new-project-period-end-date:valid::before {
+  display: none;
+}
+.management .new-project-modal-wrapper .new-project-second-row textarea {
+  font-size: 18px;
+  font-family: "Noto Sans KR", sans-serif;
+  padding: 20px;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 65%;
+  max-height: 65%;
+  background-color: #D9D9D9;
+  border-radius: 20px;
+  border: none;
+}
+.management .new-project-modal-wrapper .new-project-second-row textarea::-moz-placeholder {
+  color: #9d9797;
+}
+.management .new-project-modal-wrapper .new-project-second-row textarea::placeholder {
+  color: #9d9797;
 }/*# sourceMappingURL=fullcare.css.map */

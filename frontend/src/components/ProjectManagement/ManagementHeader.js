@@ -1,38 +1,38 @@
 import { Link } from "react-router-dom";
 
-const ManagementHeader = (projectId) => {
+const ManagementHeader = ({id}) => {
   return (
-    <header className="management-header">
-      <div className="management-header-overview">
+    <header className="management-detail-header">
+      <div className="management-detail-header-overview">
         <Link
-          to={`/management/${projectId}/overview`}
+          to={`/management/${id}/overview`}
           style={{ textDecoration: "none" }}
         >
           오버뷰
         </Link>
       </div>
 
-      <div className="management-header-meeting-record">
+      <div className="management-detail-header-meeting-record">
         <Link
-          to={`/management/${projectId}/meetingRecord`}
+          to={`/management/${id}/meetingRecord`}
           style={{ textDecoration: "none" }}
         >
           회의록
         </Link>
       </div>
 
-      <div className="management-header-schedule">
+      <div className="management-detail-header-schedule">
         <Link
-          to={`/management/${projectId}/schedule`}
+          to={`/management/${id}/schedule`}
           style={{ textDecoration: "none" }}
         >
           일정
         </Link>
       </div>
 
-      <div className="management-header-evaluation">
+      <div className="management-detail-header-evaluation">
         <Link
-          to={`/management/${projectId}/evaluation`}
+          to={`/management/${id}/evaluation`}
           style={{ textDecoration: "none" }}
         >
           평가

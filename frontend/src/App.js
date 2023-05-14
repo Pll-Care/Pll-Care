@@ -4,7 +4,7 @@ import React, { useEffect, useReducer } from "react";
 import "./scss/fullcare.css";
 
 import Home from "./pages/Home";
-import JWTToken from "./components/JWTToken";
+import JWTToken from "./components/Login/JWTToken";
 import Profile from "./pages/Profile";
 import Management from "./pages/Management";
 import Recruitment from "./pages/Recruitment";
@@ -99,15 +99,9 @@ function App() {
               <Route path={"/profile"} element={<Profile />} />
               <Route path={"/recruitment"} element={<Recruitment />} />
               <Route path={"/management"} element={<Management />} />
-              <Route
-                path={"/management/:projectId"}
-                element={<ProjectDetailPage />}
-              >
+              <Route path={"/management/:id"} element={<ProjectDetailPage />}>
                 <Route path={"overview"} element={<OverviewManagement />} />
-                <Route
-                  path={"meetingRecord"}
-                  element={<MeetingRecordManagement />}
-                />
+                <Route path={"meetingRecord"} element={<MeetingRecordManagement />} />
                 <Route path={"schedule"} element={<ScheduleManagement />} />
                 <Route path={"evaluation"} element={<EvaluationManagement />} />
               </Route>

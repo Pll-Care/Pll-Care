@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { InitialStateDispatchContext, SelectedMeetingRecordStateContext } from "../pages/MeetingRecordManagement";
+import { InitialStateDispatchContext, SelectedMeetingRecordStateContext } from "../../pages/MeetingRecordManagement";
 import MeetingRecordEditor from "./MeetingRecordEditor";
 
 const SelectedMeetingRecord = () => {

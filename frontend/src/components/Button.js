@@ -1,5 +1,5 @@
 const Button = ({ text, type, onClick }) => {
-    const btnType = ['positive', 'negative'].includes(type) ? type : 'default';
+    const btnType = ['positive', 'positive_dark'].includes(type) ? type : 'default';
 
     return (
         <button 

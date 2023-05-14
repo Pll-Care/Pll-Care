@@ -1,6 +1,6 @@
-import AllParticipants from "../components/AllParticipants";
-import EvaluationRanking from "../components/EvaluationRanking";
-import ShowEvaluationRanking from "../components/ShowEvaluationRanking";
+import AllParticipants from "../components/EvaluationManagement/AllParticipants";
+import EvaluationRanking from "../components/EvaluationManagement/EvaluationRanking";
+import ShowEvaluationRanking from "../components/EvaluationManagement/ShowEvaluationRanking";
 
 const EvaluationList = [
   {

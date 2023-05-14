@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import MeetingRecordData from "./MeetingRecordData";
-import { MeetingRecordStateContext } from "../pages/MeetingRecordManagement";
-import Pagination from "../utils/Pagination";
+import { MeetingRecordStateContext } from "../../pages/MeetingRecordManagement";
+import Pagination from "../Pagination";
 
 const BookMarkedMeetingRecordList = () => {
     const meetingRecordList = useContext(MeetingRecordStateContext);
