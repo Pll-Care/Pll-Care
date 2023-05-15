@@ -3,6 +3,7 @@ package fullcare.backend.schedule.dto.response;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.schedule.ScheduleCategory;
 import fullcare.backend.schedule.domain.Address;
+import fullcare.backend.schedule.dto.DetailMemberDto;
 import fullcare.backend.schedule.dto.MemberDto;
 import lombok.Builder;
 import lombok.Data;
@@ -12,32 +13,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class ScheduleMonthResponse {
-    private Long scheduleId;
+public class ScheduleDetailResponse {
+    private Long projectId;
     private String title;
-//    private String content;
+    private String content;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private Address address;
     private ScheduleCategory scheduleCategory;
-    private List<MemberDto> members = new ArrayList<>();
-    private Boolean check;
+    private List<DetailMemberDto> members = new ArrayList<>();
     @Builder
-    public ScheduleMonthResponse(Long scheduleId, String title, LocalDateTime startDate, LocalDateTime endDate, Address address, ScheduleCategory scheduleCategory) {
-        this.scheduleId = scheduleId;
+    public ScheduleDetailResponse(Long projectId, String title, String content, LocalDateTime startDate, LocalDateTime endDate, ScheduleCategory scheduleCategory) {
+        this.projectId = projectId;
         this.title = title;
+        this.content = content;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.address = address;
         this.scheduleCategory = scheduleCategory;
     }
-
-    public void addMember(Member member){
-        members.add(MemberDto.builder()
-                .id(member.getId())
-                .name(member.getName()).build());
-    }
-    public void updateCheck(boolean check){
-        this.check = check;
+    public void addMember(DetailMemberDto detailMemberDto){
+        members.add(detailMemberDto);
     }
 }

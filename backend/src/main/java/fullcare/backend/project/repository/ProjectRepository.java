@@ -13,4 +13,6 @@ import java.util.List;
 public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query("select p from project p join p.projectMembers pm where pm.member.id = :memberId and p.state in :state")
     Page<Project> findProjectList(Pageable pageable, @Param("memberId") Long memberId, @Param("state") List<State> state);
+
+
 }

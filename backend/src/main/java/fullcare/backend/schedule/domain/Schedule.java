@@ -2,6 +2,7 @@ package fullcare.backend.schedule.domain;
 
 
 import fullcare.backend.global.State;
+import fullcare.backend.global.entity.BaseEntity;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.projectmember.domain.ProjectMember;
@@ -15,7 +16,9 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -23,7 +26,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Entity(name="schedule")
 @Table(name="schedule")
-public abstract class Schedule {
+public abstract class Schedule extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,7 +57,7 @@ public abstract class Schedule {
     private LocalDateTime endDate;
 
     @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ScheduleMember> scheduleMembers = new ArrayList<>();
+    private Set<ScheduleMember> scheduleMembers = new HashSet<>();
 
     public Schedule(Project project, String author, State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate) {
         this.project = project;
@@ -70,8 +73,31 @@ public abstract class Schedule {
         memberList.forEach(member -> {
             ScheduleMember sm = ScheduleMember.builder()
                     .member(member)
-                    .schedule(this).build();
+                    .schedule(this)
+                    .recentView(LocalDateTime.now()).build();
             scheduleMembers.add(sm);
         });
+    }
+    public void addMember(Member member){
+
+            ScheduleMember sm = ScheduleMember.builder()
+                    .member(member)
+                    .schedule(this)
+                    .recentView(LocalDateTime.now()).build();
+            scheduleMembers.add(sm);
+
+    }
+
+
+    public void update(State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate) {
+        this.state = state;
+        this.title = title;
+        this.content = content;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    public void updateState(State state){
+        this.state = state;
     }
 }

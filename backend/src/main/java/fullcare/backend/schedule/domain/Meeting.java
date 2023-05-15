@@ -31,4 +31,7 @@ public class Meeting extends Schedule{
         super(project, author, state, title, content, startDate, endDate);
         this.address = address;
     }
+    public void updateAddress(Address address) {
+        this.address = address;
+    }
 }
