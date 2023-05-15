@@ -73,7 +73,7 @@ jwt:
 
   access:
     header: Authorization
-    token-validity-in-seconds: 3600
+    token-validity-in-seconds: 86400
 
   refresh:
     header: Authorization-refresh

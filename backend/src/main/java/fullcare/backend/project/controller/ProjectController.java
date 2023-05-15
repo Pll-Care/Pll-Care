@@ -1,11 +1,11 @@
 package fullcare.backend.project.controller;
 
 import fullcare.backend.global.State;
+import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.dto.ProjectCreateRequest;
 import fullcare.backend.project.dto.ProjectListResponse;
 import fullcare.backend.project.service.ProjectService;
-import fullcare.backend.security.jwt.CurrentLoginUser;
-import fullcare.backend.security.oauth2.domain.CustomOAuth2User;
+import fullcare.backend.security.jwt.CurrentLoginMember;
 import fullcare.backend.util.CustomPageRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -38,11 +38,10 @@ public class ProjectController {
             @ApiResponse(description = "사용자 프로젝트 리스트 조회 성공", responseCode = "200", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProjectListResponse.class))})
     })
     @GetMapping
-    public ResponseEntity<?> list(CustomPageRequest pageRequest, @RequestBody StateWrapper stateWrapper, @CurrentLoginUser CustomOAuth2User user) {
-        Long memberId = Long.parseLong(user.getName());
+    public ResponseEntity<?> list(CustomPageRequest pageRequest, @RequestBody StateWrapper stateWrapper, @CurrentLoginMember Member member) {
         PageRequest of = pageRequest.of();
         Pageable pageable = (Pageable) of;
-        Page<ProjectListResponse> responses = projectService.findMyProjectList(pageable, memberId, stateWrapper.getStates());
+        Page<ProjectListResponse> responses = projectService.findMyProjectList(pageable, member.getId(), stateWrapper.getStates());
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
@@ -52,20 +51,18 @@ public class ProjectController {
             @ApiResponse(description = "프로젝트 생성 성공", responseCode = "200", content = {@Content(mediaType = "application/json")})
     })
     @PostMapping
-    public ResponseEntity create(@RequestBody ProjectCreateRequest projectCreateRequest, @CurrentLoginUser CustomOAuth2User user) {
-        Long memberId = Long.parseLong(user.getName());
+    public ResponseEntity create(@RequestBody ProjectCreateRequest projectCreateRequest, @CurrentLoginMember Member member) {
 
-        projectService.createProject(memberId, projectCreateRequest);
+        projectService.createProject(member.getId(), projectCreateRequest);
 
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @DeleteMapping("{projectId}")
-    public ResponseEntity delete(@PathVariable Long projectId, @CurrentLoginUser CustomOAuth2User user) {
+    public ResponseEntity delete(@PathVariable Long projectId, @CurrentLoginMember Member member) {
         // 삭제 권한이 있는지 검사
 
         projectService.deleteProject(projectId);
-
         return new ResponseEntity(HttpStatus.OK);
     }
 

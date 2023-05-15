@@ -9,6 +9,7 @@ import fullcare.backend.project.dto.ProjectListResponse;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -55,6 +56,10 @@ public class ProjectService {
 
         newProject.addMember(member, new ProjectMemberRole(ProjectMemberRoleType.리더, ProjectMemberRoleType.미정));
         projectRepository.save(newProject);
+    }
+
+    public Project findProject(Long projectId) {
+        return projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException("프로젝트 정보가 없습니다."));
     }
 
     public void deleteProject(Long projectId) {
