@@ -1,18 +1,21 @@
 import { Link } from 'react-router-dom';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Login from './Login/Login';
 import Button from './Button';
-import { AuthDispatchContext, AuthStateContext } from '../App';
+
+import { authActions } from '../redux/authSlice';
 
 const MainHeader = () => {
     const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
 
-    const authState = useContext(AuthStateContext);
-    const { onLogout, onLogin } = useContext(AuthDispatchContext);
+    const dispatch = useDispatch();
+
+    const authState = useSelector(state => state.auth.isLoggedIn);
 
     const handleLogout = () => {
-        onLogout();
+        dispatch(authActions.logout());
         setIsLoginModalVisible(false);
     }
 
@@ -21,7 +24,7 @@ const MainHeader = () => {
 
         window.addEventListener("message", (event) => {
             if (event.data === "login") {
-                onLogin();
+                dispatch(authActions.login());
                 setIsLoginModalVisible(false);
             }
         });
@@ -37,7 +40,7 @@ const MainHeader = () => {
                     <Link to={'/management'}>프로젝트 관리</Link>
                     <Link to={'/recruitment'}>인원 모집</Link>
                 </div>
-                {authState.isLoggedIn ? (
+                {authState ? (
                     <div className='main-header-right-col main-header-logout-col'>
                         <Button 
                             text={'log out'}

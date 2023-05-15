@@ -3,6 +3,8 @@ import Button from "../components/Button";
 import MainHeader from "../components/MainHeader";
 import ProjectList from "../components/ProjectManagement/ProjectList";
 import NewProject from "../components/ProjectManagement/NewProject";
+import { useSelector } from "react-redux";
+import NonAuthenticatedManagement from "./NonAuthenticatedManagement";
 
 const projectListReducer = (state, action) => {
   switch (action.type) {
@@ -28,6 +30,8 @@ const Management = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const [projectList, projectListDispatch] = useReducer(projectListReducer, []);
+
+  const authState = useSelector(state => state.auth.isLoggedIn);
 
   const idRef = useRef(1);
 
@@ -81,45 +85,49 @@ const Management = () => {
 
   return (
     <ProjectListDispatchContext.Provider value={{ onCreateProject, onRemoveProject, onCompleteProject }}>
-      <div className='management'>
-        <MainHeader />
-        <header className='management-main-header'>
-          <div className='management-main-header-left-col'>
-            <h1>참여 프로젝트</h1>
-            <Button
-              onClick={handleModalVisible}
-              text={'새 프로젝트 생성'}
-            />
-          </div>
-          <div className='management-main-header-right-col'> 
-            <Button
-              className='all-projects-button'
-              text={'전체'}
-              type={allProjectListVisible && 'positive_dark'}
-              onClick={handleClickAllProjectList}
-            />
-            <Button
-              text={'진행중'}
-              type={!allProjectListVisible && 'positive_dark'}
-              onClick={handleClickOngoingProjectList}
-            />
-          </div>  
-        </header>
-        <main className='project-list-wrapper'>
-          {allProjectListVisible ?
-            <ProjectList
-              projectList={projectList}
-            /> :
-            <ProjectList
-              projectList={ongoingProjectList}
-            />
-          }
-          {isModalVisible ? 
-            <NewProject setIsModalVisible={setIsModalVisible} /> :
-            null
-          }
-        </main>
-      </div>
+      {authState ? (
+        <div className='management'>
+          <MainHeader />
+          <header className='management-main-header'>
+            <div className='management-main-header-left-col'>
+              <h1>참여 프로젝트</h1>
+              <Button
+                onClick={handleModalVisible}
+                text={'새 프로젝트 생성'}
+              />
+            </div>
+            <div className='management-main-header-right-col'> 
+              <Button
+                className='all-projects-button'
+                text={'전체'}
+                type={allProjectListVisible && 'positive_dark'}
+                onClick={handleClickAllProjectList}
+              />
+              <Button
+                text={'진행중'}
+                type={!allProjectListVisible && 'positive_dark'}
+                onClick={handleClickOngoingProjectList}
+              />
+            </div>  
+          </header>
+          <main className='project-list-wrapper'>
+            {allProjectListVisible ?
+              <ProjectList
+                projectList={projectList}
+              /> :
+              <ProjectList
+                projectList={ongoingProjectList}
+              />
+            }
+            {isModalVisible ? 
+              <NewProject setIsModalVisible={setIsModalVisible} /> :
+              null
+            }
+          </main>
+        </div>
+      ) : (
+        <NonAuthenticatedManagement />
+      )}
     </ProjectListDispatchContext.Provider>
   )
 }

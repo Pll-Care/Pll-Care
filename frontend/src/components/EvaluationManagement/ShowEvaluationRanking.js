@@ -3,7 +3,9 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
 const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
-          <div className="custom-tooltip" style={{
+        <div
+          className="custom-tooltip"
+          style={{
             backgroundColor: 'white',
             opacity: '0.8',
             border: 'none',

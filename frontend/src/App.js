@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from 'react-redux';
 
 import "./scss/fullcare.css";
 
@@ -14,102 +15,39 @@ import ScheduleManagement from "./pages/ScheduleManagement";
 import EvaluationManagement from "./pages/EvaluationManagement";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
 
-export const AuthStateContext = React.createContext();
-export const AuthDispatchContext = React.createContext();
+import { authActions } from "./redux/authSlice";
 
-const authStateReducer = (state, action) => {
-  switch (action.type) {
-    case "LOGIN": {
-      const accessTokenData = localStorage.getItem("access_token");
-      const refreshTokenData = localStorage.getItem("refresh_token");
+const App = () => {
+  const dispatch = useDispatch();
 
-      const newState = {
-        ...state,
-        accessToken: accessTokenData,
-        refreshToken: refreshTokenData,
-        isLoggedIn: true,
-      };
-
-      return newState;
-    }
-    case "LOGOUT": {
-      localStorage.clear();
-
-      const newState = {
-        ...state,
-        accessToken: "",
-        refreshToken: "",
-        isLoggedIn: false,
-      };
-
-      return newState;
-    }
-    default: {
-      return {
-        ...state,
-        accessToken: "",
-        refreshToken: "",
-        isLoggedIn: false,
-      };
-    }
-  }
-};
-
-function App() {
-  const [authState, authStateDispatch] = useReducer(authStateReducer, {
-    accessToken: "",
-    refreshToken: "",
-    isLoggedIn: false,
-  });
-
-  const onLogin = () => {
-    authStateDispatch({
-      type: "LOGIN",
-    });
-  };
-
-  const onLogout = () => {
-    authStateDispatch({
-      type: "LOGOUT",
-    });
-  };
 
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
     const refreshToken = localStorage.getItem("refresh_token");
 
     if (accessToken && refreshToken) {
-      onLogin();
+      dispatch(authActions.login());
     }
   }, []);
 
   return (
-    <AuthStateContext.Provider value={authState}>
-      <AuthDispatchContext.Provider
-        value={{
-          onLogin,
-          onLogout,
-        }}
-      >
-        <BrowserRouter>
-          <div className="App">
-            <Routes>
-              <Route path={"/"} element={<Home />} />
-              <Route path={"/token"} element={<JWTToken />} />
-              <Route path={"/profile"} element={<Profile />} />
-              <Route path={"/recruitment"} element={<Recruitment />} />
-              <Route path={"/management"} element={<Management />} />
-              <Route path={"/management/:id"} element={<ProjectDetailPage />}>
-                <Route path={"overview"} element={<OverviewManagement />} />
-                <Route path={"meetingRecord"} element={<MeetingRecordManagement />} />
-                <Route path={"schedule"} element={<ScheduleManagement />} />
-                <Route path={"evaluation"} element={<EvaluationManagement />} />
-              </Route>
-            </Routes>
-          </div>
-        </BrowserRouter>
-      </AuthDispatchContext.Provider>
-    </AuthStateContext.Provider>
+    <BrowserRouter>
+      <div className="App">
+        <Routes>
+          <Route path={"/"} element={<Home />} />
+          <Route path={"/token"} element={<JWTToken />} />
+          <Route path={"/profile"} element={<Profile />} />
+          <Route path={"/recruitment"} element={<Recruitment />} />
+          <Route path={"/management"} element={<Management />} />
+          <Route path={"/management/:id"} element={<ProjectDetailPage />}>
+          <Route path={"overview"} element={<OverviewManagement />} />
+          <Route path={"meetingRecord"} element={<MeetingRecordManagement />} />
+          <Route path={"schedule"} element={<ScheduleManagement />} />
+          <Route path={"evaluation"} element={<EvaluationManagement />} />
+        </Route>
+      </Routes>
+    </div>
+  </BrowserRouter>
   );
 }
 
