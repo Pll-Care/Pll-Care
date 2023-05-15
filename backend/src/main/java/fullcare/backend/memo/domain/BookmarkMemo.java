@@ -1,7 +1,7 @@
-package fullcare.backend.memobookmark.domain;
+package fullcare.backend.memo.domain;
 
+import fullcare.backend.global.entity.BaseEntity;
 import fullcare.backend.member.domain.Member;
-import fullcare.backend.memo.domain.Memo;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class MemoBookmark {
+public class BookmarkMemo extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "memobookmark_id")
+    @Column(name = "bookmarkmemo_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,8 +29,8 @@ public class MemoBookmark {
     @Column(name = "is_bookmarked")
     private boolean isBookmarked;
 
-    @Builder(builderMethodName = "createNewMemoBookmark")
-    public MemoBookmark(Member member, Memo memo) {
+    @Builder(builderMethodName = "createNewBookmarkMemo")
+    public BookmarkMemo(Member member, Memo memo) {
         this.member = member;
         this.memo = memo;
     }

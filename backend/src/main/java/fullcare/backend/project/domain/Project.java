@@ -74,19 +74,6 @@ public class Project extends BaseEntity {
         this.endDate = endDate;
     }
 
-//    public static Project createNewProject(Member member, String title, String content, State state) {
-//        Project newProject = Project.builder()
-//                .title(title)
-//                .content(content)
-//                .state(state)
-//                .build();
-//
-//        newProject.addMember(member, ProjectMemberRole.리더);
-//
-//        return newProject;
-//    }
-
-
     public void updateState(State state) {
         this.state = state;
     }

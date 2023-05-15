@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProjectMemberRepository extends JpaRepository<ProjectMember, Long> {
-    @Query("select pm from project_member pm where pm.member.id= :memberId and pm.project.id= :projectId")
+    @Query("select pm from project_member pm where pm.project.id = :projectId and pm.member.id = :memberId")
     Optional<ProjectMember> findByProjectIdAndMemberId(@Param("projectId") Long projectId, @Param("memberId") Long memberId);
 
     List<ProjectMember> findByProjectId(@Param("projectId") Long projectId);

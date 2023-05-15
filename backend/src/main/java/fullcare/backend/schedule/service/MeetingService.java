@@ -25,6 +25,7 @@ public class MeetingService {
     private final ProjectRepository projectRepository;
     private final MemberRepository memberRepository;
     private final MeetingRepository meetingRepository;
+
     public void createMeeting(ScheduleCreateRequest scheduleCreateRequest, String username) {
         Project project = projectRepository.findById(scheduleCreateRequest.getProjectId()).orElseThrow();
         List<MemberDto> memberDtos = scheduleCreateRequest.getMemberDtos();
@@ -43,8 +44,8 @@ public class MeetingService {
                 .state(State.예정)
                 .address(scheduleCreateRequest.getAddress())
                 .build();
-        meeting.addMemberList(memberList);
 
+        meeting.addMemberList(memberList);
         meetingRepository.save(meeting);
 
     }
