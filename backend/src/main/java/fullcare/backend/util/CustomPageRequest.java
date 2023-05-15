@@ -25,7 +25,11 @@ public class CustomPageRequest {
         this.direction = direction;
     }
 
-    public PageRequest of(String... properties) {
-        return PageRequest.of(page - 1, size, direction, properties);
+    public PageRequest of() {
+        return PageRequest.of(page - 1, size, direction, sortingProperty);
+    }
+
+    public PageRequest of(String sortingProperty) {
+        return PageRequest.of(page - 1, size, direction, sortingProperty);
     }
 }
