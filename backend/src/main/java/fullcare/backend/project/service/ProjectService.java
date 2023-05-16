@@ -1,13 +1,15 @@
 package fullcare.backend.project.service;
 
+import fullcare.backend.global.State;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.project.domain.Project;
-import fullcare.backend.project.domain.State;
 import fullcare.backend.project.dto.ProjectCreateRequest;
 import fullcare.backend.project.dto.ProjectListResponse;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
+import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -27,10 +29,8 @@ public class ProjectService {
     private final ProjectRepository projectRepository;
     private final MemberRepository memberRepository;
 
-    public Page<ProjectListResponse> findProjectList(Pageable pageable, Long memberId, List<State> states) {
-//        List<State> state = new ArrayList<>();
-//        state.add(State.예정);
-//        state.add(State.진행중);
+    @Transactional(readOnly = true)
+    public Page<ProjectListResponse> findMyProjectList(Pageable pageable, Long memberId, List<State> states) {
         Page<Project> pageProject = projectRepository.findProjectList(pageable, memberId, states);
 
         List<ProjectListResponse> content = pageProject.stream().map(p -> ProjectListResponse.builder()
@@ -48,12 +48,21 @@ public class ProjectService {
         Project newProject = Project.createNewProject()
                 .title(request.getTitle())
                 .content(request.getContent())
-                .state(State.예정)
+                .state(State.진행중)
+                .startDate(request.getStartDate())
+                .endDate(request.getEndDate())
                 .build();
 
-        
-        newProject.addMember(member, ProjectMemberRole.리더);
-        newProject.updateState(State.진행중);
+
+        newProject.addMember(member, new ProjectMemberRole(ProjectMemberRoleType.리더, ProjectMemberRoleType.미정));
         projectRepository.save(newProject);
+    }
+
+    public Project findProject(Long projectId) {
+        return projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException("프로젝트 정보가 없습니다."));
+    }
+
+    public void deleteProject(Long projectId) {
+        projectRepository.deleteById(projectId);
     }
 }
