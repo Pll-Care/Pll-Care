@@ -18,17 +18,17 @@ public class ScheduleMonthResponse {
 //    private String content;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private Address address;
+    //private Address address;
     private ScheduleCategory scheduleCategory;
     private List<MemberDto> members = new ArrayList<>();
     private Boolean check;
     @Builder
-    public ScheduleMonthResponse(Long scheduleId, String title, LocalDateTime startDate, LocalDateTime endDate, Address address, ScheduleCategory scheduleCategory) {
+    public ScheduleMonthResponse(Long scheduleId, String title, LocalDateTime startDate, LocalDateTime endDate, ScheduleCategory scheduleCategory) {
         this.scheduleId = scheduleId;
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.address = address;
+        //this.address = address;
         this.scheduleCategory = scheduleCategory;
     }
 

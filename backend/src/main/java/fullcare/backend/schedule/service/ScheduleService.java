@@ -98,13 +98,13 @@ public class ScheduleService {
         LocalDate endDate = project.getEndDate();
 
         //schedule로 통합 필요
-        List<Schedule> meetingList = scheduleRepository.findMeetingByProjectId(projectId); // dtype을 구분 짓기 위해 각 메소드를 만듬
-        List<ScheduleListResponse> scheduleListResponseList = toListResponse(meetingList, ScheduleCategory.미팅);
+//        List<Schedule> meetingList = scheduleRepository.findMeetingByProjectId(projectId); // dtype을 구분 짓기 위해 각 메소드를 만듬
+//        List<ScheduleListResponse> scheduleListResponseList = toListResponse(meetingList, ScheduleCategory.미팅);
 
         List<Schedule> milestoneList = scheduleRepository.findMileStoneByProjectId(projectId);
-        List<ScheduleListResponse> response2 = toListResponse(milestoneList,ScheduleCategory.개발일정);
+        List<ScheduleListResponse> scheduleListResponseList = toListResponse(milestoneList,ScheduleCategory.개발일정);
         /////////////////
-        scheduleListResponseList.addAll(response2);
+        //scheduleListResponseList.addAll(response2);
 
         scheduleListResponseList.sort(Comparator.comparing(ScheduleListResponse::getStartDate));// 날짜 기준 내림차순 정렬
 
@@ -114,7 +114,7 @@ public class ScheduleService {
     }
 
     @Transactional(readOnly = true)
-    public ScheduleCalenderMonthResponse findScheduleCalenderList(ScheduleMonthRequest scheduleMonthRequest) {
+    public ScheduleCalenderMonthResponse findScheduleCalenderList(ScheduleMonthRequest scheduleMonthRequest) { // 1일부터 31일까지 일정
         LocalDate localDate = LocalDateTime.now().toLocalDate();
         int lastDay = LocalDateTime.now().toLocalDate().withDayOfMonth(localDate.lengthOfMonth()).getDayOfMonth();
         LocalDateTime startDate = LocalDateTime.of(scheduleMonthRequest.getYear(),scheduleMonthRequest.getMonth(), 1, 0, 0,0);
@@ -128,7 +128,7 @@ public class ScheduleService {
         return scheduleMonthResponse;
     }
     @Transactional(readOnly = true)
-    public Page<ScheduleMonthResponse> findScheduleMonthList(Pageable pageable, ScheduleMonthRequest scheduleMonthRequest, Member member) {
+    public Page<ScheduleMonthResponse> findScheduleMonthList(Pageable pageable, ScheduleMonthRequest scheduleMonthRequest, Member member) { // 현재 날짜 이후 일정
         Member findMember = memberRepository.findById(member.getId()).orElseThrow();
 
         LocalDate localDate = LocalDateTime.now().toLocalDate();
@@ -289,7 +289,7 @@ public class ScheduleService {
             checkModify(member, schedule, scheduleResponse);
 
             if (schedule instanceof Meeting){
-                scheduleResponse.setAddress(scheduleResponse.getAddress());
+                //scheduleResponse.setAddress(scheduleResponse.getAddress());
                 scheduleResponse.setScheduleCategory(ScheduleCategory.미팅);
             }else{
                 scheduleResponse.setScheduleCategory(ScheduleCategory.개발일정);
