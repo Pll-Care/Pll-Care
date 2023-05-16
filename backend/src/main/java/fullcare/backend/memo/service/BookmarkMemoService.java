@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -34,20 +35,13 @@ public class BookmarkMemoService {
     }
 
     @Transactional
-    // todo 미완성 -> 여기서 Member와 Memo에 대해서 조회 쿼리를 한번 더 날리는가? -> 추가 조회를 날리진 않음
+    // ! 여기서 Member와 Memo에 대해서 조회 쿼리를 한번 더 날리는가? -> 추가 조회를 날리진 않음
     public void bookmarkMemo(Member member, Memo memo) {
+        Optional<BookmarkMemo> findBookmarkMemo = bookmarkMemoRepository.findByMemberAndMemo(member, memo);
 
-        boolean memberLoaded = emf.getPersistenceUnitUtil().isLoaded(member);
-        System.out.println("memberLoaded = " + memberLoaded);
+        // todo 여기서 member와 memo를 다시 조회해서 영속성 컨텍스트에 올려야하는가?
 
-        boolean memoLoaded = emf.getPersistenceUnitUtil().isLoaded(memo);
-        System.out.println("memoLoaded = " + memoLoaded);
-
-        BookmarkMemo bookmarkMemo = bookmarkMemoRepository.findByMemberAndMemo(member, memo).orElse(null);
-
-        // ! 여기서 member와 memo를 다시 조회해서 영속성 컨텍스트에 올려야하는가?
-
-        if (bookmarkMemo == null) {
+        if (!(findBookmarkMemo.isPresent())) {
             BookmarkMemo newBookmarkMemo = BookmarkMemo.createNewBookmarkMemo()
                     .member(member)
                     .memo(memo)
@@ -56,6 +50,7 @@ public class BookmarkMemoService {
             newBookmarkMemo.mark();
             bookmarkMemoRepository.save(newBookmarkMemo);
         } else {
+            BookmarkMemo bookmarkMemo = findBookmarkMemo.get();
             bookmarkMemo.unmark();
             bookmarkMemoRepository.delete(bookmarkMemo);
         }
