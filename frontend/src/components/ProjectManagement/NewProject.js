@@ -1,9 +1,10 @@
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+
 import Button from "../Button";
+import { managementActions } from "../../redux/managementSlice";
 
 import { getStringDate } from "../../utils/date";
-import { ProjectListDispatchContext } from "../../pages/Management";
-import { flushSync } from "react-dom";
 
 const NewProject = ({setIsModalVisible}) => {
     const modalOutside = useRef();
@@ -15,7 +16,7 @@ const NewProject = ({setIsModalVisible}) => {
 
     const descriptionRef = useRef();
 
-    const { onCreateProject } = useContext(ProjectListDispatchContext);
+    const dispatch = useDispatch();
 
     const handleModalClose = (e) => {
         if (e.target === modalOutside.current) {
@@ -41,7 +42,7 @@ const NewProject = ({setIsModalVisible}) => {
 
     const handleSubmitNewProject = () => {
         if (description.length < 5) {
-            alert('다섯 글자 이상 작성해주세요.');
+            alert('프로젝트 설명은 다섯 글자 이상 작성해주세요.');
             descriptionRef.current.focus();
             return;
         }
@@ -51,9 +52,19 @@ const NewProject = ({setIsModalVisible}) => {
             return;
         }
 
-        flushSync(() => {
-            onCreateProject(new Date(startDate).getTime(), new Date(endDate).getTime(), title, description, 'ongoing');
-        });
+        let ongoingData = 'complete';
+
+        if (new Date().getDate() >= new Date(startDate).getDate() && new Date().getDate() <= new Date(endDate).getDate()) {
+            ongoingData = 'ongoing';
+        }
+
+        dispatch(managementActions.onCreate({
+            startDate: new Date(startDate).getTime(),
+            endDate: new Date(endDate).getTime(),
+            title,
+            description,
+            state: ongoingData,
+        }));
 
         setIsModalVisible(false);
     }
@@ -97,6 +108,7 @@ const NewProject = ({setIsModalVisible}) => {
                                 onChange={handleChangeStartDate}
                                 data-placeholder='시작 일자'
                             />
+                            -
                             <input
                                 className="new-project-period-end-date"
                                 type='date'
@@ -106,7 +118,7 @@ const NewProject = ({setIsModalVisible}) => {
                                 data-placeholder='종료 일자'
                             />
                         </div>
-                    </div>  
+                    </div>
                     <textarea
                         value={description}
                         onChange={handleChangeContent}

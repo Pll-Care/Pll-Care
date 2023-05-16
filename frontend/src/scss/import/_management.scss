@@ -48,11 +48,13 @@
     
                 &-left-col {
                     figure {
-                        border: $border;
-                        border-radius: 25px;
+                        border: none;
+                        border-radius: 15px;
                         width: 70px;
                         height: 70px;
                         margin-right: 25px;
+                        
+                        @include backgroundImage('../assets/project-default-img.jpg', 0 0, no-repeat, 100% 100%);
                     }
                 }
         
@@ -95,6 +97,20 @@
         }
     }
 
+    .pagination-wrapper {
+        width: 30%;
+
+        button {
+            color: $background-color;
+        }
+
+        li {
+            color: $font-color;
+        }
+
+        @include putCenter;
+    }
+
     .new-project-modal-wrapper {
         background:rgba(0,0,0,0.8); 
         backdrop-filter: blur(5px);
@@ -108,21 +124,23 @@
         .new-project {
             border-radius: 40px;
             background-color: white;
-            height: 470px;
+            height: 400px;
             width: 650px;
             position: fixed;
-            top: 65px;
+            top: 95px;
             left: calc(50% - 325px);
-            padding: 0 20px;
+            padding: 20px;
     
             &-first-row {
-                height: 30%;
+                height: 22%;
     
                 figure {
-                    border: $border;
+                    border: none;
                     border-radius: 15px;
                     width: 70px;
                     height: 70px;
+                    
+                    @include backgroundImage('../assets/project-default-img.jpg', 0 0, no-repeat, 100% 100%);
                 }
     
                 .new-project-left-col {
@@ -149,11 +167,21 @@
             }
     
             &-second-row {
+                margin-top: 20px;
                 height: 70%;
-                padding: 20px;
+                padding: 10px;
+                border-radius: 35px;
+                background-color: $background-color;
+                color: $font-color;
     
                 .new-project-period {
-                    padding: 20px 0;
+                    width: 85%;
+                    padding: 0px 25px;
+                    box-shadow: 0px 10px 30px 5px #0000001A;
+                    border-radius: 35px;
+                    background-color: white;
+                    margin: 6px 10px;
+                    margin-bottom: 20px;
     
                     &-left-col {
                         width: 118px;
@@ -168,6 +196,7 @@
                     &-right-col {
                         width: 330px;
                         padding: 0 10px;
+                        color: #7A7A7A;
     
                         input {
                             font-size: $body-font-size;
@@ -176,8 +205,8 @@
                             padding: 0 10px;
                             height: 40px;
                             width: 160px;
-                            margin-right: 10px;
-                            background-color: #D9D9D9;
+                            margin-right: 5px;
+                            margin-left: 5px;
                             border: none;
                         }
 
@@ -201,19 +230,21 @@
                 textarea {
                     font-size: $body-font-size;
                     font-family: $body-font;
-                    padding: 20px;
-                    min-width: 100%;
-                    max-width: 100%;
-                    min-height: 65%;
-                    max-height: 65%;
-                    background-color: #D9D9D9;
+                    padding: 15px 25px;
+                    margin: 0px 10px;
+                    min-width: 97%;
+                    max-width: 97%;
+                    min-height: 63%;
+                    max-height: 63%;
+                    box-shadow: 0px 10px 30px 5px #0000001A;
+                    background-color: white;
                     border-radius: 20px;
                     border: none;
                 }
 
                 textarea::placeholder {
                     color: #9d9797;
-                  }
+                }
             }
         }
     }

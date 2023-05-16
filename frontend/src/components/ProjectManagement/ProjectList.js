@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
 import Button from '../Button';
-import { useContext } from 'react';
-import { ProjectListDispatchContext } from '../../pages/Management';
+import { managementActions } from '../../redux/managementSlice';
 
 const ProjectList = ({ projectList }) => {
-    const { onRemoveProject, onCompleteProject } = useContext(ProjectListDispatchContext);
+    const dispatch = useDispatch();
 
     return (
         <div className='project-list'>
@@ -32,12 +33,12 @@ const ProjectList = ({ projectList }) => {
                         <div className='project-item-button-wrapper'>
                             <Button
                                 text={'삭제하기'}
-                                onClick={(e) => { e.preventDefault(); onRemoveProject(project.id); }}
+                                onClick={(e) => { e.preventDefault(); dispatch(managementActions.onRemove(project.id)); }}
                             />
-                            <Button
+                            {project.state === 'ongoing' && <Button
                                 text={'완료하기'}
-                                onClick={(e) => { e.preventDefault(); onCompleteProject(project.id); alert('완료 처리되었습니다.')}}
-                            />
+                                onClick={(e) => { e.preventDefault(); dispatch(managementActions.onComplete(project.id)); alert('완료 처리되었습니다.') }}
+                            />}
                         </div>
                     </div>
                 </Link>

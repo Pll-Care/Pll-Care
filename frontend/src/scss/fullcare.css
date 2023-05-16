@@ -766,11 +766,15 @@ input {
   align-items: flex-start;
 }
 .management .project-list-wrapper .project-list .project-item-left-col figure {
-  border: 2px solid #01e89e;
-  border-radius: 25px;
+  border: none;
+  border-radius: 15px;
   width: 70px;
   height: 70px;
   margin-right: 25px;
+  background-image: url("../assets/project-default-img.jpg");
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: 100% 100%, 100%;
 }
 .management .project-list-wrapper .project-list .project-item-right-col {
   height: 100%;
@@ -804,6 +808,17 @@ input {
   justify-content: space-between;
   align-items: flex-end;
 }
+.management .pagination-wrapper {
+  width: 30%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.management .pagination-wrapper button {
+  color: #01e89e;
+}
+.management .pagination-wrapper li {
+  color: #01e89e;
+}
 .management .new-project-modal-wrapper {
   background: rgba(0, 0, 0, 0.8);
   -webkit-backdrop-filter: blur(5px);
@@ -818,25 +833,29 @@ input {
 .management .new-project-modal-wrapper .new-project {
   border-radius: 40px;
   background-color: white;
-  height: 470px;
+  height: 400px;
   width: 650px;
   position: fixed;
-  top: 65px;
+  top: 95px;
   left: calc(50% - 325px);
-  padding: 0 20px;
+  padding: 20px;
 }
 .management .new-project-modal-wrapper .new-project-first-row {
-  height: 30%;
+  height: 22%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
 }
 .management .new-project-modal-wrapper .new-project-first-row figure {
-  border: 2px solid #01e89e;
+  border: none;
   border-radius: 15px;
   width: 70px;
   height: 70px;
+  background-image: url("../assets/project-default-img.jpg");
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: 100% 100%, 100%;
 }
 .management .new-project-modal-wrapper .new-project-first-row .new-project-left-col {
   width: 390px;
@@ -861,11 +880,21 @@ input {
   color: #9d9797;
 }
 .management .new-project-modal-wrapper .new-project-second-row {
+  margin-top: 20px;
   height: 70%;
-  padding: 20px;
+  padding: 10px;
+  border-radius: 35px;
+  background-color: #01e89e;
+  color: #01e89e;
 }
 .management .new-project-modal-wrapper .new-project-second-row .new-project-period {
-  padding: 20px 0;
+  width: 85%;
+  padding: 0px 25px;
+  box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1019607843);
+  border-radius: 35px;
+  background-color: white;
+  margin: 6px 10px;
+  margin-bottom: 20px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -882,6 +911,7 @@ input {
 .management .new-project-modal-wrapper .new-project-second-row .new-project-period-right-col {
   width: 330px;
   padding: 0 10px;
+  color: #7A7A7A;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -894,8 +924,8 @@ input {
   padding: 0 10px;
   height: 40px;
   width: 160px;
-  margin-right: 10px;
-  background-color: #D9D9D9;
+  margin-right: 5px;
+  margin-left: 5px;
   border: none;
 }
 .management .new-project-modal-wrapper .new-project-second-row .new-project-period-right-col input[type=date]::before {
@@ -910,12 +940,14 @@ input {
 .management .new-project-modal-wrapper .new-project-second-row textarea {
   font-size: 18px;
   font-family: "Noto Sans KR", sans-serif;
-  padding: 20px;
-  min-width: 100%;
-  max-width: 100%;
-  min-height: 65%;
-  max-height: 65%;
-  background-color: #D9D9D9;
+  padding: 15px 25px;
+  margin: 0px 10px;
+  min-width: 97%;
+  max-width: 97%;
+  min-height: 63%;
+  max-height: 63%;
+  box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1019607843);
+  background-color: white;
   border-radius: 20px;
   border: none;
 }

@@ -53,7 +53,7 @@
                             height: 40px;
                             margin-right: 5px;
 
-                            @include backgroundImage('../assets/ranking-img.png')
+                            @include backgroundImage('../assets/ranking-img.png');
                         }
 
                         .ranking {
