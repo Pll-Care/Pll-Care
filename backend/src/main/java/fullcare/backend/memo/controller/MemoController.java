@@ -51,11 +51,7 @@ public class MemoController {
     // * 4. 즐겨찾기한 회의록 리스트(페이지 + 필터링)
     // * 5. 특정 회의록 북마킹
 
-
-    // ! 공통검증요소
-    // ! 1. API를 요청한 사용자가 회의록 열람 권한이 있는 프로젝트에 속한 사용자인가?
-    // ! 2. 회의록이 진짜 프로젝트 속한 회의록인가?(사실 이거 맞는지 모르겠음)
-
+    // ! 공통검증요소 : API를 요청한 사용자가 회의록 열람 권한이 있는 프로젝트에 속한 사용자인가?
 
     // ? 고민해야할 거리
     // ? @RequestBody, @RequestParam/@ModelAttribute, @PathVariable 중 어떤 걸 사용해서 HTTP 요청 데이터를 받아오는게 맞을까?
@@ -162,6 +158,11 @@ public class MemoController {
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
+    @Operation(method = "get", summary = "북마크된 회의록 리스트 조회")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "북마크 회의록 리스트 조회 성공", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MemoListResponse.class))),
+            @ApiResponse(responseCode = "400", description = "북마크 회의록 리스트 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+    })
     @GetMapping("/bookmarklist")
     public ResponseEntity bookmarklist(@RequestParam("project_id") Long projectId,
                                        @ModelAttribute CustomPageRequest pageRequest,
@@ -178,8 +179,12 @@ public class MemoController {
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
-
     // ? 북마크 기능을 update 쪽으로 같이 넣어버리기?
+    @Operation(method = "post", summary = "특정 회의록 북마킹")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "회의록 북마킹 성공", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MemoListResponse.class))),
+            @ApiResponse(responseCode = "400", description = "회의록 북마킹 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+    })
     @PostMapping("/{memoId}/bookmark")
     public ResponseEntity bookmark(@PathVariable Long memoId, @CurrentLoginMember Member member) {
         Memo memo = memoService.findMemo(memoId);

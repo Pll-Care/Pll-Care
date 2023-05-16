@@ -13,15 +13,13 @@ import java.util.Optional;
 public interface BookmarkMemoRepository extends JpaRepository<BookmarkMemo, Long> {
     Optional<BookmarkMemo> findByMemberAndMemo(Member member, Memo memo);
 
-    // ! 쿼리에 문제가 있을거 같긴함 -> 페치조인의 대상에는 원래 별칭을 주면 안됌.
-    // ? 왜 페치조인 안먹지?
     // ! 페이징 기준 -> 북마크한 날짜 or 회의록이 생성된 날짜
-
-    //    @Query("select bmm from BookmarkMemo bmm where bmm.member.id = :memberId and bmm.memo.id in (select mm.id from Memo mm where mm.project.id =:projectId)")
-    //    @Query("select bmm from BookmarkMemo bmm join fetch bmm.memo mm where mm.project.id = :projectId and bmm.member.id = :memberId")
+    // * 페치조인에 페이징 안먹힘
+    // ? DB 상으로 페이징 쿼리가 안나가는게 어떻게 페이징?
+    //    @Query("select bmm from BookmarkMemo bmm join fetch bmm.memo mm where bmm.member.id = :memberId and mm.project.id = :projectId ")
     //    @Query("select bmm from BookmarkMemo bmm join fetch bmm.memo where bmm.member.id = :memberId and bmm.memo.project.id = :projectId")
-    @Query("select bmm from BookmarkMemo bmm join fetch bmm.memo where bmm.member.id = :memberId and bmm.memo.project.id = :projectId order by bmm.memo.createdDate")
-    List<BookmarkMemo> findList(@Param("projectId") Long projectId, @Param("memberId") Long memberId); // ? DB 상으로 페이징 쿼리가 안나가는게 어떻게 페이징?
+    @Query("select bmm from BookmarkMemo bmm join fetch bmm.memo mm join mm.project p where bmm.member.id = :memberId and p.id = :projectId")
+    List<BookmarkMemo> findList(@Param("projectId") Long projectId, @Param("memberId") Long memberId);
 
 
     @Query("select bmm from BookmarkMemo bmm join fetch bmm.memo where bmm.member.id = :memberId and bmm.memo.id = :memoId")
