@@ -2,9 +2,10 @@ package fullcare.backend.project.controller;
 
 import fullcare.backend.global.State;
 import fullcare.backend.member.domain.Member;
-import fullcare.backend.project.dto.ProjectCreateRequest;
-import fullcare.backend.project.dto.ProjectListResponse;
+import fullcare.backend.project.dto.request.ProjectCreateRequest;
+import fullcare.backend.project.dto.response.ProjectListResponse;
 import fullcare.backend.project.service.ProjectService;
+import fullcare.backend.project.dto.response.ProjectMemberListResponse;
 import fullcare.backend.security.jwt.CurrentLoginMember;
 import fullcare.backend.util.CustomPageRequest;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +33,15 @@ import java.util.List;
 @Tag(name = "프로젝트", description = "프로젝트 관련 API")
 public class ProjectController {
     private final ProjectService projectService;
-
+    @Operation(method = "get", summary = "프로젝트 멤버 조회")
+    @ApiResponses(value = {
+            @ApiResponse(description = "프로젝트 멤버 조회 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ProjectMemberListResponse.class))})
+    })
+    @GetMapping("/memberList")
+    public ResponseEntity<?> projectMemberList(@RequestParam(name="project_id") Long projectId){
+        List<ProjectMemberListResponse> response = projectService.findProjectMembers(projectId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
     @Operation(method = "get", summary = "사용자 프로젝트 리스트")
 
     @ApiResponses(value = {

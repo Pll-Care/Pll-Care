@@ -1,4 +1,4 @@
-package fullcare.backend.project.dto;
+package fullcare.backend.project.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;

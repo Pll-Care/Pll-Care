@@ -1,5 +1,6 @@
 package fullcare.backend.schedule.dto.response;
 
+import fullcare.backend.global.State;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.schedule.ScheduleCategory;
 import fullcare.backend.schedule.domain.Address;
@@ -21,13 +22,15 @@ public class ScheduleMonthResponse {
     //private Address address;
     private ScheduleCategory scheduleCategory;
     private List<MemberDto> members = new ArrayList<>();
+    private State state;
     private Boolean check;
     @Builder
-    public ScheduleMonthResponse(Long scheduleId, String title, LocalDateTime startDate, LocalDateTime endDate, ScheduleCategory scheduleCategory) {
+    public ScheduleMonthResponse(Long scheduleId, String title, LocalDateTime startDate, LocalDateTime endDate, ScheduleCategory scheduleCategory, State state) {
         this.scheduleId = scheduleId;
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.state = state;
         //this.address = address;
         this.scheduleCategory = scheduleCategory;
     }
