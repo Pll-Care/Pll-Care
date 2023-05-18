@@ -12,6 +12,7 @@ public interface ProjectMemberRepository extends JpaRepository<ProjectMember, Lo
     @Query("select pm from project_member pm where pm.project.id = :projectId and pm.member.id = :memberId")
     Optional<ProjectMember> findByProjectIdAndMemberId(@Param("projectId") Long projectId, @Param("memberId") Long memberId);
 
+    //@Query("select pm from project_member pm join fetch pm.member where pm.project.id = :projectId")
     List<ProjectMember> findByProjectId(@Param("projectId") Long projectId);
 
 }

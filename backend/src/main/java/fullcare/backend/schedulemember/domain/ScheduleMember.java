@@ -40,7 +40,7 @@ public class ScheduleMember {
         this.schedule = schedule;
         this.recentView = recentView;
     }
-    public void updateRecentView(){
-        this.recentView = LocalDateTime.now();
+    public void updateRecentView(LocalDateTime now){
+        this.recentView = now;
     }
 }

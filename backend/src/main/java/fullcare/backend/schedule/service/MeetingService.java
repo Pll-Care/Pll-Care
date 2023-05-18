@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class MeetingService {
     private final MeetingRepository meetingRepository;
 
     public void createMeeting(ScheduleCreateRequest scheduleCreateRequest, String username) {
+        LocalDateTime now = LocalDateTime.now();
         Project project = projectRepository.findById(scheduleCreateRequest.getProjectId()).orElseThrow();
         List<MemberDto> memberDtos = scheduleCreateRequest.getMemberDtos();
         List<Member> memberList = new ArrayList<>();
@@ -43,6 +45,8 @@ public class MeetingService {
                 .author(username)
                 .state(State.예정)
                 .address(scheduleCreateRequest.getAddress())
+                .createdDate(now)
+                .modifiedDate(now)
                 .build();
 
         meeting.addMemberList(memberList);

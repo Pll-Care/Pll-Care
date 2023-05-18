@@ -27,8 +27,8 @@ public class Meeting extends Schedule{
     @Embedded
     private Address address;
     @Builder
-    public Meeting(Project project, String author, State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate, Address address) {
-        super(project, author, state, title, content, startDate, endDate);
+    public Meeting(Project project, String author, State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate, Address address, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+        super(project, author, state, title, content, startDate, endDate, createdDate, modifiedDate);
         this.address = address;
     }
     public void updateAddress(Address address) {

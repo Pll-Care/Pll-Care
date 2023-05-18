@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.time.LocalDateTime;
 
 public interface ScheduleMemberRepository extends JpaRepository<ScheduleMember ,Long> {
-    @Modifying
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("update schedule_member sc set sc.recentView = :recentView where sc.schedule.id = :scheduleId")
     int updateRecentView(LocalDateTime recentView, Long scheduleId);
 }

@@ -13,6 +13,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Entity(name="schedule")
 @Table(name="schedule")
-public abstract class Schedule extends BaseEntity {
+public abstract class Schedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,9 +59,17 @@ public abstract class Schedule extends BaseEntity {
     private LocalDateTime endDate;
 
     @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ScheduleMember> scheduleMembers = new HashSet<>();
+    private List<ScheduleMember> scheduleMembers = new ArrayList<>();
 
-    public Schedule(Project project, String author, State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate) {
+    @Column(name = "create_dt", nullable = false, updatable = false)
+    private LocalDateTime createdDate;
+
+    @Column(name = "modified_dt", nullable = false)
+    private LocalDateTime modifiedDate;
+
+
+
+    public Schedule(Project project, String author, State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.project = project;
         this.author = author;
         this.state = state;
@@ -67,6 +77,8 @@ public abstract class Schedule extends BaseEntity {
         this.content = content;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.createdDate = createdDate;
+        this.modifiedDate = modifiedDate;
     }
 
     public void addMemberList(List<Member> memberList){
@@ -89,15 +101,17 @@ public abstract class Schedule extends BaseEntity {
     }
 
 
-    public void update(State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate) {
+    public void update(State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime modifiedDate) {
         this.state = state;
         this.title = title;
         this.content = content;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.modifiedDate = modifiedDate;
     }
 
-    public void updateState(State state){
+    public void updateState(LocalDateTime modifiedDate, State state){
+        this.modifiedDate = modifiedDate;
         this.state = state;
     }
 }

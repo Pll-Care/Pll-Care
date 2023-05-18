@@ -4,7 +4,6 @@ import fullcare.backend.global.State;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.project.domain.Project;
-import fullcare.backend.project.dto.response.ProjectMemberListResponse;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.repository.ProjectMemberRepository;
@@ -33,7 +32,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -58,22 +56,28 @@ public class ScheduleService {
 //        return getProjectMemberListResponses(projectId, projectMemberRepository);
 //    }
     public boolean updateSchedule(ScheduleUpdateRequest scheduleUpdateRequest, Long scheduleId) {// 멤버 로그인 사용자 검증 수정
-        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow();
+        Schedule schedule = scheduleRepository.findJoinSMById(scheduleId).orElseThrow();
+        if ((schedule instanceof Meeting && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.개발일정)) || (schedule instanceof Milestone && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.미팅)) ){
+            throw new RuntimeException("수정하려는 일정의 카테고리가 맞지 않습니다.");
+        }
         List<ProjectMember> pmList = projectMemberRepository.findByProjectId(scheduleUpdateRequest.getProjectId());
-        List<Member> members = pmList.stream().map(pm -> pm.getMember()).collect(Collectors.toList());
+        List<Member> members = pmList.stream().map(pm -> pm.getMember()).collect(Collectors.toList());// 프로젝트에 있는 멤버 리스트
 
         schedule.update(
                 scheduleUpdateRequest.getState(),
                 scheduleUpdateRequest.getTitle(),
                 scheduleUpdateRequest.getContent(),
                 scheduleUpdateRequest.getStartDate(),
-                scheduleUpdateRequest.getEndDate()
+                scheduleUpdateRequest.getEndDate(),
+                LocalDateTime.now()
         );
         List<Member> updateMemberList = memberRepository.findByIds(scheduleUpdateRequest.getMemberIds()); // 새로 업데이트 되는 멤버 리스트
         if (!members.containsAll(updateMemberList)){// 프로젝트에 속한 사람인지 확인
             return false;}
 
-        schedule.getScheduleMembers().clear(); // 스케쥴 멤버가 삭제 되는 경우에 대한 방안이 없음
+
+
+        schedule.getScheduleMembers().clear(); // 어떤 사람이 들어오고, 나가고, 그대로 있는지를 파악을 해야함,
         for (Member member : updateMemberList) {
             schedule.addMember(member);
         }
@@ -119,7 +123,6 @@ public class ScheduleService {
         LocalDateTime endDate = LocalDateTime.of(scheduleMonthRequest.getYear(), scheduleMonthRequest.getMonth(),lastDay,23,59,59  );
 
         List<Schedule> scheduleList = scheduleRepository.findByStartDateBetweenOrEndDateBetween( startDate, endDate,startDate, endDate  );
-
         ScheduleCalenderMonthResponse scheduleMonthResponse = toScheduleMonthResponse(scheduleList);
         scheduleMonthResponse.getMeetings().sort(Comparator.comparing(MeetingDto::getStartDate));// 날짜 기준 내림차순 정렬
         scheduleMonthResponse.getMilestones().sort(Comparator.comparing(MilestoneDto::getStartDate));// 날짜 기준 내림차순 정렬
@@ -136,7 +139,6 @@ public class ScheduleService {
         Page<Schedule> pageSchedule = scheduleRepository.findMonthByStartDateBetweenOrEndDateBetween(pageable, startDate, endDate, startDate, endDate);
         List<ScheduleMonthResponse> scheduleMonthResponses = new ArrayList<>();
         addResponse(pageSchedule, scheduleMonthResponses, findMember);// 미팅, 마일스톤에 맞게 일정 생성 후 응답에 넣기
-
         return new PageImpl<>(scheduleMonthResponses, pageable, scheduleMonthResponses.size());
     }
 //    @Transactional(readOnly = true)
@@ -148,10 +150,11 @@ public class ScheduleService {
 //        Page<Schedule> pageSchedule = scheduleRepository.findMonthByStartDateBetweenOrEndDateBetween(pageable, startDate, endDate, startDate, endDate);
 //        return null;
 //    }
-    public void updateState(ScheduleStateUpdateRequest scheduleStateUpdateRequest, Long memberId){ // 상태 바꿀 때도 schedulemember recentview 바꿔야함
-        Schedule schedule = scheduleRepository.findById(memberId).orElseThrow();
-        schedule.updateState(scheduleStateUpdateRequest.getState());
-
+    public void updateState(ScheduleStateUpdateRequest scheduleStateUpdateRequest, Long scheduleId){ // 상태 바꿀 때도 schedulemember recentview 바꿔야함
+        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow();
+        LocalDateTime now = LocalDateTime.now();
+        schedule.updateState(now, scheduleStateUpdateRequest.getState());
+        scheduleMemberRepository.updateRecentView(now, schedule.getId());
     }
     @Transactional(readOnly = true) // 프로젝트별 일정 내용
     public ScheduleMyListResponse findMySchedule(ScheduleMonthRequest scheduleMonthRequest, Long memberId) {
@@ -200,7 +203,7 @@ public class ScheduleService {
                     .endDate(schedule.getEndDate())
                     .build();
 
-            Set<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();
+            List<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();
             for (ScheduleMember scheduleMember : scheduleMembers) {
                 if(scheduleMember.getMember() == member && scheduleMember.getRecentView().isBefore(schedule.getModifiedDate())){
                     System.out.println("확인 못함" );
@@ -230,7 +233,7 @@ public class ScheduleService {
         for (Schedule schedule : scheduleList) {
             if (schedule instanceof Meeting){
                 Meeting meeting = (Meeting) schedule;
-                if (meeting.getAddress() != null){
+                //if (meeting.getAddress() != null){
                     MeetingDto meetingDto = MeetingDto.builder()
                             .scheduleId(schedule.getId())
                             .title(schedule.getTitle())
@@ -238,12 +241,12 @@ public class ScheduleService {
                             .startDate(meeting.getStartDate())
                             .endDate(meeting.getEndDate())
                             .address(meeting.getAddress()).build();
-                    Set<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();
+                    List<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();
                     scheduleMembers.forEach(sm -> {
                         meetingDto.addMember(sm.getMember());
                     });
                     scheduleMonthResponse.addMeeting(meetingDto);
-                }
+                //}
             }else{
                 Milestone milestone = (Milestone) schedule;
                 MilestoneDto milestoneDto = MilestoneDto.builder()
@@ -253,7 +256,7 @@ public class ScheduleService {
                         .startDate(milestone.getStartDate())
                         .endDate(milestone.getEndDate())
                         .build();
-                Set<ScheduleMember> scheduleMembers = milestone.getScheduleMembers();
+                List<ScheduleMember> scheduleMembers = milestone.getScheduleMembers();
                 scheduleMembers.forEach(sm -> {
                     milestoneDto.addMember(sm.getMember());
                 });
@@ -279,10 +282,16 @@ public class ScheduleService {
     private void addResponse(Page<Schedule> pageSchedule, List<ScheduleMonthResponse> scheduleMonthResponses, Member member) {
         LocalDateTime now = LocalDateTime.now();
         for (Schedule schedule : pageSchedule) {
-            if (now.isAfter(schedule.getStartDate()) && schedule.getState().equals(State.예정)){// 벌크성 수정으로 바꿔야함, modify 도 수정되기 때문에 schedulemember 도 갱신 해줘야함
-                schedule.updateState(State.진행중);
-                scheduleMemberRepository.updateRecentView(now.plusSeconds(1l), schedule.getId());// 위에서 벌크로 날려도 어떤 스케쥴이 바꼈는지를 몰라서 못함, dirty checking으로 자동으로 수정된 schedule modfied와 내가 갱신한 시간의 싱크가 안맞아 임의로 1초정도 더해줌
-            }// 벌크성이어도 이후 코드에서 사용을 안하기 때문에 영속성 초기화 할 필요가 없음
+            if (now.isAfter(schedule.getStartDate()) && schedule.getState().equals(State.예정)){
+                schedule.updateState(now, State.진행중);
+                for (ScheduleMember scheduleMember : schedule.getScheduleMembers()) {
+                    scheduleMember.updateRecentView(now);
+                }
+
+//                scheduleMemberRepository.updateRecentView(now, schedule.getId());// 벌크로 수정한게 오히려 손해 -> flush, clear 하면 schedule 준영속상태로 다시 find로 조회해서 영속성 찾아야함으로 쿼리가 오히려 더 나갈 수 있음
+            }
+
+
             ScheduleMonthResponse scheduleResponse = ScheduleMonthResponse.builder()
                     .scheduleId(schedule.getId())
                     .title(schedule.getTitle())
@@ -291,8 +300,8 @@ public class ScheduleService {
                     .state(schedule.getState())
                     .build();
 
-            checkModify(member, schedule, scheduleResponse);
 
+            checkModify(member, schedule, scheduleResponse);
             if (schedule instanceof Meeting){
                 //scheduleResponse.setAddress(scheduleResponse.getAddress());
                 scheduleResponse.setScheduleCategory(ScheduleCategory.미팅);
@@ -305,12 +314,16 @@ public class ScheduleService {
     }
 
     private void checkModify(Member member, Schedule schedule, ScheduleMonthResponse scheduleResponse) {
-        Set<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();
+        List<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();
         scheduleMembers.forEach(sm -> {
             scheduleResponse.addMember(sm.getMember());
+//            System.out.println("------------------------------------------------");
+//            System.out.println("sm.getRecentView() = " + sm.getRecentView());
+//            System.out.println("schedule.getModifiedDate() = " + schedule.getModifiedDate());
+//            System.out.println("sm.getRecentView().isBefore(schedule.getModifiedDate()) = " + sm.getRecentView().isBefore(schedule.getModifiedDate()));
+//            System.out.println("------------------------------------------------");
                 if(sm.getMember() == member && sm.getRecentView().isBefore(schedule.getModifiedDate())){
-
-                    log.info("ChronoUnit.SECONDS.between(sm.getRecentView(),schedule.getModifiedDate()); = " + ChronoUnit.SECONDS.between(sm.getRecentView(),schedule.getModifiedDate()));
+//                    log.info("ChronoUnit.SECONDS.between(sm.getRecentView(),schedule.getModifiedDate()); = " + ChronoUnit.SECONDS.between(sm.getRecentView(),schedule.getModifiedDate()));
                     System.out.println("확인 못함" );
                     scheduleResponse.updateCheck(false);
                 }else if (sm.getMember() == member){
@@ -324,10 +337,10 @@ public class ScheduleService {
 
     @Transactional
     public ScheduleDetailResponse findSchedule(Long projectId, Long scheduleId, Long memberId) {
-        Project project = projectRepository.findById(projectId).orElseThrow();
-        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow();
+        Project project = projectRepository.findJoinPMJoinMemberById(projectId).orElseThrow();
+        Schedule schedule = scheduleRepository.findJoinSMById(scheduleId).orElseThrow();
         List<ProjectMember> projectMembers = project.getProjectMembers();
-        Set<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();
+        List<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();
 
         ScheduleDetailResponse scheduleDetailResponse = ScheduleDetailResponse.builder()
                 .projectId(projectId)
@@ -344,7 +357,7 @@ public class ScheduleService {
                     detailMemberDto.setIn(true);
                 }
                 if(projectMember.getMember() == scheduleMember.getMember() && projectMember.getMember().getId() == memberId){ // 로그인한 사용자 최근 확인한 일정 갱신
-                    scheduleMember.updateRecentView();
+                    scheduleMember.updateRecentView(LocalDateTime.now());
                 }
             }
             scheduleDetailResponse.addMember(detailMemberDto);
