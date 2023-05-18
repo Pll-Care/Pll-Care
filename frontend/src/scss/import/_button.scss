@@ -19,11 +19,16 @@
         background-color: #00AA72;
         border: 2px solid #00AA72;
     }
+}
 
-    @include tablet {
+@include tablet {
+    .button {
         font-size: $button-font-size-medium;
     }
-    @include mobile {
+}
+
+@include mobile {
+    .button {
         font-size: $button-font-size-small;
         padding: 3px 15px;
     }

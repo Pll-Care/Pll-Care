@@ -3,61 +3,38 @@
     height: 90px;
 
     &-left-col {
-        margin-left: 20px;
+        margin-left: 25px;
 
         .main-header-logo-img {
             border: $border;
             width: 60px;
             height: 60px;
-
-            @include mobile {
-                width: 40px;
-                height: 40px;
-            }
-        }
-
-        @include mobile {
-            margin-left: 5px;
         }
     }
 
     &-link {
-        width: 80%;
+        width: 75%;
         height: 70px;
-        margin-left: 50px;
-
+        margin-left: 100px;
+        
         &>a {
             font-size: $link-font-size;
             font-family: $link-font;
             color: black;
-            text-decoration: none;
-
-            @include tablet {
-                font-size: $link-font-size-medium;
-            }
-
-            @include mobile {
-                font-size: $link-font-size-small;
-            }
+            text-decoration: none;  
         }
 
-        @include mobile {   
-            margin: 0;
-            width: 55%;
-        }
         @include displayFlex(row, space-around);
     }
 
     &-right-col {
         width: 20%;
+        margin-right: 20px;
 
         Button {
             cursor: pointer;
-            margin-right: 14%;
-
-            @include mobile {
-                margin-right: 5px;
-            }
+            margin-right: 15px;
+            margin-left: auto;
         }
     
         .main-header-user-profile-img {
@@ -70,10 +47,7 @@
             @include backgroundImage("../assets/profile-default-img.png");
         }
 
-        @include mobile {
-            width: 29%;
-        }
-        @include displayFlex(row, space-between);
+        @include displayFlex;
     }
 
     &-login-col {
@@ -82,8 +56,56 @@
         }
     }
 
-    @include mobile {
-        height: 70px;
-    }
     @include displayFlex(row, space-between, center);
+}
+
+@include tablet {
+    .main-header {
+        &-link {
+            width: 45%;
+        }
+
+        &-right-col {
+            width: 30%;
+
+            .main-header-user-profile-img {
+                margin-right: 15px;
+            }
+
+            @include displayFlex(row, flex-end);
+        }
+    }
+}
+
+@include mobile {
+    .main-header {
+        height: 70px;
+
+        &-left-col {
+            margin-left: 63px;
+
+            .main-header-logo-img {
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        &-link {
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            margin-left: 0;
+        }
+
+        &-right-col {
+            width: 50%;
+
+            .main-header-user-profile-img {
+                width: 35px;
+                height: 35px;
+            }
+
+            @include displayFlex;
+        }
+    }
 }
