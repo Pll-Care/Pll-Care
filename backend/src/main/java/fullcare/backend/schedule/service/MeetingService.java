@@ -41,7 +41,7 @@ public class MeetingService {
                 .title(scheduleCreateRequest.getTitle())
                 .content(scheduleCreateRequest.getContent())
                 .author(username)
-                .state(State.예정)
+                .state(State.TBD)
                 .address(scheduleCreateRequest.getAddress())
                 .build();
 

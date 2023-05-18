@@ -37,8 +37,8 @@ public class Project extends BaseEntity {
     private String title;
 
     @Lob
-    @Column(name = "content", nullable = false)
-    private String content;
+    @Column(name = "description", nullable = false)
+    private String description;
 
 //    @Column(name = "create_dt", nullable = false)
 //    private LocalDateTime createDate;
@@ -66,9 +66,9 @@ public class Project extends BaseEntity {
 
 
     @Builder(builderMethodName = "createNewProject")
-    public Project(State state, String title, String content, LocalDate startDate, LocalDate endDate) {
+    public Project(State state, String title, String description, LocalDate startDate, LocalDate endDate) {
         this.title = title;
-        this.content = content;
+        this.description = description;
         this.state = state;
         this.startDate = startDate;
         this.endDate = endDate;
