@@ -4,15 +4,14 @@ import fullcare.backend.member.domain.Member;
 import fullcare.backend.schedule.domain.Schedule;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class MidTermEvaluation {
+public class MidtermEvaluation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,13 +19,26 @@ public class MidTermEvaluation {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="member_id", nullable = false)
-    private Member member;
+    @JoinColumn(name = "voter_id", nullable = false)
+    private Member voter;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="schedule_id", nullable = false)
+    @JoinColumn(name = "voted_id", nullable = false)
+    private Member voted;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "schedule_id", nullable = false)
     private Schedule schedule;
 
     @Enumerated(EnumType.STRING)
     private EvaluationBadge evaluationBadge;
+
+
+    @Builder(builderMethodName = "createNewMidtermEval")
+    public MidtermEvaluation(Member voter, Member voted, Schedule schedule, EvaluationBadge evaluationBadge) {
+        this.voter = voter;
+        this.voted = voted;
+        this.schedule = schedule;
+        this.evaluationBadge = evaluationBadge;
+    }
 }

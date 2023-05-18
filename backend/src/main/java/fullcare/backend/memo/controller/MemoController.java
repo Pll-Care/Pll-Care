@@ -20,7 +20,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -33,7 +32,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Slf4j
-@Getter
 @RequiredArgsConstructor
 @Tag(name = "회의록", description = "회의록 관련 API")
 @RequestMapping("/api/auth/memo") // todo memo는 인증된 사용자만 접근할 수 있는 API인데, 경로를 굳이 auth를 명시해줘야할까?
@@ -44,7 +42,7 @@ public class MemoController {
     private final ProjectMemberService projectMemberService;
     private final BookmarkMemoService bookmarkMemoService;
 
-    // todo 구현해야하는 기능
+    // todo 구현해야하는 API 기능
     // * 1 .회의록 추가, 수정, 삭제
     // * 2. 회의록 목록 조회(페이지 + 필터링)
     // * 3. 회의록 단건조회
