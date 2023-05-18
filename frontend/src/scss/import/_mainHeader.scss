@@ -1,7 +1,6 @@
 .main-header {
     border-bottom: $border;
     height: 90px;
-    @include displayFlex(row, space-between, center);
 
     &-left-col {
         margin-left: 20px;
@@ -10,30 +9,55 @@
             border: $border;
             width: 60px;
             height: 60px;
+
+            @include mobile {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        @include mobile {
+            margin-left: 5px;
         }
     }
 
     &-link {
-        width: 400px;
+        width: 80%;
         height: 70px;
         margin-left: 50px;
-        @include displayFlex(row, space-between);
 
         &>a {
             font-size: $link-font-size;
             font-family: $link-font;
             color: black;
             text-decoration: none;
+
+            @include tablet {
+                font-size: $link-font-size-medium;
+            }
+
+            @include mobile {
+                font-size: $link-font-size-small;
+            }
         }
+
+        @include mobile {   
+            margin: 0;
+            width: 55%;
+        }
+        @include displayFlex(row, space-around);
     }
 
     &-right-col {
-        margin-right: 20px;
-        width: 170px;
-        @include displayFlex(row, space-between);
+        width: 20%;
 
         Button {
             cursor: pointer;
+            margin-right: 14%;
+
+            @include mobile {
+                margin-right: 5px;
+            }
         }
     
         .main-header-user-profile-img {
@@ -45,6 +69,11 @@
 
             @include backgroundImage("../assets/profile-default-img.png");
         }
+
+        @include mobile {
+            width: 29%;
+        }
+        @include displayFlex(row, space-between);
     }
 
     &-login-col {
@@ -52,4 +81,9 @@
             margin-left: auto;
         }
     }
+
+    @include mobile {
+        height: 70px;
+    }
+    @include displayFlex(row, space-between, center);
 }

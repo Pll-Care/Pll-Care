@@ -238,13 +238,24 @@ input {
   width: 60px;
   height: 60px;
 }
+@media (max-width: 767px) {
+  .main-header-left-col .main-header-logo-img {
+    width: 40px;
+    height: 40px;
+  }
+}
+@media (max-width: 767px) {
+  .main-header-left-col {
+    margin-left: 5px;
+  }
+}
 .main-header-link {
-  width: 400px;
+  width: 80%;
   height: 70px;
   margin-left: 50px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
 .main-header-link > a {
@@ -253,9 +264,24 @@ input {
   color: black;
   text-decoration: none;
 }
+@media (min-width: 768px) and (max-width: 1023px) {
+  .main-header-link > a {
+    font-size: 22px;
+  }
+}
+@media (max-width: 767px) {
+  .main-header-link > a {
+    font-size: 13px;
+  }
+}
+@media (max-width: 767px) {
+  .main-header-link {
+    margin: 0;
+    width: 55%;
+  }
+}
 .main-header-right-col {
-  margin-right: 20px;
-  width: 170px;
+  width: 20%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -263,6 +289,12 @@ input {
 }
 .main-header-right-col Button {
   cursor: pointer;
+  margin-right: 14%;
+}
+@media (max-width: 767px) {
+  .main-header-right-col Button {
+    margin-right: 5px;
+  }
 }
 .main-header-right-col .main-header-user-profile-img {
   border: 2px solid #01e89e;
@@ -275,8 +307,18 @@ input {
   background-repeat: no-repeat;
   background-size: 100%, 100%;
 }
+@media (max-width: 767px) {
+  .main-header-right-col {
+    width: 29%;
+  }
+}
 .main-header-login-col Button {
   margin-left: auto;
+}
+@media (max-width: 767px) {
+  .main-header {
+    height: 70px;
+  }
 }
 
 .button {
@@ -298,6 +340,17 @@ input {
   color: white;
   background-color: #00AA72;
   border: 2px solid #00AA72;
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .button {
+    font-size: 17px;
+  }
+}
+@media (max-width: 767px) {
+  .button {
+    font-size: 15px;
+    padding: 3px 15px;
+  }
 }
 
 /* ManagementHeader */
