@@ -2,7 +2,7 @@
     background:rgba(0,0,0,0.8); 
     backdrop-filter: blur(5px);
     opacity: 90%;
-    position: absolute;
+    position: fixed;
     top: 0;
     width: 100%;
     height: 100%;
@@ -10,45 +10,109 @@
     .login-modal {
         border-radius: 20px;
         text-align: center;
-        width: 380px;
-        height: 440px;
+        width: 30%;
+        height: 0%;
+        padding-top: 33%;
         position: absolute;
-        top: 80px;
-        left: calc(50% - 190px);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         background-color: white;
-        @include putCenter;
-        @include displayFlex(column);
+
+        @include tablet {
+            width: 40%;
+            padding-top: 42%;
+        }
+
+        @include mobile {
+            width: 70%;
+            padding-top: 76%;
+        }
     
         .login-logo-img {
             border: $border;
             width: 80px;
             height: 80px;
+            position: absolute;
+            top: 8%;
+            
             @include putCenter;
+
+            @include tablet {
+                width: 68px;
+                height: 68px;
+                top: 9%;
+            }
+
+            @include mobile {
+                width: 20%;
+                height: 0;
+                padding-bottom: 20%;
+                top: 8%;
+            }
         }
     
         .login-heading {
+            position: absolute;
+            top: 29%;
+            padding: 12px;
+
             font: {
                 family: $heading-font;
                 size: $heading-font-size;
             }
-            padding: 12px;
+
+            @include tablet {
+                font-size: $heading-font-size-medium;
+            }
+
+            @include mobile {
+                font-size: $heading-font-size-small;
+                top: 26%;
+            }
         }
     
         .login-text {
+            color: #9AAD84;
+            line-height: $line-height;
+            position: absolute;
+            top: 42%;
+            padding: 12px;
+            margin-bottom: 30px;
+
             font: {
                 family: $body-font;
                 size: $body-font-size;
             }
-            color: #9AAD84;
-            line-height: $line-height;
-            padding: 12px;
-            margin-bottom: 30px;
+
+            @include tablet {
+                font-size: $body-font-size-medium;
+            }
+
+            @include mobile {
+                font-size: $body-font-size-small;
+                top: 43%;
+            }
         }
     
         .login-button-wrapper {
             width: 298px;
             padding: 10px;
-            @include displayFlex(row, space-around);
+            position: absolute;
+            top: 67%;
+
+            @include tablet {
+                width: 82%;
+
+                @include displayFlex(row, space-between);
+            }
+
+            @include mobile {
+                width: 90%;
+                top: 71%;
+
+                @include displayFlex(row, space-around);
+            }
     
             .login-button {
                 width: 70px;
@@ -69,7 +133,24 @@
                 &-naver {
                     @include backgroundImage('../assets/naver-login-button-img.png', center, no-repeat, 100%, 100%);
                 }
+
+                @include tablet {
+                    width: 28%;
+                    height: 0%;
+                    padding-top: 28%;
+                }
+
+                @include mobile {
+                    width: 25%;
+                    height: 0%;
+                    padding-top: 25%;
+                }
             }
-        }    
+
+            @include displayFlex(row, space-around);
+        }
+        
+        @include putCenter;
+        @include displayFlex(column);
     }
 }
