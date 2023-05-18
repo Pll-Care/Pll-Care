@@ -1,10 +1,12 @@
-import { useContext, useState } from 'react';
-import { EditStateDispatchContext, InitialStateDispatchContext, MeetingRecordStateContext } from '../../pages/MeetingRecordManagement';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import MeetingRecordData from './MeetingRecordData';
 import Pagination from '../Pagination';
 import ControlMenu from '../ControlMenu';
 import Button from '../Button';
+
+import { meetingRecordManagementActions } from '../../redux/meetingRecordManagementSlice';
 
 const filterOptionList = [
     {
@@ -25,17 +27,12 @@ const AllMeetingRecordList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [recordDatasPerPage, setRecordDatasPerPage] = useState(4);
 
-    const meetingRecordList = useContext(MeetingRecordStateContext);
+    const meetingRecordList = useSelector(state => state.meetingRecordManagement.meetingRecordList);
 
     const indexOfLast = currentPage * recordDatasPerPage;
     const indexOfFirst = indexOfLast - recordDatasPerPage;
 
-    const { setInitialState } = useContext(InitialStateDispatchContext);
-    const { setEditState } = useContext(EditStateDispatchContext);
-
-    const { setTitle } = useContext(EditStateDispatchContext);
-
-    const { setContent } = useContext(EditStateDispatchContext);
+    const dispatch = useDispatch();
 
     const getCurrentSortedMeetingRecordList = () => {
         const compare = (a, b) => {
@@ -69,7 +66,12 @@ const AllMeetingRecordList = () => {
                 <div className='header-right-col'>
                     <Button
                         text={'새로운 회의록 작성하기'}
-                        onClick={() => { setEditState('editing'); setInitialState(false); setContent(''); setTitle(''); }}
+                        onClick={() => {
+                            dispatch(meetingRecordManagementActions.onChangeEditState('editing'));
+                            dispatch(meetingRecordManagementActions.onEditInitialState(false));
+                            dispatch(meetingRecordManagementActions.onEditTitle(''));
+                            dispatch(meetingRecordManagementActions.onEditContent(''));
+                        }}
                     />
                 </div>
             </div>

@@ -1,13 +1,16 @@
-import { useContext, useEffect } from "react";
-import { InitialStateDispatchContext, SelectedMeetingRecordStateContext } from "../../pages/MeetingRecordManagement";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+
 import MeetingRecordEditor from "./MeetingRecordEditor";
 
+import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
+
 const SelectedMeetingRecord = () => {
-    const selectedMeetingRecord = useContext(SelectedMeetingRecordStateContext);
-    const { setInitialState } = useContext(InitialStateDispatchContext);
+    const selectedMeetingRecord = useSelector(state => state.meetingRecordManagement.selectedMeetingRecord);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        setInitialState(false);
+        dispatch(meetingRecordManagementActions.onEditInitialState(false));
     })
 
     return (

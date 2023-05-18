@@ -1,12 +1,9 @@
-import { useContext } from 'react';
-import { SelectedMeetingRecordStateContext } from '../../pages/MeetingRecordManagement';
-
 import SelectedMeetingRecord from './SelectedMeetingRecord';
 import MeetingRecordEditor from './MeetingRecordEditor';
+import { useSelector } from 'react-redux';
 
 const MeetingRecordListEditor = () => {
-    const selectedMeetingRecord = useContext(SelectedMeetingRecordStateContext);
-
+    const selectedMeetingRecord = useSelector(state => state.meetingRecordManagement.selectedMeetingRecord);
     return (
         <div className="meeting-record-list-editor">
             {

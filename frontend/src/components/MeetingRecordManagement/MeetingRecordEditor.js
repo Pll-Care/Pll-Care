@@ -1,12 +1,16 @@
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import Button from "../Button";
+import ControlMenu from "../ControlMenu";
+
+import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
+
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 import Quill from 'quill';
 import ImageResize from 'quill-image-resize';
-import { useContext, useEffect, useState } from "react";
-import Button from "../Button";
-import { EditStateContext, EditStateDispatchContext, InitialStateContext, InitialStateDispatchContext, MeetingRecordDispatchContext } from "../../pages/MeetingRecordManagement";
-import ControlMenu from "../ControlMenu";
-import { flushSync } from 'react-dom';
+
 Quill.register('modules/ImageResize', ImageResize);
 
 const teamMembers = [
@@ -37,40 +41,40 @@ const MeetingRecordEditor = ({ isEdit, originData }) => {
     const [writer, setWriter] = useState('');
     const [date, setDate] = useState();
 
-    const { title } = useContext(EditStateContext);
-    const { setTitle } = useContext(EditStateDispatchContext);
+    const title = useSelector(state => state.meetingRecordManagement.title);
 
-    const { content } = useContext(EditStateContext);
-    const { setContent } = useContext(EditStateDispatchContext);
+    const content = useSelector(state => state.meetingRecordManagement.content);
 
-    const { setInitialState }  = useContext(InitialStateDispatchContext);
-    const initialState = useContext(InitialStateContext);
+    const initialState = useSelector(state => state.meetingRecordManagement.initialState);
 
-    const { editState } = useContext(EditStateContext);
-    const { setEditState } = useContext(EditStateDispatchContext);
+    const editState = useSelector(state => state.meetingRecordManagement.editState);
+
+    const dispatch = useDispatch();
 
     const handleInitialState = () => {
-        setEditState('editing');
-        setInitialState((prevState) => !prevState);
+        dispatch(meetingRecordManagementActions.onChangeEditState('editing'));
+        dispatch(meetingRecordManagementActions.onEditInitialState((prevState) => !prevState));
     }
-
-    const { onCreateMeetingRecord, onEditMeetingRecord, onRemoveMeetingRecord, onBookMarkMeetingRecord } = useContext(MeetingRecordDispatchContext);
 
     const handleCreateMeetingRecord = () => {
         const writerObj = teamMembers.find((member) => parseInt(member.value) === parseInt(selectedMember));
 
         const newDate = new Date().getTime();
         
-        flushSync(() => {
-            onCreateMeetingRecord(writerObj.name, newDate, title, content);
-        });
+        dispatch(meetingRecordManagementActions.onCreateMeetingRecord({
+            writer: writerObj.name,
+            date: newDate,
+            title,
+            content,
+            bookMarked: false
+        }));
 
         setWriter(writerObj.name);
         setDate(newDate);
-        setTitle(title);
-        setContent(content);
 
-        setEditState('afterEdit');
+        dispatch(meetingRecordManagementActions.onEditContent(content));
+        dispatch(meetingRecordManagementActions.onEditTitle(title));
+        dispatch(meetingRecordManagementActions.onChangeEditState('afterEdit'));
     }
 
     const handleEditMeetingRecord = () => {
@@ -78,43 +82,53 @@ const MeetingRecordEditor = ({ isEdit, originData }) => {
 
         const newDate = new Date().getTime();
 
-        flushSync(() => {
-            onEditMeetingRecord(originData.id, writerObj.name, newDate, title, content, originData.bookMarked);
-        });
+        dispatch(meetingRecordManagementActions.onEditMeetingRecord({
+            id: originData.id,
+            writer: writerObj.name,
+            date: newDate,
+            title,
+            content,
+            bookMarked: originData.bookMarked
+        }));
 
         setWriter(writerObj.name);
         setDate(newDate);
-        setTitle(title);
-        setContent(content);
 
-        setEditState('afterEdit');
+        dispatch(meetingRecordManagementActions.onEditContent(content));
+        dispatch(meetingRecordManagementActions.onEditTitle(title));
+        dispatch(meetingRecordManagementActions.onChangeEditState('afterEdit'));
     }
 
     const handleRemoveMeetingRecord = () => {
-        flushSync(() => {
-            onRemoveMeetingRecord(originData.id);
-        })
+        dispatch(meetingRecordManagementActions.onRemoveMeetingRecord({
+            id: originData.id
+        }));
     }
 
     const handleBookMarkMeetingRecord = () => {
-        flushSync(() => {
-            onBookMarkMeetingRecord(originData.id, originData.writer, originData.date, originData.title, originData.content, true);
-        });
+        dispatch(meetingRecordManagementActions.addBookMarkedMeetingRecord({
+            id: originData.id,
+            writer: originData.writer,
+            date: originData.date,
+            title: originData.title,
+            content: originData.content,
+            bookMarked: true
+        }));
     }
 
     const handleTitleChange = (e) => {
-        setTitle(e.target.value);
+        dispatch(meetingRecordManagementActions.onEditTitle(e.target.value));
     }
 
     useEffect(() => {
         if (isEdit) {
-            setEditState('beforeEdit');
-            setContent(originData.content);
+            dispatch(meetingRecordManagementActions.onChangeEditState('beforeEdit'));
+            dispatch(meetingRecordManagementActions.onEditContent(originData.content));
 
             const writerObj = teamMembers.find((member) => member.name === originData.writer);
             setSelectedMember(writerObj.id);
 
-            setTitle(originData.title);
+            dispatch(meetingRecordManagementActions.onEditTitle(originData.title));
             setWriter(originData.writer);
             setDate(originData.date);
         }
@@ -149,7 +163,7 @@ const MeetingRecordEditor = ({ isEdit, originData }) => {
                                 <div className='button-wrapper-right-col'>
                                     <Button
                                         text={'수정하러 가기'}
-                                        onClick={() => setEditState('editing')}
+                                        onClick={() => dispatch(meetingRecordManagementActions.onChangeEditState('editing'))}
                                     />
                                     <Button
                                         text={'삭제하기'}
@@ -188,7 +202,7 @@ const MeetingRecordEditor = ({ isEdit, originData }) => {
                                     <ReactQuill
                                         className='react-quill'
                                         value={content}
-                                        onChange={setContent}
+                                        onChange={(e) => dispatch(meetingRecordManagementActions.onEditContent(e.target.value))}
                                         modules={{
                                             toolbar: [
                                                 [{ 'header': [1, 2, 3, false] }],

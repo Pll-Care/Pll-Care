@@ -1,10 +1,13 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
+
+import { useSelector } from "react-redux";
+
 import MeetingRecordData from "./MeetingRecordData";
-import { MeetingRecordStateContext } from "../../pages/MeetingRecordManagement";
 import Pagination from "../Pagination";
 
 const BookMarkedMeetingRecordList = () => {
-    const meetingRecordList = useContext(MeetingRecordStateContext);
+    const meetingRecordList = useSelector(state => state.meetingRecordManagement.meetingRecordList);
+
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [recordDatasPerPage, setRecordDatasPerPage] = useState(2);

@@ -1,21 +1,18 @@
-import { useContext } from "react";
-import { SelectedMeetingRecordDispatchContext } from "../../pages/MeetingRecordManagement";
-import { flushSync } from "react-dom";
+import { useDispatch } from "react-redux";
+import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
 
 const MeetingRecordData = ({ sortedMeetingRecordList, isLoading }) => {
-    const { setSelectedMeetingRecord } = useContext(SelectedMeetingRecordDispatchContext);
+    const dispatch = useDispatch();
 
     const handleClickMeetingRecord = (e) => {
-        flushSync(() => {
-                setSelectedMeetingRecord({
-                id: parseInt(e.currentTarget.id),
-                writer: e.currentTarget.getAttribute('writer'),
-                date: new Date(parseInt(e.currentTarget.getAttribute('date'))).getTime(),
-                title: e.currentTarget.getAttribute('title'),
-                content: e.currentTarget.getAttribute('content'),
-                bookMarked: false,
-            });
-        });
+        dispatch(meetingRecordManagementActions.onEditSelectedMeetingRecord({
+            id: parseInt(e.currentTarget.id),
+            writer: e.currentTarget.getAttribute('writer'),
+            date: new Date(parseInt(e.currentTarget.getAttribute('date'))).getTime(),
+            title: e.currentTarget.getAttribute('title'),
+            content: e.currentTarget.getAttribute('content'),
+            bookMarked: false,
+        }));
     }
 
     return (
