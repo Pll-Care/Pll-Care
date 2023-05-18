@@ -8,5 +8,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @AuthenticationPrincipal
-public @interface CurrentLoginUser {
+public @interface CurrentLoginMember {
 }

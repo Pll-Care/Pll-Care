@@ -2,7 +2,6 @@ package fullcare.backend.security.oauth2.domain;
 
 import java.util.Map;
 
-// todo 각 getter별 NPE 방지용 검증코드가 필요함
 public class KakaoOAuth2UserInfo extends OAuth2UserInfo{
     public KakaoOAuth2UserInfo(Map<String, Object> attributes) {
         super(attributes);
