@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Evaluation {
+public class FinalTermEvaluation {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "eval_id")
+    @Column(name = "final_eval_id")
     private Long id;
 
     @Column(name = "title", nullable = false)
@@ -23,6 +23,9 @@ public class Evaluation {
     @Lob
     @Column(name = "content", nullable = false)
     private String content;
+
+    @Embedded
+    private Score score;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)

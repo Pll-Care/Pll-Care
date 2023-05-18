@@ -148,7 +148,7 @@ public class ScheduleService {
 //        Page<Schedule> pageSchedule = scheduleRepository.findMonthByStartDateBetweenOrEndDateBetween(pageable, startDate, endDate, startDate, endDate);
 //        return null;
 //    }
-    public void updateState(ScheduleStateUpdateRequest scheduleStateUpdateRequest, Long memberId){
+    public void updateState(ScheduleStateUpdateRequest scheduleStateUpdateRequest, Long memberId){ // 상태 바꿀 때도 schedulemember recentview 바꿔야함
         Schedule schedule = scheduleRepository.findById(memberId).orElseThrow();
         schedule.updateState(scheduleStateUpdateRequest.getState());
 
