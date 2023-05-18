@@ -14,6 +14,7 @@ import MeetingRecordManagement from "./pages/MeetingRecordManagement";
 import ScheduleManagement from "./pages/ScheduleManagement";
 import EvaluationManagement from "./pages/EvaluationManagement";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
+import TeamMemberManagement from "./components/TeamMemberManagement/TeamMemberManagement";
 
 import { authActions } from "./redux/authSlice";
 
@@ -40,14 +41,15 @@ const App = () => {
           <Route path={"/recruitment"} element={<Recruitment />} />
           <Route path={"/management"} element={<Management />} />
           <Route path={"/management/:id"} element={<ProjectDetailPage />}>
-          <Route path={"overview"} element={<OverviewManagement />} />
-          <Route path={"meetingRecord"} element={<MeetingRecordManagement />} />
-          <Route path={"schedule"} element={<ScheduleManagement />} />
-          <Route path={"evaluation"} element={<EvaluationManagement />} />
-        </Route>
-      </Routes>
-    </div>
-  </BrowserRouter>
+            <Route path={"overview"} element={<OverviewManagement />} />
+            <Route path={"meetingRecord"} element={<MeetingRecordManagement />} />
+            <Route path={"schedule"} element={<ScheduleManagement />} />
+            <Route path={"evaluation"} element={<EvaluationManagement />} />
+            <Route path={"teamMember"} element={<TeamMemberManagement />} />
+          </Route>
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 

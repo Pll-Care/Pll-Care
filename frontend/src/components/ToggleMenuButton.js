@@ -30,8 +30,12 @@ const ToggleMenuButton = ({ isToggleMenuOpen, setIsToggleMenuOpen }) => {
                             onClick={handleToggleMenuButtonClick}
                         />
                         <div className='toggle-menu-button-link-wrapper'>
-                            <div><Link to={'/management'}>프로젝트 관리</Link></div>
-                            <div><Link to={'/recruitment'}>인원 모집</Link></div>
+                            <div>
+                                <Link to={'/management'}>프로젝트 관리</Link>
+                            </div>
+                            <div>
+                                <Link to={'/recruitment'}>인원 모집</Link>
+                            </div>
                         </div>
                     </div>
                 ) : (

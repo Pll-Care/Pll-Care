@@ -2,42 +2,32 @@ import { Link } from "react-router-dom";
 
 const ManagementHeader = ({id}) => {
   return (
-    <header className="management-detail-header">
-      <div className="management-detail-header-overview">
-        <Link
-          to={`/management/${id}/overview`}
-          style={{ textDecoration: "none" }}
-        >
-          오버뷰
-        </Link>
-      </div>
-
-      <div className="management-detail-header-meeting-record">
-        <Link
-          to={`/management/${id}/meetingRecord`}
-          style={{ textDecoration: "none" }}
-        >
-          회의록
-        </Link>
-      </div>
-
-      <div className="management-detail-header-schedule">
-        <Link
-          to={`/management/${id}/schedule`}
-          style={{ textDecoration: "none" }}
-        >
-          일정
-        </Link>
-      </div>
-
-      <div className="management-detail-header-evaluation">
-        <Link
-          to={`/management/${id}/evaluation`}
-          style={{ textDecoration: "none" }}
-        >
-          평가
-        </Link>
-      </div>
+    <header className="management-header">
+      <Link
+        to={`/management/${id}/overview`}
+      >
+        오버뷰
+      </Link>
+      <Link
+        to={`/management/${id}/meetingRecord`}
+      >
+        회의록
+      </Link>
+      <Link
+        to={`/management/${id}/schedule`}
+      >
+        일정
+      </Link>
+      <Link
+        to={`/management/${id}/evaluation`}
+      >
+        평가
+      </Link>
+      <Link
+        to={`/management/${id}/teamMember`}
+      >
+        팀 관리
+      </Link>
     </header>
   );
 };
