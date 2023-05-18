@@ -4,11 +4,14 @@ import fullcare.backend.global.State;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.project.domain.Project;
-import fullcare.backend.project.dto.ProjectCreateRequest;
-import fullcare.backend.project.dto.ProjectListResponse;
+import fullcare.backend.project.dto.request.ProjectCreateRequest;
+import fullcare.backend.project.dto.response.ProjectListResponse;
 import fullcare.backend.project.repository.ProjectRepository;
+import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
+import fullcare.backend.project.dto.response.ProjectMemberListResponse;
+import fullcare.backend.projectmember.repository.ProjectMemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +31,7 @@ import java.util.stream.Collectors;
 public class ProjectService {
     private final ProjectRepository projectRepository;
     private final MemberRepository memberRepository;
-
+    private final ProjectMemberRepository projectMemberRepository;
     @Transactional(readOnly = true)
     public Page<ProjectListResponse> findMyProjectList(Pageable pageable, Long memberId, List<State> states) {
         Page<Project> pageProject = projectRepository.findProjectList(pageable, memberId, states);
@@ -68,5 +71,21 @@ public class ProjectService {
 
     public void deleteProject(Long projectId) {
         projectRepository.deleteById(projectId);
+    }
+
+    public List<ProjectMemberListResponse> findProjectMembers(Long projectId) {
+        return getProjectMemberListResponses(projectId, projectMemberRepository);
+
+    }
+
+    public static List<ProjectMemberListResponse> getProjectMemberListResponses(Long projectId, ProjectMemberRepository projectMemberRepository) {
+        List<ProjectMember> pmList = projectMemberRepository.findByProjectId(projectId);
+        if (pmList.size()==0){
+            throw new RuntimeException("프로젝트 조회 불가");
+        }
+        List<ProjectMemberListResponse> response = pmList.stream().map(pms -> ProjectMemberListResponse.builder()
+                .id(pms.getMember().getId())
+                .name(pms.getMember().getName()).build()).collect(Collectors.toList());
+        return response;
     }
 }

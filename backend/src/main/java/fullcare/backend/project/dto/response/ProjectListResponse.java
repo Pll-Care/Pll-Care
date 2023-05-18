@@ -1,4 +1,4 @@
-package fullcare.backend.project.dto;
+package fullcare.backend.project.dto.response;
 
 import fullcare.backend.global.State;
 import lombok.Builder;
