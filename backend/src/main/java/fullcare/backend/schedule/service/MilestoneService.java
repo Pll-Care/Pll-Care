@@ -6,7 +6,6 @@ import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.schedule.domain.Milestone;
-import fullcare.backend.schedule.domain.Schedule;
 import fullcare.backend.schedule.dto.MemberDto;
 import fullcare.backend.schedule.dto.request.ScheduleCreateRequest;
 import fullcare.backend.schedule.repository.MilestoneRepository;
@@ -26,6 +25,7 @@ public class MilestoneService {
     private final ProjectRepository projectRepository;
     private final MemberRepository memberRepository;
     private final MilestoneRepository milestoneRepository;
+
     public void createMilestone(ScheduleCreateRequest scheduleCreateRequest, String username) {
         Project project = projectRepository.findById(scheduleCreateRequest.getProjectId()).orElseThrow();
         List<MemberDto> memberDtos = scheduleCreateRequest.getMemberDtos();
@@ -41,7 +41,7 @@ public class MilestoneService {
                 .title(scheduleCreateRequest.getTitle())
                 .content(scheduleCreateRequest.getContent())
                 .author(username)
-                .state(State.예정)
+                .state(State.TBD)
                 .build();
         milestone.addMemberList(memberList);
 

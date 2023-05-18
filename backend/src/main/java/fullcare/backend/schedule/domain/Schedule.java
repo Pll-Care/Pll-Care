@@ -5,17 +5,13 @@ import fullcare.backend.global.State;
 import fullcare.backend.global.entity.BaseEntity;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
-import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.schedulemember.domain.ScheduleMember;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,8 +20,8 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorColumn(name = "dtype")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@Entity(name="schedule")
-@Table(name="schedule")
+@Entity(name = "schedule")
+@Table(name = "schedule")
 public abstract class Schedule extends BaseEntity {
 
     @Id
@@ -33,12 +29,14 @@ public abstract class Schedule extends BaseEntity {
     @Column(name = "schedule_id")
     private Long id;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
     // todo -> private ProjectMember author;
     private String author;
+    
     @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false)
     private State state;
@@ -69,7 +67,7 @@ public abstract class Schedule extends BaseEntity {
         this.endDate = endDate;
     }
 
-    public void addMemberList(List<Member> memberList){
+    public void addMemberList(List<Member> memberList) {
         memberList.forEach(member -> {
             ScheduleMember sm = ScheduleMember.builder()
                     .member(member)
@@ -78,13 +76,14 @@ public abstract class Schedule extends BaseEntity {
             scheduleMembers.add(sm);
         });
     }
-    public void addMember(Member member){
 
-            ScheduleMember sm = ScheduleMember.builder()
-                    .member(member)
-                    .schedule(this)
-                    .recentView(LocalDateTime.now()).build();
-            scheduleMembers.add(sm);
+    public void addMember(Member member) {
+
+        ScheduleMember sm = ScheduleMember.builder()
+                .member(member)
+                .schedule(this)
+                .recentView(LocalDateTime.now()).build();
+        scheduleMembers.add(sm);
 
     }
 
@@ -97,7 +96,7 @@ public abstract class Schedule extends BaseEntity {
         this.endDate = endDate;
     }
 
-    public void updateState(State state){
+    public void updateState(State state) {
         this.state = state;
     }
 }

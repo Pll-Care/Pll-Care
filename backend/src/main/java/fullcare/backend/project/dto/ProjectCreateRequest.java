@@ -13,15 +13,15 @@ import java.time.LocalDate;
 public class ProjectCreateRequest {
 
     private String title;
-    private String content;
+    private String description;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate startDate;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate endDate;
 
-    public ProjectCreateRequest(String title, String content, LocalDate startDate, LocalDate endDate) {
+    public ProjectCreateRequest(String title, String description, LocalDate startDate, LocalDate endDate) {
         this.title = title;
-        this.content = content;
+        this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
     }

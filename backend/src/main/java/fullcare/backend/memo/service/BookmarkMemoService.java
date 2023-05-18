@@ -26,7 +26,7 @@ public class BookmarkMemoService {
     private final BookmarkMemoRepository bookmarkMemoRepository;
 
     public Page<BookmarkMemoListResponse> findBookmarkMemoList(Pageable pageable, Long projectId, Long memberId) {
-        List<BookmarkMemo> bookmarkMemoList = bookmarkMemoRepository.findList(projectId, memberId);
+        Page<BookmarkMemo> bookmarkMemoList = bookmarkMemoRepository.findList(pageable, projectId, memberId);
 
         List<BookmarkMemoListResponse> content = bookmarkMemoList.stream().map(BookmarkMemoListResponse::entityToDto)
                 .collect(Collectors.toList());
