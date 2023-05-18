@@ -1,6 +1,6 @@
 package fullcare.backend.member.domain;
 
-import fullcare.backend.evaluation.domain.Evaluation;
+import fullcare.backend.evaluation.domain.FinalTermEvaluation;
 import fullcare.backend.likes.domain.Likes;
 import fullcare.backend.post.domain.Post;
 import fullcare.backend.projectmember.domain.ProjectMember;
@@ -60,7 +60,7 @@ public class Member {
     private Set<Likes> likes = new HashSet<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Evaluation> evaluations = new ArrayList<>();
+    private List<FinalTermEvaluation> evaluations = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProjectMember> projectMembers = new ArrayList<>();

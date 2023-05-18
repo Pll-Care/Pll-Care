@@ -1,7 +1,7 @@
 package fullcare.backend.project.domain;
 
 
-import fullcare.backend.evaluation.domain.Evaluation;
+import fullcare.backend.evaluation.domain.FinalTermEvaluation;
 import fullcare.backend.global.State;
 import fullcare.backend.global.entity.BaseEntity;
 import fullcare.backend.member.domain.Member;
@@ -44,7 +44,7 @@ public class Project extends BaseEntity {
 //    private LocalDateTime createDate;
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Evaluation> evaluations = new ArrayList<>();
+    private List<FinalTermEvaluation> evaluations = new ArrayList<>();
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Schedule> schedules = new ArrayList<>();
