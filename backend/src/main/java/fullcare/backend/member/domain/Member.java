@@ -81,4 +81,14 @@ public class Member {
     public void updateRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }
+
+    public Member(String oAuth2Id, String nickname, String name, String email, MemberRole role, LocalDateTime signupDate, String refreshToken) {
+        this.oAuth2Id = oAuth2Id;
+        this.nickname = nickname;
+        this.name = name;
+        this.email = email;
+        this.role = role;
+        this.signupDate = signupDate;
+        this.refreshToken = refreshToken;
+    }
 }

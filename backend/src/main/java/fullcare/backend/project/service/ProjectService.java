@@ -45,9 +45,8 @@ public class ProjectService {
         return new PageImpl<>(content, pageable, content.size());
     }
 
-    public void createProject(Long memberId, ProjectCreateRequest request) {
+    public Project createProject(Long memberId, ProjectCreateRequest request) {
         Member member = memberRepository.findById(memberId).orElseThrow();
-
         Project newProject = Project.createNewProject()
                 .title(request.getTitle())
                 .content(request.getContent())
@@ -56,9 +55,11 @@ public class ProjectService {
                 .endDate(request.getEndDate())
                 .build();
 
-
         newProject.addMember(member, new ProjectMemberRole(ProjectMemberRoleType.리더, ProjectMemberRoleType.미정));
-        projectRepository.save(newProject);
+
+        Project project = projectRepository.save(newProject);
+
+        return project;
     }
 
     public Project findProject(Long projectId) {
