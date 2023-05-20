@@ -43,9 +43,10 @@ public class MilestoneService {
                 .title(scheduleCreateRequest.getTitle())
                 .content(scheduleCreateRequest.getContent())
                 .author(username)
-                .state(State.예정)
+//                .state(State.예정)
                 .createdDate(now)
                 .modifiedDate(now)
+                .state(State.TBD)
                 .build();
         milestone.addMemberList(memberList);
 

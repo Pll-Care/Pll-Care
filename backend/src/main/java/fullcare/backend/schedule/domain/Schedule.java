@@ -81,7 +81,7 @@ public abstract class Schedule {
         this.modifiedDate = modifiedDate;
     }
 
-    public void addMemberList(List<Member> memberList){
+    public void addMemberList(List<Member> memberList) {
         memberList.forEach(member -> {
             ScheduleMember sm = ScheduleMember.builder()
                     .member(member)
@@ -90,13 +90,14 @@ public abstract class Schedule {
             scheduleMembers.add(sm);
         });
     }
-    public void addMember(Member member){
 
-            ScheduleMember sm = ScheduleMember.builder()
-                    .member(member)
-                    .schedule(this)
-                    .recentView(LocalDateTime.now()).build();
-            scheduleMembers.add(sm);
+    public void addMember(Member member) {
+
+        ScheduleMember sm = ScheduleMember.builder()
+                .member(member)
+                .schedule(this)
+                .recentView(LocalDateTime.now()).build();
+        scheduleMembers.add(sm);
 
     }
 

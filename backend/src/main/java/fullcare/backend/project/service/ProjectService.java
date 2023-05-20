@@ -39,9 +39,13 @@ public class ProjectService {
         List<ProjectListResponse> content = pageProject.stream().map(p -> ProjectListResponse.builder()
                 .projectId(p.getId())
                 .title(p.getTitle())
-                .content(p.getContent().length() > 20 ? p.getContent().substring(0, 20) + "..." : p.getContent())
+                .description(p.getDescription().length() > 20 ? p.getDescription().substring(0, 20) + "..." : p.getDescription())
+                .startDate(p.getStartDate())
+                .endDate(p.getEndDate())
+                .state(p.getState())
                 .build()
         ).collect(Collectors.toList());
+        
         return new PageImpl<>(content, pageable, content.size());
     }
 
@@ -49,8 +53,8 @@ public class ProjectService {
         Member member = memberRepository.findById(memberId).orElseThrow();
         Project newProject = Project.createNewProject()
                 .title(request.getTitle())
-                .content(request.getContent())
-                .state(State.진행중)
+                .description(request.getDescription())
+                .state(State.ONGOING)
                 .startDate(request.getStartDate())
                 .endDate(request.getEndDate())
                 .build();
