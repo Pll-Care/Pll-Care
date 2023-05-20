@@ -1,0 +1,113 @@
+.my-datepicker {
+  box-shadow: 0 0 10px 5px rgba(57, 57, 57, 0.1);
+  border-radius: 20px;
+  background-color: $background-color;
+  display: flex;
+  margin: 5% 18%;
+
+  .react-datepicker {
+    font-family: $body-font;
+    border: none;
+    border-radius: 20px;
+    background-color: #fcfcfc;
+    box-shadow: 0 0 10px 5px rgba(57, 57, 57, 0.1);
+    height: 500px;
+  }
+
+  .react-datepicker__header {
+    background-color: #fcfcfc;
+    color: black;
+    border-bottom: none;
+    border-radius: 20px;
+  }
+
+  .react-datepicker__day-names {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .react-datepicker__day-name {
+    align-items: center;
+    color: #020202;
+    margin: 18px;
+  }
+
+  .react-datepicker__week {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 13px;
+  }
+  .my-calendar-list {
+    width: 100%;
+  }
+}
+.custon-title {
+  font-family: $link-font;
+}
+.calendar-list {
+  &-time {
+    color: white;
+    h5 {
+      font-family: $heading-font;
+      font-size: $sub-heading-font-size;
+      margin-bottom: 10px;
+    }
+    h1 {
+      font-family: $heading-font;
+      font-size: $heading-font-size;
+      border-bottom: 2px solid white;
+      margin-bottom: 20px;
+    }
+  }
+  padding: 2rem;
+  &-item {
+    background-color: white;
+    border-radius: 10px;
+    padding: 1rem;
+    color: $body-font-color;
+    margin-bottom: 20px;
+
+    h5 {
+      font-family: $body-font;
+      font-size: $body-font-size;
+      margin-bottom: 10px;
+    }
+    h4 {
+      font-family: $heading-font;
+      font-size: $sub-heading-font-size;
+    }
+  }
+}
+
+@include tablet {
+  .my-datepicker {
+    @include displayFlex(column);
+    .react-datepicker {
+      height: 300px;
+    }
+    .react-datepicker__day-name {
+      margin: 10px;
+    }
+    .react-datepicker__week {
+      margin: 0px 5px;
+    }
+  }
+}
+
+@include mobile {
+  .my-datepicker {
+    @include displayFlex(column);
+    margin: 3% 10%;
+    .react-datepicker {
+      height: 270px;
+    }
+    .react-datepicker__day-name {
+      margin: 5px;
+    }
+    .react-datepicker__week {
+      margin: 0px 3px;
+    }
+  }
+}

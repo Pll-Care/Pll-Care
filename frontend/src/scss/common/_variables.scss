@@ -6,7 +6,7 @@ $heading-font-size: 40px; // 전체 제목
 
 $sub-heading-font-size: 25px; // 세부 제목
 
-$body-font: 'Noto Sans KR', sans-serif;
+$body-font: "Noto Sans KR", sans-serif;
 $body-font-size: 18px;
 
 $sub-body-font-size: 15px;
@@ -25,6 +25,10 @@ $background-color: #01e89e;
 
 $font-color: #01e89e;
 
+$sub-heading-color: #00aa72;
+
+$body-font-color: #7a7a7a;
+
 // 태블릿 반응형 폰트 사이즈
 $heading-font-size-medium: 38px;
 
@@ -41,7 +45,7 @@ $button-font-size-medium: 17px;
 // 모바일 반응형 폰트 사이즈
 $heading-font-size-small: 33px;
 
-$sub-heading-font-size-small: 22px; 
+$sub-heading-font-size-small: 22px;
 
 $body-font-size-small: 13px;
 

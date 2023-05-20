@@ -1,5 +1,13 @@
+import OverviewChart from "../components/OverviewManagement/OverviewChart";
+import OverviewMeetings from "../components/OverviewManagement/OverviewMeetings";
+
 const OverviewManagement = () => {
-  return <div>오버뷰 페이지 입니다!</div>;
+  return (
+    <>
+      <OverviewChart />
+      <OverviewMeetings />
+    </>
+  );
 };
 
 export default OverviewManagement;
