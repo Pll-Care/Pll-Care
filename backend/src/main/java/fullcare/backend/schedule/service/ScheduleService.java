@@ -282,8 +282,8 @@ public class ScheduleService {
     private void addResponse(Page<Schedule> pageSchedule, List<ScheduleMonthResponse> scheduleMonthResponses, Member member) {
         LocalDateTime now = LocalDateTime.now();
         for (Schedule schedule : pageSchedule) {
-            if (now.isAfter(schedule.getStartDate()) && schedule.getState().equals(State.예정)){
-                schedule.updateState(now, State.진행중);
+            if (now.isAfter(schedule.getStartDate()) && schedule.getState().equals(State.TBD)){
+                schedule.updateState(now, State.ONGOING);
                 for (ScheduleMember scheduleMember : schedule.getScheduleMembers()) {
                     scheduleMember.updateRecentView(now);
                 }
