@@ -1,37 +1,35 @@
 .button {
-    font-family: $button-font;
-    font-size: $button-font-size;
-    background-color: white;
-    color: #01E89E;
-    border-radius: 45px;
-    border: 2px solid #01E89E;
-    padding: 5px 25px;
-    cursor: pointer;
+  font-family: $button-font;
+  font-size: $button-font-size;
+  background-color: white;
+  color: #01e89e;
+  border-radius: 45px;
+  border: 2px solid #01e89e;
+  padding: 5px 25px;
+  cursor: pointer;
 
-    &_positive {
-        color: white;
-        background-color: #01E89E;
-        border: 2px solid #01E89E;
-    }
+  &_positive {
+    color: white;
+    background-color: #01e89e;
+    border: 2px solid #01e89e;
+  }
 
-    &_positive_dark {
-        color: white;
-        background-color: #00AA72;
-        border: 2px solid #00AA72;
-    }
+  &_positive_dark {
+    color: white;
+    background-color: #00aa72;
+    border: 2px solid #00aa72;
+  }
 }
 
 @include tablet {
-    .button {
-        font-size: $button-font-size-medium;
-    }
+  .button {
+    font-size: $button-font-size-medium;
+  }
 }
 
 @include mobile {
-    .button {
-        font-size: $button-font-size-small;
-        padding: 3px 15px;
-    }
+  .button {
+    font-size: $button-font-size-small;
+    padding: 3px 15px;
+  }
 }
-
-

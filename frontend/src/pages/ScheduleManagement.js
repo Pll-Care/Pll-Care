@@ -1,5 +1,13 @@
+import MyCalendar from "../components/ScheduleManagement/MyCalendar";
+import ScheduleOption from "../components/ScheduleManagement/ScheduleOption";
+
 const ScheduleManagement = () => {
-  return <div>일정 페이지입니다!</div>;
+  return (
+    <>
+      <MyCalendar />
+      <ScheduleOption />
+    </>
+  );
 };
 
 export default ScheduleManagement;

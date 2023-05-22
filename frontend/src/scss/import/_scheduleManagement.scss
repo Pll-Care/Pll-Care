@@ -1,0 +1,68 @@
+Button {
+  margin-right: 15px;
+}
+.schedule-option {
+  margin: 20px 10%;
+  &-person {
+    background-color: $background-color;
+    margin-top: 20px;
+    padding: 1.5rem;
+
+    h4 {
+      color: white;
+      font-family: $link-font;
+      font-size: $link-font-size;
+      margin-bottom: 20px;
+    }
+  }
+}
+.schedule-list {
+  display: flex;
+  padding: 1rem;
+
+  @media (max-width: 1024px) {
+    @include displayFlex(column);
+  }
+
+  &-time {
+    @include displayFlex(column);
+    font-style: normal;
+    color: $body-font-color;
+    font-family: $heading-font;
+    width: 15%;
+    h1 {
+      font-size: 65px;
+    }
+    h2 {
+      font-size: $link-font-size;
+    }
+  }
+
+  &-content {
+    text-align: left;
+    border: 3px solid #01e89e;
+    border-radius: 35px;
+    width: 85%;
+    padding: 1rem;
+
+    &-time {
+      @include displayFlex(row, space-between, center);
+      h5 {
+        font-family: $body-font;
+        font-size: $body-font-size;
+        color: $body-font-color;
+      }
+      h1 {
+        color: $background-color;
+        font-family: $heading-font;
+        font-size: $heading-font-size;
+      }
+    }
+
+    h4 {
+      font-family: $heading-font;
+      font-size: $sub-heading-font-size;
+      color: $body-font-color;
+    }
+  }
+}

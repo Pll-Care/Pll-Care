@@ -1,0 +1,93 @@
+// OverviewChart 컴포넌트 scss
+.schedule {
+  h1 {
+    font-size: $heading-font-size;
+    color: $sub-heading-color;
+    font-family: $heading-font;
+    margin: 15px;
+  }
+}
+
+.simple {
+  background-color: white;
+  color: black;
+  border-radius: 15px;
+  padding: 1rem;
+  margin-top: 10px;
+  h2 {
+    font-family: $link-font;
+    font-size: $link-font-size;
+    color: #7a7a7a;
+  }
+  h3 {
+    margin-top: 10px;
+    font-family: $link-font;
+    font-size: 14px;
+    color: #7a7a7a;
+  }
+}
+// OverviewMeetings 컴포넌트 scss
+.overview-meetings {
+  h1 {
+    font-size: $heading-font-size;
+    color: $sub-heading-color;
+    font-family: $heading-font;
+    margin: 15px;
+  }
+  &-list {
+    @include displayFlex(row, space-around);
+    @media (max-width: 1024px) {
+      @include displayFlex(column);
+    }
+
+    &-current,
+    &-bookmark {
+      h2 {
+        font-size: $sub-heading-font-size;
+        color: $body-font-color;
+        font-family: $heading-font;
+        margin: 20px;
+      }
+    }
+  }
+}
+// OverviewMeetingList 컴포넌트 scss
+.meeting-list-wrapper {
+  width: 100%;
+  background-color: $background-color;
+  box-shadow: 0px 10px 35px 5px rgba(0, 0, 0, 0.04);
+  border-radius: 20px;
+  padding: 10px;
+  @include displayFlex(column, space-between);
+
+  .meeting-item {
+    background-color: #ffffff;
+    color: $body-font-color;
+    border-radius: 15px;
+    width: 95%;
+    height: 120px;
+
+    flex-grow: 1;
+    margin: 8px;
+    padding: 1rem;
+
+    @include displayFlex(column, space-between, flex-start);
+
+    h5,
+    h4 {
+      font-size: $body-font-size;
+      font-family: $body-font;
+    }
+    h3 {
+      font-family: $link-font;
+      font-size: $link-font-size;
+      font-size: 24px;
+    }
+  }
+  .meeting-item:first-child {
+    margin-top: 20px;
+  }
+  .meeting-item:last-child {
+    margin-bottom: 20px;
+  }
+}
