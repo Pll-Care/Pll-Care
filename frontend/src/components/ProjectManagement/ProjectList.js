@@ -24,7 +24,7 @@ const ProjectList = ({ projectList }) => {
                                 {project.title}
                             </div>
                             <div className='project-item-period'>
-                                <div>진행 기간: </div>
+                                <div className='project-item-period-heading'>진행 기간: </div>
                                 <div>
                                     {new Date(project.startDate).toLocaleDateString()}
                                     ~

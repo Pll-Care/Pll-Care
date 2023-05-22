@@ -20,8 +20,6 @@
         }
 
         &-right-col {
-            width: 220px;
-
             @include displayFlex(row, space-between);
         }
 
@@ -67,6 +65,13 @@
 
                     .project-item-description {
                         line-height: 1.5;
+                        overflow-wrap: break-word;
+                    }
+
+                    .project-item-period {
+                        &-heading {
+                            margin-right: 5px;
+                        }
                     }
                 }
     
@@ -235,8 +240,12 @@
                 }
     
                 &-button-wrapper {
-                    width: 130px;
-                    height: 120px;
+                    width: 150px;
+                    height: 100px;
+
+                    Button {
+                        margin-bottom: 10px;
+                    }
     
                     @include displayFlex(column, space-between, flex-end);
                 }
@@ -370,8 +379,13 @@
                 }
     
                 &-button-wrapper {
-                    width: 130px;
-                    height: 110px;
+                    width: 150px;
+                    height: 140px;
+
+                    Button {
+                        margin-top: 10px;
+                        margin-bottom: 15px;
+                    }
     
                     @include displayFlex(column, space-between, flex-end);
                 }
@@ -448,25 +462,34 @@
 @include mobile {
     .management {
         &-main-header {
-            height: 105px;
+            height: 120px;
             padding: 6px;
             border-bottom-left-radius: 45px;
             border-bottom-right-radius: 45px;
 
             &-left-col {
-                height: 50%;
+                height: 40px;
+                margin-top: 5px;
                 margin-bottom: 5px;
-                width: 270px;
+                width: 100%;
 
                 h1 {
                     font-size: $sub-heading-font-size-small;
                 }
 
-                @include displayFlex(row, space-between);
+                Button {
+                    margin-right: 0;
+                }
+
+                @include displayFlex(row, space-around);
             }
 
             &-right-col {
-                width: 150px;
+                width: 60%;
+
+                Button {
+                    @include putCenter;
+                }
             }
 
             @include displayFlex(column);
@@ -549,7 +572,7 @@
 
             .project-item {
                 padding: 7px;
-                height: 255px;
+                height: 235px;
 
                 &-right-col {
                     width: 84%;
@@ -557,7 +580,8 @@
                     margin-bottom: auto;
 
                     .project-item-text-wrapper {
-                        height: 190px;
+                        height: 170px;
+                        width: 100%;
                     }
 
                     .project-item-heading {
@@ -574,19 +598,24 @@
 
                     .project-item-period {
                         width: 100%;
+                        line-height: 1.5;
 
                         @include displayFlex(column, center, flex-start);
                     }
 
                     .project-item-description {
-                        overflow-wrap: break-word;
                         width: 100%;
                     }
 
                     .project-item-button-wrapper {
-                        width: 100%;
+                        width: 90%;
+                        margin-top: 10px;
 
-                        @include displayFlex(row, space-around, flex-end);
+                        Button {
+                            margin: 0;
+                        }
+
+                        @include displayFlex(row, space-around);
                     }
 
                     @include displayFlex(column, center, flex-start);

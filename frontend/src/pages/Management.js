@@ -6,9 +6,40 @@ import NonAuthenticatedManagement from "./NonAuthenticatedManagement";
 import Pagination from "../components/Pagination";
 
 import { useSelector } from "react-redux";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import axios from 'axios';
 
 const Management = () => {
+  const accessToken = useSelector(state => state.auth.accessToken);
+
+  const apiUrl = 'http://localhost:8080/api/auth/project';
+  
+  useEffect(() => {
+    const fetchProjectList = async () => {
+      try {
+        if (accessToken) {
+          const response = await axios.get(apiUrl, {
+              'states': [
+                '예정'
+              ]
+          }, {
+            headers: {
+              'Authorization': `Bearer ${accessToken}`,
+              'Content-Type': 'application/json'
+            },
+          })
+  
+          console.log(response);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    fetchProjectList();
+  }, [accessToken]);
+  
   const [allProjectListVisible, setAllProjectListVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
