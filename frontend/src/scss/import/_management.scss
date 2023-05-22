@@ -3,7 +3,6 @@
 
     &-main-header {
         background-color: $background-color;
-        font-size: $heading-font-size;
         font-family: $heading-font;
         color: white;
         height: 200px;
@@ -26,22 +25,17 @@
             @include displayFlex(row, space-between);
         }
 
-        @include displayFlex(row, space-between);
+        @include displayFlex(row, space-around);
     }
 
     .project-list-wrapper {
-        padding: 30px;
-
         .project-list {
             margin-top: 30px;
     
             .project-item {
                 border: $border;
                 border-radius: 20px;
-                width: 700px;
-                height: 160px;
                 margin-bottom: 30px;
-                padding: 20px;
                 text-decoration: none;
                 box-shadow: 0px 10px 30px 5px #B5B5B533;
                 cursor: pointer;
@@ -50,17 +44,12 @@
                     figure {
                         border: none;
                         border-radius: 15px;
-                        width: 70px;
-                        height: 70px;
-                        margin-right: 25px;
                         
                         @include backgroundImage('../assets/project-default-img.jpg', 0 0, no-repeat, 100% 100%);
                     }
                 }
         
                 &-right-col {
-                    height: 100%;
-                    width: 100%;
                     color: #003B28;
                     font-size: $body-font-size;
                     font-family: $body-font;
@@ -74,25 +63,14 @@
                     .project-item-period,
                     .project-item-description {
                         margin-bottom: 7px;
-                        width: 400px;
                     }
 
                     .project-item-description {
                         line-height: 1.5;
                     }
-
-                    .project-item-button-wrapper {
-                        width: 130px;
-                        height: 88%;
-
-                        @include displayFlex(column, space-between, flex-end);
-                    }
-
-                    @include displayFlex(row, space-between);
                 }
     
                 @include putCenter;
-                @include displayFlex(row, flex-start, flex-start);
             }
         }
     }
@@ -124,33 +102,27 @@
         .new-project {
             border-radius: 40px;
             background-color: white;
-            height: 370px;
-            width: 650px;
             position: fixed;
-            top: 95px;
-            left: calc(50% - 325px);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             padding: 20px;
     
             &-first-row {
-                height: 22%;
+                display: flex;
+                justify-content: space-between;
     
                 figure {
                     border: none;
                     border-radius: 15px;
-                    width: 70px;
-                    height: 70px;
                     
                     @include backgroundImage('../assets/project-default-img.jpg', 0 0, no-repeat, 100% 100%);
                 }
     
                 .new-project-left-col {
-                    width: 390px;
-    
                     input {
-                        width: 300px;
                         border-radius: 15px;
-                        border: none;
-                        font-size: $sub-heading-font-size;
+                        border: 2px solid white;
                         font-family: $heading-font;
                         padding: 5px;
                         background-color: white;
@@ -162,44 +134,33 @@
     
                     @include displayFlex(row, space-between, flex-end);
                 }
-    
-                @include displayFlex(row, space-between, flex-end);
             }
     
             &-second-row {
-                margin-top: 20px;
-                height: 73%;
                 padding: 10px;
                 border-radius: 35px;
                 background-color: $background-color;
                 color: $font-color;
     
                 .new-project-period {
-                    width: 85%;
-                    padding: 0px 25px;
                     box-shadow: 0px 10px 30px 5px #0000001A;
                     border-radius: 35px;
                     background-color: white;
-                    margin: 6px 10px;
-                    margin-bottom: 20px;
     
                     &-left-col {
                         width: 118px;
     
                         h1 {
-                            font-size: $body-font-size;
                             font-family: $body-font;
                             margin-right: 40px;
                         }
                     }
     
                     &-right-col {
-                        width: 330px;
                         padding: 0 10px;
                         color: #7A7A7A;
     
                         input {
-                            font-size: $body-font-size;
                             font-family: $body-font;
                             border-radius: 15px;
                             padding: 0 10px;
@@ -223,19 +184,11 @@
     
                         @include displayFlex(row, flex-start);
                     }
-    
-                    @include displayFlex(row, flex-start);
                 }
     
                 textarea {
-                    font-size: $body-font-size;
                     font-family: $body-font;
                     padding: 15px 25px;
-                    margin: 0px 10px;
-                    min-width: 97%;
-                    max-width: 97%;
-                    min-height: 63%;
-                    max-height: 63%;
                     box-shadow: 0px 10px 30px 5px #0000001A;
                     background-color: white;
                     border-radius: 20px;
@@ -245,6 +198,408 @@
                 textarea::placeholder {
                     color: #9d9797;
                 }
+            }
+        }
+    }
+}
+
+@include desktop {
+    .management {
+        &-main-header {
+            font-size: $heading-font-size;
+        }
+
+        .project-list-wrapper {
+            padding: 30px;
+
+            .project-item {
+                width: 700px;
+                height: 180px;
+                padding: 20px;
+    
+                figure {
+                    width: 70px;
+                    height: 70px;
+                    margin-right: 25px;
+                }
+    
+                &-right-col {
+                    width: 100%;
+    
+                    @include displayFlex(row, space-between);
+                }
+    
+                &-period,
+                &-description {
+                    width: 400px;
+                }
+    
+                &-button-wrapper {
+                    width: 130px;
+                    height: 120px;
+    
+                    @include displayFlex(column, space-between, flex-end);
+                }
+
+                &-period {
+                    @include displayFlex(row, flex-start);
+                }
+
+                @include displayFlex(row, flex-start, flex-start);
+            }
+        }
+
+        .new-project {
+            width: 630px;
+            height: 370px;
+
+            &-first-row {
+                height: 22%;
+
+                .new-project-left-col {
+                    width: 70%;
+
+                    input {
+                        font-size: $sub-heading-font-size;
+                        width: 80%;
+                    }
+    
+                    figure {
+                        width: 70px;
+                        height: 70px;
+                        margin-right: 20px;
+                    }
+
+                    @include displayFlex(row, center, flex-end);
+                }
+
+                @include displayFlex;
+            }
+
+            &-second-row {
+                margin-top: 20px;
+                height: 73%;
+                
+                h1, 
+                input {
+                    font-size: $body-font-size;
+                }
+
+                input {
+                    width: 300px;
+                }
+
+                h1 {
+                    width: 120px;
+                }
+
+                .new-project-period {
+                    padding: 0px 25px;
+                    margin: 6px 10px;
+                    width: 85%;
+                    margin-bottom: 20px;
+
+                    &-right-col {
+                        width: 330px;
+                    }
+
+                    @include displayFlex(row, flex-start);
+                }
+            }
+
+            textarea {
+                font-size: $body-font-size;
+                width: 97%;
+                height: 63%;
+                margin: 0px 10px;
+            }
+        }
+    }
+}
+
+@include tablet {
+    .management {
+        h1 {
+            font-size: $heading-font-size-medium;
+        }
+
+        &-main-header-right-col {
+            width: 30%;
+
+            Button {
+                margin-right: 10px;
+            }
+
+            @include displayFlex(row, flex-end);
+        }
+
+        .project-list-wrapper {
+            padding: 30px;
+
+            .project-item {
+                width: 670px;
+                height: 180px;
+                padding: 20px;
+    
+                &-heading {
+                    font-size: $heading-font-size-medium;
+                    font-family: $heading-font;
+                }
+        
+                &-period,
+                &-description {
+                    font-size: $body-font-size-medium;
+                    font-family: $body-font;
+                    width: 400px;
+                }
+
+                &-period {
+                    @include displayFlex(row, flex-start);
+                }
+    
+                figure {
+                    width: 70px;
+                    height: 70px;
+                    margin-right: 25px;
+                }
+    
+                &-right-col {
+                    width: 100%;
+    
+                    @include displayFlex(row, space-between);
+                }
+    
+                &-button-wrapper {
+                    width: 130px;
+                    height: 110px;
+    
+                    @include displayFlex(column, space-between, flex-end);
+                }
+
+                @include displayFlex(row, flex-start, flex-start);
+            }
+        }
+
+        .new-project {
+            width: 600px;
+            height: 370px;
+
+            &-first-row {
+                height: 22%;
+
+                .new-project-left-col {
+                    width: 70%;
+                    
+                    input {
+                        font-size: $sub-heading-font-size-medium;
+                        width: 80%;
+                        margin-right: 15px;
+                    }
+    
+                    figure {
+                        width: 60px;
+                        height: 60px;
+                        margin-right: 20px;
+                    }
+
+                    @include displayFlex(row, center, flex-end);
+                }
+
+                @include displayFlex;
+            }
+
+            &-second-row {
+                margin-top: 20px;
+                height: 73%;
+
+                h1, 
+                input {
+                    font-size: $body-font-size-medium;
+                }
+
+                h1 {
+                    width: 100%;
+                }
+
+                .new-project-period {
+                    padding: 0px 25px;
+                    margin: 6px 10px;
+                    width: 85%;
+                    margin-bottom: 20px;
+
+                    &-right-col {
+                        width: 330px;
+                    }
+
+                    @include displayFlex(row, flex-start);
+                }
+            }
+
+            textarea {
+                font-size: $body-font-size-medium;
+                width: 97%;
+                height: 63%;
+                margin: 0px 10px;
+            }
+        }
+    }
+}
+
+@include mobile {
+    .management {
+        &-main-header {
+            height: 105px;
+            padding: 6px;
+            border-bottom-left-radius: 45px;
+            border-bottom-right-radius: 45px;
+
+            &-left-col {
+                height: 50%;
+                margin-bottom: 5px;
+                width: 270px;
+
+                h1 {
+                    font-size: $sub-heading-font-size-small;
+                }
+
+                @include displayFlex(row, space-between);
+            }
+
+            &-right-col {
+                width: 150px;
+            }
+
+            @include displayFlex(column);
+        }
+
+        .new-project {
+            width: 90%;
+            height: 390px;
+
+            &-first-row {
+                flex-direction: column-reverse;
+                height: 25%;
+
+                .new-project-left-col {
+                    width: 100%;
+                    height: 80%;
+                    
+                    input {
+                        font-size: $sub-heading-font-size-medium;
+                        width: 85%;
+                        height: 80%;
+                        margin-right: 0;
+                        margin-bottom: auto;
+                    }
+    
+                    figure {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 15px;
+                        margin-right: 10px;
+                        margin-bottom: auto;
+                    }
+
+                    @include displayFlex(row, center, flex-end);
+                }
+
+                .new-project-right-col {
+                    margin-left: auto;
+                    margin-bottom: 5px;
+                }
+            }
+
+            &-second-row {
+                height: 75%;
+                width: 100%;
+
+                h1, 
+                input {
+                    font-size: $body-font-size-medium;
+                }
+
+                h1 {
+                    width: 100px;
+                }
+
+                .new-project-period {
+                    padding: 10px;
+                    height: 160px;
+                    width: 100%;
+                    margin-bottom: 10px;
+                    
+                    .new-project-period-right-col {
+                        @include displayFlex(column);
+                    }
+
+                    @include displayFlex(column, space-around);
+                    @include putCenter;
+                }
+            }
+
+            textarea {
+                font-size: $body-font-size-medium;
+                width: 100%;
+                height: 30%;
+            }
+        }
+
+        .project-list-wrapper {
+            padding: 10px;
+
+            .project-item {
+                padding: 7px;
+                height: 255px;
+
+                &-right-col {
+                    width: 84%;
+                    margin-top: auto;
+                    margin-bottom: auto;
+
+                    .project-item-text-wrapper {
+                        height: 190px;
+                    }
+
+                    .project-item-heading {
+                        font-size: $heading-font-size-medium;
+                        font-family: $heading-font;
+                    }
+            
+                    .project-item-period,
+                    .project-item-description {
+                        font-size: $body-font-size-medium;
+                        font-family: $body-font;
+                        width: 69%;
+                    }
+
+                    .project-item-period {
+                        width: 100%;
+
+                        @include displayFlex(column, center, flex-start);
+                    }
+
+                    .project-item-description {
+                        overflow-wrap: break-word;
+                        width: 100%;
+                    }
+
+                    .project-item-button-wrapper {
+                        width: 100%;
+
+                        @include displayFlex(row, space-around, flex-end);
+                    }
+
+                    @include displayFlex(column, center, flex-start);
+                }
+
+                figure {
+                    width: 35px;
+                    height: 35px;
+                    margin-right: 7px;
+                    margin-top: 2px;
+                }
+
+                @include displayFlex(row, flex-start, baseline);
             }
         }
     }

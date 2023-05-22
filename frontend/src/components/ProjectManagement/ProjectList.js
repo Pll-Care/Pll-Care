@@ -19,15 +19,21 @@ const ProjectList = ({ projectList }) => {
                         <figure />
                     </div>
                     <div className='project-item-right-col'>
-                        <div>
+                        <div className='project-item-text-wrapper'>
                             <div className='project-item-heading'>
                                 {project.title}
                             </div>
                             <div className='project-item-period'>
-                                진행 기간: {new Date(project.startDate).toLocaleDateString()} ~ {new Date(project.endDate).toLocaleDateString()}
+                                <div>진행 기간: </div>
+                                <div>
+                                    {new Date(project.startDate).toLocaleDateString()}
+                                    ~
+                                    {new Date(project.endDate).toLocaleDateString()}
+                                </div>
                             </div>
                             <div className='project-item-description'>
-                                프로젝트 설명: {project.description?.length > 40 ? [project.description.slice(0, 40), '...'].join('') : project.description}
+                                <div>프로젝트 설명:</div>
+                                {project.description?.length > 40 ? [project.description.slice(0, 40), '...'].join('') : project.description}
                             </div>
                         </div>
                         <div className='project-item-button-wrapper'>

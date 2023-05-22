@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import Button from "../Button";
 import { managementActions } from "../../redux/managementSlice";
@@ -80,6 +80,7 @@ const NewProject = ({setIsModalVisible}) => {
                     <div className='new-project-left-col'>
                         <figure />
                         <input
+                            className='new-project-heading-input'
                             type='text'
                             required
                             value={title}

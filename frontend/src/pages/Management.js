@@ -57,7 +57,7 @@ const Management = () => {
               <h1>참여 프로젝트</h1>
               <Button
                 onClick={handleModalVisible}
-                text={'새 프로젝트 생성'}
+                text={'프로젝트 생성'}
               />
             </div>
             <div className='management-main-header-right-col'> 
