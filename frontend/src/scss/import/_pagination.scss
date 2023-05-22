@@ -10,6 +10,8 @@
         font-size: $button-font-size;
         color: white;
         background-color: transparent;
+
+        @include putCenter;
     }
     
     ul {
