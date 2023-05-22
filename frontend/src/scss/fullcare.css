@@ -968,7 +968,6 @@ input {
   top: 0;
 }
 .management .new-project-modal-wrapper .new-project {
-  border-radius: 40px;
   background-color: white;
   position: fixed;
   top: 50%;
@@ -1008,7 +1007,6 @@ input {
 }
 .management .new-project-modal-wrapper .new-project-second-row {
   padding: 10px;
-  border-radius: 35px;
   background-color: #01e89e;
   color: #01e89e;
 }
@@ -1113,6 +1111,7 @@ input {
     align-items: center;
   }
   .management .new-project {
+    border-radius: 40px;
     width: 630px;
     height: 370px;
     padding: 20px;
@@ -1142,6 +1141,7 @@ input {
   }
   .management .new-project-second-row {
     margin-top: 20px;
+    border-radius: 35px;
     height: 73%;
   }
   .management .new-project-second-row h1,
@@ -1242,6 +1242,7 @@ input {
     margin-bottom: 15px;
   }
   .management .new-project {
+    border-radius: 40px;
     width: 600px;
     height: 370px;
     padding: 20px;
@@ -1272,6 +1273,7 @@ input {
   }
   .management .new-project-second-row {
     margin-top: 20px;
+    border-radius: 35px;
     height: 73%;
   }
   .management .new-project-second-row h1,
@@ -1341,6 +1343,7 @@ input {
     width: 90%;
     height: 320px;
     padding: 10px;
+    border-radius: 30px;
   }
   .management .new-project-first-row {
     flex-direction: column-reverse;
@@ -1375,6 +1378,7 @@ input {
   .management .new-project-second-row {
     height: 70%;
     width: 100%;
+    border-radius: 20px;
   }
   .management .new-project-second-row h1,
   .management .new-project-second-row input {

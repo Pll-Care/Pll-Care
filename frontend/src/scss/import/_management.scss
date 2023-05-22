@@ -103,7 +103,6 @@
         top: 0;
 
         .new-project {
-            border-radius: 40px;
             background-color: white;
             position: fixed;
             top: 50%;
@@ -140,7 +139,6 @@
     
             &-second-row {
                 padding: 10px;
-                border-radius: 35px;
                 background-color: $background-color;
                 color: $font-color;
     
@@ -254,6 +252,7 @@
         }
 
         .new-project {
+            border-radius: 40px;
             width: 630px;
             height: 370px;
             padding: 20px;
@@ -283,6 +282,7 @@
 
             &-second-row {
                 margin-top: 20px;
+                border-radius: 35px;
                 height: 73%;
                 
                 h1, 
@@ -393,6 +393,7 @@
         }
 
         .new-project {
+            border-radius: 40px;
             width: 600px;
             height: 370px;
             padding: 20px;
@@ -423,6 +424,7 @@
 
             &-second-row {
                 margin-top: 20px;
+                border-radius: 35px;
                 height: 73%;
 
                 h1, 
@@ -500,6 +502,7 @@
             width: 90%;
             height: 320px;
             padding: 10px;
+            border-radius: 30px;
 
             &-first-row {
                 flex-direction: column-reverse;
@@ -537,6 +540,7 @@
             &-second-row {
                 height: 70%;
                 width: 100%;
+                border-radius: 20px;
 
                 h1, 
                 input {
