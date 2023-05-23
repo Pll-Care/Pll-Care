@@ -10,6 +10,7 @@ import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 import Quill from 'quill';
 import ImageResize from 'quill-image-resize';
+import SelectedMeetingRecord from "./SelectedMeetingRecord";
 
 Quill.register('modules/ImageResize', ImageResize);
 
@@ -53,7 +54,7 @@ const MeetingRecordEditor = ({ isEdit, originData }) => {
 
     const handleInitialState = () => {
         dispatch(meetingRecordManagementActions.onChangeEditState('editing'));
-        dispatch(meetingRecordManagementActions.onEditInitialState((prevState) => !prevState));
+        dispatch(meetingRecordManagementActions.onEditInitialState(false));
     }
 
     const handleCreateMeetingRecord = () => {
@@ -202,7 +203,7 @@ const MeetingRecordEditor = ({ isEdit, originData }) => {
                                     <ReactQuill
                                         className='react-quill'
                                         value={content}
-                                        onChange={(e) => dispatch(meetingRecordManagementActions.onEditContent(e.target.value))}
+                                        onChange={(e) => dispatch(meetingRecordManagementActions.onEditContent(e))}
                                         modules={{
                                             toolbar: [
                                                 [{ 'header': [1, 2, 3, false] }],

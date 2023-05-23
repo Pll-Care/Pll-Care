@@ -69,6 +69,7 @@ const AllMeetingRecordList = () => {
                         onClick={() => {
                             dispatch(meetingRecordManagementActions.onChangeEditState('editing'));
                             dispatch(meetingRecordManagementActions.onEditInitialState(false));
+                            dispatch(meetingRecordManagementActions.onEditSelectedMeetingRecord({}));
                             dispatch(meetingRecordManagementActions.onEditTitle(''));
                             dispatch(meetingRecordManagementActions.onEditContent(''));
                         }}
