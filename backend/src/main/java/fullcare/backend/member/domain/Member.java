@@ -1,6 +1,7 @@
 package fullcare.backend.member.domain;
 
 import fullcare.backend.evaluation.domain.FinalTermEvaluation;
+import fullcare.backend.evaluation.domain.MidtermEvaluation;
 import fullcare.backend.likes.domain.Likes;
 import fullcare.backend.post.domain.Post;
 import fullcare.backend.projectmember.domain.ProjectMember;
@@ -59,8 +60,14 @@ public class Member {
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Likes> likes = new HashSet<>();
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<FinalTermEvaluation> evaluations = new ArrayList<>();
+    @OneToMany(mappedBy = "evaluator", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FinalTermEvaluation> finalTermEvaluationsEvaluator = new ArrayList<>();
+    @OneToMany(mappedBy = "evaluated", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FinalTermEvaluation> finalTermEvaluationsEvaluated = new ArrayList<>();
+    @OneToMany(mappedBy = "voter", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MidtermEvaluation> midtermEvaluationsVoter = new ArrayList<>();
+    @OneToMany(mappedBy = "voted", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MidtermEvaluation> midtermEvaluationsVoted = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProjectMember> projectMembers = new ArrayList<>();

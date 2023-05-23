@@ -1,10 +1,14 @@
 package fullcare.backend.evaluation.domain;
 
 import jakarta.persistence.Embeddable;
+import lombok.Data;
+import lombok.ToString;
 
 @Embeddable
+@Data
 public class Score {
-    private double score1;
-    private double score2;
-    private double score3;
+    private double sincerity;
+    private double jobPerformance;
+    private double punctuality;
+    private double communication;
 }

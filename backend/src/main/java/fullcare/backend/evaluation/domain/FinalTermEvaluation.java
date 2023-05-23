@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class FinalEvaluation {
+public class FinalTermEvaluation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +39,7 @@ public class FinalEvaluation {
     private Project project;
 
     @Builder(builderMethodName = "createNewFinalEval")
-    public FinalEvaluation(String content, Score score, Member evaluator, Member evaluated, Project project) {
+    public FinalTermEvaluation(String content, Score score, Member evaluator, Member evaluated, Project project) {
         this.content = content;
         this.score = score;
         this.evaluator = evaluator;

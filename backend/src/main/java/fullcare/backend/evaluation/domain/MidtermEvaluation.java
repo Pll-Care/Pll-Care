@@ -1,6 +1,7 @@
 package fullcare.backend.evaluation.domain;
 
 import fullcare.backend.member.domain.Member;
+import fullcare.backend.project.domain.Project;
 import fullcare.backend.schedule.domain.Schedule;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -30,14 +31,19 @@ public class MidtermEvaluation {
     @JoinColumn(name = "schedule_id", nullable = false)
     private Schedule schedule;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id", nullable = false)
+    private Project project;
+
     @Enumerated(EnumType.STRING)
     private EvaluationBadge evaluationBadge;
 
 
     @Builder(builderMethodName = "createNewMidtermEval")
-    public MidtermEvaluation(Member voter, Member voted, Schedule schedule, EvaluationBadge evaluationBadge) {
+    public MidtermEvaluation(Member voter, Member voted, Project project, Schedule schedule, EvaluationBadge evaluationBadge) {
         this.voter = voter;
         this.voted = voted;
+        this.project = project;
         this.schedule = schedule;
         this.evaluationBadge = evaluationBadge;
     }

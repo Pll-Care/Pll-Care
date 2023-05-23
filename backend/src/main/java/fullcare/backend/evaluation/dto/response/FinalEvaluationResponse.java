@@ -1,6 +1,6 @@
 package fullcare.backend.evaluation.dto.response;
 
-import fullcare.backend.evaluation.domain.FinalEvaluation;
+import fullcare.backend.evaluation.domain.FinalTermEvaluation;
 import fullcare.backend.evaluation.domain.Score;
 import lombok.Builder;
 
@@ -20,11 +20,11 @@ public class FinalEvaluationResponse {
     }
 
 
-    public static FinalEvaluationResponse entityToDto(FinalEvaluation finalEvaluation) {
+    public static FinalEvaluationResponse entityToDto(FinalTermEvaluation finalTermEvaluation) {
         return FinalEvaluationResponse.builder()
-                .content(finalEvaluation.getContent())
-                .memberName(finalEvaluation.getEvaluated().getName())
-                .score(finalEvaluation.getScore())
+                .content(finalTermEvaluation.getContent())
+                .memberName(finalTermEvaluation.getEvaluated().getName())
+                .score(finalTermEvaluation.getScore())
                 .build();
     }
 }

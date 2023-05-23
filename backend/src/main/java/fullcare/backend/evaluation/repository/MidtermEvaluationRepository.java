@@ -1,10 +1,19 @@
 package fullcare.backend.evaluation.repository;
 
 import fullcare.backend.evaluation.domain.MidtermEvaluation;
+import fullcare.backend.evaluation.dto.response.MidtermDetailResponse;
+import fullcare.backend.evaluation.dto.response.MidtermListResponse;
+import fullcare.backend.member.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 public interface MidtermEvaluationRepository extends JpaRepository<MidtermEvaluation, Long> {
-    @Query("select me from MidtermEvaluation me join fetch me.voted vtd where vtd.id = :memberId group by me.evaluationBadge")
-    void findAllByMemberId(Long memberId);
+    @Query("select new fullcare.backend.evaluation.dto.response.MidtermDetailResponse(me.evaluationBadge ,count(me.evaluationBadge)) from MidtermEvaluation me where me.voted.id = :memberId and me.project.id = :projectId group by me.evaluationBadge")
+    List<MidtermDetailResponse> findAllByMemberId(Long projectId, Long memberId);
+
+    @Query("select new fullcare.backend.evaluation.dto.response.MidtermListResponse(me.voted.id, me.voted.name, me.evaluationBadge ,count(me.evaluationBadge)) from MidtermEvaluation me where me.project.id = :projectId and me.voted in :members group by me.evaluationBadge, me.voted.id")
+    List<MidtermListResponse> findList(Long projectId, List<Member> members);
 }
