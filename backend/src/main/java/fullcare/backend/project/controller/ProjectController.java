@@ -1,11 +1,15 @@
 package fullcare.backend.project.controller;
 
 import fullcare.backend.global.State;
+import fullcare.backend.global.exception.InvalidAccessException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.dto.request.ProjectCreateRequest;
+import fullcare.backend.project.dto.request.ProjectStateUpdateRequest;
+import fullcare.backend.project.dto.request.ProjectUpdateRequest;
 import fullcare.backend.project.dto.response.ProjectListResponse;
 import fullcare.backend.project.service.ProjectService;
 import fullcare.backend.project.dto.response.ProjectMemberListResponse;
+import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.security.jwt.CurrentLoginMember;
 import fullcare.backend.util.CustomPageRequest;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +18,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -33,6 +38,7 @@ import java.util.List;
 @Tag(name = "프로젝트", description = "프로젝트 관련 API")
 public class ProjectController {
     private final ProjectService projectService;
+    private final ProjectMemberService projectMemberService;
     @Operation(method = "get", summary = "프로젝트 멤버 조회")
     @ApiResponses(value = {
             @ApiResponse(description = "프로젝트 멤버 조회 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ProjectMemberListResponse.class))})
@@ -48,10 +54,10 @@ public class ProjectController {
             @ApiResponse(description = "사용자 프로젝트 리스트 조회 성공", responseCode = "200", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProjectListResponse.class))})
     })
     @GetMapping
-    public ResponseEntity<?> list(CustomPageRequest pageRequest, @RequestBody StateWrapper stateWrapper, @CurrentLoginMember Member member) {
+    public ResponseEntity<?> list(CustomPageRequest pageRequest, @Valid @RequestParam List<State> state, @CurrentLoginMember Member member) {
         PageRequest of = pageRequest.of();
         Pageable pageable = (Pageable) of;
-        Page<ProjectListResponse> responses = projectService.findMyProjectList(pageable, member.getId(), stateWrapper.getStates());
+        Page<ProjectListResponse> responses = projectService.findMyProjectList(pageable, member.getId(), state);
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
@@ -75,12 +81,31 @@ public class ProjectController {
         projectService.deleteProject(projectId);
         return new ResponseEntity(HttpStatus.OK);
     }
-
-
-    @Data
-    public static class StateWrapper {
-        List<State> states;
+    @PutMapping("/{projectId}")
+    @Operation(method = "put", summary = "프로젝트 변경")
+    @ApiResponses(value = {
+            @ApiResponse(description = "프로젝트 변경 성공", responseCode = "200", content = {@Content(mediaType = "application/json")})
+    })
+    public ResponseEntity update(@PathVariable Long projectId, @Valid @RequestBody ProjectUpdateRequest projectUpdateRequest, @CurrentLoginMember Member member) {
+        if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
+            throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
+        }
+        projectService.update(projectId, projectUpdateRequest);
+        return new ResponseEntity(HttpStatus.OK);
     }
+    @PutMapping("/{projectId}/state")
+    @Operation(method = "put", summary = "프로젝트 상태 변경")
+    @ApiResponses(value = {
+            @ApiResponse(description = "프로젝트 상태 변경 성공", responseCode = "200", content = {@Content(mediaType = "application/json")})
+    })
+    public ResponseEntity updateState(@PathVariable Long projectId, @Valid @RequestBody ProjectStateUpdateRequest projectStateUpdateRequest, @CurrentLoginMember Member member) {
+        if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
+            throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
+        }
+        projectService.updateState(projectId, projectStateUpdateRequest);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
 
     // 프로젝트 생성 썸네일
     // 프로젝트 상태 변환 (진행 -> 완료)

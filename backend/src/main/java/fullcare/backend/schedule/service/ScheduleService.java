@@ -28,7 +28,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -57,7 +56,7 @@ public class ScheduleService {
 //    }
     public boolean updateSchedule(ScheduleUpdateRequest scheduleUpdateRequest, Long scheduleId) {// 멤버 로그인 사용자 검증 수정
         Schedule schedule = scheduleRepository.findJoinSMById(scheduleId).orElseThrow();
-        if ((schedule instanceof Meeting && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.개발일정)) || (schedule instanceof Milestone && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.미팅)) ){
+        if ((schedule instanceof Meeting && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.MILESTONE)) || (schedule instanceof Milestone && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.MEETING)) ){
             throw new RuntimeException("수정하려는 일정의 카테고리가 맞지 않습니다.");
         }
         List<ProjectMember> pmList = projectMemberRepository.findByProjectId(scheduleUpdateRequest.getProjectId());
@@ -82,7 +81,7 @@ public class ScheduleService {
             schedule.addMember(member);
         }
 
-        if (scheduleUpdateRequest.getCategory().equals(ScheduleCategory.미팅)){ // Meeting
+        if (scheduleUpdateRequest.getCategory().equals(ScheduleCategory.MEETING)){ // Meeting
             Meeting meeting = (Meeting)schedule;
             meeting.updateAddress(scheduleUpdateRequest.getAddress());
         }else{ // Milestone
@@ -104,7 +103,7 @@ public class ScheduleService {
 //        List<ScheduleListResponse> scheduleListResponseList = toListResponse(meetingList, ScheduleCategory.미팅);
 
         List<Schedule> milestoneList = scheduleRepository.findMileStoneByProjectId(projectId);
-        List<ScheduleListResponse> scheduleListResponseList = toListResponse(milestoneList,ScheduleCategory.개발일정);
+        List<ScheduleListResponse> scheduleListResponseList = toListResponse(milestoneList,ScheduleCategory.MILESTONE);
         /////////////////
         //scheduleListResponseList.addAll(response2);
 
@@ -116,11 +115,11 @@ public class ScheduleService {
     }
 
     @Transactional(readOnly = true)
-    public ScheduleCalenderMonthResponse findScheduleCalenderList(ScheduleMonthRequest scheduleMonthRequest) { // 1일부터 31일까지 일정
+    public ScheduleCalenderMonthResponse findScheduleCalenderList(int year, int month) { // 1일부터 31일까지 일정
         LocalDate localDate = LocalDateTime.now().toLocalDate();
         int lastDay = LocalDateTime.now().toLocalDate().withDayOfMonth(localDate.lengthOfMonth()).getDayOfMonth();
-        LocalDateTime startDate = LocalDateTime.of(scheduleMonthRequest.getYear(),scheduleMonthRequest.getMonth(), 1, 0, 0,0);
-        LocalDateTime endDate = LocalDateTime.of(scheduleMonthRequest.getYear(), scheduleMonthRequest.getMonth(),lastDay,23,59,59  );
+        LocalDateTime startDate = LocalDateTime.of(year, month, 1, 0, 0,0);
+        LocalDateTime endDate = LocalDateTime.of(year, month,lastDay,23,59,59  );
 
         List<Schedule> scheduleList = scheduleRepository.findByStartDateBetweenOrEndDateBetween( startDate, endDate,startDate, endDate  );
         ScheduleCalenderMonthResponse scheduleMonthResponse = toScheduleMonthResponse(scheduleList);
@@ -129,14 +128,14 @@ public class ScheduleService {
         return scheduleMonthResponse;
     }
     @Transactional
-    public Page<ScheduleMonthResponse> findScheduleMonthList(Pageable pageable, ScheduleMonthRequest scheduleMonthRequest, Member member) { // 1일부터 31일까지 일정
+    public Page<ScheduleMonthResponse> findScheduleMonthList(Pageable pageable, int year, int month, Member member, List<State> states) { // 1일부터 31일까지 일정
         Member findMember = memberRepository.findById(member.getId()).orElseThrow();
 
         LocalDate localDate = LocalDateTime.now().toLocalDate();
         int lastDay = LocalDateTime.now().toLocalDate().withDayOfMonth(localDate.lengthOfMonth()).getDayOfMonth();
-        LocalDateTime startDate = LocalDateTime.of(scheduleMonthRequest.getYear(),scheduleMonthRequest.getMonth(), 1, 0, 0,0);
-        LocalDateTime endDate = LocalDateTime.of(scheduleMonthRequest.getYear(), scheduleMonthRequest.getMonth(),lastDay,23,59,59  );
-        Page<Schedule> pageSchedule = scheduleRepository.findMonthByStartDateBetweenOrEndDateBetween(pageable, startDate, endDate, startDate, endDate);
+        LocalDateTime startDate = LocalDateTime.of(year,month, 1, 0, 0,0);
+        LocalDateTime endDate = LocalDateTime.of(year, month,lastDay,23,59,59  );
+        Page<Schedule> pageSchedule = scheduleRepository.findMonthByStartDateBetweenOrEndDateBetween(pageable, startDate, endDate, startDate, endDate, states);
         List<ScheduleMonthResponse> scheduleMonthResponses = new ArrayList<>();
         addResponse(pageSchedule, scheduleMonthResponses, findMember);// 미팅, 마일스톤에 맞게 일정 생성 후 응답에 넣기
         return new PageImpl<>(scheduleMonthResponses, pageable, scheduleMonthResponses.size());
@@ -218,9 +217,9 @@ public class ScheduleService {
             if (schedule instanceof Meeting){
                 Meeting meeting = (Meeting) schedule;
                 scheduleMyDto.setAddress(meeting.getAddress());
-                scheduleMyDto.setScheduleCategory(ScheduleCategory.미팅);
+                scheduleMyDto.setScheduleCategory(ScheduleCategory.MEETING);
             }else{
-                scheduleMyDto.setScheduleCategory(ScheduleCategory.개발일정);
+                scheduleMyDto.setScheduleCategory(ScheduleCategory.MILESTONE);
             }
             scheduleDtos.add(scheduleMyDto);
         }
@@ -298,15 +297,16 @@ public class ScheduleService {
                     .startDate(schedule.getStartDate())
                     .endDate(schedule.getEndDate())
                     .state(schedule.getState())
+                    .modifyDate(schedule.getModifiedDate().toLocalDate())
                     .build();
 
 
             checkModify(member, schedule, scheduleResponse);
             if (schedule instanceof Meeting){
                 //scheduleResponse.setAddress(scheduleResponse.getAddress());
-                scheduleResponse.setScheduleCategory(ScheduleCategory.미팅);
+                scheduleResponse.setScheduleCategory(ScheduleCategory.MEETING);
             }else{
-                scheduleResponse.setScheduleCategory(ScheduleCategory.개발일정);
+                scheduleResponse.setScheduleCategory(ScheduleCategory.MILESTONE);
             }
             scheduleMonthResponses.add(scheduleResponse);
 
@@ -324,13 +324,13 @@ public class ScheduleService {
 //            System.out.println("------------------------------------------------");
                 if(sm.getMember() == member && sm.getRecentView().isBefore(schedule.getModifiedDate())){
 //                    log.info("ChronoUnit.SECONDS.between(sm.getRecentView(),schedule.getModifiedDate()); = " + ChronoUnit.SECONDS.between(sm.getRecentView(),schedule.getModifiedDate()));
-                    System.out.println("확인 못함" );
+                    //System.out.println("확인 못함" );
                     scheduleResponse.updateCheck(false);
                 }else if (sm.getMember() == member){
-                    System.out.println("확인 함" );
+                    //System.out.println("확인 함" );
                     scheduleResponse.updateCheck(true);
                 }else{
-                    System.out.println("로그인한 멤버 정보가 아님");
+                    //System.out.println("로그인한 멤버 정보가 아님");
                 }
             });
     }
@@ -364,10 +364,10 @@ public class ScheduleService {
         }
 
         if(schedule instanceof Meeting){
-            scheduleDetailResponse.setScheduleCategory(ScheduleCategory.미팅);
+            scheduleDetailResponse.setScheduleCategory(ScheduleCategory.MEETING);
             scheduleDetailResponse.setAddress(scheduleDetailResponse.getAddress());
         }else{
-            scheduleDetailResponse.setScheduleCategory(ScheduleCategory.개발일정);
+            scheduleDetailResponse.setScheduleCategory(ScheduleCategory.MILESTONE);
         }
 
 

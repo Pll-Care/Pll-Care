@@ -7,6 +7,7 @@ import fullcare.backend.global.entity.BaseEntity;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.memo.domain.Memo;
 import fullcare.backend.post.domain.Post;
+import fullcare.backend.project.dto.request.ProjectUpdateRequest;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
 import fullcare.backend.schedule.domain.Schedule;
@@ -88,4 +89,11 @@ public class Project extends BaseEntity {
         member.getProjectMembers().add(pm); // ? member 엔티티에서 projectMembers 컬렉션은 필요없을듯?
     }
 
+    public void update(ProjectUpdateRequest projectUpdateRequest) {
+        this.title = projectUpdateRequest.getTitle();
+        this.description = projectUpdateRequest.getDescription();
+        this.startDate = projectUpdateRequest.getStartDate();
+        this.endDate = projectUpdateRequest.getEndDate();
+        this.state = projectUpdateRequest.getState();
+    }
 }

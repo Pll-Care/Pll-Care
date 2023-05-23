@@ -8,6 +8,7 @@ import fullcare.backend.schedule.dto.MemberDto;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,14 +24,16 @@ public class ScheduleMonthResponse {
     private ScheduleCategory scheduleCategory;
     private List<MemberDto> members = new ArrayList<>();
     private State state;
+    private LocalDate modifyDate;
     private Boolean check;
     @Builder
-    public ScheduleMonthResponse(Long scheduleId, String title, LocalDateTime startDate, LocalDateTime endDate, ScheduleCategory scheduleCategory, State state) {
+    public ScheduleMonthResponse(Long scheduleId, String title, LocalDateTime startDate, LocalDateTime endDate, ScheduleCategory scheduleCategory, LocalDate modifyDate , State state) {
         this.scheduleId = scheduleId;
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
         this.state = state;
+        this.modifyDate = modifyDate;
         //this.address = address;
         this.scheduleCategory = scheduleCategory;
     }

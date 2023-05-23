@@ -6,18 +6,15 @@ import fullcare.backend.member.domain.MemberRole;
 import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.memo.domain.Memo;
 import fullcare.backend.memo.dto.request.MemoCreateRequest;
-import fullcare.backend.memo.repository.MemoRepository;
 import fullcare.backend.memo.service.BookmarkMemoService;
 import fullcare.backend.memo.service.MemoService;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.dto.request.ProjectCreateRequest;
-import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.project.service.ProjectService;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.schedule.ScheduleCategory;
 import fullcare.backend.schedule.domain.Address;
-import fullcare.backend.schedule.domain.Milestone;
 import fullcare.backend.schedule.dto.MemberDto;
 import fullcare.backend.schedule.dto.request.ScheduleCreateRequest;
 import fullcare.backend.schedule.service.MeetingService;
@@ -79,7 +76,7 @@ public class TestDataInit {
 
                 if(!insertId.contains(findMemberId)){
                 Member member = memberRepository.findById(findMemberId).get();
-                memberDtos.add(new MemberDto(member.getId(), member.getName()));}
+                memberDtos.add(new MemberDto(member.getId(), member.getName(), null));}
                 else{j--;}
                 insertId.add(findMemberId);
             }
@@ -93,14 +90,14 @@ public class TestDataInit {
             LocalDateTime startDate = LocalDateTime.of(2023, month, randDay, 13, 0);
             if (i<16) {
                 LocalDateTime endDate = LocalDateTime.of(2023, month, randDay, 16, 0);
-                meetingService.createMeeting(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.미팅, memberDtos, "제목" + i, "내용" + i, new Address("city" + i, "street" + i)), memberRepository.findById(authorId).get().getName());
+                meetingService.createMeeting(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MEETING, memberDtos, "제목" + i, "내용" + i, new Address("city" + i, "street" + i)), memberRepository.findById(authorId).get().getName());
             }else{
                 try {
                     LocalDateTime endDate = LocalDateTime.of(2023, month, randDay + plusDay, 16, 0);
-                    milestoneService.createMilestone(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.개발일정, memberDtos, "제목" + i, "내용" + i, null), memberRepository.findById(authorId).get().getName());
+                    milestoneService.createMilestone(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MILESTONE, memberDtos, "제목" + i, "내용" + i, null), memberRepository.findById(authorId).get().getName());
                 }catch (DateTimeException e){ // 다음달로 넘어가는 경우
                     LocalDateTime endDate = LocalDateTime.of(2023, month, randDay, 16, 0).plusWeeks(1);
-                    milestoneService.createMilestone(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.개발일정, memberDtos, "제목" + i, "내용" + i, null), memberRepository.findById(authorId).get().getName());
+                    milestoneService.createMilestone(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MILESTONE, memberDtos, "제목" + i, "내용" + i, null), memberRepository.findById(authorId).get().getName());
                 }
             }
         }

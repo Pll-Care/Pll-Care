@@ -1,5 +1,6 @@
 package fullcare.backend.schedule.repository;
 
+import fullcare.backend.global.State;
 import fullcare.backend.schedule.domain.Schedule;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,9 +24,9 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     List<Schedule> findByStartDateBetweenOrEndDateBetween(LocalDateTime startCheckStartDate, LocalDateTime startCheckEndDate, LocalDateTime endCheckStartDate, LocalDateTime endCheckEndDate);
     @Query("select s from schedule s where type(s) in (Milestone)  and (s.startDate between :startDate and :endDate or s.endDate between :startDate and :endDate)")
     List<Schedule> findMeetingCalender(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
-    @Query(value = "select s from schedule s join fetch s.scheduleMembers sm where s.startDate between :startCheckStartDate and :startCheckEndDate or s.endDate between :endCheckStartDate and :endCheckEndDate"
-    ,countQuery = "select count(s) from schedule s where s.startDate between :startCheckStartDate and :startCheckEndDate or s.endDate between :endCheckStartDate and :endCheckEndDate")
-    Page<Schedule> findMonthByStartDateBetweenOrEndDateBetween(Pageable pageable, LocalDateTime startCheckStartDate, LocalDateTime startCheckEndDate, LocalDateTime endCheckStartDate, LocalDateTime endCheckEndDate);
+    @Query(value = "select s from schedule s join fetch s.scheduleMembers sm where (s.startDate between :startCheckStartDate and :startCheckEndDate or s.endDate between :endCheckStartDate and :endCheckEndDate) and s.state in :state"
+    ,countQuery = "select count(s) from schedule s where (s.startDate between :startCheckStartDate and :startCheckEndDate or s.endDate between :endCheckStartDate and :endCheckEndDate) and s.state in :state")
+    Page<Schedule> findMonthByStartDateBetweenOrEndDateBetween(Pageable pageable, LocalDateTime startCheckStartDate, LocalDateTime startCheckEndDate, LocalDateTime endCheckStartDate, LocalDateTime endCheckEndDate, List<State> state);
 
     @Query("select s from schedule s join fetch s.scheduleMembers sm where sm.member.id = :memberId and (s.startDate between :startDate and :endDate or s.endDate between :startDate and :endDate)")
     List<Schedule> findMonthListByMember(@Param("memberId")Long memberId, @Param("startDate")LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);

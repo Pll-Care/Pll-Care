@@ -5,6 +5,8 @@ import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.dto.request.ProjectCreateRequest;
+import fullcare.backend.project.dto.request.ProjectStateUpdateRequest;
+import fullcare.backend.project.dto.request.ProjectUpdateRequest;
 import fullcare.backend.project.dto.response.ProjectListResponse;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.projectmember.domain.ProjectMember;
@@ -13,6 +15,7 @@ import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.project.dto.response.ProjectMemberListResponse;
 import fullcare.backend.projectmember.repository.ProjectMemberRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -88,5 +91,15 @@ public class ProjectService {
                 .id(pms.getMember().getId())
                 .name(pms.getMember().getName()).build()).collect(Collectors.toList());
         return response;
+    }
+
+    public void updateState(Long projectId, ProjectStateUpdateRequest projectStateUpdateRequest) {
+        Project project = projectRepository.findById(projectId).orElseThrow();
+        project.updateState(projectStateUpdateRequest.getState());
+    }
+
+    public void update(Long projectId, ProjectUpdateRequest projectUpdateRequest) {
+        Project project = projectRepository.findById(projectId).orElseThrow();
+        project.update(projectUpdateRequest);
     }
 }
