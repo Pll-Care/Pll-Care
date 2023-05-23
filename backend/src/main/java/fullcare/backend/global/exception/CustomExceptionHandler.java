@@ -30,7 +30,11 @@ public class CustomExceptionHandler {
         return new ResponseEntity(message, HttpStatus.METHOD_NOT_ALLOWED);
     }
 
-
+    @ExceptionHandler(ScheduleOutOfRangeException.class)
+    public ResponseEntity<?> handleScheduleOutOfRangeException(Exception e, WebRequest request) {
+        ErrorCode message = getMessage(HttpStatus.BAD_REQUEST, e, request);
+        return new ResponseEntity(message, HttpStatus.BAD_REQUEST);
+    }
 
 
     private static ErrorCode getMessage(HttpStatus status, Exception e, WebRequest request) {

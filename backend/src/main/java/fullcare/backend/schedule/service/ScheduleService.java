@@ -1,12 +1,14 @@
 package fullcare.backend.schedule.service;
 
 import fullcare.backend.global.State;
+import fullcare.backend.global.exception.ScheduleOutOfRangeException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.repository.ProjectMemberRepository;
+import fullcare.backend.schedule.DateCategory;
 import fullcare.backend.schedule.ScheduleCategory;
 import fullcare.backend.schedule.domain.Meeting;
 import fullcare.backend.schedule.domain.Milestone;
@@ -28,6 +30,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -59,6 +63,11 @@ public class ScheduleService {
         if ((schedule instanceof Meeting && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.MILESTONE)) || (schedule instanceof Milestone && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.MEETING)) ){
             throw new RuntimeException("수정하려는 일정의 카테고리가 맞지 않습니다.");
         }
+        Project project = projectRepository.findById(scheduleUpdateRequest.getProjectId()).orElseThrow();
+        LocalDateTime startDate = project.getStartDate().atStartOfDay();
+        LocalDateTime endDate = project.getEndDate().atStartOfDay();
+        Schedule.validDate(startDate, endDate, scheduleUpdateRequest.getStartDate(), scheduleUpdateRequest.getEndDate());
+
         List<ProjectMember> pmList = projectMemberRepository.findByProjectId(scheduleUpdateRequest.getProjectId());
         List<Member> members = pmList.stream().map(pm -> pm.getMember()).collect(Collectors.toList());// 프로젝트에 있는 멤버 리스트
 
@@ -97,20 +106,25 @@ public class ScheduleService {
         Project project = projectRepository.findById(projectId).orElseThrow();
         LocalDate startDate = project.getStartDate();
         LocalDate endDate = project.getEndDate();
+        long diff = ChronoUnit.WEEKS.between(startDate, endDate);
+        DateCategory dateCategory;
+        if (diff > 13){dateCategory = DateCategory.MONTH;
+        }else{dateCategory = DateCategory.WEEK;}
+
+//        System.out.println("between = " + diff);
 
         //schedule로 통합 필요
 //        List<Schedule> meetingList = scheduleRepository.findMeetingByProjectId(projectId); // dtype을 구분 짓기 위해 각 메소드를 만듬
 //        List<ScheduleListResponse> scheduleListResponseList = toListResponse(meetingList, ScheduleCategory.미팅);
 
         List<Schedule> milestoneList = scheduleRepository.findMileStoneByProjectId(projectId);
-        List<ScheduleListResponse> scheduleListResponseList = toListResponse(milestoneList,ScheduleCategory.MILESTONE);
+        List<ScheduleListResponse> scheduleListResponseList = toListResponse(milestoneList, dateCategory);
         /////////////////
         //scheduleListResponseList.addAll(response2);
-
-        scheduleListResponseList.sort(Comparator.comparing(ScheduleListResponse::getStartDate));// 날짜 기준 내림차순 정렬
-
-        CustomResponseDto response = new CustomResponseDto(startDate, endDate, scheduleListResponseList);
-
+        CustomResponseDto response =
+                diff > 13 ? new CustomResponseDto(startDate, endDate, DateCategory.MONTH,scheduleListResponseList)
+                        : new CustomResponseDto(startDate, endDate, DateCategory.WEEK,scheduleListResponseList);
+        //scheduleListResponseList.sort(Comparator.comparing(ScheduleListResponse::getStartDate));// 날짜 기준 내림차순 정렬
         return response;
     }
 
@@ -266,15 +280,37 @@ public class ScheduleService {
     }
 
 
-    private List<ScheduleListResponse> toListResponse(List<Schedule> scheduleList, ScheduleCategory scheduleCategory) {
-        return scheduleList.stream().map(s -> ScheduleListResponse.builder()
-                .scheduleId(s.getId())
-                .title(s.getTitle())
-                .content(s.getContent())
-                .startDate(s.getStartDate())
-                .category(scheduleCategory.name())
-                .build()
-        ).collect(Collectors.toList());
+    private List<ScheduleListResponse> toListResponse(List<Schedule> scheduleList, DateCategory dateCategory) {
+        System.out.println("dateCategory = " + dateCategory);
+        List<ScheduleListResponse> scheduleListResponseList = new ArrayList<>();
+        ScheduleListResponse scheduleListResponse = null;
+        int month = scheduleList.get(0).getStartDate().getMonthValue(); //초기값
+        LocalDateTime compareDate = scheduleList.get(0).getStartDate();
+
+        int order = 1;
+        for (Schedule s : scheduleList) {
+            if(dateCategory.equals(DateCategory.MONTH)){
+                if(month <  s.getStartDate().getMonth().getValue()){
+                    month =  s.getStartDate().getMonth().getValue();
+                    order++;
+                }
+            }else{
+                if(ChronoUnit.WEEKS.between(compareDate, s.getStartDate())>1){// 2주 차이
+                    compareDate = s.getStartDate();
+                    order++;
+                }
+            }
+            scheduleListResponse = ScheduleListResponse.builder()
+                    .scheduleId(s.getId())
+                    .title(s.getTitle())
+                    .startDate(s.getStartDate())
+                    .endDate(s.getEndDate())
+                    .order(order)
+                    .build();
+            scheduleListResponseList.add(scheduleListResponse);
+        }
+
+        return scheduleListResponseList;
     }
 
 

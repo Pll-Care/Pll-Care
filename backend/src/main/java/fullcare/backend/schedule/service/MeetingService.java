@@ -1,11 +1,13 @@
 package fullcare.backend.schedule.service;
 
 import fullcare.backend.global.State;
+import fullcare.backend.global.exception.ScheduleOutOfRangeException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.schedule.domain.Meeting;
+import fullcare.backend.schedule.domain.Schedule;
 import fullcare.backend.schedule.dto.MemberDto;
 import fullcare.backend.schedule.dto.request.ScheduleCreateRequest;
 import fullcare.backend.schedule.repository.MeetingRepository;
@@ -30,6 +32,10 @@ public class MeetingService {
     public void createMeeting(ScheduleCreateRequest scheduleCreateRequest, String username) {
         LocalDateTime now = LocalDateTime.now();
         Project project = projectRepository.findById(scheduleCreateRequest.getProjectId()).orElseThrow();
+        LocalDateTime startDate = project.getStartDate().atStartOfDay();
+        LocalDateTime endDate = project.getEndDate().atStartOfDay();
+        Schedule.validDate(startDate, endDate, scheduleCreateRequest.getStartDate(), scheduleCreateRequest.getEndDate());
+
         List<MemberDto> memberDtos = scheduleCreateRequest.getMemberDtos();
         List<Member> memberList = new ArrayList<>();
         memberDtos.forEach(m -> {

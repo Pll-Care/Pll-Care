@@ -3,6 +3,7 @@ package fullcare.backend.schedule.domain;
 
 import fullcare.backend.global.State;
 import fullcare.backend.global.entity.BaseEntity;
+import fullcare.backend.global.exception.ScheduleOutOfRangeException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.projectmember.domain.ProjectMember;
@@ -114,5 +115,16 @@ public abstract class Schedule {
     public void updateState(LocalDateTime modifiedDate, State state){
         this.modifiedDate = modifiedDate;
         this.state = state;
+    }
+
+    public static void validDate(LocalDateTime pStartDate, LocalDateTime pEndDate, LocalDateTime sStartDate, LocalDateTime sEndDate){
+        if(pStartDate.isAfter(sStartDate) || pStartDate.isAfter(sEndDate) ||
+                pEndDate.isBefore(sStartDate) || pEndDate.isBefore(sEndDate)
+        ){
+            throw new ScheduleOutOfRangeException("프로젝트 일정 범위를 벗어났습니다.");
+        }
+        if (sStartDate.isAfter(sEndDate) || sEndDate.isBefore(sStartDate)){
+            throw new ScheduleOutOfRangeException("시작일정과 종료일정이 올바르지 않습니다.");
+        }
     }
 }

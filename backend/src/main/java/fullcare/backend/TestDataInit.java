@@ -82,12 +82,15 @@ public class TestDataInit {
             }
             insertId.clear();
             Month month = LocalDateTime.now().getMonth();
+            int randMonth = rand.nextInt(1, 12);
 
             LocalDate localDate = LocalDateTime.now().toLocalDate();
             int lastDay = LocalDateTime.now().toLocalDate().withDayOfMonth(localDate.lengthOfMonth()).getDayOfMonth();
             int plusDay = rand.nextInt(3, 7);
             int randDay = rand.nextInt(1, lastDay);
+//            LocalDateTime startDate = LocalDateTime.of(2023, randMonth, randDay, 13, 0);
             LocalDateTime startDate = LocalDateTime.of(2023, month, randDay, 13, 0);
+
             if (i<16) {
                 LocalDateTime endDate = LocalDateTime.of(2023, month, randDay, 16, 0);
                 meetingService.createMeeting(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MEETING, memberDtos, "제목" + i, "내용" + i, new Address("city" + i, "street" + i)), memberRepository.findById(authorId).get().getName());

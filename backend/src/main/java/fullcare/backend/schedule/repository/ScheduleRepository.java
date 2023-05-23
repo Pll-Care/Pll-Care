@@ -17,7 +17,7 @@ import java.util.Optional;
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     @Query("select s from schedule s where s.project.id = :projectId and type(s) in (Meeting)")
     List<Schedule> findMeetingByProjectId(@Param("projectId") Long projectId);
-    @Query("select s from schedule s where s.project.id = :projectId and type(s) in (Milestone)")
+    @Query("select s from schedule s where s.project.id = :projectId and type(s) in (Milestone) order by s.startDate")
     List<Schedule> findMileStoneByProjectId(@Param("projectId") Long projectId);
 
     @Query(value = "select s from schedule s join fetch s.scheduleMembers sm join fetch sm.member where s.startDate between :startCheckStartDate and :startCheckEndDate or s.endDate between :endCheckStartDate and :endCheckEndDate")

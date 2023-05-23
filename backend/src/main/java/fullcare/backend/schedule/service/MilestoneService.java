@@ -1,6 +1,7 @@
 package fullcare.backend.schedule.service;
 
 import fullcare.backend.global.State;
+import fullcare.backend.global.exception.ScheduleOutOfRangeException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.project.domain.Project;
@@ -15,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,11 @@ public class MilestoneService {
     public void createMilestone(ScheduleCreateRequest scheduleCreateRequest, String username) {
         LocalDateTime now = LocalDateTime.now();
         Project project = projectRepository.findById(scheduleCreateRequest.getProjectId()).orElseThrow();
+
+        LocalDateTime startDate = project.getStartDate().atStartOfDay();
+        LocalDateTime endDate = project.getEndDate().atStartOfDay();
+        Schedule.validDate(startDate, endDate, scheduleCreateRequest.getStartDate(), scheduleCreateRequest.getEndDate());
+
         List<MemberDto> memberDtos = scheduleCreateRequest.getMemberDtos();
         List<Member> memberList = new ArrayList<>();
         memberDtos.forEach(m -> {
