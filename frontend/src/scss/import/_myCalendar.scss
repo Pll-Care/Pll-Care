@@ -4,7 +4,6 @@
   background-color: $background-color;
   display: flex;
   margin: 5% 18%;
-
   .react-datepicker {
     font-family: $body-font;
     border: none;
@@ -47,6 +46,9 @@
   font-family: $link-font;
 }
 .calendar-list {
+  padding: 2rem;
+  height: 500px;
+  overflow-y: auto;
   &-time {
     color: white;
     h5 {
@@ -61,7 +63,6 @@
       margin-bottom: 20px;
     }
   }
-  padding: 2rem;
   &-item {
     background-color: white;
     border-radius: 10px;
@@ -77,6 +78,26 @@
     h4 {
       font-family: $heading-font;
       font-size: $sub-heading-font-size;
+    }
+    &-name {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+
+      &-avatar {
+        display: flex;
+
+        .MuiAvatar-root {
+          transform: scale(0.7);
+          cursor: pointer;
+          transition: all 0.3s ease;
+          margin-left: -20px;
+
+          &:hover {
+            transform: scale(0.8);
+          }
+        }
+      }
     }
   }
 }

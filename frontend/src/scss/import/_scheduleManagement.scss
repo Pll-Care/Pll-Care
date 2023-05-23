@@ -1,5 +1,6 @@
 Button {
   margin-right: 15px;
+  margin-top: 10px;
 }
 .schedule-option {
   margin: 20px 10%;
@@ -16,53 +17,79 @@ Button {
     }
   }
 }
-.schedule-list {
-  display: flex;
-  padding: 1rem;
-
-  @media (max-width: 1024px) {
-    @include displayFlex(column);
-  }
-
-  &-time {
-    @include displayFlex(column);
-    font-style: normal;
-    color: $body-font-color;
-    font-family: $heading-font;
-    width: 15%;
-    h1 {
-      font-size: 65px;
-    }
-    h2 {
-      font-size: $link-font-size;
-    }
-  }
-
-  &-content {
-    text-align: left;
-    border: 3px solid #01e89e;
-    border-radius: 35px;
-    width: 85%;
+.schedule {
+  height: 500px;
+  overflow-y: auto;
+  .schedule-list {
+    display: flex;
     padding: 1rem;
 
+    @media (max-width: 1024px) {
+      @include displayFlex(column);
+    }
+
     &-time {
-      @include displayFlex(row, space-between, center);
+      @include displayFlex(column);
+      font-style: normal;
+      color: $body-font-color;
+      font-family: $heading-font;
+      width: 15%;
+      h1 {
+        font-size: 65px;
+        color: gray;
+      }
+      h2 {
+        font-size: $link-font-size;
+      }
+    }
+
+    &-content {
+      text-align: left;
+      border: 3px solid #01e89e;
+      border-radius: 35px;
+      width: 85%;
+      padding: 1.5rem;
       h5 {
         font-family: $body-font;
         font-size: $body-font-size;
         color: $body-font-color;
       }
-      h1 {
-        color: $background-color;
-        font-family: $heading-font;
-        font-size: $heading-font-size;
-      }
-    }
 
-    h4 {
-      font-family: $heading-font;
-      font-size: $sub-heading-font-size;
-      color: $body-font-color;
+      &-time {
+        @include displayFlex(row, space-between, center);
+        h4 {
+          font-family: $heading-font;
+          font-size: $sub-heading-font-size;
+          color: $body-font-color;
+        }
+        h1 {
+          color: $background-color;
+          font-family: $heading-font;
+          font-size: $sub-heading-font-size;
+          background: #ffffff;
+          box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.05);
+          border-radius: 30px;
+          padding: 0.5rem;
+        }
+      }
+
+      &-option {
+        h5 {
+          margin-right: 20px;
+        }
+        align-items: center;
+        display: flex;
+        .MuiAvatar-root {
+          transform: scale(0.7);
+          cursor: pointer;
+          transition: all 0.3s ease;
+          margin-left: -10px;
+
+          &:hover {
+            transform: scale(0.8);
+          }
+        }
+      }
     }
   }
 }

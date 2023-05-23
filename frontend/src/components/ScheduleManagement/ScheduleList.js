@@ -16,15 +16,47 @@ const datas = [
     time: "13:00 ~ 16:00",
     title: "디자인팀 중간 회의",
   },
+  {
+    id: 3,
+    day: 26,
+    week: "Sat",
+    time: "13:00 ~ 16:00",
+    title: "디자인팀 중간 회의",
+  },
+  {
+    id: 4,
+    day: 26,
+    week: "Sat",
+    time: "13:00 ~ 16:00",
+    title: "디자인팀 중간 회의",
+  },
+  {
+    id: 5,
+    day: 26,
+    week: "Sat",
+    time: "13:00 ~ 16:00",
+    title: "디자인팀 중간 회의",
+  },
+  {
+    id: 6,
+    day: 26,
+    week: "Sat",
+    time: "13:00 ~ 16:00",
+    title: "디자인팀 중간 회의",
+  },
 ];
-const ScheduleList = () => {
+const ScheduleList = (props) => {
+  console.log(props.name);
+  console.log(props.option);
+  // 통신해서 리스트 가져오기
+
   return (
     <Card>
-      {datas.map((data) => (
-        <div>
+      <div className="schedule">
+        {datas.map((data) => (
           <Schedule data={data} />
-        </div>
-      ))}
+        ))}
+      </div>
     </Card>
   );
 };
