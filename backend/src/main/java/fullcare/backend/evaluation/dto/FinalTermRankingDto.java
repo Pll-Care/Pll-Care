@@ -4,16 +4,16 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class MidTermRankingDto {
+public class FinalTermRankingDto {
     private Long rank;
     private Long memberId;
     private String name;
-    private Long quantity;
+    private double score;
     @Builder
-    public MidTermRankingDto(Long rank, Long memberId, String name, Long quantity) {
+    public FinalTermRankingDto(Long rank, Long memberId, String name, double score) {
         this.rank = rank;
         this.memberId = memberId;
         this.name = name;
-        this.quantity = quantity;
+        this.score = score;
     }
 }

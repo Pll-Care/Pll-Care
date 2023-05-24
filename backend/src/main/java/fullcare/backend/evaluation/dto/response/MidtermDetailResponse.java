@@ -1,16 +1,18 @@
 package fullcare.backend.evaluation.dto.response;
 
 import fullcare.backend.evaluation.domain.EvaluationBadge;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import fullcare.backend.evaluation.dto.Badge;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-public class MidtermDetailResponse {
-    private EvaluationBadge evaluationBadge;
-    private Long quantity;
+import java.util.ArrayList;
+import java.util.List;
 
+@Getter
+@Setter
+public class MidtermDetailResponse extends Badge {
     public MidtermDetailResponse(EvaluationBadge evaluationBadge, Long quantity) {
-        this.evaluationBadge = evaluationBadge;
-        this.quantity = quantity;
+        super(evaluationBadge, quantity);
     }
+
 }

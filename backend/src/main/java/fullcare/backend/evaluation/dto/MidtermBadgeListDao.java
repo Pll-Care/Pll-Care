@@ -7,14 +7,9 @@ import lombok.Data;
 public class MidtermBadgeListDao {
     private Long memberId;
     private String name;
-//    private MidtermDetailResponse midtermDetailResponses;
     private EvaluationBadge evaluationBadge;
     private Long quantity;
-//    public MidtermListResponse(Long id, String name, MidtermDetailResponse midtermDetailResponses) {
-//        this.id = id;
-//        this.name = name;
-//        this.midtermDetailResponses = midtermDetailResponses;
-//    }
+
 
     public MidtermBadgeListDao(Long memberId, String name, EvaluationBadge evaluationBadge, Long quantity) {
         this.memberId = memberId;

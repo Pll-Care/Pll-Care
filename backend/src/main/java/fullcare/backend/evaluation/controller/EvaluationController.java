@@ -3,10 +3,9 @@ package fullcare.backend.evaluation.controller;
 
 import fullcare.backend.evaluation.dto.request.FinalEvalCreateRequest;
 import fullcare.backend.evaluation.dto.request.MidTermEvalCreateRequest;
-import fullcare.backend.evaluation.dto.response.MidTermEvalListResponse;
+import fullcare.backend.evaluation.dto.response.EverythingEvalResponse;
 import fullcare.backend.evaluation.dto.response.MidTermEvalModalResponse;
 import fullcare.backend.evaluation.dto.response.MidtermDetailResponse;
-import fullcare.backend.evaluation.dto.MidtermBadgeListDao;
 import fullcare.backend.evaluation.service.EvaluationService;
 import fullcare.backend.global.exception.InvalidAccessException;
 import fullcare.backend.member.domain.Member;
@@ -79,7 +78,7 @@ public class EvaluationController {
             throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
         }
 
-        List<MidTermEvalListResponse> response = evaluationService.findMidtermEvaluationList(projectId);
+        EverythingEvalResponse response = evaluationService.findMidtermEvaluationList(projectId);
 
         return new ResponseEntity(response, HttpStatus.OK);
     }
@@ -123,9 +122,9 @@ public class EvaluationController {
             throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
         }
 
-        evaluationService.findFinalEvaluationList(projectId);
+        EverythingEvalResponse response = evaluationService.findFinalEvaluationList(projectId);
 
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(response,HttpStatus.OK);
     }
 
 }
