@@ -8,9 +8,10 @@ import fullcare.backend.evaluation.dto.MemberDto;
 import fullcare.backend.evaluation.dto.request.FinalEvalCreateRequest;
 import fullcare.backend.evaluation.dto.request.MidTermEvalCreateRequest;
 import fullcare.backend.evaluation.dto.response.FinalEvaluationResponse;
+import fullcare.backend.evaluation.dto.response.MidTermEvalListResponse;
 import fullcare.backend.evaluation.dto.response.MidTermEvalModalResponse;
 import fullcare.backend.evaluation.dto.response.MidtermDetailResponse;
-import fullcare.backend.evaluation.dto.response.MidtermListResponse;
+import fullcare.backend.evaluation.dto.MidtermBadgeListDao;
 import fullcare.backend.evaluation.repository.FinalEvaluationRepository;
 import fullcare.backend.evaluation.repository.MidtermEvaluationRepository;
 import fullcare.backend.member.domain.Member;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -115,14 +117,32 @@ public class EvaluationService {
         return FinalEvaluationResponse.entityToDto(findFinalTermEvaluation);
     }
 
-    public List<MidtermListResponse> findMidtermEvaluationList(Long projectId) {
+    public List<MidTermEvalListResponse> findMidtermEvaluationList(Long projectId) {
         Project project = projectRepository.findJoinPMJoinMemberById(projectId).orElseThrow();
         List<Member> members = project.getProjectMembers().stream().map(pm -> pm.getMember()).collect(Collectors.toList());
-        List<MidtermListResponse> midtermListResponses = midtermEvaluationRepository.findList(projectId, members);
-        for (MidtermListResponse midtermListResponse : midtermListResponses) {
-            System.out.println("midtermListResponse = " + midtermListResponse);
-        }// JSON 응답으로 넘겨줄 때 없는 뱃지 추가 + 멤버별로 틀 맞춰서 깔끔하게 수정 필요
-        return midtermListResponses;
+        List<MidtermBadgeListDao> midtermBadgeListRespons = midtermEvaluationRepository.findList(projectId, members);
+        MidTermEvalListResponse midTermEvalList = null;
+        List<MidTermEvalListResponse> midTermEvalListResponse = new ArrayList<>();
+        boolean flag = false;
+        for (MidtermBadgeListDao midtermBadgeListDao : midtermBadgeListRespons) {
+            if(midTermEvalListResponse.size() == 0){
+                midTermEvalList = MidTermEvalListResponse.builder().memberId(midtermBadgeListDao.getMemberId()).name(midtermBadgeListDao.getName()).imageUrl(null).build();
+                midTermEvalListResponse.add(midTermEvalList);
+                flag = true;
+            }else if(midTermEvalListResponse.get(midTermEvalListResponse.size()-1).getMemberId() != midtermBadgeListDao.getMemberId()){
+                System.out.println("리스트 끝 memberId = " + midTermEvalListResponse.get(midTermEvalListResponse.size()-1).getMemberId());
+                System.out.println("현재 getMemberId() = " + midtermBadgeListDao.getMemberId());
+                if(flag){flag = false;}//첫 사람 평가 중복 추가 방지
+                else{midTermEvalListResponse.add(midTermEvalList);}
+                midTermEvalList = MidTermEvalListResponse.builder().memberId(midtermBadgeListDao.getMemberId()).name(midtermBadgeListDao.getName()).imageUrl(null).build();
+            }
+            midTermEvalList.addBadge(new BadgeDto(midtermBadgeListDao.getEvaluationBadge(),midtermBadgeListDao.getQuantity(),null));
+
+
+            System.out.println("midtermListResponse = " + midtermBadgeListDao);
+        }// JSON 응답으로 넘겨줄 때 없는 뱃지 추가 + 멤버별로 틀 맞춰서 깔끔하게 수정 필요, 프로필 이미지 추가
+        midTermEvalListResponse.add(midTermEvalList);// 마지막 추가
+        return midTermEvalListResponse;
     }
 
     public void findFinalEvaluationList(Long projectId) {

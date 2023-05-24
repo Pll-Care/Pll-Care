@@ -1,14 +1,14 @@
-package fullcare.backend.evaluation.dto.response;
+package fullcare.backend.evaluation.dto;
 
 import fullcare.backend.evaluation.domain.EvaluationBadge;
 import lombok.Data;
 
 @Data
-public class MidtermListResponse {
+public class MidtermBadgeListDao {
     private Long memberId;
     private String name;
 //    private MidtermDetailResponse midtermDetailResponses;
-private EvaluationBadge evaluationBadge;
+    private EvaluationBadge evaluationBadge;
     private Long quantity;
 //    public MidtermListResponse(Long id, String name, MidtermDetailResponse midtermDetailResponses) {
 //        this.id = id;
@@ -16,7 +16,7 @@ private EvaluationBadge evaluationBadge;
 //        this.midtermDetailResponses = midtermDetailResponses;
 //    }
 
-    public MidtermListResponse(Long memberId, String name, EvaluationBadge evaluationBadge, Long quantity) {
+    public MidtermBadgeListDao(Long memberId, String name, EvaluationBadge evaluationBadge, Long quantity) {
         this.memberId = memberId;
         this.name = name;
         this.evaluationBadge = evaluationBadge;
