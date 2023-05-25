@@ -10,7 +10,7 @@ const BookMarkedMeetingRecordList = () => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-    const [recordDatasPerPage, setRecordDatasPerPage] = useState(2);
+    const [recordDatasPerPage, setRecordDatasPerPage] = useState(3);
 
     const indexOfLast = currentPage * recordDatasPerPage;
     const indexOfFirst = indexOfLast - recordDatasPerPage;

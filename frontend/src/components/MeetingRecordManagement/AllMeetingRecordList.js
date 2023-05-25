@@ -25,7 +25,7 @@ const AllMeetingRecordList = () => {
     const [sortType, setSortType] = useState('latest');
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-    const [recordDatasPerPage, setRecordDatasPerPage] = useState(4);
+    const [recordDatasPerPage, setRecordDatasPerPage] = useState(3);
 
     const meetingRecordList = useSelector(state => state.meetingRecordManagement.meetingRecordList);
 

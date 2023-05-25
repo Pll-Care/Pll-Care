@@ -1,62 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@600&family=Open+Sans:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Open+Sans:wght@300&display=swap");
-*,
-*:before,
-*:after {
+*, *:before, *:after {
   box-sizing: border-box;
 }
 
-html,
-body,
-div,
-span,
-object,
-iframe,
-figure,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-code,
-em,
-img,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-b,
-u,
-i,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-main,
-canvas,
-embed,
-footer,
-header,
-nav,
-section,
-video {
+html, body, div, span, object, iframe, figure, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, code, em, img, small, strike, strong, sub, sup, tt, b, u, i, ol, ul, li, fieldset, form, label, table, caption, tbody, tfoot, thead, tr, th, td, main, canvas, embed, footer, header, nav, section, video {
   margin: 0;
   padding: 0;
   border: 0;
@@ -66,15 +14,11 @@ video {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: none;
-  -moz-text-size-adjust: none;
-  text-size-adjust: none;
+     -moz-text-size-adjust: none;
+          text-size-adjust: none;
 }
 
-footer,
-header,
-nav,
-section,
-main {
+footer, header, nav, section, main {
   display: block;
 }
 
@@ -82,20 +26,15 @@ body {
   line-height: 1;
 }
 
-ol,
-ul {
+ol, ul {
   list-style: none;
 }
 
-blockquote,
-q {
+blockquote, q {
   quotes: none;
 }
 
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
+blockquote:before, blockquote:after, q:before, q:after {
   content: "";
   content: none;
 }
@@ -113,7 +52,7 @@ input {
 .login-modal-wrapper {
   background: rgba(0, 0, 0, 0.8);
   -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
   opacity: 90%;
   position: fixed;
   top: 0;
@@ -155,7 +94,7 @@ input {
   font-size: 40px;
 }
 .login-modal-wrapper .login-modal .login-text {
-  color: #9aad84;
+  color: #9AAD84;
   line-height: 1.7;
   position: absolute;
   top: 42%;
@@ -450,7 +389,6 @@ input {
 }
 .meeting-record-management-wrapper .meeting-record-management {
   border: 2px solid #01e89e;
-  height: 200vh;
   display: flex;
   justify-content: space-between;
   border-radius: 35px;
@@ -458,134 +396,100 @@ input {
   margin-left: auto;
   margin-right: auto;
 }
-.meeting-record-management-wrapper
-  .meeting-record-management
-  .meeting-record-heading {
+.meeting-record-management-wrapper .meeting-record-management .meeting-record-heading {
   color: white;
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
 }
 .meeting-record-management-wrapper .meeting-record-list {
-  width: 35%;
   padding: 10px;
   border-top-left-radius: 35px;
   border-bottom-left-radius: 35px;
 }
 .meeting-record-management-wrapper .meeting-record-list-editor {
-  width: 65%;
-  padding: 10px;
+  padding: 25px 10px;
   border-radius: 35px;
   background-color: white;
   /* MEETING RECORD NEW MEETING RECORD */
 }
-.meeting-record-management-wrapper
-  .meeting-record-list-editor
-  .meeting-record-new-meeting-record {
+.meeting-record-management-wrapper .meeting-record-list-editor .meeting-record-new-meeting-record {
   height: 100%;
 }
-.meeting-record-management-wrapper
-  .meeting-record-list-editor
-  .meeting-record-new-meeting-record-editor {
+.meeting-record-management-wrapper .meeting-record-list-editor .meeting-record-new-meeting-record-editor {
   height: 100%;
   width: 95%;
   margin-left: auto;
   margin-right: auto;
 }
-.meeting-record-management-wrapper
-  .meeting-record-list-editor
-  .meeting-record-new-meeting-record-editor
-  .meeting-record-heading {
-  color: #01e89e;
+.meeting-record-management-wrapper .meeting-record-list-editor .meeting-record-new-meeting-record-editor .meeting-record-heading {
+  color: #01E89E;
   margin-bottom: 30px;
 }
-.meeting-record-management-wrapper
-  .meeting-record-list-editor
-  .meeting-record-new-meeting-record-editor
-  .meeting-record-initial-state {
+.meeting-record-management-wrapper .meeting-record-list-editor .meeting-record-new-meeting-record-editor .meeting-record-initial-state {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.meeting-record-management-wrapper
-  .meeting-record-list-editor
-  .meeting-record-not-edited-record {
+.meeting-record-management-wrapper .meeting-record-list-editor .meeting-record-not-edited-record {
   height: 100%;
   font-family: "Noto Sans KR", sans-serif;
-  font-size: 18px;
   margin-bottom: 20px;
+  padding: 15px;
+}
+.meeting-record-management-wrapper .meeting-record-list-editor .meeting-record-not-edited-record .meeting-record-body {
   padding: 20px;
+  margin-top: 10px;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  border: 2px solid #01e89e;
 }
-.meeting-record-management-wrapper
-  .meeting-record-list-editor
-  .meeting-record-not-edited-record
-  .meeting-record-body {
-  height: 96%;
-}
-.meeting-record-management-wrapper
-  .meeting-record-list-editor
-  .meeting-record-not-edited-record
-  .meeting-record-body
-  h1 {
+.meeting-record-management-wrapper .meeting-record-list-editor .meeting-record-not-edited-record .meeting-record-body h1 {
   margin-bottom: 20px;
 }
-.meeting-record-management-wrapper
-  .meeting-record-list-editor
-  .meeting-record-not-edited-record
-  .meeting-record-button-wrapper {
+.meeting-record-management-wrapper .meeting-record-list-editor .meeting-record-not-edited-record .meeting-record-button-wrapper {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-.meeting-record-management-wrapper
-  .meeting-record-list-editor
-  .meeting-record-not-edited-record
-  .meeting-record-button-wrapper
-  .button-wrapper-right-col {
-  width: 310px;
+.meeting-record-management-wrapper .meeting-record-list-editor .meeting-record-not-edited-record .meeting-record-button-wrapper .button-wrapper-left-col {
+  width: 50%;
+}
+.meeting-record-management-wrapper .meeting-record-list-editor .meeting-record-not-edited-record .meeting-record-button-wrapper .button-wrapper-right-col {
+  width: 50%;
+  margin-top: 10px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
 }
-.meeting-record-management-wrapper
-  .meeting-record-list-editor
-  .meeting-record-edited-record {
+.meeting-record-management-wrapper .meeting-record-list-editor .meeting-record-not-edited-record .meeting-record-button-wrapper .button-wrapper-right-col Button {
+  margin-right: 0;
+}
+.meeting-record-management-wrapper .meeting-record-list-editor .meeting-record-edited-record {
   font-family: "Noto Sans KR", sans-serif;
-  font-size: 18px;
-  height: 100%;
   padding: 20px;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  border: 2px solid #01e89e;
 }
-.meeting-record-management-wrapper
-  .meeting-record-list-editor
-  .meeting-record-edited-record
-  h1 {
+.meeting-record-management-wrapper .meeting-record-list-editor .meeting-record-edited-record h1 {
   margin-bottom: 20px;
 }
-.meeting-record-management-wrapper
-  .meeting-record-list-editor
-  .meeting-record-content-editor {
+.meeting-record-management-wrapper .meeting-record-list-editor .meeting-record-content-editor {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
 }
-.meeting-record-management-wrapper
-  .meeting-record-list-editor
-  .meeting-record-content-editor
-  .react-quill {
+.meeting-record-management-wrapper .meeting-record-list-editor .meeting-record-content-editor .react-quill {
   margin-top: 20px;
-  margin-bottom: 80px;
   width: 100%;
-  height: 73%;
 }
-.meeting-record-management-wrapper
-  .meeting-record-list-editor
-  .meeting-record-content-editor
-  .meeting-record-writer {
+.meeting-record-management-wrapper .meeting-record-list-editor .meeting-record-content-editor .meeting-record-writer {
   margin-bottom: 20px;
   width: 100%;
   display: flex;
@@ -593,27 +497,14 @@ input {
   justify-content: flex-start;
   align-items: center;
 }
-.meeting-record-management-wrapper
-  .meeting-record-list-editor
-  .meeting-record-content-editor
-  .meeting-record-writer
-  h1 {
+.meeting-record-management-wrapper .meeting-record-list-editor .meeting-record-content-editor .meeting-record-writer h1 {
   font-family: "Noto Sans KR", sans-serif;
-  font-size: 18px;
-  margin-right: 10px;
 }
-.meeting-record-management-wrapper
-  .meeting-record-list-editor
-  .meeting-record-content-editor
-  .meeting-record-writer
-  .control-menu {
+.meeting-record-management-wrapper .meeting-record-list-editor .meeting-record-content-editor .meeting-record-writer .control-menu {
   border: 2px solid #01e89e;
   color: black;
 }
-.meeting-record-management-wrapper
-  .meeting-record-list-editor
-  .meeting-record-content-editor
-  .meeting-record-title {
+.meeting-record-management-wrapper .meeting-record-list-editor .meeting-record-content-editor .meeting-record-title {
   margin-bottom: 20px;
   width: 100%;
   display: flex;
@@ -621,21 +512,10 @@ input {
   justify-content: flex-start;
   align-items: center;
 }
-.meeting-record-management-wrapper
-  .meeting-record-list-editor
-  .meeting-record-content-editor
-  .meeting-record-title
-  h1 {
+.meeting-record-management-wrapper .meeting-record-list-editor .meeting-record-content-editor .meeting-record-title h1 {
   font-family: "Noto Sans KR", sans-serif;
-  font-size: 18px;
-  margin-right: 10px;
 }
-.meeting-record-management-wrapper
-  .meeting-record-list-editor
-  .meeting-record-content-editor
-  .meeting-record-title
-  input {
-  width: 91%;
+.meeting-record-management-wrapper .meeting-record-list-editor .meeting-record-content-editor .meeting-record-title input {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
   border-radius: 45px;
@@ -643,10 +523,7 @@ input {
   padding: 5px 25px;
   margin-left: auto;
 }
-.meeting-record-management-wrapper
-  .meeting-record-list-editor
-  .meeting-record-content-editor
-  .meeting-record-button-wrapper {
+.meeting-record-management-wrapper .meeting-record-list-editor .meeting-record-content-editor .meeting-record-button-wrapper {
   margin-right: 20px;
 }
 .meeting-record-management-wrapper .meeting-record-selected-meeting-record {
@@ -655,37 +532,29 @@ input {
 .meeting-record-management-wrapper .meeting-record-book-marked-record-list {
   padding-top: 10px;
   margin-bottom: 10px;
-  height: 38%;
+  height: 50%;
 }
-.meeting-record-management-wrapper
-  .meeting-record-book-marked-record-list
-  .meeting-record-heading {
+.meeting-record-management-wrapper .meeting-record-book-marked-record-list .meeting-record-heading {
   height: 40px;
   margin-bottom: 20px;
   padding: 5px;
 }
-.meeting-record-management-wrapper
-  .meeting-record-book-marked-record-list
-  .meeting-record-body {
+.meeting-record-management-wrapper .meeting-record-book-marked-record-list .meeting-record-body {
   height: 85%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.meeting-record-management-wrapper
-  .meeting-record-book-marked-record-list
-  .meeting-record-body
-  .meeting-record-all-meeting-record-list-data {
+.meeting-record-management-wrapper .meeting-record-book-marked-record-list .meeting-record-body .meeting-record-all-meeting-record-list-data {
   height: 80%;
+  width: 100%;
 }
 .meeting-record-management-wrapper .meeting-record-all-meeting-record-list {
   height: 56%;
 }
-.meeting-record-management-wrapper
-  .meeting-record-all-meeting-record-list
-  .meeting-record-list-header {
-  width: 370px;
+.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .meeting-record-list-header {
+  width: 100%;
   height: 100px;
   flex-wrap: wrap;
   display: flex;
@@ -695,49 +564,46 @@ input {
   margin-left: auto;
   margin-right: auto;
 }
-.meeting-record-management-wrapper
-  .meeting-record-all-meeting-record-list
-  .meeting-record-list-header
-  .header-left-col {
+.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .meeting-record-list-header .header-left-col {
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-.meeting-record-management-wrapper
-  .meeting-record-all-meeting-record-list
-  .meeting-record-list-header
-  .header-left-col
-  .meeting-record-heading {
+.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .meeting-record-list-header .header-left-col .meeting-record-heading {
   height: 40px;
-  margin-bottom: 20px;
   padding: 5px;
 }
-.meeting-record-management-wrapper
-  .meeting-record-all-meeting-record-list
-  .meeting-record-list-header
-  .header-right-col {
+.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .meeting-record-list-header .header-left-col .control-menu {
+  margin-right: 5px;
+}
+.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .meeting-record-list-header .header-right-col {
   margin-left: auto;
 }
-.meeting-record-management-wrapper
-  .meeting-record-all-meeting-record-list
-  .record-list-item-wrapper {
+.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .meeting-record-list-header .header-right-col Button {
+  margin-right: 5px;
+}
+.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .record-list-item-wrapper {
   padding-top: 20px;
-  height: 615px;
+  height: 72%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
 }
+.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .meeting-record-all-meeting-record-list-data {
+  height: 80%;
+  width: 100%;
+}
 .meeting-record-management-wrapper .meeting-record-item {
   background-color: white;
   margin-bottom: 10px;
   border-radius: 20px;
-  width: 370px;
+  width: 95%;
   height: 120px;
   padding: 10px 20px;
-  color: #7a7a7a;
+  color: #7A7A7A;
   cursor: pointer;
   margin-left: auto;
   margin-right: auto;
@@ -748,40 +614,177 @@ input {
 }
 .meeting-record-management-wrapper .meeting-record-item-date {
   font-family: "Noto Sans KR", sans-serif;
-  font-size: 18px;
 }
 .meeting-record-management-wrapper .meeting-record-item-title {
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
 }
 .meeting-record-management-wrapper .meeting-record-item-writer {
   font-family: "Noto Sans KR", sans-serif;
-  font-size: 18px;
 }
 
 @media (min-width: 1024px) {
   .meeting-record-management {
+    height: 200vh;
     width: 85%;
+  }
+  .meeting-record-management .meeting-record-heading {
+    font-size: 25px;
+  }
+  .meeting-record-management .meeting-record-list-editor {
+    width: 65%;
+  }
+  .meeting-record-management .meeting-record-list-editor .meeting-record-not-edited-record {
+    font-size: 18px;
+  }
+  .meeting-record-management .meeting-record-list-editor .meeting-record-not-edited-record .meeting-record-body {
+    height: 90%;
+  }
+  .meeting-record-management .meeting-record-list-editor .meeting-record-content-editor .react-quill {
+    height: 75%;
+    margin-bottom: 95px;
+  }
+  .meeting-record-management .meeting-record-list-editor .meeting-record-content-editor .meeting-record-writer {
+    width: 100%;
+  }
+  .meeting-record-management .meeting-record-list-editor .meeting-record-content-editor .meeting-record-writer h1 {
+    width: 90px;
+    font-size: 18px;
+  }
+  .meeting-record-management .meeting-record-list-editor .meeting-record-content-editor .meeting-record-title {
+    width: 100%;
+  }
+  .meeting-record-management .meeting-record-list-editor .meeting-record-content-editor .meeting-record-title h1 {
+    width: 95px;
+    font-size: 18px;
+  }
+  .meeting-record-management .meeting-record-list-editor .meeting-record-content-editor .meeting-record-title input {
+    width: 89%;
+  }
+  .meeting-record-management .meeting-record-list-editor .meeting-record-edited-record {
+    font-size: 18px;
+  }
+  .meeting-record-item-date {
+    font-size: 18px;
+  }
+  .meeting-record-item-title {
+    font-size: 25px;
+  }
+  .meeting-record-item-writer {
+    font-size: 18px;
   }
 }
 @media (min-width: 767px) and (max-width: 1024px) {
   .meeting-record-management {
     width: 85%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .meeting-record-management .meeting-record-heading {
+    font-size: 23px;
+  }
+  .meeting-record-management .meeting-record-list {
+    width: 100%;
+    height: 600px;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .meeting-record-management .meeting-record-list .meeting-record-all-meeting-record-list {
+    margin-left: 5px;
+    height: 100%;
+    width: 50%;
+  }
+  .meeting-record-management .meeting-record-list .meeting-record-all-meeting-record-list .meeting-record-list-header {
+    height: 15%;
+  }
+  .meeting-record-management .meeting-record-list .meeting-record-all-meeting-record-list .record-list-item-wrapper {
+    height: 86%;
+  }
+  .meeting-record-management .meeting-record-list .meeting-record-all-meeting-record-list .record-list-item-wrapper .meeting-record-all-meeting-record-list-data {
+    height: 100%;
+  }
+  .meeting-record-management .meeting-record-list .meeting-record-all-meeting-record-list .record-list-item-wrapper .pagination-wrapper {
+    margin-bottom: 10px;
+  }
+  .meeting-record-management .meeting-record-list .meeting-record-book-marked-record-list {
+    margin-right: 5px;
+    height: 100%;
+    width: 50%;
+    padding-top: 0;
+    margin-bottom: 0;
+  }
+  .meeting-record-management .meeting-record-list .meeting-record-book-marked-record-list .meeting-record-heading {
+    height: 15%;
+  }
+  .meeting-record-management .meeting-record-list .meeting-record-book-marked-record-list .meeting-record-body {
+    height: 82%;
+  }
+  .meeting-record-management .meeting-record-list .meeting-record-book-marked-record-list .meeting-record-body .meeting-record-all-meeting-record-list-data {
+    height: 100%;
+  }
+  .meeting-record-management .meeting-record-list-editor {
+    width: 100%;
+    height: 700px;
+  }
+  .meeting-record-management .meeting-record-list-editor .meeting-record-not-edited-record {
+    font-size: 17px;
+  }
+  .meeting-record-management .meeting-record-list-editor .meeting-record-not-edited-record .meeting-record-body {
+    height: 82%;
+  }
+  .meeting-record-management .meeting-record-list-editor .meeting-record-content-editor .react-quill {
+    margin-bottom: 100px;
+    height: 80%;
+  }
+  .meeting-record-management .meeting-record-list-editor .meeting-record-content-editor .meeting-record-writer h1 {
+    width: 90px;
+    font-size: 17px;
+  }
+  .meeting-record-management .meeting-record-list-editor .meeting-record-content-editor .meeting-record-title h1 {
+    width: 90px;
+    font-size: 17px;
+  }
+  .meeting-record-management .meeting-record-list-editor .meeting-record-content-editor .meeting-record-title input {
+    width: 88%;
+    margin: 0;
+  }
+  .meeting-record-management .meeting-record-list-editor .meeting-record-edited-record {
+    font-size: 17px;
+  }
+  .meeting-record-item-date {
+    font-size: 17px;
+  }
+  .meeting-record-item-title {
+    font-size: 23px;
+  }
+  .meeting-record-item-writer {
+    font-size: 17px;
   }
 }
 @media (max-width: 767px) {
   .meeting-record-management {
     width: 90%;
   }
+  .meeting-record-item-date {
+    font-size: 12px;
+  }
+  .meeting-record-item-title {
+    font-size: 21px;
+  }
+  .meeting-record-item-writer {
+    font-size: 12px;
+  }
 }
 .control-menu {
-  width: 135px;
-  height: 40px;
   border-radius: 55px;
   border: none;
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 20px;
-  color: #01e89e;
+  color: #01E89E;
   text-align: center;
   cursor: pointer;
   -webkit-appearance: none; /* for chrome */
@@ -796,6 +799,25 @@ input {
   display: none; /*for IE10,11*/
 }
 
+@media (min-width: 1024px) {
+  .control-menu {
+    font-size: 20px;
+    width: 135px;
+    height: 40px;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .control-menu {
+    font-size: 17px;
+    padding: 5px 25px;
+  }
+}
+@media (max-width: 767px) {
+  .control-menu {
+    font-size: 14px;
+    padding: 3px 13px;
+  }
+}
 .pagination-wrapper {
   width: 250px;
   margin-top: 8px;
@@ -845,14 +867,13 @@ input {
 .evaluation-management-ranking-wrapper {
   height: 77vh;
   padding-bottom: 30px;
-  border-bottom: 2px solid #d9d9d9;
+  border-bottom: 2px solid #D9D9D9;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
-.evaluation-management-ranking-wrapper
-  .evaluation-management-show-evaluation-ranking {
+.evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-ranking {
   border: 2px solid #01e89e;
   border-radius: 30px;
   margin-right: 10px;
@@ -866,31 +887,26 @@ input {
   justify-content: center;
   align-items: center;
 }
-.evaluation-management-ranking-wrapper
-  .evaluation-management-evaluation-ranking {
+.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking {
   height: 100%;
   width: 35%;
   margin-left: 10px;
 }
-.evaluation-management-ranking-wrapper
-  .evaluation-management-evaluation-ranking-header {
+.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-header {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 25px;
-  color: #01e89e;
+  color: #01E89E;
   padding: 10px;
 }
-.evaluation-management-ranking-wrapper
-  .evaluation-management-evaluation-ranking-body {
+.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body {
   height: calc(100% - 45px);
-  background-color: #01e89e;
+  background-color: #01E89E;
   border-radius: 25px;
   padding: 30px;
   padding-bottom: 5px;
   overflow-y: scroll;
 }
-.evaluation-management-ranking-wrapper
-  .evaluation-management-evaluation-ranking-body
-  .evaluation-management-evaluation-ranking-item {
+.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item {
   border-radius: 20px;
   padding: 10px;
   margin-bottom: 26px;
@@ -901,20 +917,13 @@ input {
   justify-content: center;
   align-items: center;
 }
-.evaluation-management-ranking-wrapper
-  .evaluation-management-evaluation-ranking-body
-  .evaluation-management-evaluation-ranking-item
-  .evaluation-management-left-col {
+.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-left-col {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
 }
-.evaluation-management-ranking-wrapper
-  .evaluation-management-evaluation-ranking-body
-  .evaluation-management-evaluation-ranking-item
-  .evaluation-management-left-col
-  figure {
+.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-left-col figure {
   width: 40px;
   height: 40px;
   margin-right: 5px;
@@ -923,56 +932,36 @@ input {
   background-repeat: no-repeat;
   background-size: 100%, 100%;
 }
-.evaluation-management-ranking-wrapper
-  .evaluation-management-evaluation-ranking-body
-  .evaluation-management-evaluation-ranking-item
-  .evaluation-management-left-col
-  .ranking {
-  color: #01e89e;
+.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-left-col .ranking {
+  color: #01E89E;
   font-size: 25px;
   font-family: "IBM Plex Sans KR", sans-serif;
 }
-.evaluation-management-ranking-wrapper
-  .evaluation-management-evaluation-ranking-body
-  .evaluation-management-evaluation-ranking-item
-  .evaluation-management-right-col {
+.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col {
   width: 49%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
 }
-.evaluation-management-ranking-wrapper
-  .evaluation-management-evaluation-ranking-body
-  .evaluation-management-evaluation-ranking-item
-  .evaluation-management-right-col
-  .name {
+.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col .name {
   font-size: 25px;
   font-family: "IBM Plex Sans KR", sans-serif;
-  color: #01e89e;
+  color: #01E89E;
   margin-bottom: 4px;
 }
-.evaluation-management-ranking-wrapper
-  .evaluation-management-evaluation-ranking-body
-  .evaluation-management-evaluation-ranking-item
-  .evaluation-management-right-col
-  .score {
+.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col .score {
   font-size: 15px;
   font-family: "Noto Sans KR", sans-serif;
-  color: #7a7a7a;
+  color: #7A7A7A;
 }
-.evaluation-management-ranking-wrapper
-  .evaluation-management-evaluation-ranking-body
-  .evaluation-management-evaluation-ranking-item_1
-  .evaluation-management-left-col
-  figure {
+.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item_1 .evaluation-management-left-col figure {
   background-image: url("../assets/ranking-1-img.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 85%, 85%;
 }
-.evaluation-management-ranking-wrapper
-  .evaluation-management-evaluation-ranking-body::-webkit-scrollbar {
+.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body::-webkit-scrollbar {
   display: none;
 }
 .evaluation-management-participant-wrapper {
@@ -985,7 +974,7 @@ input {
 .evaluation-management-participant-wrapper h1 {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 25px;
-  color: #01e89e;
+  color: #01E89E;
   padding-top: 15px;
 }
 .evaluation-management-participant-wrapper .evaluation-management-participants {
@@ -998,9 +987,7 @@ input {
   justify-content: space-between;
   align-items: center;
 }
-.evaluation-management-participant-wrapper
-  .evaluation-management-participants
-  .evaluation-management-participant {
+.evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant {
   box-shadow: 0px 10px 20px 5px rgba(0, 0, 0, 0.07);
   border-radius: 20px;
   padding: 17px;
@@ -1013,10 +1000,7 @@ input {
   justify-content: center;
   align-items: center;
 }
-.evaluation-management-participant-wrapper
-  .evaluation-management-participants
-  .evaluation-management-participant-left-col
-  .evaluation-management-user-profile {
+.evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-left-col .evaluation-management-user-profile {
   border: 2px solid #01e89e;
   width: 70px;
   height: 70px;
@@ -1028,13 +1012,11 @@ input {
   background-repeat: no-repeat;
   background-size: 100%, 100%;
 }
-.evaluation-management-participant-wrapper
-  .evaluation-management-participants
-  .evaluation-management-participant-right-col {
+.evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col {
   width: 100%;
   height: 95%;
   margin-left: 30px;
-  color: #7a7a7a;
+  color: #7A7A7A;
   font-size: 25px;
   font-family: "IBM Plex Sans KR", sans-serif;
   display: flex;
@@ -1042,26 +1024,19 @@ input {
   justify-content: space-between;
   align-items: flex-start;
 }
-.evaluation-management-participant-wrapper
-  .evaluation-management-participants
-  .evaluation-management-participant-right-col
-  .evaluation-management-badges {
+.evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col .evaluation-management-badges {
   width: 100px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-.evaluation-management-participant-wrapper
-  .evaluation-management-participants
-  .evaluation-management-participant-right-col
-  .evaluation-management-badges
-  figure {
-  border: 2px solid #cccccc;
+.evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col .evaluation-management-badges figure {
+  border: 2px solid #CCCCCC;
   border-radius: 50%;
   width: 30px;
   height: 30px;
-  background-color: #cccccc;
+  background-color: #CCCCCC;
 }
 
 .management {
@@ -1118,44 +1093,24 @@ input {
   background-size: 100% 100%, 100%;
 }
 .management .project-list-wrapper .project-list .project-item-right-col {
-  color: #003b28;
+  color: #003B28;
   font-size: 18px;
   font-family: "Noto Sans KR", sans-serif;
 }
-.management
-  .project-list-wrapper
-  .project-list
-  .project-item-right-col
-  .project-item-heading {
+.management .project-list-wrapper .project-list .project-item-right-col .project-item-heading {
   font-size: 25px;
   font-family: "IBM Plex Sans KR", sans-serif;
   margin-bottom: 7px;
 }
-.management
-  .project-list-wrapper
-  .project-list
-  .project-item-right-col
-  .project-item-period,
-.management
-  .project-list-wrapper
-  .project-list
-  .project-item-right-col
-  .project-item-description {
+.management .project-list-wrapper .project-list .project-item-right-col .project-item-period,
+.management .project-list-wrapper .project-list .project-item-right-col .project-item-description {
   margin-bottom: 7px;
 }
-.management
-  .project-list-wrapper
-  .project-list
-  .project-item-right-col
-  .project-item-description {
+.management .project-list-wrapper .project-list .project-item-right-col .project-item-description {
   line-height: 1.5;
   overflow-wrap: break-word;
 }
-.management
-  .project-list-wrapper
-  .project-list
-  .project-item-right-col
-  .project-item-period-heading {
+.management .project-list-wrapper .project-list .project-item-right-col .project-item-period-heading {
   margin-right: 5px;
 }
 .management .pagination-wrapper {
@@ -1171,7 +1126,7 @@ input {
 .management .new-project-modal-wrapper {
   background: rgba(0, 0, 0, 0.8);
   -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
   opacity: 98%;
   height: 100%;
   width: 100%;
@@ -1198,38 +1153,23 @@ input {
   background-repeat: no-repeat;
   background-size: 100% 100%, 100%;
 }
-.management
-  .new-project-modal-wrapper
-  .new-project-first-row
-  .new-project-left-col {
+.management .new-project-modal-wrapper .new-project-first-row .new-project-left-col {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
 }
-.management
-  .new-project-modal-wrapper
-  .new-project-first-row
-  .new-project-left-col
-  input {
+.management .new-project-modal-wrapper .new-project-first-row .new-project-left-col input {
   border-radius: 15px;
   border: 2px solid white;
   font-family: "IBM Plex Sans KR", sans-serif;
   padding: 5px;
   background-color: white;
 }
-.management
-  .new-project-modal-wrapper
-  .new-project-first-row
-  .new-project-left-col
-  input::-moz-placeholder {
+.management .new-project-modal-wrapper .new-project-first-row .new-project-left-col input::-moz-placeholder {
   color: #9d9797;
 }
-.management
-  .new-project-modal-wrapper
-  .new-project-first-row
-  .new-project-left-col
-  input::placeholder {
+.management .new-project-modal-wrapper .new-project-first-row .new-project-left-col input::placeholder {
   color: #9d9797;
 }
 .management .new-project-modal-wrapper .new-project-second-row {
@@ -1237,42 +1177,25 @@ input {
   background-color: #01e89e;
   color: #01e89e;
 }
-.management
-  .new-project-modal-wrapper
-  .new-project-second-row
-  .new-project-period {
+.management .new-project-modal-wrapper .new-project-second-row .new-project-period {
   box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1019607843);
   background-color: white;
 }
-.management
-  .new-project-modal-wrapper
-  .new-project-second-row
-  .new-project-period-left-col {
+.management .new-project-modal-wrapper .new-project-second-row .new-project-period-left-col {
   width: 118px;
 }
-.management
-  .new-project-modal-wrapper
-  .new-project-second-row
-  .new-project-period-left-col
-  h1 {
+.management .new-project-modal-wrapper .new-project-second-row .new-project-period-left-col h1 {
   font-family: "Noto Sans KR", sans-serif;
   margin-right: 40px;
 }
-.management
-  .new-project-modal-wrapper
-  .new-project-second-row
-  .new-project-period-right-col {
-  color: #7a7a7a;
+.management .new-project-modal-wrapper .new-project-second-row .new-project-period-right-col {
+  color: #7A7A7A;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
 }
-.management
-  .new-project-modal-wrapper
-  .new-project-second-row
-  .new-project-period-right-col
-  input {
+.management .new-project-modal-wrapper .new-project-second-row .new-project-period-right-col input {
   font-family: "Noto Sans KR", sans-serif;
   border-radius: 15px;
   padding: 0 10px;
@@ -1282,25 +1205,13 @@ input {
   margin-left: 5px;
   border: none;
 }
-.management
-  .new-project-modal-wrapper
-  .new-project-second-row
-  .new-project-period-right-col
-  input[type="date"]::before {
+.management .new-project-modal-wrapper .new-project-second-row .new-project-period-right-col input[type=date]::before {
   content: attr(data-placeholder);
   color: #9d9797;
   width: 100%;
 }
-.management
-  .new-project-modal-wrapper
-  .new-project-second-row
-  .new-project-period-right-col
-  .new-project-period-start-date:valid::before,
-.management
-  .new-project-modal-wrapper
-  .new-project-second-row
-  .new-project-period-right-col
-  .new-project-period-end-date:valid::before {
+.management .new-project-modal-wrapper .new-project-second-row .new-project-period-right-col .new-project-period-start-date:valid::before,
+.management .new-project-modal-wrapper .new-project-second-row .new-project-period-right-col .new-project-period-end-date:valid::before {
   display: none;
 }
 .management .new-project-modal-wrapper .new-project-second-row textarea {
@@ -1311,16 +1222,10 @@ input {
   border-radius: 20px;
   border: none;
 }
-.management
-  .new-project-modal-wrapper
-  .new-project-second-row
-  textarea::-moz-placeholder {
+.management .new-project-modal-wrapper .new-project-second-row textarea::-moz-placeholder {
   color: #9d9797;
 }
-.management
-  .new-project-modal-wrapper
-  .new-project-second-row
-  textarea::placeholder {
+.management .new-project-modal-wrapper .new-project-second-row textarea::placeholder {
   color: #9d9797;
 }
 
@@ -1352,8 +1257,7 @@ input {
     justify-content: space-between;
     align-items: center;
   }
-  .management .project-list-wrapper .project-item-period,
-  .management .project-list-wrapper .project-item-description {
+  .management .project-list-wrapper .project-item-period, .management .project-list-wrapper .project-item-description {
     width: 400px;
   }
   .management .project-list-wrapper .project-item-button-wrapper {
@@ -1469,8 +1373,7 @@ input {
     font-size: 38px;
     font-family: "IBM Plex Sans KR", sans-serif;
   }
-  .management .project-list-wrapper .project-item-period,
-  .management .project-list-wrapper .project-item-description {
+  .management .project-list-wrapper .project-item-period, .management .project-list-wrapper .project-item-description {
     font-size: 17px;
     font-family: "Noto Sans KR", sans-serif;
     width: 400px;
@@ -1526,7 +1429,7 @@ input {
     align-items: flex-end;
   }
   .management .new-project-first-row .new-project-left-col input {
-    font-size: 25px;
+    font-size: 23px;
     width: 80%;
     margin-right: 15px;
   }
@@ -1591,7 +1494,7 @@ input {
     align-items: center;
   }
   .management-main-header-left-col h1 {
-    font-size: 22px;
+    font-size: 21px;
   }
   .management-main-header-left-col Button {
     margin-right: 0;
@@ -1622,7 +1525,7 @@ input {
     align-items: flex-end;
   }
   .management .new-project-first-row .new-project-left-col input {
-    font-size: 22px;
+    font-size: 21px;
     width: 85%;
     height: 80%;
     margin-right: 0;
@@ -1673,16 +1576,10 @@ input {
     justify-content: center;
     align-items: center;
   }
-  .management
-    .new-project-second-row
-    .new-project-period-right-col
-    input[type="date"]::-webkit-calendar-picker-indicator {
+  .management .new-project-second-row .new-project-period-right-col input[type=date]::-webkit-calendar-picker-indicator {
     width: 0;
   }
-  .management
-    .new-project-second-row
-    .new-project-period-right-col
-    input[attribute="value"] {
+  .management .new-project-second-row .new-project-period-right-col input[attribute=value] {
     text-align: center;
   }
   .management .new-project textarea {
@@ -1712,35 +1609,20 @@ input {
     justify-content: center;
     align-items: flex-start;
   }
-  .management
-    .project-list-wrapper
-    .project-item-right-col
-    .project-item-text-wrapper {
+  .management .project-list-wrapper .project-item-right-col .project-item-text-wrapper {
     width: 100%;
   }
-  .management
-    .project-list-wrapper
-    .project-item-right-col
-    .project-item-heading {
+  .management .project-list-wrapper .project-item-right-col .project-item-heading {
     font-size: 33px;
     font-family: "IBM Plex Sans KR", sans-serif;
   }
-  .management
-    .project-list-wrapper
-    .project-item-right-col
-    .project-item-period,
-  .management
-    .project-list-wrapper
-    .project-item-right-col
-    .project-item-description {
+  .management .project-list-wrapper .project-item-right-col .project-item-period,
+  .management .project-list-wrapper .project-item-right-col .project-item-description {
     font-size: 12px;
     font-family: "Noto Sans KR", sans-serif;
     width: 69%;
   }
-  .management
-    .project-list-wrapper
-    .project-item-right-col
-    .project-item-period {
+  .management .project-list-wrapper .project-item-right-col .project-item-period {
     width: 100%;
     line-height: 1.5;
     display: flex;
@@ -1748,16 +1630,10 @@ input {
     justify-content: center;
     align-items: flex-start;
   }
-  .management
-    .project-list-wrapper
-    .project-item-right-col
-    .project-item-description {
+  .management .project-list-wrapper .project-item-right-col .project-item-description {
     width: 97%;
   }
-  .management
-    .project-list-wrapper
-    .project-item-right-col
-    .project-item-button-wrapper {
+  .management .project-list-wrapper .project-item-right-col .project-item-button-wrapper {
     width: 170px;
     margin-top: 10px;
     margin-left: auto;
@@ -1767,11 +1643,7 @@ input {
     justify-content: space-between;
     align-items: center;
   }
-  .management
-    .project-list-wrapper
-    .project-item-right-col
-    .project-item-button-wrapper
-    Button {
+  .management .project-list-wrapper .project-item-right-col .project-item-button-wrapper Button {
     margin: 0;
   }
   .management .project-list-wrapper .project-item figure {
@@ -1789,7 +1661,7 @@ input {
   top: 0;
   background: rgba(0, 0, 0, 0.8);
   -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
   opacity: 90%;
 }
 .toggle-menu-button-wrapper .toggle-menu-button {
@@ -2058,8 +1930,7 @@ input {
     align-items: center;
   }
 }
-.overview-meetings-list-current h2,
-.overview-meetings-list-bookmark h2 {
+.overview-meetings-list-current h2, .overview-meetings-list-bookmark h2 {
   font-size: 25px;
   color: #7a7a7a;
   font-family: "IBM Plex Sans KR", sans-serif;
@@ -2208,4 +2079,4 @@ Button {
 }
 .schedule .schedule-list-content-option .MuiAvatar-root:hover {
   transform: scale(0.8);
-} /*# sourceMappingURL=fullcare.css.map */
+}/*# sourceMappingURL=fullcare.css.map */

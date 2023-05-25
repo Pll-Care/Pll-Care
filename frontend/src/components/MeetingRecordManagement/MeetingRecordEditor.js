@@ -10,7 +10,6 @@ import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 import Quill from 'quill';
 import ImageResize from 'quill-image-resize';
-import SelectedMeetingRecord from "./SelectedMeetingRecord";
 
 Quill.register('modules/ImageResize', ImageResize);
 
@@ -104,6 +103,7 @@ const MeetingRecordEditor = ({ isEdit, originData }) => {
         dispatch(meetingRecordManagementActions.onRemoveMeetingRecord({
             id: originData.id
         }));
+        dispatch(meetingRecordManagementActions.onEditInitialState(true));
     }
 
     const handleBookMarkMeetingRecord = () => {
