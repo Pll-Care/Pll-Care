@@ -2,11 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const meetingRecordManagementInitialState = {
     meetingRecordList: [],
+    id: 1,
     selectedMeetingRecord: {},
     initialState: true,
     editState: 'beforeEdit',
     title: '',
-    content: ''
+    content: '',
+    bookMarkedMeetingRecordList: []
 }
 
 const meetingRecordManagementSlice = createSlice({
@@ -17,15 +19,13 @@ const meetingRecordManagementSlice = createSlice({
             state.meetingRecordList = action.payload;
         },
         onCreateMeetingRecord(state, action) {
-            state.meetingRecordList.push({ ...action.payload, id: state.meetingRecordList.length + 1 });
+            state.meetingRecordList.push({ ...action.payload, id: state.id });
+            state.id++;
         },
         onRemoveMeetingRecord(state, action) {
             state.meetingRecordList = state.meetingRecordList.filter((item) => parseInt(item.id) !== parseInt(action.payload.id));
         },
         onEditMeetingRecord(state, action) {    
-            state.meetingRecordList = state.meetingRecordList.map((item) => parseInt(item.id) === parseInt(action.payload.id) ? { ...action.payload } : item);
-        },
-        addBookMarkedMeetingRecord(state, action) {
             state.meetingRecordList = state.meetingRecordList.map((item) => parseInt(item.id) === parseInt(action.payload.id) ? { ...action.payload } : item);
         },
         onEditSelectedMeetingRecord(state, action) {
@@ -42,6 +42,12 @@ const meetingRecordManagementSlice = createSlice({
         },
         onEditContent(state, action) {
             state.content = action.payload;
+        },
+        onCreateBookMarkedMeetingRecordList(state, action) {
+            state.bookMarkedMeetingRecordList.push({ ...action.payload });
+        },
+        onRemoveBookMarkedMeetingRecordList(state, action) {
+            state.bookMarkedMeetingRecordList = state.bookMarkedMeetingRecordList.filter((meetingRecord) => parseInt(meetingRecord.id) !== parseInt(action.payload.id));
         }
     }
 })

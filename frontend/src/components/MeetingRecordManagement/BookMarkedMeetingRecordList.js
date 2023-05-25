@@ -8,6 +8,8 @@ import Pagination from "../Pagination";
 const BookMarkedMeetingRecordList = () => {
     const meetingRecordList = useSelector(state => state.meetingRecordManagement.meetingRecordList);
 
+    const bookMarkedMeetingRecordList = useSelector(state => state.meetingRecordManagement.bookMarkedMeetingRecordList);
+
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [recordDatasPerPage, setRecordDatasPerPage] = useState(3);
@@ -15,16 +17,8 @@ const BookMarkedMeetingRecordList = () => {
     const indexOfLast = currentPage * recordDatasPerPage;
     const indexOfFirst = indexOfLast - recordDatasPerPage;
 
-    const getBookMarkedMeetingRecordList = () => {
-        const bookMarkedMeetingRecordList = meetingRecordList.filter((item) => item.bookMarked === true);
-        
-        return bookMarkedMeetingRecordList;
-    }
-
     const getCurrentBookMarkedMeetingRecordList = () => {
-        const currentBookMarkedList = getBookMarkedMeetingRecordList().slice(indexOfFirst, indexOfLast);
-
-        return currentBookMarkedList;
+        return bookMarkedMeetingRecordList.slice(indexOfFirst, indexOfLast);
     }
 
     return (
@@ -39,7 +33,7 @@ const BookMarkedMeetingRecordList = () => {
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
                     recordDatasPerPage={recordDatasPerPage}
-                    totalData={getBookMarkedMeetingRecordList()?.length}
+                    totalData={bookMarkedMeetingRecordList?.length}
                 />
             </div>
         </div>

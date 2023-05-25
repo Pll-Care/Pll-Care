@@ -11,7 +11,6 @@ const MeetingRecordData = ({ sortedMeetingRecordList, isLoading }) => {
             date: new Date(parseInt(e.currentTarget.getAttribute('date'))).getTime(),
             title: e.currentTarget.getAttribute('title'),
             content: e.currentTarget.getAttribute('content'),
-            bookMarked: false,
         }));
     }
 

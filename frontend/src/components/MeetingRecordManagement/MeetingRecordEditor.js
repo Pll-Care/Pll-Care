@@ -56,6 +56,8 @@ const MeetingRecordEditor = ({ isEdit, originData }) => {
         dispatch(meetingRecordManagementActions.onEditInitialState(false));
     }
 
+    const bookMarkedMeetingRecordList = useSelector(state => state.meetingRecordManagement.bookMarkedMeetingRecordList);
+
     const handleCreateMeetingRecord = () => {
         const writerObj = teamMembers.find((member) => parseInt(member.value) === parseInt(selectedMember));
 
@@ -66,7 +68,6 @@ const MeetingRecordEditor = ({ isEdit, originData }) => {
             date: newDate,
             title,
             content,
-            bookMarked: false
         }));
 
         setWriter(writerObj.name);
@@ -88,7 +89,6 @@ const MeetingRecordEditor = ({ isEdit, originData }) => {
             date: newDate,
             title,
             content,
-            bookMarked: originData.bookMarked
         }));
 
         setWriter(writerObj.name);
@@ -104,21 +104,40 @@ const MeetingRecordEditor = ({ isEdit, originData }) => {
             id: originData.id
         }));
         dispatch(meetingRecordManagementActions.onEditInitialState(true));
+        dispatch(meetingRecordManagementActions.onEditTitle(''));
+        dispatch(meetingRecordManagementActions.onEditContent(''));
     }
 
-    const handleBookMarkMeetingRecord = () => {
-        dispatch(meetingRecordManagementActions.addBookMarkedMeetingRecord({
+    const handleCreateBookMarkMeetingRecord = () => {      
+        dispatch(meetingRecordManagementActions.onCreateBookMarkedMeetingRecordList({
             id: originData.id,
             writer: originData.writer,
             date: originData.date,
             title: originData.title,
             content: originData.content,
-            bookMarked: true
         }));
+        dispatch(meetingRecordManagementActions.onEditInitialState(true));
+        dispatch(meetingRecordManagementActions.onEditTitle(''));
+        dispatch(meetingRecordManagementActions.onEditContent(''));
+    }
+
+    const handleRemoveBookMarkMeetingRecord = () => {
+        dispatch(meetingRecordManagementActions.onRemoveBookMarkedMeetingRecordList({
+            id: originData.id
+        }));
+        dispatch(meetingRecordManagementActions.onEditInitialState(true));
+        dispatch(meetingRecordManagementActions.onEditTitle(''));
+        dispatch(meetingRecordManagementActions.onEditContent(''));
     }
 
     const handleTitleChange = (e) => {
         dispatch(meetingRecordManagementActions.onEditTitle(e.target.value));
+    }
+
+    const checkExistingBookMarkMeetingRecord = () => {
+        if (bookMarkedMeetingRecordList.map((meetingRecord) => meetingRecord.id === originData.id).includes(true)) {
+            return true;
+        }
     }
 
     useEffect(() => {
@@ -156,10 +175,17 @@ const MeetingRecordEditor = ({ isEdit, originData }) => {
                             </div>
                             <div className='meeting-record-button-wrapper'>
                                 <div className='button-wrapper-left-col'>
-                                    <Button
-                                        text={'북마크하기'}
-                                        onClick={handleBookMarkMeetingRecord}
-                                    />
+                                    {checkExistingBookMarkMeetingRecord() ? (
+                                        <Button
+                                            text={'북마크 취소하기'}
+                                            onClick={handleRemoveBookMarkMeetingRecord}
+                                        />
+                                    ): (
+                                        <Button
+                                            text={'북마크하기'}
+                                            onClick={handleCreateBookMarkMeetingRecord}
+                                        />  
+                                    )}
                                 </div>
                                 <div className='button-wrapper-right-col'>
                                     <Button
