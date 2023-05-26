@@ -56,9 +56,21 @@ const MeetingRecordEditor = ({ isEdit, originData }) => {
         dispatch(meetingRecordManagementActions.onEditInitialState(false));
     }
 
+    const meetingRecordList = useSelector(state => state.meetingRecordManagement.meetingRecordList);
+
     const bookMarkedMeetingRecordList = useSelector(state => state.meetingRecordManagement.bookMarkedMeetingRecordList);
 
     const handleCreateMeetingRecord = () => {
+        if (!title.length) {
+            alert('제목을 입력해주세요');
+            return;
+        }
+
+        if (!content.length) {
+            alert('내용을 입력해주세요');
+            return;
+        }
+
         const writerObj = teamMembers.find((member) => parseInt(member.value) === parseInt(selectedMember));
 
         const newDate = new Date().getTime();
@@ -141,7 +153,7 @@ const MeetingRecordEditor = ({ isEdit, originData }) => {
     }
 
     useEffect(() => {
-        if (isEdit) {
+        if (isEdit && meetingRecordList.length) {
             dispatch(meetingRecordManagementActions.onChangeEditState('beforeEdit'));
             dispatch(meetingRecordManagementActions.onEditContent(originData.content));
 
@@ -151,6 +163,8 @@ const MeetingRecordEditor = ({ isEdit, originData }) => {
             dispatch(meetingRecordManagementActions.onEditTitle(originData.title));
             setWriter(originData.writer);
             setDate(originData.date);
+        } else {
+            dispatch(meetingRecordManagementActions.onEditInitialState(true));
         }
     }, [isEdit, originData]);
 
@@ -222,7 +236,6 @@ const MeetingRecordEditor = ({ isEdit, originData }) => {
                                             value={title}
                                             onChange={handleTitleChange}
                                             type='text'
-                                            required
                                             placeholder={'제목을 입력하세요'}
                                         />
                                     </div>
@@ -244,7 +257,7 @@ const MeetingRecordEditor = ({ isEdit, originData }) => {
                                             }
                                         }} 
                                     />
-                                    {!isEdit? (<Button
+                                    {!isEdit ? (<Button
                                         text={'작성 완료하기'}
                                         onClick={handleCreateMeetingRecord}
                                     />) : (
