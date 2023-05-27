@@ -18,4 +18,5 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query("select p from project p join fetch p.projectMembers pm join fetch pm.member where p.id = :projectId")
     Optional<Project> findJoinPMJoinMemberById(@Param("projectId") Long projectId);
 
+    boolean existsByIdAndState(Long projectId, State state);
 }

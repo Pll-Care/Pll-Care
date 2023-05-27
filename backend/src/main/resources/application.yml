@@ -44,6 +44,7 @@ spring.security.oauth2.client:
       scope:
         - name
         - email
+        - profile_image
     kakao:
       client-id: 0561aec6f0dfa0b45d48e2bc97941e06
       client-secret: q2u2iqgjGq8MmE9vezAe2KCSm332EOUv
@@ -54,6 +55,7 @@ spring.security.oauth2.client:
       scope:
         - profile_nickname
         - account_email
+        - profile_image
   provider:
     naver:
       authorization-uri: https://nid.naver.com/oauth2.0/authorize

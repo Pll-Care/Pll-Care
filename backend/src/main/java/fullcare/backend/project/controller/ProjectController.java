@@ -93,7 +93,7 @@ public class ProjectController {
         projectService.update(projectId, projectUpdateRequest);
         return new ResponseEntity(HttpStatus.OK);
     }
-    @PutMapping("/{projectId}/state")
+    @PutMapping("/{projectId}/state") // ! 프로젝트 완료는 리더만, 모든 평가가 완료될 때 조건 필요
     @Operation(method = "put", summary = "프로젝트 상태 변경")
     @ApiResponses(value = {
             @ApiResponse(description = "프로젝트 상태 변경 성공", responseCode = "200", content = {@Content(mediaType = "application/json")})
@@ -106,7 +106,7 @@ public class ProjectController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-
+    // ! 팀 탈퇴 기능 추가 필요
     // 프로젝트 생성 썸네일
     // 프로젝트 상태 변환 (진행 -> 완료)
     // 프로젝트 멤버 영입

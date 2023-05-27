@@ -62,6 +62,7 @@ public class OAuth2Attributes {
                 .role(role)
                 .signupDate(LocalDateTime.now())
                 .email(this.oAuth2UserInfo.getEmail())
+                .imageUrl(this.oAuth2UserInfo.getImageUrl())
                 .build();
     }
 }

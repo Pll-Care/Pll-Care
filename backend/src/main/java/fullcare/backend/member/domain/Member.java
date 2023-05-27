@@ -50,6 +50,7 @@ public class Member {
 
     @Column(name = "refreshToken")
     private String refreshToken;
+    private String imageUrl;
 
     //    @Column
 //    private String profileContent;
@@ -84,6 +85,7 @@ public class Member {
     public void updateEmail(String email) {
         this.email = email;
     }
+    public void updateImageUrl(String imageUrl){this.imageUrl = imageUrl;}
 
     public void updateRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;

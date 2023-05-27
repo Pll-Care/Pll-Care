@@ -5,5 +5,6 @@ import lombok.Getter;
 
 @Getter@AllArgsConstructor
 public enum State {
-    TBD, ONGOING, COMPLETE;
+    TBD, ONGOING, COMPLETE,
+    TEMPORARY;// 평가 임시저장 상태
 }

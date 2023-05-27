@@ -1,7 +1,6 @@
 package fullcare.backend.schedule.service;
 
 import fullcare.backend.global.State;
-import fullcare.backend.global.exception.ScheduleOutOfRangeException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.project.domain.Project;
@@ -30,7 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -97,7 +95,8 @@ public class ScheduleService {
         }
         return true;
     }
-    public void deleteSchedule(Long scheduleId) {
+    public void deleteSchedule(Long scheduleId, Long memberId) {
+
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow();
         scheduleRepository.delete(schedule);
     }
