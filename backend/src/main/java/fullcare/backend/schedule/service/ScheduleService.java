@@ -151,7 +151,7 @@ public class ScheduleService {
         Page<Schedule> pageSchedule = scheduleRepository.findMonthByStartDateBetweenOrEndDateBetween(pageable, startDate, endDate, startDate, endDate, states);
         List<ScheduleMonthResponse> scheduleMonthResponses = new ArrayList<>();
         addResponse(pageSchedule, scheduleMonthResponses, findMember);// 미팅, 마일스톤에 맞게 일정 생성 후 응답에 넣기
-        return new PageImpl<>(scheduleMonthResponses, pageable, scheduleMonthResponses.size());
+        return new PageImpl<>(scheduleMonthResponses, pageable, pageSchedule.getTotalElements());
     }
 //    @Transactional(readOnly = true)
 //    public Page<ScheduleMonthResponse> findScheduleMemberMonthList(Pageable pageable, ScheduleMonthListRequest scheduleMonthListRequest) {
