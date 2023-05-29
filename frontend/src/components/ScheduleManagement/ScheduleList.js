@@ -46,15 +46,15 @@ const datas = [
   },
 ];
 const ScheduleList = (props) => {
-  console.log(props.name);
-  console.log(props.option);
+  //console.log(props.name);
+  //console.log(props.option);
   // 통신해서 리스트 가져오기
 
   return (
     <Card>
       <div className="schedule">
-        {datas.map((data) => (
-          <Schedule data={data} />
+        {datas.map((data, index) => (
+          <Schedule key={index} data={data} />
         ))}
       </div>
     </Card>

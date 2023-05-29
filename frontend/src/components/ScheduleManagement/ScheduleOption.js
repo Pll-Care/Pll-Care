@@ -5,7 +5,7 @@ import ScheduleList from "./ScheduleList";
 import ButtonList from "./ButtonList";
 
 const ScheduleOption = () => {
-  const options = ["전체", "Plan", "Meeting", "지난 Plan", "지난 Meeting"];
+  const options = ["전체", "Plan", "Meeting", "지난 일정"];
   const participants = ["김철수", "박영수", "최민수", "김영희", "김민지"];
 
   const [optionVisible, setOptionVisible] = useState();

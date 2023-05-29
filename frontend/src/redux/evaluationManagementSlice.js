@@ -1,17 +1,19 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const evaluationManagementInitialState = {
-
-}
+  evaluationManagement: [],
+};
 
 const evaluationManagementSlice = createSlice({
-    name: 'evaluationManagement',
-    initialState: evaluationManagementInitialState,
-    reducers: {
+  name: "evaluationManagement",
+  initialState: evaluationManagementInitialState,
+  reducers: {
+    addEvaluation: (state, action) => {
+      state.evaluationManagement.push(action.payload);
+    },
+  },
+});
 
-    }
-})
-
-export const evaluationManagementActions = evaluationManagementSlice.actions;
+export const { addEvaluation } = evaluationManagementSlice.actions;
 
 export default evaluationManagementSlice;

@@ -19,10 +19,12 @@ function ButtonList(props) {
 
   return (
     <div>
-      {names.map((name) => (
+      {names.map((name, index) => (
         <Button
+          key={index}
           text={name}
           type={activeButton === name ? "positive_dark" : ""}
+          size={props.size === "small" ? "small" : "big"}
           onClick={() => handleButtonClick(name)}
         />
       ))}

@@ -1,4 +1,6 @@
 import { Avatar } from "@mui/material";
+import Tooltip from "@mui/material/Tooltip";
+import CalendarItem from "./CalendarItem";
 
 const datas = [
   {
@@ -70,20 +72,8 @@ const CalendarList = () => {
         <h5>오늘</h5>
         <h1>{calendar}</h1>
       </div>
-      {datas.map((data) => (
-        <div className="calendar-list-item">
-          <h5>{data.time}</h5>
-          <h4>{data.title}</h4>
-          <div className="calendar-list-item-name">
-            <h5>스타벅스</h5>
-            <div className="calendar-list-item-name-avatar">
-              <Avatar />
-              <Avatar />
-              <Avatar />
-              <Avatar />
-            </div>
-          </div>
-        </div>
+      {datas.map((data, index) => (
+        <CalendarItem key={index} data={data} />
       ))}
     </div>
   );

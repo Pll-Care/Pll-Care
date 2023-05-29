@@ -315,6 +315,10 @@ input {
   padding: 5px 25px;
   cursor: pointer;
 }
+.button_small {
+  font-size: 14px;
+  padding: 3px 13px;
+}
 .button_positive {
   color: white;
   background-color: #01e89e;
@@ -1884,6 +1888,45 @@ input {
     margin: 0px 3px;
   }
 }
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 101;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.modal {
+  position: fixed;
+  top: 20%;
+  left: 25%;
+  right: 25%;
+  background-color: #01e89e;
+  padding: 0.5rem;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  z-index: 200;
+  animation: slide-down 300ms ease-out forwards;
+}
+
+@media (max-width: 768px) {
+  .modal {
+    left: 10%;
+    right: 10%;
+  }
+}
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 .schedule h1 {
   font-size: 40px;
   color: #00aa72;
@@ -2079,4 +2122,78 @@ Button {
 }
 .schedule .schedule-list-content-option .MuiAvatar-root:hover {
   transform: scale(0.8);
+}
+
+.schedule-modal {
+  padding: 1.5rem;
+  font-family: "IBM Plex Sans KR", sans-serif;
+}
+.schedule-modal h1 {
+  color: white;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+.schedule-modal-content {
+  background-color: white;
+  box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+  padding: 1.5rem;
+}
+.schedule-modal-content h1 {
+  color: #01e89e;
+}
+.schedule-modal-content h2 {
+  color: #7a7a7a;
+  margin-bottom: 10px;
+}
+.schedule-modal-content-evaluation {
+  border: 2px solid #01e89e;
+  border-radius: 10px;
+  padding: 1.5rem;
+}
+.schedule-modal-content-evaluation h3 {
+  color: #01e89e;
+  margin-right: 20px;
+  margin-top: 5px;
+}
+.schedule-modal-content-evaluation .modal-member {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  margin-bottom: 30px;
+}
+.schedule-modal-content-evaluation .modal-badges {
+  display: flex;
+}
+.schedule-modal-content-evaluation .modal-badges-items {
+  display: flex;
+  margin-right: 30px;
+}
+.schedule-modal-content-evaluation .modal-badges-items .modal-badge {
+  cursor: pointer;
+  border-radius: 80%;
+  background-color: rgb(242, 242, 242);
+  padding: 0.5rem;
+  margin-right: 30px;
+}
+.schedule-modal-content-evaluation .modal-badges-items .selected {
+  background-color: rgb(181, 181, 181);
+}
+.schedule-modal-button {
+  margin-top: 15px;
+  text-align: right;
+}
+
+@media (min-width: 767px) and (max-width: 1024px) {
+  .modal-badge {
+    margin-right: 5px;
+    padding: 0.1rem;
+  }
+}
+@media (max-width: 767px) {
+  .modal-badge {
+    margin-right: 2px;
+    padding: 0.5rem;
+  }
 }/*# sourceMappingURL=fullcare.css.map */
