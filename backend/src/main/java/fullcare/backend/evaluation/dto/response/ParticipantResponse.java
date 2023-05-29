@@ -14,7 +14,7 @@ public class ParticipantResponse {
     private Long id;
     private String name;
     private String imageUrl;
-    private List<BadgeDto> badges = new ArrayList<>();
+    private List<BadgeDto> badgeDtos = new ArrayList<>();
     @Builder
     public ParticipantResponse(Long id, String name, String imageUrl) {
         this.id = id;
@@ -22,6 +22,6 @@ public class ParticipantResponse {
         this.imageUrl = imageUrl;
     }
     public void addBadge(BadgeDto badgeDto){
-        this.badges.add(badgeDto);
+        this.badgeDtos.add(badgeDto);
     }
 }

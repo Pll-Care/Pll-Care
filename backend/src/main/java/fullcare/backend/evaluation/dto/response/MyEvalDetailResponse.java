@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 @Data
 public class MyEvalDetailResponse {
-    private List<BadgeDto> badges = new ArrayList<>();
+    private List<BadgeDto> badgeDtos = new ArrayList<>();
     private List<FinalEvalDto> finalEvals = new ArrayList();
 
-    public MyEvalDetailResponse(List<BadgeDto> badges, List<FinalEvalDto> finalEvals) {
-        this.badges = badges;
+    public MyEvalDetailResponse(List<BadgeDto> badgeDtos, List<FinalEvalDto> finalEvals) {
+        this.badgeDtos = badgeDtos;
         this.finalEvals = finalEvals;
     }
 }

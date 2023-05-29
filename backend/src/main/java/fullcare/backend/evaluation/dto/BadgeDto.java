@@ -1,22 +1,23 @@
 package fullcare.backend.evaluation.dto;
 
 import fullcare.backend.evaluation.domain.EvaluationBadge;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
-@Setter
 @ToString
-public class BadgeDto extends Badge {
+public class BadgeDto {
+    private EvaluationBadge evaluationBadge;
+    private Long quantity;
 
-    private String imageUrl;
-
-    public BadgeDto(EvaluationBadge evaluationBadge, String imageUrl) {
-        super(evaluationBadge, 0l);
-        this.imageUrl = imageUrl;
+    public BadgeDto(EvaluationBadge evaluationBadge, Long quantity) {
+        this.evaluationBadge = evaluationBadge;
+        this.quantity = quantity;
     }
 
-    public BadgeDto(EvaluationBadge evaluationBadge, Long quantity, String imageUrl) {
-        super(evaluationBadge, quantity);
-        this.imageUrl = imageUrl;
-    }
+
 }

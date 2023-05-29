@@ -11,13 +11,13 @@ import java.util.List;
 public class MyEvalListResponse {
     private Long projectId;
     private String projectTitle;
-    private List<BadgeDto> badges = new ArrayList<>();
+    private List<BadgeDto> badgeDtos = new ArrayList<>();
     @Builder
     public MyEvalListResponse(Long projectId, String projectTitle) {
         this.projectId = projectId;
         this.projectTitle = projectTitle;
     }
     public void addBadge(BadgeDto badgeDto){
-        this.badges.add(badgeDto);
+        this.badgeDtos.add(badgeDto);
     }
 }

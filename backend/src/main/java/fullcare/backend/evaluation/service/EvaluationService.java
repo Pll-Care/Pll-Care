@@ -60,12 +60,13 @@ public class EvaluationService {
         return midtermEvaluationRepository.existsByScheduleIdAndVoterId(scheduleId, voterId);
     }
 
+
     @Transactional
     public void createMidtermEvaluation(MidTermEvalCreateRequest midTermEvalCreateRequest, Member voter) {
         Member voted = memberRepository.findById(midTermEvalCreateRequest.getVotedId()).orElseThrow(() -> new EntityNotFoundException("해당 사용자가 없습니다."));
-//        if(voter.getId() == voted.getId()){
-//            throw new InvalidAccessException("자신의 평가는 불가능합니다.");
-//        }
+        if(voter.getId() == voted.getId()){
+            throw new InvalidAccessException("자신의 평가는 불가능합니다.");
+        }
         if(validateMidDuplicationAuthor(midTermEvalCreateRequest.getScheduleId(), voter.getId())){
             throw new InvalidAccessException("중복 평가는 불가능합니다.");
         }
@@ -93,9 +94,9 @@ public class EvaluationService {
         if (!Score.valid(finalEvalCreateRequest.getScore())){
             throw new InvalidAccessException("평가 점수 범위가 벗어났습니다.");
         }
-//        if(evaluator.getId() == evaluated.getId()){
-//            throw new InvalidAccessException("자신의 평가는 불가능합니다.");
-//        }
+        if(evaluator.getId() == evaluated.getId()){
+            throw new InvalidAccessException("자신의 평가는 불가능합니다.");
+        }
 
         FinalTermEvaluation newFinalTermEvaluation = FinalTermEvaluation.createNewFinalEval()
                 .project(project)
@@ -120,11 +121,9 @@ public class EvaluationService {
         finalTermEvaluation.update(finalEvalUpdateRequest);
     }
 
-    public List<MidtermDetailResponse> findMidtermEvaluationDetailResponse(Long projectId, Long memberId) {
-        List<MidtermDetailResponse> midtermDetailResponses = midtermEvaluationRepository.findAllByMemberId(projectId, memberId);
-        setBadges(midtermDetailResponses);
-//        Badge.setBadges(Collections.unmodifiableList(midtermDetailResponses));
-
+    public List<BadgeDto> findMidtermEvaluationDetailResponse(Long projectId, Long memberId) {
+        List<BadgeDto> midtermDetailResponses = midtermEvaluationRepository.findAllByMemberId(projectId, memberId);
+        setBadge(midtermDetailResponses);
         return  midtermDetailResponses;
     }
     @Transactional
@@ -151,13 +150,12 @@ public class EvaluationService {
         List<ChartDto> midTermEvalChartDto = members.stream().map(m -> ChartDto.builder()
                 .memberId(m.getId())
                 .name(m.getName())
-//                .imageUrl(null)
                 .build()
         ).collect(Collectors.toList());
         for (BadgeDao badgeDao : midtermBadgeList) {
             for (ChartDto chart : midTermEvalChartDto) {
                 if(badgeDao.getMemberId() == chart.getMemberId()){
-                    chart.addEvaluation(new BadgeDto(badgeDao.getEvaluationBadge(), badgeDao.getQuantity(), null));
+                    chart.addEvaluation(new BadgeDto(badgeDao.getEvaluationBadge(), badgeDao.getQuantity()));
                 }
             }
         }
@@ -190,7 +188,6 @@ public class EvaluationService {
         List<ChartDto> finalTermEvalChartDto = members.stream().map(m -> ChartDto.builder()
                 .memberId(m.getId())
                 .name(m.getName())
-//                .imageUrl(null)
                 .build()
         ).collect(Collectors.toList());
         for (ScoreDao s : scoreDaos) {
@@ -242,13 +239,9 @@ public class EvaluationService {
                 .state(schedule.getState())
                 .build();
         midTermEvalModalResponse.setMembers(memberDto);
-        List<BadgeDto> badgeDtos = new ArrayList<>();
-//        badgeDtos.add(new BadgeDto(EvaluationBadge.열정적인_참여자, null));
-//        badgeDtos.add(new BadgeDto(EvaluationBadge.아이디어_뱅크, null));
-//        badgeDtos.add(new BadgeDto(EvaluationBadge.탁월한_리더, null));
-//        badgeDtos.add(new BadgeDto(EvaluationBadge.최고의_서포터, null));
-        setBadge(badgeDtos);
-        midTermEvalModalResponse.setBadges(badgeDtos);
+        List<BadgeDto> badgeDtoDtos = new ArrayList<>();
+        setBadge(badgeDtoDtos);
+        midTermEvalModalResponse.setBadgeDtos(badgeDtoDtos);
         return midTermEvalModalResponse;
     }
     public List<ParticipantResponse> findParticipantList(Long projectId){
@@ -265,7 +258,7 @@ public class EvaluationService {
                     .build();
             for (BadgeDao badgeDao : midtermBadgeList) {
                 if(member.getId() == badgeDao.getMemberId()){
-                    BadgeDto badgeDto = new BadgeDto(badgeDao.getEvaluationBadge(), badgeDao.getQuantity(), null);
+                    BadgeDto badgeDto = new BadgeDto(badgeDao.getEvaluationBadge(), badgeDao.getQuantity());
                     participantResponse.addBadge(badgeDto);
                 }
             }
@@ -275,37 +268,15 @@ public class EvaluationService {
         return response;
     }
 
-    ////////////////////////////////////////////////////////////////////////////////
-    // ! 하나로 통합 필요
-    private static void setBadges(List<MidtermDetailResponse> midtermDetailResponses) {
-        List<EvaluationBadge> evaluationBadges = new ArrayList<>();
-        evaluationBadges.add(EvaluationBadge.탁월한_리더);
-        evaluationBadges.add(EvaluationBadge.열정적인_참여자);
-        evaluationBadges.add(EvaluationBadge.최고의_서포터);
-        evaluationBadges.add(EvaluationBadge.아이디어_뱅크);
-        for (MidtermDetailResponse midtermDetailResponse : midtermDetailResponses) {
-            if(midtermDetailResponse.getEvaluationBadge().equals(EvaluationBadge.탁월한_리더)){
-                evaluationBadges.remove(EvaluationBadge.탁월한_리더);
-            }else if(midtermDetailResponse.getEvaluationBadge().equals(EvaluationBadge.열정적인_참여자)){
-                evaluationBadges.remove(EvaluationBadge.열정적인_참여자);
-            }else if(midtermDetailResponse.getEvaluationBadge().equals(EvaluationBadge.최고의_서포터)){
-                evaluationBadges.remove(EvaluationBadge.최고의_서포터);
-            }else if(midtermDetailResponse.getEvaluationBadge().equals(EvaluationBadge.아이디어_뱅크)){
-                evaluationBadges.remove(EvaluationBadge.아이디어_뱅크);
-            }
-        }
-        for (EvaluationBadge evaluationBadge : evaluationBadges) { // 없는 뱃지 추가
-            midtermDetailResponses.add(new MidtermDetailResponse(evaluationBadge,0l));
-        }
-    }
 
-    private static void setBadge(List<BadgeDto> badgeDtos) {
+
+    private static void setBadge(List<BadgeDto> badgeDtoDtos) {
         List<EvaluationBadge> evaluationBadges = new ArrayList<>();
         evaluationBadges.add(EvaluationBadge.탁월한_리더);
         evaluationBadges.add(EvaluationBadge.열정적인_참여자);
         evaluationBadges.add(EvaluationBadge.최고의_서포터);
         evaluationBadges.add(EvaluationBadge.아이디어_뱅크);
-        for (BadgeDto badgeDto : badgeDtos) {
+        for (BadgeDto badgeDto : badgeDtoDtos) {
             if(badgeDto.getEvaluationBadge().equals(EvaluationBadge.탁월한_리더)){
                 evaluationBadges.remove(EvaluationBadge.탁월한_리더);
             }else if(badgeDto.getEvaluationBadge().equals(EvaluationBadge.열정적인_참여자)){
@@ -317,7 +288,7 @@ public class EvaluationService {
             }
         }
         for (EvaluationBadge evaluationBadge : evaluationBadges) { // 없는 뱃지 추가
-            badgeDtos.add(new BadgeDto(evaluationBadge,null));
+            badgeDtoDtos.add(new BadgeDto(evaluationBadge,0l));
         }
     }
 ////////////////////////////////////////////////////////////////////////////////
@@ -330,9 +301,9 @@ public class EvaluationService {
                     .projectId(pm.getProject().getId())
                     .projectTitle(pm.getProject().getTitle())
                     .build();
-            List<MidtermDetailResponse> badgeList = midtermEvaluationRepository.findAllByMemberId(pm.getProject().getId(), memberId);
-            List<BadgeDto> badgeDtos = badgeList.stream().map(b -> new BadgeDto(b.getEvaluationBadge(), b.getQuantity(), null)).collect(Collectors.toList());
-            response.setBadges(badgeDtos);
+            List<BadgeDto> badgeList = midtermEvaluationRepository.findAllByMemberId(pm.getProject().getId(), memberId);
+//            List<BadgeDto> badgeDtoDtos = badgeList.stream().map(b -> new BadgeDto(b.getEvaluationBadge(), b.getQuantity())).collect(Collectors.toList());
+            response.setBadgeDtos(badgeList);
             myEvalListResponseList.add(response);
         }
 
@@ -340,8 +311,8 @@ public class EvaluationService {
     }
 
     public MyEvalDetailResponse findMyEval(Long projectId, Long memberId) {
-        List<MidtermDetailResponse> badgeList = midtermEvaluationRepository.findAllByMemberId(projectId, memberId);
-        List<BadgeDto> badgeDtos = badgeList.stream().map(b -> new BadgeDto(b.getEvaluationBadge(), b.getQuantity(), null)).collect(Collectors.toList());
+        List<BadgeDto> badgeList = midtermEvaluationRepository.findAllByMemberId(projectId, memberId);
+//        List<BadgeDto> badgeDtoDtos = badgeList.stream().map(b -> new BadgeDto(b.getEvaluationBadge(), b.getQuantity())).collect(Collectors.toList());
         List<FinalTermEvaluation> myFinalEvalList = finalEvaluationRepository.findByProjectIdAndEvaluatedId(projectId, memberId);
         List<FinalEvalDto> finalEvalDtos = myFinalEvalList.stream().map(fe -> FinalEvalDto.builder()
                 .memberId(fe.getEvaluator().getId())
@@ -352,7 +323,7 @@ public class EvaluationService {
                 .build()
         ).collect(Collectors.toList());
 
-        return new MyEvalDetailResponse(badgeDtos, finalEvalDtos);
+        return new MyEvalDetailResponse(badgeList, finalEvalDtos);
     }
 
     public MyEvalChartResponse findMyEvalChart(Long memberId) {

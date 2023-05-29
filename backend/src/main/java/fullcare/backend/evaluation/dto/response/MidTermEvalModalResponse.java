@@ -17,7 +17,7 @@ public class MidTermEvalModalResponse {
     private LocalDateTime endDate;
     private State state;
     List<MemberDto> members = new ArrayList<>();
-    List<BadgeDto> badges = new ArrayList<>();
+    List<BadgeDto> badgeDtos = new ArrayList<>();
     @Builder
     public MidTermEvalModalResponse(String title, LocalDateTime startDate, LocalDateTime endDate, State state) {
         this.title = title;
@@ -29,6 +29,6 @@ public class MidTermEvalModalResponse {
         this.members.add(memberDto);
     }
     public void addBadge(BadgeDto badgeDto){
-        this.badges.add(badgeDto);
+        this.badgeDtos.add(badgeDto);
     }
 }

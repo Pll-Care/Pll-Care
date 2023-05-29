@@ -21,4 +21,5 @@ public interface FinalEvaluationRepository extends JpaRepository<FinalTermEvalua
     boolean existsByEvaluatedIdAndEvaluatorId(Long evaluatedId, Long evaluatorId);
 
     List<FinalTermEvaluation> findByProjectIdAndEvaluatedId(Long projectId, @Param("evaluatedId")Long memberId);
+
 }

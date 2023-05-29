@@ -1,6 +1,7 @@
 package fullcare.backend.evaluation.controller;
 
 
+import fullcare.backend.evaluation.dto.BadgeDto;
 import fullcare.backend.evaluation.dto.request.FinalEvalCreateRequest;
 import fullcare.backend.evaluation.dto.request.FinalEvalUpdateRequest;
 import fullcare.backend.evaluation.dto.request.MidTermEvalCreateRequest;
@@ -82,7 +83,7 @@ public class EvaluationController {
     @GetMapping("/midterm/detail")
     public ResponseEntity<?> findMidterm(@RequestParam("project_id") Long projectId,
                                          @CurrentLoginMember Member member) {
-        List<MidtermDetailResponse> response = evaluationService.findMidtermEvaluationDetailResponse(projectId, member.getId());
+        List<BadgeDto> response = evaluationService.findMidtermEvaluationDetailResponse(projectId, member.getId());
 
         return new ResponseEntity(response, HttpStatus.OK);
     }
