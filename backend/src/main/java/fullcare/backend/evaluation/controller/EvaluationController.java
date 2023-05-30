@@ -110,7 +110,7 @@ public class EvaluationController {
     @PostMapping("/final")
     public ResponseEntity finalEvalCreate(@RequestBody FinalEvalCreateRequest finalEvalCreateRequest,
                                           @CurrentLoginMember Member member) {
-        if ((evaluationService.validateFinalDuplicationAuthor(finalEvalCreateRequest.getEvaluatedId(), member.getId()))) {
+        if ((evaluationService.validateFinalDuplicationAuthor(finalEvalCreateRequest.getEvaluatedId(), member.getId(), finalEvalCreateRequest.getProjectId()))) {
             throw new InvalidAccessException("중복 평가는 불가능합니다.");
         }
         if (!(projectMemberService.validateProjectMember(finalEvalCreateRequest.getProjectId(), member.getId()))) {
@@ -131,7 +131,6 @@ public class EvaluationController {
             throw new InvalidAccessException("해당 평가에 접근 권한이 없습니다.");
         }
         evaluationService.updateFinalEvaluation(evaluationId, finalEvalUpdateRequest);
-
         return new ResponseEntity(HttpStatus.OK);
     }
     @Operation(method = "delete", summary = "최종 평가 삭제")
@@ -186,7 +185,7 @@ public class EvaluationController {
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
             throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
         }
-        List<ParticipantResponse> response = evaluationService.findParticipantList(projectId);
+        List<ParticipantResponse> response = evaluationService.findParticipantList(projectId, member.getId());
         return new ResponseEntity(response,HttpStatus.OK);
     }
 
