@@ -11,11 +11,14 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProjectMemberRepository extends JpaRepository<ProjectMember, Long> {
-    @Query("select pm from project_member pm where pm.project.id = :projectId and pm.member.id = :memberId")
-    Optional<ProjectMember> findByProjectIdAndMemberId(@Param("projectId") Long projectId, @Param("memberId") Long memberId);
+
+    boolean existsByProjectIdAndMemberId(Long projectId, Long memberId);
+
+    Optional<ProjectMember> findByProjectIdAndMemberId(Long projectId, Long memberId);
 
     //@Query("select pm from project_member pm join fetch pm.member where pm.project.id = :projectId")
     List<ProjectMember> findByProjectId(@Param("projectId") Long projectId);
+
     @Query(value = "select pm from project_member pm join fetch pm.project where pm.member.id = :memberId",
             countQuery = "select count(pm) from project_member pm where pm.member.id = :memberId")
     Page<ProjectMember> findByMemberId(Pageable pageable, Long memberId);

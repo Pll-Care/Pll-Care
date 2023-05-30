@@ -3,7 +3,6 @@ package fullcare.backend.member.domain;
 import fullcare.backend.evaluation.domain.FinalTermEvaluation;
 import fullcare.backend.evaluation.domain.MidtermEvaluation;
 import fullcare.backend.likes.domain.Likes;
-import fullcare.backend.post.domain.Post;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import jakarta.persistence.*;
 import lombok.*;
@@ -55,8 +54,8 @@ public class Member {
     //    @Column
 //    private String profileContent;
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Post> posts = new ArrayList<>();
+//    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Post> posts = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Likes> likes = new HashSet<>();
@@ -74,6 +73,16 @@ public class Member {
     private List<ProjectMember> projectMembers = new ArrayList<>();
 
 
+    public Member(String oAuth2Id, String nickname, String name, String email, MemberRole role, LocalDateTime signupDate, String refreshToken) {
+        this.oAuth2Id = oAuth2Id;
+        this.nickname = nickname;
+        this.name = name;
+        this.email = email;
+        this.role = role;
+        this.signupDate = signupDate;
+        this.refreshToken = refreshToken;
+    }
+
     public void updateOAuth2Id(String oAuth2Id) {
         this.oAuth2Id = oAuth2Id;
     }
@@ -88,16 +97,6 @@ public class Member {
     public void updateImageUrl(String imageUrl){this.imageUrl = imageUrl;}
 
     public void updateRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
-    }
-
-    public Member(String oAuth2Id, String nickname, String name, String email, MemberRole role, LocalDateTime signupDate, String refreshToken) {
-        this.oAuth2Id = oAuth2Id;
-        this.nickname = nickname;
-        this.name = name;
-        this.email = email;
-        this.role = role;
-        this.signupDate = signupDate;
         this.refreshToken = refreshToken;
     }
 }

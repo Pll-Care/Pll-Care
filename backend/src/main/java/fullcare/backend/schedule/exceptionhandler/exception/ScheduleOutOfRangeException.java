@@ -1,6 +1,6 @@
-package fullcare.backend.global.exception;
+package fullcare.backend.schedule.exceptionhandler.exception;
 
-public class ScheduleOutOfRangeException extends RuntimeException{
+public class ScheduleOutOfRangeException extends RuntimeException {
     public ScheduleOutOfRangeException(String message) {
         super(message);
     }
