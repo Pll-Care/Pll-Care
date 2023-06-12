@@ -6,6 +6,7 @@ import fullcare.backend.likes.domain.Likes;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -58,6 +59,7 @@ public class Post extends BaseEntity {
     @Column(name = "tech_stack", nullable = false)
     private String techStack;
 
+    @BatchSize(size = 50)
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Recruitment> recruitments = new ArrayList<>();
 

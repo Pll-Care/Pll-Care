@@ -5,7 +5,6 @@ import fullcare.backend.global.exception.InvalidAccessException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.post.domain.Post;
 import fullcare.backend.post.dto.request.PostCreateRequest;
-import fullcare.backend.post.dto.request.PostLikeRequest;
 import fullcare.backend.post.dto.request.PostUpdateRequest;
 import fullcare.backend.post.dto.response.PostDetailResponse;
 import fullcare.backend.post.dto.response.PostListResponse;
@@ -24,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RequiredArgsConstructor
-@RequestMapping("/api/post")
+@RequestMapping("/api/auth/post")
 @RestController
 public class PostController {
 
@@ -87,37 +86,28 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<?> details(@PathVariable Long postId) {
+    public ResponseEntity<?> details(@PathVariable Long postId,
+                                     @CurrentLoginMember Member member) {
         PostDetailResponse postDetailResponse = postService.findPostDetailResponse(postId);
         return new ResponseEntity<>(postDetailResponse, HttpStatus.OK);
     }
 
     @GetMapping("/list")
-    public ResponseEntity<?> list(@ModelAttribute CustomPageRequest pageRequest) { // ? @ModelAttribute가 맞는가
+    public ResponseEntity<?> list(@ModelAttribute CustomPageRequest pageRequest,
+                                  @CurrentLoginMember Member member) { // ? @ModelAttribute가 맞는가
 
         PageRequest of = pageRequest.of();
         Pageable pageable = (Pageable) of;
-        Page<PostListResponse> responses = postService.findPostList(pageable);
+        Page<PostListResponse> responses = postService.findPostList(member.getId(), pageable);
 
         return new ResponseEntity<>(responses, HttpStatus.OK);
-
     }
 
 
     // ! like와 unlike를 합칠까말까 고민중..
-    @PostMapping("/like")
-    public ResponseEntity like(@RequestBody PostLikeRequest postLikeRequest, @CurrentLoginMember Member member) {
-
-        postService.likePost(postLikeRequest.getPostId(), member);
-
-        return new ResponseEntity<>(HttpStatus.OK);
-
-    }
-
-    @PostMapping("/unlike")
-    public ResponseEntity unlike(@RequestBody PostLikeRequest postLikeRequest, @CurrentLoginMember Member member) {
-
-        postService.unlikePost(postLikeRequest.getPostId(), member.getId());
+    @PostMapping("/{postId}/like")
+    public ResponseEntity like(@PathVariable Long postId, @CurrentLoginMember Member member) {
+        postService.likePost(postId, member);
 
         return new ResponseEntity<>(HttpStatus.OK);
 
