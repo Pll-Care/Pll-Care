@@ -1,13 +1,14 @@
 package fullcare.backend.evaluation.dto.response;
 
 import fullcare.backend.evaluation.domain.Score;
+import fullcare.backend.evaluation.dto.ScoreDto;
 import lombok.Data;
 
 @Data
 public class MyEvalChartResponse {
-    private Score score;
+    private ScoreDto score;
 
-    public MyEvalChartResponse(Score score) {
+    public MyEvalChartResponse(ScoreDto score) {
         this.score = score;
     }
 }

@@ -50,8 +50,8 @@ public class EvaluationService {
     private final ScheduleRepository scheduleRepository;
     private final ProjectMemberRepository projectMemberRepository;
     private final ScheduleMemberRepository scheduleMemberRepository;
-    public boolean validateFinalDuplicationAuthor(Long evaluatedId, Long authorId){
-        return finalEvaluationRepository.existsByEvaluatedIdAndEvaluatorId(evaluatedId, authorId);
+    public boolean validateFinalDuplicationAuthor(Long evaluatedId, Long authorId, Long projectId){
+        return finalEvaluationRepository.existsByEvaluatedIdAndEvaluatorIdAndProjectId(evaluatedId, authorId, projectId);
     }
     public boolean validateAuthor(Long evaluationId, Long authorId){
         return finalEvaluationRepository.existsByIdAndEvaluatorId(evaluationId, authorId);
@@ -97,7 +97,9 @@ public class EvaluationService {
         if(evaluator.getId() == evaluated.getId()){
             throw new InvalidAccessException("자신의 평가는 불가능합니다.");
         }
-
+        if(!project.getState().equals(State.COMPLETE)){
+            throw new InvalidAccessException("프로젝트가 완료되지 않은 평가는 불가능합니다.");
+        }
         FinalTermEvaluation newFinalTermEvaluation = FinalTermEvaluation.createNewFinalEval()
                 .project(project)
                 .content(finalEvalCreateRequest.getContent())
@@ -109,7 +111,7 @@ public class EvaluationService {
         finalEvaluationRepository.save(newFinalTermEvaluation);
     }
 
-    @Transactional
+    @Transactional //* 임시 저장한 평가를 수정 또는 완료할 때 사용
     public void updateFinalEvaluation(Long evaluationId, FinalEvalUpdateRequest finalEvalUpdateRequest) {
         if (projectRepository.existsByIdAndState(finalEvalUpdateRequest.getProjectId(), State.COMPLETE)){
             throw new InvalidAccessException("완료된 프로젝트 평가는 수정이 안됩니다.");
@@ -244,11 +246,14 @@ public class EvaluationService {
         midTermEvalModalResponse.setBadgeDtos(badgeDtoDtos);
         return midTermEvalModalResponse;
     }
-    public List<ParticipantResponse> findParticipantList(Long projectId){
+    public List<ParticipantResponse> findParticipantList(Long projectId, Long memberId){
         Project project = projectRepository.findJoinPMJoinMemberById(projectId).orElseThrow();
         List<Member> members = project.getProjectMembers().stream().map(pm -> pm.getMember()).collect(Collectors.toList());
         List<BadgeDao> midtermBadgeList = midtermEvaluationRepository.findList(projectId, members);
-
+        List<FinalTermEvaluation> finalEvalList = new ArrayList<>();
+        if(project.getState().equals(State.COMPLETE)){
+            finalEvalList = finalEvaluationRepository.findByProjectIdAndEvaluatorId(projectId, memberId);
+        }
         List<ParticipantResponse> response = new ArrayList<>();
         for (Member member : members) {
             ParticipantResponse participantResponse = ParticipantResponse.builder().
@@ -262,6 +267,12 @@ public class EvaluationService {
                     participantResponse.addBadge(badgeDto);
                 }
             }
+            for (FinalTermEvaluation fe : finalEvalList) { // * 로그인한 사용자가 다른사람 최종평가를 작성한적이 있으면 최종평가 ID 추가 없으면 null
+                if(project.getState().equals(State.COMPLETE) && fe.getEvaluated() == member){
+                    participantResponse.setFinalEvalId(fe.getId());
+                }
+            }
+
             response.add(participantResponse);
         }
 
@@ -302,7 +313,6 @@ public class EvaluationService {
                     .projectTitle(pm.getProject().getTitle())
                     .build();
             List<BadgeDto> badgeList = midtermEvaluationRepository.findAllByMemberId(pm.getProject().getId(), memberId);
-//            List<BadgeDto> badgeDtoDtos = badgeList.stream().map(b -> new BadgeDto(b.getEvaluationBadge(), b.getQuantity())).collect(Collectors.toList());
             response.setBadgeDtos(badgeList);
             myEvalListResponseList.add(response);
         }
@@ -312,18 +322,29 @@ public class EvaluationService {
 
     public MyEvalDetailResponse findMyEval(Long projectId, Long memberId) {
         List<BadgeDto> badgeList = midtermEvaluationRepository.findAllByMemberId(projectId, memberId);
-//        List<BadgeDto> badgeDtoDtos = badgeList.stream().map(b -> new BadgeDto(b.getEvaluationBadge(), b.getQuantity())).collect(Collectors.toList());
-        List<FinalTermEvaluation> myFinalEvalList = finalEvaluationRepository.findByProjectIdAndEvaluatedId(projectId, memberId);
-        List<FinalEvalDto> finalEvalDtos = myFinalEvalList.stream().map(fe -> FinalEvalDto.builder()
-                .memberId(fe.getEvaluator().getId())
-                .memberName(fe.getEvaluator().getName())
-                .imageUrl(fe.getEvaluator().getImageUrl())
-                .content(fe.getContent())
-                .score(fe.getScore())
-                .build()
-        ).collect(Collectors.toList());
+        List<FinalTermEvaluation> myFinalEvalList = finalEvaluationRepository.findByProjectIdAndEvaluatedIdAndState(projectId, memberId, State.COMPLETE); // * 최종평가가 완료된 것만 조회, 임시저장 X
+        List<FinalEvalDto> finalEvalDtoList = new ArrayList<>();
+        ScoreDto scoreDto = new ScoreDto();
+        for (FinalTermEvaluation fe : myFinalEvalList) {
+            FinalEvalDto finalEvalDto = FinalEvalDto.builder()
+                    .memberId(fe.getEvaluator().getId())
+                    .memberName(fe.getEvaluator().getName())
+                    .imageUrl(fe.getEvaluator().getImageUrl())
+                    .content(fe.getContent())
+                    .build();
+            finalEvalDtoList.add(finalEvalDto);
+            scoreDto.setCommunication(scoreDto.getCommunication()+fe.getScore().getCommunication());
+            scoreDto.setPunctuality(scoreDto.getPunctuality()+fe.getScore().getPunctuality());
+            scoreDto.setSincerity(scoreDto.getSincerity()+fe.getScore().getSincerity());
+            scoreDto.setJobPerformance(scoreDto.getJobPerformance()+fe.getScore().getJobPerformance());
+        }
+        scoreDto.setJobPerformance(scoreDto.getJobPerformance()/ myFinalEvalList.size());
+        scoreDto.setPunctuality(scoreDto.getPunctuality()/ myFinalEvalList.size());
+        scoreDto.setCommunication(scoreDto.getCommunication()/ myFinalEvalList.size());
+        scoreDto.setSincerity(scoreDto.getSincerity()/ myFinalEvalList.size());
 
-        return new MyEvalDetailResponse(badgeList, finalEvalDtos);
+
+        return new MyEvalDetailResponse(badgeList, finalEvalDtoList, scoreDto);
     }
 
     public MyEvalChartResponse findMyEvalChart(Long memberId) {
@@ -338,11 +359,17 @@ public class EvaluationService {
             punctuality+=scoreDao.getPunctuality();
             communication+=scoreDao.getCommunication();
         }
-        Score score = new Score();
-        score.setSincerity(Math.round((sincerity/myAvgScoreList.size())*100)/100.0);
-        score.setJobPerformance(Math.round(jobPerformance/myAvgScoreList.size()*100)/100.0);
-        score.setPunctuality(Math.round(punctuality/myAvgScoreList.size()*100)/100.0);
-        score.setCommunication(Math.round(communication/myAvgScoreList.size()*100)/100.0);
+        ScoreDto score = new ScoreDto();
+        score.setSincerity(sincerity/myAvgScoreList.size());
+        score.setJobPerformance(jobPerformance/myAvgScoreList.size());
+        score.setPunctuality(punctuality/myAvgScoreList.size());
+        score.setCommunication(communication/myAvgScoreList.size());
+
+        // * 소수점 조정 임시 주석
+//        score.setSincerity(Math.round((sincerity/myAvgScoreList.size())*100)/100.0);
+//        score.setJobPerformance(Math.round(jobPerformance/myAvgScoreList.size()*100)/100.0);
+//        score.setPunctuality(Math.round(punctuality/myAvgScoreList.size()*100)/100.0);
+//        score.setCommunication(Math.round(communication/myAvgScoreList.size()*100)/100.0);
         return new MyEvalChartResponse(score);
     }
 

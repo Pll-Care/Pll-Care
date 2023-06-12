@@ -8,10 +8,10 @@ import lombok.ToString;
 @Embeddable
 @Data
 public class Score {
-    private double sincerity;
-    private double jobPerformance;
-    private double punctuality;
-    private double communication;
+    private int sincerity;
+    private int jobPerformance;
+    private int punctuality;
+    private int communication;
 
     public static double avg(ScoreDto score){
         return (score.getSincerity() + score.getJobPerformance() + score.getPunctuality() + score.getCommunication())/4;

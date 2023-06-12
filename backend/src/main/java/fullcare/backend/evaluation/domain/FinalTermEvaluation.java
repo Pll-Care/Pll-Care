@@ -54,5 +54,6 @@ public class FinalTermEvaluation {
     public void update(FinalEvalUpdateRequest finalEvalUpdateRequest){
         this.content = finalEvalUpdateRequest.getContent();
         this.score = finalEvalUpdateRequest.getScore();
+        this.state = finalEvalUpdateRequest.getState();
     }
 }
