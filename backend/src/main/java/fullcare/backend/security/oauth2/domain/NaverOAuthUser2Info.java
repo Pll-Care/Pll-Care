@@ -29,4 +29,11 @@ public class NaverOAuthUser2Info extends OAuth2UserInfo{
 
         return (String) tmp.get("email");
     }
+
+    @Override
+    public String getImageUrl() {
+        Map<String, Object> tmp = (Map<String, Object>) attributes.get("response");
+
+        return (String) tmp.get("profile_image");
+    }
 }

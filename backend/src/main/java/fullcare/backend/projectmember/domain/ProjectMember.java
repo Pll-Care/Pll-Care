@@ -28,14 +28,20 @@ public class ProjectMember {
     private Project project;
 
     @Embedded
-    private ProjectMemberRole role; // 리더 or 팀원
+    private ProjectMemberRole projectMemberRole; // 리더 or 팀원
 
 
     @Builder(builderMethodName = "createNewProjectMember")
-    public ProjectMember(Member member, Project project, ProjectMemberRole role) {
+    public ProjectMember(Member member, Project project, ProjectMemberRole projectMemberRole) {
         this.member = member;
         this.project = project;
-        this.role = role;
+        this.projectMemberRole = projectMemberRole;
 
     }
+    
+    public boolean isLeader() {
+        return (this.projectMemberRole.getRole() == ProjectMemberRoleType.리더) ? true : false;
+    }
+
+
 }

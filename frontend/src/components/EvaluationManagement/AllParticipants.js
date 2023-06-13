@@ -1,4 +1,14 @@
+import { useState } from "react";
+import Button from "../Button";
+import FinalEvaluation from "./FinalEvaluation";
+
 const AllParticipants = ({ getSortedAverageEvaluationList }) => {
+    const [isFinalEvaluationVisible, setIsFinalEvaluationVisible] = useState('');
+
+    const handleFinalEvaluationModal = (name) => {
+        setIsFinalEvaluationVisible(name);
+    }
+
     return (
         <div className='evaluation-management-all-participants'>
             <h1>참여자 보기</h1>
@@ -10,6 +20,10 @@ const AllParticipants = ({ getSortedAverageEvaluationList }) => {
                         </div>
                         <div className='evaluation-management-participant-right-col'>
                             <div>{item.name}</div>
+                            <Button
+                                text={'최종 평가하기'}
+                                onClick={() => handleFinalEvaluationModal(item.name)}
+                            />
                             <div className='evaluation-management-badges'>
                                 <figure />
                                 <figure />
@@ -19,6 +33,10 @@ const AllParticipants = ({ getSortedAverageEvaluationList }) => {
                     </div>
                 ))}
             </div>
+            {isFinalEvaluationVisible && <FinalEvaluation
+                member={isFinalEvaluationVisible}
+                setIsFinalEvaluationVisible={setIsFinalEvaluationVisible}
+            />}
         </div>
     )
 }

@@ -32,6 +32,7 @@ public class MeetingDto {
     public void addMember(Member member){
         members.add(MemberDto.builder()
                 .id(member.getId())
-                .name(member.getName()).build());
+                .name(member.getName())
+                .imageUrl(member.getImageUrl()).build());
     }
 }

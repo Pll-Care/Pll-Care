@@ -1,10 +1,12 @@
 import { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Button from "../Button";
 import { managementActions } from "../../redux/managementSlice";
 
 import { getStringDate } from "../../utils/date";
+
+import axios from 'axios';
 
 const NewProject = ({setIsModalVisible}) => {
     const modalOutside = useRef();
@@ -13,6 +15,45 @@ const NewProject = ({setIsModalVisible}) => {
     const [description, setDescription] = useState('');
     const [startDate, setStartDate] = useState(getStringDate(new Date()));
     const [endDate, setEndDate] = useState(getStringDate(new Date()));
+
+    const accessToken = useSelector(state => state.auth.accessToken);
+
+    const getOtherMembers = (teamObj, name) => {
+        const otherMembersObj = teamObj
+            .filter((member) => member.name !== name)
+            .reduce((obj, member) => {
+                obj[member.name] = false;
+
+                return obj;
+            }, {});
+        
+        return otherMembersObj;
+    }
+
+    let teamMembers = [
+        {
+            name: '조상욱',
+            role: 'projectLeader',
+        },
+        {
+            name: '홍서현',
+            role: 'member',
+        },
+        {
+            name: '이연제',
+            role: 'member',
+        },
+        {
+            name: '김도연',
+            role: 'member',
+        },
+
+    ]
+        
+    teamMembers = teamMembers.map((member) => ({
+        ...member,
+        isEvaluateCompleted: getOtherMembers(teamMembers, member.name)
+    }))
 
     const descriptionRef = useRef();
 
@@ -40,7 +81,7 @@ const NewProject = ({setIsModalVisible}) => {
         setDescription(e.target.value);
     }
 
-    const handleSubmitNewProject = () => {
+    const handleSubmitNewProject = async () => {
         if (description.length < 5) {
             alert('프로젝트 설명은 다섯 글자 이상 작성해주세요.');
             descriptionRef.current.focus();
@@ -64,7 +105,22 @@ const NewProject = ({setIsModalVisible}) => {
             title,
             description,
             state: ongoingData,
+            members: teamMembers
         }));
+
+        const apiUrl = `http://localhost:8080/api/auth/project`;
+
+        const response = await axios.post(apiUrl, {
+            "title": title,
+            "description": description,
+            "startDate": getStringDate(new Date(startDate)),
+            "endDate": getStringDate(new Date(endDate))
+        }, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
+            },
+        })
 
         setIsModalVisible(false);
     }

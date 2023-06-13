@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +27,15 @@ public class MilestoneService {
     private final ProjectRepository projectRepository;
     private final MemberRepository memberRepository;
     private final MilestoneRepository milestoneRepository;
+
     public void createMilestone(ScheduleCreateRequest scheduleCreateRequest, String username) {
+        LocalDateTime now = LocalDateTime.now();
         Project project = projectRepository.findById(scheduleCreateRequest.getProjectId()).orElseThrow();
+
+        LocalDateTime startDate = project.getStartDate().atStartOfDay();
+        LocalDateTime endDate = project.getEndDate().atStartOfDay();
+        Schedule.validDate(startDate, endDate, scheduleCreateRequest.getStartDate(), scheduleCreateRequest.getEndDate());
+
         List<MemberDto> memberDtos = scheduleCreateRequest.getMemberDtos();
         List<Member> memberList = new ArrayList<>();
         memberDtos.forEach(m -> {
@@ -41,7 +49,10 @@ public class MilestoneService {
                 .title(scheduleCreateRequest.getTitle())
                 .content(scheduleCreateRequest.getContent())
                 .author(username)
-                .state(State.예정)
+//                .state(State.예정)
+                .createdDate(now)
+                .modifiedDate(now)
+                .state(State.TBD)
                 .build();
         milestone.addMemberList(memberList);
 

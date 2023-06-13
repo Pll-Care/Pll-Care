@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import Button from '../Button';
@@ -6,6 +6,32 @@ import { managementActions } from '../../redux/managementSlice';
 
 const ProjectList = ({ projectList }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const isAllMembersEvaluated = () => {
+        return projectList
+            .flatMap((project) => (project.members))
+            .every((member) => (
+                Object.values(member.isEvaluateCompleted).every((evaluated) => evaluated)
+            ))
+    };
+
+    const handleCompleteProject = (e, projectId) => {
+        e.preventDefault(); 
+
+        if (isAllMembersEvaluated()) {
+            dispatch(managementActions.onComplete(projectId));
+            alert('완료 처리되었습니다.');
+        } else {
+            alert('아직 최종 평가가 완료되지 않았습니다. 평가부터 마무리해주세요.');
+            navigate(`/management/${projectId}/evaluation`);
+        }
+    }
+
+    const handleRemoveProject = (e, projectId) => {
+        e.preventDefault();
+        dispatch(managementActions.onRemove(projectId));
+    }
 
     return (
         <div className='project-list'>
@@ -39,11 +65,11 @@ const ProjectList = ({ projectList }) => {
                         <div className='project-item-button-wrapper'>
                             <Button
                                 text={'삭제하기'}
-                                onClick={(e) => { e.preventDefault(); dispatch(managementActions.onRemove(project.id)); }}
+                                onClick={(e) => {handleRemoveProject(e, project.id)}}
                             />
                             {project.state === 'ongoing' && <Button
                                 text={'완료하기'}
-                                onClick={(e) => { e.preventDefault(); dispatch(managementActions.onComplete(project.id)); alert('완료 처리되었습니다.') }}
+                                onClick={(e) => {handleCompleteProject(e, project.id)}}
                             />}
                         </div>
                     </div>

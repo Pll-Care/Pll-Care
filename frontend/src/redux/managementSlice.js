@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const managementInitialState = {
     projectList: [],
-    id: 1
+    id: 1,
 };
 
 const managementSlice = createSlice({

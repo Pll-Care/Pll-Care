@@ -1,20 +1,24 @@
 package fullcare.backend.schedule.dto.response;
 
+import fullcare.backend.schedule.DateCategory;
 import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class CustomResponseDto<T>{
+public class CustomResponseDto{
     private LocalDate startDate;
     private LocalDate endDate;
-    private List<T> custom;
+    private DateCategory dateCategory;
+    private List<ScheduleListResponse> schedules = new ArrayList<>();
 
-    public CustomResponseDto(LocalDate startDate, LocalDate endDate, List<T> custom) {
+    public CustomResponseDto(LocalDate startDate, LocalDate endDate, DateCategory dateCategory, List<ScheduleListResponse> schedules) {
         this.startDate = startDate;
         this.endDate = endDate;
-        this.custom = custom;
+        this.dateCategory = dateCategory;
+        this.schedules = schedules;
     }
 }

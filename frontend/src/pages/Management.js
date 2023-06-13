@@ -5,8 +5,6 @@ import NewProject from "../components/ProjectManagement/NewProject";
 import NonAuthenticatedManagement from "./NonAuthenticatedManagement";
 import Pagination from "../components/Pagination";
 
-import { isAccessTokenExpired } from "../utils/tokenManagement";
-
 import { useSelector } from "react-redux";
 import { useEffect, useState } from 'react';
 
@@ -15,17 +13,13 @@ import axios from 'axios';
 const Management = () => {
   const accessToken = useSelector(state => state.auth.accessToken);
 
-  const apiUrl = 'http://localhost:8080/api/auth/project';
+  const apiUrl = 'http://localhost:8080/api/auth/project?state=ongoing';
   
   useEffect(() => {
     const fetchProjectList = async () => {
       try {
         if (accessToken) {
           const response = await axios.get(apiUrl, {
-              'states': [
-                '예정'
-              ]
-          }, {
             headers: {
               'Authorization': `Bearer ${accessToken}`,
               'Content-Type': 'application/json'

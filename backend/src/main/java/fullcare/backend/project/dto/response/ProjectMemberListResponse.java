@@ -1,14 +1,14 @@
-package fullcare.backend.schedule.dto.response;
+package fullcare.backend.project.dto.response;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class ScheduleServingResponse {
+public class ProjectMemberListResponse {
     private Long id;
     private String name;
     @Builder
-    public ScheduleServingResponse(Long id, String name) {
+    public ProjectMemberListResponse(Long id, String name) {
         this.id = id;
         this.name = name;
     }
