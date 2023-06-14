@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React, { useEffect } from "react";
 import { useDispatch } from 'react-redux';
-
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import "./scss/fullcare.css";
 
 import Home from "./pages/Home";
@@ -19,6 +20,8 @@ import TeamMemberManagement from "./components/TeamMemberManagement/TeamMemberMa
 import { authActions } from "./redux/authSlice";
 import MainHeader from "./components/shared/MainHeader";
 
+const queryClient = new QueryClient();
+
 const App = () => {
   const dispatch = useDispatch();
 
@@ -33,25 +36,28 @@ const App = () => {
   }, []);
 
   return (
-    <BrowserRouter>
-      <div className="App">
-        <MainHeader />
-        <Routes>
-          <Route path={"/"} element={<Home />} />
-          <Route path={"/token"} element={<JWTToken />} />
-          <Route path={"/profile"} element={<Profile />} />
-          <Route path={"/recruitment"} element={<Recruitment />} />
-          <Route path={"/management"} element={<Management />} />
-          <Route path={"/management/:id"} element={<ProjectDetailPage />}>
-            <Route path={"overview"} element={<OverviewManagement />} />
-            <Route path={"meetingRecord"} element={<MeetingRecordManagement />} />
-            <Route path={"schedule"} element={<ScheduleManagement />} />
-            <Route path={"evaluation"} element={<EvaluationManagement />} />
-            <Route path={"teamMember"} element={<TeamMemberManagement />} />
-          </Route>
-        </Routes>
-      </div>
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <div className="App">
+          <MainHeader />
+          <Routes>
+            <Route path={"/"} element={<Home />} />
+            <Route path={"/token"} element={<JWTToken />} />
+            <Route path={"/profile"} element={<Profile />} />
+            <Route path={"/recruitment"} element={<Recruitment />} />
+            <Route path={"/management"} element={<Management />} />
+            <Route path={"/management/:id"} element={<ProjectDetailPage />}>
+              <Route path={"overview"} element={<OverviewManagement />} />
+              <Route path={"meetingRecord"} element={<MeetingRecordManagement />} />
+              <Route path={"schedule"} element={<ScheduleManagement />} />
+              <Route path={"evaluation"} element={<EvaluationManagement />} />
+              <Route path={"teamMember"} element={<TeamMemberManagement />} />
+            </Route>
+          </Routes>
+        </div>
+        </BrowserRouter>
+      <ReactQueryDevtools />
+    </QueryClientProvider>
   );
 }
 
