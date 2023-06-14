@@ -6,7 +6,7 @@ import "react-vertical-timeline-component/style.min.css";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import FlagIcon from "@mui/icons-material/Flag";
 import ComputerIcon from "@mui/icons-material/Computer";
-import Card from "../Card";
+import Card from '../shared/Card';
 
 const datas = [
   {

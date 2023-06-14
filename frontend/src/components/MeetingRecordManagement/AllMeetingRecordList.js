@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import MeetingRecordData from './MeetingRecordData';
-import Pagination from '../Pagination';
-import ControlMenu from '../ControlMenu';
-import Button from '../Button';
+import Pagination from '../shared/Pagination';
+import ControlMenu from '../shared/ControlMenu';
+import Button from '../../components/shared/Button';
 
 import { meetingRecordManagementActions } from '../../redux/meetingRecordManagementSlice';
 

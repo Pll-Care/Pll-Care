@@ -17,6 +17,7 @@ import ProjectDetailPage from "./pages/ProjectDetailPage";
 import TeamMemberManagement from "./components/TeamMemberManagement/TeamMemberManagement";
 
 import { authActions } from "./redux/authSlice";
+import MainHeader from "./components/shared/MainHeader";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <div className="App">
+        <MainHeader />
         <Routes>
           <Route path={"/"} element={<Home />} />
           <Route path={"/token"} element={<JWTToken />} />

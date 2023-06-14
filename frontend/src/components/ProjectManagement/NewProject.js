@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import Button from "../Button";
+import Button from '../../components/shared/Button';
 import { managementActions } from "../../redux/managementSlice";
 
 import { getStringDate } from "../../utils/date";

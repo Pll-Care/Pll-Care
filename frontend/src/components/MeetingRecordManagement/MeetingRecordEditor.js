@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import Button from "../Button";
-import ControlMenu from "../ControlMenu";
+import Button from '../../components/shared/Button';
+import ControlMenu from "../shared/ControlMenu";
 
 import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
 

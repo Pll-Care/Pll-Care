@@ -2,8 +2,7 @@ import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
-import MainHeader from "../components/MainHeader";
-import ManagementHeader from "../components/ManagementHeader";
+import ManagementHeader from "../components/shared/ManagementHeader";
 
 const ProjectDetailPage = () => {
   const { id } = useParams(); 
@@ -18,7 +17,6 @@ const ProjectDetailPage = () => {
 
   return (
     <div>
-      <MainHeader />
       <ManagementHeader id={id} />
       <Outlet />
     </div>

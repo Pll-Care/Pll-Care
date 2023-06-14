@@ -1,9 +1,9 @@
 import { Avatar } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 
-import Button from "../Button";
+import Button from '../../components/shared/Button';
 import { useState } from "react";
-import ScheduleEvaluationModal from "./ScheduleEvalutaionModal";
+import ScheduleEvaluationModal from "./ScheduleEvaluationModal";
 import { useSelector } from "react-redux";
 
 const Schedule = (props) => {

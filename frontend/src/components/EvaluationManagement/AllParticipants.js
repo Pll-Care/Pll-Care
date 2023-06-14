@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "../Button";
+import Button from '../../components/shared/Button';
 import FinalEvaluation from "./FinalEvaluation";
 
 const AllParticipants = ({ getSortedAverageEvaluationList }) => {

@@ -1,9 +1,8 @@
-import Button from "../components/Button";
-import MainHeader from "../components/MainHeader";
+import Button from '../components/shared/Button';
 import ProjectList from "../components/ProjectManagement/ProjectList";
 import NewProject from "../components/ProjectManagement/NewProject";
 import NonAuthenticatedManagement from "./NonAuthenticatedManagement";
-import Pagination from "../components/Pagination";
+import Pagination from "../components/shared/Pagination";
 
 import { useSelector } from "react-redux";
 import { useEffect, useState } from 'react';
@@ -78,7 +77,6 @@ const Management = () => {
     <div>
       {authState ? (
         <div className='management'>
-          <MainHeader />
           <header className='management-main-header'>
             <div className='management-main-header-left-col'>
               <h1>참여 프로젝트</h1>

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 
 import MeetingRecordData from "./MeetingRecordData";
-import Pagination from "../Pagination";
+import Pagination from '../shared/Pagination';
 
 const BookMarkedMeetingRecordList = () => {
     const meetingRecordList = useSelector(state => state.meetingRecordManagement.meetingRecordList);

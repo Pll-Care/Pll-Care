@@ -1,4 +1,4 @@
-import MainHeader from "../components/MainHeader";
+import MainHeader from "../components/shared/MainHeader";
 
 const NonAuthenticatedManagement = () => {
     return (

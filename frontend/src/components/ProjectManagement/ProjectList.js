@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import Button from '../Button';
+import Button from '../../components/shared/Button';
 import { managementActions } from '../../redux/managementSlice';
 
 const ProjectList = ({ projectList }) => {
