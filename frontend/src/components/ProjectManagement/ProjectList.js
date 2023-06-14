@@ -39,7 +39,7 @@ const ProjectList = ({ projectList }) => {
                 <Link
                     className='project-item'
                     key={project.id}
-                    to={`/management/${project.id}/overview`}
+                    to={`/management/${project.projectId}/overview`}
                 >
                     <div className='project-item-left-col'>
                         <figure />

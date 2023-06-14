@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from 'react';
 
 import { useQuery, useQueryClient } from 'react-query';
-import { getProjectList } from '../components/lib/apis/meetingRecordManagementApi';
+import { getProjectList } from '../components/lib/apis/projectManagementApi';
 
 const Management = () => {
   const queryClient = useQueryClient();
