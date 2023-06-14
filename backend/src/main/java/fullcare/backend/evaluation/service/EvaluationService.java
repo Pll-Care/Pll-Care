@@ -25,6 +25,7 @@ import fullcare.backend.projectmember.repository.ProjectMemberRepository;
 import fullcare.backend.schedule.domain.Schedule;
 import fullcare.backend.schedule.repository.ScheduleRepository;
 import fullcare.backend.schedulemember.repository.ScheduleMemberRepository;
+import fullcare.backend.util.CustomPageImpl;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -317,7 +318,7 @@ public class EvaluationService {
             myEvalListResponseList.add(response);
         }
 
-        return new PageImpl<>(myEvalListResponseList, pageable, pmList.getTotalElements());
+        return new CustomPageImpl<>(myEvalListResponseList, pageable, pmList.getTotalElements());
     }
 
     public MyEvalDetailResponse findMyEval(Long projectId, Long memberId) {
