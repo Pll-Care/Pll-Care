@@ -3,10 +3,13 @@ import { useDispatch } from 'react-redux';
 
 import Button from '../../components/shared/Button';
 import { managementActions } from '../../redux/managementSlice';
+import useManagementMutation from './hooks/useManagementMutation';
 
 const ProjectList = ({ projectList }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const { deleteMutate } = useManagementMutation();
 
     const isAllMembersEvaluated = () => {
         return projectList
@@ -30,7 +33,8 @@ const ProjectList = ({ projectList }) => {
 
     const handleRemoveProject = (e, projectId) => {
         e.preventDefault();
-        dispatch(managementActions.onRemove(projectId));
+
+        deleteMutate(projectId);
     }
 
     return (
@@ -65,11 +69,11 @@ const ProjectList = ({ projectList }) => {
                         <div className='project-item-button-wrapper'>
                             {project.state === 'ONGOING' && <Button
                                 text={'삭제하기'}
-                                onClick={(e) => {handleRemoveProject(e, project.id)}}
+                                onClick={(e) => {handleRemoveProject(e, project.projectId)}}
                             />}
                             {project.state === 'ONGOING' && <Button
                                 text={'완료하기'}
-                                onClick={(e) => {handleCompleteProject(e, project.id)}}
+                                onClick={(e) => {handleCompleteProject(e, project.projectId)}}
                             />}
                         </div>
                     </div>

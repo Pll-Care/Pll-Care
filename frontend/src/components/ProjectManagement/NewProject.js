@@ -1,63 +1,22 @@
 import { useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
 import Button from '../../components/shared/Button';
-import { managementActions } from "../../redux/managementSlice";
 
 import { getStringDate } from "../../utils/date";
+import useManagementMutation from "./hooks/useManagementMutation";
 
-import axios from 'axios';
 
 const NewProject = ({setIsModalVisible}) => {
     const modalOutside = useRef();
+
+    const { createMutate } = useManagementMutation();
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [startDate, setStartDate] = useState(getStringDate(new Date()));
     const [endDate, setEndDate] = useState(getStringDate(new Date()));
 
-    const accessToken = useSelector(state => state.auth.accessToken);
-
-    const getOtherMembers = (teamObj, name) => {
-        const otherMembersObj = teamObj
-            .filter((member) => member.name !== name)
-            .reduce((obj, member) => {
-                obj[member.name] = false;
-
-                return obj;
-            }, {});
-        
-        return otherMembersObj;
-    }
-
-    let teamMembers = [
-        {
-            name: '조상욱',
-            role: 'projectLeader',
-        },
-        {
-            name: '홍서현',
-            role: 'member',
-        },
-        {
-            name: '이연제',
-            role: 'member',
-        },
-        {
-            name: '김도연',
-            role: 'member',
-        },
-
-    ]
-        
-    teamMembers = teamMembers.map((member) => ({
-        ...member,
-        isEvaluateCompleted: getOtherMembers(teamMembers, member.name)
-    }))
-
     const descriptionRef = useRef();
-
-    const dispatch = useDispatch();
 
     const handleModalClose = (e) => {
         if (e.target === modalOutside.current) {
@@ -88,39 +47,12 @@ const NewProject = ({setIsModalVisible}) => {
             return;
         }
 
-        if (startDate > endDate) {
-            alert('시작 일자는 종료 일자보다 늦을 수 없습니다. 다시 설정해주세요.');
-            return;
-        }
-
-        let ongoingData = 'complete';
-
-        if (new Date().getDate() >= new Date(startDate).getDate() && new Date().getDate() <= new Date(endDate).getDate()) {
-            ongoingData = 'ongoing';
-        }
-
-        dispatch(managementActions.onCreate({
-            startDate: new Date(startDate).getTime(),
-            endDate: new Date(endDate).getTime(),
-            title,
-            description,
-            state: ongoingData,
-            members: teamMembers
-        }));
-
-        const apiUrl = `http://localhost:8080/api/auth/project`;
-
-        const response = await axios.post(apiUrl, {
+        createMutate({
             "title": title,
             "description": description,
             "startDate": getStringDate(new Date(startDate)),
             "endDate": getStringDate(new Date(endDate))
-        }, {
-            headers: {
-                'Authorization': `Bearer ${accessToken}`,
-                'Content-Type': 'application/json'
-            },
-        })
+        });
 
         setIsModalVisible(false);
     }
