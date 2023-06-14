@@ -63,11 +63,11 @@ const ProjectList = ({ projectList }) => {
                             </div>
                         </div>
                         <div className='project-item-button-wrapper'>
-                            <Button
+                            {project.state === 'ONGOING' && <Button
                                 text={'삭제하기'}
                                 onClick={(e) => {handleRemoveProject(e, project.id)}}
-                            />
-                            {project.state === 'ongoing' && <Button
+                            />}
+                            {project.state === 'ONGOING' && <Button
                                 text={'완료하기'}
                                 onClick={(e) => {handleCompleteProject(e, project.id)}}
                             />}
