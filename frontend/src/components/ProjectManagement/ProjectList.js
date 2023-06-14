@@ -1,34 +1,14 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import Button from '../../components/shared/Button';
-import { managementActions } from '../../redux/managementSlice';
+
 import useManagementMutation from './hooks/useManagementMutation';
 
 const ProjectList = ({ projectList }) => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-
     const { deleteMutate } = useManagementMutation();
-
-    const isAllMembersEvaluated = () => {
-        return projectList
-            .flatMap((project) => (project.members))
-            .every((member) => (
-                Object.values(member.isEvaluateCompleted).every((evaluated) => evaluated)
-            ))
-    };
 
     const handleCompleteProject = (e, projectId) => {
         e.preventDefault(); 
-
-        if (isAllMembersEvaluated()) {
-            dispatch(managementActions.onComplete(projectId));
-            alert('완료 처리되었습니다.');
-        } else {
-            alert('아직 최종 평가가 완료되지 않았습니다. 평가부터 마무리해주세요.');
-            navigate(`/management/${projectId}/evaluation`);
-        }
     }
 
     const handleRemoveProject = (e, projectId) => {
