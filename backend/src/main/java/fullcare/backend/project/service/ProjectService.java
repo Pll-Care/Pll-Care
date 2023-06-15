@@ -14,6 +14,7 @@ import fullcare.backend.projectmember.domain.ProjectMemberRole;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.project.dto.response.ProjectMemberListResponse;
 import fullcare.backend.projectmember.repository.ProjectMemberRepository;
+import fullcare.backend.util.CustomPageImpl;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -49,7 +50,7 @@ public class ProjectService {
                 .build()
         ).collect(Collectors.toList());
         
-        return new PageImpl<>(content, pageable, content.size());
+        return new CustomPageImpl<>(content, pageable, pageProject.getTotalElements());
     }
 
     public Project createProject(Long memberId, ProjectCreateRequest request) {

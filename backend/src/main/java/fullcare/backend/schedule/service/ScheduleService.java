@@ -18,6 +18,7 @@ import fullcare.backend.schedule.dto.response.*;
 import fullcare.backend.schedule.repository.ScheduleRepository;
 import fullcare.backend.schedulemember.domain.ScheduleMember;
 import fullcare.backend.schedulemember.repository.ScheduleMemberRepository;
+import fullcare.backend.util.CustomPageImpl;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -129,8 +130,9 @@ public class ScheduleService {
 
     @Transactional(readOnly = true)
     public ScheduleCalenderMonthResponse findScheduleCalenderList(int year, int month) { // 1일부터 31일까지 일정
-        LocalDate localDate = LocalDateTime.now().toLocalDate();
-        int lastDay = LocalDateTime.now().toLocalDate().withDayOfMonth(localDate.lengthOfMonth()).getDayOfMonth();
+        LocalDateTime findDate = LocalDateTime.of(year, month, 1, 0, 0);
+        LocalDate localDate = findDate.toLocalDate();
+        int lastDay = findDate.toLocalDate().withDayOfMonth(localDate.lengthOfMonth()).getDayOfMonth();
         LocalDateTime startDate = LocalDateTime.of(year, month, 1, 0, 0,0);
         LocalDateTime endDate = LocalDateTime.of(year, month,lastDay,23,59,59  );
 
@@ -143,15 +145,15 @@ public class ScheduleService {
     @Transactional
     public Page<ScheduleMonthResponse> findScheduleMonthList(Pageable pageable, int year, int month, Member member, List<State> states) { // 1일부터 31일까지 일정
         Member findMember = memberRepository.findById(member.getId()).orElseThrow();
-
-        LocalDate localDate = LocalDateTime.now().toLocalDate();
-        int lastDay = LocalDateTime.now().toLocalDate().withDayOfMonth(localDate.lengthOfMonth()).getDayOfMonth();
+        LocalDateTime findDate = LocalDateTime.of(year, month, 1, 0, 0);
+        LocalDate localDate = findDate.toLocalDate();
+        int lastDay = findDate.toLocalDate().withDayOfMonth(localDate.lengthOfMonth()).getDayOfMonth();
         LocalDateTime startDate = LocalDateTime.of(year,month, 1, 0, 0,0);
         LocalDateTime endDate = LocalDateTime.of(year, month,lastDay,23,59,59  );
         Page<Schedule> pageSchedule = scheduleRepository.findMonthByStartDateBetweenOrEndDateBetween(pageable, startDate, endDate, startDate, endDate, states);
         List<ScheduleMonthResponse> scheduleMonthResponses = new ArrayList<>();
         addResponse(pageSchedule, scheduleMonthResponses, findMember);// 미팅, 마일스톤에 맞게 일정 생성 후 응답에 넣기
-        return new PageImpl<>(scheduleMonthResponses, pageable, pageSchedule.getTotalElements());
+        return new CustomPageImpl<>(scheduleMonthResponses, pageable, pageSchedule.getTotalElements());
     }
 //    @Transactional(readOnly = true)
 //    public Page<ScheduleMonthResponse> findScheduleMemberMonthList(Pageable pageable, ScheduleMonthListRequest scheduleMonthListRequest) {
