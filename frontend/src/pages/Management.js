@@ -1,5 +1,4 @@
 import Button from "../components/Button";
-import MainHeader from "../components/MainHeader";
 import ProjectList from "../components/ProjectManagement/ProjectList";
 import NewProject from "../components/ProjectManagement/NewProject";
 import NonAuthenticatedManagement from "./NonAuthenticatedManagement";
@@ -8,46 +7,48 @@ import Pagination from "../components/Pagination";
 import { isAccessTokenExpired } from "../utils/tokenManagement";
 
 import { useSelector } from "react-redux";
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import axios from 'axios';
+import axios from "axios";
 
 const Management = () => {
-  const accessToken = useSelector(state => state.auth.accessToken);
+  const accessToken = useSelector((state) => state.auth.accessToken);
 
-  const apiUrl = 'http://localhost:8080/api/auth/project';
-  
+  const apiUrl = "http://localhost:8080/api/auth/project";
+
   useEffect(() => {
     const fetchProjectList = async () => {
       try {
         if (accessToken) {
-          const response = await axios.get(apiUrl, {
-              'states': [
-                '예정'
-              ]
-          }, {
-            headers: {
-              'Authorization': `Bearer ${accessToken}`,
-              'Content-Type': 'application/json'
+          const response = await axios.get(
+            apiUrl,
+            {
+              states: ["예정"],
             },
-          })
-  
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
           console.log(response);
         }
       } catch (e) {
         console.log(e);
       }
-    }
+    };
 
     fetchProjectList();
   }, [accessToken]);
-  
+
   const [allProjectListVisible, setAllProjectListVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const projectList = useSelector(state => state.management.projectList);
+  const projectList = useSelector((state) => state.management.projectList);
 
-  const authState = useSelector(state => state.auth.isLoggedIn);
+  const authState = useSelector((state) => state.auth.isLoggedIn);
 
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -58,62 +59,56 @@ const Management = () => {
 
   const getCurrentProjectList = () => {
     return projectList.slice(indexOfFirst, indexOfLast);
-  }
+  };
 
   const getOngoingProjectList = () => {
-    return projectList.filter((project) => project.state === 'ongoing');
-  }
+    return projectList.filter((project) => project.state === "ongoing");
+  };
 
   const getCurrentOngoingProjectList = () => {
     return getOngoingProjectList().slice(indexOfFirst, indexOfLast);
-  }
+  };
 
   const handleClickAllProjectList = () => {
     setAllProjectListVisible(true);
-  }
+  };
 
   const handleClickOngoingProjectList = () => {
     setAllProjectListVisible(false);
-  }
+  };
 
   const handleModalVisible = () => {
     setIsModalVisible(true);
-  }
+  };
 
   return (
     <div>
       {authState ? (
-        <div className='management'>
-          <MainHeader />
-          <header className='management-main-header'>
-            <div className='management-main-header-left-col'>
+        <div className="management">
+          <header className="management-main-header">
+            <div className="management-main-header-left-col">
               <h1>참여 프로젝트</h1>
-              <Button
-                onClick={handleModalVisible}
-                text={'프로젝트 생성'}
-              />
+              <Button onClick={handleModalVisible} text={"프로젝트 생성"} />
             </div>
-            <div className='management-main-header-right-col'> 
+            <div className="management-main-header-right-col">
               <Button
-                className='all-projects-button'
-                text={'전체'}
-                type={allProjectListVisible && 'positive_dark'}
+                className="all-projects-button"
+                text={"전체"}
+                type={allProjectListVisible && "positive_dark"}
                 onClick={handleClickAllProjectList}
               />
               <Button
-                text={'진행중'}
-                type={!allProjectListVisible && 'positive_dark'}
+                text={"진행중"}
+                type={!allProjectListVisible && "positive_dark"}
                 onClick={handleClickOngoingProjectList}
               />
-            </div>  
+            </div>
           </header>
-          <main className='project-list-wrapper'>
+          <main className="project-list-wrapper">
             {allProjectListVisible ? (
               <div>
-                <ProjectList
-                  projectList={getCurrentProjectList()}
-                />
-                <Pagination 
+                <ProjectList projectList={getCurrentProjectList()} />
+                <Pagination
                   currentPage={currentPage}
                   setCurrentPage={setCurrentPage}
                   recordDatasPerPage={recordDatasPerPage}
@@ -122,28 +117,25 @@ const Management = () => {
               </div>
             ) : (
               <div>
-                <ProjectList
-                    projectList={getCurrentOngoingProjectList()}
-                />
-                <Pagination 
+                <ProjectList projectList={getCurrentOngoingProjectList()} />
+                <Pagination
                   currentPage={currentPage}
                   setCurrentPage={setCurrentPage}
                   recordDatasPerPage={recordDatasPerPage}
                   totalData={getOngoingProjectList()?.length}
                 />
-              </div>    
+              </div>
             )}
-            {isModalVisible ? 
-              <NewProject setIsModalVisible={setIsModalVisible} /> :
-              null
-            }
+            {isModalVisible ? (
+              <NewProject setIsModalVisible={setIsModalVisible} />
+            ) : null}
           </main>
         </div>
       ) : (
         <NonAuthenticatedManagement />
       )}
     </div>
-  )
-}
+  );
+};
 
 export default Management;

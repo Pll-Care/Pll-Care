@@ -1,111 +1,113 @@
 .main-header {
-    border-bottom: $border;
-    height: 90px;
+  border-bottom: $border;
+  height: 90px;
 
-    &-left-col {
-        margin-left: 25px;
+  &-left-col {
+    margin-left: 25px;
 
-        .main-header-logo-img {
-            border: $border;
-            width: 60px;
-            height: 60px;
-        }
+    .main-header-logo-img {
+      border: $border;
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  &-link {
+    @include displayFlex(row, space-between);
+  }
+
+  .nav_item {
+    & > a {
+      font-size: $link-font-size;
+      font-family: $link-font;
+      color: black;
+      text-decoration: none;
+    }
+  }
+
+  .nav_divide {
+    padding-left: 25px;
+  }
+
+  &-right-col {
+    width: 20%;
+    margin-right: 20px;
+
+    Button {
+      cursor: pointer;
+      margin-right: 15px;
+      margin-left: auto;
     }
 
-    &-link {
-        width: 75%;
-        height: 70px;
-        margin-left: 100px;
-        
-        &>a {
-            font-size: $link-font-size;
-            font-family: $link-font;
-            color: black;
-            text-decoration: none;  
-        }
+    .main-header-user-profile-img {
+      border: $border;
+      border-radius: 35%;
+      background-color: #01e89e;
+      width: 40px;
+      height: 40px;
 
-        @include displayFlex(row, space-around);
+      @include backgroundImage("../assets/profile-default-img.png");
     }
 
-    &-right-col {
-        width: 20%;
-        margin-right: 20px;
+    @include displayFlex;
+  }
 
-        Button {
-            cursor: pointer;
-            margin-right: 15px;
-            margin-left: auto;
-        }
-    
-        .main-header-user-profile-img {
-            border: $border;
-            border-radius: 35%;
-            background-color: #01e89e;
-            width: 40px;
-            height: 40px;
-
-            @include backgroundImage("../assets/profile-default-img.png");
-        }
-
-        @include displayFlex;
+  &-login-col {
+    Button {
+      margin-left: auto;
     }
+  }
 
-    &-login-col {
-        Button {
-            margin-left: auto;
-        }
-    }
-
-    @include displayFlex(row, space-between, center);
+  @include displayFlex(row, space-between, center);
 }
 
 @include tablet {
-    .main-header {
-        &-link {
-            width: 45%;
-        }
-
-        &-right-col {
-            width: 30%;
-
-            .main-header-user-profile-img {
-                margin-right: 15px;
-            }
-
-            @include displayFlex(row, flex-end);
-        }
+  .main-header {
+    &-link {
+      width: 45%;
     }
+
+    &-right-col {
+      width: 30%;
+
+      .main-header-user-profile-img {
+        margin-right: 15px;
+      }
+
+      @include displayFlex(row, flex-end);
+    }
+  }
 }
 
 @include mobile {
-    .main-header {
-        height: 70px;
+  .main-header {
+    height: 70px;
 
-        &-left-col {
-            margin-left: 63px;
+    &-left-col {
+      margin-left: 63px;
 
-            .main-header-logo-img {
-                width: 45px;
-                height: 45px;
-            }
-        }
-
-        &-link {
-            width: 0;
-            height: 0;
-            overflow: hidden;
-            margin-left: 0;
-        }
-
-        &-right-col {
-            width: 50%;
-
-            .main-header-user-profile-img {
-                width: 35px;
-                height: 35px;
-            }
-
-            @include displayFlex;
-        }
+      .main-header-logo-img {
+        width: 45px;
+        height: 45px;
+      }
     }
+
+    &-link {
+      width: 0;
+      height: 0;
+      overflow: hidden;
+      margin-left: 0;
+    }
+
+    &-right-col {
+      width: 50%;
+
+      .main-header-user-profile-img {
+        width: 35px;
+        height: 35px;
+      }
+
+      @include displayFlex;
+    }
+  }
 }
