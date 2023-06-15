@@ -22,9 +22,9 @@ const Management = () => {
 
   const [recordDatasPerPage, setRecordDatasPerPage] = useState(4);
 
-  const { data = { projectList: [] } } = useQuery(['managementProjectList', currentPage, allProjectListVisible], () => getProjectList(currentPage, 4));
+  const { data = { projectList: [] } } = useQuery(['managementProjectList', currentPage, allProjectListVisible], () => getProjectList(currentPage));
 
-  const { data: ongoingData = { projectList: [] } } = useQuery(['managementProjectList', ongoingCurrentPage, allProjectListVisible], () => getProjectList(ongoingCurrentPage, 4, 'ONGOING'));
+  const { data: ongoingData = { projectList: [] } } = useQuery(['managementProjectList', ongoingCurrentPage, allProjectListVisible], () => getProjectList(ongoingCurrentPage, 'ONGOING'));
 
   const projectList = data.projectList;
 
@@ -39,13 +39,13 @@ const Management = () => {
       const nextPage = currentPage + 1;
 
       if (nextPage <= lastPageNum) {
-        queryClient.prefetchQuery(['managementProjectList', nextPage, allProjectListVisible], () => getProjectList(nextPage, 4));
+        queryClient.prefetchQuery(['managementProjectList', nextPage, allProjectListVisible], () => getProjectList(nextPage));
       }
     } else {
       const ongoingNextPage = ongoingCurrentPage + 1;
 
       if (ongoingNextPage <= ongoingLastPageNum) {
-        queryClient.prefetchQuery(['managementProjectList', ongoingNextPage, allProjectListVisible], () => getProjectList(ongoingNextPage, 4, 'ONGOING'));
+        queryClient.prefetchQuery(['managementProjectList', ongoingNextPage, allProjectListVisible], () => getProjectList(ongoingNextPage, 'ONGOING'));
       }
     }
   }, [allProjectListVisible, currentPage, lastPageNum, ongoingCurrentPage, ongoingLastPageNum, queryClient]);
