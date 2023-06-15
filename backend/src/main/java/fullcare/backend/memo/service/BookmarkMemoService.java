@@ -31,7 +31,7 @@ public class BookmarkMemoService {
         List<BookmarkMemoListResponse> content = bookmarkMemoList.stream().map(BookmarkMemoListResponse::entityToDto)
                 .collect(Collectors.toList());
 
-        return new PageImpl<>(content, pageable, content.size());
+        return new PageImpl<>(content, pageable, bookmarkMemoList.getTotalElements());
     }
 
     @Transactional

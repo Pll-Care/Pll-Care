@@ -22,4 +22,6 @@ public interface ProjectMemberRepository extends JpaRepository<ProjectMember, Lo
     @Query(value = "select pm from project_member pm join fetch pm.project where pm.member.id = :memberId",
             countQuery = "select count(pm) from project_member pm where pm.member.id = :memberId")
     Page<ProjectMember> findByMemberId(Pageable pageable, Long memberId);
+
+    void deleteByProjectIdAndMemberId(Long projectId, Long memberId);
 }

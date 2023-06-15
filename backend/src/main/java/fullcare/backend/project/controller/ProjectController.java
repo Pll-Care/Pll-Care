@@ -4,11 +4,14 @@ import fullcare.backend.global.State;
 import fullcare.backend.global.exception.InvalidAccessException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.dto.request.ProjectCreateRequest;
+import fullcare.backend.project.dto.request.ProjectMemberDeleteRequest;
 import fullcare.backend.project.dto.request.ProjectStateUpdateRequest;
 import fullcare.backend.project.dto.request.ProjectUpdateRequest;
 import fullcare.backend.project.dto.response.ProjectListResponse;
-import fullcare.backend.project.service.ProjectService;
 import fullcare.backend.project.dto.response.ProjectMemberListResponse;
+import fullcare.backend.project.service.ProjectService;
+import fullcare.backend.projectmember.domain.ProjectMember;
+import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.security.jwt.CurrentLoginMember;
 import fullcare.backend.util.CustomPageRequest;
@@ -19,7 +22,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,15 +41,21 @@ import java.util.List;
 public class ProjectController {
     private final ProjectService projectService;
     private final ProjectMemberService projectMemberService;
+
+
+    // * 특정 프로젝트의 멤버 목록
     @Operation(method = "get", summary = "프로젝트 멤버 조회")
     @ApiResponses(value = {
             @ApiResponse(description = "프로젝트 멤버 조회 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ProjectMemberListResponse.class))})
     })
     @GetMapping("/memberList")
-    public ResponseEntity<?> projectMemberList(@RequestParam(name="project_id") Long projectId){
+    public ResponseEntity<?> projectMemberList(@RequestParam(name = "project_id") Long projectId) {
         List<ProjectMemberListResponse> response = projectService.findProjectMembers(projectId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+
+    // * 사용자가 속한 프로젝트 목록
     @Operation(method = "get", summary = "사용자 프로젝트 리스트")
 
     @ApiResponses(value = {
@@ -62,6 +70,7 @@ public class ProjectController {
     }
 
 
+    // * 새로운 프로젝트 생성
     @Operation(method = "post", summary = "프로젝트 생성")
     @ApiResponses(value = {
             @ApiResponse(description = "프로젝트 생성 성공", responseCode = "200", content = {@Content(mediaType = "application/json")})
@@ -74,6 +83,8 @@ public class ProjectController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+
+    // * 특정 프로젝트 삭제
     @DeleteMapping("{projectId}")
     public ResponseEntity delete(@PathVariable Long projectId, @CurrentLoginMember Member member) {
         // 삭제 권한이 있는지 검사
@@ -81,6 +92,9 @@ public class ProjectController {
         projectService.deleteProject(projectId);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+
+    // * 특정 프로젝트 내용 수정
     @PutMapping("/{projectId}")
     @Operation(method = "put", summary = "프로젝트 변경")
     @ApiResponses(value = {
@@ -93,6 +107,9 @@ public class ProjectController {
         projectService.update(projectId, projectUpdateRequest);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+
+    // * 특정 프로젝트 상태 수정
     @PutMapping("/{projectId}/state") // ! 프로젝트 완료는 리더만, 모든 평가가 완료될 때 조건 필요
     @Operation(method = "put", summary = "프로젝트 상태 변경")
     @ApiResponses(value = {
@@ -106,12 +123,21 @@ public class ProjectController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+
+    // * 특정 프로젝트 멤버 삭제(리더가 강퇴)
+    @DeleteMapping("/memberOut")
+    public ResponseEntity deleteProjectMember(@RequestBody ProjectMemberDeleteRequest request, @CurrentLoginMember Member member) {
+        ProjectMember projectMember = projectMemberService.findProjectMember(request.getProjectId(), member.getId());
+
+        if (projectMember.getProjectMemberRole().getRole() != ProjectMemberRoleType.리더 || !(projectMemberService.validateProjectMember(request.getProjectId(), request.getMemberId()))) {
+            throw new InvalidAccessException("삭제 권한이 없습니다.");
+        }
+
+        projectMemberService.deleteProjectMember(request.getProjectId(), request.getMemberId());
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     // ! 팀 탈퇴 기능 추가 필요
-    // 프로젝트 생성 썸네일
-    // 프로젝트 상태 변환 (진행 -> 완료)
-    // 프로젝트 멤버 영입
-    // 프로젝트 삭제
-    // 프로젝트 업데이트
-
-
+    // 프로젝트 생성 썸네일 -> [새로운 프로젝트 생성, 특정 프로젝트 내용 수정] 에 들어가야함
+    // ? 프로젝트 멤버 영입 -> 그냥 모집글의 지원 기능으로 대체?
 }

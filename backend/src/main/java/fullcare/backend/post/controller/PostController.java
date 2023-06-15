@@ -9,7 +9,10 @@ import fullcare.backend.post.dto.request.PostUpdateRequest;
 import fullcare.backend.post.dto.response.PostDetailResponse;
 import fullcare.backend.post.dto.response.PostListResponse;
 import fullcare.backend.post.service.PostService;
+import fullcare.backend.project.domain.Project;
 import fullcare.backend.projectmember.domain.ProjectMember;
+import fullcare.backend.projectmember.domain.ProjectMemberRole;
+import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.security.jwt.CurrentLoginMember;
 import fullcare.backend.util.CustomPageRequest;
@@ -31,11 +34,13 @@ public class PostController {
     private final ProjectMemberService projectMemberService;
 
     // todo 구현해야하는 기능
-    // * 1. 모집글 추가, 수정, 삭제 -> 모집글을 삭제할 수 있는
+    // * 1. 모집글 생성, 수정, 삭제 -> 모집글을 삭제할 수 있는
     // * 2. 모집글 목록 조회(페이지 + 필터링)
     // * 3. 모집글 단건조회
     // * 4. 모집글 좋아요
+    // * 5. 모집글을 통해 프로젝트에 지원
 
+    // * 새로운 모집글 생성
     @PostMapping
     public ResponseEntity create(@RequestBody PostCreateRequest postCreateRequest,
                                  @CurrentLoginMember Member member) {
@@ -50,7 +55,8 @@ public class PostController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PatchMapping("/{postId}")
+    // * 특정 모집글 수정
+    @PutMapping("/{postId}")
     public ResponseEntity update(@PathVariable Long postId,
                                  @RequestBody PostUpdateRequest postUpdateRequest,
                                  @CurrentLoginMember Member member) {
@@ -68,6 +74,8 @@ public class PostController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+
+    // * 특정 모집글 삭제
     @DeleteMapping("/{postId}")
     public ResponseEntity delete(@PathVariable Long postId,
                                  @CurrentLoginMember Member member) {
@@ -85,6 +93,8 @@ public class PostController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+
+    // * 특정 모집글 조회
     @GetMapping("/{postId}")
     public ResponseEntity<?> details(@PathVariable Long postId,
                                      @CurrentLoginMember Member member) {
@@ -92,6 +102,8 @@ public class PostController {
         return new ResponseEntity<>(postDetailResponse, HttpStatus.OK);
     }
 
+
+    // * 모집글 목록
     @GetMapping("/list")
     public ResponseEntity<?> list(@ModelAttribute CustomPageRequest pageRequest,
                                   @CurrentLoginMember Member member) { // ? @ModelAttribute가 맞는가
@@ -104,6 +116,7 @@ public class PostController {
     }
 
 
+    // * 특정 모집글 좋아요
     // ! like와 unlike를 합칠까말까 고민중..
     @PostMapping("/{postId}/like")
     public ResponseEntity like(@PathVariable Long postId, @CurrentLoginMember Member member) {
@@ -111,5 +124,21 @@ public class PostController {
 
         return new ResponseEntity<>(HttpStatus.OK);
 
+    }
+
+    // * 특정 게시글을 통해 해당 프로젝트에 지원
+    @PostMapping("/{postId}/apply")
+    public ResponseEntity apply(@PathVariable Long postId, @CurrentLoginMember Member member) {
+        Post post = postService.findPost(postId);
+        ProjectMember projectMember = post.getProjectMember();
+        Project project = projectMember.getProject();
+
+        // ! 이미 프로젝트에 소속된 사람이라면 처리할 필요 없음
+        if (projectMemberService.validateProjectMember(project.getId(), member.getId())) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        projectMemberService.addProjectMember(project.getId(), member.getId(), new ProjectMemberRole(ProjectMemberRoleType.미정, ProjectMemberRoleType.미정));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

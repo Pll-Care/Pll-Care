@@ -4,6 +4,7 @@ import fullcare.backend.security.jwt.JwtAccessDeniedHandler;
 import fullcare.backend.security.jwt.JwtAuthenticationEntryPoint;
 import fullcare.backend.security.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,6 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
+@Slf4j
 @RequiredArgsConstructor
 @EnableWebSecurity
 public class JwtConfig {
@@ -28,6 +30,8 @@ public class JwtConfig {
     public SecurityFilterChain jwtFilterChain(HttpSecurity http) throws Exception {
 //        http
 //        .cors().configurationSource(corsConfigurationSource());
+
+        log.info("JwtConfig.jwtFilterChain");
 
         // ! cors 설정
         http.cors(withDefaults());
