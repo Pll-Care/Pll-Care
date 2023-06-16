@@ -137,11 +137,11 @@ public class MemoController {
 
     @Operation(method = "get", summary = "회의록 리스트 조회")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "회의록 리스트 조회 성공", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MemoListResponse.class))),
+            @ApiResponse(responseCode = "200", description = "회의록 리스트 조회 성공", useReturnTypeSchema = true),
             @ApiResponse(responseCode = "400", description = "회의록 리스트 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @GetMapping("/list")
-    public ResponseEntity<?> list(@RequestParam("project_id") Long projectId,
+    public ResponseEntity<Page<MemoListResponse>> list(@RequestParam("project_id") Long projectId,
                                   @ModelAttribute CustomPageRequest pageRequest,
                                   @CurrentLoginMember Member member) {
 

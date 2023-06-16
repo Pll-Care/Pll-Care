@@ -143,7 +143,7 @@ public class ScheduleService {
         return scheduleMonthResponse;
     }
     @Transactional
-    public Page<ScheduleMonthResponse> findScheduleMonthList(Pageable pageable, int year, int month, Member member, List<State> states) { // 1일부터 31일까지 일정
+    public CustomPageImpl<ScheduleMonthResponse> findScheduleMonthList(Pageable pageable, int year, int month, Member member, List<State> states) { // 1일부터 31일까지 일정
         Member findMember = memberRepository.findById(member.getId()).orElseThrow();
         LocalDateTime findDate = LocalDateTime.of(year, month, 1, 0, 0);
         LocalDate localDate = findDate.toLocalDate();
