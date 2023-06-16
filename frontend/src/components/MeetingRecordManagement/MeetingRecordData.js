@@ -1,14 +1,14 @@
 import { useDispatch } from "react-redux";
 import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
 
-const MeetingRecordData = ({ sortedMeetingRecordList, isLoading }) => {
+const MeetingRecordData = ({ sortedMeetingRecordList }) => {
     const dispatch = useDispatch();
 
     const handleClickMeetingRecord = (e) => {
         dispatch(meetingRecordManagementActions.onEditSelectedMeetingRecord({
             id: parseInt(e.currentTarget.id),
             writer: e.currentTarget.getAttribute('writer'),
-            date: new Date(parseInt(e.currentTarget.getAttribute('date'))).getTime(),
+            date: new Date(parseInt(new Date(e.currentTarget.getAttribute('date')).getTime())),
             title: e.currentTarget.getAttribute('title'),
             content: e.currentTarget.getAttribute('content'),
         }));
@@ -16,25 +16,25 @@ const MeetingRecordData = ({ sortedMeetingRecordList, isLoading }) => {
 
     return (
         <div className='meeting-record-all-meeting-record-list-data'>
-            {sortedMeetingRecordList().map((record) => (
+            {Array.isArray(sortedMeetingRecordList) && sortedMeetingRecordList.map((record) => (
                 <div
                     className='meeting-record-item'
-                    key={record.id}
+                    key={record.memoId}
                     onClick={handleClickMeetingRecord}
-                    id={record.id}
-                    writer={record.writer}
-                    date={record.date}
+                    id={record.memoId}
+                    writer={record.author}
+                    date={new Date(record.createdDate).toLocaleDateString()}
                     title={record.title}
                     content={record.content}
                 >
                     <div className='meeting-record-item-date'>
-                        {new Date(record.date).toLocaleDateString()}
+                        {new Date(record.createdDate).toLocaleDateString()}
                     </div>
                     <div className='meeting-record-item-title'>
                         {record.title}
                     </div>
                     <div className='meeting-record-item-writer'>
-                        {record.writer}
+                        {record.author}
                     </div>
                 </div>
             ))}

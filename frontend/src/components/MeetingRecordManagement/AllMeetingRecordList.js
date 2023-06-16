@@ -1,56 +1,52 @@
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import MeetingRecordData from './MeetingRecordData';
 import Pagination from '../shared/Pagination';
 import ControlMenu from '../shared/ControlMenu';
 import Button from '../../components/shared/Button';
 
+import { useQuery, useQueryClient } from 'react-query';
+
 import { meetingRecordManagementActions } from '../../redux/meetingRecordManagementSlice';
+import { getAllMeetingRecordList } from '../lib/apis/meetingRecordManagementApi';
+import { useLocation } from 'react-router-dom';
 
 const filterOptionList = [
     {
         id: 1,
         name: '최신순',
-        value: 'latest'
+        value: 'DESC'
     },
     {
         id: 2,
         name: '오래된순',
-        value: 'oldest'
+        value: 'ASC'
     },
 ]
 
 const AllMeetingRecordList = () => {
-    const [sortType, setSortType] = useState('latest');
-    const [isLoading, setIsLoading] = useState(true);
+    const [sortType, setSortType] = useState('DESC');
     const [currentPage, setCurrentPage] = useState(1);
     const [recordDatasPerPage, setRecordDatasPerPage] = useState(3);
 
-    const meetingRecordList = useSelector(state => state.meetingRecordManagement.meetingRecordList);
-
-    const indexOfLast = currentPage * recordDatasPerPage;
-    const indexOfFirst = indexOfLast - recordDatasPerPage;
-
+    const projectId = parseInt(useLocation().pathname.slice(12, 14));
+    
     const dispatch = useDispatch();
 
-    const getCurrentSortedMeetingRecordList = () => {
-        const compare = (a, b) => {
-            if (sortType === 'latest') {
-                return parseInt(b.date) - parseInt(a.date);
-            } else {
-                return parseInt(a.date) - parseInt(b.date);
-            }
+    const queryClient = useQueryClient();
+
+    const { data = { meetingRecordList: [] } } = useQuery(['managementAllMeetingRecordList', projectId, currentPage, sortType], () => getAllMeetingRecordList(projectId, currentPage, sortType));
+
+    const meetingRecordList = data.meetingRecordList;
+
+    useEffect(() => {
+        const nextPage = currentPage + 1;
+
+        if (nextPage <= data.totalPages) {
+            queryClient.prefetchQuery(['managementAllMeetingRecordList', projectId, nextPage, sortType], () => getAllMeetingRecordList(projectId, nextPage, sortType));
         }
-
-        const copyList = JSON.parse(JSON.stringify(meetingRecordList));
-
-        const sortedList = copyList.sort(compare);
-
-        let currentSortedRecords = sortedList.slice(indexOfFirst, indexOfLast);
-
-        return currentSortedRecords;
-    }
+    }, [currentPage, data.totalPages, projectId, queryClient, sortType])
 
     return (
         <div className="meeting-record-all-meeting-record-list">
@@ -70,22 +66,19 @@ const AllMeetingRecordList = () => {
                             dispatch(meetingRecordManagementActions.onChangeEditState('editing'));
                             dispatch(meetingRecordManagementActions.onEditInitialState(false));
                             dispatch(meetingRecordManagementActions.onEditSelectedMeetingRecord({}));
-                            dispatch(meetingRecordManagementActions.onEditTitle(''));
-                            dispatch(meetingRecordManagementActions.onEditContent(''));
                         }}
                     />
                 </div>
             </div>
             <div className='record-list-item-wrapper'>
                 <MeetingRecordData
-                    sortedMeetingRecordList={getCurrentSortedMeetingRecordList}
-                    isloading={isLoading}
+                    sortedMeetingRecordList={meetingRecordList}
                 />
                 <Pagination
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
                     recordDatasPerPage={recordDatasPerPage}
-                    totalData={meetingRecordList.length}
+                    totalData={data.totalElements}
                 />
             </div>
         </div>
