@@ -8,9 +8,9 @@ import Button from '../../components/shared/Button';
 
 import { useQuery, useQueryClient } from 'react-query';
 
-import { meetingRecordManagementActions } from '../../redux/meetingRecordManagementSlice';
 import { getAllMeetingRecordList } from '../lib/apis/meetingRecordManagementApi';
 import { useLocation } from 'react-router-dom';
+import { meetingRecordManagementActions } from '../../redux/meetingRecordManagementSlice';
 
 const filterOptionList = [
     {
@@ -46,7 +46,7 @@ const AllMeetingRecordList = () => {
         if (nextPage <= data.totalPages) {
             queryClient.prefetchQuery(['managementAllMeetingRecordList', projectId, nextPage, sortType], () => getAllMeetingRecordList(projectId, nextPage, sortType));
         }
-    }, [currentPage, data.totalPages, projectId, queryClient, sortType])
+    }, [currentPage, data.totalPages, projectId, queryClient, sortType]);
 
     return (
         <div className="meeting-record-all-meeting-record-list">
@@ -63,9 +63,8 @@ const AllMeetingRecordList = () => {
                     <Button
                         text={'새로운 회의록 작성하기'}
                         onClick={() => {
-                            dispatch(meetingRecordManagementActions.onChangeEditState('editing'));
                             dispatch(meetingRecordManagementActions.onEditInitialState(false));
-                            dispatch(meetingRecordManagementActions.onEditSelectedMeetingRecord({}));
+                            dispatch(meetingRecordManagementActions.onEditSelectedMeetingRecordState(false));
                         }}
                     />
                 </div>
