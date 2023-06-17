@@ -1,7 +1,7 @@
 package fullcare.backend.evaluation.controller;
 
 
-import fullcare.backend.evaluation.dto.BadgeDto;
+import fullcare.backend.evaluation.dto.*;
 import fullcare.backend.evaluation.dto.request.FinalEvalCreateRequest;
 import fullcare.backend.evaluation.dto.request.FinalEvalUpdateRequest;
 import fullcare.backend.evaluation.dto.request.MidTermEvalCreateRequest;
@@ -13,6 +13,7 @@ import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.schedule.dto.response.ScheduleMonthResponse;
 import fullcare.backend.schedulemember.service.ScheduleMemberService;
 import fullcare.backend.security.jwt.CurrentLoginMember;
+import fullcare.backend.util.CustomPageImpl;
 import fullcare.backend.util.CustomPageRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -48,10 +49,10 @@ public class EvaluationController {
     // * 중간평가 관련
     @Operation(method = "get", summary = "중간 평가 모달창 조회")
     @ApiResponses(value = {
-            @ApiResponse(description = "중간 평가 모달창 조회 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,  schema = @Schema(implementation = MidTermEvalModalResponse.class))})
+            @ApiResponse(description = "중간 평가 모달창 조회 성공", responseCode = "200", useReturnTypeSchema = true)
     })
     @GetMapping("/midterm")
-    public ResponseEntity midtermEvalModal(@RequestParam Long scheduleId,
+    public ResponseEntity<MidTermEvalModalResponse> midtermEvalModal(@RequestParam Long scheduleId,
                                             @CurrentLoginMember Member member) {
         if (!(scheduleMemberService.validateScheduleMember(scheduleId, member.getId()))) {
             throw new InvalidAccessException("해당 평가에 접근 권한이 없습니다.");
@@ -78,10 +79,10 @@ public class EvaluationController {
 
     @Operation(method = "get", summary = "중간 평가 조회")
     @ApiResponses(value = {
-            @ApiResponse(description = "중간 평가 모달창 조회 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,  schema = @Schema(implementation = MidtermDetailResponse.class))})
+            @ApiResponse(description = "중간 평가 모달창 조회 성공", responseCode = "200", useReturnTypeSchema = true)
     })
     @GetMapping("/midterm/detail")
-    public ResponseEntity<?> findMidterm(@RequestParam("project_id") Long projectId,
+    public ResponseEntity<List<BadgeDto>> findMidterm(@RequestParam("project_id") Long projectId,
                                          @CurrentLoginMember Member member) {
         List<BadgeDto> response = evaluationService.findMidtermEvaluationDetailResponse(projectId, member.getId());
 
@@ -89,11 +90,11 @@ public class EvaluationController {
     }
     @Operation(method = "get", summary = "중간 평가 차트, 랭킹 조회")
     @ApiResponses(value = {
-            @ApiResponse(description = "중간 평가 차트, 랭킹 조회 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,  schema = @Schema(implementation = EverythingEvalResponse.class))})
+            @ApiResponse(description = "중간 평가 차트, 랭킹 조회 성공", responseCode = "200", useReturnTypeSchema = true)
     })
     @GetMapping("/midtermlist") // 디자인에서 뱃지 개수 차트 부분
-    public ResponseEntity midtermEvalList(@RequestParam("project_id") Long projectId,
-                                          @CurrentLoginMember Member member) {
+    public ResponseEntity<EverythingEvalResponse<ChartDto<BadgeDto>, MidTermRankingDto>> midtermEvalList(@RequestParam("project_id") Long projectId,
+                                                                            @CurrentLoginMember Member member) {
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
             throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
         }
@@ -150,10 +151,10 @@ public class EvaluationController {
     }
     @Operation(method = "get", summary = "최종 평가 조회")
     @ApiResponses(value = {
-            @ApiResponse(description = "최종 평가 조회 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,  schema = @Schema(implementation = FinalEvaluationResponse.class))})
+            @ApiResponse(description = "최종 평가 조회 성공", responseCode = "200", useReturnTypeSchema = true)
     })
     @GetMapping("/final/{evaluationId}")
-    public ResponseEntity finalEvalDetails(@PathVariable Long evaluationId,
+    public ResponseEntity<FinalEvaluationResponse> finalEvalDetails(@PathVariable Long evaluationId,
                                            @CurrentLoginMember Member member) {// ? 평가된 사람 id, 평가 id 조건 검색 해서 일치하면 접근 허용 필요
         FinalEvaluationResponse response = evaluationService.findFinalEvaluationDetailResponse(evaluationId);
         return new ResponseEntity(response, HttpStatus.OK);
@@ -161,11 +162,11 @@ public class EvaluationController {
 
     @Operation(method = "get", summary = "최종 평가 차트, 랭킹 조회")
     @ApiResponses(value = {
-            @ApiResponse(description = "최종 평가 차트, 랭킹 조회 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,  schema = @Schema(implementation = EverythingEvalResponse.class))})
+            @ApiResponse(description = "최종 평가 차트, 랭킹 조회 성공", responseCode = "200", useReturnTypeSchema = true)
     })
     @GetMapping("/finallist") // 최종평가 차트 api
-    public ResponseEntity finalEvalList(@RequestParam("project_id") Long projectId,
-                                        @CurrentLoginMember Member member) {
+    public ResponseEntity<EverythingEvalResponse<ChartDto<ScoreDto>, FinalTermRankingDto>> finalEvalList(@RequestParam("project_id") Long projectId,
+                                                                                                         @CurrentLoginMember Member member) {
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
             throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
         }
@@ -177,10 +178,10 @@ public class EvaluationController {
 
     @Operation(method = "get", summary = "프로젝트 평가 멤버 조회")
     @ApiResponses(value = {
-            @ApiResponse(description = "프로젝트 평가 멤버 조회 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,  schema = @Schema(implementation = ParticipantResponse.class))})
+            @ApiResponse(description = "프로젝트 평가 멤버 조회 성공", responseCode = "200", useReturnTypeSchema = true)
     })// * 프로젝트 참여자 리스트
     @GetMapping("/participant")
-    public ResponseEntity findParticipantList(@RequestParam("project_id") Long projectId,
+    public ResponseEntity<List<ParticipantResponse>> findParticipantList(@RequestParam("project_id") Long projectId,
                                         @CurrentLoginMember Member member) {
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
             throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
@@ -191,10 +192,10 @@ public class EvaluationController {
 
     @Operation(method = "get", summary = "개인페이지 프로젝트 평가 리스트 조회")
     @ApiResponses(value = {
-            @ApiResponse(description = "개인페이지 프로젝트 평가 리스트 조회 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,  schema = @Schema(implementation = MyEvalListResponse.class))})
+            @ApiResponse(description = "개인페이지 프로젝트 평가 리스트 조회 성공", responseCode = "200", useReturnTypeSchema = true)
     })// * 개인 페이지
     @GetMapping("/mine")
-    public ResponseEntity findMyEvalList(CustomPageRequest pageRequest, @CurrentLoginMember Member member) {
+    public ResponseEntity<CustomPageImpl<MyEvalListResponse>> findMyEvalList(CustomPageRequest pageRequest, @CurrentLoginMember Member member) {
         PageRequest of = pageRequest.of("project");
         Pageable pageable = (Pageable) of;
         Page<MyEvalListResponse> response = evaluationService.findMyEvalList(pageable, member.getId());
@@ -202,10 +203,10 @@ public class EvaluationController {
     }
     @Operation(method = "get", summary = "개인페이지 프로젝트 평가 조회")
     @ApiResponses(value = {
-            @ApiResponse(description = "개인페이지 프로젝트 평가 조회 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,  schema = @Schema(implementation = MyEvalDetailResponse.class))})
+            @ApiResponse(description = "개인페이지 프로젝트 평가 조회 성공", responseCode = "200",useReturnTypeSchema = true)
     })
     @GetMapping("/mine/{projectId}")
-    public ResponseEntity findMyEvalDetail(@PathVariable Long projectId, @CurrentLoginMember Member member) {
+    public ResponseEntity<MyEvalDetailResponse> findMyEvalDetail(@PathVariable Long projectId, @CurrentLoginMember Member member) {
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
             throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
         }
@@ -215,10 +216,10 @@ public class EvaluationController {
     }
     @Operation(method = "get", summary = "개인페이지 평가 차트 조회")
     @ApiResponses(value = {
-            @ApiResponse(description = "개인페이지 평가 차트 조회 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,  schema = @Schema(implementation = MyEvalChartResponse.class))})
+            @ApiResponse(description = "개인페이지 평가 차트 조회 성공", responseCode = "200", useReturnTypeSchema = true)
     })
     @GetMapping("/mine/chart")
-    public ResponseEntity findMyEvalChart(@CurrentLoginMember Member member) {
+    public ResponseEntity<MyEvalChartResponse> findMyEvalChart(@CurrentLoginMember Member member) {
         MyEvalChartResponse response = evaluationService.findMyEvalChart(member.getId());
         return new ResponseEntity(response,HttpStatus.OK);
     }

@@ -12,6 +12,11 @@ spring:
   #    username: root
   #    password: 1234
 
+## AWS RDS 설정
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://fullcare.ctyerwfyq4ca.ap-northeast-2.rds.amazonaws.com:3306/fullcare
+    username: root
+    password: fullcare1234
 
   # JPA
   jpa:
@@ -86,4 +91,22 @@ jwt:
 logging:
   level:
     root: info
+    com:
+      amazonaws:
+        util:
+          EC2MetadataUtils: ERROR
 
+
+# AWS S3
+cloud:
+  aws:
+    s3:
+      bucket: fullcare.bucket
+    credentials:
+      access-key: AKIARPK2GG2JA63IKXJS
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false

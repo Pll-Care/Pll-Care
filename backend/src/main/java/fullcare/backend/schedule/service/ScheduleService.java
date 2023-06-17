@@ -143,7 +143,7 @@ public class ScheduleService {
         return scheduleMonthResponse;
     }
     @Transactional
-    public Page<ScheduleMonthResponse> findScheduleMonthList(Pageable pageable, int year, int month, Member member, List<State> states) { // 1일부터 31일까지 일정
+    public CustomPageImpl<ScheduleMonthResponse> findScheduleMonthList(Pageable pageable, int year, int month, Member member, List<State> states) { // 1일부터 31일까지 일정
         Member findMember = memberRepository.findById(member.getId()).orElseThrow();
         LocalDateTime findDate = LocalDateTime.of(year, month, 1, 0, 0);
         LocalDate localDate = findDate.toLocalDate();
@@ -285,32 +285,33 @@ public class ScheduleService {
         System.out.println("dateCategory = " + dateCategory);
         List<ScheduleListResponse> scheduleListResponseList = new ArrayList<>();
         ScheduleListResponse scheduleListResponse = null;
-        int month = scheduleList.get(0).getStartDate().getMonthValue(); //초기값
-        LocalDateTime compareDate = scheduleList.get(0).getStartDate();
+        if (!scheduleList.isEmpty()) {
+            int month = scheduleList.get(0).getStartDate().getMonthValue(); //초기값
+            LocalDateTime compareDate = scheduleList.get(0).getStartDate();
 
-        int order = 1;
-        for (Schedule s : scheduleList) {
-            if(dateCategory.equals(DateCategory.MONTH)){
-                if(month <  s.getStartDate().getMonth().getValue()){
-                    month =  s.getStartDate().getMonth().getValue();
-                    order++;
+            int order = 1;
+            for (Schedule s : scheduleList) {
+                if (dateCategory.equals(DateCategory.MONTH)) {
+                    if (month < s.getStartDate().getMonth().getValue()) {
+                        month = s.getStartDate().getMonth().getValue();
+                        order++;
+                    }
+                } else {
+                    if (ChronoUnit.WEEKS.between(compareDate, s.getStartDate()) > 1) {// 2주 차이
+                        compareDate = s.getStartDate();
+                        order++;
+                    }
                 }
-            }else{
-                if(ChronoUnit.WEEKS.between(compareDate, s.getStartDate())>1){// 2주 차이
-                    compareDate = s.getStartDate();
-                    order++;
-                }
+                scheduleListResponse = ScheduleListResponse.builder()
+                        .scheduleId(s.getId())
+                        .title(s.getTitle())
+                        .startDate(s.getStartDate())
+                        .endDate(s.getEndDate())
+                        .order(order)
+                        .build();
+                scheduleListResponseList.add(scheduleListResponse);
             }
-            scheduleListResponse = ScheduleListResponse.builder()
-                    .scheduleId(s.getId())
-                    .title(s.getTitle())
-                    .startDate(s.getStartDate())
-                    .endDate(s.getEndDate())
-                    .order(order)
-                    .build();
-            scheduleListResponseList.add(scheduleListResponse);
         }
-
         return scheduleListResponseList;
     }
 

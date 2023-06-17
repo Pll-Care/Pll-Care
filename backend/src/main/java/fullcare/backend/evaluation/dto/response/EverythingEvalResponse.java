@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 @Data
 @AllArgsConstructor
-public class EverythingEvalResponse<T> {
+public class EverythingEvalResponse<T, S> {
     private List<T> charts = new ArrayList<>();
-    private List<T> ranks = new ArrayList<>();
+    private List<S> ranks = new ArrayList<>();
 }
