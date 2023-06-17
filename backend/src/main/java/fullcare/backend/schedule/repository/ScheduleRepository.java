@@ -36,4 +36,9 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
     @Query("select s from schedule s join fetch s.scheduleMembers sm where s.id = :scheduleId")
     Optional<Schedule> findJoinSMById(@Param("scheduleId") Long scheduleId);
+
+    @Query("select s from schedule s join fetch s.scheduleMembers sm join fetch sm.member where s.id = :scheduleId")
+    Optional<Schedule> findJoinSMJoinMemberById(@Param("scheduleId") Long scheduleId);
+
+    Optional<Schedule> findByIdAndState(Long scheduleId, State state);
 }

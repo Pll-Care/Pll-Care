@@ -4,6 +4,7 @@ import fullcare.backend.security.oauth2.CustomOAuth2UserService;
 import fullcare.backend.security.oauth2.OAuth2FailureHandler;
 import fullcare.backend.security.oauth2.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -16,8 +17,10 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
+
 @RequiredArgsConstructor
 @EnableWebSecurity
+@Slf4j
 @Configuration
 public class SecurityConfig {
 
@@ -36,6 +39,8 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain globalFilterChain(HttpSecurity http) throws Exception {
+
+        log.info("SecurityConfig.globalFilterChain");
 
         // ! cors 설정
         http.cors(withDefaults());

@@ -7,7 +7,7 @@ import org.springframework.data.domain.Sort.Direction;
 @Getter
 public class CustomPageRequest {
     private int page = 1;
-    private int size = 10;
+    private int size = 5;
     private Direction direction = Direction.DESC;
     private String sortingProperty = "createdDate";
 

@@ -1,7 +1,6 @@
 package fullcare.backend.schedule.service;
 
 import fullcare.backend.global.State;
-import fullcare.backend.global.exception.ScheduleOutOfRangeException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.project.domain.Project;
@@ -19,6 +18,7 @@ import fullcare.backend.schedule.dto.response.*;
 import fullcare.backend.schedule.repository.ScheduleRepository;
 import fullcare.backend.schedulemember.domain.ScheduleMember;
 import fullcare.backend.schedulemember.repository.ScheduleMemberRepository;
+import fullcare.backend.util.CustomPageImpl;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -97,7 +96,8 @@ public class ScheduleService {
         }
         return true;
     }
-    public void deleteSchedule(Long scheduleId) {
+    public void deleteSchedule(Long scheduleId, Long memberId) {
+
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow();
         scheduleRepository.delete(schedule);
     }
@@ -130,8 +130,9 @@ public class ScheduleService {
 
     @Transactional(readOnly = true)
     public ScheduleCalenderMonthResponse findScheduleCalenderList(int year, int month) { // 1일부터 31일까지 일정
-        LocalDate localDate = LocalDateTime.now().toLocalDate();
-        int lastDay = LocalDateTime.now().toLocalDate().withDayOfMonth(localDate.lengthOfMonth()).getDayOfMonth();
+        LocalDateTime findDate = LocalDateTime.of(year, month, 1, 0, 0);
+        LocalDate localDate = findDate.toLocalDate();
+        int lastDay = findDate.toLocalDate().withDayOfMonth(localDate.lengthOfMonth()).getDayOfMonth();
         LocalDateTime startDate = LocalDateTime.of(year, month, 1, 0, 0,0);
         LocalDateTime endDate = LocalDateTime.of(year, month,lastDay,23,59,59  );
 
@@ -142,17 +143,17 @@ public class ScheduleService {
         return scheduleMonthResponse;
     }
     @Transactional
-    public Page<ScheduleMonthResponse> findScheduleMonthList(Pageable pageable, int year, int month, Member member, List<State> states) { // 1일부터 31일까지 일정
+    public CustomPageImpl<ScheduleMonthResponse> findScheduleMonthList(Pageable pageable, int year, int month, Member member, List<State> states) { // 1일부터 31일까지 일정
         Member findMember = memberRepository.findById(member.getId()).orElseThrow();
-
-        LocalDate localDate = LocalDateTime.now().toLocalDate();
-        int lastDay = LocalDateTime.now().toLocalDate().withDayOfMonth(localDate.lengthOfMonth()).getDayOfMonth();
+        LocalDateTime findDate = LocalDateTime.of(year, month, 1, 0, 0);
+        LocalDate localDate = findDate.toLocalDate();
+        int lastDay = findDate.toLocalDate().withDayOfMonth(localDate.lengthOfMonth()).getDayOfMonth();
         LocalDateTime startDate = LocalDateTime.of(year,month, 1, 0, 0,0);
         LocalDateTime endDate = LocalDateTime.of(year, month,lastDay,23,59,59  );
         Page<Schedule> pageSchedule = scheduleRepository.findMonthByStartDateBetweenOrEndDateBetween(pageable, startDate, endDate, startDate, endDate, states);
         List<ScheduleMonthResponse> scheduleMonthResponses = new ArrayList<>();
         addResponse(pageSchedule, scheduleMonthResponses, findMember);// 미팅, 마일스톤에 맞게 일정 생성 후 응답에 넣기
-        return new PageImpl<>(scheduleMonthResponses, pageable, scheduleMonthResponses.size());
+        return new CustomPageImpl<>(scheduleMonthResponses, pageable, pageSchedule.getTotalElements());
     }
 //    @Transactional(readOnly = true)
 //    public Page<ScheduleMonthResponse> findScheduleMemberMonthList(Pageable pageable, ScheduleMonthListRequest scheduleMonthListRequest) {
@@ -284,32 +285,33 @@ public class ScheduleService {
         System.out.println("dateCategory = " + dateCategory);
         List<ScheduleListResponse> scheduleListResponseList = new ArrayList<>();
         ScheduleListResponse scheduleListResponse = null;
-        int month = scheduleList.get(0).getStartDate().getMonthValue(); //초기값
-        LocalDateTime compareDate = scheduleList.get(0).getStartDate();
+        if (!scheduleList.isEmpty()) {
+            int month = scheduleList.get(0).getStartDate().getMonthValue(); //초기값
+            LocalDateTime compareDate = scheduleList.get(0).getStartDate();
 
-        int order = 1;
-        for (Schedule s : scheduleList) {
-            if(dateCategory.equals(DateCategory.MONTH)){
-                if(month <  s.getStartDate().getMonth().getValue()){
-                    month =  s.getStartDate().getMonth().getValue();
-                    order++;
+            int order = 1;
+            for (Schedule s : scheduleList) {
+                if (dateCategory.equals(DateCategory.MONTH)) {
+                    if (month < s.getStartDate().getMonth().getValue()) {
+                        month = s.getStartDate().getMonth().getValue();
+                        order++;
+                    }
+                } else {
+                    if (ChronoUnit.WEEKS.between(compareDate, s.getStartDate()) > 1) {// 2주 차이
+                        compareDate = s.getStartDate();
+                        order++;
+                    }
                 }
-            }else{
-                if(ChronoUnit.WEEKS.between(compareDate, s.getStartDate())>1){// 2주 차이
-                    compareDate = s.getStartDate();
-                    order++;
-                }
+                scheduleListResponse = ScheduleListResponse.builder()
+                        .scheduleId(s.getId())
+                        .title(s.getTitle())
+                        .startDate(s.getStartDate())
+                        .endDate(s.getEndDate())
+                        .order(order)
+                        .build();
+                scheduleListResponseList.add(scheduleListResponse);
             }
-            scheduleListResponse = ScheduleListResponse.builder()
-                    .scheduleId(s.getId())
-                    .title(s.getTitle())
-                    .startDate(s.getStartDate())
-                    .endDate(s.getEndDate())
-                    .order(order)
-                    .build();
-            scheduleListResponseList.add(scheduleListResponse);
         }
-
         return scheduleListResponseList;
     }
 

@@ -86,6 +86,6 @@ public class MemoService {
         List<MemoListResponse> content = memoList.stream().map(MemoListResponse::entityToDto)
                 .collect(Collectors.toList());
 
-        return new PageImpl<>(content, pageable, content.size());
+        return new PageImpl<>(content, pageable, memoList.getTotalElements());
     }
 }

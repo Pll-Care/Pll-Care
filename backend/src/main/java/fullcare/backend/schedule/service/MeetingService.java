@@ -1,7 +1,6 @@
 package fullcare.backend.schedule.service;
 
 import fullcare.backend.global.State;
-import fullcare.backend.global.exception.ScheduleOutOfRangeException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.project.domain.Project;

@@ -6,7 +6,6 @@ import fullcare.backend.global.State;
 import fullcare.backend.global.entity.BaseEntity;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.memo.domain.Memo;
-import fullcare.backend.post.domain.Post;
 import fullcare.backend.project.dto.request.ProjectUpdateRequest;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
@@ -53,8 +52,8 @@ public class Project extends BaseEntity {
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Memo> memos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Post> posts = new ArrayList<>();
+//    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Post> posts = new ArrayList<>();
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProjectMember> projectMembers = new ArrayList<>();
@@ -83,7 +82,7 @@ public class Project extends BaseEntity {
         ProjectMember pm = ProjectMember.createNewProjectMember()
                 .member(member)
                 .project(this)
-                .role(role).build();
+                .projectMemberRole(role).build();
 
         projectMembers.add(pm); // ! project save시에 projectmember도 cascade 옵션으로 똑바로 저장되는지 확인 필요
         member.getProjectMembers().add(pm); // ? member 엔티티에서 projectMembers 컬렉션은 필요없을듯?

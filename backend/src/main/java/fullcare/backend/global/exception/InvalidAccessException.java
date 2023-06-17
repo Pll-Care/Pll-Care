@@ -1,5 +1,9 @@
 package fullcare.backend.global.exception;
 
+
+/*
+ *
+ */
 public class InvalidAccessException extends RuntimeException {
 
     public InvalidAccessException(String message) {

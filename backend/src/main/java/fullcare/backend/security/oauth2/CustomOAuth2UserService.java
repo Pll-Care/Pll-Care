@@ -93,7 +93,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         member.updateOAuth2Id(oAuth2Id);
         member.updateName(oAuth2Attributes.getOAuth2UserInfo().getName());
         member.updateEmail(oAuth2Attributes.getOAuth2UserInfo().getEmail());
-
+        member.updateImageUrl(oAuth2Attributes.getOAuth2UserInfo().getImageUrl());
     }
 
     private Member newMember(OAuth2Attributes oAuth2Attributes, String oAuth2providerName) {

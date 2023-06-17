@@ -41,6 +41,7 @@ public class ScheduleMonthResponse {
     public void addMember(Member member){
         members.add(MemberDto.builder()
                 .id(member.getId())
+                .imageUrl(member.getImageUrl())
                 .name(member.getName()).build());
     }
     public void updateCheck(boolean check){
