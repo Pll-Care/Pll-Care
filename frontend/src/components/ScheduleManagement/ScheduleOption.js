@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Card from '../shared/Card';
+import Card from "../shared/Card";
 import ScheduleList from "./ScheduleList";
 import ButtonList from "./ButtonList";
 

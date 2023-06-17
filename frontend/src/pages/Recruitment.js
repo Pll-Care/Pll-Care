@@ -1,9 +1,9 @@
 const Recruitment = () => {
-    return (
-        <div>
-            <div>Recruitment</div>
-        </div>
-    )
-}
+  return (
+    <div>
+      <div>Recruitment</div>
+    </div>
+  );
+};
 
 export default Recruitment;

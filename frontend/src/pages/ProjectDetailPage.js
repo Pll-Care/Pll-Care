@@ -5,14 +5,14 @@ import { useEffect } from "react";
 import ManagementHeader from "../components/shared/ManagementHeader";
 
 const ProjectDetailPage = () => {
-  const { id } = useParams(); 
+  const { id } = useParams();
 
-  const authState = useSelector(state => state.auth.isLoggedIn);
+  const authState = useSelector((state) => state.auth.isLoggedIn);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    !authState && navigate('/', { replace: true });
+    !authState && navigate("/", { replace: true });
   }, []);
 
   return (
