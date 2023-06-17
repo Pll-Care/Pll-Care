@@ -1,6 +1,7 @@
 package fullcare.backend.post.controller;
 
 
+import fullcare.backend.global.dto.FailureResponse;
 import fullcare.backend.global.exception.InvalidAccessException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.post.domain.Post;
@@ -16,16 +17,24 @@ import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.security.jwt.CurrentLoginMember;
 import fullcare.backend.util.CustomPageRequest;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 @RequiredArgsConstructor
+@Tag(name = "모집글", description = "모집글 관련 API")
 @RequestMapping("/api/auth/post")
 @RestController
 public class PostController {
@@ -41,6 +50,11 @@ public class PostController {
     // * 5. 모집글을 통해 프로젝트에 지원
 
     // * 새로운 모집글 생성
+    @Operation(method = "post", summary = "모집글 생성")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "모집글 생성 성공", content = @Content),
+            @ApiResponse(responseCode = "400", description = "모집글 생성 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+    })
     @PostMapping
     public ResponseEntity create(@RequestBody PostCreateRequest postCreateRequest,
                                  @CurrentLoginMember Member member) {
@@ -56,7 +70,12 @@ public class PostController {
     }
 
     // * 특정 모집글 수정
-    @PutMapping("/{postId}")
+    @Operation(method = "patch", summary = "모집글 수정")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "모집글 수정 성공", content = @Content),
+            @ApiResponse(responseCode = "400", description = "모집글 수정 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+    })
+    @PatchMapping("/{postId}")
     public ResponseEntity update(@PathVariable Long postId,
                                  @RequestBody PostUpdateRequest postUpdateRequest,
                                  @CurrentLoginMember Member member) {
@@ -76,6 +95,11 @@ public class PostController {
 
 
     // * 특정 모집글 삭제
+    @Operation(method = "delete", summary = "모집글 삭제")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "모집글 삭제 성공", content = @Content),
+            @ApiResponse(responseCode = "400", description = "모집 삭제 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+    })
     @DeleteMapping("/{postId}")
     public ResponseEntity delete(@PathVariable Long postId,
                                  @CurrentLoginMember Member member) {
@@ -95,6 +119,12 @@ public class PostController {
 
 
     // * 특정 모집글 조회
+    // todo 좋아요 여부를 응답에 포함시켜야 하는가?
+    @Operation(method = "get", summary = "모집글 단건 조회")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "모집글 단건 조회 성공", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = PostDetailResponse.class))),
+            @ApiResponse(responseCode = "400", description = "모집글 단건 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+    })
     @GetMapping("/{postId}")
     public ResponseEntity<?> details(@PathVariable Long postId,
                                      @CurrentLoginMember Member member) {
@@ -104,9 +134,14 @@ public class PostController {
 
 
     // * 모집글 목록
+    @Operation(method = "get", summary = "모집글 리스트 조회")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "모집글 리스트 조회 성공", useReturnTypeSchema = true),
+            @ApiResponse(responseCode = "400", description = "모집글 리스트 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+    })
     @GetMapping("/list")
-    public ResponseEntity<?> list(@ModelAttribute CustomPageRequest pageRequest,
-                                  @CurrentLoginMember Member member) { // ? @ModelAttribute가 맞는가
+    public ResponseEntity<Page<PostListResponse>> list(@ModelAttribute CustomPageRequest pageRequest,
+                                                       @CurrentLoginMember Member member) { // ? @ModelAttribute가 맞는가
 
         PageRequest of = pageRequest.of();
         Pageable pageable = (Pageable) of;
@@ -118,6 +153,12 @@ public class PostController {
 
     // * 특정 모집글 좋아요
     // ! like와 unlike를 합칠까말까 고민중..
+    // todo path variable 대신 requestparam으로 넣는게 나을지도
+    @Operation(method = "post", summary = "특정 모집글 좋아요")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "모집글 좋아요 성공", content = @Content),
+            @ApiResponse(responseCode = "400", description = "모집글 좋아요 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+    })
     @PostMapping("/{postId}/like")
     public ResponseEntity like(@PathVariable Long postId, @CurrentLoginMember Member member) {
         postService.likePost(postId, member);
@@ -127,6 +168,12 @@ public class PostController {
     }
 
     // * 특정 게시글을 통해 해당 프로젝트에 지원
+    // todo path variable 대신 requestparam으로 넣는게 나을지도
+    @Operation(method = "post", summary = "특정 모집글을 통해 프로젝트 지원")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "프로젝트 지원 성공", content = @Content),
+            @ApiResponse(responseCode = "400", description = "프로젝트 지원 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+    })
     @PostMapping("/{postId}/apply")
     public ResponseEntity apply(@PathVariable Long postId, @CurrentLoginMember Member member) {
         Post post = postService.findPost(postId);

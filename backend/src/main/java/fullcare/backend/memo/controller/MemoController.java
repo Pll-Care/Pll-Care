@@ -8,6 +8,7 @@ import fullcare.backend.memo.dto.request.MemoCreateRequest;
 import fullcare.backend.memo.dto.request.MemoUpdateRequest;
 import fullcare.backend.memo.dto.response.BookmarkMemoListResponse;
 import fullcare.backend.memo.dto.response.MemoDetailResponse;
+import fullcare.backend.memo.dto.response.MemoIdResponse;
 import fullcare.backend.memo.dto.response.MemoListResponse;
 import fullcare.backend.memo.service.BookmarkMemoService;
 import fullcare.backend.memo.service.MemoService;
@@ -56,7 +57,7 @@ public class MemoController {
 
     @Operation(method = "post", summary = "회의록 생성")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "회의록 생성 성공", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MemoDetailResponse.class))),
+            @ApiResponse(responseCode = "201", description = "회의록 생성 성공", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MemoIdResponse.class))),
             @ApiResponse(responseCode = "400", description = "회의록 생성 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @PostMapping
@@ -67,13 +68,13 @@ public class MemoController {
             throw new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.");
         }
 
-        memoService.createMemo(memoCreateRequest, member.getNickname());
-        return new ResponseEntity(HttpStatus.OK);
+        Memo newMemo = memoService.createMemo(memoCreateRequest, member.getNickname());
+        return new ResponseEntity(new MemoIdResponse(newMemo.getId()), HttpStatus.CREATED);
     }
 
     @Operation(method = "patch", summary = "회의록 수정")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "회의록 수정 성공", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MemoDetailResponse.class))),
+            @ApiResponse(responseCode = "200", description = "회의록 수정 성공", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MemoIdResponse.class))),
             @ApiResponse(responseCode = "400", description = "회의록 수정 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @PatchMapping("/{memoId}")
@@ -89,12 +90,12 @@ public class MemoController {
         }
 
         memoService.updateMemo(memoId, memoUpdateRequest, member.getNickname());
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(new MemoIdResponse(memo.getId()), HttpStatus.OK);
     }
 
     @Operation(method = "delete", summary = "회의록 삭제")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "회의록 삭제 성공", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MemoDetailResponse.class))),
+            @ApiResponse(responseCode = "200", description = "회의록 삭제 성공", content = @Content),
             @ApiResponse(responseCode = "400", description = "회의록 삭제 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @DeleteMapping("/{memoId}")
@@ -137,13 +138,13 @@ public class MemoController {
 
     @Operation(method = "get", summary = "회의록 리스트 조회")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "회의록 리스트 조회 성공", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MemoListResponse.class))),
+            @ApiResponse(responseCode = "200", description = "회의록 리스트 조회 성공", useReturnTypeSchema = true),
             @ApiResponse(responseCode = "400", description = "회의록 리스트 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @GetMapping("/list")
-    public ResponseEntity<?> list(@RequestParam("project_id") Long projectId,
-                                  @ModelAttribute CustomPageRequest pageRequest,
-                                  @CurrentLoginMember Member member) {
+    public ResponseEntity<Page<MemoListResponse>> list(@RequestParam("project_id") Long projectId,
+                                                       @ModelAttribute CustomPageRequest pageRequest,
+                                                       @CurrentLoginMember Member member) {
 
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
             throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
@@ -158,13 +159,13 @@ public class MemoController {
 
     @Operation(method = "get", summary = "북마크된 회의록 리스트 조회")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "북마크 회의록 리스트 조회 성공", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MemoListResponse.class))),
+            @ApiResponse(responseCode = "200", description = "북마크 회의록 리스트 조회 성공", useReturnTypeSchema = true),
             @ApiResponse(responseCode = "400", description = "북마크 회의록 리스트 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @GetMapping("/bookmarklist")
-    public ResponseEntity bookmarklist(@RequestParam("project_id") Long projectId,
-                                       @ModelAttribute CustomPageRequest pageRequest,
-                                       @CurrentLoginMember Member member) {
+    public ResponseEntity<Page<BookmarkMemoListResponse>> bookmarklist(@RequestParam("project_id") Long projectId,
+                                                                       @ModelAttribute CustomPageRequest pageRequest,
+                                                                       @CurrentLoginMember Member member) {
 
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
             throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
@@ -178,9 +179,10 @@ public class MemoController {
     }
 
     // ? 북마크 기능을 update 쪽으로 같이 넣어버리기?
+    // todo path variable 대신 requestparam으로 넣는게 나을지도
     @Operation(method = "post", summary = "특정 회의록 북마킹")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "회의록 북마킹 성공", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MemoListResponse.class))),
+            @ApiResponse(responseCode = "200", description = "회의록 북마킹 성공", content = @Content),
             @ApiResponse(responseCode = "400", description = "회의록 북마킹 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @PostMapping("/{memoId}/bookmark")
