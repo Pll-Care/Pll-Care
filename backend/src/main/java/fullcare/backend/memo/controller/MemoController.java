@@ -77,7 +77,7 @@ public class MemoController {
             @ApiResponse(responseCode = "200", description = "회의록 수정 성공", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MemoIdResponse.class))),
             @ApiResponse(responseCode = "400", description = "회의록 수정 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
-    @PatchMapping("/{memoId}")
+    @PutMapping("/{memoId}")
     public ResponseEntity update(@PathVariable Long memoId,
                                  @RequestBody MemoUpdateRequest memoUpdateRequest,
                                  @CurrentLoginMember Member member) {

@@ -70,12 +70,12 @@ public class PostController {
     }
 
     // * 특정 모집글 수정
-    @Operation(method = "patch", summary = "모집글 수정")
+    @Operation(method = "put", summary = "모집글 수정")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "모집글 수정 성공", content = @Content),
             @ApiResponse(responseCode = "400", description = "모집글 수정 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
-    @PatchMapping("/{postId}")
+    @PutMapping("/{postId}")
     public ResponseEntity update(@PathVariable Long postId,
                                  @RequestBody PostUpdateRequest postUpdateRequest,
                                  @CurrentLoginMember Member member) {
