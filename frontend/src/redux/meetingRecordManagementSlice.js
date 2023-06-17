@@ -18,7 +18,7 @@ const meetingRecordManagementSlice = createSlice({
     },
     onEditIsCreatedMeetingRecordVisibleState(state, action) {
       state.isCreatedMeetingRecordVisible = action.payload;
-    }
+    },
   },
 });
 

@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React, { useEffect } from "react";
-import { useDispatch } from 'react-redux';
-import { ReactQueryDevtools } from 'react-query/devtools';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { useDispatch } from "react-redux";
+import { ReactQueryDevtools } from "react-query/devtools";
+import { QueryClient, QueryClientProvider } from "react-query";
 import "./scss/fullcare.css";
 
 import Home from "./pages/Home";
@@ -24,7 +24,6 @@ const queryClient = new QueryClient();
 
 const App = () => {
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
@@ -48,17 +47,20 @@ const App = () => {
             <Route path={"/management"} element={<Management />} />
             <Route path={"/management/:id"} element={<ProjectDetailPage />}>
               <Route path={"overview"} element={<OverviewManagement />} />
-              <Route path={"meetingRecord"} element={<MeetingRecordManagement />} />
+              <Route
+                path={"meetingRecord"}
+                element={<MeetingRecordManagement />}
+              />
               <Route path={"schedule"} element={<ScheduleManagement />} />
               <Route path={"evaluation"} element={<EvaluationManagement />} />
               <Route path={"teamMember"} element={<TeamMemberManagement />} />
             </Route>
           </Routes>
         </div>
-        </BrowserRouter>
+      </BrowserRouter>
       <ReactQueryDevtools />
     </QueryClientProvider>
   );
-}
+};
 
 export default App;
