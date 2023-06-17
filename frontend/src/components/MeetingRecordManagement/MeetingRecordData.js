@@ -5,6 +5,7 @@ const MeetingRecordData = ({ sortedMeetingRecordList }) => {
   const dispatch = useDispatch();
 
   const handleClickMeetingRecord = (e) => {
+    dispatch(meetingRecordManagementActions.onEditInitialState(false));
     dispatch(
       meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(false)
     );

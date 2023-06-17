@@ -14,7 +14,9 @@ Quill.register("modules/ImageResize", ImageResize);
 const MeetingRecordEditor = () => {
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
-  const isCreatedMeetingRecordVisible = useSelector(state => state.meetingRecordManagement.isCreatedMeetingRecordVisible);
+  const isCreatedMeetingRecordVisible = useSelector(
+    (state) => state.meetingRecordManagement.isCreatedMeetingRecordVisible
+  );
   const initialState = useSelector(
     (state) => state.meetingRecordManagement.initialState
   );
@@ -42,14 +44,22 @@ const MeetingRecordEditor = () => {
       meetingRecordManagementActions.onEditSelectedMeetingRecordState(false)
     );
     dispatch(
-      meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(true)
-    )
+      meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(
+        true
+      )
+    );
   };
 
   useEffect(() => {
+    dispatch(meetingRecordManagementActions.onEditInitialState(true));
     dispatch(
-      meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(false)
-    )
+      meetingRecordManagementActions.onEditSelectedMeetingRecordState(false)
+    );
+    dispatch(
+      meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(
+        false
+      )
+    );
   }, []);
 
   return (
@@ -66,9 +76,11 @@ const MeetingRecordEditor = () => {
           <div>createdMeetingRecord</div>
         </div>
       ) : (
-        <div>
-          <h1>제목: </h1>
-          <input value={title} onChange={handleChangeTitle} />
+        <div className="meeting-record-editor">
+          <div className="meeting-record-title">
+            <h1>제목: </h1>
+            <input value={title} onChange={handleChangeTitle} />
+          </div>
           <ReactQuill
             className="react-quill"
             value={content}

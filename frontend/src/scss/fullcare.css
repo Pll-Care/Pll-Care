@@ -523,7 +523,7 @@ input {
   height: 85%;
   margin-bottom: 68px;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor Button {
+.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-editor Button {
   margin-left: auto;
 }
 .meeting-record-management-wrapper .meeting-record-item {
