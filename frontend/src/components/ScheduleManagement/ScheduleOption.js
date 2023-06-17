@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Card from '../shared/Card';
+import Card from "../shared/Card";
 import ScheduleList from "./ScheduleList";
 import ButtonList from "./ButtonList";
 
@@ -19,7 +19,7 @@ const ScheduleOption = () => {
     setNameVisible(name);
   };
   return (
-    <>
+    <div className="schedule-container">
       <div className="schedule-option">
         <ButtonList names={options} onButtonClick={optionClickHandler} />
       </div>
@@ -32,7 +32,7 @@ const ScheduleOption = () => {
       </Card>
 
       <ScheduleList option={optionVisible} name={nameVisible} />
-    </>
+    </div>
   );
 };
 export default ScheduleOption;

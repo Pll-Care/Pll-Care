@@ -7,6 +7,10 @@
   border: 2px solid #01e89e;
   padding: 5px 25px;
   cursor: pointer;
+  /* 텍스트 줄바꿈 방지 */
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
 
   &_small {
     font-size: $button-font-size-small;

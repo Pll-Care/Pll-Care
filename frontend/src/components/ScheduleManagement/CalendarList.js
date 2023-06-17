@@ -1,5 +1,3 @@
-import { Avatar } from "@mui/material";
-import Tooltip from "@mui/material/Tooltip";
 import CalendarItem from "./CalendarItem";
 
 const datas = [
@@ -41,6 +39,7 @@ const datas = [
 ];
 
 const CalendarList = () => {
+  // 오늘 날짜 가져오기
   const today = new Date();
 
   const months = [
