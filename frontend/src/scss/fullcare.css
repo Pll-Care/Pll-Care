@@ -523,7 +523,7 @@ input {
   height: 85%;
   margin-bottom: 68px;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-editor Button {
+.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor Button {
   margin-left: auto;
 }
 .meeting-record-management-wrapper .meeting-record-item {
@@ -1879,10 +1879,17 @@ input {
   }
 }
 .schedule h1 {
-  font-size: 40px;
+  font-size: 25px;
   color: #00aa72;
   font-family: "IBM Plex Sans KR", sans-serif;
   margin: 15px;
+  margin-left: 15%;
+}
+
+.endpoint {
+  color: gray;
+  margin-bottom: 10px;
+  font-size: 18px;
 }
 
 .simple {
@@ -1904,75 +1911,23 @@ input {
   color: #7a7a7a;
 }
 
-.overview-meetings h1 {
-  font-size: 40px;
-  color: #00aa72;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  margin: 15px;
-}
-.overview-meetings-list {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-}
-@media (max-width: 1024px) {
-  .overview-meetings-list {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+@media (max-width: 767px) {
+  .schedule h1 {
+    font-size: 12px;
+  }
+  .endpoint {
+    font-size: 12px;
+  }
+  .simple h2,
+  .simple h3 {
+    font-size: 13px;
   }
 }
-.overview-meetings-list-current h2, .overview-meetings-list-bookmark h2 {
-  font-size: 25px;
-  color: #7a7a7a;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  margin: 20px;
+@media (min-width: 767px) and (max-width: 1024px) {
+  .endpoint {
+    font-size: 17px;
+  }
 }
-
-.meeting-list-wrapper {
-  width: 100%;
-  background-color: #01e89e;
-  box-shadow: 0px 10px 35px 5px rgba(0, 0, 0, 0.04);
-  border-radius: 20px;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-.meeting-list-wrapper .meeting-item {
-  background-color: #ffffff;
-  color: #7a7a7a;
-  border-radius: 15px;
-  width: 95%;
-  height: 120px;
-  flex-grow: 1;
-  margin: 8px;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-.meeting-list-wrapper .meeting-item h5,
-.meeting-list-wrapper .meeting-item h4 {
-  font-size: 18px;
-  font-family: "Noto Sans KR", sans-serif;
-}
-.meeting-list-wrapper .meeting-item h3 {
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
-  font-size: 24px;
-}
-.meeting-list-wrapper .meeting-item:first-child {
-  margin-top: 20px;
-}
-.meeting-list-wrapper .meeting-item:last-child {
-  margin-bottom: 20px;
-}
-
 /*Button {
   margin-right: 15px;
   margin-top: 10px;
