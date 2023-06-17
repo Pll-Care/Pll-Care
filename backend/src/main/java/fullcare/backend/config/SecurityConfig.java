@@ -4,6 +4,7 @@ import fullcare.backend.security.oauth2.CustomOAuth2UserService;
 import fullcare.backend.security.oauth2.OAuth2FailureHandler;
 import fullcare.backend.security.oauth2.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -16,8 +17,10 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
+
 @RequiredArgsConstructor
 @EnableWebSecurity
+@Slf4j
 @Configuration
 public class SecurityConfig {
 
@@ -27,15 +30,17 @@ public class SecurityConfig {
 
 
     // * 정적 자원을 백엔드 서버에서 제공하는 경우 시큐리티 필터를 거치지 않게하기 위해 사용
-//    @Bean
-//    public WebSecurityCustomizer webSecurityCustomizer(){
-//        return (web) -> web
-//                .ignoring().requestMatchers("/**");
-//    }
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web
+                .ignoring().requestMatchers("/swagger-ui/**", "/v3/api-docs/**");
+    }
 
 
     @Bean
     public SecurityFilterChain globalFilterChain(HttpSecurity http) throws Exception {
+
+        log.info("SecurityConfig.globalFilterChain");
 
         // ! cors 설정
         http.cors(withDefaults());
@@ -52,7 +57,7 @@ public class SecurityConfig {
                         .requestMatchers("/oauth2/authorization/**").permitAll()
                         // * 추후에 접근을 열어야하는 경로가 있다면 추가
                         .anyRequest().denyAll()) // ! 나머지 요청들은 접근 자체를 막아야함
-                        .exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)); // * 실제로 사용되지는 않지만, DefaultLoginPageGeneratingFilter를 없애줌
+                .exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)); // * 실제로 사용되지는 않지만, DefaultLoginPageGeneratingFilter를 없애줌
 //                        .accessDeniedHandler(new SimpleAccessDeniedHandler());
         // !별도의 AccessDeniedHandler 지정 안할 시, /error 로 재요청함/
 
