@@ -77,6 +77,11 @@ const AllMeetingRecordList = () => {
                   false
                 )
               );
+              dispatch(
+                meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(
+                  false
+                )
+              );
             }}
           />
         </div>

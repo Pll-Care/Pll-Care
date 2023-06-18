@@ -4,6 +4,7 @@ const meetingRecordManagementInitialState = {
   initialState: true,
   isSelectedMeetingRecord: false,
   isCreatedMeetingRecordVisible: false,
+  selectedMeetingRecordId: -1,
 };
 
 const meetingRecordManagementSlice = createSlice({
@@ -19,6 +20,9 @@ const meetingRecordManagementSlice = createSlice({
     onEditIsCreatedMeetingRecordVisibleState(state, action) {
       state.isCreatedMeetingRecordVisible = action.payload;
     },
+    onEditSelectedMeetingRecordId(state, action) {
+      state.selectedMeetingRecordId = action.payload;
+    }
   },
 });
 

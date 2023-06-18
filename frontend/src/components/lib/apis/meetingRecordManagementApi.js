@@ -35,7 +35,23 @@ export const createMeetingRecord = async (newMeetingRecordObj) => {
 };
 
 export const getMeetingRecord = async (meetingRecordId) => {
-  const response = await customAxios.get(`/auth/memo/${meetingRecordId}`);
+  if (meetingRecordId !== -1) {
+    const response = await customAxios.get(`/auth/memo/${meetingRecordId}`);
 
-  return response.data.content;
+    return response.data;
+  }
+};
+
+export const deleteMeetingRecord = async (meetingRecordId) => {
+  const response = await customAxios.delete(`/auth/memo/${meetingRecordId}`);
+
+  return response.data;
+};
+
+export const createBookMarkMeetingRecord = async (meetingRecordId) => {
+  const response = await customAxios.post(
+    `/auth/memo/${meetingRecordId}/bookmark`
+  );
+
+  return response.data;
 };

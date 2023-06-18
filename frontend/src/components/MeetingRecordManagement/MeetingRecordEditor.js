@@ -8,12 +8,16 @@ import Quill from "quill";
 import ImageResize from "quill-image-resize";
 import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
 import { useEffect, useState } from "react";
+import useMeetingRecordManagementMutation from "./hooks/useMeetingRecordManagementMutation";
+import { useLocation } from "react-router-dom";
+import SelectedMeetingRecord from "./SelectedMeetingRecord";
 
 Quill.register("modules/ImageResize", ImageResize);
 
 const MeetingRecordEditor = () => {
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
+  const projectId = parseInt(useLocation().pathname.slice(12, 14));
   const isCreatedMeetingRecordVisible = useSelector(
     (state) => state.meetingRecordManagement.isCreatedMeetingRecordVisible
   );
@@ -23,6 +27,8 @@ const MeetingRecordEditor = () => {
   const isSelectedMeetingRecord = useSelector(
     (state) => state.meetingRecordManagement.isSelectedMeetingRecord
   );
+
+  const { createMutate } = useMeetingRecordManagementMutation();
 
   const dispatch = useDispatch();
 
@@ -40,6 +46,11 @@ const MeetingRecordEditor = () => {
   const handleChangeContent = (e) => setContent(e);
 
   const handleSubmit = () => {
+    createMutate({
+      projectId: projectId,
+      title: title,
+      content: content,
+    });
     dispatch(
       meetingRecordManagementActions.onEditSelectedMeetingRecordState(false)
     );
@@ -70,7 +81,7 @@ const MeetingRecordEditor = () => {
           <Button text={"작성하기"} onClick={handleInitialState} />
         </div>
       ) : isSelectedMeetingRecord ? (
-        <div>selectedMeetingRecord</div>
+        <SelectedMeetingRecord />
       ) : isCreatedMeetingRecordVisible ? (
         <div>
           <div>createdMeetingRecord</div>
