@@ -55,3 +55,11 @@ export const createBookMarkMeetingRecord = async (meetingRecordId) => {
 
   return response.data;
 };
+
+export const editMeetingRecord = async (meetingRecordId, newMeetingRecordObj) => {
+  const response = await customAxios.post(`/auth/memo/${meetingRecordId}`, newMeetingRecordObj);
+
+  console.log(response);
+  
+  return response.data;
+}

@@ -43,6 +43,20 @@ const AllMeetingRecordList = () => {
 
   const meetingRecordList = data.meetingRecordList;
 
+  const handleCreateMeetingRecord = () => {
+    dispatch(meetingRecordManagementActions.setTitle(""));
+    dispatch(meetingRecordManagementActions.setContent(""));
+    dispatch(meetingRecordManagementActions.onEditInitialState(false));
+    dispatch(
+      meetingRecordManagementActions.onEditSelectedMeetingRecordState(false)
+    );
+    dispatch(
+      meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(
+        false
+      )
+    );
+  };
+
   useEffect(() => {
     const nextPage = currentPage + 1;
 
@@ -68,21 +82,7 @@ const AllMeetingRecordList = () => {
         <div className="header-right-col">
           <Button
             text={"새로운 회의록 작성하기"}
-            onClick={() => {
-              dispatch(
-                meetingRecordManagementActions.onEditInitialState(false)
-              );
-              dispatch(
-                meetingRecordManagementActions.onEditSelectedMeetingRecordState(
-                  false
-                )
-              );
-              dispatch(
-                meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(
-                  false
-                )
-              );
-            }}
+            onClick={handleCreateMeetingRecord}
           />
         </div>
       </div>

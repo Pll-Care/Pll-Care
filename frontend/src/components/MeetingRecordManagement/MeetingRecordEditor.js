@@ -15,8 +15,8 @@ import SelectedMeetingRecord from "./SelectedMeetingRecord";
 Quill.register("modules/ImageResize", ImageResize);
 
 const MeetingRecordEditor = () => {
-  const [content, setContent] = useState("");
-  const [title, setTitle] = useState("");
+  const content = useSelector(state => state.meetingRecordManagement.content);
+  const title = useSelector(state => state.meetingRecordManagement.title);
   const projectId = parseInt(useLocation().pathname.slice(12, 14));
   const isCreatedMeetingRecordVisible = useSelector(
     (state) => state.meetingRecordManagement.isCreatedMeetingRecordVisible
@@ -27,8 +27,9 @@ const MeetingRecordEditor = () => {
   const isSelectedMeetingRecord = useSelector(
     (state) => state.meetingRecordManagement.isSelectedMeetingRecord
   );
+  const isEdit = useSelector((state) => state.meetingRecordManagement.isEdit);
 
-  const { createMutate } = useMeetingRecordManagementMutation();
+  const { createMutate, editMutate } = useMeetingRecordManagementMutation();
 
   const dispatch = useDispatch();
 
@@ -40,17 +41,24 @@ const MeetingRecordEditor = () => {
   };
 
   const handleChangeTitle = (e) => {
-    setTitle(e.target.value);
+    dispatch(meetingRecordManagementActions.setTitle(e.target.value));
   };
 
-  const handleChangeContent = (e) => setContent(e);
+  const handleChangeContent = (e) => dispatch(meetingRecordManagementActions.setContent(e));
 
   const handleSubmit = () => {
-    createMutate({
-      projectId: projectId,
-      title: title,
-      content: content,
-    });
+    if (isEdit) {
+      editMutate(projectId, {
+        title: title,
+        content: content,
+      });
+    } else {
+      createMutate({
+        projectId: projectId,
+        title: title,
+        content: content,
+      });
+    }
     dispatch(
       meetingRecordManagementActions.onEditSelectedMeetingRecordState(false)
     );
@@ -59,10 +67,15 @@ const MeetingRecordEditor = () => {
         true
       )
     );
+    dispatch(meetingRecordManagementActions.onChangeIsEditState(false));
   };
 
   useEffect(() => {
-    dispatch(meetingRecordManagementActions.onEditInitialState(true));
+    if (!isEdit) {
+      dispatch(meetingRecordManagementActions.onEditInitialState(true));
+    } else {
+      dispatch(meetingRecordManagementActions.onEditInitialState(false));
+    }
     dispatch(
       meetingRecordManagementActions.onEditSelectedMeetingRecordState(false)
     );
@@ -71,7 +84,12 @@ const MeetingRecordEditor = () => {
         false
       )
     );
-  }, []);
+    dispatch(
+      meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(
+        true
+      )
+    );
+  }, [dispatch]);
 
   return (
     <div className="meeting-record-new-meeting-record-editor">

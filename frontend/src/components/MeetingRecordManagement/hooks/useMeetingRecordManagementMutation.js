@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "react-query";
 
-import { createBookMarkMeetingRecord, createMeetingRecord, deleteMeetingRecord } from "../../lib/apis/meetingRecordManagementApi";
+import { createBookMarkMeetingRecord, createMeetingRecord, deleteMeetingRecord, editMeetingRecord } from "../../lib/apis/meetingRecordManagementApi";
 
 const useMeetingRecordManagementMutation = () => {
   const queryClient = useQueryClient();
@@ -17,13 +17,20 @@ const useMeetingRecordManagementMutation = () => {
     }
   });
 
-  const { mutate: createBookMarkMutate } = useMutation(createBookMarkMeetingRecord, {
+  const { mutate: editMutate } = useMutation(editMeetingRecord, {
     onSuccess: () => {
+      queryClient.invalidateQueries(["managementAllMeetingRecordList"]);
       queryClient.invalidateQueries(["managementBookMarkMeetingRecordList"]);
     }
   })
 
-  return { createMutate, deleteMutate, createBookMarkMutate };
+  const { mutate: createBookMarkMutate } = useMutation(createBookMarkMeetingRecord, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["managementBookMarkMeetingRecordList"]);
+    }
+  });
+
+  return { createMutate, deleteMutate, editMutate, createBookMarkMutate };
 };
 
 export default useMeetingRecordManagementMutation;

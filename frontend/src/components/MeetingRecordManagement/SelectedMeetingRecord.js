@@ -3,13 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMeetingRecord } from "../lib/apis/meetingRecordManagementApi";
 import useMeetingRecordManagementMutation from "./hooks/useMeetingRecordManagementMutation";
 import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
+import { useEffect } from "react";
 
-const SelectedMeetingRecord = () => {
+const SelectedMeetingRecord = ({ setContent, setTitle }) => {
   const selectedMeetingRecordId = useSelector(
     (state) => state.meetingRecordManagement.selectedMeetingRecordId
   );
 
   const dispatch = useDispatch();
+
+  const isEdit = useSelector((state) => state.meetingRecordManagement.isEdit);
 
   const { deleteMutate, createBookMarkMutate } =
     useMeetingRecordManagementMutation();
@@ -21,6 +24,7 @@ const SelectedMeetingRecord = () => {
   );
 
   const handleEditMeetingRecord = () => {
+    dispatch(meetingRecordManagementActions.onChangeIsEditState(true));
     dispatch(
       meetingRecordManagementActions.onEditSelectedMeetingRecordState(false)
     );
@@ -35,6 +39,11 @@ const SelectedMeetingRecord = () => {
     createBookMarkMutate(data.memoId);
     dispatch(meetingRecordManagementActions.onEditInitialState(true));
   };
+
+  useEffect(() => {
+    dispatch(meetingRecordManagementActions.setTitle(data.title));
+    dispatch(meetingRecordManagementActions.setContent(data.content));
+  })
 
   return (
     <div className="selected-meeting-record">
