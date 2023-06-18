@@ -14,20 +14,20 @@ export const getProjectList = async (pageNum = 1, state = "all") => {
   }
 
   return {
-    projectList: response.data.contents,
-    totalElements: response.data.paging.totalElements,
-    totalPages: response.data.paging.totalPages,
+    projectList: response.data.content,
+    totalElements: response.data.totalElements,
+    totalPages: response.data.totalPages,
   };
 };
 
 export const createProject = async (newProjectObj) => {
   const response = await customAxios.post("/auth/project", newProjectObj);
 
-  return response.data.contents;
+  return response.data.content;
 };
 
 export const deleteProject = async (projectId) => {
   const response = await customAxios.delete(`/auth/project/${projectId}`);
 
-  return response.data.contents;
+  return response.data.content;
 };
