@@ -16,6 +16,7 @@ import fullcare.backend.projectmember.domain.ProjectMemberRole;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.security.jwt.CurrentLoginMember;
+import fullcare.backend.util.CustomPageImpl;
 import fullcare.backend.util.CustomPageRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -140,12 +141,12 @@ public class PostController {
             @ApiResponse(responseCode = "400", description = "모집글 리스트 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @GetMapping("/list")
-    public ResponseEntity<Page<PostListResponse>> list(@ModelAttribute CustomPageRequest pageRequest,
-                                                       @CurrentLoginMember Member member) { // ? @ModelAttribute가 맞는가
+    public ResponseEntity<CustomPageImpl<PostListResponse>> list(@ModelAttribute CustomPageRequest pageRequest,
+                                                                 @CurrentLoginMember Member member) { // ? @ModelAttribute가 맞는가
 
         PageRequest of = pageRequest.of();
         Pageable pageable = (Pageable) of;
-        Page<PostListResponse> responses = postService.findPostList(member.getId(), pageable);
+        CustomPageImpl<PostListResponse> responses = postService.findPostList(member.getId(), pageable);
 
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }

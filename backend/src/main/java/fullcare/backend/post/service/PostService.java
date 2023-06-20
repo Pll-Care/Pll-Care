@@ -15,6 +15,7 @@ import fullcare.backend.post.repository.PostRepository;
 import fullcare.backend.post.repository.RecruitmentRepository;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.repository.ProjectMemberRepository;
+import fullcare.backend.util.CustomPageImpl;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -99,7 +100,7 @@ public class PostService {
         return postDetailResponse;
     }
 
-    public Page<PostListResponse> findPostList(Long memberId, Pageable pageable) {
+    public CustomPageImpl<PostListResponse> findPostList(Long memberId, Pageable pageable) {
         Page<PostListResponse> postListResponsePage = postRepository.findList(memberId, pageable);
 
         List<PostListResponse> content = postListResponsePage.getContent();
@@ -110,7 +111,7 @@ public class PostService {
         Map<Long, List<Recruitment>> collect = recruitments.stream().collect(Collectors.groupingBy(r -> r.getPost().getId()));
         content.stream().forEach(l -> l.setRecruitInfoList(collect.get(l.getPostId()).stream().map(r -> new RecruitInfo(r)).toList()));
 
-        return postListResponsePage;
+        return new CustomPageImpl<>(postListResponsePage.getContent(), pageable, postListResponsePage.getTotalElements());
     }
 
 

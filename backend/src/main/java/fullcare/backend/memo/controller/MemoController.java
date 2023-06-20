@@ -14,6 +14,7 @@ import fullcare.backend.memo.service.BookmarkMemoService;
 import fullcare.backend.memo.service.MemoService;
 import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.security.jwt.CurrentLoginMember;
+import fullcare.backend.util.CustomPageImpl;
 import fullcare.backend.util.CustomPageRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -142,9 +143,9 @@ public class MemoController {
             @ApiResponse(responseCode = "400", description = "회의록 리스트 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @GetMapping("/list")
-    public ResponseEntity<Page<MemoListResponse>> list(@RequestParam("project_id") Long projectId,
-                                                       @ModelAttribute CustomPageRequest pageRequest,
-                                                       @CurrentLoginMember Member member) {
+    public ResponseEntity<CustomPageImpl<MemoListResponse>> list(@RequestParam("project_id") Long projectId,
+                                                                 @ModelAttribute CustomPageRequest pageRequest,
+                                                                 @CurrentLoginMember Member member) {
 
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
             throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
@@ -152,7 +153,7 @@ public class MemoController {
 
         PageRequest of = pageRequest.of();
         Pageable pageable = (Pageable) of;
-        Page<MemoListResponse> responses = memoService.findMemoList(projectId, pageable);
+        CustomPageImpl<MemoListResponse> responses = memoService.findMemoList(projectId, pageable);
 
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
@@ -163,7 +164,7 @@ public class MemoController {
             @ApiResponse(responseCode = "400", description = "북마크 회의록 리스트 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @GetMapping("/bookmarklist")
-    public ResponseEntity<Page<BookmarkMemoListResponse>> bookmarklist(@RequestParam("project_id") Long projectId,
+    public ResponseEntity<CustomPageImpl<BookmarkMemoListResponse>> bookmarklist(@RequestParam("project_id") Long projectId,
                                                                        @ModelAttribute CustomPageRequest pageRequest,
                                                                        @CurrentLoginMember Member member) {
 
@@ -173,7 +174,7 @@ public class MemoController {
 
         PageRequest of = pageRequest.of();
         Pageable pageable = (Pageable) of;
-        Page<BookmarkMemoListResponse> responses = bookmarkMemoService.findBookmarkMemoList(pageable, projectId, member.getId());
+        CustomPageImpl<BookmarkMemoListResponse> responses = bookmarkMemoService.findBookmarkMemoList(pageable, projectId, member.getId());
 
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }

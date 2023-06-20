@@ -10,6 +10,7 @@ import fullcare.backend.memo.repository.BookmarkMemoRepository;
 import fullcare.backend.memo.repository.MemoRepository;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.repository.ProjectRepository;
+import fullcare.backend.util.CustomPageImpl;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -81,11 +82,11 @@ public class MemoService {
     }
 
 
-    public Page<MemoListResponse> findMemoList(Long projectId, Pageable pageable) {
+    public CustomPageImpl<MemoListResponse> findMemoList(Long projectId, Pageable pageable) {
         Page<Memo> memoList = memoRepository.findList(projectId, pageable);
         List<MemoListResponse> content = memoList.stream().map(MemoListResponse::entityToDto)
                 .collect(Collectors.toList());
 
-        return new PageImpl<>(content, pageable, memoList.getTotalElements());
+        return new CustomPageImpl<>(content, pageable, memoList.getTotalElements());
     }
 }
