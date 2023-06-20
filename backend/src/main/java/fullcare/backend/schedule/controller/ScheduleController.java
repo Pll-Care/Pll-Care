@@ -7,6 +7,7 @@ import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.schedule.ScheduleCategory;
 import fullcare.backend.schedule.dto.request.*;
 import fullcare.backend.schedule.dto.response.*;
+import fullcare.backend.schedule.exceptionhandler.exception.NotFoundCategory;
 import fullcare.backend.schedule.service.MeetingService;
 import fullcare.backend.schedule.service.MilestoneService;
 import fullcare.backend.schedule.service.ScheduleService;
@@ -57,7 +58,7 @@ public class ScheduleController {
         }else if(scheduleCreateRequest.getCategory().equals(ScheduleCategory.MEETING)){
             meetingService.createMeeting(scheduleCreateRequest, member.getName());
         }else{
-            throw new RuntimeException("없는 카테고리입니다.");
+            throw new NotFoundCategory("없는 카테고리입니다.");
         }
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -83,7 +84,7 @@ public class ScheduleController {
             throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
         }
         if (!scheduleService.updateSchedule(scheduleUpdateRequest, scheduleId)){
-            throw new RuntimeException("해당 사용자는 일정을 변경할 수 없습니다.");
+            throw new InvalidAccessException("해당 사용자는 일정을 변경할 수 없습니다.");
         }
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -114,7 +115,7 @@ public class ScheduleController {
     @ApiResponses(value = {
             @ApiResponse(description = "달력 조회 성공", responseCode = "200", useReturnTypeSchema = true)
     })
-    @GetMapping("/calenderList")
+    @GetMapping("/calenderlist")
     public ResponseEntity<ScheduleCalenderMonthResponse> calenderViewList(@Valid @RequestParam("project_id") Long projectId, @Valid @RequestParam int year,  @Valid @RequestParam int month , @CurrentLoginMember Member member){
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
             throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
@@ -127,7 +128,7 @@ public class ScheduleController {
     @ApiResponses(value = {
             @ApiResponse(description = "월별 리스트 조회 성공", responseCode = "200", useReturnTypeSchema = true)
     })
-    @GetMapping("/monthList")
+    @GetMapping("/monthlist")
     public ResponseEntity<CustomPageImpl<ScheduleMonthResponse>> calenderList(CustomPageRequest pageRequest,
                                                                         @Valid @RequestParam("project_id") Long projectId,
                                                                         @Valid @RequestParam int year,

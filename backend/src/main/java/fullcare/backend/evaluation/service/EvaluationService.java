@@ -12,6 +12,7 @@ import fullcare.backend.evaluation.dto.request.FinalEvalUpdateRequest;
 import fullcare.backend.evaluation.dto.request.MidTermEvalCreateRequest;
 import fullcare.backend.evaluation.dto.response.*;
 import fullcare.backend.evaluation.dto.ChartDto;
+import fullcare.backend.evaluation.exceptionhandler.exception.*;
 import fullcare.backend.evaluation.repository.FinalEvaluationRepository;
 import fullcare.backend.evaluation.repository.MidtermEvaluationRepository;
 import fullcare.backend.global.State;
@@ -66,15 +67,15 @@ public class EvaluationService {
     public void createMidtermEvaluation(MidTermEvalCreateRequest midTermEvalCreateRequest, Member voter) {
         Member voted = memberRepository.findById(midTermEvalCreateRequest.getVotedId()).orElseThrow(() -> new EntityNotFoundException("해당 사용자가 없습니다."));
         if(voter.getId() == voted.getId()){
-            throw new InvalidAccessException("자신의 평가는 불가능합니다.");
+            throw new MyEvalException("자신의 평가는 불가능합니다.");
         }
         if(validateMidDuplicationAuthor(midTermEvalCreateRequest.getScheduleId(), voter.getId())){
-            throw new InvalidAccessException("중복 평가는 불가능합니다.");
+            throw new EvalDuplicateException("중복 평가는 불가능합니다.");
         }
         scheduleMemberRepository.findByScheduleIdAndMemberId(midTermEvalCreateRequest.getScheduleId(), voter.getId()).orElseThrow(() ->  new EntityNotFoundException("일정에 해당 사용자가 없습니다."));//* 일정에 투표하는 사람이 없을때
         scheduleMemberRepository.findByScheduleIdAndMemberId(midTermEvalCreateRequest.getScheduleId(), voted.getId()).orElseThrow(() ->  new EntityNotFoundException("일정에 해당 사용자가 없습니다."));//* 일정에 투표된 사람이 없을때
-        Schedule schedule = scheduleRepository.findByIdAndState(midTermEvalCreateRequest.getScheduleId(), State.COMPLETE).orElseThrow(()->new InvalidAccessException("일정이 완료 안됐습니다."));//* 일정이 완료 됐을때만 가능
-        Project project = projectRepository.findById(midTermEvalCreateRequest.getProjectId()).orElseThrow();
+        Schedule schedule = scheduleRepository.findByIdAndState(midTermEvalCreateRequest.getScheduleId(), State.COMPLETE).orElseThrow(() -> new InvalidAccessException("일정이 완료 안됐습니다."));//* 일정이 완료 됐을때만 가능
+        Project project = projectRepository.findById(midTermEvalCreateRequest.getProjectId()).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트가 존재하지 않습니다."));
         MidtermEvaluation newMidtermEvaluation = MidtermEvaluation.createNewMidtermEval()
                 .evaluationBadge(midTermEvalCreateRequest.getEvaluationBadge())
                 .voter(voter)
@@ -93,13 +94,16 @@ public class EvaluationService {
         projectMemberRepository.findByProjectIdAndMemberId(project.getId(), finalEvalCreateRequest.getEvaluatedId()).orElseThrow(() -> new EntityNotFoundException("투표된 사람은 프로젝트에 없습니다."));
         //? 점수 5점 이상일 경우 에러처리
         if (!Score.valid(finalEvalCreateRequest.getScore())){
-            throw new InvalidAccessException("평가 점수 범위가 벗어났습니다.");
+            throw new EvalOutOfRangeException("평가 점수 범위가 벗어났습니다.");
         }
         if(evaluator.getId() == evaluated.getId()){
-            throw new InvalidAccessException("자신의 평가는 불가능합니다.");
+            throw new MyEvalException("자신의 평가는 불가능합니다.");
         }
         if(!project.getState().equals(State.COMPLETE)){
-            throw new InvalidAccessException("프로젝트가 완료되지 않은 평가는 불가능합니다.");
+            throw new EvalNotCompleteProjectException("프로젝트가 완료되지 않은 평가는 불가능합니다.");
+        }
+        if ((validateFinalDuplicationAuthor(finalEvalCreateRequest.getEvaluatedId(), evaluator.getId(), finalEvalCreateRequest.getProjectId()))) {
+            throw new EvalDuplicateException("중복 평가는 불가능합니다.");
         }
         FinalTermEvaluation newFinalTermEvaluation = FinalTermEvaluation.createNewFinalEval()
                 .project(project)
@@ -114,13 +118,13 @@ public class EvaluationService {
 
     @Transactional //* 임시 저장한 평가를 수정 또는 완료할 때 사용
     public void updateFinalEvaluation(Long evaluationId, FinalEvalUpdateRequest finalEvalUpdateRequest) {
-        if (projectRepository.existsByIdAndState(finalEvalUpdateRequest.getProjectId(), State.COMPLETE)){
-            throw new InvalidAccessException("완료된 프로젝트 평가는 수정이 안됩니다.");
+        if (finalEvaluationRepository.existsByIdAndState(evaluationId, State.COMPLETE)){
+            throw new CompletedEvalException("완료된 평가는 수정이 안됩니다.");
         }
         if (!Score.valid(finalEvalUpdateRequest.getScore())){
-            throw new InvalidAccessException("평가 점수 범위가 벗어났습니다.");
+            throw new EvalOutOfRangeException("평가 점수 범위가 벗어났습니다.");
         }
-        FinalTermEvaluation finalTermEvaluation = finalEvaluationRepository.findById(evaluationId).orElseThrow();
+        FinalTermEvaluation finalTermEvaluation = finalEvaluationRepository.findById(evaluationId).orElseThrow(() -> new EntityNotFoundException("해당 최종 평가가 존재하지 않습니다."));
         finalTermEvaluation.update(finalEvalUpdateRequest);
     }
 
@@ -131,10 +135,10 @@ public class EvaluationService {
     }
     @Transactional
     public void deleteFinalEvaluation(Long evaluationId, Long projectId) {
-        if (projectRepository.existsByIdAndState(projectId, State.COMPLETE)){
-            throw new InvalidAccessException("완료된 프로젝트 평가는 삭제가 안됩니다.");
+        if (finalEvaluationRepository.existsByIdAndState(evaluationId, State.COMPLETE)){
+            throw new CompletedEvalException("완료된 평가는 삭제가 안됩니다.");
         }
-        FinalTermEvaluation finalTermEvaluation = finalEvaluationRepository.findById(evaluationId).orElseThrow();
+        FinalTermEvaluation finalTermEvaluation = finalEvaluationRepository.findById(evaluationId).orElseThrow(() -> new EntityNotFoundException("해당 최종 평가가 존재하지 않습니다."));
         finalEvaluationRepository.delete(finalTermEvaluation);
     }
 
@@ -145,7 +149,7 @@ public class EvaluationService {
     }
 
     public EverythingEvalResponse findMidtermEvaluationList(Long projectId) {
-        Project project = projectRepository.findJoinPMJoinMemberById(projectId).orElseThrow();
+        Project project = projectRepository.findJoinPMJoinMemberById(projectId).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트가 존재하지 않습니다."));
         List<Member> members = project.getProjectMembers().stream().map(pm -> pm.getMember()).collect(Collectors.toList());
         List<BadgeDao> midtermBadgeList = midtermEvaluationRepository.findList(projectId, members);
         List<MidTermRankProjectionInterface> rank = midtermEvaluationRepository.findRank(projectId);
@@ -184,7 +188,7 @@ public class EvaluationService {
     }
 
     public EverythingEvalResponse findFinalEvaluationList(Long projectId) {
-        Project project = projectRepository.findJoinPMJoinMemberById(projectId).orElseThrow();
+        Project project = projectRepository.findJoinPMJoinMemberById(projectId).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트가 존재하지 않습니다."));
         List<Member> members = project.getProjectMembers().stream().map(pm -> pm.getMember()).collect(Collectors.toList());
         List<ScoreDao> scoreDaos = finalEvaluationRepository.findList(projectId, members);
 
@@ -230,8 +234,8 @@ public class EvaluationService {
     }
 
     public MidTermEvalModalResponse modal(Long scheduleId, Long memberId) {
-        Schedule schedule = scheduleRepository.findJoinSMJoinMemberById(scheduleId).orElseThrow();
-        Member member = memberRepository.findById(memberId).orElseThrow();
+        Schedule schedule = scheduleRepository.findJoinSMJoinMemberById(scheduleId).orElseThrow(() -> new EntityNotFoundException("해당 일정이 존재하지 않습니다."));
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException("해당 사용자가 존재하지 않습니다."));
         List<MemberDto> memberDto = schedule.getScheduleMembers().stream().filter(sm -> sm.getMember() != member).map(sm -> MemberDto.builder().member(sm.getMember()).build()).collect(Collectors.toList());// 나를 제외한 일정에 참여한 팀원
 
 
@@ -248,7 +252,7 @@ public class EvaluationService {
         return midTermEvalModalResponse;
     }
     public List<ParticipantResponse> findParticipantList(Long projectId, Long memberId){
-        Project project = projectRepository.findJoinPMJoinMemberById(projectId).orElseThrow();
+        Project project = projectRepository.findJoinPMJoinMemberById(projectId).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트가 존재하지 않습니다."));
         List<Member> members = project.getProjectMembers().stream().map(pm -> pm.getMember()).collect(Collectors.toList());
         List<BadgeDao> midtermBadgeList = midtermEvaluationRepository.findList(projectId, members);
         List<FinalTermEvaluation> finalEvalList = new ArrayList<>();

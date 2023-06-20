@@ -15,11 +15,13 @@ import fullcare.backend.schedule.domain.Schedule;
 import fullcare.backend.schedule.dto.*;
 import fullcare.backend.schedule.dto.request.*;
 import fullcare.backend.schedule.dto.response.*;
+import fullcare.backend.schedule.exceptionhandler.exception.ScheduleCategoryMisMatchException;
 import fullcare.backend.schedule.repository.ScheduleRepository;
 import fullcare.backend.schedulemember.domain.ScheduleMember;
 import fullcare.backend.schedulemember.repository.ScheduleMemberRepository;
 import fullcare.backend.util.CustomPageImpl;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -58,11 +60,11 @@ public class ScheduleService {
 //        return getProjectMemberListResponses(projectId, projectMemberRepository);
 //    }
     public boolean updateSchedule(ScheduleUpdateRequest scheduleUpdateRequest, Long scheduleId) {// 멤버 로그인 사용자 검증 수정
-        Schedule schedule = scheduleRepository.findJoinSMById(scheduleId).orElseThrow();
+        Schedule schedule = scheduleRepository.findJoinSMById(scheduleId).orElseThrow(() -> new EntityNotFoundException("해당 일정이 존재하지 않습니다."));
         if ((schedule instanceof Meeting && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.MILESTONE)) || (schedule instanceof Milestone && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.MEETING)) ){
-            throw new RuntimeException("수정하려는 일정의 카테고리가 맞지 않습니다.");
+            throw new ScheduleCategoryMisMatchException("수정하려는 일정의 카테고리가 맞지 않습니다.");
         }
-        Project project = projectRepository.findById(scheduleUpdateRequest.getProjectId()).orElseThrow();
+        Project project = projectRepository.findById(scheduleUpdateRequest.getProjectId()).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트가 존재하지 않습니다."));
         LocalDateTime startDate = project.getStartDate().atStartOfDay();
         LocalDateTime endDate = project.getEndDate().atStartOfDay();
         Schedule.validDate(startDate, endDate, scheduleUpdateRequest.getStartDate(), scheduleUpdateRequest.getEndDate());
@@ -80,7 +82,8 @@ public class ScheduleService {
         );
         List<Member> updateMemberList = memberRepository.findByIds(scheduleUpdateRequest.getMemberIds()); // 새로 업데이트 되는 멤버 리스트
         if (!members.containsAll(updateMemberList)){// 프로젝트에 속한 사람인지 확인
-            return false;}
+            return false;
+        }
 
 
 
@@ -98,12 +101,12 @@ public class ScheduleService {
     }
     public void deleteSchedule(Long scheduleId, Long memberId) {
 
-        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow();
+        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new EntityNotFoundException("해당 일정이 존재하지 않습니다."));
         scheduleRepository.delete(schedule);
     }
     @Transactional(readOnly = true)
     public CustomResponseDto findScheduleList(Long projectId) {
-        Project project = projectRepository.findById(projectId).orElseThrow();
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트가 존재하지 않습니다."));
         LocalDate startDate = project.getStartDate();
         LocalDate endDate = project.getEndDate();
         long diff = ChronoUnit.WEEKS.between(startDate, endDate);
@@ -144,7 +147,7 @@ public class ScheduleService {
     }
     @Transactional
     public CustomPageImpl<ScheduleMonthResponse> findScheduleMonthList(Pageable pageable, int year, int month, Member member, List<State> states) { // 1일부터 31일까지 일정
-        Member findMember = memberRepository.findById(member.getId()).orElseThrow();
+        Member findMember = memberRepository.findById(member.getId()).orElseThrow(() -> new EntityNotFoundException("해당 사용자가 존재하지 않습니다."));
         LocalDateTime findDate = LocalDateTime.of(year, month, 1, 0, 0);
         LocalDate localDate = findDate.toLocalDate();
         int lastDay = findDate.toLocalDate().withDayOfMonth(localDate.lengthOfMonth()).getDayOfMonth();
@@ -165,14 +168,14 @@ public class ScheduleService {
 //        return null;
 //    }
     public void updateState(ScheduleStateUpdateRequest scheduleStateUpdateRequest, Long scheduleId){ // 상태 바꿀 때도 schedulemember recentview 바꿔야함
-        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow();
+        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new EntityNotFoundException("해당 일정이 존재하지 않습니다."));
         LocalDateTime now = LocalDateTime.now();
         schedule.updateState(now, scheduleStateUpdateRequest.getState());
         scheduleMemberRepository.updateRecentView(now, schedule.getId());
     }
     @Transactional(readOnly = true) // 프로젝트별 일정 내용
     public ScheduleMyListResponse findMySchedule(ScheduleMonthRequest scheduleMonthRequest, Long memberId) {
-        Member member = memberRepository.findById(memberId).orElseThrow();
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException("해당 사용자가 존재하지 않습니다."));
         LocalDate localDate = LocalDateTime.now().toLocalDate();
         int lastDay = LocalDateTime.now().toLocalDate().withDayOfMonth(localDate.lengthOfMonth()).getDayOfMonth();
         LocalDateTime startDate = LocalDateTime.of(scheduleMonthRequest.getYear(),scheduleMonthRequest.getMonth(), 1, 0, 0,0);
@@ -375,8 +378,8 @@ public class ScheduleService {
 
     @Transactional
     public ScheduleDetailResponse findSchedule(Long projectId, Long scheduleId, Long memberId) {
-        Project project = projectRepository.findJoinPMJoinMemberById(projectId).orElseThrow();
-        Schedule schedule = scheduleRepository.findJoinSMById(scheduleId).orElseThrow();
+        Project project = projectRepository.findJoinPMJoinMemberById(projectId).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트가 존재하지 않습니다."));
+        Schedule schedule = scheduleRepository.findJoinSMById(scheduleId).orElseThrow(() -> new EntityNotFoundException("해당 일정이 존재하지 않습니다."));
         List<ProjectMember> projectMembers = project.getProjectMembers();
         List<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();
 

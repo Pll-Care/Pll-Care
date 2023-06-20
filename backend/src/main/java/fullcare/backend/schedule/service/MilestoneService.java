@@ -10,6 +10,7 @@ import fullcare.backend.schedule.domain.Schedule;
 import fullcare.backend.schedule.dto.MemberDto;
 import fullcare.backend.schedule.dto.request.ScheduleCreateRequest;
 import fullcare.backend.schedule.repository.MilestoneRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class MilestoneService {
 
     public void createMilestone(ScheduleCreateRequest scheduleCreateRequest, String username) {
         LocalDateTime now = LocalDateTime.now();
-        Project project = projectRepository.findById(scheduleCreateRequest.getProjectId()).orElseThrow();
+        Project project = projectRepository.findById(scheduleCreateRequest.getProjectId()).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트가 존재하지 않습니다."));
 
         LocalDateTime startDate = project.getStartDate().atStartOfDay();
         LocalDateTime endDate = project.getEndDate().atStartOfDay();
@@ -39,7 +40,7 @@ public class MilestoneService {
         List<MemberDto> memberDtos = scheduleCreateRequest.getMemberDtos();
         List<Member> memberList = new ArrayList<>();
         memberDtos.forEach(m -> {
-            Member member = memberRepository.findById(m.getId()).orElseThrow();
+            Member member = memberRepository.findById(m.getId()).orElseThrow(() -> new EntityNotFoundException("해당 사용자가 존재하지 않습니다."));
             memberList.add(member);
         });
         Milestone milestone = Milestone.builder()

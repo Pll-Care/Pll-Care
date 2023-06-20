@@ -18,7 +18,7 @@ public interface FinalEvaluationRepository extends JpaRepository<FinalTermEvalua
     List<ScoreDao> findMyAvgScore(Long memberId);
 
     boolean existsByIdAndEvaluatorId(Long id, Long evaluatorId);
-
+    boolean existsByIdAndState(Long id, State state);
     boolean existsByEvaluatedIdAndEvaluatorIdAndProjectId(Long evaluatedId, Long evaluatorId,Long projectId);
 
     List<FinalTermEvaluation> findByProjectIdAndEvaluatedIdAndState(Long projectId, Long evaluatedId, State state);

@@ -111,9 +111,6 @@ public class EvaluationController {
     @PostMapping("/final")
     public ResponseEntity finalEvalCreate(@RequestBody FinalEvalCreateRequest finalEvalCreateRequest,
                                           @CurrentLoginMember Member member) {
-        if ((evaluationService.validateFinalDuplicationAuthor(finalEvalCreateRequest.getEvaluatedId(), member.getId(), finalEvalCreateRequest.getProjectId()))) {
-            throw new InvalidAccessException("중복 평가는 불가능합니다.");
-        }
         if (!(projectMemberService.validateProjectMember(finalEvalCreateRequest.getProjectId(), member.getId()))) {
             throw new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.");
         }
