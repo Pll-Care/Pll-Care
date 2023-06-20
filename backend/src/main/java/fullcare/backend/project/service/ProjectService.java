@@ -37,7 +37,7 @@ public class ProjectService {
     private final MemberRepository memberRepository;
     private final ProjectMemberRepository projectMemberRepository;
     @Transactional(readOnly = true)
-    public Page<ProjectListResponse> findMyProjectList(Pageable pageable, Long memberId, List<State> states) {
+    public CustomPageImpl<ProjectListResponse> findMyProjectList(Pageable pageable, Long memberId, List<State> states) {
         Page<Project> pageProject = projectRepository.findProjectList(pageable, memberId, states);
 
         List<ProjectListResponse> content = pageProject.stream().map(p -> ProjectListResponse.builder()

@@ -15,6 +15,7 @@ import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.security.jwt.CurrentLoginMember;
+import fullcare.backend.util.CustomPageImpl;
 import fullcare.backend.util.CustomPageRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -63,10 +64,10 @@ public class ProjectController {
             @ApiResponse(responseCode = "400", description = "사용자 프로젝트 리스트 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @GetMapping
-    public ResponseEntity<Page<ProjectListResponse>> list(CustomPageRequest pageRequest, @Valid @RequestParam List<State> state, @CurrentLoginMember Member member) {
+    public ResponseEntity<CustomPageImpl<ProjectListResponse>> list(CustomPageRequest pageRequest, @Valid @RequestParam List<State> state, @CurrentLoginMember Member member) {
         PageRequest of = pageRequest.of();
         Pageable pageable = (Pageable) of;
-        Page<ProjectListResponse> responses = projectService.findMyProjectList(pageable, member.getId(), state);
+        CustomPageImpl<ProjectListResponse> responses = projectService.findMyProjectList(pageable, member.getId(), state);
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 

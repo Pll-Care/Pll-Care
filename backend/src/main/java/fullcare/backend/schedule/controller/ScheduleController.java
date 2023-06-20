@@ -89,7 +89,7 @@ public class ScheduleController {
         }
         return new ResponseEntity(HttpStatus.OK);
     }
-    @Operation(method = "delete", summary = "일정 삭제") // ! 작성자 본인, 팀리더만 삭제 조건 추가 필요
+    @Operation(method = "delete", summary = "일정 삭제")
     @ApiResponses(value = {
             @ApiResponse(description = "일정 삭제 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
     })
@@ -101,7 +101,7 @@ public class ScheduleController {
         if (!scheduleService.validateAuthor(scheduleDeleteRequest.getProjectId(), scheduleId, member.getId())&& !projectMember.isLeader()) {
             throw new InvalidAccessException("일정 삭제에 대한 권한이 없습니다.");
         }
-        scheduleService.deleteSchedule(scheduleId, member.getId());
+        scheduleService.deleteSchedule(scheduleId);
         return new ResponseEntity(HttpStatus.OK);
     }
 

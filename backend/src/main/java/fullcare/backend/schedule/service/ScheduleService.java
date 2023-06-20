@@ -108,8 +108,7 @@ public class ScheduleService {
         }
         return true;
     }
-    public void deleteSchedule(Long scheduleId, Long memberId) {
-
+    public void deleteSchedule(Long scheduleId) {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new EntityNotFoundException("해당 일정이 존재하지 않습니다."));
         scheduleRepository.delete(schedule);
     }
