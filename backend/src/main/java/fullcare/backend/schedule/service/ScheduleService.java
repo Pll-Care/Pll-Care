@@ -59,6 +59,15 @@ public class ScheduleService {
 //
 //        return getProjectMemberListResponses(projectId, projectMemberRepository);
 //    }
+
+    public boolean validateAuthor(Long projectId, Long scheduleId, Long authorId){
+        ProjectMember projectMember = projectMemberRepository.findByProjectIdAndMemberId(projectId, authorId).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트 멤버가 존재하지 않습니다."));
+        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new EntityNotFoundException("해당 일정이 존재하지 않습니다."));
+        if(schedule.getProjectMember() == projectMember){
+            return true;
+        }
+        return false;
+    }
     public boolean updateSchedule(ScheduleUpdateRequest scheduleUpdateRequest, Long scheduleId) {// 멤버 로그인 사용자 검증 수정
         Schedule schedule = scheduleRepository.findJoinSMById(scheduleId).orElseThrow(() -> new EntityNotFoundException("해당 일정이 존재하지 않습니다."));
         if ((schedule instanceof Meeting && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.MILESTONE)) || (schedule instanceof Milestone && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.MEETING)) ){

@@ -3,6 +3,7 @@ package fullcare.backend.schedule.controller;
 import fullcare.backend.global.State;
 import fullcare.backend.global.exception.InvalidAccessException;
 import fullcare.backend.member.domain.Member;
+import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.schedule.ScheduleCategory;
 import fullcare.backend.schedule.dto.request.*;
@@ -54,9 +55,9 @@ public class ScheduleController {
         }
 
         if(scheduleCreateRequest.getCategory().equals(ScheduleCategory.MILESTONE)){
-            milestoneService.createMilestone(scheduleCreateRequest, member.getName());
+            milestoneService.createMilestone(scheduleCreateRequest, member);
         }else if(scheduleCreateRequest.getCategory().equals(ScheduleCategory.MEETING)){
-            meetingService.createMeeting(scheduleCreateRequest, member.getName());
+            meetingService.createMeeting(scheduleCreateRequest, member);
         }else{
             throw new NotFoundCategory("없는 카테고리입니다.");
         }
@@ -94,8 +95,11 @@ public class ScheduleController {
     })
     @DeleteMapping("/{scheduleId}")
     public ResponseEntity delete(@PathVariable Long scheduleId, @Valid @RequestBody ScheduleDeleteRequest scheduleDeleteRequest, @CurrentLoginMember Member member){
-        if (!(projectMemberService.validateProjectMember(scheduleDeleteRequest.getProjectId(), member.getId()))) {
-            throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
+        ProjectMember projectMember = projectMemberService.findProjectMember(scheduleDeleteRequest.getProjectId(), member.getId());
+
+        //? 작성자 또는 팀 리더만 삭제 가능
+        if (!scheduleService.validateAuthor(scheduleDeleteRequest.getProjectId(), scheduleId, member.getId())&& !projectMember.isLeader()) {
+            throw new InvalidAccessException("일정 삭제에 대한 권한이 없습니다.");
         }
         scheduleService.deleteSchedule(scheduleId, member.getId());
         return new ResponseEntity(HttpStatus.OK);

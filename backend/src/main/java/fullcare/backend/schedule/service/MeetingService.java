@@ -5,6 +5,8 @@ import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.repository.ProjectRepository;
+import fullcare.backend.projectmember.domain.ProjectMember;
+import fullcare.backend.projectmember.repository.ProjectMemberRepository;
 import fullcare.backend.schedule.domain.Meeting;
 import fullcare.backend.schedule.domain.Schedule;
 import fullcare.backend.schedule.dto.MemberDto;
@@ -28,10 +30,12 @@ public class MeetingService {
     private final ProjectRepository projectRepository;
     private final MemberRepository memberRepository;
     private final MeetingRepository meetingRepository;
+    private final ProjectMemberRepository projectMemberRepository;
 
-    public void createMeeting(ScheduleCreateRequest scheduleCreateRequest, String username) {
+    public void createMeeting(ScheduleCreateRequest scheduleCreateRequest, Member author) {
         LocalDateTime now = LocalDateTime.now();
         Project project = projectRepository.findById(scheduleCreateRequest.getProjectId()).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트가 존재하지 않습니다."));
+        ProjectMember projectMember = projectMemberRepository.findByProjectIdAndMemberId(scheduleCreateRequest.getProjectId(), author.getId()).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트 멤버가 존재하지 않습니다."));
         LocalDateTime startDate = project.getStartDate().atStartOfDay();
         LocalDateTime endDate = project.getEndDate().atStartOfDay();
         Schedule.validDate(startDate, endDate, scheduleCreateRequest.getStartDate(), scheduleCreateRequest.getEndDate());
@@ -48,7 +52,7 @@ public class MeetingService {
                 .endDate(scheduleCreateRequest.getEndDate())
                 .title(scheduleCreateRequest.getTitle())
                 .content(scheduleCreateRequest.getContent())
-                .author(username)
+                .projectMember(projectMember)
                 .state(State.TBD)
                 .address(scheduleCreateRequest.getAddress())
                 .createdDate(now)

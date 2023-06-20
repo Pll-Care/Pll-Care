@@ -127,14 +127,14 @@ public class TestDataInit {
 
             if (i < 16) {
                 LocalDateTime endDate = LocalDateTime.of(2023, month, randDay, 16, 0);
-                meetingService.createMeeting(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MEETING, memberDtos, "제목" + i, "내용" + i, new Address("city" + i, "street" + i)), memberRepository.findById(authorId).get().getName());
+                meetingService.createMeeting(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MEETING, memberDtos, "제목" + i, "내용" + i, new Address("city" + i, "street" + i)), memberRepository.findById(authorId).get());
             } else {
                 try {
                     LocalDateTime endDate = LocalDateTime.of(2023, month, randDay + plusDay, 16, 0);
-                    milestoneService.createMilestone(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MILESTONE, memberDtos, "제목" + i, "내용" + i, null), memberRepository.findById(authorId).get().getName());
+                    milestoneService.createMilestone(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MILESTONE, memberDtos, "제목" + i, "내용" + i, null), memberRepository.findById(authorId).get());
                 } catch (DateTimeException e) { // 다음달로 넘어가는 경우
                     LocalDateTime endDate = LocalDateTime.of(2023, month, randDay, 16, 0).plusWeeks(1);
-                    milestoneService.createMilestone(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MILESTONE, memberDtos, "제목" + i, "내용" + i, null), memberRepository.findById(authorId).get().getName());
+                    milestoneService.createMilestone(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MILESTONE, memberDtos, "제목" + i, "내용" + i, null), memberRepository.findById(authorId).get());
                 }
             }
         }

@@ -4,6 +4,7 @@ package fullcare.backend.schedule.domain;
 import fullcare.backend.global.State;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
+import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.schedule.exceptionhandler.exception.ScheduleOutOfRangeException;
 import fullcare.backend.schedulemember.domain.ScheduleMember;
 import jakarta.persistence.*;
@@ -33,7 +34,9 @@ public abstract class Schedule {
     private Project project;
 
     // todo -> private ProjectMember author;
-    private String author;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id", nullable = false)
+    private ProjectMember projectMember;
     @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false)
     private State state;
@@ -61,9 +64,9 @@ public abstract class Schedule {
     private LocalDateTime modifiedDate;
 
 
-    public Schedule(Project project, String author, State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    public Schedule(Project project, ProjectMember projectMember, State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.project = project;
-        this.author = author;
+        this.projectMember = projectMember;
         this.state = state;
         this.title = title;
         this.content = content;

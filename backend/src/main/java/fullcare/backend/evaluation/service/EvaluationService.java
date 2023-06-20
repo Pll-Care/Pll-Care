@@ -312,15 +312,46 @@ public class EvaluationService {
     public Page<MyEvalListResponse> findMyEvalList(Pageable pageable, Long memberId) {
         Page<ProjectMember> pmList = projectMemberRepository.findByMemberId(pageable, memberId);
         List<MyEvalListResponse> myEvalListResponseList = new ArrayList<>();
+        List<Long> projectIds = pmList.stream().map(pm -> pm.getProject().getId()).collect(Collectors.toList());
+
+        List<FinalTermEvaluation> myFinalEvalList = finalEvaluationRepository.findByProjectIdsAndEvaluatedIdAndState(projectIds, memberId, State.COMPLETE);
+        int feCnt = 0;
         for (ProjectMember pm : pmList) {
+            feCnt = 0;
+            ScoreDto scoreDto = new ScoreDto();
+            for (FinalTermEvaluation fe : myFinalEvalList){
+                if(fe.getProject().getId() == pm.getProject().getId()) {
+                    feCnt++;
+                    scoreDto.setCommunication(scoreDto.getCommunication()+fe.getScore().getCommunication());
+                    scoreDto.setPunctuality(scoreDto.getPunctuality()+fe.getScore().getPunctuality());
+                    scoreDto.setSincerity(scoreDto.getSincerity()+fe.getScore().getSincerity());
+                    scoreDto.setJobPerformance(scoreDto.getJobPerformance()+fe.getScore().getJobPerformance());
+                }
+            }
+//            scoreDto.setJobPerformance(scoreDto.getJobPerformance()/ feCnt);
+//            scoreDto.setPunctuality(scoreDto.getPunctuality()/ feCnt);
+//            scoreDto.setCommunication(scoreDto.getCommunication()/ feCnt);
+//            scoreDto.setSincerity(scoreDto.getSincerity()/ feCnt);
+
+            scoreDto.setSincerity(Math.round(scoreDto.getSincerity()/ feCnt*100)/100.0);
+            scoreDto.setJobPerformance(Math.round(scoreDto.getJobPerformance()/ feCnt*100)/100.0);
+            scoreDto.setPunctuality(Math.round(scoreDto.getPunctuality()/ feCnt*100)/100.0);
+            scoreDto.setCommunication(Math.round(scoreDto.getCommunication()/ feCnt*100)/100.0);
+
+
             MyEvalListResponse response = MyEvalListResponse.builder()
                     .projectId(pm.getProject().getId())
                     .projectTitle(pm.getProject().getTitle())
+                    .score(scoreDto)
                     .build();
-            List<BadgeDto> badgeList = midtermEvaluationRepository.findAllByMemberId(pm.getProject().getId(), memberId);
-            response.setBadgeDtos(badgeList);
+
+
+//            List<BadgeDto> badgeList = midtermEvaluationRepository.findAllByMemberId(pm.getProject().getId(), memberId);
+//            response.setBadgeDtos(badgeList);
             myEvalListResponseList.add(response);
         }
+
+
 
         return new CustomPageImpl<>(myEvalListResponseList, pageable, pmList.getTotalElements());
     }
