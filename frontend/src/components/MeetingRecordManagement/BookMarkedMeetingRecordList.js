@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import MeetingRecordData from "./MeetingRecordData";
-import Pagination from "../shared/Pagination";
+import Pagination from "../common/Pagination";
 import { useLocation } from "react-router-dom";
 import { useQuery, useQueryClient } from "react-query";
 import { getBookMarkMeetingRecordList } from "../lib/apis/meetingRecordManagementApi";

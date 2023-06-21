@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
 
-import Button from "../../components/shared/Button";
+import Button from "../../components/common/Button";
 
 import { getStringDate } from "../../utils/date";
-import useManagementMutation from "./hooks/useManagementMutation";
+import useManagementMutation from "../../hooks/useManagementMutation";
 
 const NewProject = ({ setIsModalVisible }) => {
   const modalOutside = useRef();

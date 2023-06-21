@@ -5,9 +5,9 @@ import {
   createMeetingRecord,
   deleteMeetingRecord,
   editMeetingRecord,
-} from "../../lib/apis/meetingRecordManagementApi";
+} from "../components/lib/apis/meetingRecordManagementApi";
 import { useDispatch } from "react-redux";
-import { meetingRecordManagementActions } from "../../../redux/meetingRecordManagementSlice";
+import { meetingRecordManagementActions } from "../redux/meetingRecordManagementSlice";
 
 const useMeetingRecordManagementMutation = () => {
   const queryClient = useQueryClient();

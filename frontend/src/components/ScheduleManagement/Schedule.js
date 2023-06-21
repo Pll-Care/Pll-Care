@@ -1,7 +1,7 @@
 import { Avatar } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 
-import Button from "../../components/shared/Button";
+import Button from "../../components/common/Button";
 import { useState } from "react";
 import ScheduleEvaluationModal from "./ScheduleEvaluationModal";
 import { useSelector } from "react-redux";

@@ -1,4 +1,4 @@
-import Card from "../shared/Card";
+import Card from "../common/Card";
 import Schedule from "./Schedule";
 
 const datas = [

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Modal from "../shared/Modal";
+import Modal from "../common/Modal";
 import ButtonList from "./ButtonList";
-import Button from "../shared/Button";
+import Button from "../common/Button";
 import { Tooltip } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { addEvaluation } from "../../redux/evaluationManagementSlice";

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import Button from "../shared/Button";
+import Button from "../common/Button";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -8,7 +8,7 @@ import Quill from "quill";
 import ImageResize from "quill-image-resize";
 import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
 import { useEffect } from "react";
-import useMeetingRecordManagementMutation from "./hooks/useMeetingRecordManagementMutation";
+import useMeetingRecordManagementMutation from "../../hooks/useMeetingRecordManagementMutation";
 import { useLocation } from "react-router-dom";
 import MeetingRecord from "./MeetingRecord";
 

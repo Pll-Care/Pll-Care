@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
-import Button from "../../components/shared/Button";
+import Button from "../../components/common/Button";
 
-import useManagementMutation from "./hooks/useManagementMutation";
+import useManagementMutation from "../../hooks/useManagementMutation";
 
 const ProjectList = ({ projectList }) => {
   const { deleteMutate } = useManagementMutation();

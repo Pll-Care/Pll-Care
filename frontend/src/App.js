@@ -18,7 +18,7 @@ import ProjectDetailPage from "./pages/ProjectDetailPage";
 import TeamMemberManagement from "./components/TeamMemberManagement/TeamMemberManagement";
 
 import { authActions } from "./redux/authSlice";
-import MainHeader from "./components/shared/MainHeader";
+import MainHeader from "./components/common/MainHeader";
 
 const queryClient = new QueryClient();
 

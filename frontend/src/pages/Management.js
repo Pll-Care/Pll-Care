@@ -1,8 +1,8 @@
-import Button from '../components/shared/Button';
+import Button from '../components/common/Button';
 import ProjectList from "../components/ProjectManagement/ProjectList";
 import NewProject from "../components/ProjectManagement/NewProject";
 import NonAuthenticatedManagement from "./NonAuthenticatedManagement";
-import Pagination from "../components/shared/Pagination";
+import Pagination from "../components/common/Pagination";
 
 import { useSelector } from "react-redux";
 import { useEffect, useState } from 'react';
