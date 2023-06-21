@@ -65,7 +65,7 @@ const MeetingRecord = ({ state }) => {
       dispatch(meetingRecordManagementActions.setTitle(createdData.title));
       dispatch(meetingRecordManagementActions.setContent(createdData.content));
     }
-  }, []);
+  }, [createdData.content, createdData.title, dispatch, selectedData.content, selectedData.title, state]);
 
   return state === "selectedMeetingRecord" ? (
     <div className="meeting-record">

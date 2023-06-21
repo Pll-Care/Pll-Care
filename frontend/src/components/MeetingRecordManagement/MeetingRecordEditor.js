@@ -52,7 +52,8 @@ const MeetingRecordEditor = () => {
 
   const handleSubmit = () => {
     if (isEdit) {
-      editMutate(selectedMeetingRecordId, {
+      editMutate({
+        selectedMeetingRecordId,
         title: title,
         content: content,
       });

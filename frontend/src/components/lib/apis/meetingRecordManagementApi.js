@@ -56,15 +56,14 @@ export const createBookMarkMeetingRecord = async (meetingRecordId) => {
   return response.data;
 };
 
-export const editMeetingRecord = async (
-  meetingRecordId,
-  newMeetingRecordObj
-) => {
-  console.log(meetingRecordId, newMeetingRecordObj);
+export const editMeetingRecord = async (newMeetingRecordObj) => {
   const response = await customAxios.put(
-    `/auth/memo/${meetingRecordId}`,
-    newMeetingRecordObj
+    `/auth/memo/${newMeetingRecordObj.selectedMeetingRecordId}`,
+    {
+      title: newMeetingRecordObj.title,
+      content: newMeetingRecordObj.content,
+    }
   );
 
-  return response.data;
+  return response.data.memoId;
 };

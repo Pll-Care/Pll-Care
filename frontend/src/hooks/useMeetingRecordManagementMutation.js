@@ -31,7 +31,10 @@ const useMeetingRecordManagementMutation = () => {
   });
 
   const { mutate: editMutate } = useMutation(editMeetingRecord, {
-    onSuccess: () => {
+    onSuccess: (data) => {
+      dispatch(
+        meetingRecordManagementActions.onEditCreatedMeetingRecordId(data)
+      );
       queryClient.invalidateQueries(["managementAllMeetingRecordList"]);
       queryClient.invalidateQueries(["managementBookMarkMeetingRecordList"]);
     },
