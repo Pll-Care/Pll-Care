@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMeetingRecord } from "../lib/apis/meetingRecordManagementApi";
 import useMeetingRecordManagementMutation from "../../hooks/useMeetingRecordManagementMutation";
 import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const MeetingRecord = ({ state }) => {
   const selectedMeetingRecordId = useSelector(
@@ -13,8 +13,6 @@ const MeetingRecord = ({ state }) => {
   const createdMeetingRecordId = useSelector(
     (state) => state.meetingRecordManagement.createdMeetingRecordId
   );
-
-  const [data, setData] = useState({});
 
   const dispatch = useDispatch();
 
@@ -46,18 +44,27 @@ const MeetingRecord = ({ state }) => {
   };
 
   const handleDeleteMeetingRecord = () => {
-    deleteMutate(data.memoId);
+    state === "selectedMeetingRecord"
+      ? deleteMutate(selectedData.memoId)
+      : deleteMutate(createdData.memoId);
     dispatch(meetingRecordManagementActions.onEditInitialState(true));
   };
 
   const handleBookMarkMeetingRecord = () => {
-    createBookMarkMutate(data.memoId);
+    state === "selectedMeetingRecord"
+      ? createBookMarkMutate(selectedData.memoId)
+      : createBookMarkMutate(createdData.memoId);
     dispatch(meetingRecordManagementActions.onEditInitialState(true));
   };
 
   useEffect(() => {
-    dispatch(meetingRecordManagementActions.setTitle(data.title));
-    dispatch(meetingRecordManagementActions.setContent(data.content));
+    if (state === "selectedMeetingRecord") {
+      dispatch(meetingRecordManagementActions.setTitle(selectedData.title));
+      dispatch(meetingRecordManagementActions.setContent(selectedData.content));
+    } else {
+      dispatch(meetingRecordManagementActions.setTitle(createdData.title));
+      dispatch(meetingRecordManagementActions.setContent(createdData.content));
+    }
   }, []);
 
   return state === "selectedMeetingRecord" ? (
@@ -72,7 +79,13 @@ const MeetingRecord = ({ state }) => {
           <div className="meeting-record-button-wrapper">
             <button onClick={handleEditMeetingRecord}>수정하기</button>
             <button onClick={handleDeleteMeetingRecord}>삭제하기</button>
-            <button onClick={handleBookMarkMeetingRecord}>북마크하기</button>
+            {selectedData.bookmarked ? (
+              <button onClick={handleBookMarkMeetingRecord}>
+                북마크 취소하기
+              </button>
+            ) : (
+              <button onClick={handleBookMarkMeetingRecord}>북마크하기</button>
+            )}
           </div>
         </div>
       </div>
@@ -93,7 +106,13 @@ const MeetingRecord = ({ state }) => {
           <div className="meeting-record-button-wrapper">
             <button onClick={handleEditMeetingRecord}>수정하기</button>
             <button onClick={handleDeleteMeetingRecord}>삭제하기</button>
-            <button onClick={handleBookMarkMeetingRecord}>북마크하기</button>
+            {createdData.bookmarked ? (
+              <button onClick={handleBookMarkMeetingRecord}>
+                북마크 취소하기
+              </button>
+            ) : (
+              <button onClick={handleBookMarkMeetingRecord}>북마크하기</button>
+            )}
           </div>
         </div>
       </div>
