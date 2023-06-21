@@ -7,16 +7,16 @@ import "react-quill/dist/quill.snow.css";
 import Quill from "quill";
 import ImageResize from "quill-image-resize";
 import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useMeetingRecordManagementMutation from "./hooks/useMeetingRecordManagementMutation";
 import { useLocation } from "react-router-dom";
-import SelectedMeetingRecord from "./SelectedMeetingRecord";
+import MeetingRecord from "./MeetingRecord";
 
 Quill.register("modules/ImageResize", ImageResize);
 
 const MeetingRecordEditor = () => {
-  const content = useSelector(state => state.meetingRecordManagement.content);
-  const title = useSelector(state => state.meetingRecordManagement.title);
+  const content = useSelector((state) => state.meetingRecordManagement.content);
+  const title = useSelector((state) => state.meetingRecordManagement.title);
   const projectId = parseInt(useLocation().pathname.slice(12, 14));
   const isCreatedMeetingRecordVisible = useSelector(
     (state) => state.meetingRecordManagement.isCreatedMeetingRecordVisible
@@ -26,6 +26,9 @@ const MeetingRecordEditor = () => {
   );
   const isSelectedMeetingRecord = useSelector(
     (state) => state.meetingRecordManagement.isSelectedMeetingRecord
+  );
+  const selectedMeetingRecordId = useSelector(
+    (state) => state.meetingRecordManagement.selectedMeetingRecordId
   );
   const isEdit = useSelector((state) => state.meetingRecordManagement.isEdit);
 
@@ -44,11 +47,12 @@ const MeetingRecordEditor = () => {
     dispatch(meetingRecordManagementActions.setTitle(e.target.value));
   };
 
-  const handleChangeContent = (e) => dispatch(meetingRecordManagementActions.setContent(e));
+  const handleChangeContent = (e) =>
+    dispatch(meetingRecordManagementActions.setContent(e));
 
   const handleSubmit = () => {
     if (isEdit) {
-      editMutate(projectId, {
+      editMutate(selectedMeetingRecordId, {
         title: title,
         content: content,
       });
@@ -84,11 +88,6 @@ const MeetingRecordEditor = () => {
         false
       )
     );
-    dispatch(
-      meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(
-        true
-      )
-    );
   }, [dispatch]);
 
   return (
@@ -99,11 +98,9 @@ const MeetingRecordEditor = () => {
           <Button text={"작성하기"} onClick={handleInitialState} />
         </div>
       ) : isSelectedMeetingRecord ? (
-        <SelectedMeetingRecord />
+        <MeetingRecord state={"selectedMeetingRecord"} />
       ) : isCreatedMeetingRecordVisible ? (
-        <div>
-          <div>createdMeetingRecord</div>
-        </div>
+        <MeetingRecord state={"createdMeetingRecord"} />
       ) : (
         <div className="meeting-record-editor">
           <div className="meeting-record-title">

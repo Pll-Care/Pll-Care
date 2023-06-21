@@ -31,7 +31,7 @@ export const getBookMarkMeetingRecordList = async (projectId, pageNum = 1) => {
 export const createMeetingRecord = async (newMeetingRecordObj) => {
   const response = await customAxios.post(`/auth/memo`, newMeetingRecordObj);
 
-  return response.data.content;
+  return response.data.memoId;
 };
 
 export const getMeetingRecord = async (meetingRecordId) => {
@@ -56,10 +56,15 @@ export const createBookMarkMeetingRecord = async (meetingRecordId) => {
   return response.data;
 };
 
-export const editMeetingRecord = async (meetingRecordId, newMeetingRecordObj) => {
-  const response = await customAxios.post(`/auth/memo/${meetingRecordId}`, newMeetingRecordObj);
+export const editMeetingRecord = async (
+  meetingRecordId,
+  newMeetingRecordObj
+) => {
+  console.log(meetingRecordId, newMeetingRecordObj);
+  const response = await customAxios.put(
+    `/auth/memo/${meetingRecordId}`,
+    newMeetingRecordObj
+  );
 
-  console.log(response);
-  
   return response.data;
-}
+};
