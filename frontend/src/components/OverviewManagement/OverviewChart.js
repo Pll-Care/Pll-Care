@@ -8,7 +8,7 @@ import FlagIcon from "@mui/icons-material/Flag";
 import ComputerIcon from "@mui/icons-material/Computer";
 import { useParams } from "react-router";
 import { useEffect } from "react";
-import { customAxios } from "../lib/apis/customAxios";
+import { customAxios } from "../../lib/apis/customAxios";
 import { useQuery } from "react-query";
 
 // 더미 데이터

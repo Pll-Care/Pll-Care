@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
-import { getMeetingRecord } from "../lib/apis/meetingRecordManagementApi";
+import { getMeetingRecord } from "../../lib/apis/meetingRecordManagementApi";
 import useMeetingRecordManagementMutation from "../../hooks/useMeetingRecordManagementMutation";
 import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
 import { useEffect } from "react";

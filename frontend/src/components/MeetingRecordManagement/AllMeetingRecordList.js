@@ -8,7 +8,7 @@ import Button from "../../components/common/Button";
 
 import { useQuery, useQueryClient } from "react-query";
 
-import { getAllMeetingRecordList } from "../lib/apis/meetingRecordManagementApi";
+import { getAllMeetingRecordList } from "../../lib/apis/meetingRecordManagementApi";
 import { useLocation } from "react-router-dom";
 import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
 

@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "react-query";
 import {
   createProject,
   deleteProject,
-} from "../components/lib/apis/projectManagementApi";
+} from "../lib/apis/projectManagementApi";
 
 const useManagementMutation = () => {
   const queryClient = useQueryClient();

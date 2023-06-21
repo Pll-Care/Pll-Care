@@ -4,7 +4,7 @@ import MeetingRecordData from "./MeetingRecordData";
 import Pagination from "../common/Pagination";
 import { useLocation } from "react-router-dom";
 import { useQuery, useQueryClient } from "react-query";
-import { getBookMarkMeetingRecordList } from "../lib/apis/meetingRecordManagementApi";
+import { getBookMarkMeetingRecordList } from "../../lib/apis/meetingRecordManagementApi";
 
 const BookMarkedMeetingRecordList = () => {
   const projectId = parseInt(useLocation().pathname.slice(12, 14));

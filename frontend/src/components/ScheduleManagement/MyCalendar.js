@@ -1,7 +1,7 @@
 import FullCalendar from "@fullcalendar/react";
 import CalendarList from "./CalendarList";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import { customAxios } from "../lib/apis/customAxios";
+import { customAxios } from "../../lib/apis/customAxios";
 import { useParams } from "react-router";
 import { useQuery } from "react-query";
 
