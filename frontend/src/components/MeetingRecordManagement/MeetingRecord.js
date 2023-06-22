@@ -4,6 +4,7 @@ import { getMeetingRecord } from "../../lib/apis/meetingRecordManagementApi";
 import useMeetingRecordManagementMutation from "../../hooks/useMeetingRecordManagementMutation";
 import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
 import { useEffect } from "react";
+import Button from "../common/Button";
 
 const MeetingRecord = ({ state }) => {
   const selectedMeetingRecordId = useSelector(
@@ -65,7 +66,14 @@ const MeetingRecord = ({ state }) => {
       dispatch(meetingRecordManagementActions.setTitle(createdData.title));
       dispatch(meetingRecordManagementActions.setContent(createdData.content));
     }
-  }, [createdData.content, createdData.title, dispatch, selectedData.content, selectedData.title, state]);
+  }, [
+    createdData.content,
+    createdData.title,
+    dispatch,
+    selectedData.content,
+    selectedData.title,
+    state,
+  ]);
 
   return state === "selectedMeetingRecord" ? (
     <div className="meeting-record">
@@ -77,14 +85,32 @@ const MeetingRecord = ({ state }) => {
         <div className="meeting-record-container">
           <div className="meeting-record-author">{selectedData.author}</div>
           <div className="meeting-record-button-wrapper">
-            <button onClick={handleEditMeetingRecord}>수정하기</button>
-            <button onClick={handleDeleteMeetingRecord}>삭제하기</button>
+            <Button
+              size={"small"}
+              type={"underlined"}
+              text={"삭제하기"}
+              onClick={handleDeleteMeetingRecord}
+            />
+            <Button
+              size={"small"}
+              type={"underlined"}
+              text={"수정하기"}
+              onClick={handleEditMeetingRecord}
+            />
             {selectedData.bookmarked ? (
-              <button onClick={handleBookMarkMeetingRecord}>
-                북마크 취소하기
-              </button>
+              <Button
+                size={"small"}
+                type={"underlined"}
+                text={"북마크 취소하기"}
+                onClick={handleBookMarkMeetingRecord}
+              />
             ) : (
-              <button onClick={handleBookMarkMeetingRecord}>북마크하기</button>
+              <Button
+                size={"small"}
+                type={"underlined"}
+                text={"북마크하기"}
+                onClick={handleBookMarkMeetingRecord}
+              />
             )}
           </div>
         </div>
@@ -104,14 +130,32 @@ const MeetingRecord = ({ state }) => {
         <div className="meeting-record-container">
           <div className="meeting-record-author">{createdData.author}</div>
           <div className="meeting-record-button-wrapper">
-            <button onClick={handleEditMeetingRecord}>수정하기</button>
-            <button onClick={handleDeleteMeetingRecord}>삭제하기</button>
+            <Button
+              size={"small"}
+              type={"underlined"}
+              text={"삭제하기"}
+              onClick={handleDeleteMeetingRecord}
+            />
+            <Button
+              size={"small"}
+              type={"underlined"}
+              text={"수정하기"}
+              onClick={handleEditMeetingRecord}
+            />
             {createdData.bookmarked ? (
-              <button onClick={handleBookMarkMeetingRecord}>
-                북마크 취소하기
-              </button>
+              <Button
+                size={"small"}
+                type={"underlined"}
+                text={"북마크 취소하기"}
+                onClick={handleBookMarkMeetingRecord}
+              />
             ) : (
-              <button onClick={handleBookMarkMeetingRecord}>북마크하기</button>
+              <Button
+                size={"small"}
+                type={"underlined"}
+                text={"북마크하기"}
+                onClick={handleBookMarkMeetingRecord}
+              />
             )}
           </div>
         </div>

@@ -105,8 +105,17 @@ const MeetingRecordEditor = () => {
       ) : (
         <div className="meeting-record-editor">
           <div className="meeting-record-title">
-            <h1>제목: </h1>
-            <input value={title} onChange={handleChangeTitle} />
+            <input
+              value={title}
+              onChange={handleChangeTitle}
+              placeholder={"제목을 입력하세요"}
+            />
+            <Button
+              size={"small"}
+              type={"underlined"}
+              text={"작성 완료하기"}
+              onClick={handleSubmit}
+            />
           </div>
           <ReactQuill
             className="react-quill"
@@ -126,7 +135,6 @@ const MeetingRecordEditor = () => {
               },
             }}
           />
-          <Button text={"작성 완료하기"} onClick={handleSubmit} />
         </div>
       )}
     </div>

@@ -1,6 +1,6 @@
 const Button = ({ text, type, size = "big", onClick }) => {
   const btnSize = size === "big" ? "button_big" : "button_small";
-  const btnType = ["positive", "positive_dark"].includes(type)
+  const btnType = ["positive", "positive_dark", "underlined"].includes(type)
     ? type
     : "default";
 
