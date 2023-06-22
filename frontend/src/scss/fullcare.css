@@ -1741,6 +1741,16 @@ input {
     height: 35px;
   }
 }
+.loading-indicator-container {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.loading-indicator-container .loading-indicator {
+  color: #01e89e;
+}
+
 .card {
   margin: 20px 10%;
   background: #fcfcfc;
