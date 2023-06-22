@@ -19,8 +19,15 @@ import TeamMemberManagement from "./components/TeamMemberManagement/TeamMemberMa
 
 import { authActions } from "./redux/authSlice";
 import MainHeader from "./components/common/MainHeader";
+import { Loading } from "./components/common/Loading";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      suspense: true,
+    },
+  },
+});
 
 const App = () => {
   const dispatch = useDispatch();
@@ -36,28 +43,30 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <div className="App">
-          <MainHeader />
-          <Routes>
-            <Route path={"/"} element={<Home />} />
-            <Route path={"/token"} element={<JWTToken />} />
-            <Route path={"/profile"} element={<Profile />} />
-            <Route path={"/recruitment"} element={<Recruitment />} />
-            <Route path={"/management"} element={<Management />} />
-            <Route path={"/management/:id"} element={<ProjectDetailPage />}>
-              <Route path={"overview"} element={<OverviewManagement />} />
-              <Route
-                path={"meetingRecord"}
-                element={<MeetingRecordManagement />}
-              />
-              <Route path={"schedule"} element={<ScheduleManagement />} />
-              <Route path={"evaluation"} element={<EvaluationManagement />} />
-              <Route path={"teamMember"} element={<TeamMemberManagement />} />
-            </Route>
-          </Routes>
-        </div>
-      </BrowserRouter>
+      <React.Suspense fallback={<Loading />}>
+        <BrowserRouter>
+          <div className="App">
+            <MainHeader />
+            <Routes>
+              <Route path={"/"} element={<Home />} />
+              <Route path={"/token"} element={<JWTToken />} />
+              <Route path={"/profile"} element={<Profile />} />
+              <Route path={"/recruitment"} element={<Recruitment />} />
+              <Route path={"/management"} element={<Management />} />
+              <Route path={"/management/:id"} element={<ProjectDetailPage />}>
+                <Route path={"overview"} element={<OverviewManagement />} />
+                <Route
+                  path={"meetingRecord"}
+                  element={<MeetingRecordManagement />}
+                />
+                <Route path={"schedule"} element={<ScheduleManagement />} />
+                <Route path={"evaluation"} element={<EvaluationManagement />} />
+                <Route path={"teamMember"} element={<TeamMemberManagement />} />
+              </Route>
+            </Routes>
+          </div>
+        </BrowserRouter>
+      </React.Suspense>
       <ReactQueryDevtools />
     </QueryClientProvider>
   );
