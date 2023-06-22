@@ -1,5 +1,6 @@
 package fullcare.backend.schedule.service;
 
+import fullcare.backend.evaluation.repository.MidtermEvaluationRepository;
 import fullcare.backend.global.State;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
@@ -9,6 +10,7 @@ import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.repository.ProjectMemberRepository;
 import fullcare.backend.schedule.DateCategory;
 import fullcare.backend.schedule.ScheduleCategory;
+import fullcare.backend.schedule.ScheduleCondition;
 import fullcare.backend.schedule.domain.Meeting;
 import fullcare.backend.schedule.domain.Milestone;
 import fullcare.backend.schedule.domain.Schedule;
@@ -17,6 +19,7 @@ import fullcare.backend.schedule.dto.request.*;
 import fullcare.backend.schedule.dto.response.*;
 import fullcare.backend.schedule.exceptionhandler.exception.ScheduleCategoryMisMatchException;
 import fullcare.backend.schedule.repository.ScheduleRepository;
+import fullcare.backend.schedule.repository.ScheduleRepositoryCustom;
 import fullcare.backend.schedulemember.domain.ScheduleMember;
 import fullcare.backend.schedulemember.repository.ScheduleMemberRepository;
 import fullcare.backend.util.CustomPageImpl;
@@ -25,7 +28,6 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,9 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -49,6 +49,8 @@ public class ScheduleService {
     private final MemberRepository memberRepository;
     private final ScheduleMemberRepository scheduleMemberRepository;
     private final EntityManager em;
+    private final ScheduleRepositoryCustom scheduleRepositoryCustom;
+    private final MidtermEvaluationRepository midtermEvaluationRepository;
 //    @Transactional(readOnly = true)
 //    public List<ProjectMemberListResponse> findProjectMembers(Long projectId){
 ////        Project project = projectRepository.findById(projectId).orElseThrow();
@@ -155,18 +157,32 @@ public class ScheduleService {
         return scheduleMonthResponse;
     }
     @Transactional
-    public CustomPageImpl<ScheduleMonthResponse> findScheduleMonthList(Pageable pageable, int year, int month, Member member, List<State> states) { // 1일부터 31일까지 일정
-        Member findMember = memberRepository.findById(member.getId()).orElseThrow(() -> new EntityNotFoundException("해당 사용자가 존재하지 않습니다."));
+    public CustomPageImpl<ScheduleMonthResponse> findScheduleMonthList(Pageable pageable, int year, int month) { // 1일부터 31일까지 일정
         LocalDateTime findDate = LocalDateTime.of(year, month, 1, 0, 0);
         LocalDate localDate = findDate.toLocalDate();
         int lastDay = findDate.toLocalDate().withDayOfMonth(localDate.lengthOfMonth()).getDayOfMonth();
         LocalDateTime startDate = LocalDateTime.of(year,month, 1, 0, 0,0);
         LocalDateTime endDate = LocalDateTime.of(year, month,lastDay,23,59,59  );
-        Page<Schedule> pageSchedule = scheduleRepository.findMonthByStartDateBetweenOrEndDateBetween(pageable, startDate, endDate, startDate, endDate, states);
-        List<ScheduleMonthResponse> scheduleMonthResponses = new ArrayList<>();
-        addResponse(pageSchedule, scheduleMonthResponses, findMember);// 미팅, 마일스톤에 맞게 일정 생성 후 응답에 넣기
-        return new CustomPageImpl<>(scheduleMonthResponses, pageable, pageSchedule.getTotalElements());
+
+        Page<Schedule> pageSchedule = scheduleRepository.findMonthByStartDateBetweenOrEndDateBetween(pageable, startDate, endDate, startDate, endDate);
+
+        List<ScheduleMonthResponse> scheduleMonthResponse = new ArrayList<>();
+        addResponse(pageSchedule, scheduleMonthResponse);// 미팅, 마일스톤에 맞게 일정 생성 후 응답에 넣기
+        return new CustomPageImpl<>(scheduleMonthResponse, pageable, pageSchedule.getTotalElements());
     }
+
+    @Transactional
+    public CustomPageImpl<ScheduleSearchResponse> searchScheduleList(Pageable pageable, Member member, ScheduleCondition scheduleCondition) { // 1일부터 31일까지 일정
+        Member findMember = memberRepository.findById(member.getId()).orElseThrow(() -> new EntityNotFoundException("해당 사용자가 존재하지 않습니다."));
+        List<Schedule> scheduleList = scheduleRepositoryCustom.search(scheduleCondition, scheduleCondition.getProjectId());//? 모든 일정을 가져와서 검증
+
+        List<ScheduleSearchResponse> ScheduleSearchResponse = new ArrayList<>();
+        List<ScheduleSearchResponse> content = createPageResponse(scheduleList, ScheduleSearchResponse, findMember, pageable);// 미팅, 마일스톤에 맞게 일정 생성 후 응답에 넣기
+
+        return new CustomPageImpl<>(content, pageable, content.size());
+    }
+
+
 //    @Transactional(readOnly = true)
 //    public Page<ScheduleMonthResponse> findScheduleMemberMonthList(Pageable pageable, ScheduleMonthListRequest scheduleMonthListRequest) {
 //        LocalDate localDate = LocalDateTime.now().toLocalDate();
@@ -328,7 +344,7 @@ public class ScheduleService {
     }
 
 
-    private void addResponse(Page<Schedule> pageSchedule, List<ScheduleMonthResponse> scheduleMonthResponses, Member member) {
+    private void addResponse(Page<Schedule> pageSchedule, List<ScheduleMonthResponse> scheduleMonthResponse) {
         LocalDateTime now = LocalDateTime.now();
         for (Schedule schedule : pageSchedule) {
             if (now.isAfter(schedule.getStartDate()) && schedule.getState().equals(State.TBD)){
@@ -346,6 +362,41 @@ public class ScheduleService {
                     .title(schedule.getTitle())
                     .startDate(schedule.getStartDate())
                     .endDate(schedule.getEndDate())
+                    .build();
+
+
+            List<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();
+            scheduleMembers.forEach(sm -> {
+                        scheduleResponse.addMember(sm.getMember());
+                });
+            if (schedule instanceof Meeting){
+                scheduleResponse.setAddress(((Meeting) schedule).getAddress());
+                scheduleResponse.setScheduleCategory(ScheduleCategory.MEETING);
+            }else{
+                scheduleResponse.setScheduleCategory(ScheduleCategory.MILESTONE);
+            }
+            scheduleMonthResponse.add(scheduleResponse);
+
+        }
+    }
+
+    private List<ScheduleSearchResponse> createPageResponse(List<Schedule> scheduleList, List<ScheduleSearchResponse> scheduleSearchResponse, Member member,Pageable pageable) {
+        LocalDateTime now = LocalDateTime.now();
+
+        for (Schedule schedule : scheduleList) {
+            if (now.isAfter(schedule.getStartDate()) && schedule.getState().equals(State.TBD)){
+                schedule.updateState(now, State.ONGOING);
+                for (ScheduleMember scheduleMember : schedule.getScheduleMembers()) {
+                    scheduleMember.updateRecentView(now);
+                }
+          }
+
+
+            ScheduleSearchResponse scheduleResponse = ScheduleSearchResponse.builder()
+                    .scheduleId(schedule.getId())
+                    .title(schedule.getTitle())
+                    .startDate(schedule.getStartDate())
+                    .endDate(schedule.getEndDate())
                     .state(schedule.getState())
                     .modifyDate(schedule.getModifiedDate().toLocalDate())
                     .build();
@@ -358,12 +409,41 @@ public class ScheduleService {
             }else{
                 scheduleResponse.setScheduleCategory(ScheduleCategory.MILESTONE);
             }
-            scheduleMonthResponses.add(scheduleResponse);
+
+
+            boolean eval = midtermEvaluationRepository.existsByScheduleIdAndVoterId(schedule.getId(), member.getId());
+            if (!eval && schedule.getState().equals(State.COMPLETE)) { //? 평가한 적이 없는 완료된 일정을 고름
+                if (schedule.getScheduleMembers().stream().anyMatch(sm -> sm.getMember().getId() == member.getId())) {//? 사용자가 일정에 들어갔는지 확인
+                    scheduleResponse.setEvaluationRequired(true);
+                }
+            }
+
+
+            scheduleSearchResponse.add(scheduleResponse);
 
         }
+        List<ScheduleSearchResponse> newResponse = new ArrayList<>();
+        for (ScheduleSearchResponse response : scheduleSearchResponse) {
+            if(!(response.getEndDate().isBefore(LocalDateTime.now()) && !response.getEvaluationRequired())){//? 현재 이후 날짜이거나 내가 평가할 필요가 있는 일정일 경우
+                newResponse.add(response);
+            }
+        }
+
+        int pageNumber = pageable.getPageNumber();
+        Long last = null;
+        Long offset = pageable.getOffset();
+
+
+        if((pageNumber+1) * pageable.getPageSize() > newResponse.size()){
+            last = Long.valueOf(newResponse.size());
+        }else {
+            last = pageable.getOffset() + pageable.getPageSize();
+        }
+        newResponse.sort(Comparator.comparing(ScheduleSearchResponse::getStartDate));// 날짜 기준 내림차순 정렬
+        return newResponse.subList(offset.intValue(), last.intValue());
     }
 
-    private void checkModify(Member member, Schedule schedule, ScheduleMonthResponse scheduleResponse) {
+    private void checkModify(Member member, Schedule schedule, ScheduleSearchResponse scheduleResponse) {
         List<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();
         scheduleMembers.forEach(sm -> {
             scheduleResponse.addMember(sm.getMember());

@@ -1,11 +1,11 @@
 package fullcare.backend.schedule.controller;
 
-import fullcare.backend.global.State;
 import fullcare.backend.global.exception.InvalidAccessException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.schedule.ScheduleCategory;
+import fullcare.backend.schedule.ScheduleCondition;
 import fullcare.backend.schedule.dto.request.*;
 import fullcare.backend.schedule.dto.response.*;
 import fullcare.backend.schedule.exceptionhandler.exception.NotFoundCategory;
@@ -17,22 +17,17 @@ import fullcare.backend.util.CustomPageImpl;
 import fullcare.backend.util.CustomPageRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RequestMapping("/api/auth/schedule")
 @RestController
@@ -134,11 +129,11 @@ public class ScheduleController {
     })
     @GetMapping("/monthlist")
     public ResponseEntity<CustomPageImpl<ScheduleMonthResponse>> calenderList(CustomPageRequest pageRequest,
-                                                                        @Valid @RequestParam("project_id") Long projectId,
-                                                                        @Valid @RequestParam int year,
-                                                                        @Valid @RequestParam int month,
-                                                                        @Valid @RequestParam(required = false, defaultValue = "TBD,ONGOING") List<State> state  ,
-                                                                        @CurrentLoginMember Member member){
+                                                                              @Valid @RequestParam("project_id") Long projectId,
+                                                                              @Valid @RequestParam int year,
+                                                                              @Valid @RequestParam int month,
+//                                                                        @Valid @RequestParam(required = false, defaultValue = "TBD,ONGOING") List<State> state  ,
+                                                                              @CurrentLoginMember Member member){
 //        List<State> states = new ArrayList<>();
 //        if (state.equals(State.TBD)||state.equals(State.ONGOING)){ states.add(state); states.add(State.ONGOING);}else{states.add(State.COMPLETE);}
         PageRequest of = pageRequest.of("startDate");
@@ -146,7 +141,27 @@ public class ScheduleController {
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
             throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
         }
-        CustomPageImpl<ScheduleMonthResponse> response = scheduleService.findScheduleMonthList(pageable, year, month, member, state);
+        CustomPageImpl<ScheduleMonthResponse> response = scheduleService.findScheduleMonthList(pageable, year, month);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Operation(method = "get", summary = "일정 필터 리스트 조회")
+    @ApiResponses(value = {
+            @ApiResponse(description = "일정 필터 리스트 조회 성공", responseCode = "200", useReturnTypeSchema = true)
+    })
+    @GetMapping("/search")
+    public ResponseEntity<CustomPageImpl<ScheduleSearchResponse>> searchList(CustomPageRequest pageRequest,
+                                                                             ScheduleCondition scheduleCondition,
+                                                                             @CurrentLoginMember Member member){
+//        List<State> states = new ArrayList<>();
+//        if (state.equals(State.TBD)||state.equals(State.ONGOING)){ states.add(state); states.add(State.ONGOING);}else{states.add(State.COMPLETE);}
+        PageRequest of = pageRequest.of("startDate");
+        Pageable pageable = (Pageable) of;
+        if (!(projectMemberService.validateProjectMember(scheduleCondition.getProjectId(), member.getId()))) {
+            throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
+        }
+
+        CustomPageImpl<ScheduleSearchResponse> response = scheduleService.searchScheduleList(pageable, member,scheduleCondition);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
