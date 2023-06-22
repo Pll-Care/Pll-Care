@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import Login from "./Login/Login";
+import Login from "../Login/Login";
 import Button from "./Button";
 import ToggleMenuButton from "./ToggleMenuButton";
 
-import { authActions } from "../redux/authSlice";
+import { authActions } from "../../redux/authSlice";
 
 export const headerMenu = [
   { id: 1, link: "/management", title: "프로젝트 관리" },

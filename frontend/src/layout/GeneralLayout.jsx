@@ -1,4 +1,4 @@
-import MainHeader from "../components/MainHeader";
+import MainHeader from "../components/common/MainHeader";
 
 const GeneralLayout = ({ children }) => {
   return (
