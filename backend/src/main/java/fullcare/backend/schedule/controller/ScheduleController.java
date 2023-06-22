@@ -120,11 +120,11 @@ public class ScheduleController {
             @ApiResponse(description = "달력 조회 성공", responseCode = "200", useReturnTypeSchema = true)
     })
     @GetMapping("/calenderlist")
-    public ResponseEntity<ScheduleCalenderMonthResponse> calenderViewList(@Valid @RequestParam("project_id") Long projectId, @Valid @RequestParam int year,  @Valid @RequestParam int month , @CurrentLoginMember Member member){
+    public ResponseEntity<ScheduleCalenderMonthResponse> calenderViewList(@Valid @RequestParam("project_id") Long projectId, @CurrentLoginMember Member member){
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
             throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
         }
-        ScheduleCalenderMonthResponse response = scheduleService.findScheduleCalenderList(year, month);
+        ScheduleCalenderMonthResponse response = scheduleService.findScheduleCalenderList(projectId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

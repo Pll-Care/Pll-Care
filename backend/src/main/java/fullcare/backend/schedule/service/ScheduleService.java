@@ -140,14 +140,15 @@ public class ScheduleService {
     }
 
     @Transactional(readOnly = true)
-    public ScheduleCalenderMonthResponse findScheduleCalenderList(int year, int month) { // 1일부터 31일까지 일정
-        LocalDateTime findDate = LocalDateTime.of(year, month, 1, 0, 0);
-        LocalDate localDate = findDate.toLocalDate();
-        int lastDay = findDate.toLocalDate().withDayOfMonth(localDate.lengthOfMonth()).getDayOfMonth();
-        LocalDateTime startDate = LocalDateTime.of(year, month, 1, 0, 0,0);
-        LocalDateTime endDate = LocalDateTime.of(year, month,lastDay,23,59,59  );
+    public ScheduleCalenderMonthResponse findScheduleCalenderList(Long projectId) { // 1일부터 31일까지 일정
+//        LocalDateTime findDate = LocalDateTime.of(year, month, 1, 0, 0);
+//        LocalDate localDate = findDate.toLocalDate();
+//        int lastDay = findDate.toLocalDate().withDayOfMonth(localDate.lengthOfMonth()).getDayOfMonth();
+//        LocalDateTime startDate = LocalDateTime.of(year, month, 1, 0, 0,0);
+//        LocalDateTime endDate = LocalDateTime.of(year, month,lastDay,23,59,59  );
+//        List<Schedule> scheduleList = scheduleRepository.findByStartDateBetweenOrEndDateBetween( startDate, endDate,startDate, endDate  );
 
-        List<Schedule> scheduleList = scheduleRepository.findByStartDateBetweenOrEndDateBetween( startDate, endDate,startDate, endDate  );
+        List<Schedule> scheduleList = scheduleRepository.findByProjectId(projectId);
         ScheduleCalenderMonthResponse scheduleMonthResponse = toScheduleMonthResponse(scheduleList);
         scheduleMonthResponse.getMeetings().sort(Comparator.comparing(MeetingDto::getStartDate));// 날짜 기준 내림차순 정렬
         scheduleMonthResponse.getMilestones().sort(Comparator.comparing(MilestoneDto::getStartDate));// 날짜 기준 내림차순 정렬
