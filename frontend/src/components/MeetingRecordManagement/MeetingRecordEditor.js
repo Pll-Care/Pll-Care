@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import useMeetingRecordManagementMutation from "../../hooks/useMeetingRecordManagementMutation";
 import { useLocation } from "react-router-dom";
 import MeetingRecord from "./MeetingRecord";
+import { toast } from "react-toastify";
 
 Quill.register("modules/ImageResize", ImageResize);
 
@@ -51,6 +52,14 @@ const MeetingRecordEditor = () => {
     dispatch(meetingRecordManagementActions.setContent(e));
 
   const handleSubmit = () => {
+    if (title.length < 1) {
+      toast.error("제목을 입력하세요.");
+      return;
+    } else if (content.length < 1) {
+      toast.error("내용을 입력하세요.");
+      return;
+    }
+
     if (isEdit) {
       editMutate({
         selectedMeetingRecordId,
