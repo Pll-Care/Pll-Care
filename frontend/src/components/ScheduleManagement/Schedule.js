@@ -1,9 +1,9 @@
 import { Avatar } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 
-import Button from "../Button";
+import Button from "../../components/common/Button";
 import { useState } from "react";
-import ScheduleEvaluationModal from "./ScheduleEvalutaionModal";
+import ScheduleEvaluationModal from "./ScheduleEvaluationModal";
 import { useSelector } from "react-redux";
 
 const Schedule = (props) => {
@@ -44,19 +44,18 @@ const Schedule = (props) => {
         {!findEvaluation && (
           <Button
             text={"평가 작성"}
+            //size="small"
             onClick={openModalHandler}
             type="positive"
           />
         )}
         {findEvaluation && (
           <Button
-            text={"완료하기"}
+            text={"완료"}
+            size="small"
             onClick={completeClickHandler}
             type="positive"
           />
-        )}
-        {findEvaluation && findEvaluation.complete === "완료됨" && (
-          <Button text={"완료됨"} onClick={openModalHandler} type="positive" />
         )}
       </div>
 

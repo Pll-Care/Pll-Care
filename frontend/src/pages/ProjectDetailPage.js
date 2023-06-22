@@ -2,7 +2,7 @@ import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
-import ManagementHeader from "../components/ManagementHeader";
+import ManagementHeader from "../components/common/ManagementHeader";
 
 const ProjectDetailPage = () => {
   const { id } = useParams();

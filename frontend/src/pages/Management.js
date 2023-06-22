@@ -1,73 +1,73 @@
-import Button from "../components/Button";
+import Button from "../components/common/Button";
 import ProjectList from "../components/ProjectManagement/ProjectList";
 import NewProject from "../components/ProjectManagement/NewProject";
 import NonAuthenticatedManagement from "./NonAuthenticatedManagement";
-import Pagination from "../components/Pagination";
-
-import { isAccessTokenExpired } from "../utils/tokenManagement";
+import Pagination from "../components/common/Pagination";
 
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
-import axios from "axios";
+import { useQuery, useQueryClient } from "react-query";
+import { getProjectList } from "../lib/apis/projectManagementApi";
 
 const Management = () => {
-  const accessToken = useSelector((state) => state.auth.accessToken);
+  const queryClient = useQueryClient();
 
-  const apiUrl = "http://localhost:8080/api/auth/project";
-
-  useEffect(() => {
-    const fetchProjectList = async () => {
-      try {
-        if (accessToken) {
-          const response = await axios.get(
-            apiUrl,
-            {
-              states: ["예정"],
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-                "Content-Type": "application/json",
-              },
-            }
-          );
-
-          console.log(response);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    fetchProjectList();
-  }, [accessToken]);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [ongoingCurrentPage, setOngoingCurrentPage] = useState(1);
   const [allProjectListVisible, setAllProjectListVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const projectList = useSelector((state) => state.management.projectList);
-
   const authState = useSelector((state) => state.auth.isLoggedIn);
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
   const [recordDatasPerPage, setRecordDatasPerPage] = useState(4);
 
-  const indexOfLast = currentPage * recordDatasPerPage;
-  const indexOfFirst = indexOfLast - recordDatasPerPage;
+  const { data = { projectList: [] } } = useQuery(
+    ["managementProjectList", currentPage, allProjectListVisible],
+    () => getProjectList(currentPage)
+  );
 
-  const getCurrentProjectList = () => {
-    return projectList.slice(indexOfFirst, indexOfLast);
-  };
+  const { data: ongoingData = { projectList: [] } } = useQuery(
+    ["managementProjectList", ongoingCurrentPage, allProjectListVisible],
+    () => getProjectList(ongoingCurrentPage, "ONGOING")
+  );
 
-  const getOngoingProjectList = () => {
-    return projectList.filter((project) => project.state === "ongoing");
-  };
+  const projectList = data.projectList;
 
-  const getCurrentOngoingProjectList = () => {
-    return getOngoingProjectList().slice(indexOfFirst, indexOfLast);
-  };
+  const lastPageNum = data.totalPages;
+
+  const ongoingProjectList = ongoingData.projectList;
+
+  const ongoingLastPageNum = ongoingData.totalPages;
+
+  useEffect(() => {
+    if (allProjectListVisible) {
+      const nextPage = currentPage + 1;
+
+      if (nextPage <= lastPageNum) {
+        queryClient.prefetchQuery(
+          ["managementProjectList", nextPage, allProjectListVisible],
+          () => getProjectList(nextPage)
+        );
+      }
+    } else {
+      const ongoingNextPage = ongoingCurrentPage + 1;
+
+      if (ongoingNextPage <= ongoingLastPageNum) {
+        queryClient.prefetchQuery(
+          ["managementProjectList", ongoingNextPage, allProjectListVisible],
+          () => getProjectList(ongoingNextPage, "ONGOING")
+        );
+      }
+    }
+  }, [
+    allProjectListVisible,
+    currentPage,
+    lastPageNum,
+    ongoingCurrentPage,
+    ongoingLastPageNum,
+    queryClient,
+  ]);
 
   const handleClickAllProjectList = () => {
     setAllProjectListVisible(true);
@@ -107,22 +107,22 @@ const Management = () => {
           <main className="project-list-wrapper">
             {allProjectListVisible ? (
               <div>
-                <ProjectList projectList={getCurrentProjectList()} />
+                <ProjectList projectList={projectList} />
                 <Pagination
                   currentPage={currentPage}
                   setCurrentPage={setCurrentPage}
                   recordDatasPerPage={recordDatasPerPage}
-                  totalData={projectList?.length}
+                  totalData={data.totalElements}
                 />
               </div>
             ) : (
               <div>
-                <ProjectList projectList={getCurrentOngoingProjectList()} />
+                <ProjectList projectList={ongoingProjectList} />
                 <Pagination
-                  currentPage={currentPage}
-                  setCurrentPage={setCurrentPage}
+                  currentPage={ongoingCurrentPage}
+                  setCurrentPage={setOngoingCurrentPage}
                   recordDatasPerPage={recordDatasPerPage}
-                  totalData={getOngoingProjectList()?.length}
+                  totalData={ongoingData.totalElements}
                 />
               </div>
             )}

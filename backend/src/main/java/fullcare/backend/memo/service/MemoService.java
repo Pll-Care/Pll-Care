@@ -33,9 +33,8 @@ public class MemoService {
     private final BookmarkMemoRepository bookmarkMemoRepository;
     private final ProjectRepository projectRepository;
 
-
     @Transactional
-    public void createMemo(MemoCreateRequest request, String username) {
+    public Memo createMemo(MemoCreateRequest request, String username) {
         Project project = projectRepository.findById(request.getProjectId()).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트가 존재하지 않습니다."));
 
         Memo newMemo = Memo.createNewMemo()
@@ -45,7 +44,8 @@ public class MemoService {
                 .author(username)
                 .build();
 
-        memoRepository.save(newMemo);
+        Memo memo = memoRepository.save(newMemo);
+        return memo;
     }
 
     @Transactional

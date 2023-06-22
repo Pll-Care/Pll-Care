@@ -9,16 +9,17 @@ import java.time.LocalDateTime;
 public class ScheduleListResponse {
     private Long scheduleId;
     private String title;
-    private String content;
+    //private String content;
     private LocalDateTime startDate;
-    private String category;
+    private LocalDateTime endDate;
+    private int order;
     @Builder
-    public ScheduleListResponse(Long scheduleId, String title, String content, LocalDateTime startDate, String category) {
+    public ScheduleListResponse(Long scheduleId, String title,LocalDateTime startDate,LocalDateTime endDate, int order) {
         this.scheduleId = scheduleId;
         this.title = title;
-        this.content = content;
         this.startDate = startDate;
-        this.category = category;
+        this.endDate = endDate;
+        this.order = order;
     }
 
     public ScheduleListResponse(LocalDateTime startDate) {

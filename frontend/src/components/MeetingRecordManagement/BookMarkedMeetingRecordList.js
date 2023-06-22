@@ -1,43 +1,49 @@
-import { useState } from "react";
-
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 import MeetingRecordData from "./MeetingRecordData";
-import Pagination from "../Pagination";
+import Pagination from "../common/Pagination";
+import { useLocation } from "react-router-dom";
+import { useQuery, useQueryClient } from "react-query";
+import { getBookMarkMeetingRecordList } from "../../lib/apis/meetingRecordManagementApi";
 
 const BookMarkedMeetingRecordList = () => {
-    const meetingRecordList = useSelector(state => state.meetingRecordManagement.meetingRecordList);
+  const projectId = parseInt(useLocation().pathname.slice(12, 14));
 
-    const bookMarkedMeetingRecordList = useSelector(state => state.meetingRecordManagement.bookMarkedMeetingRecordList);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recordDatasPerPage, setRecordDatasPerPage] = useState(3);
 
-    const [isLoading, setIsLoading] = useState(true);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [recordDatasPerPage, setRecordDatasPerPage] = useState(3);
+  const queryClient = useQueryClient();
 
-    const indexOfLast = currentPage * recordDatasPerPage;
-    const indexOfFirst = indexOfLast - recordDatasPerPage;
+  const { data = { meetingRecordList: [] } } = useQuery(
+    ["managementBookMarkMeetingRecordList", projectId, currentPage],
+    () => getBookMarkMeetingRecordList(projectId, currentPage)
+  );
 
-    const getCurrentBookMarkedMeetingRecordList = () => {
-        return bookMarkedMeetingRecordList.slice(indexOfFirst, indexOfLast);
+  useEffect(() => {
+    const nextPage = currentPage + 1;
+
+    if (nextPage <= data.totalPages) {
+      queryClient.prefetchQuery(
+        ["managementBookMarkMeetingRecordList", projectId, nextPage],
+        () => getBookMarkMeetingRecordList(projectId, nextPage)
+      );
     }
+  }, [currentPage, data.totalPages, projectId, queryClient]);
 
-    return (
-        <div className='meeting-record-book-marked-record-list'>
-            <h1 className='meeting-record-heading'>북마크</h1>
-            <div className='meeting-record-body'>
-                <MeetingRecordData
-                    sortedMeetingRecordList={getCurrentBookMarkedMeetingRecordList}
-                    isLoading={isLoading}
-                />
-                <Pagination
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                    recordDatasPerPage={recordDatasPerPage}
-                    totalData={bookMarkedMeetingRecordList?.length}
-                />
-            </div>
-        </div>
-    )
-}
+  return (
+    <div className="meeting-record-book-marked-record-list">
+      <h1 className="meeting-record-heading">북마크</h1>
+      <div className="meeting-record-body">
+        <MeetingRecordData sortedMeetingRecordList={data.meetingRecordList} />
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          recordDatasPerPage={recordDatasPerPage}
+          totalData={data.totalElements}
+        />
+      </div>
+    </div>
+  );
+};
 
 export default BookMarkedMeetingRecordList;

@@ -2,31 +2,26 @@ package fullcare.backend.schedule.domain;
 
 
 import fullcare.backend.global.State;
-import fullcare.backend.global.entity.BaseEntity;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
-import fullcare.backend.projectmember.domain.ProjectMember;
+import fullcare.backend.schedule.exceptionhandler.exception.ScheduleOutOfRangeException;
 import fullcare.backend.schedulemember.domain.ScheduleMember;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorColumn(name = "dtype")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@Entity(name="schedule")
-@Table(name="schedule")
-public abstract class Schedule extends BaseEntity {
+@Entity(name = "schedule")
+@Table(name = "schedule")
+public abstract class Schedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,9 +52,16 @@ public abstract class Schedule extends BaseEntity {
     private LocalDateTime endDate;
 
     @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ScheduleMember> scheduleMembers = new HashSet<>();
+    private List<ScheduleMember> scheduleMembers = new ArrayList<>();
 
-    public Schedule(Project project, String author, State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate) {
+    @Column(name = "create_dt", nullable = false, updatable = false)
+    private LocalDateTime createdDate;
+
+    @Column(name = "modified_dt", nullable = false)
+    private LocalDateTime modifiedDate;
+
+
+    public Schedule(Project project, String author, State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.project = project;
         this.author = author;
         this.state = state;
@@ -67,9 +69,22 @@ public abstract class Schedule extends BaseEntity {
         this.content = content;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.createdDate = createdDate;
+        this.modifiedDate = modifiedDate;
     }
 
-    public void addMemberList(List<Member> memberList){
+    public static void validDate(LocalDateTime pStartDate, LocalDateTime pEndDate, LocalDateTime sStartDate, LocalDateTime sEndDate) {
+        if (pStartDate.isAfter(sStartDate) || pStartDate.isAfter(sEndDate) ||
+                pEndDate.isBefore(sStartDate) || pEndDate.isBefore(sEndDate)
+        ) {
+            throw new ScheduleOutOfRangeException("프로젝트 일정 범위를 벗어났습니다.");
+        }
+        if (sStartDate.isAfter(sEndDate) || sEndDate.isBefore(sStartDate)) {
+            throw new ScheduleOutOfRangeException("시작일정과 종료일정이 올바르지 않습니다.");
+        }
+    }
+
+    public void addMemberList(List<Member> memberList) {
         memberList.forEach(member -> {
             ScheduleMember sm = ScheduleMember.builder()
                     .member(member)
@@ -78,26 +93,28 @@ public abstract class Schedule extends BaseEntity {
             scheduleMembers.add(sm);
         });
     }
-    public void addMember(Member member){
 
-            ScheduleMember sm = ScheduleMember.builder()
-                    .member(member)
-                    .schedule(this)
-                    .recentView(LocalDateTime.now()).build();
-            scheduleMembers.add(sm);
+    public void addMember(Member member) {
+
+        ScheduleMember sm = ScheduleMember.builder()
+                .member(member)
+                .schedule(this)
+                .recentView(LocalDateTime.now()).build();
+        scheduleMembers.add(sm);
 
     }
 
-
-    public void update(State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate) {
+    public void update(State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime modifiedDate) {
         this.state = state;
         this.title = title;
         this.content = content;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.modifiedDate = modifiedDate;
     }
 
-    public void updateState(State state){
+    public void updateState(LocalDateTime modifiedDate, State state) {
+        this.modifiedDate = modifiedDate;
         this.state = state;
     }
 }

@@ -31,4 +31,15 @@ public class ScheduleCreateRequest {
 
     private Address address;
 
+
+    public ScheduleCreateRequest(Long projectId, LocalDateTime startDate, LocalDateTime endDate, ScheduleCategory category, List<MemberDto> memberDtos, String title, String content, Address address) {
+        this.projectId = projectId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.category = category;
+        this.memberDtos = memberDtos;
+        this.title = title;
+        this.content = content;
+        this.address = address;
+    }
 }

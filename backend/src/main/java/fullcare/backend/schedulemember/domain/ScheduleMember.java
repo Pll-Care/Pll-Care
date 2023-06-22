@@ -1,5 +1,6 @@
 package fullcare.backend.schedulemember.domain;
 
+import fullcare.backend.global.entity.BaseEntity;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
@@ -39,7 +40,7 @@ public class ScheduleMember {
         this.schedule = schedule;
         this.recentView = recentView;
     }
-    public void updateRecentView(){
-        this.recentView = LocalDateTime.now();
+    public void updateRecentView(LocalDateTime now){
+        this.recentView = now;
     }
 }
