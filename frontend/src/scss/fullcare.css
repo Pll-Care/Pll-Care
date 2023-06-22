@@ -585,7 +585,6 @@ input {
   align-items: space-between;
 }
 .meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-editor .meeting-record-title {
-  margin-bottom: 20px;
   height: 15%;
   border-bottom: 2px solid #d9d9d9;
   display: flex;
@@ -613,6 +612,7 @@ input {
 .meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .react-quill {
   height: 85%;
   line-height: 1.5;
+  margin-top: 20px;
   margin-bottom: 68px;
 }
 .meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record {
