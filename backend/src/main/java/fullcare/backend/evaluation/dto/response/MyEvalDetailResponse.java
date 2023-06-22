@@ -11,11 +11,11 @@ import java.util.List;
 public class MyEvalDetailResponse {
     private List<BadgeDto> badgeDtos = new ArrayList<>();
     private List<FinalEvalDto> finalEvals = new ArrayList();
-    private ScoreDto score;
+//    private ScoreDto score;
 
-    public MyEvalDetailResponse(List<BadgeDto> badgeDtos, List<FinalEvalDto> finalEvals, ScoreDto scoreDto) {
+    public MyEvalDetailResponse(List<BadgeDto> badgeDtos, List<FinalEvalDto> finalEvals) {
         this.badgeDtos = badgeDtos;
         this.finalEvals = finalEvals;
-        this.score = scoreDto;
+//        this.score = scoreDto;
     }
 }

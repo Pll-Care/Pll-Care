@@ -362,25 +362,24 @@ public class EvaluationService {
         List<FinalEvalDto> finalEvalDtoList = new ArrayList<>();
         ScoreDto scoreDto = new ScoreDto();
         for (FinalTermEvaluation fe : myFinalEvalList) {
+            scoreDto.setCommunication(fe.getScore().getCommunication());
+            scoreDto.setPunctuality(fe.getScore().getPunctuality());
+            scoreDto.setSincerity(fe.getScore().getSincerity());
+            scoreDto.setJobPerformance(fe.getScore().getJobPerformance());
             FinalEvalDto finalEvalDto = FinalEvalDto.builder()
                     .memberId(fe.getEvaluator().getId())
                     .memberName(fe.getEvaluator().getName())
                     .imageUrl(fe.getEvaluator().getImageUrl())
                     .content(fe.getContent())
+                    .score(scoreDto)
                     .build();
             finalEvalDtoList.add(finalEvalDto);
-            scoreDto.setCommunication(scoreDto.getCommunication()+fe.getScore().getCommunication());
-            scoreDto.setPunctuality(scoreDto.getPunctuality()+fe.getScore().getPunctuality());
-            scoreDto.setSincerity(scoreDto.getSincerity()+fe.getScore().getSincerity());
-            scoreDto.setJobPerformance(scoreDto.getJobPerformance()+fe.getScore().getJobPerformance());
+
         }
-        scoreDto.setJobPerformance(scoreDto.getJobPerformance()/ myFinalEvalList.size());
-        scoreDto.setPunctuality(scoreDto.getPunctuality()/ myFinalEvalList.size());
-        scoreDto.setCommunication(scoreDto.getCommunication()/ myFinalEvalList.size());
-        scoreDto.setSincerity(scoreDto.getSincerity()/ myFinalEvalList.size());
 
 
-        return new MyEvalDetailResponse(badgeList, finalEvalDtoList, scoreDto);
+
+        return new MyEvalDetailResponse(badgeList, finalEvalDtoList);
     }
 
     public MyEvalChartResponse findMyEvalChart(Long memberId) {

@@ -10,13 +10,13 @@ public class FinalEvalDto {
     private String memberName;
     private String imageUrl; // ? 사용자 이미지
     private String content;
-//    private Score score;
+    private ScoreDto score;
     @Builder
-    public FinalEvalDto(Long memberId, String memberName, String imageUrl, String content) {
+    public FinalEvalDto(Long memberId, String memberName, String imageUrl, String content, ScoreDto score ) {
         this.memberId = memberId;
         this.memberName = memberName;
         this.imageUrl = imageUrl;
         this.content = content;
-//        this.score = score;
+        this.score = score;
     }
 }
