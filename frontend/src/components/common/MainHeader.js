@@ -7,6 +7,7 @@ import Button from "./Button";
 import ToggleMenuButton from "./ToggleMenuButton";
 
 import { authActions } from "../../redux/authSlice";
+import { useRouter } from "../../hooks/useRouter";
 
 export const headerMenu = [
   { id: 1, link: "/management", title: "프로젝트 관리" },
@@ -17,13 +18,14 @@ const MainHeader = () => {
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
   const [isToggleMenuOpen, setIsToggleMenuOpen] = useState(false);
 
+  const { routeTo } = useRouter();
   const dispatch = useDispatch();
-
   const authState = useSelector((state) => state.auth.isLoggedIn);
 
   const handleLogout = () => {
     dispatch(authActions.logout());
     setIsLoginModalVisible(false);
+    routeTo("/");
   };
 
   const handleLogin = () => {
@@ -61,9 +63,7 @@ const MainHeader = () => {
                 {authState ? (
                   <Link to={menu.link}>{menu.title}</Link>
                 ) : (
-                  <Link onClick={() => setIsLoginModalVisible(true)}>
-                    {menu.title}
-                  </Link>
+                  <Link onClick={handleLogin}>{menu.title}</Link>
                 )}
               </li>
             ))}

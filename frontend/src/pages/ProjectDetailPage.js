@@ -1,18 +1,16 @@
 import { Outlet, useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
 import ManagementHeader from "../components/common/ManagementHeader";
+import { isToken } from "../utils/localstroageHandler";
 
 const ProjectDetailPage = () => {
   const { id } = useParams();
 
-  const authState = useSelector((state) => state.auth.isLoggedIn);
-
   const navigate = useNavigate();
 
   useEffect(() => {
-    !authState && navigate("/", { replace: true });
+    !isToken("access_token") && navigate("/", { replace: true });
   }, []);
 
   return (
