@@ -1803,18 +1803,46 @@ input {
     height: 35px;
   }
 }
-.loading-indicator-container {
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  transition: opacity 0.3s ease-in-out;
+.Toastify__toast-container {
+  width: -moz-max-content;
+  width: max-content;
+  height: 70px;
+  font-size: 18px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: bold;
 }
-.loading-indicator-container.active {
-  opacity: 1;
+
+.Toastify__toast.Toastify__toast--error,
+.Toastify__toast.Toastify__toast--success {
+  height: 25px;
+  border-radius: 10px;
 }
-.loading-indicator-container .loading-indicator {
-  color: #01e89e;
+
+.Toastify__toast.Toastify__toast--error {
+  background-color: #fee7e7;
+}
+.Toastify__toast.Toastify__toast--error .Toastify__toast-body {
+  color: #c9000c;
+}
+
+.Toastify__toast.Toastify__toast--success {
+  background-color: #d7f8ed;
+}
+.Toastify__toast.Toastify__toast--success .Toastify__toast-body {
+  color: #003b28;
+}
+
+.Toastify__toast.Toastify__toast--error::before,
+.Toastify__toast.Toastify__toast--success::before {
+  margin: auto 15px;
+}
+
+.Toastify__toast.Toastify__toast--error::before {
+  content: url("../assets/toast-message-error-img.png");
+}
+
+.Toastify__toast.Toastify__toast--success::before {
+  content: url("../assets/toast-message-check-img.png");
 }
 
 .card {

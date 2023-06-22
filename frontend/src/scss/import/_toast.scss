@@ -1,0 +1,42 @@
+.Toastify__toast-container {
+  width: max-content;
+  height: 70px;
+  font-size: $body-font-size;
+  font-family: $body-font;
+  font-weight: bold;
+}
+
+.Toastify__toast.Toastify__toast--error,
+.Toastify__toast.Toastify__toast--success {
+  height: 25px;
+  border-radius: 10px;
+}
+
+.Toastify__toast.Toastify__toast--error {
+  .Toastify__toast-body {
+    color: #c9000c;
+  }
+
+  background-color: #fee7e7;
+}
+
+.Toastify__toast.Toastify__toast--success {
+  .Toastify__toast-body {
+    color: #003b28;
+  }
+
+  background-color: #d7f8ed;
+}
+
+.Toastify__toast.Toastify__toast--error::before,
+.Toastify__toast.Toastify__toast--success::before {
+  margin: auto 15px;
+}
+
+.Toastify__toast.Toastify__toast--error::before {
+  content: url("../assets/toast-message-error-img.png");
+}
+
+.Toastify__toast.Toastify__toast--success::before {
+  content: url("../assets/toast-message-check-img.png");
+}

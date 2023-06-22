@@ -6,6 +6,9 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { authActions } from "./redux/authSlice";
 import { useEffect } from "react";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import "./scss/fullcare.css";
 
 const queryClient = new QueryClient();
@@ -25,6 +28,11 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={routers} />
+      <ToastContainer
+        autoClose={3000}
+        position={"top-right"}
+        hideProgressBar
+      />
       <ReactQueryDevtools />
     </QueryClientProvider>
   );

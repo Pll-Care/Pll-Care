@@ -4,6 +4,7 @@ import Button from "../../components/common/Button";
 
 import { getStringDate } from "../../utils/date";
 import useManagementMutation from "../../hooks/useManagementMutation";
+import { toast } from "react-toastify";
 
 const NewProject = ({ setIsModalVisible }) => {
   const modalOutside = useRef();
@@ -41,7 +42,7 @@ const NewProject = ({ setIsModalVisible }) => {
 
   const handleSubmitNewProject = async () => {
     if (description.length < 5) {
-      alert("프로젝트 설명은 다섯 글자 이상 작성해주세요.");
+      toast.error("프로젝트 설명은 다섯 글자 이상 작성해주세요.");
       descriptionRef.current.focus();
       return;
     }
