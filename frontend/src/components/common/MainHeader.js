@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Login from "../Login/Login";
@@ -37,6 +37,10 @@ const MainHeader = () => {
     });
   };
 
+  const closeModal = useCallback(() => {
+    setIsLoginModalVisible(false);
+  }, []);
+
   return (
     <>
       <header className="main-header">
@@ -54,7 +58,13 @@ const MainHeader = () => {
                 className={menu.id === 1 ? "nav_item" : "nav_item nav_divide"}
                 key={menu.id}
               >
-                <Link to={menu.link}>{menu.title}</Link>
+                {authState ? (
+                  <Link to={menu.link}>{menu.title}</Link>
+                ) : (
+                  <Link onClick={() => setIsLoginModalVisible(true)}>
+                    {menu.title}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>
@@ -73,7 +83,7 @@ const MainHeader = () => {
       {isLoginModalVisible && (
         <Login
           isLoginModalVisible={isLoginModalVisible}
-          setIsLoginModalVisible={setIsLoginModalVisible}
+          closeModal={closeModal}
         />
       )}
     </>
