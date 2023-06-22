@@ -2,11 +2,16 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import Login from "../Login/Login";
+import Login from "./Login/Login";
 import Button from "./Button";
 import ToggleMenuButton from "./ToggleMenuButton";
 
-import { authActions } from "../../redux/authSlice";
+import { authActions } from "../redux/authSlice";
+
+export const headerMenu = [
+  { id: 1, link: "/management", title: "프로젝트 관리" },
+  { id: 2, link: "/recruitment", title: "인원 모집" },
+];
 
 const MainHeader = () => {
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
@@ -42,9 +47,17 @@ const MainHeader = () => {
             setIsToggleMenuOpen={setIsToggleMenuOpen}
           />
         </div>
-        <div className="main-header-link">
-          <Link to={"/management"}>프로젝트 관리</Link>
-          <Link to={"/recruitment"}>인원 모집</Link>
+        <div>
+          <ul className="main-header-link">
+            {headerMenu.map((menu) => (
+              <li
+                className={menu.id === 1 ? "nav_item" : "nav_item nav_divide"}
+                key={menu.id}
+              >
+                <Link to={menu.link}>{menu.title}</Link>
+              </li>
+            ))}
+          </ul>
         </div>
         {authState ? (
           <div className="main-header-right-col main-header-logout-col">
