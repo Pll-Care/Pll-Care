@@ -1,0 +1,160 @@
+.teamMember {
+  width: 85%;
+  margin: 0 auto;
+  padding: 30px 0;
+
+  &_title {
+    color: #01e89e;
+    font-size: 25px;
+    font-weight: bold;
+  }
+}
+
+//
+//
+
+.memberMangement {
+  margin-bottom: 15px;
+  &_head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &_memebers {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
+    grid-gap: 10px;
+  }
+}
+
+.member_item {
+  min-height: 220px;
+
+  &_imgbox {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > div {
+      width: 150px;
+      height: 150px;
+      position: relative;
+    }
+
+    &_img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background-color: #01e89e;
+      display: inline-block;
+    }
+  }
+
+  &_infobox {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    padding-top: 10px;
+    gap: 10px;
+    &_name {
+      font-family: $link-font;
+      font-size: 18px;
+      color: #003b28;
+    }
+
+    &_job {
+      font-family: $link-font;
+      font-size: 12px;
+      color: #7a7a7a;
+    }
+  }
+
+  &_delete {
+    z-index: 10;
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    background-color: #fff;
+    opacity: 0.75;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #003b28;
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+//
+//
+
+.applicationStatus {
+  width: 100%;
+  &_users {
+    width: 100%;
+  }
+}
+
+.application_item {
+  width: 90%;
+  max-height: 100px;
+  border: 2px solid #01e89e;
+  border-radius: 18px;
+  padding: 15px 10px;
+  margin: 15px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &_imgbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 6%;
+
+    > img {
+      width: 100%;
+      height: 100%;
+      background-color: #01e89e;
+      border-radius: 16px;
+    }
+  }
+
+  &_infobox {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 15px;
+
+    > p {
+      font-family: $link-font;
+      color: #7a7a7a;
+    }
+
+    &_name {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    &_job {
+      font-size: 14px;
+    }
+  }
+
+  &_btnbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+  }
+}
