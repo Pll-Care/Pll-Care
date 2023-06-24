@@ -5,7 +5,6 @@ import fullcare.backend.global.dto.FailureResponse;
 import fullcare.backend.global.exception.InvalidAccessException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.dto.request.*;
-import fullcare.backend.project.dto.response.ProjectApplyResponse;
 import fullcare.backend.project.dto.response.ProjectListResponse;
 import fullcare.backend.project.dto.response.ProjectMemberListResponse;
 import fullcare.backend.project.service.ProjectService;
@@ -161,11 +160,11 @@ public class ProjectController {
             @ApiResponse(responseCode = "400", description = "프로젝트 지원 현황 리스트 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @GetMapping("/{projectId}/applylist")
-    public ResponseEntity<List<ProjectApplyResponse>> findApplyList(@PathVariable Long projectId, @CurrentLoginMember Member member) {
+    public ResponseEntity<List<ProjectMemberListResponse>> findApplyList(@PathVariable Long projectId, @CurrentLoginMember Member member) {
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
             throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
         }
-        List<ProjectApplyResponse> response = projectService.findApplyList(projectId);
+        List<ProjectMemberListResponse> response = projectService.findApplyList(projectId);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 

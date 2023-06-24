@@ -7,7 +7,6 @@ import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.dto.request.ProjectCreateRequest;
 import fullcare.backend.project.dto.request.ProjectStateUpdateRequest;
 import fullcare.backend.project.dto.request.ProjectUpdateRequest;
-import fullcare.backend.project.dto.response.ProjectApplyResponse;
 import fullcare.backend.project.dto.response.ProjectListResponse;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.projectmember.domain.ProjectMember;
@@ -84,9 +83,9 @@ public class ProjectService {
         return getProjectMemberListResponses(projectId, projectMemberRepository);
 
     }
-    public List<ProjectApplyResponse> findApplyList(Long projectId){
+    public List<ProjectMemberListResponse> findApplyList(Long projectId){
         List<ProjectMember> pmList = projectMemberRepository.findApplyListByProjectIdAndProjectMemberRole(projectId, ProjectMemberRoleType.미정);
-        List<ProjectApplyResponse> response = pmList.stream().map(pms -> ProjectApplyResponse.applyList()
+        List<ProjectMemberListResponse> response = pmList.stream().map(pms -> ProjectMemberListResponse.builder()
                 .id(pms.getMember().getId())
                 .pmId(pms.getId())
                 .name(pms.getMember().getName())
@@ -102,6 +101,7 @@ public class ProjectService {
         }
         List<ProjectMemberListResponse> response = pmList.stream().map(pms -> ProjectMemberListResponse.builder()
                 .id(pms.getMember().getId())
+                .pmId(pms.getId())
                 .name(pms.getMember().getName())
                 .imageUrl(pms.getMember().getImageUrl())
                 .position(pms.getProjectMemberRole().getPosition().toString())
