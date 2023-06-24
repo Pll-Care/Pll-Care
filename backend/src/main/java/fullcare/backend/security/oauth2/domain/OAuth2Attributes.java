@@ -3,6 +3,7 @@ package fullcare.backend.security.oauth2.domain;
 
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.domain.MemberRole;
+import fullcare.backend.profile.domain.Profile;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -63,6 +64,7 @@ public class OAuth2Attributes {
                 .signupDate(LocalDateTime.now())
                 .email(this.oAuth2UserInfo.getEmail())
                 .imageUrl(this.oAuth2UserInfo.getImageUrl())
+                .profile(new Profile("한 줄 소개입니다."))
                 .build();
     }
 }

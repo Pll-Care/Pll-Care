@@ -7,6 +7,7 @@ import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.projectmember.domain.ProjectMember;
+import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.projectmember.repository.ProjectMemberRepository;
 import fullcare.backend.schedule.DateCategory;
 import fullcare.backend.schedule.ScheduleCategory;
@@ -80,9 +81,8 @@ public class ScheduleService {
         LocalDateTime endDate = project.getEndDate().atStartOfDay();
         Schedule.validDate(startDate, endDate, scheduleUpdateRequest.getStartDate(), scheduleUpdateRequest.getEndDate());
 
-        List<ProjectMember> pmList = projectMemberRepository.findByProjectId(scheduleUpdateRequest.getProjectId());
+        List<ProjectMember> pmList = projectMemberRepository.findByProjectId(scheduleUpdateRequest.getProjectId(), ProjectMemberRoleType.미정);
         List<Member> members = pmList.stream().map(pm -> pm.getMember()).collect(Collectors.toList());// 프로젝트에 있는 멤버 리스트
-
         schedule.update(
                 scheduleUpdateRequest.getState(),
                 scheduleUpdateRequest.getTitle(),

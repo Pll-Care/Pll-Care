@@ -7,6 +7,7 @@ import fullcare.backend.member.domain.Member;
 import fullcare.backend.post.domain.Post;
 import fullcare.backend.post.dto.request.PostCreateRequest;
 import fullcare.backend.post.dto.request.PostUpdateRequest;
+import fullcare.backend.post.dto.response.MyPostResponse;
 import fullcare.backend.post.dto.response.PostDetailResponse;
 import fullcare.backend.post.dto.response.PostListResponse;
 import fullcare.backend.post.service.PostService;
@@ -189,4 +190,7 @@ public class PostController {
         projectMemberService.addProjectMember(project.getId(), member.getId(), new ProjectMemberRole(ProjectMemberRoleType.미정, ProjectMemberRoleType.미정));
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
+
 }

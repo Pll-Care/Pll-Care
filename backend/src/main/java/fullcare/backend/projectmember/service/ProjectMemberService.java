@@ -7,6 +7,7 @@ import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
+import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.projectmember.repository.ProjectMemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,11 @@ public class ProjectMemberService {
 
         project.addMember(member, role);
     }
+    public void updateProjectMemberRole(Long pmId, ProjectMemberRole projectMemberRole){
+        ProjectMember projectMember = projectMemberRepository.findById(pmId).orElseThrow(() -> new EntityNotFoundException("해당 회원이 존재하지 않습니다."));
+        projectMember.updateRole(projectMemberRole);
 
+    }
     public void deleteProjectMember(Long projectId, Long memberId) {
         projectMemberRepository.deleteByProjectIdAndMemberId(projectId, memberId);
     }

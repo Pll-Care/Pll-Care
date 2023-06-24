@@ -1,12 +1,16 @@
 package fullcare.backend.memo.domain;
 
 import fullcare.backend.global.entity.BaseEntity;
+import fullcare.backend.post.domain.Recruitment;
 import fullcare.backend.project.domain.Project;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -30,6 +34,9 @@ public class Memo extends BaseEntity {
     @Lob
     @Column(name = "content", nullable = false)
     private String content;
+
+    @OneToMany(mappedBy = "memo", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BookmarkMemo> bookmarkMemos = new ArrayList<>();
 
     @Builder(builderMethodName = "createNewMemo")
     public Memo(Project project, String title, String content, String author) {

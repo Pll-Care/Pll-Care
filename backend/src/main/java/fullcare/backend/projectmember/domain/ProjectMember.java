@@ -1,12 +1,18 @@
 package fullcare.backend.projectmember.domain;
 
 import fullcare.backend.member.domain.Member;
+import fullcare.backend.memo.domain.BookmarkMemo;
+import fullcare.backend.post.domain.Post;
 import fullcare.backend.project.domain.Project;
+import fullcare.backend.schedule.domain.Schedule;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -27,6 +33,10 @@ public class ProjectMember {
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
+    @OneToMany(mappedBy = "projectMember", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> posts = new ArrayList<>();
+    @OneToMany(mappedBy = "projectMember", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Schedule> schedules = new ArrayList<>();
     @Embedded
     private ProjectMemberRole projectMemberRole; // 리더 or 팀원
 
@@ -43,5 +53,7 @@ public class ProjectMember {
         return (this.projectMemberRole.getRole() == ProjectMemberRoleType.리더) ? true : false;
     }
 
-
+    public void updateRole(ProjectMemberRole projectMemberRole){
+        this.projectMemberRole = projectMemberRole;
+    }
 }

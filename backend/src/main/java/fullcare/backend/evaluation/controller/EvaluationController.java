@@ -185,37 +185,4 @@ public class EvaluationController {
         return new ResponseEntity(response,HttpStatus.OK);
     }
 
-    @Operation(method = "get", summary = "개인페이지 프로젝트 평가 리스트 조회")
-    @ApiResponses(value = {
-            @ApiResponse(description = "개인페이지 프로젝트 평가 리스트 조회 성공", responseCode = "200", useReturnTypeSchema = true)
-    })// * 개인 페이지
-    @GetMapping("/mine")
-    public ResponseEntity<CustomPageImpl<MyEvalListResponse>> findMyEvalList(CustomPageRequest pageRequest, @CurrentLoginMember Member member) {
-        PageRequest of = pageRequest.of("project");
-        Pageable pageable = (Pageable) of;
-        Page<MyEvalListResponse> response = evaluationService.findMyEvalList(pageable, member.getId());
-        return new ResponseEntity(response,HttpStatus.OK);
-    }
-    @Operation(method = "get", summary = "개인페이지 프로젝트 평가 조회")
-    @ApiResponses(value = {
-            @ApiResponse(description = "개인페이지 프로젝트 평가 조회 성공", responseCode = "200",useReturnTypeSchema = true)
-    })
-    @GetMapping("/mine/{projectId}")
-    public ResponseEntity<MyEvalDetailResponse> findMyEvalDetail(@PathVariable Long projectId, @CurrentLoginMember Member member) {
-        if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
-        }
-        MyEvalDetailResponse response = evaluationService.findMyEval(projectId, member.getId());
-
-        return new ResponseEntity(response,HttpStatus.OK);
-    }
-    @Operation(method = "get", summary = "개인페이지 평가 차트 조회")
-    @ApiResponses(value = {
-            @ApiResponse(description = "개인페이지 평가 차트 조회 성공", responseCode = "200", useReturnTypeSchema = true)
-    })
-    @GetMapping("/mine/chart")
-    public ResponseEntity<MyEvalChartResponse> findMyEvalChart(@CurrentLoginMember Member member) {
-        MyEvalChartResponse response = evaluationService.findMyEvalChart(member.getId());
-        return new ResponseEntity(response,HttpStatus.OK);
-    }
 }

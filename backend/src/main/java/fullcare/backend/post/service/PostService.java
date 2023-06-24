@@ -9,6 +9,7 @@ import fullcare.backend.post.domain.Recruitment;
 import fullcare.backend.post.dto.request.PostCreateRequest;
 import fullcare.backend.post.dto.request.PostUpdateRequest;
 import fullcare.backend.post.dto.request.RecruitInfo;
+import fullcare.backend.post.dto.response.MyPostResponse;
 import fullcare.backend.post.dto.response.PostDetailResponse;
 import fullcare.backend.post.dto.response.PostListResponse;
 import fullcare.backend.post.repository.PostRepository;
@@ -134,5 +135,29 @@ public class PostService {
 
         //            throw new InvalidAccessException("이미 좋아요 처리한 모집글입니다.");
 
+    }
+
+    public CustomPageImpl<MyPostResponse> findMyPost(Long memberId, Pageable pageable){
+        Page<Post> posts = postRepository.findPageByMemberId(memberId, pageable);
+        List<MyPostResponse> content = posts.stream().map(p -> MyPostResponse.builder()
+                .postId(p.getId())
+                .title(p.getTitle())
+                .description(p.getDescription())
+                .state(p.getState())
+                .build()
+        ).collect(Collectors.toList());
+        return new CustomPageImpl<>(content, pageable, posts.getTotalElements());
+    }
+
+    public CustomPageImpl<MyPostResponse> findMyLikePost(Long memberId, Pageable pageable){
+        Page<Post> posts = postRepository.findLikePageByMemberId(memberId, pageable);
+        List<MyPostResponse> content = posts.stream().map(p -> MyPostResponse.builder()
+                .postId(p.getId())
+                .title(p.getTitle())
+                .description(p.getDescription())
+                .state(p.getState())
+                .build()
+        ).collect(Collectors.toList());
+        return new CustomPageImpl<>(content, pageable, posts.getTotalElements());
     }
 }

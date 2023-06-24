@@ -13,6 +13,7 @@ import fullcare.backend.post.domain.RecruitPosition;
 import fullcare.backend.post.dto.request.PostCreateRequest;
 import fullcare.backend.post.dto.request.RecruitInfo;
 import fullcare.backend.post.service.PostService;
+import fullcare.backend.profile.domain.Profile;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.dto.request.ProjectCreateRequest;
 import fullcare.backend.project.service.ProjectService;
@@ -160,10 +161,10 @@ public class TestDataInit {
     }
 
     private void createMember() {
-        Member member = new Member("google_101581376839285371456", "nick", "name", "fullcaredummy@gmail.com", MemberRole.USER, LocalDateTime.now(), "refresh");
+        Member member = new Member("naver_h9Vdq-6-ZRXzfDGDQKeQ6mUM6VOvrCsBeBXGLlbPeyE", "nick", "name", "fullcaredummy@gmail.com", MemberRole.USER, LocalDateTime.now(), "refresh", new Profile("한 줄 소개 입니다."));
         memberRepository.save(member);
         for (int i = 1; i < 10; i++) {
-            member = new Member("id" + i, "nick" + i, "name" + i, "email" + i, MemberRole.USER, LocalDateTime.now(), "refresh" + i);
+            member = new Member("id" + i, "nick" + i, "name" + i, "email" + i, MemberRole.USER, LocalDateTime.now(), "refresh" + i, new Profile("한 줄 소개 입니다."));
             memberRepository.save(member);
         }
     }
