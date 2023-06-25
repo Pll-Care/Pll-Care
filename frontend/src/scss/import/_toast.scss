@@ -6,6 +6,10 @@
   font-weight: bold;
 }
 
+.Toastify__toast-icon {
+  display: none;
+}
+
 .Toastify__toast.Toastify__toast--error,
 .Toastify__toast.Toastify__toast--success {
   height: 25px;
