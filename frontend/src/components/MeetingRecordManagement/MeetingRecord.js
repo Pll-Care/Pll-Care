@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMeetingRecord } from "../../lib/apis/meetingRecordManagementApi";
 import useMeetingRecordManagementMutation from "../../hooks/useMeetingRecordManagementMutation";
 import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import Button from "../common/Button";
 
 const MeetingRecord = ({ state }) => {
@@ -42,6 +42,9 @@ const MeetingRecord = ({ state }) => {
     dispatch(
       meetingRecordManagementActions.onEditSelectedMeetingRecordState(false)
     );
+    dispatch(
+      meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(false)
+    );
   };
 
   const handleDeleteMeetingRecord = () => {
@@ -58,7 +61,7 @@ const MeetingRecord = ({ state }) => {
     dispatch(meetingRecordManagementActions.onEditInitialState(true));
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (state === "selectedMeetingRecord") {
       dispatch(meetingRecordManagementActions.setTitle(selectedData.title));
       dispatch(meetingRecordManagementActions.setContent(selectedData.content));
@@ -75,7 +78,7 @@ const MeetingRecord = ({ state }) => {
     state,
   ]);
 
-  return state === "selectedMeetingRecord" ? (
+  return state === "selectedMeetingRecord" && selectedData.createdDate ? (
     <div className="meeting-record">
       <div className="meeting-record-heading">
         <div className="meeting-record-date">
@@ -121,50 +124,52 @@ const MeetingRecord = ({ state }) => {
       />
     </div>
   ) : (
-    <div className="meeting-record">
-      <div className="meeting-record-heading">
-        <div className="meeting-record-date">
-          {new Date(createdData.createdDate).toLocaleString()}
-        </div>
-        <div className="meeting-record-title">{createdData.title}</div>
-        <div className="meeting-record-container">
-          <div className="meeting-record-author">{createdData.author}</div>
-          <div className="meeting-record-button-wrapper">
-            <Button
-              size={"small"}
-              type={"underlined"}
-              text={"삭제하기"}
-              onClick={handleDeleteMeetingRecord}
-            />
-            <Button
-              size={"small"}
-              type={"underlined"}
-              text={"수정하기"}
-              onClick={handleEditMeetingRecord}
-            />
-            {createdData.bookmarked ? (
+    state === "createdMeetingRecord" && createdData.createdDate && (
+      <div className="meeting-record">
+        <div className="meeting-record-heading">
+          <div className="meeting-record-date">
+            {new Date(createdData.createdDate).toLocaleString()}
+          </div>
+          <div className="meeting-record-title">{createdData.title}</div>
+          <div className="meeting-record-container">
+            <div className="meeting-record-author">{createdData.author}</div>
+            <div className="meeting-record-button-wrapper">
               <Button
                 size={"small"}
                 type={"underlined"}
-                text={"북마크 취소하기"}
-                onClick={handleBookMarkMeetingRecord}
+                text={"삭제하기"}
+                onClick={handleDeleteMeetingRecord}
               />
-            ) : (
               <Button
                 size={"small"}
                 type={"underlined"}
-                text={"북마크하기"}
-                onClick={handleBookMarkMeetingRecord}
+                text={"수정하기"}
+                onClick={handleEditMeetingRecord}
               />
-            )}
+              {createdData.bookmarked ? (
+                <Button
+                  size={"small"}
+                  type={"underlined"}
+                  text={"북마크 취소하기"}
+                  onClick={handleBookMarkMeetingRecord}
+                />
+              ) : (
+                <Button
+                  size={"small"}
+                  type={"underlined"}
+                  text={"북마크하기"}
+                  onClick={handleBookMarkMeetingRecord}
+                />
+              )}
+            </div>
           </div>
         </div>
+        <div
+          className="selected-meeting-record-content"
+          dangerouslySetInnerHTML={{ __html: createdData.content }}
+        />
       </div>
-      <div
-        className="selected-meeting-record-content"
-        dangerouslySetInnerHTML={{ __html: createdData.content }}
-      />
-    </div>
+    )
   );
 };
 

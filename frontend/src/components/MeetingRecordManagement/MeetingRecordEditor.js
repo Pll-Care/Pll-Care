@@ -7,7 +7,7 @@ import "react-quill/dist/quill.snow.css";
 import Quill from "quill";
 import ImageResize from "quill-image-resize";
 import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import useMeetingRecordManagementMutation from "../../hooks/useMeetingRecordManagementMutation";
 import { useLocation } from "react-router-dom";
 import MeetingRecord from "./MeetingRecord";
@@ -73,18 +73,9 @@ const MeetingRecordEditor = () => {
         content: content,
       });
     }
-    dispatch(
-      meetingRecordManagementActions.onEditSelectedMeetingRecordState(false)
-    );
-    dispatch(
-      meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(
-        true
-      )
-    );
-    dispatch(meetingRecordManagementActions.onChangeIsEditState(false));
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!isEdit) {
       dispatch(meetingRecordManagementActions.onEditInitialState(true));
     } else {

@@ -18,9 +18,19 @@ const useMeetingRecordManagementMutation = () => {
   const { mutate: createMutate } = useMutation(createMeetingRecord, {
     onSuccess: (data) => {
       dispatch(
+        meetingRecordManagementActions.onEditSelectedMeetingRecordState(false)
+      );
+      dispatch(
+        meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(
+          true
+        )
+      );
+      dispatch(
         meetingRecordManagementActions.onEditCreatedMeetingRecordId(data)
       );
+      dispatch(meetingRecordManagementActions.onChangeIsEditState(false));
       queryClient.invalidateQueries(["managementAllMeetingRecordList"]);
+      queryClient.invalidateQueries(["managementCreatedMeetingRecordList"]);
       toast.success("작성 완료되었습니다!");
     },
   });
@@ -36,10 +46,20 @@ const useMeetingRecordManagementMutation = () => {
   const { mutate: editMutate } = useMutation(editMeetingRecord, {
     onSuccess: (data) => {
       dispatch(
+        meetingRecordManagementActions.onEditSelectedMeetingRecordState(false)
+      );
+      dispatch(
+        meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(
+          true
+        )
+      );
+      dispatch(
         meetingRecordManagementActions.onEditCreatedMeetingRecordId(data)
       );
+      dispatch(meetingRecordManagementActions.onChangeIsEditState(false));
       queryClient.invalidateQueries(["managementAllMeetingRecordList"]);
       queryClient.invalidateQueries(["managementBookMarkMeetingRecordList"]);
+      queryClient.invalidateQueries(["managementCreatedMeetingRecordList"]);
       toast.success("수정되었습니다!");
     },
   });
