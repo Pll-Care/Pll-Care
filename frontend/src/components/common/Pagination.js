@@ -18,7 +18,8 @@ const Pagination = ({
   };
 
   const handleIncreasePageIndex = () => {
-    pageIndex < Math.ceil(totalPages) &&
+    console.log(pageIndex, Math.ceil(totalPages));
+    pageIndex + maxDataNumbers < Math.ceil(totalPages) &&
       setPageIndex((prevPageIndex) => (prevPageIndex += maxDataNumbers));
   };
 
