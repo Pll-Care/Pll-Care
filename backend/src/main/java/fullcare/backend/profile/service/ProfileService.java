@@ -27,7 +27,7 @@ public class ProfileService {
                 .myProfile(memberId == member.getId())
                 .build();
     }
-    @Transactional
+
     public void updateProfile(Member member, ProfileUpdateRequest profileUpdateRequest){
         Member findMember = memberRepository.findById(member.getId()).orElseThrow();
         Profile p = findMember.getProfile();
