@@ -157,7 +157,7 @@ public class ProjectController {
     @Operation(method = "get", summary = "프로젝트 지원 현황 리스트 조회")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "프로젝트 지원 현황 리스트 조회 성공", useReturnTypeSchema = true),
-            @ApiResponse(responseCode = "400", description = "프로젝트 지원 현황 리스트 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+//            @ApiResponse(responseCode = "400", description = "프로젝트 지원 현황 리스트 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @GetMapping("/{projectId}/applylist")
     public ResponseEntity<List<ProjectMemberListResponse>> findApplyList(@PathVariable Long projectId, @CurrentLoginMember Member member) {
@@ -171,11 +171,11 @@ public class ProjectController {
     @Operation(method = "put", summary = "프로젝트 멤버 역할 수정")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "프로젝트 멤버 역할 수정 성공", useReturnTypeSchema = true),
-            @ApiResponse(responseCode = "400", description = "프로젝트 멤버 역할 수정 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+//            @ApiResponse(responseCode = "400", description = "프로젝트 멤버 역할 수정 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @PutMapping("/{projectId}/pmrole")
     public ResponseEntity updateProjectMemberRole(@PathVariable Long projectId,@RequestBody ProjectMemberRoleUpdateRequest projectMemberRoleUpdateRequest, @CurrentLoginMember Member member) {
-        ProjectMember projectMember = projectMemberService.findProjectMember(projectId, member.getId());
+        ProjectMember projectMember = projectMemberService.findProjectMember(projectId, member.getId());//! 해당 리더가 수정하려는 멤버와 같은 프로젝트에 속한지 검증 필요
         if (!projectMember.isLeader()) { //? 프로젝트 리더만 프로젝트 멤버 역할 수정
             throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
         }

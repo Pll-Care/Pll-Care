@@ -145,7 +145,7 @@ public class TestDataInit {
         LocalDate startDate = LocalDate.of(2023, 1, 1);
         LocalDate endDate = LocalDate.of(2023, 12, 31);
         for (long i = 1l; i < 10l; i++) {
-            Project project = projectService.createProject(1l, new ProjectCreateRequest("제목" + i, "내용" + i, startDate.plusMonths(i), endDate));
+            Project project = projectService.createProject(1l, new ProjectCreateRequest("제목" + i, "내용" + i, startDate.plusMonths(i), endDate, null));
             for (long j = 2l; j < 10l; j++) {
                 if (j < 4l) {
                     project.addMember(memberRepository.findById(j).get(), new ProjectMemberRole(ProjectMemberRoleType.팀원, ProjectMemberRoleType.백엔드));

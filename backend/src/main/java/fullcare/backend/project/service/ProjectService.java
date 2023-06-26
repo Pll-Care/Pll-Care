@@ -14,6 +14,7 @@ import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.projectmember.repository.ProjectMemberRepository;
+import fullcare.backend.s3.FileUploadService;
 import fullcare.backend.util.CustomPageImpl;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -36,16 +37,16 @@ public class ProjectService {
     private final MemberRepository memberRepository;
     private final ProjectMemberRepository projectMemberRepository;
 
-    public static List<ProjectMemberListResponse> getProjectMemberListResponses(Long projectId, ProjectMemberRepository projectMemberRepository) {
-        List<ProjectMember> pmList = projectMemberRepository.findByProjectId(projectId);
-        if (pmList.size() == 0) {
-            throw new RuntimeException("프로젝트 조회 불가");
-        }
-        List<ProjectMemberListResponse> response = pmList.stream().map(pms -> ProjectMemberListResponse.builder()
-                .id(pms.getMember().getId())
-                .name(pms.getMember().getName()).build()).collect(Collectors.toList());
-        return response;
-    }
+//    public static List<ProjectMemberListResponse> getProjectMemberListResponses(Long projectId, ProjectMemberRepository projectMemberRepository) {
+//        List<ProjectMember> pmList = projectMemberRepository.findByProjectId(projectId, ProjectMemberRoleType.미정);
+//        if (pmList.size() == 0) {
+//            throw new RuntimeException("프로젝트 조회 불가");
+//        }
+//        List<ProjectMemberListResponse> response = pmList.stream().map(pms -> ProjectMemberListResponse.builder()
+//                .id(pms.getMember().getId())
+//                .name(pms.getMember().getName()).build()).collect(Collectors.toList());
+//        return response;
+//    }
 
     @Transactional(readOnly = true)
     public CustomPageImpl<ProjectListResponse> findMyProjectList(Pageable pageable, Long memberId, List<State> states) {
@@ -58,6 +59,7 @@ public class ProjectService {
                 .startDate(p.getStartDate())
                 .endDate(p.getEndDate())
                 .state(p.getState())
+                .imageUrl(p.getImageUrl())
                 .build()
         ).collect(Collectors.toList());
 
@@ -72,6 +74,7 @@ public class ProjectService {
                 .state(State.ONGOING)
                 .startDate(request.getStartDate())
                 .endDate(request.getEndDate())
+                .imageUrl(request.getImageUrl())
                 .build();
 
         newProject.addMember(member, new ProjectMemberRole(ProjectMemberRoleType.리더, ProjectMemberRoleType.미정));

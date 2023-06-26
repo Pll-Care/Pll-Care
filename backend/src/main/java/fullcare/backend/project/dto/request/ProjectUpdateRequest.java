@@ -33,4 +33,5 @@ public class ProjectUpdateRequest {
     @FutureOrPresent
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate endDate;
+    private String imageUrl;
 }

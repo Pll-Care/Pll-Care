@@ -2,10 +2,10 @@ spring:
 
   # Database
   datasource:
-    url: jdbc:h2:tcp://localhost/~/userdb
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:tcp://localhost/~/userdb
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
 
   #    driver-class-name: com.mysql.cj.jdbc.Driver
   #    url: jdbc:mysql://localhost:3306/fullcare?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
@@ -101,7 +101,7 @@ logging:
 cloud:
   aws:
     s3:
-      bucket: fullcare.bucket
+      bucket: fullcared
     credentials:
       access-key: AKIARPK2GG2JA63IKXJS
       secret-key: 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

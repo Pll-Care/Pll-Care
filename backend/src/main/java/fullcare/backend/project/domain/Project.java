@@ -41,6 +41,7 @@ public class Project extends BaseEntity {
     @Lob
     @Column(name = "description", nullable = false)
     private String description;
+    private String imageUrl;
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MidtermEvaluation> midtermEvaluations = new ArrayList<>();
@@ -68,12 +69,13 @@ public class Project extends BaseEntity {
 
 
     @Builder(builderMethodName = "createNewProject")
-    public Project(State state, String title, String description, LocalDate startDate, LocalDate endDate) {
+    public Project(State state, String title, String description, LocalDate startDate, LocalDate endDate, String imageUrl) {
         this.title = title;
         this.description = description;
         this.state = state;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.imageUrl = imageUrl;
     }
 
     public void updateState(State state) {
@@ -96,5 +98,6 @@ public class Project extends BaseEntity {
         this.startDate = projectUpdateRequest.getStartDate();
         this.endDate = projectUpdateRequest.getEndDate();
         this.state = projectUpdateRequest.getState();
+        this.imageUrl = projectUpdateRequest.getImageUrl();
     }
 }

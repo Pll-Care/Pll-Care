@@ -23,7 +23,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Optional<Post> findById(@Param("postId") Long postId);
 
 
-    @Query(value = "select p from Post p where p.projectMember.member.id  = :memberId", countQuery = "select count(p) from Post p where p.projectMember.member.id = :memberId")
+    @Query(value = "select p from Post p join p.project pp join pp.projectMembers pm where pm.member.id  = :memberId", countQuery = "select count(p) from Post p join p.project pp join pp.projectMembers pm where pm.member.id = :memberId")
     Page<Post> findPageByMemberId(@Param("memberId")Long memberId, Pageable pageable);
 
     @Query(value = "select p from Post p join fetch p.likes l where l.member.id =:memberId", countQuery = "select p from Post p join fetch p.likes l where l.member.id =:memberId")

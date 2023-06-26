@@ -4,7 +4,7 @@ import fullcare.backend.evaluation.dto.response.MyEvalChartResponse;
 import fullcare.backend.evaluation.dto.response.MyEvalDetailResponse;
 import fullcare.backend.evaluation.dto.response.MyEvalListResponse;
 import fullcare.backend.evaluation.service.EvaluationService;
-import fullcare.backend.global.dto.FailureResponse;
+//import fullcare.backend.global.dto.FailureResponse;
 import fullcare.backend.global.exception.InvalidAccessException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.post.dto.response.MyPostResponse;
@@ -49,7 +49,7 @@ public class ProfileController {
     @Operation(method = "get", summary = "개인 프로필 조회")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "개인 프로필 조회 성공", useReturnTypeSchema = true),
-            @ApiResponse(responseCode = "400", description = "개인 프로필 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+//            @ApiResponse(responseCode = "400", description = "개인 프로필 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @GetMapping
     public ResponseEntity<ProfileResponse> findProfile(@PathVariable Long memberId, @CurrentLoginMember Member member) {
@@ -60,7 +60,7 @@ public class ProfileController {
     @Operation(method = "put", summary = "개인 프로필 수정")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "개인 프로필 수정 성공", useReturnTypeSchema = true),
-            @ApiResponse(responseCode = "400", description = "개인 프로필 수정 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+//            @ApiResponse(responseCode = "400", description = "개인 프로필 수정 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @PutMapping
     public ResponseEntity projectMemberList(@PathVariable Long memberId, @CurrentLoginMember Member member, @RequestBody ProfileUpdateRequest profileUpdateRequest) {
@@ -74,7 +74,7 @@ public class ProfileController {
     @Operation(method = "get", summary = "개인페이지 작성한 모집글 조회")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "개인페이지 작성한 모집글 조회 성공", useReturnTypeSchema = true),
-            @ApiResponse(responseCode = "400", description = "개인페이지 작성한 모집글 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+//            @ApiResponse(responseCode = "400", description = "개인페이지 작성한 모집글 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @GetMapping("/post")
     public ResponseEntity<CustomPageImpl<MyPostResponse>> findMyPost(@PathVariable Long memberId, CustomPageRequest pageRequest, @CurrentLoginMember Member member) {
@@ -91,7 +91,7 @@ public class ProfileController {
     @Operation(method = "get", summary = "개인페이지 좋아요 한 모집글 조회")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "개인페이지 좋아요 한 모집글 조회 성공", useReturnTypeSchema = true),
-            @ApiResponse(responseCode = "400", description = "개인페이지 좋아요 한 모집글 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+//            @ApiResponse(responseCode = "400", description = "개인페이지 좋아요 한 모집글 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @GetMapping("/post/like")
     public ResponseEntity<CustomPageImpl<MyPostResponse>> findMyLikePost(@PathVariable Long memberId, CustomPageRequest pageRequest, @CurrentLoginMember Member member) {
