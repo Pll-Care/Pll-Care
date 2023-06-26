@@ -4,31 +4,46 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import fullcare.backend.schedule.ScheduleCategory;
 import fullcare.backend.schedule.domain.Address;
 import fullcare.backend.schedule.dto.MemberDto;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
 public class ScheduleCreateRequest {
-    @NotNull
+
+    @NotBlank
     private Long projectId;
-    @NotNull
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
+
+    // TODO startDate(이전) < endDate(이후) + NotBlank인가 NotEmpty인가?
+    @FutureOrPresent
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime startDate;
-    @NotNull
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
+
+    @FutureOrPresent
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime endDate;
-    @NotNull
+
+    // ? NotBlank인가 NotEmpty인가?
     private ScheduleCategory category;
-    @NotNull
+
+    // TODO 여기는 왜 MemberDto로 받는가? (ScheduleUpdateRequest와의 차이점)
+    @NotEmpty
     private List<MemberDto> memberDtos;
-    @NotNull
+
+    @NotBlank
+    @Length(min = 2, max = 20)
     private String title;
-    @NotNull
+
+    @NotEmpty
     private String content;
 
+    @NotNull
     private Address address;
 
 

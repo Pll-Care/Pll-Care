@@ -28,7 +28,7 @@ public class PostListResponse {
 
     public PostListResponse(Post post, boolean isLiked) {//, int isLiked) {
         this.postId = post.getId();
-        this.projectName = post.getProjectMember().getProject().getTitle();
+        this.projectName = post.getProject().getTitle();
         this.title = post.getTitle();
         this.techStack = post.getTechStack();
         this.isLiked = isLiked;
@@ -45,20 +45,17 @@ public class PostListResponse {
         this.title = title;
         this.techStack = techStack;
         this.isLiked = isLiked;
-//        this.recruitInfoList = recruitments.stream().map(r -> new RecruitInfo(r)).toList();
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
-
     }
 
 
     public static PostListResponse entityToDto(Post post) {
         return PostListResponse.builder()
                 .postId(post.getId())
-                .projectName(post.getProjectMember().getProject().getTitle())
+                .projectName(post.getProject().getTitle())
                 .title(post.getTitle())
                 .techStack(post.getTechStack())
-//                .recruitInfoList(post.getRecruitments().stream().map(r -> new RecruitInfo(r)).toList())
                 .createdDate(post.getCreatedDate())
                 .modifiedDate(post.getModifiedDate())
                 .build();

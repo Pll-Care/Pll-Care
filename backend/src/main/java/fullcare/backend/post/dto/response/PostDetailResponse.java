@@ -1,5 +1,6 @@
 package fullcare.backend.post.dto.response;
 
+import fullcare.backend.post.domain.Post;
 import fullcare.backend.post.dto.request.RecruitInfo;
 import lombok.Builder;
 import lombok.Getter;
@@ -47,24 +48,23 @@ public class PostDetailResponse {
         this.modifiedDate = modifiedDate;
     }
 
+    public static PostDetailResponse entityToDto(Post post) {
+        return PostDetailResponse.builder()
+                .postId(post.getId())
+                .projectName(post.getProject().getTitle())
+                .memberName(post.getAuthor().getNickname())
+                .title(post.getTitle())
+                .description(post.getDescription())
+                .reference(post.getReference())
+                .contact(post.getContact())
+                .region(post.getRegion())
+                .techStack(post.getTechStack())
+                .createdDate(post.getCreatedDate())
+                .modifiedDate(post.getModifiedDate())
+                .build();
+    }
+
     public void setRecruitInfoList(List<RecruitInfo> list) {
         this.recruitInfoList = list;
     }
-
-//    public static PostDetailResponse entityToDto(Post post) {
-//        return PostDetailResponse.builder()
-//                .postId(post.getId())
-//                .projectName(post.getProjectMember().getProject().getTitle())
-//                .memberName(post.getProjectMember().getMember().getNickname())
-//                .title(post.getTitle())
-//                .description(post.getDescription())
-//                .reference(post.getReference())
-//                .contact(post.getContact())
-//                .region(post.getRegion())
-//                .techStack(post.getTechStack())
-//                .recruitInfoList(post.getRecruitments().stream().map(ri -> new RecruitInfo(ri)).toList())
-//                .createdDate(post.getCreatedDate())
-//                .modifiedDate(post.getModifiedDate())
-//                .build();
-//    }
 }

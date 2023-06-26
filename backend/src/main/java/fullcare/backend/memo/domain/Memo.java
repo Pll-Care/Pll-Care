@@ -58,10 +58,9 @@ public class Memo extends BaseEntity {
 //        return newMemo;
 //    }
 
-    public void updateAll(String title, String content, String author) {
+    public void updateAll(String title, String content) {
         this.title = title;
         this.content = content;
-        this.author = author;
     }
 
 //    private void belongTo(Project project) {

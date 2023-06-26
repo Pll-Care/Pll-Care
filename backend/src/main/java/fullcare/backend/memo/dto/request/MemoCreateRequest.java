@@ -1,5 +1,6 @@
 package fullcare.backend.memo.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,10 +10,10 @@ import org.hibernate.validator.constraints.Length;
 @NoArgsConstructor
 public class MemoCreateRequest {
 
-    @NotEmpty
+    @NotBlank
     private Long projectId;
 
-    @NotEmpty
+    @NotBlank
     @Length(min = 2, max = 20)
     private String title;
 

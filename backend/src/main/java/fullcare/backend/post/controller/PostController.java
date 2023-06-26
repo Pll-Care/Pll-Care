@@ -1,7 +1,7 @@
 package fullcare.backend.post.controller;
 
 
-import fullcare.backend.global.dto.FailureResponse;
+import fullcare.backend.global.dto.ErrorResponse;
 import fullcare.backend.global.exception.InvalidAccessException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.post.domain.Post;
@@ -12,7 +12,7 @@ import fullcare.backend.post.dto.response.PostDetailResponse;
 import fullcare.backend.post.dto.response.PostListResponse;
 import fullcare.backend.post.service.PostService;
 import fullcare.backend.project.domain.Project;
-import fullcare.backend.projectmember.domain.ProjectMember;
+import fullcare.backend.projectmember.DuplicateProjectMemberException;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.projectmember.service.ProjectMemberService;
@@ -45,9 +45,8 @@ public class PostController {
     private final ProjectMemberService projectMemberService;
 
     // todo 구현해야하는 기능
-    // * 1. 모집글 생성, 수정, 삭제 -> 모집글을 삭제할 수 있는
     // * 2. 모집글 목록 조회(페이지 + 필터링)
-    // * 3. 모집글 단건조회
+
     // * 4. 모집글 좋아요
     // * 5. 모집글을 통해 프로젝트에 지원
 
@@ -55,14 +54,12 @@ public class PostController {
     @Operation(method = "post", summary = "모집글 생성")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "모집글 생성 성공", content = @Content),
-            @ApiResponse(responseCode = "400", description = "모집글 생성 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+            @ApiResponse(responseCode = "400", description = "모집글 생성 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping
     public ResponseEntity create(@RequestBody PostCreateRequest postCreateRequest,
                                  @CurrentLoginMember Member member) {
 
-        // * 해당 프로젝트의 모집글을 작성 할 수 있는 권한을 가진 사람인지 검증 필요
-        // * 프로젝트에 소속된 사람인가? (프로젝트에 소속된 사람이라면 누구나 모집글을 작성할 수 있음)
         if (!(projectMemberService.validateProjectMember(postCreateRequest.getProjectId(), member.getId()))) {
             throw new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.");
         }
@@ -75,19 +72,20 @@ public class PostController {
     @Operation(method = "put", summary = "모집글 수정")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "모집글 수정 성공", content = @Content),
-            @ApiResponse(responseCode = "400", description = "모집글 수정 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+            @ApiResponse(responseCode = "400", description = "모집글 수정 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PutMapping("/{postId}")
     public ResponseEntity update(@PathVariable Long postId,
                                  @RequestBody PostUpdateRequest postUpdateRequest,
                                  @CurrentLoginMember Member member) {
 
-        Post post = postService.findPost(postId); // ! 페치조인 여부 확인 필요
-        ProjectMember projectMember = post.getProjectMember(); // * 작성자 정보
+        Post post = postService.findPost(postId);
+        Project findProject = post.getProject();  // * 프로젝트 정보
+        Member author = post.getAuthor(); // * 작성자 정보
 
-        // * 해당 프로젝트의 모집글을 수정 할 수 있는 권한을 가진 사람인지 검증 필요
-        // * 프로젝트 리더인가? or 프로젝트 팀원이면서 작성자 본인인가?
-        if (!(projectMember.getMember().getId().equals(member.getId())) && !(projectMemberService.findProjectMember(projectMember.getProject().getId(), member.getId()).isLeader())) {
+        if (!(projectMemberService.validateProjectMember(findProject.getId(), member.getId()))) {
+            throw new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.");
+        } else if (!author.getId().equals(member.getId()) || !(projectMemberService.findProjectMember(findProject.getId(), member.getId()).isLeader())) {
             throw new InvalidAccessException("해당 모집글의 수정 권한이 없습니다.");
         }
 
@@ -100,18 +98,19 @@ public class PostController {
     @Operation(method = "delete", summary = "모집글 삭제")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "모집글 삭제 성공", content = @Content),
-            @ApiResponse(responseCode = "400", description = "모집 삭제 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+            @ApiResponse(responseCode = "400", description = "모집 삭제 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @DeleteMapping("/{postId}")
     public ResponseEntity delete(@PathVariable Long postId,
                                  @CurrentLoginMember Member member) {
 
-        Post post = postService.findPost(postId); // ! 페치조인 여부 확인 필요
-        ProjectMember projectMember = post.getProjectMember(); // * 작성자 정보
+        Post post = postService.findPost(postId);
+        Project findProject = post.getProject();  // * 프로젝트 정보
+        Member author = post.getAuthor(); // * 작성자 정보
 
-        // * 해당 프로젝트의 모집글을 수정 할 수 있는 권한을 가진 사람인지 검증 필요
-        // * 프로젝트 리더인가? or 프로젝트 팀원이면서 작성자 본인인가?
-        if (!(projectMember.getMember().getId().equals(member.getId())) && !(projectMemberService.findProjectMember(projectMember.getProject().getId(), member.getId()).isLeader())) {
+        if (!(projectMemberService.validateProjectMember(findProject.getId(), member.getId()))) {
+            throw new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.");
+        } else if (!author.getId().equals(member.getId()) || !(projectMemberService.findProjectMember(findProject.getId(), member.getId()).isLeader())) {
             throw new InvalidAccessException("해당 모집글의 삭제 권한이 없습니다.");
         }
 
@@ -121,25 +120,27 @@ public class PostController {
 
 
     // * 특정 모집글 조회
-    // todo 좋아요 여부를 응답에 포함시켜야 하는가?
+    // todo 좋아요 여부를 응답에 포함시킬 때, 로그인 사용자와 로그인하지 않은 사용자를 어떻게 구분할 것이냐.
     @Operation(method = "get", summary = "모집글 단건 조회")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "모집글 단건 조회 성공", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = PostDetailResponse.class))),
-            @ApiResponse(responseCode = "400", description = "모집글 단건 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+            @ApiResponse(responseCode = "400", description = "모집글 단건 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping("/{postId}")
     public ResponseEntity<?> details(@PathVariable Long postId,
                                      @CurrentLoginMember Member member) {
+
         PostDetailResponse postDetailResponse = postService.findPostDetailResponse(postId);
         return new ResponseEntity<>(postDetailResponse, HttpStatus.OK);
+
     }
 
 
-    // * 모집글 목록
+    // * 모집글 목록 조회
     @Operation(method = "get", summary = "모집글 리스트 조회")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "모집글 리스트 조회 성공", useReturnTypeSchema = true),
-            @ApiResponse(responseCode = "400", description = "모집글 리스트 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+            @ApiResponse(responseCode = "400", description = "모집글 리스트 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping("/list")
     public ResponseEntity<CustomPageImpl<PostListResponse>> list(@ModelAttribute CustomPageRequest pageRequest,
@@ -154,19 +155,17 @@ public class PostController {
 
 
     // * 특정 모집글 좋아요
-    // ! like와 unlike를 합칠까말까 고민중..
-    // todo path variable 대신 requestparam으로 넣는게 나을지도
     @Operation(method = "post", summary = "특정 모집글 좋아요")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "모집글 좋아요 성공", content = @Content),
-            @ApiResponse(responseCode = "400", description = "모집글 좋아요 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+            @ApiResponse(responseCode = "400", description = "모집글 좋아요 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping("/{postId}/like")
     public ResponseEntity like(@PathVariable Long postId, @CurrentLoginMember Member member) {
-        postService.likePost(postId, member);
+        Post post = postService.findPost(postId);
 
+        postService.likePost(post, member);
         return new ResponseEntity<>(HttpStatus.OK);
-
     }
 
     // * 특정 게시글을 통해 해당 프로젝트에 지원
@@ -174,20 +173,20 @@ public class PostController {
     @Operation(method = "post", summary = "특정 모집글을 통해 프로젝트 지원")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "프로젝트 지원 성공", content = @Content),
-            @ApiResponse(responseCode = "400", description = "프로젝트 지원 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+            @ApiResponse(responseCode = "400", description = "프로젝트 지원 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping("/{postId}/apply")
     public ResponseEntity apply(@PathVariable Long postId, @CurrentLoginMember Member member) {
         Post post = postService.findPost(postId);
-        ProjectMember projectMember = post.getProjectMember();
-        Project project = projectMember.getProject();
+        Project findProject = post.getProject();  // * 프로젝트 정보
 
         // ! 이미 프로젝트에 소속된 사람이라면 처리할 필요 없음
-        if (projectMemberService.validateProjectMember(project.getId(), member.getId())) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (projectMemberService.validateProjectMember(findProject.getId(), member.getId())) {
+            throw new DuplicateProjectMemberException();
         }
 
-        projectMemberService.addProjectMember(project.getId(), member.getId(), new ProjectMemberRole(ProjectMemberRoleType.미정, ProjectMemberRoleType.미정));
+        // ! 어떤 포지션에 지원하는지에 대한 내용이 추가되어야할 듯 싶다.
+        projectMemberService.addProjectMember(findProject.getId(), member.getId(), new ProjectMemberRole(ProjectMemberRoleType.미정, ProjectMemberRoleType.미정));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

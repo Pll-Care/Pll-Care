@@ -4,6 +4,7 @@ import fullcare.backend.evaluation.domain.FinalTermEvaluation;
 import fullcare.backend.evaluation.domain.MidtermEvaluation;
 import fullcare.backend.likes.domain.Likes;
 import fullcare.backend.profile.domain.Profile;
+import fullcare.backend.post.domain.Post;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import jakarta.persistence.*;
 import lombok.*;
@@ -32,7 +33,7 @@ public class Member {
     @Column(name = "oauth2_id")
     private String oAuth2Id;
 
-    @Column(name = "nickname")
+    @Column(name = "nickname", unique = true) // ! 닉네임 unique 처리에 대한 고민이 필요함
     private String nickname;
 
     @Column(name = "name")
@@ -58,18 +59,21 @@ public class Member {
     //    @Column
 //    private String profileContent;
 
-//    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Post> posts = new ArrayList<>();
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> posts = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Likes> likes = new HashSet<>();
 
     @OneToMany(mappedBy = "evaluator", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FinalTermEvaluation> finalTermEvaluationsEvaluator = new ArrayList<>();
+
     @OneToMany(mappedBy = "evaluated", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FinalTermEvaluation> finalTermEvaluationsEvaluated = new ArrayList<>();
+
     @OneToMany(mappedBy = "voter", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MidtermEvaluation> midtermEvaluationsVoter = new ArrayList<>();
+
     @OneToMany(mappedBy = "voted", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MidtermEvaluation> midtermEvaluationsVoted = new ArrayList<>();
 
@@ -99,7 +103,10 @@ public class Member {
     public void updateEmail(String email) {
         this.email = email;
     }
-    public void updateImageUrl(String imageUrl){this.imageUrl = imageUrl;}
+
+    public void updateImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public void updateRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;

@@ -26,20 +26,11 @@ public class BookmarkMemo extends BaseEntity {
     @JoinColumn(name = "memo_id")
     private Memo memo;
 
-    @Column(name = "is_bookmarked")
-    private boolean isBookmarked;
+    // ? bookmarkedDate를 따로 만들어서 쓸 것이냐, 아니면 그냥 BaseEntity의 createdDate로 사용할 것이냐?
 
     @Builder(builderMethodName = "createNewBookmarkMemo")
     public BookmarkMemo(Member member, Memo memo) {
         this.member = member;
         this.memo = memo;
-    }
-
-    public void mark() {
-        this.isBookmarked = true;
-    }
-
-    public void unmark() {
-        this.isBookmarked = false;
     }
 }

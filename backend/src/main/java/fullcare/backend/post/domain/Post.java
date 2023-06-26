@@ -3,7 +3,8 @@ package fullcare.backend.post.domain;
 import fullcare.backend.global.State;
 import fullcare.backend.global.entity.BaseEntity;
 import fullcare.backend.likes.domain.Likes;
-import fullcare.backend.projectmember.domain.ProjectMember;
+import fullcare.backend.member.domain.Member;
+import fullcare.backend.project.domain.Project;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
@@ -23,18 +24,13 @@ public class Post extends BaseEntity {
     @Column(name = "post_id")
     private Long id;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "project_id", nullable = false)
-//    private Project project;
-//
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "author_id", nullable = false)
-//    private Member member;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id", nullable = false)
+    private Project project;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", nullable = false)
-    private ProjectMember projectMember;
-
+    private Member author;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -71,8 +67,9 @@ public class Post extends BaseEntity {
     private State state;
 
     @Builder(builderMethodName = "createNewPost")
-    public Post(ProjectMember projectMember, String title, String reference, String contact, String description, String region, String techStack, State state) {
-        this.projectMember = projectMember;
+    public Post(Project project, Member author, String title, String reference, String contact, String description, String region, String techStack, State state) {
+        this.project = project;
+        this.author = author;
         this.title = title;
         this.reference = reference;
         this.contact = contact;
