@@ -1275,12 +1275,13 @@ input {
   justify-content: space-between;
 }
 .management .new-project-modal-wrapper .new-project-first-row figure {
-  border: none;
+  border: 2px solid #01e89e;
   border-radius: 15px;
-  background-image: url("../assets/project-default-img.jpg");
-  background-position: 0 0;
+  width: 70px;
+  height: 70px;
+  background-position: center;
   background-repeat: no-repeat;
-  background-size: 100% 100%, 100%;
+  background-size: 100% 100%;
 }
 .management .new-project-modal-wrapper .new-project-first-row .new-project-left-col {
   display: flex;
@@ -1288,7 +1289,16 @@ input {
   justify-content: space-between;
   align-items: flex-end;
 }
-.management .new-project-modal-wrapper .new-project-first-row .new-project-left-col input {
+.management .new-project-modal-wrapper .new-project-first-row .new-project-left-col div {
+  width: 100px;
+  height: 100%;
+  margin-right: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.management .new-project-modal-wrapper .new-project-first-row .new-project-left-col .new-project-heading-input {
   border-radius: 15px;
   border: 2px solid white;
   font-family: "IBM Plex Sans KR", sans-serif;
@@ -1300,6 +1310,9 @@ input {
 }
 .management .new-project-modal-wrapper .new-project-first-row .new-project-left-col input::placeholder {
   color: #9d9797;
+}
+.management .new-project-modal-wrapper .new-project-first-row .image-input {
+  display: none;
 }
 .management .new-project-modal-wrapper .new-project-second-row {
   padding: 10px;
@@ -1409,11 +1422,11 @@ input {
   .management .new-project {
     border-radius: 40px;
     width: 630px;
-    height: 370px;
+    height: 420px;
     padding: 20px;
   }
   .management .new-project-first-row {
-    height: 22%;
+    height: 30%;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -1421,6 +1434,7 @@ input {
   }
   .management .new-project-first-row .new-project-left-col {
     width: 70%;
+    height: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -1430,15 +1444,10 @@ input {
     font-size: 25px;
     width: 80%;
   }
-  .management .new-project-first-row .new-project-left-col figure {
-    width: 70px;
-    height: 70px;
-    margin-right: 20px;
-  }
   .management .new-project-second-row {
     margin-top: 20px;
     border-radius: 35px;
-    height: 73%;
+    height: 63%;
   }
   .management .new-project-second-row h1,
   .management .new-project-second-row input {

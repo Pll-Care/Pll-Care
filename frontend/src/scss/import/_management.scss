@@ -112,16 +112,29 @@
             &-first-row {
                 display: flex;
                 justify-content: space-between;
-    
+
                 figure {
-                    border: none;
+                    border: $border;
                     border-radius: 15px;
-                    
-                    @include backgroundImage('../assets/project-default-img.jpg', 0 0, no-repeat, 100% 100%);
+                    width: 70px;
+                    height: 70px;
+                    background: {
+                        position: center;
+                        repeat: no-repeat;
+                        size: 100% 100%;
+                    };
                 }
     
                 .new-project-left-col {
-                    input {
+                    div {
+                        width: 100px;
+                        height: 100%;
+                        margin-right: 15px;
+
+                        @include displayFlex(column, space-between);
+                    }
+
+                    .new-project-heading-input {
                         border-radius: 15px;
                         border: 2px solid white;
                         font-family: $heading-font;
@@ -134,6 +147,10 @@
                     }
     
                     @include displayFlex(row, space-between, flex-end);
+                }
+
+                .image-input {
+                    display: none;
                 }
             }
     
@@ -254,24 +271,19 @@
         .new-project {
             border-radius: 40px;
             width: 630px;
-            height: 370px;
+            height: 420px;
             padding: 20px;
 
             &-first-row {
-                height: 22%;
+                height: 30%;
 
                 .new-project-left-col {
                     width: 70%;
+                    height: 100%;
 
                     input {
                         font-size: $sub-heading-font-size;
                         width: 80%;
-                    }
-    
-                    figure {
-                        width: 70px;
-                        height: 70px;
-                        margin-right: 20px;
                     }
 
                     @include displayFlex(row, center, flex-end);
@@ -283,7 +295,7 @@
             &-second-row {
                 margin-top: 20px;
                 border-radius: 35px;
-                height: 73%;
+                height: 63%;
                 
                 h1, 
                 input {

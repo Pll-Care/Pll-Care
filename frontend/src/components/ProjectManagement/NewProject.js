@@ -15,8 +15,12 @@ const NewProject = ({ setIsModalVisible }) => {
   const [description, setDescription] = useState("");
   const [startDate, setStartDate] = useState(getStringDate(new Date()));
   const [endDate, setEndDate] = useState(getStringDate(new Date()));
+  const [imgUrl, setImgUrl] = useState("");
+  const [formData, setFormData] = useState();
 
-  const descriptionRef = useRef();
+  const descriptionRef = useRef(null);
+
+  const inputRef = useRef(null);
 
   const handleModalClose = (e) => {
     if (e.target === modalOutside.current) {
@@ -57,6 +61,32 @@ const NewProject = ({ setIsModalVisible }) => {
     setIsModalVisible(false);
   };
 
+  const handleUploadImage = (e) => {
+    if (!e.target.files) {
+      toast.error("잘못된 접근입니다. 다시 이미지를 업로드해주세요.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onloadend = () => {
+      setImgUrl(reader.result);
+    };
+
+    const formData = new FormData();
+    formData.append('image', e.target.files[0]);
+    setFormData(formData);
+  };
+
+  const handleUploadImageClick = () => {
+    if (!inputRef.current) {
+      toast.error("잘못된 접근입니다. 다시 이미지를 업로드해주세요.");
+      return;
+    }
+
+    inputRef.current.click();
+  };
+
   return (
     <div
       className="new-project-modal-wrapper"
@@ -66,7 +96,25 @@ const NewProject = ({ setIsModalVisible }) => {
       <div className="new-project">
         <div className="new-project-first-row">
           <div className="new-project-left-col">
-            <figure />
+            <div classname="new-project-img-wrapper">
+              <figure
+                style={{
+                  backgroundImage: `url(${imgUrl && imgUrl})`,
+                }}
+              />
+              <input
+                className="image-input"
+                type="file"
+                accept="image/*"
+                ref={inputRef}
+                onChange={handleUploadImage}
+              />
+              <Button
+                onClick={handleUploadImageClick}
+                text={"이미지 추가"}
+                size={"small"}
+              />
+            </div>
             <input
               className="new-project-heading-input"
               type="text"
