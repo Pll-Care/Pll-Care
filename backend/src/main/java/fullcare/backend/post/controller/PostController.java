@@ -118,7 +118,7 @@ public class PostController {
 
 
     // * 특정 모집글 조회
-    // todo 좋아요 여부를 응답에 포함시켜야 하는가? -> 미정
+    // todo 좋아요 여부를 응답에 포함시킬 때, 로그인 사용자와 로그인하지 않은 사용자를 어떻게 구분할 것이냐.
     @Operation(method = "get", summary = "모집글 단건 조회")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "모집글 단건 조회 성공", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = PostDetailResponse.class))),
@@ -130,6 +130,7 @@ public class PostController {
 
         PostDetailResponse postDetailResponse = postService.findPostDetailResponse(postId);
         return new ResponseEntity<>(postDetailResponse, HttpStatus.OK);
+
     }
 
 
