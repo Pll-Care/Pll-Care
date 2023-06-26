@@ -1275,13 +1275,14 @@ input {
   justify-content: space-between;
 }
 .management .new-project-modal-wrapper .new-project-first-row figure {
-  border: 2px solid #01e89e;
+  border: 1px solid black;
   border-radius: 15px;
   width: 70px;
   height: 70px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  background-color: #dedada;
 }
 .management .new-project-modal-wrapper .new-project-first-row .new-project-left-col {
   display: flex;
