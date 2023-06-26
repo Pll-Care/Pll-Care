@@ -5,15 +5,13 @@ import fullcare.backend.memo.domain.BookmarkMemo;
 import fullcare.backend.memo.domain.Memo;
 import fullcare.backend.memo.dto.response.BookmarkMemoListResponse;
 import fullcare.backend.memo.repository.BookmarkMemoRepository;
-import jakarta.persistence.EntityManagerFactory;
+import fullcare.backend.util.CustomPageImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -22,24 +20,21 @@ import java.util.stream.Collectors;
 @Service
 public class BookmarkMemoService {
 
-    private final EntityManagerFactory emf;
     private final BookmarkMemoRepository bookmarkMemoRepository;
 
-    public Page<BookmarkMemoListResponse> findBookmarkMemoList(Pageable pageable, Long projectId, Long memberId) {
-        Page<BookmarkMemo> bookmarkMemoList = bookmarkMemoRepository.findList(pageable, projectId, memberId);
+    public CustomPageImpl<BookmarkMemoListResponse> findBookmarkMemoList(Pageable pageable, Long projectId, Long memberId) {
 
-        List<BookmarkMemoListResponse> content = bookmarkMemoList.stream().map(BookmarkMemoListResponse::entityToDto)
-                .collect(Collectors.toList());
+        Page<BookmarkMemo> result = bookmarkMemoRepository.findList(pageable, projectId, memberId);
+        result.stream().map(BookmarkMemoListResponse::entityToDto).collect(Collectors.toList());
 
-        return new PageImpl<>(content, pageable, bookmarkMemoList.getTotalElements());
+        // Page<BookmarkMemoListResponse> result2 = bookmarkMemoRepository.findDtoList(pageable, projectId, memberId);
+
+        return new CustomPageImpl<>(result.getContent(), pageable, result.getTotalElements());
     }
 
     @Transactional
-    // ! 여기서 Member와 Memo에 대해서 조회 쿼리를 한번 더 날리는가? -> 추가 조회를 날리진 않음
-    public void bookmarkMemo(Member member, Memo memo) {
-        Optional<BookmarkMemo> findBookmarkMemo = bookmarkMemoRepository.findByMemberAndMemo(member, memo);
-
-        // todo 여기서 member와 memo를 다시 조회해서 영속성 컨텍스트에 올려야하는가?
+    public void bookmarkMemo(Memo memo, Member member) {
+        Optional<BookmarkMemo> findBookmarkMemo = bookmarkMemoRepository.findByMemoAndMember(memo, member);
 
         if (!(findBookmarkMemo.isPresent())) {
             BookmarkMemo newBookmarkMemo = BookmarkMemo.createNewBookmarkMemo()
@@ -47,11 +42,9 @@ public class BookmarkMemoService {
                     .memo(memo)
                     .build();
 
-            newBookmarkMemo.mark();
             bookmarkMemoRepository.save(newBookmarkMemo);
         } else {
             BookmarkMemo bookmarkMemo = findBookmarkMemo.get();
-            bookmarkMemo.unmark();
             bookmarkMemoRepository.delete(bookmarkMemo);
         }
     }

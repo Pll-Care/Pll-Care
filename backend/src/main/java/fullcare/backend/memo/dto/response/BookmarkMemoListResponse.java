@@ -38,7 +38,9 @@ public class BookmarkMemoListResponse {
                 .author(memo.getAuthor())
                 .createdDate(memo.getCreatedDate())
                 .modifiedDate(memo.getModifiedDate())
-                .isBookmarked(bookmarkMemo.isBookmarked())
+                .isBookmarked(true)
                 .build();
     }
+
+
 }

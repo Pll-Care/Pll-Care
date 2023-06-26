@@ -1,26 +1,23 @@
 package fullcare.backend.memo.service;
 
-import fullcare.backend.memo.domain.BookmarkMemo;
 import fullcare.backend.memo.domain.Memo;
 import fullcare.backend.memo.dto.request.MemoCreateRequest;
 import fullcare.backend.memo.dto.request.MemoUpdateRequest;
 import fullcare.backend.memo.dto.response.MemoDetailResponse;
 import fullcare.backend.memo.dto.response.MemoListResponse;
-import fullcare.backend.memo.repository.BookmarkMemoRepository;
 import fullcare.backend.memo.repository.MemoRepository;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.repository.ProjectRepository;
+import fullcare.backend.util.CustomPageImpl;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -30,7 +27,6 @@ import java.util.stream.Collectors;
 public class MemoService {
 
     private final MemoRepository memoRepository;
-    private final BookmarkMemoRepository bookmarkMemoRepository;
     private final ProjectRepository projectRepository;
 
     @Transactional
@@ -49,13 +45,9 @@ public class MemoService {
     }
 
     @Transactional
-    public void updateMemo(Long memoId, MemoUpdateRequest request, String username) {
-        Memo memo = memoRepository.findById(memoId).orElseThrow(() -> new EntityNotFoundException("해당 회의록이 존재하지 않습니다."));
-
-        memo.updateAll(request.getTitle(), request.getContent(), username);
-        //        memoRepository.flush();
-        //        ! JPA Auditing으로 lastModified 저장할 때, flush를 해야 반영되는지 확인이 필요
-
+    public void updateMemo(Long memoId, MemoUpdateRequest request) {
+        Memo memo = findMemo(memoId);
+        memo.updateAll(request.getTitle(), request.getContent());
     }
 
     @Transactional
@@ -69,23 +61,27 @@ public class MemoService {
     }
 
     public MemoDetailResponse findMemoDetailResponse(Long memberId, Long memoId) {
-        Optional<BookmarkMemo> findMemo = bookmarkMemoRepository.findByMemberIdAndMemoId(memberId, memoId);
 
-        if (findMemo.isPresent()) {
-            log.info("findMemo.isPresent() : {}", findMemo.isPresent());
-            return MemoDetailResponse.entityToDto(findMemo.get().getMemo(), true);
-        }
+//        Optional<BookmarkMemo> findBookmarkMemo = bookmarkMemoRepository.findByMemberIdAndMemoId(memberId, memoId);
+//
+//        if (findBookmarkMemo.isPresent()) {
+//            return MemoDetailResponse.entityToDto(findBookmarkMemo.get().getMemo(), true);
+//        }
+//
+//        Memo memo = findMemo(memoId);
 
-        Memo memo = memoRepository.findById(memoId).orElseThrow(() -> new EntityNotFoundException("해당 회의록이 존재하지 않습니다."));
-        return MemoDetailResponse.entityToDto(memo, false);
+        // ? 북마크여부를 검사할 때, bookmarkmemo를 찾아보는게 맞는가, memo에서 left outer join 하는게 맞는가?
+        MemoDetailResponse result = memoRepository.findMemo(memberId, memoId);
+        return result;
+
+//        return MemoDetailResponse.entityToDto(memo, false);
     }
 
-
-    public Page<MemoListResponse> findMemoList(Long projectId, Pageable pageable) {
-        Page<Memo> memoList = memoRepository.findList(projectId, pageable);
-        List<MemoListResponse> content = memoList.stream().map(MemoListResponse::entityToDto)
+    public CustomPageImpl<MemoListResponse> findMemoList(Long projectId, Pageable pageable) {
+        Page<Memo> result = memoRepository.findMemoListByProjectId(projectId, pageable);
+        List<MemoListResponse> content = result.stream().map(MemoListResponse::entityToDto)
                 .collect(Collectors.toList());
 
-        return new PageImpl<>(content, pageable, memoList.getTotalElements());
+        return new CustomPageImpl<>(content, pageable, result.getTotalElements());
     }
 }

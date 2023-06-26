@@ -8,6 +8,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -31,6 +34,9 @@ public class Memo extends BaseEntity {
     @Column(name = "content", nullable = false)
     private String content;
 
+    @OneToMany(mappedBy = "memo", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BookmarkMemo> bookmarkMemos = new ArrayList<>();
+
     @Builder(builderMethodName = "createNewMemo")
     public Memo(Project project, String title, String content, String author) {
         this.project = project;
@@ -51,10 +57,9 @@ public class Memo extends BaseEntity {
 //        return newMemo;
 //    }
 
-    public void updateAll(String title, String content, String author) {
+    public void updateAll(String title, String content) {
         this.title = title;
         this.content = content;
-        this.author = author;
     }
 
 //    private void belongTo(Project project) {

@@ -78,7 +78,7 @@ public class TestDataInit {
 
             Post post = postService.createPost(new PostCreateRequest(rand.nextLong(1, 8), "모집글" + i, "내용" + i, "참조" + i, "연락" + i, "지역" + i, "기술스택" + i, recruitInfos), findMemberId);
             if (i % 3 == 0) {
-                postService.likePost(post.getId(), memberRepository.findById(findMemberId).get());
+                postService.likePost(post, memberRepository.findById(findMemberId).get());
 //                postService.likePost(post.getId(), memberRepository.findById(rand.nextLong(1, 10)).get());
             }
         }
@@ -90,7 +90,7 @@ public class TestDataInit {
             long findMemberId = rand.nextLong(1, 10);
             Memo memo = memoService.createMemo(new MemoCreateRequest(1l, "제목" + i, "내용" + i), memberRepository.findById(findMemberId).get().getName());
             if (i % 3 == 0) {
-                bookmarkMemoService.bookmarkMemo(memberRepository.findById(1l).get(), memo);
+                bookmarkMemoService.bookmarkMemo(memo, memberRepository.findById(1l).get());
             }
         }
     }

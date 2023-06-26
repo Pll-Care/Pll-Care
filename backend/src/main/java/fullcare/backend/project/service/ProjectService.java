@@ -8,19 +8,17 @@ import fullcare.backend.project.dto.request.ProjectCreateRequest;
 import fullcare.backend.project.dto.request.ProjectStateUpdateRequest;
 import fullcare.backend.project.dto.request.ProjectUpdateRequest;
 import fullcare.backend.project.dto.response.ProjectListResponse;
+import fullcare.backend.project.dto.response.ProjectMemberListResponse;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
-import fullcare.backend.project.dto.response.ProjectMemberListResponse;
 import fullcare.backend.projectmember.repository.ProjectMemberRepository;
 import fullcare.backend.util.CustomPageImpl;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +34,18 @@ public class ProjectService {
     private final ProjectRepository projectRepository;
     private final MemberRepository memberRepository;
     private final ProjectMemberRepository projectMemberRepository;
+
+    public static List<ProjectMemberListResponse> getProjectMemberListResponses(Long projectId, ProjectMemberRepository projectMemberRepository) {
+        List<ProjectMember> pmList = projectMemberRepository.findByProjectId(projectId);
+        if (pmList.size() == 0) {
+            throw new RuntimeException("프로젝트 조회 불가");
+        }
+        List<ProjectMemberListResponse> response = pmList.stream().map(pms -> ProjectMemberListResponse.builder()
+                .id(pms.getMember().getId())
+                .name(pms.getMember().getName()).build()).collect(Collectors.toList());
+        return response;
+    }
+
     @Transactional(readOnly = true)
     public Page<ProjectListResponse> findMyProjectList(Pageable pageable, Long memberId, List<State> states) {
         Page<Project> pageProject = projectRepository.findProjectList(pageable, memberId, states);
@@ -49,7 +59,7 @@ public class ProjectService {
                 .state(p.getState())
                 .build()
         ).collect(Collectors.toList());
-        
+
         return new CustomPageImpl<>(content, pageable, pageProject.getTotalElements());
     }
 
@@ -81,17 +91,6 @@ public class ProjectService {
     public List<ProjectMemberListResponse> findProjectMembers(Long projectId) {
         return getProjectMemberListResponses(projectId, projectMemberRepository);
 
-    }
-
-    public static List<ProjectMemberListResponse> getProjectMemberListResponses(Long projectId, ProjectMemberRepository projectMemberRepository) {
-        List<ProjectMember> pmList = projectMemberRepository.findByProjectId(projectId);
-        if (pmList.size()==0){
-            throw new RuntimeException("프로젝트 조회 불가");
-        }
-        List<ProjectMemberListResponse> response = pmList.stream().map(pms -> ProjectMemberListResponse.builder()
-                .id(pms.getMember().getId())
-                .name(pms.getMember().getName()).build()).collect(Collectors.toList());
-        return response;
     }
 
     public void updateState(Long projectId, ProjectStateUpdateRequest projectStateUpdateRequest) {

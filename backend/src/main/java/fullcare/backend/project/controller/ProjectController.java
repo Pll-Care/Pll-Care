@@ -1,7 +1,7 @@
 package fullcare.backend.project.controller;
 
 import fullcare.backend.global.State;
-import fullcare.backend.global.dto.FailureResponse;
+import fullcare.backend.global.dto.ErrorResponse;
 import fullcare.backend.global.exception.InvalidAccessException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.dto.request.ProjectCreateRequest;
@@ -47,7 +47,7 @@ public class ProjectController {
     @Operation(method = "get", summary = "프로젝트 멤버 조회")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "프로젝트 멤버 조회 성공", useReturnTypeSchema = true),
-            @ApiResponse(responseCode = "400", description = "프로젝트 멤버 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+            @ApiResponse(responseCode = "400", description = "프로젝트 멤버 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping("/memberlist")
     public ResponseEntity<List<ProjectMemberListResponse>> projectMemberList(@RequestParam(name = "project_id") Long projectId) {
@@ -60,7 +60,7 @@ public class ProjectController {
     @Operation(method = "get", summary = "사용자 프로젝트 리스트 조회")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "사용자 프로젝트 리스트 조회 성공", useReturnTypeSchema = true),
-            @ApiResponse(responseCode = "400", description = "사용자 프로젝트 리스트 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+            @ApiResponse(responseCode = "400", description = "사용자 프로젝트 리스트 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping
     public ResponseEntity<Page<ProjectListResponse>> list(CustomPageRequest pageRequest, @Valid @RequestParam List<State> state, @CurrentLoginMember Member member) {
@@ -75,21 +75,21 @@ public class ProjectController {
     @Operation(method = "post", summary = "프로젝트 생성")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "프로젝트 생성 성공", content = @Content),
-            @ApiResponse(responseCode = "400", description = "프로젝트 생성 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+            @ApiResponse(responseCode = "400", description = "프로젝트 생성 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping
     public ResponseEntity create(@RequestBody ProjectCreateRequest projectCreateRequest, @CurrentLoginMember Member member) {
 
         projectService.createProject(member.getId(), projectCreateRequest);
 
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     // * 특정 프로젝트 내용 수정
     @Operation(method = "put", summary = "프로젝트 수정")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "프로젝트 수정 성공", content = @Content),
-            @ApiResponse(responseCode = "400", description = "프로젝트 수정 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+            @ApiResponse(responseCode = "400", description = "프로젝트 수정 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PutMapping("/{projectId}")
     public ResponseEntity update(@PathVariable Long projectId, @Valid @RequestBody ProjectUpdateRequest projectUpdateRequest, @CurrentLoginMember Member member) {
@@ -104,7 +104,7 @@ public class ProjectController {
     @Operation(method = "delete", summary = "프로젝트 삭제")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "프로젝트 삭제 성공", content = @Content),
-            @ApiResponse(responseCode = "400", description = "프로젝트 삭제 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+            @ApiResponse(responseCode = "400", description = "프로젝트 삭제 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @DeleteMapping("{projectId}")
     public ResponseEntity delete(@PathVariable Long projectId, @CurrentLoginMember Member member) {
@@ -119,7 +119,7 @@ public class ProjectController {
     @Operation(method = "put", summary = "프로젝트 상태 변경")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "프로젝트 상태 변경 성공", content = @Content),
-            @ApiResponse(responseCode = "400", description = "프로젝트 상태 변경실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+            @ApiResponse(responseCode = "400", description = "프로젝트 상태 변경실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PutMapping("/{projectId}/state") // ! 프로젝트 완료는 리더만, 모든 평가가 완료될 때 조건 필요
     public ResponseEntity updateState(@PathVariable Long projectId, @Valid @RequestBody ProjectStateUpdateRequest projectStateUpdateRequest, @CurrentLoginMember Member member) {
@@ -135,7 +135,7 @@ public class ProjectController {
     @Operation(method = "post", summary = "프로젝트 멤버 삭제")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "프로젝트 멤버 삭제 성공", content = @Content),
-            @ApiResponse(responseCode = "400", description = "프로젝트 멤버 삭제 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+            @ApiResponse(responseCode = "400", description = "프로젝트 멤버 삭제 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping("/memberout")
     public ResponseEntity deleteProjectMember(@RequestBody ProjectMemberDeleteRequest request, @CurrentLoginMember Member member) {

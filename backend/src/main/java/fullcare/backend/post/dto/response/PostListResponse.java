@@ -45,10 +45,8 @@ public class PostListResponse {
         this.title = title;
         this.techStack = techStack;
         this.isLiked = isLiked;
-//        this.recruitInfoList = recruitments.stream().map(r -> new RecruitInfo(r)).toList();
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
-
     }
 
 
@@ -58,7 +56,6 @@ public class PostListResponse {
                 .projectName(post.getProjectMember().getProject().getTitle())
                 .title(post.getTitle())
                 .techStack(post.getTechStack())
-//                .recruitInfoList(post.getRecruitments().stream().map(r -> new RecruitInfo(r)).toList())
                 .createdDate(post.getCreatedDate())
                 .modifiedDate(post.getModifiedDate())
                 .build();
