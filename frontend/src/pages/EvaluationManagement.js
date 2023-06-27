@@ -75,7 +75,138 @@ const mockList = {
         },
       ],
     },
-    
+    {
+      memberId: 11,
+      name: "홍서현",
+      evaluation: [
+        {
+          evaluationBadge: "탁월한_리더",
+          quantity: 2,
+        },
+        {
+          evaluationBadge: "열정적인_참여자",
+          quantity: 3,
+        },
+        {
+          evaluationBadge: "최고의_서포터",
+          quantity: 1,
+        },
+        {
+          evaluationBadge: "아이디어_뱅크",
+          quantity: 1,
+        },
+      ],
+    },
+    {
+      memberId: 12,
+      name: "이연제",
+      evaluation: [
+        {
+          evaluationBadge: "탁월한_리더",
+          quantity: 15,
+        },
+        {
+          evaluationBadge: "열정적인_참여자",
+          quantity: 1,
+        },
+        {
+          evaluationBadge: "최고의_서포터",
+          quantity: 0,
+        },
+        {
+          evaluationBadge: "아이디어_뱅크",
+          quantity: 0,
+        },
+      ],
+    },
+    {
+      memberId: 13,
+      name: "조상욱",
+      evaluation: [
+        {
+          evaluationBadge: "탁월한_리더",
+          quantity: 2,
+        },
+        {
+          evaluationBadge: "열정적인_참여자",
+          quantity: 6,
+        },
+        {
+          evaluationBadge: "최고의_서포터",
+          quantity: 1,
+        },
+        {
+          evaluationBadge: "아이디어_뱅크",
+          quantity: 0,
+        },
+      ],
+    },
+    {
+      memberId: 11,
+      name: "홍서현",
+      evaluation: [
+        {
+          evaluationBadge: "탁월한_리더",
+          quantity: 2,
+        },
+        {
+          evaluationBadge: "열정적인_참여자",
+          quantity: 3,
+        },
+        {
+          evaluationBadge: "최고의_서포터",
+          quantity: 1,
+        },
+        {
+          evaluationBadge: "아이디어_뱅크",
+          quantity: 1,
+        },
+      ],
+    },
+    {
+      memberId: 12,
+      name: "이연제",
+      evaluation: [
+        {
+          evaluationBadge: "탁월한_리더",
+          quantity: 15,
+        },
+        {
+          evaluationBadge: "열정적인_참여자",
+          quantity: 1,
+        },
+        {
+          evaluationBadge: "최고의_서포터",
+          quantity: 0,
+        },
+        {
+          evaluationBadge: "아이디어_뱅크",
+          quantity: 0,
+        },
+      ],
+    },
+    {
+      memberId: 13,
+      name: "조상욱",
+      evaluation: [
+        {
+          evaluationBadge: "탁월한_리더",
+          quantity: 2,
+        },
+        {
+          evaluationBadge: "열정적인_참여자",
+          quantity: 6,
+        },
+        {
+          evaluationBadge: "최고의_서포터",
+          quantity: 1,
+        },
+        {
+          evaluationBadge: "아이디어_뱅크",
+          quantity: 0,
+        },
+      ],
+    },
   ],
   ranks: [
     {

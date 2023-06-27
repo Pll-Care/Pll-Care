@@ -37,6 +37,22 @@
       font-size: $body-font-size;
       overflow-x: hidden;
 
+      .slick-slider {
+        width: 96%;
+        height: 83%;
+
+        .slick-list {
+          width: 100%;
+          height: 95%;
+        }
+
+        @include displayFlex(row, flex-start);
+      }
+
+      .slick-arrow {
+        display: none;
+      }
+
       @include displayFlex;
     }
 
