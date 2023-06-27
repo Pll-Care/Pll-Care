@@ -33,7 +33,7 @@ const GeneralLayout = ({ children }) => {
   return (
     <>
       <MainHeader />
-      <div>{children}</div>
+      <main>{children}</main>
     </>
   );
 };

@@ -14,7 +14,7 @@ const ProjectDetailPage = () => {
   }, []);
 
   return (
-    <div>
+    <div className="management_project_layout">
       <ManagementHeader id={id} />
       <Outlet />
     </div>
