@@ -29,19 +29,16 @@ public class ProjectMemberService {
 
     public ProjectMember findProjectMember(Long projectId, Long memberId) {
         return projectMemberRepository.findByProjectIdAndMemberId(projectId, memberId).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트 멤버가 존재하지 않습니다."));
-
     }
 
     public void addProjectMember(Long projectId, Long memberId, ProjectMemberRole role) {
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트가 존재하지 않습니다."));
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException("해당 회원이 존재하지 않습니다."));
-
         project.addMember(member, role);
     }
     public void updateProjectMemberRole(Long pmId, ProjectMemberRole projectMemberRole){
         ProjectMember projectMember = projectMemberRepository.findById(pmId).orElseThrow(() -> new EntityNotFoundException("해당 회원이 존재하지 않습니다."));
         projectMember.updateRole(projectMemberRole);
-
     }
     public void deleteProjectMember(Long projectId, Long memberId) {
         projectMemberRepository.deleteByProjectIdAndMemberId(projectId, memberId);

@@ -2,7 +2,6 @@ package fullcare.backend.schedule.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import fullcare.backend.schedule.ScheduleCategory;
-import fullcare.backend.schedule.domain.Address;
 import fullcare.backend.schedule.dto.MemberDto;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
@@ -44,10 +43,10 @@ public class ScheduleCreateRequest {
     private String content;
 
     @NotNull
-    private Address address;
+    private String address;
 
 
-    public ScheduleCreateRequest(Long projectId, LocalDateTime startDate, LocalDateTime endDate, ScheduleCategory category, List<MemberDto> memberDtos, String title, String content, Address address) {
+    public ScheduleCreateRequest(Long projectId, LocalDateTime startDate, LocalDateTime endDate, ScheduleCategory category, List<MemberDto> memberDtos, String title, String content, String address) {
         this.projectId = projectId;
         this.startDate = startDate;
         this.endDate = endDate;

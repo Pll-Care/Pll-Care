@@ -144,8 +144,8 @@ public class PostService {
 
     }
 
-    public CustomPageImpl<MyPostResponse> findMyPost(Long memberId, Pageable pageable){
-        Page<Post> posts = postRepository.findPageByMemberId(memberId, pageable);
+    public CustomPageImpl<MyPostResponse> findMyPost(Long memberId, State state, Pageable pageable){
+        Page<Post> posts = postRepository.findPageByMemberId(memberId, state, pageable);
         List<MyPostResponse> content = posts.stream().map(p -> MyPostResponse.builder()
                 .postId(p.getId())
                 .title(p.getTitle())

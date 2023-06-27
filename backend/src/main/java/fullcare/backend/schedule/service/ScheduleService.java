@@ -494,8 +494,9 @@ public class ScheduleService {
         }
 
         if(schedule instanceof Meeting){
+            Meeting meeting = (Meeting)schedule;
             scheduleDetailResponse.setScheduleCategory(ScheduleCategory.MEETING);
-            scheduleDetailResponse.setAddress(scheduleDetailResponse.getAddress());
+            scheduleDetailResponse.setAddress(meeting.getAddress());
         }else{
             scheduleDetailResponse.setScheduleCategory(ScheduleCategory.MILESTONE);
         }

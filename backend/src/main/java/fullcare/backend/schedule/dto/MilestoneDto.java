@@ -1,7 +1,6 @@
 package fullcare.backend.schedule.dto;
 
 import fullcare.backend.member.domain.Member;
-import fullcare.backend.schedule.domain.Address;
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;

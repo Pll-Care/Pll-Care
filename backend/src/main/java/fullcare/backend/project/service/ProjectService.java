@@ -14,14 +14,13 @@ import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.projectmember.repository.ProjectMemberRepository;
-import fullcare.backend.s3.FileUploadService;
+import fullcare.backend.s3.UploadService;
 import fullcare.backend.util.CustomPageImpl;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +35,7 @@ public class ProjectService {
     private final ProjectRepository projectRepository;
     private final MemberRepository memberRepository;
     private final ProjectMemberRepository projectMemberRepository;
+    private final UploadService uploadService;
 
 //    public static List<ProjectMemberListResponse> getProjectMemberListResponses(Long projectId, ProjectMemberRepository projectMemberRepository) {
 //        List<ProjectMember> pmList = projectMemberRepository.findByProjectId(projectId, ProjectMemberRoleType.미정);
@@ -89,7 +89,9 @@ public class ProjectService {
     }
 
     public void deleteProject(Long projectId) {
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException("프로젝트 정보가 없습니다."));
         projectRepository.deleteById(projectId);
+        uploadService.delete(project.getImageUrl());
     }
 
     public List<ProjectMemberListResponse> findProjectMembers(Long projectId) {
@@ -130,6 +132,8 @@ public class ProjectService {
 
     public void update(Long projectId, ProjectUpdateRequest projectUpdateRequest) {
         Project project = projectRepository.findById(projectId).orElseThrow();
+        String imageUrl = project.getImageUrl();
         project.update(projectUpdateRequest);
+        uploadService.delete(imageUrl);
     }
 }

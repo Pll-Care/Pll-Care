@@ -20,7 +20,7 @@ import fullcare.backend.project.service.ProjectService;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.schedule.ScheduleCategory;
-import fullcare.backend.schedule.domain.Address;
+//import fullcare.backend.schedule.domain.Address;
 import fullcare.backend.schedule.dto.MemberDto;
 import fullcare.backend.schedule.dto.request.ScheduleCreateRequest;
 import fullcare.backend.schedule.service.MeetingService;
@@ -128,7 +128,7 @@ public class TestDataInit {
 
             if (i < 16) {
                 LocalDateTime endDate = LocalDateTime.of(2023, month, randDay, 16, 0);
-                meetingService.createMeeting(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MEETING, memberDtos, "제목" + i, "내용" + i, new Address("city" + i, "street" + i)), memberRepository.findById(authorId).get());
+                meetingService.createMeeting(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MEETING, memberDtos, "제목" + i, "내용" + i, "address"+i), memberRepository.findById(authorId).get());
             } else {
                 try {
                     LocalDateTime endDate = LocalDateTime.of(2023, month, randDay + plusDay, 16, 0);

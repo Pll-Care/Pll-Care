@@ -2,7 +2,6 @@ package fullcare.backend.schedule.dto.response;
 
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.schedule.ScheduleCategory;
-import fullcare.backend.schedule.domain.Address;
 import fullcare.backend.schedule.dto.MemberDto;
 import lombok.Builder;
 import lombok.Data;
@@ -16,11 +15,11 @@ public class ScheduleMonthResponse {
     private String title;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private Address address;
+    private String address;
     private ScheduleCategory scheduleCategory;
     private List<MemberDto> members = new ArrayList<>();
     @Builder
-    public ScheduleMonthResponse(Long scheduleId, String title, LocalDateTime startDate, LocalDateTime endDate, ScheduleCategory scheduleCategory, Address address) {
+    public ScheduleMonthResponse(Long scheduleId, String title, LocalDateTime startDate, LocalDateTime endDate, ScheduleCategory scheduleCategory, String address) {
         this.scheduleId = scheduleId;
         this.title = title;
         this.startDate = startDate;

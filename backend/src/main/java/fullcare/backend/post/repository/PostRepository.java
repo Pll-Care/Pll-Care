@@ -1,6 +1,7 @@
 package fullcare.backend.post.repository;
 
 
+import fullcare.backend.global.State;
 import fullcare.backend.post.domain.Post;
 import fullcare.backend.post.dto.response.PostListResponse;
 import org.springframework.data.domain.Page;
@@ -23,8 +24,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Optional<Post> findById(@Param("postId") Long postId);
 
 
-    @Query(value = "select p from Post p join p.project pp join pp.projectMembers pm where pm.member.id  = :memberId", countQuery = "select count(p) from Post p join p.project pp join pp.projectMembers pm where pm.member.id = :memberId")
-    Page<Post> findPageByMemberId(@Param("memberId")Long memberId, Pageable pageable);
+    @Query(value = "select p from Post p join p.project pp join pp.projectMembers pm where pm.member.id  = :memberId and p.state = :state", countQuery = "select count(p) from Post p join p.project pp join pp.projectMembers pm where pm.member.id = :memberId and p.state = :state")
+    Page<Post> findPageByMemberId(@Param("memberId")Long memberId, @Param("state")State  state, Pageable pageable);
 
     @Query(value = "select p from Post p join fetch p.likes l where l.member.id =:memberId", countQuery = "select p from Post p join fetch p.likes l where l.member.id =:memberId")
     Page<Post> findLikePageByMemberId(@Param("memberId")Long memberId, Pageable pageable);

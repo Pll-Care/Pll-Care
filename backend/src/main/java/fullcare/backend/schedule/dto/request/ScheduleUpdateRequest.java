@@ -3,7 +3,6 @@ package fullcare.backend.schedule.dto.request;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import fullcare.backend.global.State;
 import fullcare.backend.schedule.ScheduleCategory;
-import fullcare.backend.schedule.domain.Address;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -46,5 +45,5 @@ public class ScheduleUpdateRequest {
     private String content;
 
     @NotNull
-    private Address address;
+    private String address;
 }

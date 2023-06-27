@@ -5,6 +5,7 @@ import fullcare.backend.evaluation.dto.response.MyEvalDetailResponse;
 import fullcare.backend.evaluation.dto.response.MyEvalListResponse;
 import fullcare.backend.evaluation.service.EvaluationService;
 //import fullcare.backend.global.dto.FailureResponse;
+import fullcare.backend.global.State;
 import fullcare.backend.global.exception.InvalidAccessException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.post.dto.response.MyPostResponse;
@@ -77,13 +78,13 @@ public class ProfileController {
 //            @ApiResponse(responseCode = "400", description = "개인페이지 작성한 모집글 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @GetMapping("/post")
-    public ResponseEntity<CustomPageImpl<MyPostResponse>> findMyPost(@PathVariable Long memberId, CustomPageRequest pageRequest, @CurrentLoginMember Member member) {
+    public ResponseEntity<CustomPageImpl<MyPostResponse>> findMyPost(@PathVariable Long memberId, @RequestParam(value = "state", defaultValue = "TBD")State state, CustomPageRequest pageRequest, @CurrentLoginMember Member member) {
         if(memberId != member.getId()){
             throw new InvalidAccessException("해당 프로필 권한이 없습니다.");
         }
         PageRequest of = pageRequest.of();
         Pageable pageable = (Pageable) of;
-        CustomPageImpl<MyPostResponse> response = postService.findMyPost(member.getId(), pageable);
+        CustomPageImpl<MyPostResponse> response = postService.findMyPost(member.getId(), state, pageable);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
