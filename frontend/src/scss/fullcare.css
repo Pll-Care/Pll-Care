@@ -1974,6 +1974,10 @@ input {
   width: 30%;
   overflow-y: auto;
 }
+.calendar-list .button-container {
+  display: flex;
+  justify-content: flex-end;
+}
 .calendar-list-time {
   color: white;
 }
@@ -2020,6 +2024,64 @@ input {
 }
 .calendar-list-item-name-avatar .MuiAvatar-root:hover {
   transform: scale(0.8);
+}
+
+.modal-container {
+  padding: 1rem;
+  font-family: "Noto Sans KR", sans-serif;
+}
+.modal-container .button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+.modal-container input {
+  border: none;
+  border-radius: 10px;
+  font-size: 35px;
+  margin-bottom: 10px;
+  font-family: "Noto Sans KR", sans-serif;
+}
+.modal-container-description {
+  background-color: white;
+  border-radius: 15px;
+  padding: 1rem;
+  margin-top: 15px;
+  border: 2px solid #01e89e;
+}
+.modal-container-description h5 {
+  margin-right: 30px;
+  color: #01e89e;
+}
+.modal-container-description .plan-option {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.modal-container-description .plan-option h4 {
+  margin: 0px 10px;
+}
+.modal-container-description .plan-option input {
+  font-size: 20px;
+  margin-top: 10px;
+}
+.modal-container-description .plan-option Button {
+  margin-right: 10px;
+}
+.modal-container-description .plan-option select {
+  border-radius: 10px;
+  padding: 0.5rem;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  color: #00aa72;
+}
+.modal-container-description .plan-option-bottom {
+  display: flex;
+  align-items: center;
+  border-bottom: 1.5px solid rgb(217, 217, 217);
+  margin-bottom: 20px;
+}
+.modal-container-description .plan-option-bottom input {
+  font-size: 15px;
 }
 
 @media (min-width: 767px) and (max-width: 1024px) {
@@ -2086,15 +2148,30 @@ input {
 
 .modal {
   position: fixed;
-  top: 20%;
-  left: 25%;
-  right: 25%;
-  background-color: #01e89e;
   padding: 0.5rem;
   border-radius: 14px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   z-index: 200;
   animation: slide-down 300ms ease-out forwards;
+  overflow-y: auto;
+}
+.modal_dark {
+  background-color: #01e89e;
+}
+.modal_light {
+  background-color: white;
+}
+.modal_small {
+  top: 30%;
+  left: 30%;
+  right: 30%;
+  height: 40%;
+}
+.modal_big {
+  top: 10%;
+  max-height: 80%;
+  left: 20%;
+  right: 20%;
 }
 
 @media (max-width: 768px) {

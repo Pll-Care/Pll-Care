@@ -10,17 +10,32 @@
 
 .modal {
   position: fixed;
-  top: 20%;
-  left: 25%;
-  right: 25%;
-  background-color: $background-color;
   padding: 0.5rem;
   border-radius: 14px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   z-index: 200;
   animation: slide-down 300ms ease-out forwards;
-}
+  overflow-y: auto;
+  &_dark {
+    background-color: $background-color;
+  }
 
+  &_light {
+    background-color: white;
+  }
+  &_small {
+    top: 30%;
+    left: 30%;
+    right: 30%;
+    height: 40%;
+  }
+  &_big {
+    top: 10%;
+    max-height: 80%;
+    left: 20%;
+    right: 20%;
+  }
+}
 @media (max-width: 768px) {
   .modal {
     //left: calc(50% - 16rem);

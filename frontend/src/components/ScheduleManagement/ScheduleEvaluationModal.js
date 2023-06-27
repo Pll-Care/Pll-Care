@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+
+import { Tooltip } from "@mui/material";
+
+import { addEvaluation } from "../../redux/evaluationManagementSlice";
 import Modal from "../common/Modal";
 import ButtonList from "./ButtonList";
 import Button from "../common/Button";
-import { Tooltip } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { addEvaluation } from "../../redux/evaluationManagementSlice";
 
 const ScheduleEvaluationModal = (props) => {
   const dispatch = useDispatch();
