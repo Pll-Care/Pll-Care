@@ -102,14 +102,14 @@ public class TestDataInit {
         long authorId;
         for (long i = 1l; i <= 30; i++) {
             authorId = rand.nextLong(1, 10);
-            List<MemberDto> memberDtos = new ArrayList<>();
+            List<Long> memberIds = new ArrayList<>();
             long lValue = rand.nextLong(3, 6);
             for (long j = 0l; j < lValue; j++) {
                 long findMemberId = rand.nextLong(1, 10);
 
                 if (!insertId.contains(findMemberId)) {
                     Member member = memberRepository.findById(findMemberId).get();
-                    memberDtos.add(new MemberDto(member.getId(), member.getName(), null));
+                    memberIds.add(member.getId());
                 } else {
                     j--;
                 }
@@ -128,14 +128,14 @@ public class TestDataInit {
 
             if (i < 16) {
                 LocalDateTime endDate = LocalDateTime.of(2023, month, randDay, 16, 0);
-                meetingService.createMeeting(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MEETING, memberDtos, "제목" + i, "내용" + i, "address"+i), memberRepository.findById(authorId).get());
+                meetingService.createMeeting(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MEETING, memberIds, "제목" + i, "내용" + i, "address"+i), memberRepository.findById(authorId).get());
             } else {
                 try {
                     LocalDateTime endDate = LocalDateTime.of(2023, month, randDay + plusDay, 16, 0);
-                    milestoneService.createMilestone(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MILESTONE, memberDtos, "제목" + i, "내용" + i, null), memberRepository.findById(authorId).get());
+                    milestoneService.createMilestone(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MILESTONE, memberIds, "제목" + i, "내용" + i, null), memberRepository.findById(authorId).get());
                 } catch (DateTimeException e) { // 다음달로 넘어가는 경우
                     LocalDateTime endDate = LocalDateTime.of(2023, month, randDay, 16, 0).plusWeeks(1);
-                    milestoneService.createMilestone(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MILESTONE, memberDtos, "제목" + i, "내용" + i, null), memberRepository.findById(authorId).get());
+                    milestoneService.createMilestone(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MILESTONE, memberIds, "제목" + i, "내용" + i, null), memberRepository.findById(authorId).get());
                 }
             }
         }

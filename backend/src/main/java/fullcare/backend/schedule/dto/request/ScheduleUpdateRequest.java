@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 public class ScheduleUpdateRequest {
 
-    @NotBlank
+    @NotNull
     private Long projectId;
 
     @NotNull

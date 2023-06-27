@@ -93,12 +93,14 @@ public class ScheduleController {
         ProjectMember projectMember = projectMemberService.findProjectMember(scheduleDeleteRequest.getProjectId(), member.getId());
 
         //? 작성자 또는 팀 리더만 삭제 가능
-        if (!scheduleService.validateAuthor(scheduleDeleteRequest.getProjectId(), scheduleId, member.getId())&& !projectMember.isLeader()) {
+        if (!scheduleService.validateDelete(scheduleId, scheduleDeleteRequest.getProjectId(), member.getId(), projectMember)) {
             throw new InvalidAccessException("일정 삭제에 대한 권한이 없습니다.");
         }
         scheduleService.deleteSchedule(scheduleId);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+
 
     @Operation(method = "get", summary = "전체 일정 리스트 조회")
     @ApiResponses(value = {

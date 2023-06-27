@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 public class ScheduleCreateRequest {
 
-    @NotBlank
+    @NotNull
     private Long projectId;
 
     // TODO startDate(이전) < endDate(이후) + NotBlank인가 NotEmpty인가?
@@ -31,9 +31,8 @@ public class ScheduleCreateRequest {
     // ? NotBlank인가 NotEmpty인가?
     private ScheduleCategory category;
 
-    // TODO 여기는 왜 MemberDto로 받는가? (ScheduleUpdateRequest와의 차이점)
     @NotEmpty
-    private List<MemberDto> memberDtos;
+    private List<Long> memberIds;
 
     @NotBlank
     @Length(min = 2, max = 20)
@@ -42,16 +41,16 @@ public class ScheduleCreateRequest {
     @NotEmpty
     private String content;
 
-    @NotNull
+//    @NotNull
     private String address;
 
 
-    public ScheduleCreateRequest(Long projectId, LocalDateTime startDate, LocalDateTime endDate, ScheduleCategory category, List<MemberDto> memberDtos, String title, String content, String address) {
+    public ScheduleCreateRequest(Long projectId, LocalDateTime startDate, LocalDateTime endDate, ScheduleCategory category, List<Long> memberIds, String title, String content, String address) {
         this.projectId = projectId;
         this.startDate = startDate;
         this.endDate = endDate;
         this.category = category;
-        this.memberDtos = memberDtos;
+        this.memberIds = memberIds;
         this.title = title;
         this.content = content;
         this.address = address;

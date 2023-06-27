@@ -41,10 +41,10 @@ public class MilestoneService {
         LocalDateTime endDate = project.getEndDate().atStartOfDay();
         Schedule.validDate(startDate, endDate, scheduleCreateRequest.getStartDate(), scheduleCreateRequest.getEndDate());
 
-        List<MemberDto> memberDtos = scheduleCreateRequest.getMemberDtos();
+        List<Long> memberIds = scheduleCreateRequest.getMemberIds();
         List<Member> memberList = new ArrayList<>();
-        memberDtos.forEach(m -> {
-            Member member = memberRepository.findById(m.getId()).orElseThrow(() -> new EntityNotFoundException("해당 사용자가 존재하지 않습니다."));
+        memberIds.forEach(m -> {
+            Member member = memberRepository.findById(m).orElseThrow(() -> new EntityNotFoundException("해당 사용자가 존재하지 않습니다."));
             memberList.add(member);
         });
         Milestone milestone = Milestone.builder()

@@ -71,6 +71,9 @@ public class ScheduleService {
         }
         return false;
     }
+    public boolean validateDelete(Long scheduleId, Long projectId, Long memberId, ProjectMember projectMember) {
+        return !(!validateAuthor(projectId, scheduleId, memberId) && !projectMember.isLeader());
+    }
     public boolean updateSchedule(ScheduleUpdateRequest scheduleUpdateRequest, Long scheduleId) {// 멤버 로그인 사용자 검증 수정
         Schedule schedule = scheduleRepository.findJoinSMById(scheduleId).orElseThrow(() -> new EntityNotFoundException("해당 일정이 존재하지 않습니다."));
         if ((schedule instanceof Meeting && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.MILESTONE)) || (schedule instanceof Milestone && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.MEETING)) ){
@@ -472,12 +475,15 @@ public class ScheduleService {
         List<ProjectMember> projectMembers = project.getProjectMembers();
         List<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();
 
+        ProjectMember pmMe = projectMembers.stream().filter(pm -> pm.getMember().getId() == memberId).findFirst().get();
+
         ScheduleDetailResponse scheduleDetailResponse = ScheduleDetailResponse.builder()
                 .projectId(projectId)
                 .title(schedule.getTitle())
                 .content(schedule.getContent())
                 .startDate(schedule.getStartDate())
                 .endDate(schedule.getEndDate())
+                .deleteAuthorization(validateDelete(scheduleId, projectId, memberId, pmMe))
                 .build();
         for (ProjectMember projectMember : projectMembers) {
             DetailMemberDto detailMemberDto = DetailMemberDto.builder().id(projectMember.getMember().getId())

@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class ScheduleStateUpdateRequest {
 
-    @NotBlank
+    @NotNull
     private Long projectId;
 
     // ? NotBlank인가 NotEmpty인가?

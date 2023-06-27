@@ -3,23 +3,24 @@ package fullcare.backend.schedule.dto.request;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
 public class ScheduleMonthListRequest {
 
-    @NotBlank
+    @NotNull
     private Long projectId;
 
-    @NotBlank
+    @NotNull
     private Long memberId;
 
-    @NotBlank
+    @NotNull
     @Min(1900)
     @Max(9999)
     private int year;
 
-    @NotBlank
+    @NotNull
     @Min(1)
     @Max(12)
     private int month;

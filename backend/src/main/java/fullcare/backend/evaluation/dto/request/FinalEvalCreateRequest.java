@@ -9,10 +9,10 @@ import lombok.Getter;
 @Getter
 public class FinalEvalCreateRequest {
 
-    @NotBlank
+    @NotNull
     private Long projectId;
 
-    @NotBlank
+    @NotNull
     private Long evaluatedId;
 
     // TODO 값 타입을 DTO에서 써도 되는가?

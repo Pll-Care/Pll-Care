@@ -1,5 +1,6 @@
 package fullcare.backend.project.service;
 
+import fullcare.backend.evaluation.domain.FinalTermEvaluation;
 import fullcare.backend.global.State;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
@@ -90,9 +91,16 @@ public class ProjectService {
 
     public void deleteProject(Long projectId) {
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException("프로젝트 정보가 없습니다."));
+        List<FinalTermEvaluation> finalTermEvaluations = project.getFinalTermEvaluations();
+        for (FinalTermEvaluation fe : finalTermEvaluations) {
+            fe.setProjectNull();
+        }
         projectRepository.deleteById(projectId);
-        uploadService.delete(project.getImageUrl());
+        if (project.getImageUrl() != null){
+            uploadService.delete(project.getImageUrl());
+        }
     }
+
 
     public List<ProjectMemberListResponse> findProjectMembers(Long projectId) {
         return getProjectMemberListResponses(projectId, projectMemberRepository);

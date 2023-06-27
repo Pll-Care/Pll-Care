@@ -2,6 +2,7 @@ package fullcare.backend.memo.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
@@ -10,7 +11,7 @@ import org.hibernate.validator.constraints.Length;
 @NoArgsConstructor
 public class MemoCreateRequest {
 
-    @NotBlank
+    @NotNull
     private Long projectId;
 
     @NotBlank
