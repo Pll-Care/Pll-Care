@@ -30,12 +30,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequiredArgsConstructor
 public class UploadController {
     private final UploadService uploadService;
-//    private final S3UploaderService s3UploaderService;
-    private final AmazonS3 amazonS3;
 
-
-
-    // * 새로운 프로젝트 생성
+    //* 이미지 관련 api
     @Operation(method = "post", summary = "이미지 업로드")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "이미지 업로드 성공", useReturnTypeSchema = true),
@@ -46,15 +42,13 @@ public class UploadController {
         UploadResponse response = uploadService.upload(file, dir);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
-    // * 새로운 프로젝트 생성
     @Operation(method = "delete", summary = "이미지 삭제")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "이미지 업로드 성공", useReturnTypeSchema = true),
-            @ApiResponse(responseCode = "400", description = "이미지 업로드 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse(responseCode = "201", description = "이미지 삭제 성공", useReturnTypeSchema = true),
+            @ApiResponse(responseCode = "400", description = "이미지 삭제 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @DeleteMapping("/image")
-    public ResponseEntity<UploadResponse> uploadFile(@RequestParam("url")String url) throws MalformedURLException {
+    public ResponseEntity<UploadResponse> uploadFile(@RequestParam("url")String url) {
         uploadService.delete(url);
         return new ResponseEntity<>( HttpStatus.OK);
     }
