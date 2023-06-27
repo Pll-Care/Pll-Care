@@ -1214,15 +1214,14 @@ input {
   margin-right: auto;
 }
 .management .project-list-wrapper .project-list .project-item-left-col figure {
-  border: none;
+  border: 2px solid #01e89e;
   border-radius: 15px;
-  background-image: url("../assets/project-default-img.jpg");
-  background-position: 0 0;
+  background-position: center;
   background-repeat: no-repeat;
-  background-size: 100% 100%, 100%;
+  background-size: 100% 100%;
 }
 .management .project-list-wrapper .project-list .project-item-right-col {
-  color: #003B28;
+  color: #003b28;
   font-size: 18px;
   font-family: "Noto Sans KR", sans-serif;
 }
@@ -1332,7 +1331,7 @@ input {
   margin-right: 40px;
 }
 .management .new-project-modal-wrapper .new-project-second-row .new-project-period-right-col {
-  color: #7A7A7A;
+  color: #7a7a7a;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;

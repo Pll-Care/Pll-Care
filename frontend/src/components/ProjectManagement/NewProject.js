@@ -5,6 +5,7 @@ import Button from "../../components/common/Button";
 import { getStringDate } from "../../utils/date";
 import useManagementMutation from "../../hooks/useManagementMutation";
 import { toast } from "react-toastify";
+import { uploadImage } from "../../lib/apis/projectManagementApi";
 
 const NewProject = ({ setIsModalVisible }) => {
   const modalOutside = useRef();
@@ -16,7 +17,7 @@ const NewProject = ({ setIsModalVisible }) => {
   const [startDate, setStartDate] = useState(getStringDate(new Date()));
   const [endDate, setEndDate] = useState(getStringDate(new Date()));
   const [imgUrl, setImgUrl] = useState("");
-  const [formData, setFormData] = useState();
+  const [responseImgUrl, setResponseImgUrl] = useState("");
 
   const descriptionRef = useRef(null);
 
@@ -56,6 +57,7 @@ const NewProject = ({ setIsModalVisible }) => {
       description: description,
       startDate: getStringDate(new Date(startDate)),
       endDate: getStringDate(new Date(endDate)),
+      imageUrl: responseImgUrl
     });
 
     setIsModalVisible(false);
@@ -69,13 +71,19 @@ const NewProject = ({ setIsModalVisible }) => {
 
     const reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
-    reader.onloadend = () => {
+    reader.onloadend = async () => {
       setImgUrl(reader.result);
-    };
 
-    const formData = new FormData();
-    formData.append('image', e.target.files[0]);
-    setFormData(formData);
+      const formData = new FormData();
+      formData.append("file", e.target.files[0]);
+
+      const imgUrl = await uploadImage({
+        dir: "project",
+        formData: formData.get("file"),
+      });
+
+      setResponseImgUrl(imgUrl);
+    };
   };
 
   const handleUploadImageClick = () => {

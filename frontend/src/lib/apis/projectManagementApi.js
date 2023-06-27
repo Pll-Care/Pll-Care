@@ -31,3 +31,17 @@ export const deleteProject = async (projectId) => {
 
   return response.data.content;
 };
+
+export const uploadImage = async (imgData) => {
+  const response = await customAxios.post(
+    `/auth/upload/image?dir=${imgData.dir}`,
+    {
+      file: imgData.formData,
+    },
+    {
+      headers: { "Content-Type": "multipart/form-data" },
+    }
+  );
+
+  return response.data.imageUrl;
+};

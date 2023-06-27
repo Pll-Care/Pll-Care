@@ -26,7 +26,7 @@ const ProjectList = ({ projectList }) => {
           to={`/management/${project.projectId}/overview`}
         >
           <div className="project-item-left-col">
-            <figure />
+            <figure style={{ backgroundImage: `url(${project.imageUrl})` }} />
           </div>
           <div className="project-item-right-col">
             <div className="project-item-text-wrapper">
