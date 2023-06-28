@@ -110,7 +110,7 @@
 }
 
 .MuiBox-root {
-  .new-project {
+  .project-editor {
     height: 90%;
     width: 100%;
     display: grid;
@@ -137,7 +137,7 @@
       border-radius: 10px;
       padding: 15px;
 
-      .new-project-left-col {
+      .project-editor-left-col {
         width: 20%;
         height: 100%;
         margin-right: 20px;
@@ -166,12 +166,12 @@
         }
       }
 
-      .new-project-right-col {
+      .project-editor-right-col {
         width: 80%;
         height: 100%;
       }
 
-      .new-project-right-col .new-project-period-first-row {
+      .project-editor-right-col .project-editor-period-first-row {
         background-color: white;
         border-radius: 10px;
         margin-bottom: 10px;
@@ -191,7 +191,7 @@
         @include displayFlex(row, space-around);
       }
 
-      .new-project-right-col .new-project-period-second-row {
+      .project-editor-right-col .project-editor-period-second-row {
         width: 100%;
         height: calc(100% - 50px);
 
