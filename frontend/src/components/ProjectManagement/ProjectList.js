@@ -5,6 +5,7 @@ import Button from "../../components/common/Button";
 import ProjectButtonModal from "./ProjectButtonModal";
 import useManagementMutation from "../../hooks/useManagementMutation";
 import ProjectEditor from "./ProjectEditor";
+import projectDefaultImg from "../../assets/project-default-img.jpg";
 
 import { getStringDate } from "../../utils/date";
 
@@ -86,7 +87,7 @@ const ProjectList = ({ projectList }) => {
                 backgroundImage: `url(${
                   project.imageUrl
                     ? project.imageUrl
-                    : "/assets/project-default-img.jpg"
+                    : projectDefaultImg
                 })`,
               }}
             />
