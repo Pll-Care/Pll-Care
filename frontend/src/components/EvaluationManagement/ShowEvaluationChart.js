@@ -2,6 +2,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
 import { useState } from "react";
 
 const CustomTooltip = ({ active, payload, label }) => {
@@ -27,8 +28,44 @@ const settings = {
   infinite: true,
   speed: 500,
   slidesToShow: 1,
-  slidesToScroll: 1
+  slidesToScroll: 1,
 };
+
+const evaluateBadgeMaxNumRounded = (data) => {
+  let maxBadgeNum = 0;
+
+  data.forEach((memberData) => {
+    memberData.evaluation.forEach((evaluationData) => {
+      if (evaluationData.quantity > maxBadgeNum) {
+        maxBadgeNum = evaluationData.quantity;
+      }
+    });
+  });
+
+  return maxBadgeNum + (5 - (maxBadgeNum % 5));
+};
+
+const chartIndices = (data, chunkSize) => {
+  let indexArray = [];
+
+  for (let i = 0; i < data.length / chunkSize; i++) {
+    indexArray.push(i);
+  }
+
+  return indexArray;
+};
+
+function makeChartData(data) {
+  const evaluations = {};
+
+  data.forEach((memberData) => {
+    memberData.evaluation.forEach((evaluationData) => {
+      evaluations[evaluationData.evaluationBadge] = evaluationData.quantity;
+    });
+  });
+
+  return evaluations;
+}
 
 const ShowEvaluationChart = ({ chartData }) => {
   const data = chartData.map((memberData) => {
@@ -40,50 +77,16 @@ const ShowEvaluationChart = ({ chartData }) => {
     };
   });
 
-  const [chartDataNum, setChartDataNum] = useState(data.length < 9 ? data.length : Math.ceil(data.length / 3));
-
-  function makeChartData(data) {
-    const evaluations = {};
-
-    data.forEach((memberData) => {
-      memberData.evaluation.forEach((evaluationData) => {
-        evaluations[evaluationData.evaluationBadge] = evaluationData.quantity;
-      });
-    });
-
-    return evaluations;
-  }
-
-  function yAxisDomain(data) {
-    let maxBadgeNum = 0;
-
-    data.forEach((memberData) => {
-      memberData.evaluation.forEach((evaluationData) => {
-        if (evaluationData.quantity > maxBadgeNum) {
-          maxBadgeNum = evaluationData.quantity;
-        }
-      });
-    });
-
-    return maxBadgeNum + (5 - (maxBadgeNum % 5));
-  }
-
-  const chartIndexNum = () => {
-    let indexNum = [];
-
-    for (let i = 0; i < data.length / chartDataNum; i++) {
-      indexNum.push(i);
-    }
-
-    return indexNum;
-  };
+  const [chartDataNum, setChartDataNum] = useState(
+    data.length < 9 ? data.length : Math.ceil(data.length / 3)
+  );
 
   return (
     <div className="evaluation-management-chart-wrapper">
       <h1>배지 차트</h1>
       <div className="evaluation-management-show-evaluation-chart">
         <Slider className="slider" {...settings}>
-          {chartIndexNum().map((i) => (
+          {chartIndices(data, chartDataNum).map((i) => (
             <div className={`chart chart_${i}`} key={i}>
               <BarChart
                 className="chart"
@@ -95,8 +98,7 @@ const ShowEvaluationChart = ({ chartData }) => {
                 <XAxis dataKey="name" tickSize={8} />
                 <YAxis
                   dataKey="averageEvaluation"
-                  domain={[0, yAxisDomain(chartData)]}
-                  
+                  domain={[0, evaluateBadgeMaxNumRounded(chartData)]}
                 />
                 <Bar dataKey="아이디어_뱅크" fill="#01E89E" />
                 <Bar dataKey="열정적인_참여자" fill="#00AA72" />
