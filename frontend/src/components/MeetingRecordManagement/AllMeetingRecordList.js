@@ -9,6 +9,7 @@ import Button from "../../components/common/Button";
 import { useQuery, useQueryClient } from "react-query";
 
 import { getAllMeetingRecordList } from "../../lib/apis/meetingRecordManagementApi";
+import { getProjectId } from "../../utils/getProjectId";
 import { useLocation } from "react-router-dom";
 import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
 
@@ -30,7 +31,7 @@ const AllMeetingRecordList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [recordDatasPerPage, setRecordDatasPerPage] = useState(3);
 
-  const projectId = parseInt(useLocation().pathname.slice(12, 14));
+  const projectId = getProjectId(useLocation());
 
   const dispatch = useDispatch();
 

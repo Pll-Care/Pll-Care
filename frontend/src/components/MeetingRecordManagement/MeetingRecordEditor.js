@@ -12,13 +12,14 @@ import useMeetingRecordManagementMutation from "../../hooks/useMeetingRecordMana
 import { useLocation } from "react-router-dom";
 import MeetingRecord from "./MeetingRecord";
 import { toast } from "react-toastify";
+import { getProjectId } from "../../utils/getProjectId";
 
 Quill.register("modules/ImageResize", ImageResize);
 
 const MeetingRecordEditor = () => {
   const content = useSelector((state) => state.meetingRecordManagement.content);
   const title = useSelector((state) => state.meetingRecordManagement.title);
-  const projectId = parseInt(useLocation().pathname.slice(12, 14));
+  const projectId = getProjectId(useLocation());
   const isCreatedMeetingRecordVisible = useSelector(
     (state) => state.meetingRecordManagement.isCreatedMeetingRecordVisible
   );

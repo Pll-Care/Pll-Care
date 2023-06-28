@@ -5,7 +5,8 @@ import ShowEvaluationChart from "../components/EvaluationManagement/ShowEvaluati
 import { getMidEvaluationChartAndRanking } from "../lib/apis/evaluationManagementApi";
 import { useQuery } from "react-query";
 import { useEffect, useState } from "react";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
+import { getProjectId } from "../utils/getProjectId";
 
 const mockList = {
   charts: [
@@ -234,7 +235,7 @@ const EvaluationManagement = () => {
   // 전역 상태로 변경 필요
   const [isEvaluated, setIsEvaluated] = useState(true);
 
-  const projectId = parseInt(useLocation().pathname.slice(12, 14));
+  const projectId = getProjectId(useLocation());
 
   const { data } = useQuery(["managementEvaluationChartAndRanking"], () =>
     getMidEvaluationChartAndRanking(projectId)
@@ -247,7 +248,9 @@ const EvaluationManagement = () => {
   return (
     <div
       className={
-        isEvaluated ? "evaluation-management" : "evaluation-management-non-evaluated"
+        isEvaluated
+          ? "evaluation-management"
+          : "evaluation-management-non-evaluated"
       }
     >
       <div className="evaluation-management-ranking-wrapper">

@@ -5,9 +5,10 @@ import Pagination from "../common/Pagination";
 import { useLocation } from "react-router-dom";
 import { useQuery, useQueryClient } from "react-query";
 import { getBookMarkMeetingRecordList } from "../../lib/apis/meetingRecordManagementApi";
+import { getProjectId } from "../../utils/getProjectId";
 
 const BookMarkedMeetingRecordList = () => {
-  const projectId = parseInt(useLocation().pathname.slice(12, 14));
+  const projectId = getProjectId(useLocation());
 
   const [currentPage, setCurrentPage] = useState(1);
   const [recordDatasPerPage, setRecordDatasPerPage] = useState(3);
