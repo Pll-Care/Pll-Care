@@ -206,6 +206,23 @@
   @include displayFlex;
 }
 
+
+.MuiBox-root {
+  .delete-project {
+    height: 70%;
+    
+    &-heading {
+      color: white;
+      font-family: $heading-font;
+      font-size: $sub-heading-font-size;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    @include displayFlex(column, space-around);
+  }
+}
+
 @include desktop {
   .management {
     &-main-header {

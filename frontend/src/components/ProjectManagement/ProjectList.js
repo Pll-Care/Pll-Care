@@ -2,19 +2,23 @@ import { Link } from "react-router-dom";
 
 import Button from "../../components/common/Button";
 
-import useManagementMutation from "../../hooks/useManagementMutation";
+import { useState } from "react";
+import ProjectDeleteModal from "./ProjectDeleteModal";
 
 const ProjectList = ({ projectList }) => {
-  const { deleteMutate } = useManagementMutation();
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [deleteProjectId, setDeleteProjectId] = useState();
 
   const handleCompleteProject = (e, projectId) => {
     e.preventDefault();
   };
 
-  const handleRemoveProject = (e, projectId) => {
+  const handleDeleteButtonClick = (e, projectId) => {
     e.preventDefault();
 
-    deleteMutate(projectId);
+    setDeleteProjectId(projectId);
+
+    setDeleteModalVisible(true);
   };
 
   return (
@@ -26,7 +30,15 @@ const ProjectList = ({ projectList }) => {
           to={`/management/${project.projectId}/overview`}
         >
           <div className="project-item-left-col">
-            <figure style={{ backgroundImage: `url(${project.imageUrl ? project.imageUrl : '/assets/project-default-img.jpg'})` }} />
+            <figure
+              style={{
+                backgroundImage: `url(${
+                  project.imageUrl
+                    ? project.imageUrl
+                    : "/assets/project-default-img.jpg"
+                })`,
+              }}
+            />
           </div>
           <div className="project-item-right-col">
             <div className="project-item-text-wrapper">
@@ -49,9 +61,7 @@ const ProjectList = ({ projectList }) => {
               {project.state === "ONGOING" && (
                 <Button
                   text={"삭제하기"}
-                  onClick={(e) => {
-                    handleRemoveProject(e, project.projectId);
-                  }}
+                  onClick={(e) => handleDeleteButtonClick(e, project.projectId)}
                 />
               )}
               {project.state === "ONGOING" && (
@@ -66,6 +76,13 @@ const ProjectList = ({ projectList }) => {
           </div>
         </Link>
       ))}
+      {deleteModalVisible && (
+        <ProjectDeleteModal
+          projectId={deleteProjectId}
+          deleteModalVisible={deleteModalVisible}
+          setDeleteModalVisible={setDeleteModalVisible}
+        />
+      )}
     </div>
   );
 };
