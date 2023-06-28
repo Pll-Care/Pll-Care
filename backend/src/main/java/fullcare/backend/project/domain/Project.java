@@ -100,4 +100,7 @@ public class Project extends BaseEntity {
         this.state = projectUpdateRequest.getState();
         this.imageUrl = projectUpdateRequest.getImageUrl();
     }
+    public boolean isCompleted(){
+        return this.state.equals(State.COMPLETE) ? true : false;
+    }
 }

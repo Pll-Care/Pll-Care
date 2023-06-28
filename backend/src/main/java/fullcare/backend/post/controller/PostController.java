@@ -145,10 +145,12 @@ public class PostController {
     @GetMapping("/list")
     public ResponseEntity<CustomPageImpl<PostListResponse>> list(@ModelAttribute CustomPageRequest pageRequest,
                                                                  @CurrentLoginMember Member member) { // ? @ModelAttribute가 맞는가
-
+        CustomPageImpl<PostListResponse> responses=null;
         PageRequest of = pageRequest.of();
         Pageable pageable = (Pageable) of;
-        CustomPageImpl<PostListResponse> responses = postService.findPostList(member.getId(), pageable);
+        if(member!=null){
+        responses = postService.findPostList(member.getId(), pageable);}
+        else{  responses = postService.findPostList(null, pageable);}
 
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }

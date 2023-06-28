@@ -39,6 +39,7 @@ public abstract class Schedule {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", nullable = false)
     private ProjectMember projectMember;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false)
     private State state;

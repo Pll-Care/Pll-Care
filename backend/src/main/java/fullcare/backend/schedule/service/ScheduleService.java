@@ -5,6 +5,7 @@ import fullcare.backend.global.State;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.project.domain.Project;
+import fullcare.backend.project.exceptionhandler.exception.ProjectComplete;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
@@ -83,7 +84,9 @@ public class ScheduleService {
         LocalDateTime startDate = project.getStartDate().atStartOfDay();
         LocalDateTime endDate = project.getEndDate().atStartOfDay();
         Schedule.validDate(startDate, endDate, scheduleUpdateRequest.getStartDate(), scheduleUpdateRequest.getEndDate());
-
+        if(project.isCompleted()){
+            throw new ProjectComplete("완료된 프로젝트는 일정을 수정하지 못합니다.");
+        }
         List<ProjectMember> pmList = projectMemberRepository.findByProjectId(scheduleUpdateRequest.getProjectId(), ProjectMemberRoleType.미정);
         List<Member> members = pmList.stream().map(pm -> pm.getMember()).collect(Collectors.toList());// 프로젝트에 있는 멤버 리스트
         schedule.update(
@@ -113,8 +116,12 @@ public class ScheduleService {
         }
         return true;
     }
-    public void deleteSchedule(Long scheduleId) {
+    public void deleteSchedule(Long scheduleId, Long projectId) {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new EntityNotFoundException("해당 일정이 존재하지 않습니다."));
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException("해당 일정이 존재하지 않습니다."));
+        if(project.isCompleted()){
+            throw new ProjectComplete("완료된 프로젝트는 일정을 삭제하지 못합니다.");
+        }
         scheduleRepository.delete(schedule);
     }
     @Transactional(readOnly = true)
@@ -197,6 +204,10 @@ public class ScheduleService {
 //    }
     public void updateState(ScheduleStateUpdateRequest scheduleStateUpdateRequest, Long scheduleId){ // 상태 바꿀 때도 schedulemember recentview 바꿔야함
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new EntityNotFoundException("해당 일정이 존재하지 않습니다."));
+        Project project = projectRepository.findById(scheduleStateUpdateRequest.getProjectId()).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트가 존재하지 않습니다."));
+        if(project.isCompleted()){
+            throw new ProjectComplete("완료된 프로젝트는 일정을 생성하지 못합니다.");
+        }
         LocalDateTime now = LocalDateTime.now();
         schedule.updateState(now, scheduleStateUpdateRequest.getState());
         scheduleMemberRepository.updateRecentView(now, schedule.getId());

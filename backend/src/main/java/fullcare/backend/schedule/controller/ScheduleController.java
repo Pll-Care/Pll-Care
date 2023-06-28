@@ -96,7 +96,7 @@ public class ScheduleController {
         if (!scheduleService.validateDelete(scheduleId, scheduleDeleteRequest.getProjectId(), member.getId(), projectMember)) {
             throw new InvalidAccessException("일정 삭제에 대한 권한이 없습니다.");
         }
-        scheduleService.deleteSchedule(scheduleId);
+        scheduleService.deleteSchedule(scheduleId, scheduleDeleteRequest.getProjectId());
         return new ResponseEntity(HttpStatus.OK);
     }
 

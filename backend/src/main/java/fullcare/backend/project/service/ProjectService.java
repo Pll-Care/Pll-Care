@@ -104,7 +104,6 @@ public class ProjectService {
 
     public List<ProjectMemberListResponse> findProjectMembers(Long projectId) {
         return getProjectMemberListResponses(projectId, projectMemberRepository);
-
     }
 
     public List<ProjectMemberListResponse> findApplyList(Long projectId){

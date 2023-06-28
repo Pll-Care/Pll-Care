@@ -2,17 +2,22 @@ package fullcare.backend.profile.domain;
 
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.post.domain.RecruitPosition;
+import fullcare.backend.profile.dto.ProjectExperienceDto;
 import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+
+import java.util.List;
+
+//import javax.json.JsonMergePatch;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "profile")
 @Entity
+@DynamicUpdate
 public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,8 +35,8 @@ public class Profile {
     @Lob
     @Column(name = "tech_stack")
     private String techStack;
-    @Embedded
-    private ProjectExperience projectExperience;
+    @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY, cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<ProjectExperience> projectExperiences;
 
     public Profile(String bio) {
         this.bio = bio;
@@ -40,6 +45,25 @@ public class Profile {
         this.contact = profileUpdateRequest.getContact();
         this.recruitPosition = profileUpdateRequest.getRecruitPosition();
         this.techStack = profileUpdateRequest.getTechStack();
-        this.projectExperience.updateProjectExperience(profileUpdateRequest);
+        if (profileUpdateRequest.getProjectId() != null && profileUpdateRequest.isDelete()){
+            ProjectExperience projectExperience = this.projectExperiences.stream().filter(pe -> pe.getId() == profileUpdateRequest.getProjectId())
+                    .findFirst().orElseThrow(() -> new EntityNotFoundException("프로젝트 경험이 없습니다."));
+            projectExperiences.remove(projectExperience);
+        }else{
+            if(profileUpdateRequest.getProjectExperiences() != null) {
+                List<ProjectExperienceDto> peList = profileUpdateRequest.getProjectExperiences();
+                for (ProjectExperienceDto peDto : peList) {
+                    ProjectExperience projectExperience = ProjectExperience.builder()
+                            .title(peDto.getTitle())
+                            .description(peDto.getDescription())
+                            .startDate(peDto.getStartDate())
+                            .endDate(peDto.getEndDate())
+                            .techStack(peDto.getTechStack())
+                            .profile(this)
+                            .build();
+                    this.projectExperiences.add(projectExperience);
+                }
+            }
+        }
     }
 }

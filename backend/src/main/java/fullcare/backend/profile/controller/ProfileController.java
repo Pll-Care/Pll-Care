@@ -35,6 +35,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+//import javax.json.JsonMergePatch;
+//import javax.json.JsonPatch;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -58,14 +60,17 @@ public class ProfileController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @Operation(method = "put", summary = "개인 프로필 수정")
+    @Operation(method = "patch", summary = "개인 프로필 수정")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "개인 프로필 수정 성공", useReturnTypeSchema = true),
 //            @ApiResponse(responseCode = "400", description = "개인 프로필 수정 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
-    @PutMapping
+    @PatchMapping
     public ResponseEntity projectMemberList(@PathVariable Long memberId, @CurrentLoginMember Member member, @RequestBody ProfileUpdateRequest profileUpdateRequest) {
-
+        if(memberId != member.getId()){
+            throw new InvalidAccessException("해당 프로필 권한이 없습니다.");
+        }
+        profileService.updateProfile(member, profileUpdateRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -141,4 +146,12 @@ public class ProfileController {
         MyEvalChartResponse response = evaluationService.findMyEvalChart(memberId);
         return new ResponseEntity(response,HttpStatus.OK);
     }
+
+
+
+//    @PatchMapping(value = "/api/person/{id}", consumes = "application/json-patch+json")
+//    public ResponseEntity<?> patchPerson(@PathVariable Long id, @RequestBody JsonMergePatch jsonPatch) {
+////        PersonResponse personResponse = personService.patchPerson(id, jsonPatch);
+//        return null;
+//    }
 }

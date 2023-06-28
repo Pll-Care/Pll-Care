@@ -1,19 +1,22 @@
 package fullcare.backend.profile.domain;
 
+import fullcare.backend.profile.dto.ProjectExperienceDto;
 import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.Lob;
+import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
-@Embeddable
+@Entity
 @NoArgsConstructor
 public class ProjectExperience {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "project_experience_id")
+    private Long id;
     private String title;
     private String description;
     @Column(name = "start_dt")
@@ -23,13 +26,25 @@ public class ProjectExperience {
     @Lob
     @Column(name = "project_tech_stack")
     private String techStack;
-
-    public void updateProjectExperience(ProfileUpdateRequest profileUpdateRequest){
-        this.title = profileUpdateRequest.getTitle();
-        this.description = profileUpdateRequest.getDescription();
-        this.startDate = profileUpdateRequest.getStartDate();
-        this.endDate = profileUpdateRequest.getEndDate();
-        this.techStack = profileUpdateRequest.getTechStack();
+    @ManyToOne
+    private Profile profile;
+    @Builder
+    public ProjectExperience(String title, String description, LocalDate startDate, LocalDate endDate, String techStack, Profile profile) {
+        this.title = title;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.techStack = techStack;
+        this.profile = profile;
     }
+
+//    public void setProjectExperience(ProjectExperienceDto projectExperienceDto){
+//        this.title = projectExperienceDto.getTitle();
+//        this.description = projectExperienceDto.getDescription();
+//        this.startDate = projectExperienceDto.getStartDate();
+//        this.endDate = projectExperienceDto.getEndDate();
+//        this.techStack = projectExperienceDto.getTechStack();
+//    }
+
 
 }
