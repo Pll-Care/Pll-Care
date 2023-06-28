@@ -2136,60 +2136,6 @@ input {
     transform: scale(0.6);
   }
 }
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  z-index: 101;
-  background-color: rgba(0, 0, 0, 0.75);
-}
-
-.modal {
-  position: fixed;
-  padding: 0.5rem;
-  border-radius: 14px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  z-index: 200;
-  animation: slide-down 300ms ease-out forwards;
-  overflow-y: auto;
-}
-.modal_dark {
-  background-color: #01e89e;
-}
-.modal_light {
-  background-color: white;
-}
-.modal_small {
-  top: 30%;
-  left: 30%;
-  right: 30%;
-  height: 40%;
-}
-.modal_big {
-  top: 10%;
-  max-height: 80%;
-  left: 20%;
-  right: 20%;
-}
-
-@media (max-width: 768px) {
-  .modal {
-    left: 10%;
-    right: 10%;
-  }
-}
-@keyframes slide-down {
-  from {
-    opacity: 0;
-    transform: translateY(-3rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 .schedule h1 {
   font-size: 25px;
   color: #00aa72;

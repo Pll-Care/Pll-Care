@@ -3,9 +3,11 @@ import { useParams } from "react-router";
 import { toast } from "react-toastify";
 import { useMutation } from "react-query";
 
+import { Box, Modal } from "@mui/material";
+
 import Button from "../common/Button";
-import Modal from "../common/Modal";
 import { makeNewPlan } from "../../lib/apis/scheduleManagementApi";
+import ModalContainer from "../common/ModalContainer";
 
 // 프로젝트 팀원 더미 데이터
 const names = [
@@ -39,7 +41,7 @@ const names = [
   },
 ];
 
-const NewScheduleModal = ({ onClose }) => {
+const NewScheduleModal = ({ open, onClose }) => {
   const { id } = useParams();
   const today = new Date();
   const initialDate = today.toISOString().slice(0, 16);
@@ -156,8 +158,9 @@ const NewScheduleModal = ({ onClose }) => {
     console.log(new_plan);
     //mutate(new_plan);
   };
+
   return (
-    <Modal onClose={onClose} type="light" size="big">
+    <ModalContainer open={open} onClose={onClose} type="white" width="60%">
       <div className="modal-container">
         <input
           type="text"
@@ -243,7 +246,7 @@ const NewScheduleModal = ({ onClose }) => {
           <Button text="생성 완료" onClick={submitNewPlan} />
         </div>
       </div>
-    </Modal>
+    </ModalContainer>
   );
 };
 export default NewScheduleModal;

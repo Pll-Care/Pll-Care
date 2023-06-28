@@ -27,16 +27,15 @@ const Schedule = (props) => {
 
   return (
     <div className="schedule-list">
-      {modalVisible && (
-        <ScheduleEvaluationModal
-          id={props.data.id}
-          modalHandler={hideModalHandler}
-          title={props.data.title}
-          time={props.data.time}
-          day={props.data.day}
-          week={props.data.week}
-        />
-      )}
+      <ScheduleEvaluationModal
+        open={modalVisible}
+        id={props.data.id}
+        onClose={hideModalHandler}
+        title={props.data.title}
+        time={props.data.time}
+        day={props.data.day}
+        week={props.data.week}
+      />
       <div className="schedule-list-time">
         <h1>{props.data.day}</h1>
         <h2>{props.data.week}</h2>
@@ -58,7 +57,6 @@ const Schedule = (props) => {
           />
         )}
       </div>
-
       <div className="schedule-list-content">
         <h5>{props.data.time}</h5>
         <div className="schedule-list-content-time">

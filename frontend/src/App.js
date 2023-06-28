@@ -28,11 +28,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={routers} />
-      <ToastContainer
-        autoClose={3000}
-        position={"top-right"}
-        hideProgressBar
-      />
+      <ToastContainer autoClose={3000} position={"top-right"} hideProgressBar />
       <ReactQueryDevtools />
     </QueryClientProvider>
   );

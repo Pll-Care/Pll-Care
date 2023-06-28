@@ -166,7 +166,7 @@ const CalendarList = () => {
       <div className="button-container">
         <Button text="새 일정 생성" onClick={() => modalOpen()} />
       </div>
-      {modalIsVisible && <NewScheduleModal onClose={modalClose} />}
+      <NewScheduleModal open={modalIsVisible} onClose={modalClose} />
     </div>
   );
 };
