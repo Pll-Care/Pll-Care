@@ -4,6 +4,9 @@ import { useState } from "react";
 import Button from "../../components/common/Button";
 import ProjectButtonModal from "./ProjectButtonModal";
 import useManagementMutation from "../../hooks/useManagementMutation";
+import ProjectEditor from "./ProjectEditor";
+
+import { getStringDate } from "../../utils/date";
 
 const ProjectList = ({ projectList }) => {
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
@@ -11,6 +14,16 @@ const ProjectList = ({ projectList }) => {
 
   const [leaveModalVisible, setLeaveModalVisible] = useState(false);
   const [leaveProjectId, setLeaveProjectId] = useState();
+
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [editData, setEditData] = useState({
+    projectId: 0,
+    title: "",
+    startDate: new Date(),
+    endDate: new Date(),
+    imageUrl: "",
+    description: "",
+  });
 
   const { completeMutate } = useManagementMutation();
 
@@ -28,8 +41,27 @@ const ProjectList = ({ projectList }) => {
     setDeleteModalVisible(true);
   };
 
-  const handleEditProjectClick = (e, projectId) => {
+  const handleEditProjectClick = (
+    e,
+    projectId,
+    title,
+    startDate,
+    endDate,
+    description,
+    imageUrl
+  ) => {
     e.preventDefault();
+
+    setEditModalVisible(true);
+
+    setEditData({
+      title,
+      projectId,
+      startDate: getStringDate(new Date(startDate)),
+      endDate: getStringDate(new Date(endDate)),
+      description,
+      imageUrl,
+    });
   };
 
   const handleLeaveProjectClick = (e, projectId) => {
@@ -90,7 +122,15 @@ const ProjectList = ({ projectList }) => {
                   <Button
                     text={"수정하기"}
                     onClick={(e) => {
-                      handleEditProjectClick(e, project.projectId);
+                      handleEditProjectClick(
+                        e,
+                        project.projectId,
+                        project.title,
+                        project.startDate,
+                        project.endDate,
+                        project.description,
+                        project.imageUrl
+                      );
                     }}
                   />
                 )}
@@ -131,6 +171,14 @@ const ProjectList = ({ projectList }) => {
           projectId={leaveProjectId}
           modalVisible={leaveModalVisible}
           setModalVisible={setLeaveModalVisible}
+        />
+      )}
+      {editModalVisible && (
+        <ProjectEditor
+          isModalVisible={editModalVisible}
+          setIsModalVisible={setEditModalVisible}
+          isEdit={true}
+          editData={editData}
         />
       )}
     </div>

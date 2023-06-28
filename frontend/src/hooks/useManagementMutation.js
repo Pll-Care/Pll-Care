@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "react-query";
-import { completeProject, createProject, deleteProject } from "../lib/apis/projectManagementApi";
+import { completeProject, createProject, deleteProject, editProject } from "../lib/apis/projectManagementApi";
 import { toast } from "react-toastify";
 
 const useManagementMutation = () => {
@@ -29,7 +29,15 @@ const useManagementMutation = () => {
     }
   })
 
-  return { createMutate, deleteMutate, completeMutate };
+  const { mutate: editMutate } = useMutation(editProject, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["managementOngoingProjectList"]);
+      queryClient.invalidateQueries(["managementAllProjectList"]);
+      toast.success("수정되었습니다!");
+    }
+  })
+
+  return { createMutate, deleteMutate, completeMutate, editMutate };
 };
 
 export default useManagementMutation;

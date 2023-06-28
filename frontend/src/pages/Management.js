@@ -1,6 +1,6 @@
 import Button from "../components/common/Button";
 import ProjectList from "../components/ProjectManagement/ProjectList";
-import NewProject from "../components/ProjectManagement/NewProject";
+import ProjectEditor from "../components/ProjectManagement/ProjectEditor";
 import NonAuthenticatedManagement from "./NonAuthenticatedManagement";
 import Pagination from "../components/common/Pagination";
 
@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 
 import { useQuery, useQueryClient } from "react-query";
 import { getProjectList } from "../lib/apis/projectManagementApi";
+import NewProject from "../components/ProjectManagement/NewProject";
 
 const Management = () => {
   const queryClient = useQueryClient();
@@ -62,7 +63,13 @@ const Management = () => {
         );
       }
     }
-  }, [allProjectListVisible, currentPage, lastPageNum, ongoingCurrentPage, queryClient]);
+  }, [
+    allProjectListVisible,
+    currentPage,
+    lastPageNum,
+    ongoingCurrentPage,
+    queryClient,
+  ]);
 
   const handleClickAllProjectList = () => {
     setAllProjectListVisible((prevData) => true);
@@ -103,8 +110,12 @@ const Management = () => {
             <div>
               <ProjectList projectList={projectList} />
               <Pagination
-                currentPage={allProjectListVisible ? currentPage : ongoingCurrentPage}
-                setCurrentPage={allProjectListVisible ? setCurrentPage : setOngoingCurrentPage}
+                currentPage={
+                  allProjectListVisible ? currentPage : ongoingCurrentPage
+                }
+                setCurrentPage={
+                  allProjectListVisible ? setCurrentPage : setOngoingCurrentPage
+                }
                 recordDatasPerPage={recordDatasPerPage}
                 totalData={data.totalElements}
               />

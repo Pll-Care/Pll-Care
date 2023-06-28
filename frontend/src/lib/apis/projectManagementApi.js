@@ -32,13 +32,29 @@ export const deleteProject = async (projectId) => {
   return response.data.content;
 };
 
+export const editProject = async (newProjectData) => {
+  const response = await customAxios.put(
+    `/auth/project/${newProjectData.projectId}`,
+    {
+      title: newProjectData.title,
+      description: newProjectData.description,
+      state: newProjectData.state,
+      startDate: newProjectData.startDate,
+      endDate: newProjectData.endDate,
+      imageUrl: newProjectData.imageUrl,
+    }
+  );
+
+  return response.data;
+};
+
 export const completeProject = async (projectId) => {
   const response = await customAxios.put(`/auth/project/${projectId}/state`, {
-    state: "COMPLETE"
+    state: "COMPLETE",
   });
 
-  return response;
-}
+  return response.data;
+};
 
 export const uploadImage = async (imgData) => {
   const response = await customAxios.post(
