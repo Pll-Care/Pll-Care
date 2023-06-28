@@ -2,7 +2,7 @@ package fullcare.backend.profile.domain;
 
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.post.domain.RecruitPosition;
-import fullcare.backend.profile.dto.ProjectExperienceDto;
+import fullcare.backend.profile.dto.ProjectExperienceRequestDto;
 import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
 import jakarta.persistence.*;
 import lombok.*;
@@ -56,8 +56,8 @@ public class Profile {
             projectExperiences.remove(projectExperience);
         }else{
             if(profileUpdateRequest.getProjectExperiences() != null) {
-                List<ProjectExperienceDto> peList = profileUpdateRequest.getProjectExperiences();
-                for (ProjectExperienceDto peDto : peList) {
+                List<ProjectExperienceRequestDto> peList = profileUpdateRequest.getProjectExperiences();
+                for (ProjectExperienceRequestDto peDto : peList) {
                     ProjectExperience projectExperience = ProjectExperience.builder()
                             .title(peDto.getTitle())
                             .description(peDto.getDescription())

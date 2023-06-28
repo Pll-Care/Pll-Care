@@ -1,7 +1,5 @@
 package fullcare.backend.profile.domain;
 
-import fullcare.backend.profile.dto.ProjectExperienceDto;
-import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,14 +35,5 @@ public class ProjectExperience {
         this.techStack = techStack;
         this.profile = profile;
     }
-
-//    public void setProjectExperience(ProjectExperienceDto projectExperienceDto){
-//        this.title = projectExperienceDto.getTitle();
-//        this.description = projectExperienceDto.getDescription();
-//        this.startDate = projectExperienceDto.getStartDate();
-//        this.endDate = projectExperienceDto.getEndDate();
-//        this.techStack = projectExperienceDto.getTechStack();
-//    }
-
 
 }

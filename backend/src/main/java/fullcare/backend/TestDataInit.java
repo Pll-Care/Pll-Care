@@ -161,7 +161,7 @@ public class TestDataInit {
     }
 
     private void createMember() {
-        Member member = new Member("naver_h9Vdq-6-ZRXzfDGDQKeQ6mUM6VOvrCsBeBXGLlbPeyE", "nick", "name", "fullcaredummy@gmail.com", MemberRole.USER, LocalDateTime.now(), "refresh", new Profile("한 줄 소개 입니다."));
+        Member member = new Member("google_101581376839285371456", "nick", "name", "fullcaredummy@gmail.com", MemberRole.USER, LocalDateTime.now(), "refresh", new Profile("한 줄 소개 입니다."));
         memberRepository.save(member);
         for (int i = 1; i < 10; i++) {
             member = new Member("id" + i, "nick" + i, "name" + i, "email" + i, MemberRole.USER, LocalDateTime.now(), "refresh" + i, new Profile("한 줄 소개 입니다."));

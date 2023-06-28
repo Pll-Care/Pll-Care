@@ -8,7 +8,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class ProjectExperienceDto {
+public class ProjectExperienceRequestDto {
     private String title;
     private String description;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
@@ -17,7 +17,7 @@ public class ProjectExperienceDto {
     private LocalDate endDate;
     private String techStack;
     @Builder
-    public ProjectExperienceDto(String title, String description, LocalDate startDate, LocalDate endDate, String techStack) {
+    public ProjectExperienceRequestDto(String title, String description, LocalDate startDate, LocalDate endDate, String techStack) {
         this.title = title;
         this.description = description;
         this.startDate = startDate;

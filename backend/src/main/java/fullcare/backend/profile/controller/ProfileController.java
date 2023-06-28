@@ -10,6 +10,7 @@ import fullcare.backend.global.exception.InvalidAccessException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.post.dto.response.MyPostResponse;
 import fullcare.backend.post.service.PostService;
+import fullcare.backend.profile.TechStackResponse;
 import fullcare.backend.profile.dto.request.ProfileBioUpdateRequest;
 import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
 import fullcare.backend.profile.dto.response.ProfileResponse;
@@ -26,6 +27,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -67,7 +69,7 @@ public class ProfileController {
 //            @ApiResponse(responseCode = "400", description = "개인 프로필 생성, 수정, 삭제 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @PatchMapping
-    public ResponseEntity updateProfile(@PathVariable Long memberId, @CurrentLoginMember Member member, @RequestBody ProfileUpdateRequest profileUpdateRequest) {
+    public ResponseEntity updateProfile(@PathVariable Long memberId, @CurrentLoginMember Member member, @Valid @RequestBody ProfileUpdateRequest profileUpdateRequest) {
         if(memberId != member.getId()){
             throw new InvalidAccessException("해당 프로필 권한이 없습니다.");
         }
@@ -81,7 +83,7 @@ public class ProfileController {
 //            @ApiResponse(responseCode = "400", description = "개인 프로필 한 줄 소개 수정 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @PutMapping
-    public ResponseEntity<ProfileResponse> updateBio(@PathVariable Long memberId, @CurrentLoginMember Member member, @RequestBody ProfileBioUpdateRequest profileBioUpdateRequest) {
+    public ResponseEntity<ProfileResponse> updateBio(@PathVariable Long memberId, @CurrentLoginMember Member member,@Valid @RequestBody ProfileBioUpdateRequest profileBioUpdateRequest) {
         if(memberId != member.getId()){
             throw new InvalidAccessException("해당 프로필 권한이 없습니다.");
         }
@@ -162,10 +164,14 @@ public class ProfileController {
     }
 
 
-
-//    @PatchMapping(value = "/api/person/{id}", consumes = "application/json-patch+json")
-//    public ResponseEntity<?> patchPerson(@PathVariable Long id, @RequestBody JsonMergePatch jsonPatch) {
-////        PersonResponse personResponse = personService.patchPerson(id, jsonPatch);
-//        return null;
-//    }
+    @Operation(method = "get", summary = "기술스택 검색")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "기술스택 검색 성공", useReturnTypeSchema = true),
+//            @ApiResponse(responseCode = "400", description = "기술스택 검색 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+    })
+    @GetMapping(value = "/techstack")
+    public ResponseEntity<TechStackResponse> findTechStack(@RequestParam("tech") String tech) {
+        TechStackResponse response = profileService.findTechStack(tech);
+        return new ResponseEntity(response,HttpStatus.OK);
+    }
 }

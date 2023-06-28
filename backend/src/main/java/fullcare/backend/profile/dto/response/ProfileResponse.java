@@ -2,9 +2,8 @@ package fullcare.backend.profile.dto.response;
 
 import fullcare.backend.post.domain.RecruitPosition;
 import fullcare.backend.profile.domain.Contact;
-import fullcare.backend.profile.domain.ProjectExperience;
-import fullcare.backend.profile.dto.ProjectExperienceDto;
-import jakarta.persistence.*;
+import fullcare.backend.profile.dto.ProjectExperienceRequestDto;
+import fullcare.backend.profile.dto.ProjectExperienceResponseDto;
 import lombok.Builder;
 import lombok.Data;
 
@@ -16,12 +15,12 @@ public class ProfileResponse {
     private Contact contact;
     private RecruitPosition recruitPosition;
     private String techStack;
-    private List<ProjectExperienceDto> projectExperiences;
+    private List<ProjectExperienceResponseDto> projectExperiences;
 
     private boolean myProfile;
 
     @Builder
-    public ProfileResponse(String bio, Contact contact, RecruitPosition recruitPosition, String techStack, List<ProjectExperienceDto> projectExperiences, boolean myProfile) {
+    public ProfileResponse(String bio, Contact contact, RecruitPosition recruitPosition, String techStack, List<ProjectExperienceResponseDto> projectExperiences, boolean myProfile) {
         this.bio = bio;
         this.contact = contact;
         this.recruitPosition = recruitPosition;
