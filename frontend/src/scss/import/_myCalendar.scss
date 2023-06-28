@@ -17,6 +17,10 @@
   height: 500px;
   width: 30%;
   overflow-y: auto;
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+  }
   &-time {
     color: white;
     h5 {
@@ -64,6 +68,65 @@
           &:hover {
             transform: scale(0.8);
           }
+        }
+      }
+    }
+  }
+}
+
+// NewScheduleModal 컴포넌트
+.modal-container {
+  padding: 1rem;
+  font-family: $body-font;
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+  }
+  input {
+    border: none;
+    border-radius: 10px;
+    font-size: 35px;
+    margin-bottom: 10px;
+    font-family: $body-font;
+  }
+  &-description {
+    background-color: white;
+    border-radius: 15px;
+    padding: 1rem;
+    margin-top: 15px;
+    border: $border;
+    h5 {
+      margin-right: 30px;
+      color: $font-color;
+    }
+    .plan-option {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      h4 {
+        margin: 0px 10px;
+      }
+      input {
+        font-size: 20px;
+        margin-top: 10px;
+      }
+      Button {
+        margin-right: 10px;
+      }
+      select {
+        border-radius: 10px;
+        padding: 0.5rem;
+        font-family: $link-font;
+        color: $sub-heading-color;
+      }
+      &-bottom {
+        display: flex;
+        align-items: center;
+        border-bottom: 1.5px solid rgb(217, 217, 217);
+        margin-bottom: 20px;
+        input {
+          font-size: 15px;
         }
       }
     }

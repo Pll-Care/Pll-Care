@@ -1,10 +1,12 @@
 import { useState } from "react";
-import Modal from "../common/Modal";
+import { useDispatch } from "react-redux";
+
+import { Tooltip } from "@mui/material";
+
+import { addEvaluation } from "../../redux/evaluationManagementSlice";
 import ButtonList from "./ButtonList";
 import Button from "../common/Button";
-import { Tooltip } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { addEvaluation } from "../../redux/evaluationManagementSlice";
+import ModalContainer from "../common/ModalContainer";
 
 const ScheduleEvaluationModal = (props) => {
   const dispatch = useDispatch();
@@ -35,7 +37,12 @@ const ScheduleEvaluationModal = (props) => {
   };
 
   return (
-    <Modal onClose={props.modalHandler}>
+    <ModalContainer
+      open={props.open}
+      onClose={props.onClose}
+      type="dark"
+      width="50%"
+    >
       <div className="schedule-modal">
         <h1>평가 작성</h1>
         <div className="schedule-modal-content">
@@ -106,7 +113,7 @@ const ScheduleEvaluationModal = (props) => {
           <Button text="저장" onClick={evaluationClickHandler} />
         </div>
       </div>
-    </Modal>
+    </ModalContainer>
   );
 };
 export default ScheduleEvaluationModal;
