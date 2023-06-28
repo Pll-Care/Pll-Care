@@ -6,10 +6,9 @@ import { getStringDate } from "../../utils/date";
 import useManagementMutation from "../../hooks/useManagementMutation";
 import { toast } from "react-toastify";
 import { uploadImage } from "../../lib/apis/projectManagementApi";
+import ModalContainer from "../common/ModalContainer";
 
-const NewProject = ({ setIsModalVisible }) => {
-  const modalOutside = useRef();
-
+const NewProject = ({ isModalVisible, setIsModalVisible }) => {
   const { createMutate } = useManagementMutation();
 
   const [title, setTitle] = useState("");
@@ -23,10 +22,12 @@ const NewProject = ({ setIsModalVisible }) => {
 
   const inputRef = useRef(null);
 
-  const handleModalClose = (e) => {
-    if (e.target === modalOutside.current) {
-      setIsModalVisible(false);
-    }
+  const handleModalOpen = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalVisible(false);
   };
 
   const handleChangeTitle = (e) => {
@@ -57,7 +58,7 @@ const NewProject = ({ setIsModalVisible }) => {
       description: description,
       startDate: getStringDate(new Date(startDate)),
       endDate: getStringDate(new Date(endDate)),
-      imageUrl: responseImgUrl
+      imageUrl: responseImgUrl,
     });
 
     setIsModalVisible(false);
@@ -96,13 +97,24 @@ const NewProject = ({ setIsModalVisible }) => {
   };
 
   return (
-    <div
-      className="new-project-modal-wrapper"
-      ref={modalOutside}
-      onClick={handleModalClose}
+    <ModalContainer
+      open={isModalVisible}
+      onClose={handleModalClose}
+      width={"60%"}
+      height={"75%"}
     >
       <div className="new-project">
-        <div className="new-project-first-row">
+        <div className="new-project-heading">
+          <input
+            className="new-project-heading-input"
+            type="text"
+            required
+            value={title}
+            onChange={handleChangeTitle}
+            placeholder="프로젝트 이름을 입력하세요"
+          />
+        </div>
+        <div className="new-project-body">
           <div className="new-project-left-col">
             <div classname="new-project-img-wrapper">
               <figure
@@ -119,58 +131,55 @@ const NewProject = ({ setIsModalVisible }) => {
               />
               <Button
                 onClick={handleUploadImageClick}
-                text={"이미지 추가"}
+                text={"이미지 업로드"}
                 size={"small"}
               />
             </div>
-            <input
-              className="new-project-heading-input"
-              type="text"
-              required
-              value={title}
-              onChange={handleChangeTitle}
-              placeholder="프로젝트 제목을 입력하세요"
-            />
           </div>
           <div className="new-project-right-col">
-            <Button text="작성 완료" onClick={handleSubmitNewProject} />
+            <div className="new-project-period-first-row">
+              <h1>진행 기간:</h1>
+              <div>
+                <input
+                  className="new-project-period-start-date"
+                  type="date"
+                  required
+                  value={startDate}
+                  onChange={handleChangeStartDate}
+                  data-placeholder="시작 일자"
+                />
+                -
+                <input
+                  className="new-project-period-end-date"
+                  type="date"
+                  required
+                  value={endDate}
+                  onChange={handleChangeEndDate}
+                  data-placeholder="종료 일자"
+                />
+              </div>
+            </div>
+            <div className="new-project-period-second-row">
+              <textarea
+                value={description}
+                onChange={handleChangeContent}
+                ref={descriptionRef}
+                placeholder="프로젝트 설명을 작성하세요"
+                required
+              />
+            </div>
           </div>
         </div>
-        <div className="new-project-second-row">
-          <div className="new-project-period">
-            <div className="new-project-period-left-col">
-              <h1>진행 기간:</h1>
-            </div>
-            <div className="new-project-period-right-col">
-              <input
-                className="new-project-period-start-date"
-                type="date"
-                required
-                value={startDate}
-                onChange={handleChangeStartDate}
-                data-placeholder="시작 일자"
-              />
-              -
-              <input
-                className="new-project-period-end-date"
-                type="date"
-                required
-                value={endDate}
-                onChange={handleChangeEndDate}
-                data-placeholder="종료 일자"
-              />
-            </div>
-          </div>
-          <textarea
-            value={description}
-            onChange={handleChangeContent}
-            ref={descriptionRef}
-            placeholder="프로젝트 설명을 작성하세요"
-            required
+        <div className="button-wrapper">
+          <Button
+            text="작성 완료"
+            size={"small"}
+            type={"positive"}
+            onClick={handleSubmitNewProject}
           />
         </div>
       </div>
-    </div>
+    </ModalContainer>
   );
 };
 

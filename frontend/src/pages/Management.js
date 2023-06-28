@@ -127,7 +127,10 @@ const Management = () => {
               </div>
             )}
             {isModalVisible ? (
-              <NewProject setIsModalVisible={setIsModalVisible} />
+              <NewProject
+                isModalVisible={isModalVisible}
+                setIsModalVisible={setIsModalVisible}
+              />
             ) : null}
           </main>
         </div>

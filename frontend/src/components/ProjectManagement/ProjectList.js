@@ -22,11 +22,11 @@ const ProjectList = ({ projectList }) => {
       {projectList?.map((project) => (
         <Link
           className="project-item"
-          key={project.id}
+          key={project.projectId}
           to={`/management/${project.projectId}/overview`}
         >
           <div className="project-item-left-col">
-            <figure style={{ backgroundImage: `url(${project.imageUrl})` }} />
+            <figure style={{ backgroundImage: `url(${project.imageUrl ? project.imageUrl : '/assets/project-default-img.jpg'})` }} />
           </div>
           <div className="project-item-right-col">
             <div className="project-item-text-wrapper">
