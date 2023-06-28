@@ -1,9 +1,9 @@
 import { customAxios } from "./customAxios";
 
-export const getProjectList = async (pageNum = 1, state = "all") => {
+export const getProjectList = async (pageNum = 1, state) => {
   let response = null;
 
-  if (state === "all") {
+  if (state === "ALL") {
     response = await customAxios.get(
       `/auth/project?page=${pageNum}&size=4&state=ONGOING&state=COMPLETE`
     );
@@ -31,6 +31,14 @@ export const deleteProject = async (projectId) => {
 
   return response.data.content;
 };
+
+export const completeProject = async (projectId) => {
+  const response = await customAxios.put(`/auth/project/${projectId}/state`, {
+    state: "COMPLETE"
+  });
+
+  return response;
+}
 
 export const uploadImage = async (imgData) => {
   const response = await customAxios.post(

@@ -1,24 +1,43 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 import Button from "../../components/common/Button";
-
-import { useState } from "react";
-import ProjectDeleteModal from "./ProjectDeleteModal";
+import ProjectButtonModal from "./ProjectButtonModal";
+import useManagementMutation from "../../hooks/useManagementMutation";
 
 const ProjectList = ({ projectList }) => {
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [deleteProjectId, setDeleteProjectId] = useState();
 
-  const handleCompleteProject = (e, projectId) => {
+  const [leaveModalVisible, setLeaveModalVisible] = useState(false);
+  const [leaveProjectId, setLeaveProjectId] = useState();
+
+  const { completeMutate } = useManagementMutation();
+
+  const handleCompleteProjectClick = (e, projectId) => {
     e.preventDefault();
+
+    completeMutate(projectId);
   };
 
-  const handleDeleteButtonClick = (e, projectId) => {
+  const handleDeleteProjectClick = (e, projectId) => {
     e.preventDefault();
 
     setDeleteProjectId(projectId);
 
     setDeleteModalVisible(true);
+  };
+
+  const handleEditProjectClick = (e, projectId) => {
+    e.preventDefault();
+  };
+
+  const handleLeaveProjectClick = (e, projectId) => {
+    e.preventDefault();
+
+    setLeaveProjectId(projectId);
+
+    setLeaveModalVisible(true);
   };
 
   return (
@@ -58,29 +77,60 @@ const ProjectList = ({ projectList }) => {
               </div>
             </div>
             <div className="project-item-button-wrapper">
-              {project.state === "ONGOING" && (
-                <Button
-                  text={"삭제하기"}
-                  onClick={(e) => handleDeleteButtonClick(e, project.projectId)}
-                />
-              )}
-              {project.state === "ONGOING" && (
-                <Button
-                  text={"완료하기"}
-                  onClick={(e) => {
-                    handleCompleteProject(e, project.projectId);
-                  }}
-                />
-              )}
+              <div>
+                {project.state === "ONGOING" && (
+                  <Button
+                    text={"삭제하기"}
+                    onClick={(e) =>
+                      handleDeleteProjectClick(e, project.projectId)
+                    }
+                  />
+                )}
+                {project.state === "ONGOING" && (
+                  <Button
+                    text={"수정하기"}
+                    onClick={(e) => {
+                      handleEditProjectClick(e, project.projectId);
+                    }}
+                  />
+                )}
+              </div>
+              <div>
+                {project.state === "ONGOING" && (
+                  <Button
+                    text={"탈퇴하기"}
+                    onClick={(e) => {
+                      handleLeaveProjectClick(e, project.projectId);
+                    }}
+                  />
+                )}
+                {project.state === "ONGOING" && (
+                  <Button
+                    text={"완료하기"}
+                    onClick={(e) => {
+                      handleCompleteProjectClick(e, project.projectId);
+                    }}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </Link>
       ))}
       {deleteModalVisible && (
-        <ProjectDeleteModal
+        <ProjectButtonModal
+          type={"삭제"}
           projectId={deleteProjectId}
-          deleteModalVisible={deleteModalVisible}
-          setDeleteModalVisible={setDeleteModalVisible}
+          modalVisible={deleteModalVisible}
+          setModalVisible={setDeleteModalVisible}
+        />
+      )}
+      {leaveModalVisible && (
+        <ProjectButtonModal
+          type={"탈퇴"}
+          projectId={leaveProjectId}
+          modalVisible={leaveModalVisible}
+          setModalVisible={setLeaveModalVisible}
         />
       )}
     </div>

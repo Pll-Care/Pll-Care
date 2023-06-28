@@ -14,7 +14,6 @@ const Management = () => {
   const queryClient = useQueryClient();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [ongoingCurrentPage, setOngoingCurrentPage] = useState(1);
   const [allProjectListVisible, setAllProjectListVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -23,22 +22,21 @@ const Management = () => {
   const [recordDatasPerPage, setRecordDatasPerPage] = useState(4);
 
   const { data = { projectList: [] } } = useQuery(
-    ["managementProjectList", currentPage, allProjectListVisible],
-    () => getProjectList(currentPage)
-  );
-
-  const { data: ongoingData = { projectList: [] } } = useQuery(
-    ["managementProjectList", ongoingCurrentPage, allProjectListVisible],
-    () => getProjectList(ongoingCurrentPage, "ONGOING")
+    [
+      allProjectListVisible
+        ? "managementAllProjectList"
+        : "managementOngoingProjectList",
+      currentPage,
+      allProjectListVisible,
+    ],
+    () =>
+      getProjectList(currentPage, allProjectListVisible ? "ALL" : "ONGOING"),
+    { keepPreviousData: true }
   );
 
   const projectList = data.projectList;
 
   const lastPageNum = data.totalPages;
-
-  const ongoingProjectList = ongoingData.projectList;
-
-  const ongoingLastPageNum = ongoingData.totalPages;
 
   useEffect(() => {
     if (allProjectListVisible) {
@@ -46,35 +44,28 @@ const Management = () => {
 
       if (nextPage <= lastPageNum) {
         queryClient.prefetchQuery(
-          ["managementProjectList", nextPage, allProjectListVisible],
-          () => getProjectList(nextPage)
+          ["managementAllProjectList", nextPage, allProjectListVisible],
+          () => getProjectList(nextPage, "ALL")
         );
       }
     } else {
-      const ongoingNextPage = ongoingCurrentPage + 1;
+      const nextPage = currentPage + 1;
 
-      if (ongoingNextPage <= ongoingLastPageNum) {
+      if (nextPage <= lastPageNum) {
         queryClient.prefetchQuery(
-          ["managementProjectList", ongoingNextPage, allProjectListVisible],
-          () => getProjectList(ongoingNextPage, "ONGOING")
+          ["managementOngoingProjectList", nextPage, allProjectListVisible],
+          () => getProjectList(nextPage, "ONGOING")
         );
       }
     }
-  }, [
-    allProjectListVisible,
-    currentPage,
-    lastPageNum,
-    ongoingCurrentPage,
-    ongoingLastPageNum,
-    queryClient,
-  ]);
+  }, [allProjectListVisible, currentPage, lastPageNum, queryClient]);
 
   const handleClickAllProjectList = () => {
-    setAllProjectListVisible(true);
+    setAllProjectListVisible((prevData) => true);
   };
 
   const handleClickOngoingProjectList = () => {
-    setAllProjectListVisible(false);
+    setAllProjectListVisible((prevData) => false);
   };
 
   const handleModalVisible = () => {
@@ -105,27 +96,15 @@ const Management = () => {
             </div>
           </header>
           <main className="project-list-wrapper">
-            {allProjectListVisible ? (
-              <div>
-                <ProjectList projectList={projectList} />
-                <Pagination
-                  currentPage={currentPage}
-                  setCurrentPage={setCurrentPage}
-                  recordDatasPerPage={recordDatasPerPage}
-                  totalData={data.totalElements}
-                />
-              </div>
-            ) : (
-              <div>
-                <ProjectList projectList={ongoingProjectList} />
-                <Pagination
-                  currentPage={ongoingCurrentPage}
-                  setCurrentPage={setOngoingCurrentPage}
-                  recordDatasPerPage={recordDatasPerPage}
-                  totalData={ongoingData.totalElements}
-                />
-              </div>
-            )}
+            <div>
+              <ProjectList projectList={projectList} />
+              <Pagination
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                recordDatasPerPage={recordDatasPerPage}
+                totalData={data.totalElements}
+              />
+            </div>
             {isModalVisible ? (
               <NewProject
                 isModalVisible={isModalVisible}
