@@ -14,6 +14,7 @@ const Management = () => {
   const queryClient = useQueryClient();
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [ongoingCurrentPage, setOngoingCurrentPage] = useState(1);
   const [allProjectListVisible, setAllProjectListVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -26,11 +27,14 @@ const Management = () => {
       allProjectListVisible
         ? "managementAllProjectList"
         : "managementOngoingProjectList",
-      currentPage,
+      allProjectListVisible ? currentPage : ongoingCurrentPage,
       allProjectListVisible,
     ],
     () =>
-      getProjectList(currentPage, allProjectListVisible ? "ALL" : "ONGOING"),
+      getProjectList(
+        allProjectListVisible ? currentPage : ongoingCurrentPage,
+        allProjectListVisible ? "ALL" : "ONGOING"
+      ),
     { keepPreviousData: true }
   );
 
@@ -49,7 +53,7 @@ const Management = () => {
         );
       }
     } else {
-      const nextPage = currentPage + 1;
+      const nextPage = ongoingCurrentPage + 1;
 
       if (nextPage <= lastPageNum) {
         queryClient.prefetchQuery(
@@ -58,7 +62,7 @@ const Management = () => {
         );
       }
     }
-  }, [allProjectListVisible, currentPage, lastPageNum, queryClient]);
+  }, [allProjectListVisible, currentPage, lastPageNum, ongoingCurrentPage, queryClient]);
 
   const handleClickAllProjectList = () => {
     setAllProjectListVisible((prevData) => true);
@@ -99,8 +103,8 @@ const Management = () => {
             <div>
               <ProjectList projectList={projectList} />
               <Pagination
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
+                currentPage={allProjectListVisible ? currentPage : ongoingCurrentPage}
+                setCurrentPage={allProjectListVisible ? setCurrentPage : setOngoingCurrentPage}
                 recordDatasPerPage={recordDatasPerPage}
                 totalData={data.totalElements}
               />
