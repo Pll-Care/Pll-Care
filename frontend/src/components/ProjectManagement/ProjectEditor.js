@@ -48,7 +48,7 @@ const ProjectEditor = ({
     setDescription(e.target.value);
   };
 
-  const handleSubmitNewProject = async (projectId = 0) => {
+  const handleSubmitNewProject = async () => {
     if (description.length < 5) {
       toast.error("프로젝트 설명은 다섯 글자 이상 작성해주세요.");
       descriptionRef.current.focus();
@@ -57,7 +57,7 @@ const ProjectEditor = ({
 
     if (isEdit) {
       editMutate({
-        projectId,
+        projectId: editData.projectId,
         title,
         description,
         state: "ONGOING",
