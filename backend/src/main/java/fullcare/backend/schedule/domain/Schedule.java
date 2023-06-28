@@ -38,7 +38,8 @@ public abstract class Schedule {
     // todo -> private ProjectMember author;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", nullable = false)
-    private ProjectMember projectMember;
+    private Member member;
+//    private ProjectMember projectMember;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false)
@@ -67,9 +68,9 @@ public abstract class Schedule {
     private LocalDateTime modifiedDate;
 
 
-    public Schedule(Project project, ProjectMember projectMember, State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    public Schedule(Project project, Member member, State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.project = project;
-        this.projectMember = projectMember;
+        this.member = member;
         this.state = state;
         this.title = title;
         this.content = content;

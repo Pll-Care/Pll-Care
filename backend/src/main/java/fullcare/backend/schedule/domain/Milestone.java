@@ -2,6 +2,7 @@ package fullcare.backend.schedule.domain;
 
 
 import fullcare.backend.global.State;
+import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import jakarta.persistence.DiscriminatorValue;
@@ -20,7 +21,7 @@ import java.time.LocalDateTime;
 
 public class Milestone extends Schedule{
     @Builder
-    public Milestone(Project project, ProjectMember projectMember, State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdDate, LocalDateTime modifiedDate) {
-        super(project, projectMember, state, title, content, startDate, endDate, createdDate, modifiedDate);
+    public Milestone(Project project, Member member, State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+        super(project, member, state, title, content, startDate, endDate, createdDate, modifiedDate);
     }
 }

@@ -10,6 +10,7 @@ import fullcare.backend.global.exception.InvalidAccessException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.post.dto.response.MyPostResponse;
 import fullcare.backend.post.service.PostService;
+import fullcare.backend.profile.dto.request.ProfileBioUpdateRequest;
 import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
 import fullcare.backend.profile.dto.response.ProfileResponse;
 import fullcare.backend.profile.service.ProfileService;
@@ -48,7 +49,7 @@ public class ProfileController {
     private final PostService postService;
     private final EvaluationService evaluationService;
     private final ProjectMemberService projectMemberService;
-    // * 특정 프로젝트의 멤버 목록
+    // * 개인 프로필 api
     @Operation(method = "get", summary = "개인 프로필 조회")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "개인 프로필 조회 성공", useReturnTypeSchema = true),
@@ -60,13 +61,13 @@ public class ProfileController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @Operation(method = "patch", summary = "개인 프로필 수정")
+    @Operation(method = "patch", summary = "개인 프로필 생성, 수정, 삭제")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "개인 프로필 수정 성공", useReturnTypeSchema = true),
-//            @ApiResponse(responseCode = "400", description = "개인 프로필 수정 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+            @ApiResponse(responseCode = "200", description = "개인 프로필 생성, 수정, 삭제 성공", useReturnTypeSchema = true),
+//            @ApiResponse(responseCode = "400", description = "개인 프로필 생성, 수정, 삭제 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @PatchMapping
-    public ResponseEntity projectMemberList(@PathVariable Long memberId, @CurrentLoginMember Member member, @RequestBody ProfileUpdateRequest profileUpdateRequest) {
+    public ResponseEntity updateProfile(@PathVariable Long memberId, @CurrentLoginMember Member member, @RequestBody ProfileUpdateRequest profileUpdateRequest) {
         if(memberId != member.getId()){
             throw new InvalidAccessException("해당 프로필 권한이 없습니다.");
         }
@@ -74,6 +75,19 @@ public class ProfileController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Operation(method = "put", summary = "개인 프로필 한 줄 소개 수정")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "개인 프로필 한 줄 소개 수정 성공", useReturnTypeSchema = true),
+//            @ApiResponse(responseCode = "400", description = "개인 프로필 한 줄 소개 수정 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+    })
+    @PutMapping
+    public ResponseEntity<ProfileResponse> updateBio(@PathVariable Long memberId, @CurrentLoginMember Member member, @RequestBody ProfileBioUpdateRequest profileBioUpdateRequest) {
+        if(memberId != member.getId()){
+            throw new InvalidAccessException("해당 프로필 권한이 없습니다.");
+        }
+        profileService.updateBio(member, profileBioUpdateRequest);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 
     //* 모집글 api

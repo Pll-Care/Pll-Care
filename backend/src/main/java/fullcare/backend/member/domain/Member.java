@@ -6,6 +6,7 @@ import fullcare.backend.likes.domain.Likes;
 import fullcare.backend.profile.domain.Profile;
 import fullcare.backend.post.domain.Post;
 import fullcare.backend.projectmember.domain.ProjectMember;
+import fullcare.backend.schedule.domain.Schedule;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -64,6 +65,9 @@ public class Member {
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Likes> likes = new HashSet<>();
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Schedule> schedules = new ArrayList<>();
 
     @OneToMany(mappedBy = "evaluator", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FinalTermEvaluation> finalTermEvaluationsEvaluator = new ArrayList<>();

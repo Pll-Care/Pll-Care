@@ -7,6 +7,7 @@ import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class Profile {
 
     @OneToOne(mappedBy = "profile")
     private Member member;
+    @Length(min = 5, max = 25)
     private String bio; //* 한줄 자기소개
     @Embedded
     private Contact contact;
@@ -39,6 +41,9 @@ public class Profile {
     private List<ProjectExperience> projectExperiences;
 
     public Profile(String bio) {
+        this.bio = bio;
+    }
+    public void updateBio(String bio){
         this.bio = bio;
     }
     public void updateProfile(ProfileUpdateRequest profileUpdateRequest){

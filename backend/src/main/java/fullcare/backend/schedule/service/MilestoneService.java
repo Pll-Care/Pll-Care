@@ -54,7 +54,7 @@ public class MilestoneService {
                 .endDate(scheduleCreateRequest.getEndDate())
                 .title(scheduleCreateRequest.getTitle())
                 .content(scheduleCreateRequest.getContent())
-                .projectMember(projectMember)
+                .member(author)
 //                .state(State.예정)
                 .createdDate(now)
                 .modifiedDate(now)

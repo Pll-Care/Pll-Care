@@ -54,7 +54,7 @@ public class MeetingService {
                 .endDate(scheduleCreateRequest.getEndDate())
                 .title(scheduleCreateRequest.getTitle())
                 .content(scheduleCreateRequest.getContent())
-                .projectMember(projectMember)
+                .member(author)
                 .state(State.TBD)
                 .address(scheduleCreateRequest.getAddress())
                 .createdDate(now)

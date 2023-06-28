@@ -2,6 +2,8 @@ package fullcare.backend.schedule.exceptionhandler;
 
 
 import fullcare.backend.global.exception.ErrorCode;
+import fullcare.backend.schedule.exceptionhandler.exception.NotFoundCategory;
+import fullcare.backend.schedule.exceptionhandler.exception.ScheduleCategoryMisMatchException;
 import fullcare.backend.schedule.exceptionhandler.exception.ScheduleOutOfRangeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,17 @@ public class ScheduleExceptionHandler {
     
     @ExceptionHandler(ScheduleOutOfRangeException.class)
     public ResponseEntity<?> handleScheduleOutOfRangeException(Exception e, WebRequest request) {
+        ErrorCode message = ErrorCode.getMessage(HttpStatus.BAD_REQUEST, e, request);
+        return new ResponseEntity(message, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NotFoundCategory.class)
+    public ResponseEntity<?> handleNotFoundCategoryException(Exception e, WebRequest request) {
+        ErrorCode message = ErrorCode.getMessage(HttpStatus.BAD_REQUEST, e, request);
+        return new ResponseEntity(message, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(ScheduleCategoryMisMatchException.class)
+    public ResponseEntity<?> handleScheduleCategoryMisMatchExceptionException(Exception e, WebRequest request) {
         ErrorCode message = ErrorCode.getMessage(HttpStatus.BAD_REQUEST, e, request);
         return new ResponseEntity(message, HttpStatus.BAD_REQUEST);
     }

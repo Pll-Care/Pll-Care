@@ -44,6 +44,5 @@ public class ScheduleUpdateRequest {
     @NotEmpty
     private String content;
 
-    @NotNull
     private String address;
 }

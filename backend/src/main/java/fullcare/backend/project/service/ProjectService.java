@@ -89,12 +89,8 @@ public class ProjectService {
         return projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException("프로젝트 정보가 없습니다."));
     }
 
-    public void deleteProject(Long projectId) {
+    public void deleteProject(Long projectId) {// ! 완료된 프로젝트는 삭제 불가 검증 추가 필요
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException("프로젝트 정보가 없습니다."));
-        List<FinalTermEvaluation> finalTermEvaluations = project.getFinalTermEvaluations();
-        for (FinalTermEvaluation fe : finalTermEvaluations) {
-            fe.setProjectNull();
-        }
         projectRepository.deleteById(projectId);
         if (project.getImageUrl() != null){
             uploadService.delete(project.getImageUrl());

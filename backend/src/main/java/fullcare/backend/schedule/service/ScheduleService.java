@@ -67,7 +67,7 @@ public class ScheduleService {
     public boolean validateAuthor(Long projectId, Long scheduleId, Long authorId){
         ProjectMember projectMember = projectMemberRepository.findByProjectIdAndMemberId(projectId, authorId).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트 멤버가 존재하지 않습니다."));
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new EntityNotFoundException("해당 일정이 존재하지 않습니다."));
-        if(schedule.getProjectMember() == projectMember){
+        if(schedule.getMember().getId() == projectMember.getMember().getId()){
             return true;
         }
         return false;

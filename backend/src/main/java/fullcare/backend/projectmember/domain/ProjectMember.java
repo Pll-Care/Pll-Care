@@ -35,8 +35,8 @@ public class ProjectMember {
 
 //    @OneToMany(mappedBy = "projectMember", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<Post> posts = new ArrayList<>();
-    @OneToMany(mappedBy = "projectMember", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Schedule> schedules = new ArrayList<>();
+//    @OneToMany(mappedBy = "projectMember", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Schedule> schedules = new ArrayList<>();
     @Embedded
     private ProjectMemberRole projectMemberRole; // 리더 or 팀원
 
