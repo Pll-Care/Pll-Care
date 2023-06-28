@@ -1,18 +1,24 @@
 import { useCallback, useState } from "react";
 import Button from "../common/Button";
 import MemberItem from "./MemberItem";
+import { useQuery, useQueryClient } from "react-query";
+import {
+  deleteMember,
+  getTeamMember,
+} from "../../lib/apis/teamMemberManagementApi";
+import useManagementTeamMemeber from "../../hooks/useManagementTeamMemeber";
 
-const dummy = [
-  { memberId: 0, name: "김철수", job: "Front-End" },
-  { memberId: 1, name: "김현학", job: "Front-End" },
-  { memberId: 2, name: "김하영", job: "Back-End" },
-  { memberId: 3, name: "김아름", job: "Back-End" },
-  { memberId: 4, name: "김현수", job: "Front-End" },
-  { memberId: 5, name: "김나영", job: "Back-End" },
-];
-
-const MemberManagement = () => {
+const MemberManagement = ({ projectId }) => {
   const [isEdit, setIsEdit] = useState(false);
+  const queryClient = useQueryClient();
+
+  const { deleteTeamMemeber } = useManagementTeamMemeber();
+
+  const { isLoading, data: response = [] } = useQuery(
+    ["members", projectId],
+    () => getTeamMember(projectId)
+  );
+
   const editMember = useCallback(() => {
     setIsEdit(true);
   }, []);
@@ -20,6 +26,21 @@ const MemberManagement = () => {
   const editCompleted = useCallback(() => {
     setIsEdit(false);
   }, []);
+
+  const deleteTeamMember = useCallback(
+    async (memberId) => {
+      const response = await deleteMember(projectId, memberId);
+      if (response.status === 200) {
+        queryClient.invalidateQueries(["members"]);
+      }
+      if (response.status === 401) {
+        console.log(response.message);
+      }
+      // deleteTeamMemeber(projectId, memberId);
+    },
+    [projectId, queryClient]
+  );
+
   return (
     <section className="memberMangement">
       <div className="memberMangement_head">
@@ -32,15 +53,25 @@ const MemberManagement = () => {
       </div>
       <div>
         <ul className="memberMangement_memebers">
-          {dummy.map((member) => (
-            <MemberItem
-              key={member.memberId}
-              memberId={member.memberId}
-              name={member.name}
-              job={member.job}
-              isEdit={isEdit}
-            />
-          ))}
+          {isLoading ? (
+            <div>로딩중....</div>
+          ) : response.length === 0 ? (
+            <p className="memberMangement_memebers_noMember">
+              팀원이 없습니다.
+            </p>
+          ) : (
+            response.map((member) => (
+              <MemberItem
+                key={member.id}
+                memberId={member.id}
+                name={member.name}
+                position={member.position}
+                imageUrl={member.imageUrl}
+                isEdit={isEdit}
+                deleteTeamMember={deleteTeamMember}
+              />
+            ))
+          )}
         </ul>
       </div>
     </section>

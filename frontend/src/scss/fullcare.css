@@ -412,9 +412,8 @@ input {
   border: 2px solid #01e89e;
   border-radius: 30px;
   box-shadow: 0px 10px 35px 5px rgba(0, 0, 0, 0.04);
-  width: 85%;
+  width: 100%;
   height: 70px;
-  margin-top: 25px;
   margin-bottom: 25px;
   margin-left: auto;
   margin-right: auto;
@@ -1153,7 +1152,7 @@ input {
   background-size: 100% 100%, 100%;
 }
 .management .project-list-wrapper .project-list .project-item-right-col {
-  color: #003B28;
+  color: #003b28;
   font-size: 18px;
   font-family: "Noto Sans KR", sans-serif;
 }
@@ -1249,7 +1248,7 @@ input {
   margin-right: 40px;
 }
 .management .new-project-modal-wrapper .new-project-second-row .new-project-period-right-col {
-  color: #7A7A7A;
+  color: #7a7a7a;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -1713,6 +1712,13 @@ input {
     margin-top: 2px;
   }
 }
+.management_project_layout {
+  width: 72%;
+  margin: 0 auto;
+  padding-top: 25px;
+  padding-bottom: 30px;
+}
+
 .toggle-menu-button-wrapper {
   width: 100%;
   height: 100%;
@@ -2278,7 +2284,8 @@ input {
 .teamMember {
   width: 85%;
   margin: 0 auto;
-  padding: 30px 0;
+  padding-top: 30px;
+  padding-bottom: 50px;
 }
 .teamMember_title {
   color: #01e89e;
@@ -2295,10 +2302,15 @@ input {
   justify-content: space-between;
 }
 .memberMangement_memebers {
+  min-height: 450px;
   margin-top: 10px;
   display: grid;
   grid-template-columns: repeat(3, minmax(250px, 1fr));
   grid-gap: 10px;
+}
+.memberMangement_memebers_noMember {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
 }
 
 .member_item {
@@ -2366,6 +2378,15 @@ input {
 }
 .applicationStatus_users {
   width: 100%;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+.applicationStatus_users_noMember {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
 }
 
 .application_item {
@@ -2374,7 +2395,6 @@ input {
   border: 2px solid #01e89e;
   border-radius: 18px;
   padding: 15px 10px;
-  margin: 15px auto;
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -1,15 +1,12 @@
+import { useQuery } from "react-query";
 import ApplicationItem from "./ApplicationItem";
+import { getApplicationUser } from "../../lib/apis/teamMemberManagementApi";
 
-const dummy = [
-  { userId: 0, name: "김철수", job: "Front-End" },
-  { userId: 1, name: "김현학", job: "Front-End" },
-  { userId: 2, name: "김하영", job: "Back-End" },
-  { userId: 3, name: "김아름", job: "Back-End" },
-  { userId: 4, name: "김현수", job: "Front-End" },
-  { userId: 5, name: "김나영", job: "Back-End" },
-];
+const ApplicationStatus = ({ projectId }) => {
+  const { data: users = [] } = useQuery(["applyUsers", projectId], () =>
+    getApplicationUser(projectId)
+  );
 
-const ApplicationStatus = () => {
   return (
     <section className="applicationStatus">
       <div>
@@ -17,14 +14,21 @@ const ApplicationStatus = () => {
       </div>
       <div>
         <ul className="applicationStatus_users">
-          {dummy.map((user) => (
-            <ApplicationItem
-              key={user.userId}
-              userId={user.userId}
-              name={user.name}
-              job={user.job}
-            />
-          ))}
+          {users.length === 0 ? (
+            <p className="applicationStatus_users_noMember">
+              지원 인원이 없습니다.
+            </p>
+          ) : (
+            users.map((user) => (
+              <ApplicationItem
+                key={user.id}
+                userId={user.id}
+                name={user.name}
+                job={user.position}
+                imageUrl={user.imageUrl}
+              />
+            ))
+          )}
         </ul>
       </div>
     </section>
