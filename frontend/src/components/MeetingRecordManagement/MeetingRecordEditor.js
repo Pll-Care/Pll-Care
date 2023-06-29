@@ -1,25 +1,23 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useLayoutEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 import Button from "../common/Button";
-
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import Quill from "quill";
-import ImageResize from "quill-image-resize";
-import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
-import { useLayoutEffect } from "react";
-import useMeetingRecordManagementMutation from "../../hooks/useMeetingRecordManagementMutation";
-import { useLocation } from "react-router-dom";
+import NewMeetingRecord from "./NewMeetingRecord";
 import MeetingRecord from "./MeetingRecord";
+
+import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
+import useMeetingRecordManagementMutation from "../../hooks/useMeetingRecordManagementMutation";
+
 import { toast } from "react-toastify";
 import { getProjectId } from "../../utils/getProjectId";
-
-Quill.register("modules/ImageResize", ImageResize);
 
 const MeetingRecordEditor = () => {
   const content = useSelector((state) => state.meetingRecordManagement.content);
   const title = useSelector((state) => state.meetingRecordManagement.title);
+
   const projectId = getProjectId(useLocation());
+
   const isCreatedMeetingRecordVisible = useSelector(
     (state) => state.meetingRecordManagement.isCreatedMeetingRecordVisible
   );
@@ -32,6 +30,7 @@ const MeetingRecordEditor = () => {
   const selectedMeetingRecordId = useSelector(
     (state) => state.meetingRecordManagement.selectedMeetingRecordId
   );
+
   const isEdit = useSelector((state) => state.meetingRecordManagement.isEdit);
 
   const { createMutate, editMutate } = useMeetingRecordManagementMutation();
@@ -104,39 +103,13 @@ const MeetingRecordEditor = () => {
       ) : isCreatedMeetingRecordVisible ? (
         <MeetingRecord state={"createdMeetingRecord"} />
       ) : (
-        <div className="meeting-record-editor">
-          <div className="meeting-record-title">
-            <input
-              value={title}
-              onChange={handleChangeTitle}
-              placeholder={"제목을 입력하세요"}
-            />
-            <Button
-              size={"small"}
-              type={"underlined"}
-              text={"작성 완료하기"}
-              onClick={handleSubmit}
-            />
-          </div>
-          <ReactQuill
-            className="react-quill"
-            value={content}
-            onChange={handleChangeContent}
-            modules={{
-              toolbar: [
-                [{ header: [1, 2, 3, false] }],
-                [{ size: ["small", false, "large", "huge"] }],
-                ["bold", "italic", "underline", "strike"],
-                [{ align: [] }],
-                [{ color: [] }, { background: [] }],
-                ["link", "image"],
-              ],
-              ImageResize: {
-                parchment: Quill.import("parchment"),
-              },
-            }}
-          />
-        </div>
+        <NewMeetingRecord
+          title={title}
+          content={content}
+          handleChangeTitle={handleChangeTitle}
+          handleSubmit={handleSubmit}
+          handleChangeContent={handleChangeContent}
+        />
       )}
     </div>
   );
