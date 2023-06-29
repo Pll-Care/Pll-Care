@@ -1,0 +1,248 @@
+.schedule-option {
+  margin: 20px 10%;
+  &-person {
+    background-color: $background-color;
+    margin-top: 20px;
+    padding: 1.5rem;
+
+    h4 {
+      color: white;
+      font-family: $link-font;
+      font-size: $link-font-size;
+      margin-bottom: 20px;
+    }
+  }
+}
+.schedule {
+  height: 500px;
+  overflow-y: auto;
+  .schedule-list {
+    display: flex;
+    padding: 1rem;
+
+    @media (max-width: 1024px) {
+      @include displayFlex(column);
+    }
+
+    &-time {
+      @include displayFlex(column);
+      font-style: normal;
+      color: $body-font-color;
+      font-family: $heading-font;
+      width: 15%;
+      h1 {
+        font-size: 65px;
+        color: gray;
+      }
+      h2 {
+        font-size: $link-font-size;
+      }
+    }
+
+    &-content {
+      text-align: left;
+      border: 3px solid #01e89e;
+      border-radius: 35px;
+      width: 85%;
+      padding: 1.5rem;
+      h5 {
+        font-family: $body-font;
+        font-size: $body-font-size;
+        color: $body-font-color;
+      }
+
+      &-time {
+        @include displayFlex(row, space-between, center);
+        h4 {
+          font-family: $heading-font;
+          font-size: $sub-heading-font-size;
+          color: $body-font-color;
+        }
+        h1 {
+          color: $background-color;
+          font-family: $heading-font;
+          font-size: $sub-heading-font-size;
+          background: #ffffff;
+          box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.05);
+          border-radius: 30px;
+          padding: 0.5rem;
+        }
+      }
+
+      &-option {
+        h5 {
+          margin-right: 20px;
+        }
+        align-items: center;
+        display: flex;
+        .MuiAvatar-root {
+          transform: scale(0.7);
+          cursor: pointer;
+          transition: all 0.3s ease;
+          margin-left: -10px;
+
+          &:hover {
+            transform: scale(0.8);
+          }
+        }
+      }
+    }
+  }
+}
+
+.schedule-modal {
+  padding: 1.5rem;
+  font-family: $link-font;
+  h1 {
+    color: white;
+    font-family: $link-font;
+    font-size: $sub-heading-font-size;
+    margin-bottom: 20px;
+  }
+  &-content {
+    background-color: white;
+    box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 14px;
+    padding: 1.5rem;
+    h1 {
+      color: $font-color;
+    }
+    h2 {
+      color: $body-font-color;
+      margin-bottom: 10px;
+    }
+    &-evaluation {
+      border: $border;
+      border-radius: 10px;
+      padding: 1.5rem;
+      h3 {
+        color: $font-color;
+        margin-right: 20px;
+        margin-top: 5px;
+      }
+      .modal-member {
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+        margin-bottom: 30px;
+      }
+      .modal-badges {
+        display: flex;
+        &-items {
+          display: flex;
+          margin-right: 30px;
+          .modal-badge {
+            cursor: pointer;
+            border-radius: 80%;
+            background-color: rgb(242, 242, 242);
+            padding: 0.5rem;
+            margin-right: 30px;
+          }
+
+          .selected {
+            background-color: rgb(181, 181, 181);
+          }
+        }
+      }
+    }
+  }
+  &-button {
+    margin-top: 15px;
+    text-align: right;
+  }
+}
+
+@include tablet {
+  .modal-badge {
+    margin-right: 5px;
+    padding: 0.1rem;
+  }
+  .schedule-container {
+    h4 {
+      font-size: $link-font-size-medium;
+    }
+    .schedule-list-time {
+      flex-direction: row;
+      h1 {
+        font-size: $sub-heading-font-size-medium;
+      }
+      h2 {
+        font-size: $link-font-size-medium;
+        margin-right: 10px;
+      }
+    }
+    .schedule-list-content {
+      h5 {
+        font-size: $body-font-size-medium;
+      }
+      h4 {
+        font-size: $sub-heading-font-size-medium;
+      }
+    }
+  }
+  .schedule-modal {
+    h1,
+    h3 {
+      font-size: $body-font-size-medium;
+    }
+    h2 {
+      font-size: $sub-body-font-size-medium;
+    }
+  }
+}
+
+@include mobile {
+  .modal-badge {
+    margin-right: 2px;
+    padding: 0.5rem;
+  }
+  .schedule-container {
+    h4 {
+      font-size: $button-font-size-small;
+    }
+    .schedule-list-time {
+      flex-direction: row;
+      h1 {
+        //font-size: $sub-heading-font-size-small;
+        font-size: 15px;
+      }
+      h2 {
+        font-size: $link-font-size-medium;
+        margin-right: 10px;
+      }
+    }
+    .schedule-list-content {
+      flex-direction: column;
+      align-items: flex-start;
+      h5 {
+        font-size: $body-font-size-small;
+      }
+      h4 {
+        font-size: $sub-heading-font-size-small;
+      }
+      &-time {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+    .schedule-list-content-option {
+      .MuiAvatar-root {
+        transform: scale(0.5);
+        margin-left: -25px;
+
+        &:hover {
+          transform: scale(0.6);
+        }
+      }
+    }
+  }
+  .schedule-modal {
+    h1,
+    h3 {
+      font-size: $body-font-size-small;
+    }
+    h2 {
+      font-size: $sub-body-font-size-small;
+    }
+  }
+}

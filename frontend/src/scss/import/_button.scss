@@ -1,9 +1,51 @@
 .button {
-    font-family: $button-font;
-    font-size: $button-font-size;
+  font-family: $button-font;
+  font-size: $button-font-size;
+  background-color: white;
+  color: #01e89e;
+  border-radius: 45px;
+  border: 2px solid #01e89e;
+  padding: 5px 25px;
+  cursor: pointer;
+  /* 텍스트 줄바꿈 방지 */
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+
+  &_small {
+    font-size: $button-font-size-small;
+    padding: 3px 13px;
+  }
+
+  &_positive {
     color: white;
-    background-color: #01E89E;
-    border-radius: 10px;
+    background-color: #01e89e;
+    border: 2px solid #01e89e;
+  }
+
+  &_positive_dark {
+    color: white;
+    background-color: #00aa72;
+    border: 2px solid #00aa72;
+  }
+
+  &_underlined {
+    background-color: transparent;
     border: none;
-    padding: 5px 25px;
+    color: #7a7a7a;
+    text-decoration: underline;
+  }
+}
+
+@include tablet {
+  .button {
+    font-size: $button-font-size-medium;
+  }
+}
+
+@include mobile {
+  .button {
+    font-size: $button-font-size-small;
+    padding: 3px 13px;
+  }
 }

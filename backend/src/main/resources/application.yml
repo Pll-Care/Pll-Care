@@ -1,19 +1,28 @@
-# Database
 spring:
-  datasource:
-    url: jdbc:h2:tcp://localhost/~/userdb
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+
+#   # Database
+#   datasource:
+#     url: jdbc:h2:tcp://localhost/~/userdb
+#     username: sa
+#     password:
+#     driver-class-name: org.h2.Driver
+
+  #    driver-class-name: com.mysql.cj.jdbc.Driver
+  #    url: jdbc:mysql://localhost:3306/fullcare?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+  #    username: root
+  #    password: 1234
+
+
+  # JPA
   jpa:
-    show-sql: true
+    hibernate:
+      ddl-auto: create
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
-
-# JPA
-spring.jpa.hibernate.ddl-auto: create
-
+        default_batch_fetch_size: 100
+    open-in-view: false
 
 
 # OAuth2
@@ -35,16 +44,18 @@ spring.security.oauth2.client:
       scope:
         - name
         - email
+        - profile_image
     kakao:
       client-id: 0561aec6f0dfa0b45d48e2bc97941e06
       client-secret: q2u2iqgjGq8MmE9vezAe2KCSm332EOUv
-      client-name : Kakao
+      client-name: Kakao
       client-authentication-method: client_secret_post
       redirect-uri: "{baseUrl}/login/oauth2/{registrationId}"
       authorization-grant-type: authorization_code
       scope:
         - profile_nickname
         - account_email
+        - profile_image
   provider:
     naver:
       authorization-uri: https://nid.naver.com/oauth2.0/authorize
@@ -64,7 +75,7 @@ jwt:
 
   access:
     header: Authorization
-    token-validity-in-seconds: 3600
+    token-validity-in-seconds: 360000
 
   refresh:
     header: Authorization-refresh

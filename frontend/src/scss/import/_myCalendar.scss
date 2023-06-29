@@ -1,0 +1,191 @@
+.fc-toolbar-title {
+  font-family: $heading-font;
+  font-size: 5px;
+  color: gray;
+}
+
+.calendar {
+  @include displayFlex(row, center, center);
+  &-schedule {
+    width: 40%;
+  }
+}
+.calendar-list {
+  background-color: $background-color;
+  align-items: center;
+  padding: 2rem;
+  height: 500px;
+  width: 30%;
+  overflow-y: auto;
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+  }
+  &-time {
+    color: white;
+    h5 {
+      font-family: $heading-font;
+      font-size: $sub-heading-font-size;
+      margin-bottom: 10px;
+    }
+    h1 {
+      font-family: $heading-font;
+      font-size: $heading-font-size;
+      border-bottom: 2px solid white;
+      margin-bottom: 20px;
+    }
+  }
+  &-item {
+    background-color: white;
+    border-radius: 10px;
+    padding: 1rem;
+    color: $body-font-color;
+    margin-bottom: 20px;
+
+    h5 {
+      font-family: $body-font;
+      font-size: $body-font-size;
+      margin-bottom: 10px;
+    }
+    h4 {
+      font-family: $heading-font;
+      font-size: $sub-heading-font-size;
+    }
+    &-name {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+
+      &-avatar {
+        display: flex;
+
+        .MuiAvatar-root {
+          transform: scale(0.7);
+          cursor: pointer;
+          transition: all 0.3s ease;
+          margin-left: -20px;
+
+          &:hover {
+            transform: scale(0.8);
+          }
+        }
+      }
+    }
+  }
+}
+
+// NewScheduleModal 컴포넌트
+.modal-container {
+  padding: 1rem;
+  font-family: $body-font;
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+  }
+  input {
+    border: none;
+    border-radius: 10px;
+    font-size: 35px;
+    margin-bottom: 10px;
+    font-family: $body-font;
+  }
+  &-description {
+    background-color: white;
+    border-radius: 15px;
+    padding: 1rem;
+    margin-top: 15px;
+    border: $border;
+    h5 {
+      margin-right: 30px;
+      color: $font-color;
+    }
+    .plan-option {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      h4 {
+        margin: 0px 10px;
+      }
+      input {
+        font-size: 20px;
+        margin-top: 10px;
+      }
+      Button {
+        margin-right: 10px;
+      }
+      select {
+        border-radius: 10px;
+        padding: 0.5rem;
+        font-family: $link-font;
+        color: $sub-heading-color;
+      }
+      &-bottom {
+        display: flex;
+        align-items: center;
+        border-bottom: 1.5px solid rgb(217, 217, 217);
+        margin-bottom: 20px;
+        input {
+          font-size: 15px;
+        }
+      }
+    }
+  }
+}
+
+@include tablet {
+  .calendar {
+    flex-direction: column;
+    &-schedule {
+      width: 100%;
+    }
+    &-list {
+      margin-top: 10px;
+      width: 85%;
+      h5 {
+        font-size: $body-font-size-medium;
+      }
+      h1,
+      h4 {
+        font-size: $sub-heading-font-size-medium;
+      }
+    }
+  }
+}
+
+@include mobile {
+  .fc-daygrid-day {
+    font-size: 7px;
+    margin: 80%;
+  }
+  .fc-toolbar-title {
+    font-size: 5px;
+  }
+  .calendar {
+    flex-direction: column;
+    &-schedule {
+      width: 100%;
+    }
+    &-list {
+      margin-top: 10px;
+      width: 100%;
+      h5 {
+        font-size: $body-font-size-small;
+      }
+      h1,
+      h4 {
+        font-size: $sub-heading-font-size-small;
+      }
+    }
+  }
+  .calendar-list-item-name-avatar {
+    .MuiAvatar-root {
+      transform: scale(0.5);
+      margin-left: -25px;
+
+      &:hover {
+        transform: scale(0.6);
+      }
+    }
+  }
+}

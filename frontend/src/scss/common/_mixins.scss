@@ -10,11 +10,30 @@
     margin-right: auto;
 }
 
-@mixin backgroundImage($url, $position, $repeat, $sizeX, $sizeY) {
+@mixin backgroundImage($url, $position: center, $repeat: no-repeat, $sizeX: 100%, $sizeY: 100%) {
     background: {
         image: url($url);
         position: $position;
         repeat: $repeat;
         size: $sizeX, $sizeY;
+    }
+}
+
+// media query
+@mixin mobile {
+    @media (max-width: 767px) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (min-width: 767px) and (max-width: 1024px) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: 1024px) {
+        @content;
     }
 }

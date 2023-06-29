@@ -1,0 +1,296 @@
+.management {
+  height: 100vh;
+
+  &-main-header {
+    background-color: $background-color;
+    font-family: $heading-font;
+    color: white;
+    height: 200px;
+    border-bottom-left-radius: 60px;
+    border-bottom-right-radius: 60px;
+    padding: 35px;
+    padding-top: 120px;
+
+    &-left-col {
+      h1 {
+        margin-right: 20px;
+      }
+
+      @include displayFlex;
+    }
+
+    &-right-col {
+      @include displayFlex(row, space-between);
+    }
+
+    @include displayFlex(row, space-around);
+  }
+
+  .project-list-wrapper {
+    .project-list {
+      margin-top: 30px;
+
+      .project-item {
+        border: $border;
+        width: 65%;
+        border-radius: 20px;
+        margin-bottom: 30px;
+        text-decoration: none;
+        box-shadow: 0px 10px 30px 5px #b5b5b533;
+        cursor: pointer;
+
+        &-left-col {
+          figure {
+            border: $border;
+            border-radius: 50%;
+            background: {
+              position: center;
+              repeat: no-repeat;
+              size: 100% 100%;
+            }
+          }
+        }
+
+        &-right-col {
+          display: grid;
+          grid-template-columns: 60% 40%;
+          grid-template-rows: 100%;
+          color: #003b28;
+          font-size: $body-font-size;
+          font-family: $body-font;
+
+          .project-item-heading {
+            font-size: $sub-heading-font-size;
+            font-family: $heading-font;
+            margin-bottom: 7px;
+          }
+
+          .project-item-period,
+          .project-item-description {
+            margin-bottom: 7px;
+          }
+
+          .project-item-description {
+            line-height: 1.5;
+            overflow-wrap: break-word;
+          }
+
+          .project-item-period {
+            &-heading {
+              margin-right: 5px;
+            }
+          }
+
+          .project-item-button-wrapper {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: 1 1;
+            grid-template-rows: 50% 50%;
+            justify-content: space-between;
+          }
+        }
+
+        @include putCenter;
+      }
+    }
+  }
+
+  .pagination-wrapper {
+    button {
+      color: $background-color;
+    }
+
+    li {
+      color: $font-color;
+    }
+
+    @include putCenter;
+  }
+}
+
+.MuiBox-root {
+  .project-editor {
+    height: 90%;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 15% 70% 15%;
+    grid-template-columns: 100%;
+
+    &-heading {
+      margin-bottom: 10px;
+
+      &-input {
+        width: 100%;
+        border: none;
+        height: 100%;
+        font-size: $sub-heading-font-size;
+        font-family: $heading-font;
+        border-radius: 10px;
+      }
+    }
+
+    &-body {
+      height: 100%;
+      background-color: $background-color;
+      box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      padding: 15px;
+
+      .project-editor-left-col {
+        width: 20%;
+        height: 100%;
+        margin-right: 20px;
+
+        div {
+          height: 80%;
+
+          figure {
+            border: 1px solid black;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            background: {
+              position: center;
+              repeat: no-repeat;
+              size: 100% 100%;
+              color: #dedada;
+            }
+          }
+
+          .image-input {
+            display: none;
+          }
+
+          @include displayFlex(column, space-around);
+        }
+      }
+
+      .project-editor-right-col {
+        width: 80%;
+        height: 100%;
+      }
+
+      .project-editor-right-col .project-editor-period-first-row {
+        background-color: white;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        height: 40px;
+        width: 85%;
+        font-family: $body-font;
+        font-size: $body-font-size;
+        color: #00AA72;
+
+        input[type="date"] {
+          border: none;
+          font-family: $body-font;
+          font-size: $body-font-size;
+          width: 130px;
+        }
+
+        @include displayFlex(row, space-around);
+      }
+
+      .project-editor-right-col .project-editor-period-second-row {
+        width: 100%;
+        height: calc(100% - 50px);
+
+        textarea {
+          min-width: 100%;
+          max-width: 100%;
+          min-height: 100%;
+          max-height: 100%;
+          padding: 10px;
+          border: none;
+          border-radius: 10px;
+          font-family: $body-font;
+          font-size: $body-font-size;
+        }
+      }
+
+      @include displayFlex;
+    }
+
+    .button-wrapper {
+      @include displayFlex(row, flex-end, flex-end);
+    }
+  }
+
+  @include displayFlex;
+}
+
+
+.MuiBox-root {
+  .delete-project {
+    height: 70%;
+    
+    &-heading {
+      color: white;
+      font-family: $heading-font;
+      font-size: $sub-heading-font-size;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    @include displayFlex(column, space-around);
+  }
+}
+
+.management_project_layout {
+  width: 72%;
+  margin: 0 auto;
+  padding-top: 25px;
+  padding-bottom: 30px;
+}
+
+@include desktop {
+  .management {
+    &-main-header {
+      font-size: $heading-font-size;
+    }
+
+    .project-list-wrapper {
+      padding: 30px;
+
+      .project-item {
+        width: 700px;
+        height: 180px;
+        padding: 20px;
+
+        figure {
+          width: 70px;
+          height: 70px;
+          margin-right: 25px;
+        }
+
+        &-right-col {
+          width: 100%;
+
+          @include displayFlex(row, space-between);
+        }
+
+        &-period,
+        &-description {
+          width: 400px;
+        }
+
+        &-button-wrapper {
+          width: 150px;
+          height: 100px;
+
+          Button {
+            margin-bottom: 10px;
+          }
+
+          @include displayFlex(column, space-between, flex-end);
+        }
+
+        &-period {
+          @include displayFlex(row, flex-start);
+        }
+
+        @include displayFlex(row, flex-start, flex-start);
+      }
+    }
+  }
+}

@@ -1,0 +1,56 @@
+// OverviewChart 컴포넌트 scss
+.schedule {
+  h1 {
+    font-size: $sub-heading-font-size;
+    color: $sub-heading-color;
+    font-family: $link-font;
+    margin: 15px;
+    margin-left: 15%;
+  }
+}
+.endpoint {
+  color: gray;
+  margin-bottom: 10px;
+  font-size: $body-font-size;
+}
+
+.simple {
+  background-color: white;
+  color: black;
+  border-radius: 15px;
+  padding: 1rem;
+  margin-top: 10px;
+  h2 {
+    font-family: $link-font;
+    font-size: $link-font-size;
+    color: #7a7a7a;
+  }
+  h3 {
+    margin-top: 10px;
+    font-family: $link-font;
+    font-size: 14px;
+    color: #7a7a7a;
+  }
+}
+
+@include mobile {
+  .schedule {
+    h1 {
+      font-size: $body-font-size-small;
+    }
+  }
+  .endpoint {
+    font-size: $body-font-size-small;
+  }
+  .simple {
+    h2,
+    h3 {
+      font-size: $link-font-size-small;
+    }
+  }
+}
+@include tablet {
+  .endpoint {
+    font-size: $body-font-size-medium;
+  }
+}

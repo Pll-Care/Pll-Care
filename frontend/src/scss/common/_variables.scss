@@ -1,18 +1,57 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@600&family=Open+Sans:wght@300&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Open+Sans:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@600&family=Open+Sans:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Open+Sans:wght@300&display=swap");
 
-$heading-font: 'IBM Plex Sans KR', sans-serif;
-$heading-font-size: 60px;
+$heading-font: "IBM Plex Sans KR", sans-serif;
+$heading-font-size: 40px; // 전체 제목
 
-$body-font: 'Noto Sans KR', sans-serif;
-$body-font-size: 20px;
+$sub-heading-font-size: 25px; // 세부 제목
 
-$link-font: 'IBM Plex Sans KR', sans-serif;
+$body-font: "Noto Sans KR", sans-serif;
+$body-font-size: 18px;
+
+$sub-body-font-size: 15px;
+
+$link-font: "IBM Plex Sans KR", sans-serif;
 $link-font-size: 25px;
 
-$button-font: 'IBM Plex Sans KR', sans-serif;
+$button-font: "IBM Plex Sans KR", sans-serif;
 $button-font-size: 20px;
+$sub-button-font-size: 15px;
 
 $line-height: 1.7;
 
-$border: 2px solid #01E89E;
+$border: 2px solid #01e89e;
+
+$background-color: #01e89e;
+
+$font-color: #01e89e;
+
+$sub-heading-color: #00aa72;
+
+$body-font-color: #7a7a7a;
+
+// 태블릿 반응형 폰트 사이즈
+$heading-font-size-medium: 38px;
+
+$sub-heading-font-size-medium: 23px;
+
+$body-font-size-medium: 17px;
+
+$sub-body-font-size-medium: 15px;
+
+$link-font-size-medium: 22px;
+
+$button-font-size-medium: 17px;
+
+// 모바일 반응형 폰트 사이즈
+$heading-font-size-small: 33px;
+
+$sub-heading-font-size-small: 21px;
+
+$body-font-size-small: 12px;
+
+$sub-body-font-size-small: 11px;
+
+$link-font-size-small: 13px;
+
+$button-font-size-small: 14px;
