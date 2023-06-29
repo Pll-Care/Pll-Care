@@ -1,6 +1,5 @@
 import Button from "../components/common/Button";
 import ProjectList from "../components/ProjectManagement/ProjectList";
-import ProjectEditor from "../components/ProjectManagement/ProjectEditor";
 import NonAuthenticatedManagement from "./NonAuthenticatedManagement";
 import Pagination from "../components/common/Pagination";
 
@@ -108,7 +107,10 @@ const Management = () => {
           </header>
           <main className="project-list-wrapper">
             <div>
-              <ProjectList projectList={projectList} />
+              <ProjectList
+                type={allProjectListVisible ? "all" : "ongoing"}
+                projectList={projectList}
+              />
               <Pagination
                 currentPage={
                   allProjectListVisible ? currentPage : ongoingCurrentPage
