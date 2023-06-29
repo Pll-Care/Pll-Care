@@ -1,0 +1,36 @@
+.home {
+  border: 2px solid blue;
+  padding: 40px;
+
+  .banner-wrapper {
+    border: 2px solid red;
+    height: 450px;
+    margin-bottom: 20px;
+  }
+  
+  .banner {
+    border: 2px solid black;
+    width: 75%;
+    height: 400px;
+
+    @include putCenter;
+  }
+
+  .description {
+    border: 2px solid red;
+    height: 300px;
+    margin-bottom: 20px;
+  }
+
+  .project-wrapper {
+    display: grid;
+    grid-template-columns: 48% 48%;
+    grid-template-rows: 100%;
+    gap: 4%;
+    height: 400px;
+
+    .project {
+        border: 2px solid red;
+      }
+  }
+}
