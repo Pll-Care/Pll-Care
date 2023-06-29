@@ -4,18 +4,21 @@ import { useDispatch } from "react-redux";
 import { Tooltip } from "@mui/material";
 
 import { addEvaluation } from "../../redux/evaluationManagementSlice";
-import ButtonList from "./ButtonList";
 import Button from "../common/Button";
 import ModalContainer from "../common/ModalContainer";
 import { getDateTimeDuration } from "../../utils/date";
+import { useParams } from "react-router";
+import { useMutation } from "react-query";
+import { makeNewMidEvaluation } from "../../lib/apis/evaluationManagementApi";
+import { toast } from "react-toastify";
 
 const ScheduleEvaluationModal = (props) => {
   const dispatch = useDispatch();
+  const { id } = useParams();
 
-  const participants = ["김철수", "박영수", "최민수", "김영희", "김민지"];
-
-  const [name, setName] = useState();
-  const [badge, setBadge] = useState("열정적인 참여자");
+  const [name, setName] = useState(props.members[0].id);
+  const [badge, setBadge] = useState("열정적인_참여자");
+  console.log(name);
 
   const participantsClickHandler = (name) => {
     setName(name);
@@ -26,17 +29,24 @@ const ScheduleEvaluationModal = (props) => {
 
   const time = getDateTimeDuration(props.startDate, props.endDate, props.type);
 
+  const { mutate } = useMutation(makeNewMidEvaluation, {
+    onSuccess: () => {
+      props.onClose();
+      toast.success("중간평가 성공하였습니다");
+    },
+  });
+
   const evaluationClickHandler = () => {
-    const newEvaluation = {
-      id: props.id,
-      title: props.title,
-      member: name,
-      badge: badge,
-      complete: "완료 안됨",
+    const data = {
+      projectId: parseInt(id, 10),
+      votedId: parseInt(name, 10),
+      scheduleId: parseInt(props.id, 10),
+      evaluationBadge: badge,
     };
-    console.log(newEvaluation);
-    dispatch(addEvaluation(newEvaluation));
-    props.modalHandler();
+    console.log(data);
+    mutate(data);
+    //console.log(newEvaluation);
+    //dispatch(addEvaluation(newEvaluation));
   };
 
   return (
@@ -54,11 +64,15 @@ const ScheduleEvaluationModal = (props) => {
           <div className="schedule-modal-content-evaluation">
             <div className="modal-member">
               <h3>참여자</h3>
-              <ButtonList
-                names={participants}
-                size="small"
-                onButtonClick={participantsClickHandler}
-              />
+              {props.members.map((member, index) => (
+                <Button
+                  key={index}
+                  text={member.name}
+                  size="small"
+                  type={name === member.id ? "positive_dark" : ""}
+                  onClick={() => participantsClickHandler(member.id)}
+                />
+              ))}
             </div>
             <div className="modal-badges">
               <h3>뱃지 선택</h3>
@@ -66,9 +80,9 @@ const ScheduleEvaluationModal = (props) => {
                 <Tooltip title="열정적인 참여자">
                   <div
                     className={`modal-badge ${
-                      badge === "열정적인 참여자" ? "selected" : ""
+                      badge === "열정적인_참여자" ? "selected" : ""
                     }`}
-                    onClick={() => badgeClickHandler("열정적인 참여자")}
+                    onClick={() => badgeClickHandler("열정적인_참여자")}
                   >
                     🔥
                   </div>
@@ -76,9 +90,9 @@ const ScheduleEvaluationModal = (props) => {
                 <Tooltip title="아이디어 뱅크">
                   <div
                     className={`modal-badge ${
-                      badge === "아이디어 뱅크" ? "selected" : ""
+                      badge === "아이디어_뱅크" ? "selected" : ""
                     }`}
-                    onClick={() => badgeClickHandler("아이디어 뱅크")}
+                    onClick={() => badgeClickHandler("아이디어_뱅크")}
                   >
                     💡
                   </div>
@@ -86,9 +100,9 @@ const ScheduleEvaluationModal = (props) => {
                 <Tooltip title="탁월한 리더">
                   <div
                     className={`modal-badge ${
-                      badge === "탁월한 리더" ? "selected" : ""
+                      badge === "탁월한_리더" ? "selected" : ""
                     }`}
-                    onClick={() => badgeClickHandler("탁월한 리더")}
+                    onClick={() => badgeClickHandler("탁월한_리더")}
                   >
                     👏
                   </div>
@@ -96,9 +110,9 @@ const ScheduleEvaluationModal = (props) => {
                 <Tooltip title="최고의 서포터">
                   <div
                     className={`modal-badge ${
-                      badge === "최고의 서포터" ? "selected" : ""
+                      badge === "최고의_서포터" ? "selected" : ""
                     }`}
-                    onClick={() => badgeClickHandler("최고의 서포터")}
+                    onClick={() => badgeClickHandler("최고의_서포터")}
                   >
                     👥
                   </div>

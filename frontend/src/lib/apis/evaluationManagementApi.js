@@ -15,3 +15,13 @@ export const getEvaluationMember = async (projectId) => {
 
   return response.data;
 };
+
+// 중간 평가 생성
+export const makeNewMidEvaluation = async (data) => {
+  try {
+    const res = await customAxios.post("/auth/evaluation/midterm", data);
+    return res;
+  } catch (err) {
+    return err;
+  }
+};
