@@ -286,6 +286,7 @@ input {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  gap: 25px;
 }
 .main-header .nav_item > a {
   font-size: 25px;
@@ -315,10 +316,10 @@ input {
   background-color: #01e89e;
   width: 40px;
   height: 40px;
-  background-image: url("../assets/profile-default-img.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100%, 100%;
+}
+.main-header-right-col .main-header-user-profile-img > img {
+  width: 100%;
+  height: 100%;
 }
 .main-header-login-col Button {
   margin-left: auto;
@@ -368,6 +369,20 @@ input {
     height: 35px;
   }
 }
+.profile_header_background {
+  background-color: #01e89e;
+}
+.profile_header_menu_color > a {
+  color: white !important;
+}
+.profile_header_button {
+  background-color: white !important;
+  color: #01e89e !important;
+}
+.profile_header_image_background {
+  background-color: white !important;
+}
+
 .button {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;

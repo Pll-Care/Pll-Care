@@ -9,7 +9,7 @@ import { customAxios } from "../lib/apis/customAxios";
 
 const GeneralLayout = ({ children }) => {
   const dispatch = useDispatch();
-  const { currentPath, routeTo } = useRouter();
+  const { currentPath, replaceTo } = useRouter();
 
   const isLogin = useSelector((state) => state.auth.isLoggedIn);
 
@@ -22,13 +22,13 @@ const GeneralLayout = ({ children }) => {
 
   useEffect(() => {
     if (currentPath !== "/" && !isToken("access_token")) {
-      routeTo("/");
+      replaceTo("/");
     }
 
     if (isToken("access_token") && isToken("refresh_token")) {
       dispatch(authActions.login());
     }
-  }, []);
+  }, [currentPath]);
 
   return (
     <>
