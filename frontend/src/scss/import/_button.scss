@@ -28,6 +28,13 @@
     background-color: #00aa72;
     border: 2px solid #00aa72;
   }
+
+  &_underlined {
+    background-color: transparent;
+    border: none;
+    color: #7a7a7a;
+    text-decoration: underline;
+  }
 }
 
 @include tablet {

@@ -31,7 +31,9 @@
     &-book-marked-record-list {
       padding-top: 10px;
       margin-bottom: 10px;
-      height: 50%;
+      height: 48%;
+      display: grid;
+      grid-template-rows: 13% 87%;
 
       .meeting-record-heading {
         height: 40px;
@@ -40,20 +42,26 @@
       }
 
       .meeting-record-body {
-        height: 85%;
+        height: 100%;
+        display: grid;
+        grid-template-rows: 86% 14%;
 
         .meeting-record-all-meeting-record-list-data {
-          height: 80%;
+          height: 100%;
           width: 100%;
         }
 
-        @include displayFlex(column);
+        .pagination-wrapper {
+          @include putCenter;
+        }
       }
     }
 
     /* ALL MEETING RECORD LIST */
     &-all-meeting-record-list {
-      height: 56%;
+      height: 52%;
+      display: grid;
+      grid-template-rows: 20% 80%;
 
       .meeting-record-list-header {
         width: 100%;
@@ -89,14 +97,18 @@
 
       .record-list-item-wrapper {
         padding-top: 20px;
-        height: 72%;
+        height: 100%;
 
         @include displayFlex(column, space-between);
       }
 
       .meeting-record-all-meeting-record-list-data {
-        height: 80%;
+        height: 100%;
         width: 100%;
+      }
+
+      .pagination-wrapper {
+        margin-top: auto;
       }
     }
 
@@ -121,31 +133,37 @@
         @include displayFlex(column, center, space-between);
       }
 
-      .meeting-record-title {
-        font-size: $sub-heading-font-size;
-        font-family: $heading-font;
-        margin-bottom: 20px;
-
-        @include displayFlex(row, space-between);
+      .meeting-record-editor .meeting-record-title {
+        height: 15%;
+        border-bottom: 2px solid #d9d9d9; 
+        display: flex;
+        justify-content: space-between;
       }
 
       .meeting-record-title input {
         width: 87%;
-        height: 40px;
-        border-radius: 20px;
+        height: 70px;
+        border: none;
+        border-radius: 10px;
         padding: 10px;
-        font-size: $sub-heading-font-size;
+        font-size: $heading-font-size;
         font-family: $heading-font;
+        align-self: center;
+      }
+
+      .meeting-record-title input::placeholder {
+        color: #D9D9D9;
+      }
+
+      .meeting-record-title button {
+        align-self: flex-end;
       }
 
       .react-quill {
         height: 85%;
         line-height: 1.5;
+        margin-top: 20px;
         margin-bottom: 68px;
-      }
-
-      .meeting-record-editor Button {
-        margin-left: auto;
       }
 
       .meeting-record {
@@ -159,27 +177,17 @@
         display: grid;
         font-size: $sub-body-font-size;
         font-family: $body-font;
-        grid-template-rows: 5% 75% 20%;
+        grid-template-rows: 20% 60% 20%;
         border-bottom: 2px solid #d9d9d9;
       }
 
       .meeting-record-heading .meeting-record-title {
-        font-size: $sub-heading-font-size;
+        font-size: $heading-font-size;
         font-family: $heading-font;
       }
 
       .meeting-record-container {
         @include displayFlex(row, space-between);
-      }
-
-      .meeting-record-container .meeting-record-button-wrapper button {
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        color: #7a7a7a;
-        text-decoration: underline;
-        font-family: $button-font;
-        font-size: $sub-button-font-size;
       }
 
       .selected-meeting-record-content {
@@ -197,7 +205,7 @@
       margin-bottom: 10px;
       border-radius: 20px;
       width: 95%;
-      height: 120px;
+      height: 110px;
       padding: 10px 20px;
       color: #7a7a7a;
       cursor: pointer;
@@ -223,7 +231,7 @@
 @include desktop {
   .meeting-record {
     &-management {
-      height: 200vh;
+      height: 1080px;
       width: 85%;
 
       .meeting-record-heading {

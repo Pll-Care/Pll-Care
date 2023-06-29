@@ -1,18 +1,43 @@
 import { Avatar } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 
-const CalendarItem = (props) => {
-  const members = ["김철수", "박영수", "최민수", "김영희", "김민지"];
+const CalendarItem = ({ data }) => {
+  const location = data.address
+    ? data.address.city + " " + data.address.street
+    : "";
+
+  const time = data.address
+    ? data.startDate.slice(5, 7) +
+      "월 " +
+      data.startDate.slice(8, 10) +
+      "일 " +
+      data.startDate.slice(11, 16) +
+      " ~ " +
+      data.endDate.slice(11, 16)
+    : data.startDate.slice(5, 7) +
+      "월 " +
+      data.startDate.slice(8, 10) +
+      "일 " +
+      " ~ " +
+      data.endDate.slice(5, 7) +
+      "월 " +
+      data.endDate.slice(8, 10) +
+      "일 ";
   return (
     <div className="calendar-list-item">
-      <h5>{props.data.time}</h5>
-      <h4>{props.data.title}</h4>
+      {data.address ? (
+        <h5 style={{ color: "#00aa72" }}>Meeting</h5>
+      ) : (
+        <h5 style={{ color: "#00aa72" }}>Plan</h5>
+      )}
+      <h5>{time}</h5>
+      <h4>{data.title}</h4>
       <div className="calendar-list-item-name">
-        <h5>스타벅스</h5>
+        <h5>{location}</h5>
         <div className="calendar-list-item-name-avatar">
-          {members.map((member, index) => (
-            <Tooltip key={index} title={member}>
-              <Avatar />
+          {data.members.map((member, index) => (
+            <Tooltip key={index} title={member.name}>
+              <Avatar src={member.imageUrl} />
             </Tooltip>
           ))}
         </div>

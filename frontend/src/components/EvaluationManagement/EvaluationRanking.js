@@ -1,31 +1,29 @@
-const EvaluationRanking = ({ getSortedAverageEvaluationList }) => {
-  let i = 0;
+const EvaluationRanking = ({ rankingData }) => {
+  const sortedTop3RankingData = rankingData.filter((dataItem) => dataItem.rank < 4).sort((a, b) => a.rank - b.rank);
 
   return (
     <div className="evaluation-management-evaluation-ranking">
       <h1 className="evaluation-management-evaluation-ranking-header">
-        기여도 랭킹
+        배지 랭킹
       </h1>
       <div className="evaluation-management-evaluation-ranking-body">
-        {getSortedAverageEvaluationList().map((item) => {
-          i++;
-
+        {sortedTop3RankingData.map((item) => {
           return (
             <div
               className={[
                 `evaluation-management-evaluation-ranking-item`,
-                `evaluation-management-evaluation-ranking-item_${i}`,
+                `evaluation-management-evaluation-ranking-item_${item.rank}`,
               ].join(" ")}
-              key={i}
+              key={item.rank}
             >
               <div className="evaluation-management-left-col">
                 <figure />
-                <div className="ranking">{i}위</div>
+                <div className="ranking">{item.rank}위</div>
               </div>
               <div className="evaluation-management-right-col">
                 <div className="name">{item.name}</div>
                 <div className="score">
-                  전체 평점: {item.averageEvaluation} / 5.0
+                  총 배지 개수: {item.quantity}개
                 </div>
               </div>
             </div>

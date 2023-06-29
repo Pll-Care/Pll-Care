@@ -1,20 +1,76 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 import Button from "../../components/common/Button";
-
+import ProjectButtonModal from "./ProjectButtonModal";
 import useManagementMutation from "../../hooks/useManagementMutation";
+import ProjectEditor from "./ProjectEditor";
+import projectDefaultImg from "../../assets/project-default-img.jpg";
+
+import { getStringDate } from "../../utils/date";
 
 const ProjectList = ({ projectList }) => {
-  const { deleteMutate } = useManagementMutation();
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [deleteProjectId, setDeleteProjectId] = useState();
 
-  const handleCompleteProject = (e, projectId) => {
+  const [leaveModalVisible, setLeaveModalVisible] = useState(false);
+  const [leaveProjectId, setLeaveProjectId] = useState();
+
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [editData, setEditData] = useState({
+    projectId: 0,
+    title: "",
+    startDate: new Date(),
+    endDate: new Date(),
+    imageUrl: "",
+    description: "",
+  });
+
+  const { completeMutate } = useManagementMutation();
+
+  const handleCompleteProjectClick = (e, projectId) => {
     e.preventDefault();
+
+    completeMutate(projectId);
   };
 
-  const handleRemoveProject = (e, projectId) => {
+  const handleDeleteProjectClick = (e, projectId) => {
     e.preventDefault();
 
-    deleteMutate(projectId);
+    setDeleteProjectId(projectId);
+
+    setDeleteModalVisible(true);
+  };
+
+  const handleEditProjectClick = (
+    e,
+    projectId,
+    title,
+    startDate,
+    endDate,
+    description,
+    imageUrl
+  ) => {
+    e.preventDefault();
+
+    setEditModalVisible(true);
+
+    setEditData({
+      title,
+      projectId,
+      startDate: getStringDate(new Date(startDate)),
+      endDate: getStringDate(new Date(endDate)),
+      description,
+      imageUrl,
+    });
+  };
+
+  const handleLeaveProjectClick = (e, projectId) => {
+    e.preventDefault();
+
+    setLeaveProjectId(projectId);
+
+    setLeaveModalVisible(true);
   };
 
   return (
@@ -22,11 +78,19 @@ const ProjectList = ({ projectList }) => {
       {projectList?.map((project) => (
         <Link
           className="project-item"
-          key={project.id}
+          key={project.projectId}
           to={`/management/${project.projectId}/overview`}
         >
           <div className="project-item-left-col">
-            <figure />
+            <figure
+              style={{
+                backgroundImage: `url(${
+                  project.imageUrl
+                    ? project.imageUrl
+                    : projectDefaultImg
+                })`,
+              }}
+            />
           </div>
           <div className="project-item-right-col">
             <div className="project-item-text-wrapper">
@@ -46,26 +110,78 @@ const ProjectList = ({ projectList }) => {
               </div>
             </div>
             <div className="project-item-button-wrapper">
-              {project.state === "ONGOING" && (
-                <Button
-                  text={"삭제하기"}
-                  onClick={(e) => {
-                    handleRemoveProject(e, project.projectId);
-                  }}
-                />
-              )}
-              {project.state === "ONGOING" && (
-                <Button
-                  text={"완료하기"}
-                  onClick={(e) => {
-                    handleCompleteProject(e, project.projectId);
-                  }}
-                />
-              )}
+              <div>
+                {project.state === "ONGOING" && (
+                  <Button
+                    text={"삭제하기"}
+                    onClick={(e) =>
+                      handleDeleteProjectClick(e, project.projectId)
+                    }
+                  />
+                )}
+                {project.state === "ONGOING" && (
+                  <Button
+                    text={"수정하기"}
+                    onClick={(e) => {
+                      handleEditProjectClick(
+                        e,
+                        project.projectId,
+                        project.title,
+                        project.startDate,
+                        project.endDate,
+                        project.description,
+                        project.imageUrl
+                      );
+                    }}
+                  />
+                )}
+              </div>
+              <div>
+                {project.state === "ONGOING" && (
+                  <Button
+                    text={"탈퇴하기"}
+                    onClick={(e) => {
+                      handleLeaveProjectClick(e, project.projectId);
+                    }}
+                  />
+                )}
+                {project.state === "ONGOING" && (
+                  <Button
+                    text={"완료하기"}
+                    onClick={(e) => {
+                      handleCompleteProjectClick(e, project.projectId);
+                    }}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </Link>
       ))}
+      {deleteModalVisible && (
+        <ProjectButtonModal
+          type={"삭제"}
+          projectId={deleteProjectId}
+          modalVisible={deleteModalVisible}
+          setModalVisible={setDeleteModalVisible}
+        />
+      )}
+      {leaveModalVisible && (
+        <ProjectButtonModal
+          type={"탈퇴"}
+          projectId={leaveProjectId}
+          modalVisible={leaveModalVisible}
+          setModalVisible={setLeaveModalVisible}
+        />
+      )}
+      {editModalVisible && (
+        <ProjectEditor
+          isModalVisible={editModalVisible}
+          setIsModalVisible={setEditModalVisible}
+          isEdit={true}
+          editData={editData}
+        />
+      )}
     </div>
   );
 };

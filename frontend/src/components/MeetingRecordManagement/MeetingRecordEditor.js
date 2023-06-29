@@ -7,17 +7,19 @@ import "react-quill/dist/quill.snow.css";
 import Quill from "quill";
 import ImageResize from "quill-image-resize";
 import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import useMeetingRecordManagementMutation from "../../hooks/useMeetingRecordManagementMutation";
 import { useLocation } from "react-router-dom";
 import MeetingRecord from "./MeetingRecord";
+import { toast } from "react-toastify";
+import { getProjectId } from "../../utils/getProjectId";
 
 Quill.register("modules/ImageResize", ImageResize);
 
 const MeetingRecordEditor = () => {
   const content = useSelector((state) => state.meetingRecordManagement.content);
   const title = useSelector((state) => state.meetingRecordManagement.title);
-  const projectId = parseInt(useLocation().pathname.slice(12, 14));
+  const projectId = getProjectId(useLocation());
   const isCreatedMeetingRecordVisible = useSelector(
     (state) => state.meetingRecordManagement.isCreatedMeetingRecordVisible
   );
@@ -51,6 +53,14 @@ const MeetingRecordEditor = () => {
     dispatch(meetingRecordManagementActions.setContent(e));
 
   const handleSubmit = () => {
+    if (title.length < 1) {
+      toast.error("제목을 입력하세요.");
+      return;
+    } else if (content.length < 1) {
+      toast.error("내용을 입력하세요.");
+      return;
+    }
+
     if (isEdit) {
       editMutate({
         selectedMeetingRecordId,
@@ -64,18 +74,9 @@ const MeetingRecordEditor = () => {
         content: content,
       });
     }
-    dispatch(
-      meetingRecordManagementActions.onEditSelectedMeetingRecordState(false)
-    );
-    dispatch(
-      meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(
-        true
-      )
-    );
-    dispatch(meetingRecordManagementActions.onChangeIsEditState(false));
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!isEdit) {
       dispatch(meetingRecordManagementActions.onEditInitialState(true));
     } else {
@@ -105,8 +106,17 @@ const MeetingRecordEditor = () => {
       ) : (
         <div className="meeting-record-editor">
           <div className="meeting-record-title">
-            <h1>제목: </h1>
-            <input value={title} onChange={handleChangeTitle} />
+            <input
+              value={title}
+              onChange={handleChangeTitle}
+              placeholder={"제목을 입력하세요"}
+            />
+            <Button
+              size={"small"}
+              type={"underlined"}
+              text={"작성 완료하기"}
+              onClick={handleSubmit}
+            />
           </div>
           <ReactQuill
             className="react-quill"
@@ -126,7 +136,6 @@ const MeetingRecordEditor = () => {
               },
             }}
           />
-          <Button text={"작성 완료하기"} onClick={handleSubmit} />
         </div>
       )}
     </div>

@@ -1,351 +1,435 @@
 .evaluation-management {
-    height: 180vh;
-    width: 1150px;
+  width: 85%;
 
-    &-ranking-wrapper {
-        height: 77vh;
-        padding-bottom: 30px;
-        border-bottom: 2px solid #D9D9D9;
+  &-non-evaluated {
+    width: 85%;
+    background-color: #FCFCFC;
+    filter: opacity(30%) blur(4px);
+    pointer-events: none;
 
-        .evaluation-management-show-evaluation-ranking {
-            border: $border;
-            border-radius: 30px;
-            margin-right: 10px;
-            height: 100%;
-            width: 65%;
-            font-family: $body-font;
-            font-size: $body-font-size;
-            overflow-x: hidden;
+    @include putCenter;
+  }
 
-            @include displayFlex;
-        }
+  &-ranking-wrapper {
+    height: 500px;
+    padding-bottom: 30px;
+    border-bottom: 2px solid #d9d9d9;
 
-        .evaluation-management-evaluation-ranking {
-            height: 100%;
-            width: 35%;
-            margin-left: 10px;
+    .evaluation-management-chart-wrapper {
+      height: 470px;
+      width: 65%;
 
-            &-header {
-                font-family: $heading-font;
-                font-size: $sub-heading-font-size;
-                color: #01E89E;
-                padding: 10px;
-            }
-
-            &-body {
-                height: calc(100% - 45px);
-                background-color: #01E89E;
-                border-radius: 25px;
-                padding: 30px;
-                padding-bottom: 5px;
-                overflow-y: scroll;
-
-                .evaluation-management-evaluation-ranking-item {
-                    border-radius: 20px;
-                    padding: 10px;
-                    margin-bottom: 26px;
-                    background-color: white;
-                    height: 104px;
-
-                    .evaluation-management-left-col {
-                        figure {
-                            width: 40px;
-                            height: 40px;
-                            margin-right: 5px;
-
-                            @include backgroundImage('../assets/ranking-img.png');
-                        }
-
-                        .ranking {
-                            color: #01E89E;
-                            font-size: $sub-heading-font-size;
-                            font-family: $heading-font;
-                        }
-
-                        @include displayFlex(row, flex-start);
-                    }
-
-                    .evaluation-management-right-col {
-                        width: 49%;
-
-                        .name {
-                            font-size: $sub-heading-font-size;
-                            font-family: $heading-font;
-                            color: #01E89E;
-                            margin-bottom: 4px;
-                        }
-
-                        .score {
-                            font-size: $sub-body-font-size;
-                            font-family: $body-font;
-                            color: #7A7A7A;
-                        }
-
-                        @include displayFlex(column, center, flex-end);
-                    }
-
-                    @include displayFlex;
-                }
-
-                .evaluation-management-evaluation-ranking-item_1 {
-                    .evaluation-management-left-col {
-                        figure {
-                            @include backgroundImage('../assets/ranking-1-img.png', center, no-repeat, 85%, 85%);
-                        }
-                    }
-                }
-            }
-
-            &-body::-webkit-scrollbar {
-                display: none;
-            }         
-        }
-
-        @include displayFlex;
+      h1 {
+        font-family: $heading-font;
+        font-size: $sub-heading-font-size;
+        color: #01e89e;
+        padding: 10px;
+      }
     }
 
-    &-participant-wrapper {
-        height: 100vh;
-        margin-top: 15px;
-        width: 60%;
+    .evaluation-management-show-evaluation-chart {
+      border: $border;
+      border-radius: 30px;
+      margin-right: 10px;
+      width: 98%;
+      height: calc(100% - 45px);
+      font-family: $body-font;
+      font-size: $body-font-size;
+      overflow-x: hidden;
 
-        h1 {
-            font-family: $heading-font;
-            font-size: $sub-heading-font-size;
-            color: #01E89E;
-            padding-top: 15px;
+      .slick-slider {
+        width: 96%;
+        height: 83%;
+
+        .slick-list {
+          width: 100%;
+          height: 95%;
         }
 
-        .evaluation-management-participants {
-            flex-wrap: wrap;
-            padding-top: 20px;
-            margin-top: 10px;
-            padding-bottom: 40px;
+        @include displayFlex(row, flex-start);
+      }
 
-            .evaluation-management-participant {
-                box-shadow: 0px 10px 20px 5px rgba(0, 0, 0, 0.07);;
-                border-radius: 20px;
-                padding: 17px;
-                margin-bottom: 15px;
-                background-color: white;
-                height: 104px;
-                width: 48.8%;
+      .slick-arrow {
+        display: none;
+      }
 
-                &-left-col {
-                    .evaluation-management-user-profile {
-                        border: $border;
-                        width: 70px;
-                        height: 70px;
-                        border-radius: 20px;
-                        margin-top: auto;
-                        margin-bottom: auto;
-    
-                        @include backgroundImage('../assets/ranking-img.png');
-                    }
-                }
+      @include displayFlex;
+    }
 
-                &-right-col {
-                    width: 100%;
-                    height: 95%;
-                    margin-left: 30px;
-                    color: #7A7A7A;
-                    font-size: $sub-heading-font-size;
-                    font-family: $heading-font;
+    .custom-tooltip {
+      background-color: #d7d7d7;
+      opacity: 0.9;
+      border: none;
+      width: 180px;
+      height: 140px;
+      line-height: 1.5;
 
-                    .evaluation-management-badges {
-                        width: 100px;
+      @include displayFlex;
+    }
 
-                        figure {
-                            border: 2px solid #CCCCCC;;
-                            border-radius: 50%;
-                            width: 30px;
-                            height: 30px;
-                            background-color: #CCCCCC;
-                        }
+    .evaluation-management-evaluation-ranking {
+      height: 470px;
+      width: 35%;
+      margin-left: 10px;
+      overflow-y: hidden;
 
-                        @include displayFlex(row, space-between);
-                    }
+      &-header {
+        font-family: $heading-font;
+        font-size: $sub-heading-font-size;
+        color: #01e89e;
+        padding: 10px;
+      }
 
-                    @include displayFlex(column, space-between, flex-start);
-                }
+      &-body {
+        height: calc(100% - 45px);
+        background-color: #01e89e;
+        border-radius: 25px;
+        padding: 30px;
+        padding-bottom: 5px;
+        overflow-y: scroll;
 
-                @include displayFlex;
+        .evaluation-management-evaluation-ranking-item {
+          border-radius: 20px;
+          padding: 10px;
+          margin-bottom: 26px;
+          background-color: white;
+          height: 104px;
+
+          .evaluation-management-left-col {
+            figure {
+              width: 40px;
+              height: 40px;
+              margin-right: 5px;
+
+              @include backgroundImage("../assets/ranking-img.png");
+            }
+
+            .ranking {
+              color: #01e89e;
+              font-size: $sub-heading-font-size;
+              font-family: $heading-font;
+            }
+
+            @include displayFlex(row, flex-start);
+          }
+
+          .evaluation-management-right-col {
+            width: 49%;
+
+            .name {
+              font-size: $sub-heading-font-size;
+              font-family: $heading-font;
+              color: #01e89e;
+              margin-bottom: 4px;
+            }
+
+            .score {
+              font-size: $sub-body-font-size;
+              font-family: $body-font;
+              color: #7a7a7a;
+            }
+
+            @include displayFlex(column, center, flex-end);
+          }
+
+          @include displayFlex;
+        }
+
+        .evaluation-management-evaluation-ranking-item_1 {
+          .evaluation-management-left-col {
+            figure {
+              @include backgroundImage(
+                "../assets/ranking-1-img.png",
+                center,
+                no-repeat,
+                85%,
+                85%
+              );
+            }
+          }
+        }
+      }
+
+      &-body::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    @include displayFlex;
+  }
+
+  &-participant-wrapper {
+    margin-top: 15px;
+    width: 100%;
+
+    h1 {
+      font-family: $heading-font;
+      font-size: $sub-heading-font-size;
+      color: #01e89e;
+      padding-top: 15px;
+    }
+
+    .evaluation-management-participants {
+      flex-wrap: wrap;
+      padding-top: 20px;
+      margin-top: 10px;
+      padding-bottom: 40px;
+      width: 100%;
+
+      .evaluation-management-participant {
+        box-shadow: 0px 10px 20px 5px rgba(0, 0, 0, 0.07);
+        border-radius: 20px;
+        padding: 20px;
+        margin-bottom: 15px;
+        background-color: white;
+        height: 110px;
+        width: 48.8%;
+        cursor: pointer;
+
+        &-left-col .evaluation-management-user-profile {
+          border: $border;
+          width: 70px;
+          height: 70px;
+          border-radius: 20px;
+          margin-top: auto;
+          margin-bottom: auto;
+
+          @include backgroundImage("../assets/ranking-img.png");
+        }
+
+        &-right-col {
+          width: 100%;
+          height: 95%;
+          margin-left: 30px;
+          color: #7a7a7a;
+          font-size: $sub-heading-font-size;
+          font-family: $heading-font;
+
+          .name-badge-wrapper {
+            height: 100%;
+
+            @include displayFlex(column, space-between, flex-start);
+          }
+
+          .evaluation-management-badges {
+            width: 180px;
+
+            .badge-quantity-container {
+              width: 185px;
+              height: 35px;
+              font-family: $button-font;
+              font-size: $button-font-size;
+
+              @include displayFlex(row, space-between);
+            }
+
+            figure {
+              border: 2px solid #cccccc;
+              border-radius: 50%;
+              width: 30px;
+              height: 30px;
+              background-color: #cccccc;
+            }
+
+            .badge-quantity {
+              position: relative;
+
+              div {
+                position: absolute;
+                top: 5px;
+                left: 9px;
+              }
             }
 
             @include displayFlex(row, space-between);
+          }
+
+          @include displayFlex(row, space-between, center);
         }
 
-        @include putCenter;
+        @include displayFlex;
+      }
 
-    }
-
-    .final-evaluation-wrapper {
-        background: rgba(0,0,0,0.8); 
-        backdrop-filter: blur(5px);
-        opacity: 95%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-
-    &-final-evaluation {
-        background-color: $background-color;
-        padding: 40px;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        overflow: auto;
-        transform: translate(-50%, -50%);
-        width: 80%;
-        height: 90vh;
-        box-shadow: 0px 5px 30px 3px rgba(0, 0, 0, 0.1);
-        border-radius: 30px;
-        color: white;
-        font-family: $heading-font;
-        font-size: $sub-heading-font-size;
-
-        .final-evaluation-heading {
-            margin-bottom: 25px;
-        }
-
-        .final-evaluation-body {
-            background-color: white;
-            box-shadow: 0px 5px 30px 3px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            height: 200%;
-            border-radius: 30px;
-            margin-bottom: 15px;
-            padding: 15px;
-            display: grid;
-            grid-template-rows: 25% 25% 50%;
-
-            .evaluation,
-            .badges {
-                border-bottom: 2px solid #D9D9D9;
-            }
-
-            .evaluation {
-                h1 {
-                    margin-bottom: 20px;
-                }
-            }
-
-            .evaluation-criterion {
-                color: #7A7A7A;
-                font-family: $body-font;
-                font-size: $body-font-size;
-                display: grid;
-                grid-template-columns: 35% 35%;
-                grid-template-rows: 50% 50%;
-                column-gap: 0px;
-                row-gap: 20px;
-                justify-content: space-around;
-
-                .evaluation-score {
-                    border-radius: 55px;
-                    border: $border;
-                    font-family: $button-font;
-                    font-size: $button-font-size;
-                    color: #01E89E;
-                    text-align: center;
-                    cursor: pointer;
-                    -webkit-appearance:none;  /* for chrome */
-                    -moz-appearance:none;  /*for firefox*/
-                    appearance:none;
-                    width: 100px;
-                    height: 40px;
-
-                    @include backgroundImage('../assets/select-arrow-img.png', 88%, no-repeat, 10%, 10%);
-                }
-
-                div {                    
-                    @include displayFlex(row, space-between);
-                }
-            }
-
-            .badges {
-                &-body {
-                    display: grid;
-                    grid-template-columns: 42% 42%;
-                    grid-template-rows: 50% 50%;
-                    justify-content: space-around;
-                    row-gap: 20px;
-                    column-gap: 0px;
-                    padding: 20px;
-                    color: #7A7A7A;
-                    font-family: $body-font;
-                    font-size: $body-font-size;
-
-                    .badge {
-                        display: grid;
-                        grid-template-columns: 20% 50% 30%;
-                        grid-template-rows: 100%;
-                        align-items: center;
-
-                        figure {
-                            background-color: #CCCCCC;
-                            width: 40px;
-                            height: 40px;
-                            border-radius: 50%;
-                        }
-                    }
-                }
-            }
-
-            .content {
-                h1 {
-                    flex-grow: 0;
-                }
-                
-                div {
-                    color: #7A7A7A;
-                    font-family: $heading-font;
-                    font-size: $sub-heading-font-size;
-                    font-weight: 700;
-                    flex-grow: 1;
-                    padding: 20px;
-                    width: 100%;
-
-                    div {
-                        padding-left: 20px;
-                    }
-
-                    textarea {
-                        color: #7A7A7A;
-                        height: 100%;
-                        width: 90%;
-                        border: 2px solid #CCCCCC;
-                        border-radius: 20px;
-                        box-shadow: 0px 10px 20px 5px rgba(0, 0, 0, 0.07);
-                        padding: 20px;
-                    }
-
-                    textarea::placeholder, textarea {
-                        font-size: $body-font-size;
-                        font-family: $body-font;
-                    }
-
-                    @include displayFlex(column);
-                }
-
-                @include displayFlex(column, center, flex-start);
-            }
-        }
-
-        .final-evaluation-button-wrapper {
-            Button {
-                margin-right: 0;
-            }
-
-            @include displayFlex(row, flex-end);
-        }
-
-        &::-webkit-scrollbar {
-            display: none;
-        }
+      @include displayFlex(row, space-between);
     }
 
     @include putCenter;
+  }
+
+  .final-evaluation-wrapper {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    opacity: 95%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &-final-evaluation {
+    background-color: $background-color;
+    padding: 40px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    overflow: auto;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 90vh;
+    box-shadow: 0px 5px 30px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+    color: white;
+    font-family: $heading-font;
+    font-size: $sub-heading-font-size;
+
+    .final-evaluation-heading {
+      margin-bottom: 25px;
+    }
+
+    .final-evaluation-body {
+      background-color: white;
+      box-shadow: 0px 5px 30px 3px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      height: 200%;
+      border-radius: 30px;
+      margin-bottom: 15px;
+      padding: 15px;
+      display: grid;
+      grid-template-rows: 25% 25% 50%;
+
+      .evaluation,
+      .badges {
+        border-bottom: 2px solid #d9d9d9;
+      }
+
+      .evaluation {
+        h1 {
+          margin-bottom: 20px;
+        }
+      }
+
+      .evaluation-criterion {
+        color: #7a7a7a;
+        font-family: $body-font;
+        font-size: $body-font-size;
+        display: grid;
+        grid-template-columns: 35% 35%;
+        grid-template-rows: 50% 50%;
+        column-gap: 0px;
+        row-gap: 20px;
+        justify-content: space-around;
+
+        .evaluation-score {
+          border-radius: 55px;
+          border: $border;
+          font-family: $button-font;
+          font-size: $button-font-size;
+          color: #01e89e;
+          text-align: center;
+          cursor: pointer;
+          -webkit-appearance: none; /* for chrome */
+          -moz-appearance: none; /*for firefox*/
+          appearance: none;
+          width: 100px;
+          height: 40px;
+
+          @include backgroundImage(
+            "../assets/select-arrow-img.png",
+            88%,
+            no-repeat,
+            10%,
+            10%
+          );
+        }
+
+        div {
+          @include displayFlex(row, space-between);
+        }
+      }
+
+      .badges {
+        &-body {
+          display: grid;
+          grid-template-columns: 42% 42%;
+          grid-template-rows: 50% 50%;
+          justify-content: space-around;
+          row-gap: 20px;
+          column-gap: 0px;
+          padding: 20px;
+          color: #7a7a7a;
+          font-family: $body-font;
+          font-size: $body-font-size;
+
+          .badge {
+            display: grid;
+            grid-template-columns: 20% 50% 30%;
+            grid-template-rows: 100%;
+            align-items: center;
+
+            figure {
+              background-color: #cccccc;
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+            }
+          }
+        }
+      }
+
+      .content {
+        h1 {
+          flex-grow: 0;
+        }
+
+        div {
+          color: #7a7a7a;
+          font-family: $heading-font;
+          font-size: $sub-heading-font-size;
+          font-weight: 700;
+          flex-grow: 1;
+          padding: 20px;
+          width: 100%;
+
+          div {
+            padding-left: 20px;
+          }
+
+          textarea {
+            color: #7a7a7a;
+            height: 100%;
+            width: 90%;
+            border: 2px solid #cccccc;
+            border-radius: 20px;
+            box-shadow: 0px 10px 20px 5px rgba(0, 0, 0, 0.07);
+            padding: 20px;
+          }
+
+          textarea::placeholder,
+          textarea {
+            font-size: $body-font-size;
+            font-family: $body-font;
+          }
+
+          @include displayFlex(column);
+        }
+
+        @include displayFlex(column, center, flex-start);
+      }
+    }
+
+    .final-evaluation-button-wrapper {
+      Button {
+        margin-right: 0;
+      }
+
+      @include displayFlex(row, flex-end);
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  @include putCenter;
 }
