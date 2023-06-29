@@ -1216,6 +1216,14 @@ input {
 .management .project-list-wrapper .project-list {
   margin-top: 30px;
 }
+.management .project-list-wrapper .project-list-description {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 25px;
+  color: #7a7a7a;
+}
+.management .project-list-wrapper .project-list-description p {
+  text-align: center;
+}
 .management .project-list-wrapper .project-list .project-item {
   border: 2px solid #01e89e;
   width: 65%;

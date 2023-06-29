@@ -30,6 +30,15 @@
     .project-list {
       margin-top: 30px;
 
+      &-description {
+        font-family: $heading-font;
+        font-size: $sub-heading-font-size;
+        color: #7a7a7a;
+        p {
+          text-align: center;
+        }
+      }
+
       .project-item {
         border: $border;
         width: 65%;
