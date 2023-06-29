@@ -1138,9 +1138,6 @@ input {
   display: none;
 }
 
-.management {
-  height: 100vh;
-}
 .management-main-header {
   background-color: #01e89e;
   font-family: "IBM Plex Sans KR", sans-serif;
