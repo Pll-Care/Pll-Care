@@ -19,7 +19,7 @@ function ButtonList(props) {
   };
 
   return (
-    <div>
+    <div className="button-group">
       {names.map((name, index) => (
         <Button
           key={index}

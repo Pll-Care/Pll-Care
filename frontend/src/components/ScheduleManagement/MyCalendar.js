@@ -9,10 +9,10 @@ import { getAllSchedule } from "../../lib/apis/scheduleManagementApi";
 const MyCalendar = () => {
   const { id } = useParams();
 
-  //const { isLoading, data } = useQuery("CalendarSchedule", () =>
-  //  getAllSchedule(id)
-  //);
-  //console.log(data);
+  const { isLoading, data } = useQuery("CalendarSchedule", () =>
+    getAllSchedule(id)
+  );
+  console.log(data);
 
   // 더미 데이터
   const datas = {
@@ -110,7 +110,7 @@ const MyCalendar = () => {
     };
     events.push(milestone);
   });
-  console.log(events);
+  //console.log(events);
 
   // 일정 표시하는 부분 커스텀
   const eventContent = (arg) => {

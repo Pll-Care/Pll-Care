@@ -7,15 +7,15 @@
 .calendar {
   @include displayFlex(row, center, center);
   &-schedule {
-    width: 40%;
+    width: 50%;
   }
 }
 .calendar-list {
   background-color: $background-color;
   align-items: center;
   padding: 2rem;
-  height: 500px;
-  width: 30%;
+  height: 470px;
+  width: 40%;
   overflow-y: auto;
   .button-container {
     display: flex;
@@ -76,12 +76,14 @@
 
 // NewScheduleModal 컴포넌트
 .modal-container {
-  padding: 1rem;
   font-family: $body-font;
   .button-container {
     display: flex;
     justify-content: flex-end;
     margin-top: 15px;
+    Button {
+      margin-left: 10px;
+    }
   }
   input {
     border: none;

@@ -6,6 +6,11 @@ import CalendarItem from "./CalendarItem";
 import NewScheduleModal from "./NewScheduleModal";
 import Button from "../common/Button";
 import { getAllSchedule } from "../../lib/apis/scheduleManagementApi";
+import { getTodayDateEnglish } from "../../utils/date";
+import {
+  getAfterScheduleData,
+  getCombineSortedPlanMeeting,
+} from "../../utils/schedule";
 
 // 더미 데이터
 const datas = {
@@ -16,10 +21,7 @@ const datas = {
       content: "string",
       startDate: "2023-06-25T05:49:53.840Z",
       endDate: "2023-06-25T10:49:53.840Z",
-      address: {
-        city: "string",
-        street: "string",
-      },
+      address: "string1",
       members: [
         {
           id: 0,
@@ -34,10 +36,7 @@ const datas = {
       content: "string1",
       startDate: "2023-06-29T05:49:53.840Z",
       endDate: "2023-06-29T10:49:53.840Z",
-      address: {
-        city: "string",
-        street: "string",
-      },
+      address: "string2",
       members: [
         {
           id: 0,
@@ -52,10 +51,7 @@ const datas = {
       content: "string1",
       startDate: "2023-07-26T05:49:53.840Z",
       endDate: "2023-07-26T09:49:53.840Z",
-      address: {
-        city: "string",
-        street: "string",
-      },
+      address: "string3",
       members: [
         {
           id: 0,
@@ -96,6 +92,7 @@ const datas = {
     },
   ],
 };
+
 const CalendarList = () => {
   const [modalIsVisible, setModalIsVisible] = useState(false);
   const modalOpen = () => {
@@ -106,28 +103,7 @@ const CalendarList = () => {
   };
 
   // 오늘 날짜 가져오기
-  const today = new Date();
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  const month = months[today.getMonth()];
-
-  const daysOfWeek = ["Sun", "Mon", "Tues", "Wednes", "Thurs", "Fri", "Satur"];
-  const dayOfWeek = daysOfWeek[today.getDay()];
-  const date = today.getDate();
-  // 오늘 날짜 요일, 일 표시
-  const calendar = `${month} ${date}, ${dayOfWeek}`;
+  const calendar = getTodayDateEnglish();
 
   // 모든 일정 가져오기
   const { id } = useParams();
@@ -135,24 +111,18 @@ const CalendarList = () => {
   //const { isLoading, data } = useQuery("CalendarSchedule", () =>
   //  getAllSchedule(id)
   //);
-  const filteredMeetings = datas?.meetings?.filter((meeting) => {
-    const meetingStartDate = new Date(meeting.startDate);
-    return meetingStartDate >= today;
-  });
 
-  const filteredMilestones = datas?.milestones?.filter((milestone) => {
-    const milestoneStartDate = new Date(milestone.startDate);
-    return milestoneStartDate >= today;
-  });
+  // 오늘 이후의 meeting 가져오기
+  const filteredMeetings = getAfterScheduleData(datas.meetings);
 
-  const sortedEvents = [...filteredMeetings, ...filteredMilestones].sort(
-    (a, b) => {
-      const startDateA = new Date(a.startDate);
-      const startDateB = new Date(b.startDate);
-      return startDateA - startDateB;
-    }
+  // 오늘 이후의 plan 가져오기
+  const filteredMilestones = getAfterScheduleData(datas.milestones);
+
+  // plan과 meeting 시간 순으로 sort해서 합치기
+  const sortedEvents = getCombineSortedPlanMeeting(
+    filteredMeetings,
+    filteredMilestones
   );
-  console.log(sortedEvents);
 
   return (
     <div className="calendar-list">

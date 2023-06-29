@@ -7,6 +7,7 @@ import { addEvaluation } from "../../redux/evaluationManagementSlice";
 import ButtonList from "./ButtonList";
 import Button from "../common/Button";
 import ModalContainer from "../common/ModalContainer";
+import { getDateTimeDuration } from "../../utils/date";
 
 const ScheduleEvaluationModal = (props) => {
   const dispatch = useDispatch();
@@ -22,6 +23,8 @@ const ScheduleEvaluationModal = (props) => {
   const badgeClickHandler = (badge) => {
     setBadge(badge);
   };
+
+  const time = getDateTimeDuration(props.startDate, props.endDate, props.type);
 
   const evaluationClickHandler = () => {
     const newEvaluation = {
@@ -41,18 +44,13 @@ const ScheduleEvaluationModal = (props) => {
       open={props.open}
       onClose={props.onClose}
       type="dark"
-      width="50%"
+      width="40%"
     >
       <div className="schedule-modal">
         <h1>평가 작성</h1>
         <div className="schedule-modal-content">
           <h1>{props.title}</h1>
-          <h2>
-            {props.day + " "}
-            {props.week + " "}
-            {props.time + "  "}
-            진행
-          </h2>
+          <h2>{time} 진행</h2>
           <div className="schedule-modal-content-evaluation">
             <div className="modal-member">
               <h3>참여자</h3>

@@ -21,3 +21,37 @@ export const makeNewPlan = async (data) => {
     return err;
   }
 };
+
+// 일정 필터 리스트 조회
+export const getFilterSchedule = async (projectId, memberId, category) => {
+  try {
+    const res = await customAxios.get(
+      `/auth/schedule/search?page=1&size=1&direction=ASC&sortingProperty=string&projectId=${projectId}&memberId=${memberId}&scheduleCategory=${category}`
+    );
+    return res.data.content;
+  } catch (err) {
+    return err;
+  }
+};
+
+// 일정 상세 조회
+export const getDetailSchedule = async (projectId, scheduleId) => {
+  try {
+    const res = await customAxios.get(
+      `/auth/schedule/${scheduleId}?project_id=${projectId}`
+    );
+    return res.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+// 일정 수정
+export const ModifySchedule = async (id, data) => {
+  try {
+    const res = await customAxios.post(`auth/schedules/${id}`, data);
+    return res;
+  } catch (err) {
+    return err;
+  }
+};

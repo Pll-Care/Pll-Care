@@ -1591,7 +1591,7 @@ input {
 }
 
 .card {
-  margin: 20px 10%;
+  margin: 20px 0px;
   background: #fcfcfc;
   box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1);
   border-radius: 35px;
@@ -1611,15 +1611,15 @@ input {
   align-items: center;
 }
 .calendar-schedule {
-  width: 40%;
+  width: 50%;
 }
 
 .calendar-list {
   background-color: #01e89e;
   align-items: center;
   padding: 2rem;
-  height: 500px;
-  width: 30%;
+  height: 470px;
+  width: 40%;
   overflow-y: auto;
 }
 .calendar-list .button-container {
@@ -1675,13 +1675,15 @@ input {
 }
 
 .modal-container {
-  padding: 1rem;
   font-family: "Noto Sans KR", sans-serif;
 }
 .modal-container .button-container {
   display: flex;
   justify-content: flex-end;
   margin-top: 15px;
+}
+.modal-container .button-container Button {
+  margin-left: 10px;
 }
 .modal-container input {
   border: none;
@@ -1789,7 +1791,7 @@ input {
   color: #00aa72;
   font-family: "IBM Plex Sans KR", sans-serif;
   margin: 15px;
-  margin-left: 15%;
+  margin-left: 7%;
 }
 
 .endpoint {
@@ -1835,7 +1837,7 @@ input {
   }
 }
 .schedule-option {
-  margin: 20px 10%;
+  margin: 40px 0px;
 }
 .schedule-option-person {
   background-color: #01e89e;
@@ -1849,23 +1851,19 @@ input {
   margin-bottom: 20px;
 }
 
-.schedule {
-  height: 500px;
-  overflow-y: auto;
-}
-.schedule .schedule-list {
+.schedule-list {
   display: flex;
   padding: 1rem;
 }
 @media (max-width: 1024px) {
-  .schedule .schedule-list {
+  .schedule-list {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
 }
-.schedule .schedule-list-time {
+.schedule-list-time {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1875,64 +1873,120 @@ input {
   font-family: "IBM Plex Sans KR", sans-serif;
   width: 15%;
 }
-.schedule .schedule-list-time h1 {
+@media (min-width: 767px) and (max-width: 1024px) {
+  .schedule-list-time {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+}
+@media (max-width: 767px) {
+  .schedule-list-time {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.schedule-list-time h1 {
   font-size: 65px;
   color: gray;
 }
-.schedule .schedule-list-time h2 {
+.schedule-list-time h2 {
   font-size: 25px;
+  margin-bottom: 15px;
 }
-.schedule .schedule-list-content {
+.schedule-list-content {
   text-align: left;
   border: 3px solid #01e89e;
   border-radius: 35px;
   width: 85%;
   padding: 1.5rem;
-}
-.schedule .schedule-list-content h5 {
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 18px;
-  color: #7a7a7a;
-}
-.schedule .schedule-list-content-time {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-.schedule .schedule-list-content-time h4 {
+@media (max-width: 767px) {
+  .schedule-list-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.schedule-list-content h5 {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 18px;
+  color: #7a7a7a;
+}
+.schedule-list-content h4 {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 25px;
   color: #7a7a7a;
+  margin: 10px 0px;
 }
-.schedule .schedule-list-content-time h1 {
-  color: #01e89e;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
-  background: #ffffff;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.05);
-  border-radius: 30px;
-  padding: 0.5rem;
+.schedule-list-content-past {
+  border: 3px solid rgb(197, 197, 197);
 }
-.schedule .schedule-list-content-option {
+.schedule-list-content-option {
   align-items: center;
   display: flex;
 }
-.schedule .schedule-list-content-option h5 {
-  margin-right: 20px;
+@media (max-width: 767px) {
+  .schedule-list-content-option {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
-.schedule .schedule-list-content-option .MuiAvatar-root {
+.schedule-list-content-option h5 {
+  margin-right: 20px;
+  color: #00aa72;
+}
+.schedule-list-content-option-mui {
+  display: flex;
+}
+.schedule-list-content-option .MuiAvatar-root {
   transform: scale(0.7);
   cursor: pointer;
   transition: all 0.3s ease;
   margin-left: -10px;
 }
-.schedule .schedule-list-content-option .MuiAvatar-root:hover {
+.schedule-list-content-option .MuiAvatar-root:hover {
   transform: scale(0.8);
+}
+@media (max-width: 767px) {
+  .schedule-list-content-option .MuiAvatar-root {
+    transform: scale(0.5);
+    margin-left: -25px;
+  }
+  .schedule-list-content-option .MuiAvatar-root:hover {
+    transform: scale(0.6);
+  }
+}
+.schedule-list-content-time {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.schedule-list-content-time h1 {
+  color: #01e89e;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  background: #ffffff;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.05);
+  border-radius: 30px;
+  padding: 0.5rem;
+}
+.schedule-list-content-time Button {
+  margin-top: 10px;
 }
 
 .schedule-modal {
-  padding: 1.5rem;
   font-family: "IBM Plex Sans KR", sans-serif;
 }
 .schedule-modal h1 {
@@ -1992,85 +2046,6 @@ input {
   text-align: right;
 }
 
-@media (min-width: 767px) and (max-width: 1024px) {
-  .modal-badge {
-    margin-right: 5px;
-    padding: 0.1rem;
-  }
-  .schedule-container h4 {
-    font-size: 22px;
-  }
-  .schedule-container .schedule-list-time {
-    flex-direction: row;
-  }
-  .schedule-container .schedule-list-time h1 {
-    font-size: 23px;
-  }
-  .schedule-container .schedule-list-time h2 {
-    font-size: 22px;
-    margin-right: 10px;
-  }
-  .schedule-container .schedule-list-content h5 {
-    font-size: 17px;
-  }
-  .schedule-container .schedule-list-content h4 {
-    font-size: 23px;
-  }
-  .schedule-modal h1,
-  .schedule-modal h3 {
-    font-size: 17px;
-  }
-  .schedule-modal h2 {
-    font-size: 15px;
-  }
-}
-@media (max-width: 767px) {
-  .modal-badge {
-    margin-right: 2px;
-    padding: 0.5rem;
-  }
-  .schedule-container h4 {
-    font-size: 14px;
-  }
-  .schedule-container .schedule-list-time {
-    flex-direction: row;
-  }
-  .schedule-container .schedule-list-time h1 {
-    font-size: 15px;
-  }
-  .schedule-container .schedule-list-time h2 {
-    font-size: 22px;
-    margin-right: 10px;
-  }
-  .schedule-container .schedule-list-content {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .schedule-container .schedule-list-content h5 {
-    font-size: 12px;
-  }
-  .schedule-container .schedule-list-content h4 {
-    font-size: 21px;
-  }
-  .schedule-container .schedule-list-content-time {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .schedule-container .schedule-list-content-option .MuiAvatar-root {
-    transform: scale(0.5);
-    margin-left: -25px;
-  }
-  .schedule-container .schedule-list-content-option .MuiAvatar-root:hover {
-    transform: scale(0.6);
-  }
-  .schedule-modal h1,
-  .schedule-modal h3 {
-    font-size: 12px;
-  }
-  .schedule-modal h2 {
-    font-size: 11px;
-  }
-}
 .teamMember {
   width: 85%;
   margin: 0 auto;
