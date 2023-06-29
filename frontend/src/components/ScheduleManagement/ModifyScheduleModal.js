@@ -1,55 +1,50 @@
 import { useState, useRef } from "react";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 
 import Button from "../common/Button";
-import { makeNewPlan } from "../../lib/apis/scheduleManagementApi";
+import {
+  ModifySchedule,
+  getDetailSchedule,
+  makeNewPlan,
+} from "../../lib/apis/scheduleManagementApi";
 import ModalContainer from "../common/ModalContainer";
 
 // 프로젝트 팀원 더미 데이터
-const names = [
-  {
-    id: 0,
-    pmId: 0,
-    name: "string1",
-    imageUrl: "string1",
-    position: "string1",
-  },
-  {
-    id: 1,
-    pmId: 1,
-    name: "string2",
-    imageUrl: "string2",
-    position: "string2",
-  },
-  {
-    id: 2,
-    pmId: 2,
-    name: "string3",
-    imageUrl: "string3",
-    position: "string3",
-  },
-  {
-    id: 3,
-    pmId: 3,
-    name: "string4",
-    imageUrl: "string4",
-    position: "string4",
-  },
-];
 
-const NewScheduleModal = ({ open, onClose }) => {
+const ModifyScheduleModal = ({ open, onClose, scheduleId, state }) => {
   const { id } = useParams();
   const today = new Date();
-  const initialDate = today.toISOString().slice(0, 16);
-  const [startDate, setStartDate] = useState(initialDate);
-  const [endDate, setEndDate] = useState(initialDate);
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
   const [participants, setParticipants] = useState([]);
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [title, setTitle] = useState();
+  const [content, setContent] = useState();
   const [option, setOption] = useState("MILESTONE");
   const [location, setLocation] = useState("");
+
+  const { data } = useQuery(
+    "ScheduleDetail",
+    () => getDetailSchedule(id, scheduleId),
+    {
+      onSuccess: (data) => {
+        setStartDate(data.startDate);
+        setEndDate(data.endDate);
+        setParticipants(data.members);
+        setTitle(data.title);
+        setContent(data.content);
+        setOption(data.scheduleCategory);
+        //if (data.address === null) {
+        //  setLocation("");
+        //} else {
+        setLocation(data.address);
+        //}
+        setLocation(data.address);
+      },
+    }
+  );
+  console.log(data);
 
   const titleRef = useRef();
   const contentRef = useRef();
@@ -81,32 +76,49 @@ const NewScheduleModal = ({ open, onClose }) => {
     setLocation(e.target.value);
   };
 
-  const handleButtonClick = (data) => {
-    if (participants.find((participant) => participant.id === data.id)) {
-      // 클릭한 data가 이미 participants 배열에 있을 경우 제외
-      setParticipants(
-        participants.filter((participant) => participant.id !== data.id)
-      );
-    } else {
-      // 클릭한 data가 participants 배열에 없을 경우 추가
-      setParticipants([
-        ...participants,
-        { id: data.id, name: data.name, imageUrl: data.imageUrl },
-      ]);
-    }
+  const cancelModal = () => {
+    onClose();
   };
 
-  const { mutate } = useMutation(makeNewPlan, {
+  const handleButtonClick = (data) => {
+    setParticipants((prevParticipants) => {
+      const updatedParticipants = prevParticipants.map((participant) => {
+        if (participant.id === data.id) {
+          return { ...participant, in: !participant.in };
+        }
+        return participant;
+      });
+      return updatedParticipants;
+    });
+  };
+  const { mutate } = useMutation("ModifySchedule", ModifySchedule, {
     onSuccess: (data) => {
       console.log(data);
       onClose();
     },
-    onError: (error) => {
-      console.log(error);
-    },
   });
 
-  const submitNewPlan = () => {
+  // 수정하는 버튼
+  const submitModifyPlan = () => {
+    const members = [];
+    participants.forEach((participant) => {
+      if (participant.in === true) {
+        members.push(participant.id);
+      }
+    });
+    // 수정 내용 검증
+    if (
+      title === data.title &&
+      content === data.content &&
+      startDate === data.startDate &&
+      endDate === data.endDate &&
+      participants === data.members &&
+      option === "MEETING" &&
+      location === data.address
+    ) {
+      toast.error("수정하지 않으셨습니다. 일정 수정해주세요");
+      return;
+    }
     if (title.length < 2) {
       toast.error("일정 제목을 더 작성해주세요.");
       titleRef.current.focus();
@@ -114,11 +126,6 @@ const NewScheduleModal = ({ open, onClose }) => {
     }
     const start = new Date(startDate);
     const end = new Date(endDate);
-    if (start <= today) {
-      toast.error("일정의 시작 일이 오늘 이전일 수 없습니다.");
-      startDateRef.current.focus();
-      return;
-    }
     if (start >= end) {
       toast.error("일정 기간을 수정해주세요.");
       endDateRef.current.focus();
@@ -130,11 +137,7 @@ const NewScheduleModal = ({ open, onClose }) => {
       endDateRef.current.focus();
       return;
     }
-    if (option === "MEETING" && location.length < 2) {
-      toast.error("모임 위치를 더 자세히 작성해주세요.");
-      return;
-    }
-    if (participants.length < 1) {
+    if (members.length < 1) {
       toast.error("일정 참여할 멤버를 선택해주세요.");
       return;
     }
@@ -143,19 +146,20 @@ const NewScheduleModal = ({ open, onClose }) => {
       contentRef.current.focus();
       return;
     }
-
-    const new_plan = {
+    const modifyData = {
       projectId: parseInt(id, 10),
       startDate: startDate,
       endDate: endDate,
+      state: state,
       category: option,
-      memberDtos: participants,
+      memberIds: members,
       title: title,
       content: content,
-      address: { city: "", street: "" },
+      address: location,
     };
-    console.log(new_plan);
-    mutate(new_plan);
+
+    console.log(modifyData);
+    mutate(scheduleId, modifyData);
   };
 
   return (
@@ -213,13 +217,13 @@ const NewScheduleModal = ({ open, onClose }) => {
 
           <div className="plan-option">
             <h5>참여자</h5>
-            {names.map((data) => (
+            {participants.map((data) => (
               <Button
                 key={data.id}
                 text={data.name}
                 size="small"
                 type={
-                  participants.find((participant) => participant.id === data.id)
+                  participants.find((participant) => participant.in === true)
                     ? "positive_dark"
                     : ""
                 }
@@ -242,10 +246,11 @@ const NewScheduleModal = ({ open, onClose }) => {
           </div>
         </div>
         <div className="button-container">
-          <Button text="생성 완료" onClick={submitNewPlan} />
+          <Button text="수정 완료" onClick={submitModifyPlan} />
+          <Button text="취소" onClick={cancelModal} />
         </div>
       </div>
     </ModalContainer>
   );
 };
-export default NewScheduleModal;
+export default ModifyScheduleModal;
