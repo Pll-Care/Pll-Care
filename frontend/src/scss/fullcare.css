@@ -462,13 +462,12 @@ input {
   /* MEETING RECORD ITEM */
 }
 .meeting-record-management-wrapper .meeting-record-management {
+  width: 100%;
   border: 2px solid #01e89e;
   display: flex;
   justify-content: space-between;
   border-radius: 35px;
   background-color: #01e89e;
-  margin-left: auto;
-  margin-right: auto;
 }
 .meeting-record-management-wrapper .meeting-record-management .meeting-record-heading {
   font-family: "IBM Plex Sans KR", sans-serif;
