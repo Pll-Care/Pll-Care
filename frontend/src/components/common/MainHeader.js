@@ -47,7 +47,7 @@ const MainHeader = () => {
     <>
       <header className="main-header">
         <div className="main-header-left-col">
-          <figure className="main-header-logo-img" />
+          <figure className="main-header-logo-img" onClick={() => routeTo("/")} />
           <ToggleMenuButton
             isToggleMenuOpen={isToggleMenuOpen}
             setIsToggleMenuOpen={setIsToggleMenuOpen}

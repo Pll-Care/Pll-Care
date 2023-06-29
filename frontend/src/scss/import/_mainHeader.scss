@@ -10,6 +10,7 @@
       border: $border;
       width: 60px;
       height: 60px;
+      cursor: pointer;
     }
 
     @include displayFlex;
