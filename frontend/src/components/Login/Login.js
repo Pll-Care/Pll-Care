@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { googleAuthUrl, kakaoAuthUrl, naverAuthUrl } from "../../utils/auth";
 import { useRef } from "react";
 
-const Login = ({ setIsLoginModalVisible }) => {
+const Login = ({ closeModal }) => {
   const modalOutside = useRef();
 
   const handleLoginWindow = (url) => {
@@ -14,7 +14,7 @@ const Login = ({ setIsLoginModalVisible }) => {
 
   const handleModalClose = (e) => {
     if (e.target === modalOutside.current) {
-      setIsLoginModalVisible(false);
+      closeModal();
     }
   };
 

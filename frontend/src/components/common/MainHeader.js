@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Login from "../Login/Login";
@@ -7,6 +7,7 @@ import Button from "./Button";
 import ToggleMenuButton from "./ToggleMenuButton";
 
 import { authActions } from "../../redux/authSlice";
+import { useRouter } from "../../hooks/useRouter";
 
 export const headerMenu = [
   { id: 1, link: "/management", title: "프로젝트 관리" },
@@ -17,13 +18,14 @@ const MainHeader = () => {
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
   const [isToggleMenuOpen, setIsToggleMenuOpen] = useState(false);
 
+  const { routeTo } = useRouter();
   const dispatch = useDispatch();
-
   const authState = useSelector((state) => state.auth.isLoggedIn);
 
   const handleLogout = () => {
     dispatch(authActions.logout());
     setIsLoginModalVisible(false);
+    routeTo("/");
   };
 
   const handleLogin = () => {
@@ -36,6 +38,10 @@ const MainHeader = () => {
       }
     });
   };
+
+  const closeModal = useCallback(() => {
+    setIsLoginModalVisible(false);
+  }, []);
 
   return (
     <>
@@ -54,7 +60,11 @@ const MainHeader = () => {
                 className={menu.id === 1 ? "nav_item" : "nav_item nav_divide"}
                 key={menu.id}
               >
-                <Link to={menu.link}>{menu.title}</Link>
+                {authState ? (
+                  <Link to={menu.link}>{menu.title}</Link>
+                ) : (
+                  <Link onClick={handleLogin}>{menu.title}</Link>
+                )}
               </li>
             ))}
           </ul>
@@ -73,7 +83,7 @@ const MainHeader = () => {
       {isLoginModalVisible && (
         <Login
           isLoginModalVisible={isLoginModalVisible}
-          setIsLoginModalVisible={setIsLoginModalVisible}
+          closeModal={closeModal}
         />
       )}
     </>

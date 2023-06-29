@@ -418,9 +418,8 @@ input {
   border: 2px solid #01e89e;
   border-radius: 30px;
   box-shadow: 0px 10px 35px 5px rgba(0, 0, 0, 0.04);
-  width: 85%;
+  width: 100%;
   height: 70px;
-  margin-top: 25px;
   margin-bottom: 25px;
   margin-left: auto;
   margin-right: auto;
@@ -1400,6 +1399,13 @@ input {
   line-height: 1.5;
 }
 
+.management_project_layout {
+  width: 72%;
+  margin: 0 auto;
+  padding-top: 25px;
+  padding-bottom: 30px;
+}
+
 @media (min-width: 1024px) {
   .management-main-header {
     font-size: 40px;
@@ -2065,4 +2071,158 @@ input {
   .schedule-modal h2 {
     font-size: 11px;
   }
+}
+.teamMember {
+  width: 85%;
+  margin: 0 auto;
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+.teamMember_title {
+  color: #01e89e;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.memberMangement {
+  margin-bottom: 15px;
+}
+.memberMangement_head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.memberMangement_memebers {
+  min-height: 450px;
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(250px, 1fr));
+  grid-gap: 10px;
+}
+.memberMangement_memebers_noMember {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+}
+
+.member_item {
+  min-height: 220px;
+}
+.member_item_imgbox {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.member_item_imgbox > div {
+  width: 150px;
+  height: 150px;
+  position: relative;
+}
+.member_item_imgbox_img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #01e89e;
+  display: inline-block;
+}
+.member_item_infobox {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  padding-top: 10px;
+  gap: 10px;
+}
+.member_item_infobox_name {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  color: #003b28;
+}
+.member_item_infobox_job {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 12px;
+  color: #7a7a7a;
+}
+.member_item_delete {
+  z-index: 10;
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  background-color: #fff;
+  opacity: 0.75;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #003b28;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.applicationStatus {
+  width: 100%;
+}
+.applicationStatus_users {
+  width: 100%;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+.applicationStatus_users_noMember {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+}
+
+.application_item {
+  width: 90%;
+  max-height: 100px;
+  border: 2px solid #01e89e;
+  border-radius: 18px;
+  padding: 15px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.application_item_imgbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 6%;
+}
+.application_item_imgbox > img {
+  width: 100%;
+  height: 100%;
+  background-color: #01e89e;
+  border-radius: 16px;
+}
+.application_item_infobox {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 15px;
+}
+.application_item_infobox > p {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  color: #7a7a7a;
+}
+.application_item_infobox_name {
+  font-size: 18px;
+  font-weight: bold;
+}
+.application_item_infobox_job {
+  font-size: 14px;
+}
+.application_item_btnbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10%;
 }/*# sourceMappingURL=fullcare.css.map */

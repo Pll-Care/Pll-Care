@@ -236,6 +236,13 @@
   }
 }
 
+.management_project_layout {
+  width: 72%;
+  margin: 0 auto;
+  padding-top: 25px;
+  padding-bottom: 30px;
+}
+
 @include desktop {
   .management {
     &-main-header {
