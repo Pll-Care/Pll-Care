@@ -53,7 +53,7 @@ const MainHeader = () => {
             setIsToggleMenuOpen={setIsToggleMenuOpen}
           />
         </div>
-        <div>
+        <div className="main-header-medium-col">
           <ul className="main-header-link">
             {headerMenu.map((menu) => (
               <li
