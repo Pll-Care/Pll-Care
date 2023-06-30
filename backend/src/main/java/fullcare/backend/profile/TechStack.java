@@ -2,7 +2,7 @@ package fullcare.backend.profile;
 
 public enum TechStack {
     // ? Back 관련
-    SPRING("Spring"), SPRINGBOOT("SpringBoot"), DJANGO("Django"),
+    SPRING("Spring"), SPRINGBOOT("SpringBoot"), DJANGO("Django"), FLASK("Flask"),
     // ? Front 관련
     REACT("React"), VUE("Vue"), JAVASCRIPT("JavaScript"),
     // ? DevOps 관련
