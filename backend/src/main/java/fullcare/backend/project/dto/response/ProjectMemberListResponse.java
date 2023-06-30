@@ -6,14 +6,12 @@ import lombok.Data;
 
 @Data
 public class ProjectMemberListResponse {
-
     private Long id;
     private String name;
     private String imageUrl;
     private ProjectMemberRoleType position;
     private boolean isLeader;
-
-    @Builder(builderMethodName = "createResponse")
+    @Builder
     public ProjectMemberListResponse(Long id, String name, String imageUrl, ProjectMemberRoleType position, boolean isLeader) {
         this.id = id;
         this.name = name;
@@ -21,5 +19,4 @@ public class ProjectMemberListResponse {
         this.position = position;
         this.isLeader = isLeader;
     }
-    
 }

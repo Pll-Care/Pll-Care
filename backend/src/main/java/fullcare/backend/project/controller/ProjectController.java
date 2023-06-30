@@ -7,7 +7,7 @@ import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.CompletedProjectException;
 import fullcare.backend.project.dto.request.*;
 import fullcare.backend.project.dto.response.ProjectListResponse;
-import fullcare.backend.project.dto.response.ProjectMemberResponse;
+import fullcare.backend.project.dto.response.ProjectMemberListResponse;
 import fullcare.backend.project.service.ProjectService;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
@@ -237,11 +237,11 @@ public class ProjectController {
             @ApiResponse(responseCode = "400", description = "프로젝트 지원 현황 리스트 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping("/{projectId}/applylist")
-    public ResponseEntity<List<ProjectMemberResponse>> findApplyList(@PathVariable Long projectId, @CurrentLoginMember Member member) {
+    public ResponseEntity<List<ProjectMemberListResponse>> findApplyList(@PathVariable Long projectId, @CurrentLoginMember Member member) {
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
             throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
         }
-        List<ProjectMemberResponse> response = projectService.findApplyList(projectId);
+        List<ProjectMemberListResponse> response = projectService.findApplyList(projectId);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
@@ -252,11 +252,11 @@ public class ProjectController {
             @ApiResponse(responseCode = "400", description = "프로젝트 멤버 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping("/{projectId}/memberlist")
-    public ResponseEntity<List<ProjectMemberResponse>> projectMemberList(@PathVariable Long projectId, @CurrentLoginMember Member member) {
+    public ResponseEntity<List<ProjectMemberListResponse>> projectMemberList(@PathVariable Long projectId, @CurrentLoginMember Member member) {
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
             throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
         }
-        List<ProjectMemberResponse> response = projectService.findProjectMembers(projectId);
+        List<ProjectMemberListResponse> response = projectService.findProjectMembers(projectId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

@@ -15,7 +15,6 @@ import fullcare.backend.profile.dto.request.ProfileBioUpdateRequest;
 import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
 import fullcare.backend.profile.dto.response.ProfileResponse;
 import fullcare.backend.profile.service.ProfileService;
-import fullcare.backend.project.dto.response.ProjectMemberListResponse;
 import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.schedule.service.ScheduleService;
 import fullcare.backend.security.jwt.CurrentLoginMember;

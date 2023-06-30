@@ -1,6 +1,5 @@
 package fullcare.backend.project.service;
 
-import fullcare.backend.evaluation.domain.FinalTermEvaluation;
 import fullcare.backend.global.State;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
@@ -93,10 +92,10 @@ public class ProjectService {
         return new CustomPageImpl<>(content, pageable, pageProject.getTotalElements());
     }
 
-    public List<ProjectMemberResponse> findProjectMembers(Long projectId) {
+    public List<ProjectMemberListResponse> findProjectMembers(Long projectId) {
         List<ProjectMember> pmList = projectMemberRepository.findByProjectIdAndProjectMemberRole(projectId, ProjectMemberRoleType.미정);
 
-        List<ProjectMemberResponse> response = pmList.stream().map(pm -> ProjectMemberResponse.builder()
+        List<ProjectMemberListResponse> response = pmList.stream().map(pm -> ProjectMemberListResponse.builder()
                 .id(pm.getMember().getId())
                 .name(pm.getMember().getNickname())
                 .imageUrl(pm.getMember().getImageUrl())
@@ -106,9 +105,9 @@ public class ProjectService {
         return response;
     }
 
-    public List<ProjectMemberResponse> findApplyList(Long projectId) {
+    public List<ProjectMemberListResponse> findApplyList(Long projectId) {
         List<ProjectMember> pmList = projectMemberRepository.findApplyListByProjectIdAndProjectMemberRole(projectId, ProjectMemberRoleType.미정);
-        List<ProjectMemberResponse> response = pmList.stream().map(pms -> ProjectMemberResponse.builder()
+        List<ProjectMemberListResponse> response = pmList.stream().map(pms -> ProjectMemberListResponse.builder()
                 .id(pms.getMember().getId())
                 .name(pms.getMember().getName())
                 .imageUrl(pms.getMember().getImageUrl())
