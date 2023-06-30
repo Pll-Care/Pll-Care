@@ -23,7 +23,7 @@ public class PostDetailResponse {
     private String contact;
     private String region;
     private String techStack;
-//    private boolean isLiked;
+    private boolean isLiked;
 
 
     private List<RecruitInfo> recruitInfoList;
@@ -33,7 +33,8 @@ public class PostDetailResponse {
     @Builder
     public PostDetailResponse(Long postId, String projectName, String memberName, String title,
                               String description, String reference, String contact, String region,
-                              String techStack, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+                              String techStack, boolean isLiked,
+                              LocalDateTime createdDate, LocalDateTime modifiedDate) {
 
         this.postId = postId;
         this.projectName = projectName;
@@ -44,6 +45,7 @@ public class PostDetailResponse {
         this.contact = contact;
         this.region = region;
         this.techStack = techStack;
+        this.isLiked = isLiked;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
     }

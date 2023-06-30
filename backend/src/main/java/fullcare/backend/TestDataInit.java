@@ -20,8 +20,6 @@ import fullcare.backend.project.service.ProjectService;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.schedule.ScheduleCategory;
-//import fullcare.backend.schedule.domain.Address;
-import fullcare.backend.schedule.dto.MemberDto;
 import fullcare.backend.schedule.dto.request.ScheduleCreateRequest;
 import fullcare.backend.schedule.service.MeetingService;
 import fullcare.backend.schedule.service.MilestoneService;
@@ -89,7 +87,7 @@ public class TestDataInit {
         Random rand = new Random();
         for (long i = 1l; i < 25; i++) {
             long findMemberId = rand.nextLong(1, 10);
-            Memo memo = memoService.createMemo(new MemoCreateRequest(1l, "제목" + i, "내용" + i), memberRepository.findById(findMemberId).get().getName());
+            Memo memo = memoService.createMemo(new MemoCreateRequest(1l, "제목" + i, "내용" + i), memberRepository.findById(findMemberId).get());
             if (i % 3 == 0) {
                 bookmarkMemoService.bookmarkMemo(memo, memberRepository.findById(1l).get());
             }
@@ -128,7 +126,7 @@ public class TestDataInit {
 
             if (i < 16) {
                 LocalDateTime endDate = LocalDateTime.of(2023, month, randDay, 16, 0);
-                meetingService.createMeeting(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MEETING, memberIds, "제목" + i, "내용" + i, "address"+i), memberRepository.findById(authorId).get());
+                meetingService.createMeeting(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MEETING, memberIds, "제목" + i, "내용" + i, "address" + i), memberRepository.findById(authorId).get());
             } else {
                 try {
                     LocalDateTime endDate = LocalDateTime.of(2023, month, randDay + plusDay, 16, 0);

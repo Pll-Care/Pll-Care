@@ -28,7 +28,8 @@ public abstract class Schedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "schedule_id")
     private Long id;
-    @Column(insertable = false,updatable = false)
+    
+    @Column(insertable = false, updatable = false)
     private String dtype;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -39,6 +40,7 @@ public abstract class Schedule {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", nullable = false)
     private ProjectMember projectMember;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false)
     private State state;

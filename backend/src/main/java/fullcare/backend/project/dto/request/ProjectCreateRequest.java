@@ -8,8 +8,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
@@ -37,6 +35,8 @@ public class ProjectCreateRequest {
 
 
     private String imageUrl;
+
+
     // ? 테스트 데이터 세팅용으로 사용하는 생성자
     public ProjectCreateRequest(String title, String description, LocalDate startDate, LocalDate endDate, String imageUrl) {
         this.title = title;

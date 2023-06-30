@@ -29,7 +29,7 @@ public class MemoListResponse {
         return MemoListResponse.builder()
                 .memoId(memo.getId())
                 .title(memo.getTitle())
-                .author(memo.getAuthor())
+                .author(memo.getAuthor().getNickname())
                 .createdDate(memo.getCreatedDate())
                 .modifiedDate(memo.getModifiedDate())
                 .build();

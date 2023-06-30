@@ -15,18 +15,15 @@ public class BookmarkMemoListResponse {
     private String title;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
-    private boolean isBookmarked;
 
     @Builder
     public BookmarkMemoListResponse(Long memoId, String author, String title,
-                                    LocalDateTime createdDate, LocalDateTime modifiedDate,
-                                    boolean isBookmarked) {
+                                    LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.memoId = memoId;
         this.author = author;
         this.title = title;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
-        this.isBookmarked = isBookmarked;
     }
 
     public static BookmarkMemoListResponse entityToDto(BookmarkMemo bookmarkMemo) {
@@ -35,10 +32,9 @@ public class BookmarkMemoListResponse {
         return BookmarkMemoListResponse.builder()
                 .memoId(memo.getId())
                 .title(memo.getTitle())
-                .author(memo.getAuthor())
+                .author(memo.getAuthor().getNickname())
                 .createdDate(memo.getCreatedDate())
                 .modifiedDate(memo.getModifiedDate())
-                .isBookmarked(true)
                 .build();
     }
 

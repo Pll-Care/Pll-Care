@@ -31,7 +31,7 @@ public class MemoDetailResponse {
     public static MemoDetailResponse entityToDto(Memo memo, boolean isBookmarked) {
         return MemoDetailResponse.builder()
                 .memoId(memo.getId())
-                .author(memo.getAuthor())
+                .author(memo.getAuthor().getNickname())
                 .title(memo.getTitle())
                 .content(memo.getContent())
                 .isBookmarked(isBookmarked)

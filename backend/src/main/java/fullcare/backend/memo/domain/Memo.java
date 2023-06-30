@@ -1,7 +1,7 @@
 package fullcare.backend.memo.domain;
 
 import fullcare.backend.global.entity.BaseEntity;
-import fullcare.backend.post.domain.Recruitment;
+import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -26,7 +26,9 @@ public class Memo extends BaseEntity {
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
-    private String author;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id", nullable = false)
+    private Member author;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -39,7 +41,7 @@ public class Memo extends BaseEntity {
     private List<BookmarkMemo> bookmarkMemos = new ArrayList<>();
 
     @Builder(builderMethodName = "createNewMemo")
-    public Memo(Project project, String title, String content, String author) {
+    public Memo(Project project, String title, String content, Member author) {
         this.project = project;
         this.title = title;
         this.content = content;
