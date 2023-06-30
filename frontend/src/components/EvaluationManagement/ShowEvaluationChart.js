@@ -67,7 +67,7 @@ function makeChartData(data) {
   return evaluations;
 }
 
-const ShowEvaluationChart = ({ chartData }) => {
+const ShowEvaluationChart = ({ chartData = null }) => {
   const data = chartData.map((memberData) => {
     const evaluations = makeChartData([memberData]);
 
@@ -81,7 +81,7 @@ const ShowEvaluationChart = ({ chartData }) => {
     data.length < 9 ? data.length : Math.ceil(data.length / 3)
   );
 
-  return (
+  return chartData && (
     <div className="evaluation-management-chart-wrapper">
       <h1>배지 차트</h1>
       <div className="evaluation-management-show-evaluation-chart">

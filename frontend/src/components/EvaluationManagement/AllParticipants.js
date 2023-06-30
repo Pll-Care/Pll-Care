@@ -104,6 +104,7 @@ const AllParticipants = () => {
                     {item.badgeDtos?.map((badge, idx) =>
                       badge.quantity ? (
                         <div
+                          key={idx}
                           className={[
                             `badge-quantity`,
                             `badge-quantity_${idx}`,

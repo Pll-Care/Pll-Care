@@ -18,15 +18,18 @@ const EvaluationManagement = () => {
 
   const projectId = getProjectId(useLocation());
 
-  const { data } = useQuery(["managementEvaluationChartAndRanking"], () =>
-    getMidEvaluationChartAndRanking(projectId)
+  const { data = { charts: [], ranks: [] } } = useQuery(
+    ["managementEvaluationChartAndRanking"],
+    () => getMidEvaluationChartAndRanking(projectId)
   );
+
+  console.log(data.charts);
 
   useEffect(() => {
     !isEvaluated && toast.error("평가 페이지는 중간 평가 이후에 공개됩니다.");
   }, [isEvaluated]);
 
-  return (
+  return data.charts && (
     <div
       className={
         isEvaluated
