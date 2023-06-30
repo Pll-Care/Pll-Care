@@ -243,7 +243,7 @@ const EvaluationManagement = () => {
 
   useEffect(() => {
     !isEvaluated && toast.error("평가 페이지는 중간 평가 이후에 공개됩니다.");
-  }, []);
+  }, [isEvaluated]);
 
   return (
     <div
@@ -254,8 +254,8 @@ const EvaluationManagement = () => {
       }
     >
       <div className="evaluation-management-ranking-wrapper">
-        <ShowEvaluationChart chartData={mockList.charts} />
-        <EvaluationRanking rankingData={mockList.ranks} />
+        <ShowEvaluationChart chartData={data.charts} />
+        <EvaluationRanking rankingData={data.ranks} />
       </div>
       <div className="evaluation-management-participant-wrapper">
         <AllParticipants />
