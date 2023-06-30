@@ -9,7 +9,7 @@ import fullcare.backend.project.dto.request.ProjectCreateRequest;
 import fullcare.backend.project.dto.request.ProjectStateUpdateRequest;
 import fullcare.backend.project.dto.request.ProjectUpdateRequest;
 import fullcare.backend.project.dto.response.ProjectListResponse;
-import fullcare.backend.project.dto.response.ProjectMemberListResponse;
+import fullcare.backend.project.dto.response.*;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
@@ -93,9 +93,10 @@ public class ProjectService {
         return new CustomPageImpl<>(content, pageable, pageProject.getTotalElements());
     }
 
-    public List<ProjectMemberListResponse> findProjectMembers(Long projectId) {
+    public List<ProjectMemberResponse> findProjectMembers(Long projectId) {
         List<ProjectMember> pmList = projectMemberRepository.findByProjectIdAndProjectMemberRole(projectId, ProjectMemberRoleType.미정);
-        List<ProjectMemberListResponse> response = pmList.stream().map(pm -> ProjectMemberListResponse.builder()
+
+        List<ProjectMemberResponse> response = pmList.stream().map(pm -> ProjectMemberResponse.builder()
                 .id(pm.getMember().getId())
                 .name(pm.getMember().getNickname())
                 .imageUrl(pm.getMember().getImageUrl())
@@ -105,9 +106,9 @@ public class ProjectService {
         return response;
     }
 
-    public List<ProjectMemberListResponse> findApplyList(Long projectId) {
+    public List<ProjectMemberResponse> findApplyList(Long projectId) {
         List<ProjectMember> pmList = projectMemberRepository.findApplyListByProjectIdAndProjectMemberRole(projectId, ProjectMemberRoleType.미정);
-        List<ProjectMemberListResponse> response = pmList.stream().map(pms -> ProjectMemberListResponse.builder()
+        List<ProjectMemberResponse> response = pmList.stream().map(pms -> ProjectMemberResponse.builder()
                 .id(pms.getMember().getId())
                 .name(pms.getMember().getName())
                 .imageUrl(pms.getMember().getImageUrl())
