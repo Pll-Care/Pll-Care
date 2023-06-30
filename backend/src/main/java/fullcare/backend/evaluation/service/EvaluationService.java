@@ -19,6 +19,7 @@ import fullcare.backend.global.State;
 import fullcare.backend.global.exception.InvalidAccessException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
+import fullcare.backend.project.CompletedProjectException;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.projectmember.domain.ProjectMember;
@@ -31,7 +32,6 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,10 +67,10 @@ public class EvaluationService {
     public void createMidtermEvaluation(MidTermEvalCreateRequest midTermEvalCreateRequest, Member voter) {
         Member voted = memberRepository.findById(midTermEvalCreateRequest.getVotedId()).orElseThrow(() -> new EntityNotFoundException("해당 사용자가 없습니다."));
         if(voter.getId() == voted.getId()){
-            throw new MyEvalException("자신의 평가는 불가능합니다.");
+            throw new SelfEvalException("자신의 평가는 불가능합니다.");
         }
         if(validateMidDuplicationAuthor(midTermEvalCreateRequest.getScheduleId(), voter.getId())){
-            throw new EvalDuplicateException("중복 평가는 불가능합니다.");
+            throw new DuplicateEvalException("중복 평가는 불가능합니다.");
         }
         scheduleMemberRepository.findByScheduleIdAndMemberId(midTermEvalCreateRequest.getScheduleId(), voter.getId()).orElseThrow(() ->  new EntityNotFoundException("일정에 해당 사용자가 없습니다."));//* 일정에 투표하는 사람이 없을때
         scheduleMemberRepository.findByScheduleIdAndMemberId(midTermEvalCreateRequest.getScheduleId(), voted.getId()).orElseThrow(() ->  new EntityNotFoundException("일정에 해당 사용자가 없습니다."));//* 일정에 투표된 사람이 없을때
@@ -97,13 +97,13 @@ public class EvaluationService {
             throw new EvalOutOfRangeException("평가 점수 범위가 벗어났습니다.");
         }
         if(evaluator.getId() == evaluated.getId()){
-            throw new MyEvalException("자신의 평가는 불가능합니다.");
+            throw new SelfEvalException("자신의 평가는 불가능합니다.");
         }
         if(!project.getState().equals(State.COMPLETE)){
-            throw new EvalNotCompleteProjectException("프로젝트가 완료되지 않은 평가는 불가능합니다.");
+            throw new NotCompletedProjectException("프로젝트가 완료되지 않은 평가는 불가능합니다.");
         }
         if ((validateFinalDuplicationAuthor(finalEvalCreateRequest.getEvaluatedId(), evaluator.getId(), finalEvalCreateRequest.getProjectId()))) {
-            throw new EvalDuplicateException("중복 평가는 불가능합니다.");
+            throw new DuplicateEvalException("중복 평가는 불가능합니다.");
         }
         FinalTermEvaluation newFinalTermEvaluation = FinalTermEvaluation.createNewFinalEval()
                 .project(project)
@@ -119,7 +119,7 @@ public class EvaluationService {
     @Transactional //* 임시 저장한 평가를 수정 또는 완료할 때 사용
     public void updateFinalEvaluation(Long evaluationId, FinalEvalUpdateRequest finalEvalUpdateRequest) {
         if (finalEvaluationRepository.existsByIdAndState(evaluationId, State.COMPLETE)){
-            throw new CompletedEvalException("완료된 평가는 수정이 안됩니다.");
+            throw new CompletedProjectException("완료된 평가는 수정이 안됩니다.");
         }
         if (!Score.valid(finalEvalUpdateRequest.getScore())){
             throw new EvalOutOfRangeException("평가 점수 범위가 벗어났습니다.");
@@ -136,7 +136,7 @@ public class EvaluationService {
     @Transactional
     public void deleteFinalEvaluation(Long evaluationId, Long projectId) {
         if (finalEvaluationRepository.existsByIdAndState(evaluationId, State.COMPLETE)){
-            throw new CompletedEvalException("완료된 평가는 삭제가 안됩니다.");
+            throw new CompletedProjectException("완료된 평가는 삭제가 안됩니다.");
         }
         FinalTermEvaluation finalTermEvaluation = finalEvaluationRepository.findById(evaluationId).orElseThrow(() -> new EntityNotFoundException("해당 최종 평가가 존재하지 않습니다."));
         finalEvaluationRepository.delete(finalTermEvaluation);

@@ -3,6 +3,7 @@ package fullcare.backend.schedule.service;
 import fullcare.backend.global.State;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
+import fullcare.backend.project.CompletedProjectException;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.projectmember.domain.ProjectMember;
@@ -10,7 +11,6 @@ import fullcare.backend.projectmember.repository.ProjectMemberRepository;
 import fullcare.backend.schedule.domain.Meeting;
 import fullcare.backend.schedule.domain.Schedule;
 import fullcare.backend.schedule.dto.request.ScheduleCreateRequest;
-import fullcare.backend.project.exceptionhandler.exception.ProjectComplete;
 import fullcare.backend.schedule.repository.MeetingRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +40,7 @@ public class MeetingService {
         LocalDateTime endDate = project.getEndDate().atStartOfDay();
         Schedule.validDate(startDate, endDate, scheduleCreateRequest.getStartDate(), scheduleCreateRequest.getEndDate());
         if(project.isCompleted()){
-            throw new ProjectComplete("완료된 프로젝트는 일정을 생성하지 못합니다.");
+            throw new CompletedProjectException("완료된 프로젝트는 일정을 생성하지 못합니다.");
         }
         List<Long> memberIds = scheduleCreateRequest.getMemberIds();
         List<Member> memberList = new ArrayList<>();
