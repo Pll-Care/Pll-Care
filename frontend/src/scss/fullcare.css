@@ -1477,7 +1477,7 @@ input {
   margin-right: auto;
 }
 .evaluation-management-non-evaluated {
-  width: 85%;
+  width: 100%;
   background-color: #FCFCFC;
   filter: opacity(30%) blur(4px);
   pointer-events: none;
@@ -1698,7 +1698,6 @@ input {
   align-items: center;
 }
 .evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col .evaluation-management-badges .badge-quantity-container {
-  width: 185px;
   height: 35px;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
@@ -1716,6 +1715,7 @@ input {
 }
 .evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col .evaluation-management-badges .badge-quantity {
   position: relative;
+  margin-right: 18px;
 }
 .evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col .evaluation-management-badges .badge-quantity div {
   position: absolute;

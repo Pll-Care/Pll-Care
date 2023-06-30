@@ -2,7 +2,7 @@
   width: 100%;
 
   &-non-evaluated {
-    width: 85%;
+    width: 100%;
     background-color: #FCFCFC;
     filter: opacity(30%) blur(4px);
     pointer-events: none;
@@ -215,7 +215,6 @@
             width: 180px;
 
             .badge-quantity-container {
-              width: 185px;
               height: 35px;
               font-family: $button-font;
               font-size: $button-font-size;
@@ -233,6 +232,7 @@
 
             .badge-quantity {
               position: relative;
+              margin-right: 18px;
 
               div {
                 position: absolute;

@@ -87,10 +87,10 @@ const ShowEvaluationChart = ({ chartData }) => {
       <div className="evaluation-management-show-evaluation-chart">
         <Slider className="slider" {...settings}>
           {chartIndices(data, chartDataNum).map((i) => (
-            <div className={`chart chart_${i}`} key={i}>
+            <div key={i}>
               <BarChart
                 className="chart"
-                width={560}
+                width={495}
                 height={320}
                 data={data.slice(i * chartDataNum, (i + 1) * chartDataNum)}
               >
