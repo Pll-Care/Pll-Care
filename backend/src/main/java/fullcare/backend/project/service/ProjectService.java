@@ -55,10 +55,12 @@ public class ProjectService {
     }
 
     public void updateProject(Long projectId, ProjectUpdateRequest projectUpdateRequest) {
-        Project project = projectRepository.findById(projectId).orElseThrow();
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException("프로젝트 정보가 없습니다."));
         String imageUrl = project.getImageUrl();
         project.update(projectUpdateRequest);
-        uploadService.delete(imageUrl);
+        if(imageUrl != null) {
+            uploadService.delete(imageUrl);
+        }
     }
 
 
@@ -66,7 +68,7 @@ public class ProjectService {
         return projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException("프로젝트 정보가 없습니다."));
     }
 
-    public void deleteProject(Long projectId) {// ! 완료된 프로젝트는 삭제 불가 검증 추가 필요
+    public void deleteProject(Long projectId) {
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException("프로젝트 정보가 없습니다."));
         projectRepository.deleteById(projectId);
         if (project.getImageUrl() != null) {

@@ -8,6 +8,7 @@ import fullcare.backend.project.CompletedProjectException;
 import fullcare.backend.project.dto.request.*;
 import fullcare.backend.project.dto.response.ProjectListResponse;
 import fullcare.backend.project.dto.response.ProjectMemberListResponse;
+import fullcare.backend.project.dto.response.ProjectUpdateStateResponse;
 import fullcare.backend.project.service.ProjectService;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
@@ -47,8 +48,9 @@ public class ProjectController {
 
     // ! TODO project가 존재하지 않는 경우와 projectMember가  존재하지 않는 경우를 어떻게 나눠서 처리해야할 것인가?
     // ! TODO 소속된 멤버의 역할 수정과 프로젝트 지원자를 받는 API를 분리해야하는가?
+    // ! 분리를 하고 페이지네이션으로 구현 필요
     // ! TODO 리더가 본인을 삭제하려고 할 때, 다른 누군가에게 리더 포지션을 위임해야함 -> memberout 코드 미완성
-    
+    // ! 스스로 프로젝트 나가는 api가 없음
     @Operation(method = "post", summary = "프로젝트 생성")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "프로젝트 생성 성공", content = @Content),
@@ -118,7 +120,7 @@ public class ProjectController {
             @ApiResponse(responseCode = "400", description = "프로젝트 상태 변경실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PutMapping("/{projectId}/state")
-    public ResponseEntity updateState(@PathVariable Long projectId, @Valid @RequestBody ProjectStateUpdateRequest projectStateUpdateRequest, @CurrentLoginMember Member member) {
+    public ResponseEntity<ProjectUpdateStateResponse> updateState(@PathVariable Long projectId, @Valid @RequestBody ProjectStateUpdateRequest projectStateUpdateRequest, @CurrentLoginMember Member member) {
         try {
             ProjectMember projectMember = projectMemberService.findProjectMember(projectId, member.getId());
 
@@ -132,7 +134,7 @@ public class ProjectController {
         }
 
         projectService.updateState(projectId, projectStateUpdateRequest);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(new ProjectUpdateStateResponse(projectId), HttpStatus.OK);
     }
 
     // * 사용자가 속한 프로젝트 목록
