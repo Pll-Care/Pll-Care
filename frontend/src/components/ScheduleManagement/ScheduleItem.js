@@ -12,10 +12,13 @@ import {
   getStringDate,
 } from "../../utils/date";
 import ModifyScheduleModal from "./ModifyScheduleModal";
+import AlertModal from "./AlertModal";
+import { useParams } from "react-router";
 
 const ScheduleItem = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modifyModalVisible, setModifyModalVisible] = useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
   const openModalHandler = () => {
     setModalVisible(true);
@@ -29,6 +32,13 @@ const ScheduleItem = (props) => {
   };
   const hideModifyModalHandler = () => {
     setModifyModalVisible(false);
+  };
+
+  const openDeleteModalHandler = () => {
+    setDeleteModalVisible(true);
+  };
+  const hideDeleteModalHandler = () => {
+    setDeleteModalVisible(false);
   };
 
   const time = getDateTimeDuration(
@@ -49,6 +59,7 @@ const ScheduleItem = (props) => {
         title={props.data.title}
         startDate={props.data.startDate}
         endDate={props.data.endDate}
+        members={props.data.members}
         type={props.data.scheduleCategory}
       />
       <ModifyScheduleModal
@@ -56,6 +67,12 @@ const ScheduleItem = (props) => {
         onClose={hideModifyModalHandler}
         scheduleId={props.data.scheduleId}
         state={props.data.state}
+      />
+      <AlertModal
+        open={deleteModalVisible}
+        onClose={hideDeleteModalHandler}
+        width="30%"
+        text="정말 일정 삭제하시겠습니까?"
       />
       <div className="schedule-list-time">
         <h1>{day}</h1>
@@ -98,7 +115,11 @@ const ScheduleItem = (props) => {
             size="small"
             onClick={openModifyModalHandler}
           />
-          <Button text="삭제하기" size="small" />
+          <Button
+            text="삭제하기"
+            size="small"
+            onClick={openDeleteModalHandler}
+          />
         </div>
       </div>
     </div>
