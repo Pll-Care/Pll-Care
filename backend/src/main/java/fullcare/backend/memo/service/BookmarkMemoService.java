@@ -6,14 +6,13 @@ import fullcare.backend.memo.domain.Memo;
 import fullcare.backend.memo.dto.response.BookmarkMemoListResponse;
 import fullcare.backend.memo.repository.BookmarkMemoRepository;
 import fullcare.backend.util.CustomPageImpl;
-import jakarta.persistence.EntityManagerFactory;
-import fullcare.backend.util.CustomPageImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -26,13 +25,10 @@ public class BookmarkMemoService {
 
 
     public CustomPageImpl<BookmarkMemoListResponse> findBookmarkMemoList(Pageable pageable, Long projectId, Long memberId) {
-
         Page<BookmarkMemo> result = bookmarkMemoRepository.findList(pageable, projectId, memberId);
-        result.stream().map(BookmarkMemoListResponse::entityToDto).collect(Collectors.toList());
+        List<BookmarkMemoListResponse> content = result.stream().map(BookmarkMemoListResponse::entityToDto).collect(Collectors.toList());
 
-        // Page<BookmarkMemoListResponse> result2 = bookmarkMemoRepository.findDtoList(pageable, projectId, memberId);
-
-        return new CustomPageImpl<>(result.getContent(), pageable, result.getTotalElements());
+        return new CustomPageImpl<>(content, pageable, result.getTotalElements());
     }
 
     @Transactional

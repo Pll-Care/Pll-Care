@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @Getter
 public class ProjectMemberRoleUpdateRequest {
-    private Long pmId;
+    private Long memberId;
     private ProjectMemberRole projectMemberRole;
 }

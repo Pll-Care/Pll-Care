@@ -23,10 +23,14 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("select p from Post p join fetch p.author a join fetch p.project pj where p.id = :postId")
     Optional<Post> findById(@Param("postId") Long postId);
 
+//    @Query("select new fullcare.backend.post.dto.response.PostDetailResponse(p.id, pj.title, a.nickname, p.title, p.description, p.reference, p.contact, p.region, p.techStack, case when l.id is null then false else true end, p.createdDate, p.modifiedDate)" +
+//            "from Post p join p.project pj join p.author a left join Likes l on l.post.id = p.id and l.member.id = :memberId")
+//    PostDetailResponse findPost(@Param("memberId") Long memberId, @Param("postId") Long postId);
+
 
     @Query(value = "select p from Post p join p.project pp join pp.projectMembers pm where pm.member.id  = :memberId and p.state = :state", countQuery = "select count(p) from Post p join p.project pp join pp.projectMembers pm where pm.member.id = :memberId and p.state = :state")
-    Page<Post> findPageByMemberId(@Param("memberId")Long memberId, @Param("state")State  state, Pageable pageable);
+    Page<Post> findPageByMemberId(@Param("memberId") Long memberId, @Param("state") State state, Pageable pageable);
 
     @Query(value = "select p from Post p join fetch p.likes l where l.member.id =:memberId", countQuery = "select p from Post p join fetch p.likes l where l.member.id =:memberId")
-    Page<Post> findLikePageByMemberId(@Param("memberId")Long memberId, Pageable pageable);
+    Page<Post> findLikePageByMemberId(@Param("memberId") Long memberId, Pageable pageable);
 }

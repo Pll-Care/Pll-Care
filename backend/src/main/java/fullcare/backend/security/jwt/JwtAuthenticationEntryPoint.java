@@ -29,24 +29,19 @@ import static fullcare.backend.security.jwt.exception.JwtErrorCode.*;
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        String message = (String)request.getAttribute("message");
-        if(message.equals(NOT_FOUND_TOKEN.getMessage())){
-            setResponse(request, response, HttpServletResponse.SC_BAD_REQUEST);
-        }
-        else if(message.equals(MALFORMED_TOKEN.getMessage())) {
-            setResponse(request, response, HttpServletResponse.SC_BAD_REQUEST);
-        }
-        else if(message.equals(EXPIRED_TOKEN.getMessage())) {
-            setResponse(request, response, HttpServletResponse.SC_BAD_REQUEST);
-        }
-        else if(message.equals(UNSUPPORTED_TOKEN.getMessage())) {
-            setResponse(request, response, HttpServletResponse.SC_BAD_REQUEST);
-        }
-        else if(message.equals(ILLEGAL_TOKEN.getMessage())) {
-            setResponse(request, response, HttpServletResponse.SC_BAD_REQUEST);
-        }
-        else if(message.equals(NOT_FOUND_USER.getMessage())) {
-            setResponse(request, response, HttpServletResponse.SC_BAD_REQUEST);
+        String message = (String) request.getAttribute("message");
+        if (message.equals(NOT_FOUND_TOKEN.getMessage())) {
+            setResponse(request, response, HttpServletResponse.SC_UNAUTHORIZED);
+        } else if (message.equals(MALFORMED_TOKEN.getMessage())) {
+            setResponse(request, response, HttpServletResponse.SC_UNAUTHORIZED);
+        } else if (message.equals(EXPIRED_TOKEN.getMessage())) {
+            setResponse(request, response, HttpServletResponse.SC_UNAUTHORIZED);
+        } else if (message.equals(UNSUPPORTED_TOKEN.getMessage())) {
+            setResponse(request, response, HttpServletResponse.SC_UNAUTHORIZED);
+        } else if (message.equals(ILLEGAL_TOKEN.getMessage())) {
+            setResponse(request, response, HttpServletResponse.SC_UNAUTHORIZED);
+        } else if (message.equals(NOT_FOUND_USER.getMessage())) {
+            setResponse(request, response, HttpServletResponse.SC_UNAUTHORIZED);
         }
     }
 

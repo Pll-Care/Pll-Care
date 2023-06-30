@@ -22,6 +22,14 @@ public class ProjectMemberRole {
         this.role = role;
         this.position = position;
     }
+
+    public void updateRole(ProjectMemberRoleType role) {
+        this.role = role;
+    }
+
+    public void updatePosition(ProjectMemberRoleType position) {
+        this.position = position;
+    }
 }
 
 

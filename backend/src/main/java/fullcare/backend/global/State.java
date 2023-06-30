@@ -7,5 +7,5 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum State {
-    TBD, ONGOING, COMPLETE,
+    TBD, ONGOING, COMPLETE;
 }

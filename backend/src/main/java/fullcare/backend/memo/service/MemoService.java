@@ -1,5 +1,6 @@
 package fullcare.backend.memo.service;
 
+import fullcare.backend.member.domain.Member;
 import fullcare.backend.memo.domain.Memo;
 import fullcare.backend.memo.dto.request.MemoCreateRequest;
 import fullcare.backend.memo.dto.request.MemoUpdateRequest;
@@ -30,29 +31,29 @@ public class MemoService {
     private final ProjectRepository projectRepository;
 
     @Transactional
-    public Memo createMemo(MemoCreateRequest request, String username) {
+    public Memo createMemo(MemoCreateRequest request, Member author) {
         Project project = projectRepository.findById(request.getProjectId()).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트가 존재하지 않습니다."));
 
         Memo newMemo = Memo.createNewMemo()
                 .project(project)
                 .title(request.getTitle())
                 .content(request.getContent())
-                .author(username)
+                .author(author)
                 .build();
 
-        Memo memo = memoRepository.save(newMemo);
-        return memo;
+
+        return memoRepository.save(newMemo);
     }
 
     @Transactional
     public void updateMemo(Long memoId, MemoUpdateRequest request) {
-        Memo memo = findMemo(memoId);
-        memo.updateAll(request.getTitle(), request.getContent());
+        Memo findMemo = findMemo(memoId);
+        findMemo.updateAll(request.getTitle(), request.getContent());
     }
 
     @Transactional
     public void deleteMemo(Long memoId) {
-        // * 엔티티가 발견되지 않을 시, 예외 던지지 않음 (삭제가 실패되었음을 알려줄 필요는 없나?)
+        // TODO check 필요. 엔티티가 발견되지 않을 시, 예외 던지지 않음 (삭제가 실패되었음을 알려줄 필요는 없나?)
         memoRepository.deleteById(memoId);
     }
 
@@ -62,20 +63,10 @@ public class MemoService {
 
     public MemoDetailResponse findMemoDetailResponse(Long memberId, Long memoId) {
 
-//        Optional<BookmarkMemo> findBookmarkMemo = bookmarkMemoRepository.findByMemberIdAndMemoId(memberId, memoId);
-//
-//        if (findBookmarkMemo.isPresent()) {
-//            return MemoDetailResponse.entityToDto(findBookmarkMemo.get().getMemo(), true);
-//        }
-//
-//        Memo memo = findMemo(memoId);
-
-        // ? 북마크여부를 검사할 때, bookmarkmemo를 찾아보는게 맞는가, memo에서 left outer join 하는게 맞는가?
-        MemoDetailResponse result = memoRepository.findMemo(memberId, memoId);
+        MemoDetailResponse result = memoRepository.findMemoDetailDto(memberId, memoId);
         return result;
-
-//        return MemoDetailResponse.entityToDto(memo, false);
     }
+
 
     public CustomPageImpl<MemoListResponse> findMemoList(Long projectId, Pageable pageable) {
         Page<Memo> result = memoRepository.findMemoListByProjectId(projectId, pageable);

@@ -36,15 +36,13 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequiredArgsConstructor
 @Tag(name = "회의록", description = "회의록 관련 API")
-@RequestMapping("/api/auth/memo") // todo memo는 인증된 사용자만 접근할 수 있는 API인데, 경로를 굳이 auth를 명시해줘야할까?
+@RequestMapping("/api/auth/memo")
 @RestController
 public class MemoController {
 
     private final MemoService memoService;
     private final ProjectMemberService projectMemberService;
     private final BookmarkMemoService bookmarkMemoService;
-
-    // ! 공통검증요소 : API를 요청한 사용자가 회의록이 속한 프로젝트의 멤버인가?
 
     // * 새로운 회의록 생성
     @Operation(method = "post", summary = "회의록 생성")
@@ -60,7 +58,7 @@ public class MemoController {
             throw new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.");
         }
 
-        Memo newMemo = memoService.createMemo(memoCreateRequest, member.getNickname());
+        Memo newMemo = memoService.createMemo(memoCreateRequest, member);
         return new ResponseEntity(new MemoIdResponse(newMemo.getId()), HttpStatus.CREATED);
     }
 
@@ -75,7 +73,7 @@ public class MemoController {
                                  @RequestBody MemoUpdateRequest memoUpdateRequest,
                                  @CurrentLoginMember Member member) {
 
-        Memo memo = memoService.findMemo(memoId); // ! -> Project 엔티티 Fetch Join 함
+        Memo memo = memoService.findMemo(memoId);
         Long projectId = memo.getProject().getId();
 
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
@@ -102,9 +100,10 @@ public class MemoController {
 
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
             throw new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.");
-        } else if (!memo.getAuthor().equals(member.getNickname()) || !projectMemberService.findProjectMember(projectId, member.getId()).getProjectMemberRole().getRole().equals(ProjectMemberRoleType.리더)) {
+        } else if (memo.getAuthor().getId() != member.getId() || projectMemberService.findProjectMember(projectId, member.getId()).getProjectMemberRole().getRole() != ProjectMemberRoleType.리더) {
             throw new InvalidAccessException("해당 회의록에 대한 삭제 권한이 없습니다.");
         }
+
         memoService.deleteMemo(memoId);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -143,7 +142,7 @@ public class MemoController {
                                                                  @CurrentLoginMember Member member) {
 
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
+            throw new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.");
         }
 
         PageRequest of = pageRequest.of();
@@ -165,7 +164,7 @@ public class MemoController {
                                                                                  @CurrentLoginMember Member member) {
 
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
+            throw new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.");
         }
 
         PageRequest of = pageRequest.of();
@@ -188,7 +187,7 @@ public class MemoController {
         Long projectId = memo.getProject().getId();
 
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
+            throw new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.");
         }
 
         bookmarkMemoService.bookmarkMemo(memo, member);
