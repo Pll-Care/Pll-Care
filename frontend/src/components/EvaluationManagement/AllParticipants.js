@@ -78,7 +78,7 @@ const AllParticipants = () => {
     },
   ];
 
-  // 백엔드 처리 필요
+  // 전역 상태로 처리 필요
   const [isCompleted, setIsCompleted] = useState(true);
 
   const [isFinalEvaluationVisible, setIsFinalEvaluationVisible] = useState("");
@@ -101,23 +101,26 @@ const AllParticipants = () => {
                 <div>{item.name}</div>
                 <div className="evaluation-management-badges">
                   <div className="badge-quantity-container">
-                    {item.badgeDtos?.map((badge, idx) => (
-                      <div
-                        className={[
-                          `badge-quantity`,
-                          `badge-quantity_${idx}`,
-                        ].join(" ")}
-                      >
-                        <figure />
-                        <div>X{badge.quantity}</div>
-                      </div>
-                    ))}
+                    {item.badgeDtos?.map((badge, idx) =>
+                      badge.quantity ? (
+                        <div
+                          className={[
+                            `badge-quantity`,
+                            `badge-quantity_${idx}`,
+                          ].join(" ")}
+                        >
+                          <figure />
+                          <div>X{badge.quantity}</div>
+                        </div>
+                      ) : null
+                    )}
                   </div>
                 </div>
               </div>
               {isCompleted && (
                 <Button
                   text={"최종 평가하기"}
+                  size={"small"}
                   onClick={() => handleFinalEvaluationModal(item.name)}
                 />
               )}
