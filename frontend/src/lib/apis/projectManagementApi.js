@@ -29,7 +29,7 @@ export const createProject = async (newProjectObj) => {
 export const deleteProject = async (projectId) => {
   const response = await customAxios.delete(`/auth/project/${projectId}`);
 
-  return response.data.content;
+  return response.data.projectId;
 };
 
 export const editProject = async (newProjectData) => {
