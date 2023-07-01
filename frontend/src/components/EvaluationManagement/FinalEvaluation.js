@@ -1,5 +1,10 @@
 import { useRef, useState } from "react";
 import Button from "../../components/common/Button";
+import { getProjectId } from "../../utils/getProjectId";
+import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { isCompleteProject } from "../../utils/isCompleteProject";
+import useEvaluationManagementMutation from "../../hooks/useEvaluationManagementMutation";
 
 const middleEvaluationBadges = [
   {
@@ -67,7 +72,11 @@ const evaluationOptionList = [
   },
 ];
 
-const FinalEvaluation = ({ member, setIsFinalEvaluationVisible }) => {
+const FinalEvaluation = ({
+  participantId,
+  member,
+  setIsFinalEvaluationVisible,
+}) => {
   const [evaluationScore, setEvaluationScore] = useState([
     {
       name: "diligence",
@@ -91,6 +100,16 @@ const FinalEvaluation = ({ member, setIsFinalEvaluationVisible }) => {
 
   const modalOutside = useRef();
 
+  const projectId = getProjectId(useLocation());
+
+  const completedProjectIdList = useSelector(
+    (state) => state.projectManagement.completedProjectId
+  );
+
+  const isCompleted = isCompleteProject(completedProjectIdList, projectId);
+
+  const { finalEvaluationMutate } = useEvaluationManagementMutation();
+
   const handleFinalEvaluationVisible = (e) => {
     if (e.target === modalOutside.current) {
       setIsFinalEvaluationVisible("");
@@ -106,6 +125,21 @@ const FinalEvaluation = ({ member, setIsFinalEvaluationVisible }) => {
       return prevScore.map((score, index) =>
         idx === index ? { ...score, value: parseInt(e.target.value) } : score
       );
+    });
+  };
+
+  const handleSubmitFinalEvaluation = () => {
+    finalEvaluationMutate({
+      projectId: projectId,
+      evaluatedId: participantId,
+      score: {
+        sincerity: evaluationScore[0].value,
+        jobPerformance: evaluationScore[1].value,
+        punctuality: evaluationScore[2].value,
+        communication: evaluationScore[3].value,
+      },
+      content: content,
+      state: isCompleted,
     });
   };
 
@@ -141,7 +175,7 @@ const FinalEvaluation = ({ member, setIsFinalEvaluationVisible }) => {
             </div>
           </div>
           <div className="badges">
-            <h1>누적 뱃지</h1>
+            <h1>누적 배지</h1>
             <div className="badges-body">
               {middleEvaluationBadges.map((item) => (
                 <div className="badge">
@@ -165,7 +199,10 @@ const FinalEvaluation = ({ member, setIsFinalEvaluationVisible }) => {
           </div>
         </div>
         <div className="final-evaluation-button-wrapper">
-          <Button text={"평가 완료하기"} />
+          <Button
+            text={"평가 완료하기"}
+            onClick={handleSubmitFinalEvaluation}
+          />
         </div>
       </div>
     </div>

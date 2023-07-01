@@ -1,100 +1,57 @@
 import { useState } from "react";
+import { useQuery } from "react-query";
+import { useLocation } from "react-router-dom";
+
 import Button from "../../components/common/Button";
 import FinalEvaluation from "./FinalEvaluation";
+import { getProjectId } from "../../utils/getProjectId";
+
+import defaultImgUrl from "../../assets/project-default-img.jpg";
+
+import { getEvaluationMember } from "../../lib/apis/evaluationManagementApi";
 
 const AllParticipants = () => {
-  const memberList = [
-    {
-      id: 11,
-      name: "홍서현",
-      imageUrl: "string",
-      badgeDtos: [
-        {
-          evaluationBadge: "탁월한_리더",
-          quantity: 2,
-        },
-        {
-          evaluationBadge: "열정적인_참여자",
-          quantity: 3,
-        },
-        {
-          evaluationBadge: "최고의_서포터",
-          quantity: 1,
-        },
-        {
-          evaluationBadge: "아이디어_뱅크",
-          quantity: 1,
-        },
-      ],
-      finalEvalId: 0,
-    },
-    {
-      id: 12,
-      name: "이연제",
-      imageUrl: "string",
-      badgeDtos: [
-        {
-          evaluationBadge: "탁월한_리더",
-          quantity: 15,
-        },
-        {
-          evaluationBadge: "열정적인_참여자",
-          quantity: 1,
-        },
-        {
-          evaluationBadge: "최고의_서포터",
-          quantity: 0,
-        },
-        {
-          evaluationBadge: "아이디어_뱅크",
-          quantity: 0,
-        },
-      ],
-      finalEvalId: 0,
-    },
-    {
-      id: 13,
-      name: "조상욱",
-      imageUrl: "string",
-      badgeDtos: [
-        {
-          evaluationBadge: "탁월한_리더",
-          quantity: 2,
-        },
-        {
-          evaluationBadge: "열정적인_참여자",
-          quantity: 6,
-        },
-        {
-          evaluationBadge: "최고의_서포터",
-          quantity: 1,
-        },
-        {
-          evaluationBadge: "아이디어_뱅크",
-          quantity: 0,
-        },
-      ],
-      finalEvalId: 0,
-    },
-  ];
-
   // 전역 상태로 처리 필요
   const [isCompleted, setIsCompleted] = useState(true);
 
   const [isFinalEvaluationVisible, setIsFinalEvaluationVisible] = useState("");
 
+  const [participantId, setParticipantId] = useState();
+
   const handleFinalEvaluationModal = (name) => {
     setIsFinalEvaluationVisible(name);
   };
+
+  const handleClickParticipant = (participantId) => {
+    setParticipantId(participantId);
+  };
+
+  const projectId = getProjectId(useLocation());
+
+  const { data: memberList = [] } = useQuery(
+    ["managementEvaluationAllParticipants"],
+    () => getEvaluationMember(projectId)
+  );
 
   return (
     <div className="evaluation-management-all-participants">
       <h1>참여자 보기</h1>
       <div className="evaluation-management-participants">
-        {memberList.map((item) => (
-          <div className="evaluation-management-participant">
+        {memberList.map((item, idx) => (
+          <div
+            key={item.id}
+            onClick={() => handleClickParticipant(item.id)}
+            className="evaluation-management-participant"
+          >
             <div className="evaluation-management-participant-left-col">
-              <figure className="evaluation-management-user-profile" />
+              <figure
+                style={{
+                  backgroundImage: `url(${
+                    item.imageUrl ? item.imageUrl : defaultImgUrl
+                  })`,
+                }}
+                className="evaluation-management-user-profile"
+              />
             </div>
             <div className="evaluation-management-participant-right-col">
               <div className="name-badge-wrapper">
@@ -104,7 +61,7 @@ const AllParticipants = () => {
                     {item.badgeDtos?.map((badge, idx) =>
                       badge.quantity ? (
                         <div
-                          key={idx}
+                          key={item.id}
                           className={[
                             `badge-quantity`,
                             `badge-quantity_${idx}`,
@@ -131,6 +88,7 @@ const AllParticipants = () => {
       </div>
       {isFinalEvaluationVisible && (
         <FinalEvaluation
+          participantId={participantId}
           member={isFinalEvaluationVisible}
           setIsFinalEvaluationVisible={setIsFinalEvaluationVisible}
         />

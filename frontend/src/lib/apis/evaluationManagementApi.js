@@ -16,6 +16,15 @@ export const getEvaluationMember = async (projectId) => {
   return response.data;
 };
 
+export const createFinalEvaluation = async (finalEvaluationObj) => {
+  const response = await customAxios.post(
+    `/auth/evaluation/final`,
+    finalEvaluationObj
+  );
+
+  return response;
+};
+
 // 중간 평가 생성
 export const makeNewMidEvaluation = async (data) => {
   try {
