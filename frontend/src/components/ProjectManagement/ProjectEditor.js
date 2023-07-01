@@ -65,8 +65,8 @@ const ProjectEditor = ({
         state: "ONGOING",
         startDate: getStringDate(new Date(startDate)),
         endDate: getStringDate(new Date(endDate)),
-        imageUrl: responseImgUrl
-      })
+        imageUrl: responseImgUrl,
+      });
     } else {
       createMutate({
         title: title,
@@ -143,10 +143,12 @@ const ProjectEditor = ({
         </div>
         <div className="project-editor-body">
           <div className="project-editor-left-col">
-            <div classname="project-editor-img-wrapper">
+            <div className="project-editor-img-wrapper">
               <figure
                 style={{
-                  backgroundImage: `url(${imgUrl ? imgUrl : projectDefaultImg})`,
+                  backgroundImage: `url(${
+                    imgUrl ? imgUrl : projectDefaultImg
+                  })`,
                 }}
               />
               <input
