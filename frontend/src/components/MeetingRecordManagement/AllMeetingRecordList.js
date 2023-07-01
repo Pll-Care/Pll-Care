@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import MeetingRecordData from "./MeetingRecordData";
 import Pagination from "../common/Pagination";
@@ -12,6 +12,7 @@ import { getAllMeetingRecordList } from "../../lib/apis/meetingRecordManagementA
 import { getProjectId } from "../../utils/getProjectId";
 import { useLocation } from "react-router-dom";
 import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
+import { isCompleteProject } from "../../utils/isCompleteProject";
 
 const filterOptionList = [
   {
@@ -32,6 +33,11 @@ const AllMeetingRecordList = () => {
   const [recordDatasPerPage, setRecordDatasPerPage] = useState(3);
 
   const projectId = getProjectId(useLocation());
+
+  const completedProjectId = useSelector(
+    (state) => state.projectManagement.completedProjectId
+  );
+  const isComplete = isCompleteProject(completedProjectId, projectId);
 
   const dispatch = useDispatch();
 
@@ -81,10 +87,10 @@ const AllMeetingRecordList = () => {
           />
         </div>
         <div className="header-right-col">
-          <Button
+          {isComplete === "ONGOING" && <Button
             text={"새로운 회의록 작성하기"}
             onClick={handleCreateMeetingRecord}
-          />
+          />}
         </div>
       </div>
       <div className="record-list-item-wrapper">

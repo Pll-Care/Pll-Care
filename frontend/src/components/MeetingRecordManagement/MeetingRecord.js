@@ -3,8 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMeetingRecord } from "../../lib/apis/meetingRecordManagementApi";
 import useMeetingRecordManagementMutation from "../../hooks/useMeetingRecordManagementMutation";
 import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
-import { useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import Button from "../common/Button";
+import { getProjectId } from "../../utils/getProjectId";
+import { useLocation } from "react-router-dom";
+import { isCompleteProject } from "../../utils/isCompleteProject";
 
 const MeetingRecord = ({ state }) => {
   const selectedMeetingRecordId = useSelector(
@@ -16,6 +19,13 @@ const MeetingRecord = ({ state }) => {
   );
 
   const dispatch = useDispatch();
+
+  const projectId = getProjectId(useLocation());
+
+  const completedProjectId = useSelector(
+    (state) => state.projectManagement.completedProjectId
+  );
+  const isComplete = isCompleteProject(completedProjectId, projectId);
 
   const { deleteMutate, createBookMarkMutate } =
     useMeetingRecordManagementMutation();
@@ -43,7 +53,9 @@ const MeetingRecord = ({ state }) => {
       meetingRecordManagementActions.onEditSelectedMeetingRecordState(false)
     );
     dispatch(
-      meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(false)
+      meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(
+        false
+      )
     );
   };
 
@@ -88,33 +100,39 @@ const MeetingRecord = ({ state }) => {
         <div className="meeting-record-container">
           <div className="meeting-record-author">{selectedData.author}</div>
           <div className="meeting-record-button-wrapper">
-            <Button
-              size={"small"}
-              type={"underlined"}
-              text={"삭제하기"}
-              onClick={handleDeleteMeetingRecord}
-            />
-            <Button
-              size={"small"}
-              type={"underlined"}
-              text={"수정하기"}
-              onClick={handleEditMeetingRecord}
-            />
-            {selectedData.bookmarked ? (
-              <Button
-                size={"small"}
-                type={"underlined"}
-                text={"북마크 취소하기"}
-                onClick={handleBookMarkMeetingRecord}
-              />
-            ) : (
-              <Button
-                size={"small"}
-                type={"underlined"}
-                text={"북마크하기"}
-                onClick={handleBookMarkMeetingRecord}
-              />
+            {isComplete === "ONGOING" && (
+              <>
+                <Button
+                  size={"small"}
+                  type={"underlined"}
+                  text={"삭제하기"}
+                  onClick={handleDeleteMeetingRecord}
+                />
+                <Button
+                  size={"small"}
+                  type={"underlined"}
+                  text={"수정하기"}
+                  onClick={handleEditMeetingRecord}
+                />
+              </>
             )}
+            {isComplete === "ONGOING" ? (
+              selectedData.bookmarked ? (
+                <Button
+                  size={"small"}
+                  type={"underlined"}
+                  text={"북마크 취소하기"}
+                  onClick={handleBookMarkMeetingRecord}
+                />
+              ) : (
+                <Button
+                  size={"small"}
+                  type={"underlined"}
+                  text={"북마크하기"}
+                  onClick={handleBookMarkMeetingRecord}
+                />
+              )
+            ) : null}
           </div>
         </div>
       </div>
