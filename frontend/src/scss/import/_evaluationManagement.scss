@@ -190,11 +190,15 @@
           border: $border;
           width: 70px;
           height: 70px;
-          border-radius: 20px;
+          border-radius: 50%;
           margin-top: auto;
           margin-bottom: auto;
 
-          @include backgroundImage("../assets/ranking-img.png");
+          background: {
+            position: center;
+            repeat: no-repeat;
+            size: 100% 100%;
+          }
         }
 
         &-right-col {
