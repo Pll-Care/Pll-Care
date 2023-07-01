@@ -23,13 +23,11 @@ const EvaluationManagement = () => {
     () => getMidEvaluationChartAndRanking(projectId)
   );
 
-  console.log(data.charts);
-
   useEffect(() => {
     !isEvaluated && toast.error("평가 페이지는 중간 평가 이후에 공개됩니다.");
   }, [isEvaluated]);
 
-  return data.charts && (
+  return data.charts.length ? (
     <div
       className={
         isEvaluated
@@ -45,7 +43,7 @@ const EvaluationManagement = () => {
         <AllParticipants />
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default EvaluationManagement;

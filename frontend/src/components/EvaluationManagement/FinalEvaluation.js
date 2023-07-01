@@ -6,25 +6,6 @@ import { useSelector } from "react-redux";
 import { isCompleteProject } from "../../utils/isCompleteProject";
 import useEvaluationManagementMutation from "../../hooks/useEvaluationManagementMutation";
 
-const middleEvaluationBadges = [
-  {
-    name: "열정적인 참여자",
-    numOfBadges: 3,
-  },
-  {
-    name: "아이디어 뱅크",
-    numOfBadges: 2,
-  },
-  {
-    name: "탁월한 리더",
-    numOfBadges: 4,
-  },
-  {
-    name: "최고의 서포터",
-    numOfBadges: 1,
-  },
-];
-
 const evaluationCriterion = [
   {
     name: "성실도",
@@ -76,6 +57,7 @@ const FinalEvaluation = ({
   participantId,
   member,
   setIsFinalEvaluationVisible,
+  badgeQuantity,
 }) => {
   const [evaluationScore, setEvaluationScore] = useState([
     {
@@ -177,11 +159,11 @@ const FinalEvaluation = ({
           <div className="badges">
             <h1>누적 배지</h1>
             <div className="badges-body">
-              {middleEvaluationBadges.map((item) => (
+              {badgeQuantity?.map((item) => (
                 <div className="badge">
                   <figure />
-                  <div>{item.name}</div>
-                  <div>{item.numOfBadges}개</div>
+                  <div>{badgeQuantity.evaluationBadge}</div>
+                  <div>{badgeQuantity.quantity}개</div>
                 </div>
               ))}
             </div>

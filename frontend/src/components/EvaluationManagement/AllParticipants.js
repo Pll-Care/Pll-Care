@@ -16,14 +16,17 @@ const AllParticipants = () => {
 
   const [isFinalEvaluationVisible, setIsFinalEvaluationVisible] = useState("");
 
+  const [badgeQuantity, setBadgeQuantity] = useState();
+
   const [participantId, setParticipantId] = useState();
 
   const handleFinalEvaluationModal = (name) => {
     setIsFinalEvaluationVisible(name);
   };
 
-  const handleClickParticipant = (participantId) => {
+  const handleClickParticipant = (badgeQuantity, participantId) => {
     setParticipantId(participantId);
+    setBadgeQuantity(badgeQuantity);
   };
 
   const projectId = getProjectId(useLocation());
@@ -40,7 +43,7 @@ const AllParticipants = () => {
         {memberList.map((item, idx) => (
           <div
             key={item.id}
-            onClick={() => handleClickParticipant(item.id)}
+            onClick={() => handleClickParticipant(item.badgeDtos, item.id)}
             className="evaluation-management-participant"
           >
             <div className="evaluation-management-participant-left-col">
@@ -88,6 +91,7 @@ const AllParticipants = () => {
       </div>
       {isFinalEvaluationVisible && (
         <FinalEvaluation
+          badgeQuantity={badgeQuantity}
           participantId={participantId}
           member={isFinalEvaluationVisible}
           setIsFinalEvaluationVisible={setIsFinalEvaluationVisible}
