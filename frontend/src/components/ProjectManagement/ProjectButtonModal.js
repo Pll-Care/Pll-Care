@@ -8,7 +8,7 @@ const ProjectButtonModal = ({
   modalVisible,
   setModalVisible,
 }) => {
-  const { deleteMutate } = useManagementMutation();
+  const { deleteMutate, completeMutate } = useManagementMutation();
 
   const handleModalClose = () => {
     setModalVisible(false);
@@ -16,6 +16,12 @@ const ProjectButtonModal = ({
 
   const handleDeleteClick = () => {
     deleteMutate(projectId);
+
+    setModalVisible(false);
+  };
+
+  const handleCompleteClick = () => {
+    completeMutate(projectId);
 
     setModalVisible(false);
   };
@@ -38,7 +44,13 @@ const ProjectButtonModal = ({
         </h1>
         <Button
           text={`${type}하기`}
-          onClick={type === "삭제" ? handleDeleteClick : handleLeaveClick}
+          onClick={
+            type === "삭제"
+              ? handleDeleteClick
+              : type === "완료"
+              ? handleCompleteClick
+              : handleLeaveClick
+          }
         />
       </div>
     </ModalContainer>

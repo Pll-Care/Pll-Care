@@ -16,6 +16,9 @@ const ProjectList = ({ type, projectList }) => {
   const [leaveModalVisible, setLeaveModalVisible] = useState(false);
   const [leaveProjectId, setLeaveProjectId] = useState();
 
+  const [completeModalVisible, setCompleteModalVisible] = useState(false);
+  const [completeProjectId, setCompleteProjectId] = useState();
+
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [editData, setEditData] = useState({
     projectId: 0,
@@ -26,12 +29,12 @@ const ProjectList = ({ type, projectList }) => {
     description: "",
   });
 
-  const { completeMutate } = useManagementMutation();
-
   const handleCompleteProjectClick = (e, projectId) => {
     e.preventDefault();
 
-    completeMutate(projectId);
+    setCompleteProjectId(projectId);
+
+    setCompleteModalVisible(true);
   };
 
   const handleDeleteProjectClick = (e, projectId) => {
@@ -154,6 +157,7 @@ const ProjectList = ({ type, projectList }) => {
                     {project.state === "ONGOING" && (
                       <Button
                         text={"완료하기"}
+                        id={project.projectId}
                         onClick={(e) => {
                           handleCompleteProjectClick(e, project.projectId);
                         }}
@@ -178,6 +182,14 @@ const ProjectList = ({ type, projectList }) => {
               projectId={leaveProjectId}
               modalVisible={leaveModalVisible}
               setModalVisible={setLeaveModalVisible}
+            />
+          )}
+          {completeModalVisible && (
+            <ProjectButtonModal
+              type={"완료"}
+              projectId={completeProjectId}
+              modalVisible={completeModalVisible}
+              setModalVisible={setCompleteModalVisible}
             />
           )}
           {editModalVisible && (
