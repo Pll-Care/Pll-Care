@@ -1,5 +1,7 @@
 package fullcare.backend.profile;
 
+import java.util.List;
+
 public enum TechStack {
     // ? Back 관련
     SPRING("Spring"), SPRINGBOOT("SpringBoot"), DJANGO("Django"), FLASK("Flask"),
@@ -18,5 +20,21 @@ public enum TechStack {
     TechStack(String value){this.value = value;}
     public String getValue(){
         return value;
+    }
+
+    public static String listToString(List<TechStack> techStacks){
+        String string = techStacks.stream().toString();
+        System.out.println("스트림 string = " + string);
+        String s = null;
+        for (int i=0; i< techStacks.size();i++){
+            if(i==0){
+                 s = techStacks.size() == 1 ? techStacks.get(i).getValue() : techStacks.get(i).getValue() + "," ;
+            }else if(i == techStacks.size() - 1){
+                s += techStacks.get(i).getValue();
+            }else{
+                s += techStacks.get(i).getValue() + ",";
+            }
+        }
+        return s;
     }
 }

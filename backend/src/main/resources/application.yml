@@ -13,10 +13,10 @@ spring:
     password: 1234
 
   ## AWS RDS 설정
-  #  driver-class-name: com.mysql.cj.jdbc.Driver
-  #  url: jdbc:mysql://fullcare.ctyerwfyq4ca.ap-northeast-2.rds.amazonaws.com:3306/fullcare
-  #  username: root
-  #  password: fullcare1234
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://fullcare.ctyerwfyq4ca.ap-northeast-2.rds.amazonaws.com:3306/fullcare
+#    username: root
+#    password: fullcare1234
 
   # JPA
   jpa:
@@ -42,7 +42,8 @@ spring.security.oauth2.client:
     google:
       client-id: 797403577295-spn5skte9mtn11n6pu3nqnisd4eojl1h.apps.googleusercontent.com
       client-secret: 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
-      redirect-uri: http://localhost:8080/login/oauth2/google
+#      redirect-uri: http://localhost:8080/login/oauth2/google
+      redirect-uri: http://ec2-54-180-193-41.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/google
       scope:
         - profile
         - email

@@ -116,7 +116,7 @@ public class ProjectController {
     // * 특정 프로젝트 상태 수정
     @Operation(method = "put", summary = "프로젝트 상태 변경")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "프로젝트 상태 변경 성공", content = @Content),
+            @ApiResponse(responseCode = "200", description = "프로젝트 상태 변경 성공", useReturnTypeSchema = true),
             @ApiResponse(responseCode = "400", description = "프로젝트 상태 변경실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PutMapping("/{projectId}/state")

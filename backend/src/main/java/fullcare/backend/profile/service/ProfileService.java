@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,11 +34,13 @@ public class ProfileService {
                 .startDate(pro.getStartDate())
                 .endDate(pro.getEndDate())
                 .techStack(pro.getTechStack()).build()).collect(Collectors.toList());
+        List<String> techStacks = Arrays.stream(p.getTechStack().split(",")).collect(Collectors.toList());
+
         return ProfileResponse.builder()
                 .bio(p.getBio())
                 .contact(p.getContact())
                 .recruitPosition(p.getRecruitPosition())
-                .techStack(p.getTechStack())
+                .techStack(techStacks)
                 .projectExperiences(projectExperienceRequestDtos)
                 .myProfile(memberId == member.getId())
                 .build();
@@ -45,7 +48,6 @@ public class ProfileService {
 
     public void updateProfile(Member member, ProfileUpdateRequest profileUpdateRequest){
         Member findMember = memberRepository.findById(member.getId()).orElseThrow(() -> new EntityNotFoundException("해당 사용자 정보가 없습니다."));
-
         Profile profile = findMember.getProfile();
         profile.updateProfile(profileUpdateRequest);
     }

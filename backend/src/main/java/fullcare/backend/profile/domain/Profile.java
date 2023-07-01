@@ -2,6 +2,7 @@ package fullcare.backend.profile.domain;
 
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.post.domain.RecruitPosition;
+import fullcare.backend.profile.TechStack;
 import fullcare.backend.profile.dto.ProjectExperienceRequestDto;
 import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
 import jakarta.persistence.*;
@@ -49,7 +50,7 @@ public class Profile {
     public void updateProfile(ProfileUpdateRequest profileUpdateRequest){
         this.contact = profileUpdateRequest.getContact();
         this.recruitPosition = profileUpdateRequest.getRecruitPosition();
-        this.techStack = profileUpdateRequest.getTechStack();
+        this.techStack = TechStack.listToString(profileUpdateRequest.getTechStack());
         if (profileUpdateRequest.getProjectId() != null && profileUpdateRequest.isDelete()){
             ProjectExperience projectExperience = this.projectExperiences.stream().filter(pe -> pe.getId() == profileUpdateRequest.getProjectId())
                     .findFirst().orElseThrow(() -> new EntityNotFoundException("프로젝트 경험이 없습니다."));
@@ -71,4 +72,6 @@ public class Profile {
             }
         }
     }
+
+
 }
