@@ -81,22 +81,6 @@ const MeetingRecordEditor = () => {
     }
   };
 
-  useLayoutEffect(() => {
-    if (!isEdit) {
-      dispatch(meetingRecordManagementActions.onEditInitialState(true));
-    } else {
-      dispatch(meetingRecordManagementActions.onEditInitialState(false));
-    }
-    dispatch(
-      meetingRecordManagementActions.onEditSelectedMeetingRecordState(false)
-    );
-    dispatch(
-      meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(
-        false
-      )
-    );
-  }, [dispatch]);
-
   return (
     <div className="meeting-record-new-meeting-record-editor">
       {initialState ? (
