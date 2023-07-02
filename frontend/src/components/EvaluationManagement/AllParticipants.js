@@ -9,11 +9,10 @@ import { getProjectId } from "../../utils/getProjectId";
 import defaultImgUrl from "../../assets/project-default-img.jpg";
 
 import { getEvaluationMember } from "../../lib/apis/evaluationManagementApi";
+import { useSelector } from "react-redux";
+import { isCompleteProject } from "../../utils/isCompleteProject";
 
 const AllParticipants = () => {
-  // 전역 상태로 처리 필요
-  const [isCompleted, setIsCompleted] = useState(true);
-
   const [isFinalEvaluationVisible, setIsFinalEvaluationVisible] = useState("");
 
   const [badgeQuantity, setBadgeQuantity] = useState();
@@ -31,6 +30,12 @@ const AllParticipants = () => {
 
   const projectId = getProjectId(useLocation());
 
+  const completedProjectIdList = useSelector(
+    (state) => state.projectManagement.completedProjectId
+  );
+
+  const isCompleted = isCompleteProject(completedProjectIdList, projectId);
+
   const { data: memberList = [] } = useQuery(
     ["managementEvaluationAllParticipants"],
     () => getEvaluationMember(projectId)
@@ -40,7 +45,7 @@ const AllParticipants = () => {
     <div className="evaluation-management-all-participants">
       <h1>참여자 보기</h1>
       <div className="evaluation-management-participants">
-        {memberList.map((item, idx) => (
+        {memberList.map((item) => (
           <div
             key={item.id}
             onClick={() => handleClickParticipant(item.badgeDtos, item.id)}
@@ -78,7 +83,7 @@ const AllParticipants = () => {
                   </div>
                 </div>
               </div>
-              {isCompleted && (
+              {(isCompleted === "COMPLETE" && !item.finalEvalId) && (
                 <Button
                   text={"최종 평가하기"}
                   size={"small"}
