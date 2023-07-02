@@ -1,15 +1,11 @@
 .loading-indicator-container {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    transition: opacity 0.3s ease-in-out;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease-in-out;
 
-    &.active {
-        opacity: 1;
-    }
-
-    .loading-indicator {
-        color: #01e89e;
-    }
+  .loading-indicator {
+    color: #01e89e;
+  }
 }

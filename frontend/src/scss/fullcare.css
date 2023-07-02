@@ -627,6 +627,17 @@ input {
   content: url("../assets/toast-message-check-img.png");
 }
 
+.loading-indicator-container {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease-in-out;
+}
+.loading-indicator-container .loading-indicator {
+  color: #01e89e;
+}
+
 .card {
   margin: 20px 0px;
   background: #fcfcfc;
