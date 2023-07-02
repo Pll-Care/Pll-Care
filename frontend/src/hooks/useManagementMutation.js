@@ -16,6 +16,9 @@ const useManagementMutation = () => {
       queryClient.invalidateQueries(["managementAllProjectList"]);
       toast.success("생성되었습니다!");
     },
+    onError: () => {
+      toast.error("생성 실패하였습니다. 잠시 후 다시 시도해주세요.");
+    }
   });
 
   const { mutate: deleteMutate } = useMutation(deleteProject, {
@@ -24,6 +27,9 @@ const useManagementMutation = () => {
       queryClient.invalidateQueries(["managementAllProjectList"]);
       toast.success("삭제되었습니다!");
     },
+    onError: () => {
+      toast.error("삭제 실패하였습니다. 잠시 후 다시 시도해주세요.");
+    }
   });
 
   const { mutate: completeMutate } = useMutation(completeProject, {
@@ -34,6 +40,9 @@ const useManagementMutation = () => {
       dispatch(projectManagementActions.addCompletedProjectId(data.projectId));
 
       toast.success("완료 처리되었습니다!");
+    },
+    onError: () => {
+      toast.error("완료 처리 실패하였습니다. 잠시 후 다시 시도해주세요.");
     }
   })
 
@@ -42,6 +51,9 @@ const useManagementMutation = () => {
       queryClient.invalidateQueries(["managementOngoingProjectList"]);
       queryClient.invalidateQueries(["managementAllProjectList"]);
       toast.success("수정되었습니다!");
+    },
+    onError: () => {
+      toast.error("수정 실패하였습니다. 잠시 후 다시 시도해주세요.");
     }
   })
 

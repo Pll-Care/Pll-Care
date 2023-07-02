@@ -51,6 +51,11 @@ const ProjectEditor = ({
   };
 
   const handleSubmitNewProject = async () => {
+    if (title.length < 1) {
+      toast.error("프로젝트 이름은 두 글자 이상 작성해주세요.");
+      return;
+    }
+
     if (description.length < 5) {
       toast.error("프로젝트 설명은 다섯 글자 이상 작성해주세요.");
       descriptionRef.current.focus();
