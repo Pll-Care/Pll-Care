@@ -70,6 +70,14 @@ const Management = () => {
     queryClient,
   ]);
 
+  useEffect(() => {
+    if (allProjectListVisible) {
+      setCurrentPage(1);
+    } else {
+      setOngoingCurrentPage(1);
+    }
+  }, [allProjectListVisible]);
+
   const handleClickAllProjectList = () => {
     setAllProjectListVisible((prevData) => true);
   };
