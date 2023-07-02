@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { isCompleteProject } from "../../utils/isCompleteProject";
 import useEvaluationManagementMutation from "../../hooks/useEvaluationManagementMutation";
+import { toast } from "react-toastify";
 
 const evaluationCriterion = [
   {
@@ -111,6 +112,11 @@ const FinalEvaluation = ({
   };
 
   const handleSubmitFinalEvaluation = () => {
+    if (content.length < 1) {
+      toast.error("최종 의견을 작성해주세요.");
+      return;
+    }
+    
     finalEvaluationMutate({
       projectId: projectId,
       evaluatedId: participantId,
