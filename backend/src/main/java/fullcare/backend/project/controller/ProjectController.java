@@ -145,7 +145,6 @@ public class ProjectController {
         }
 
         projectService.updateState(projectId, State.COMPLETE);
-        projectService.updateState(projectId, projectStateUpdateRequest);
         return new ResponseEntity(new ProjectUpdateStateResponse(projectId), HttpStatus.OK);
     }
 

@@ -57,9 +57,7 @@ public class ProjectService {
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException("프로젝트 정보가 없습니다."));
         String imageUrl = project.getImageUrl();
         project.update(projectUpdateRequest);
-        if(imageUrl != null && !imageUrl.isEmpty()) {
-            uploadService.delete(imageUrl);
-        }
+        uploadService.delete(imageUrl);
     }
 
 
@@ -70,9 +68,7 @@ public class ProjectService {
     public void deleteProject(Long projectId) {
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException("프로젝트 정보가 없습니다."));
         projectRepository.deleteById(projectId);
-        if (project.getImageUrl() != null && !project.getImageUrl().isEmpty()) {
-            uploadService.delete(project.getImageUrl());
-        }
+        uploadService.delete(project.getImageUrl());
     }
 
     @Transactional(readOnly = true)

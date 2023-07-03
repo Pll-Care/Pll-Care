@@ -37,19 +37,21 @@ public class UploadService {
         }
     }
 
-    public void delete(String deleteUrl){
-        try {
-            URL url = new URL(deleteUrl);
-            String keyName = url.getPath().substring(1);
-            System.out.println("keyName = " + keyName);
-            boolean isObjectExist = amazonS3Client.doesObjectExist(bucket, keyName);
-            if (isObjectExist) {
-                amazonS3Client.deleteObject(bucket, keyName);
-            } else {
-                throw new RuntimeException("파일을 찾지 못했습니다.");
+    public void delete(String deleteUrl) {
+        if (deleteUrl != null && !deleteUrl.isEmpty()) {
+            try {
+                URL url = new URL(deleteUrl);
+                String keyName = url.getPath().substring(1);
+                System.out.println("keyName = " + keyName);
+                boolean isObjectExist = amazonS3Client.doesObjectExist(bucket, keyName);
+                if (isObjectExist) {
+                    amazonS3Client.deleteObject(bucket, keyName);
+                } else {
+                    throw new RuntimeException("파일을 찾지 못했습니다.");
+                }
+            } catch (Exception e) {
+                throw new RuntimeException("파일 삭제를 실패했습니다.");
             }
-        } catch (Exception e) {
-            throw new RuntimeException("파일 삭제를 실패했습니다.");
         }
     }
 }
