@@ -6,10 +6,7 @@ import lombok.Getter;
 
 @Getter
 public class ProjectMemberAddRequest {
-
-    @NotNull
-    private Long projectId;
-
+    
     @NotNull
     private Long memberId;
 

@@ -5,7 +5,6 @@ import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.dto.request.ProjectCreateRequest;
-import fullcare.backend.project.dto.request.ProjectStateUpdateRequest;
 import fullcare.backend.project.dto.request.ProjectUpdateRequest;
 import fullcare.backend.project.dto.response.ProjectListResponse;
 import fullcare.backend.project.dto.response.*;
@@ -65,7 +64,7 @@ public class ProjectService {
 
 
     public Project findProject(Long projectId) {
-        return projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException("프로젝트 정보가 없습니다."));
+        return projectRepository.findJoinPMJoinMemberById(projectId).orElseThrow(() -> new EntityNotFoundException("프로젝트 정보가 없습니다."));
     }
 
     public void deleteProject(Long projectId) {
@@ -119,9 +118,9 @@ public class ProjectService {
         return response;
     }
 
-    public void updateState(Long projectId, ProjectStateUpdateRequest projectStateUpdateRequest) {
+    public void updateState(Long projectId, State state) {
         Project project = projectRepository.findById(projectId).orElseThrow();
-        project.updateState(projectStateUpdateRequest.getState());
+        project.updateState(state);
     }
 
 }
