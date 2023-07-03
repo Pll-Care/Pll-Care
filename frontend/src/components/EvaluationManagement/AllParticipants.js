@@ -37,6 +37,7 @@ const AllParticipants = ({ projectId, isCompleted }) => {
             handleFinalEvaluationModal={handleFinalEvaluationModal}
             handleClickParticipant={handleClickParticipant}
             isCompleted={isCompleted}
+            isSelf={member.me}
           />
         ))}
       </div>
