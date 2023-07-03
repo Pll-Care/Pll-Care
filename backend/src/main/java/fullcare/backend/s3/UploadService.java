@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -19,14 +20,15 @@ public class UploadService {
     private String bucket;
 
     public UploadResponse upload(MultipartFile file, String dir){
+        UUID uuid = UUID.randomUUID();
         try {
 
             String fileName = file.getOriginalFilename();
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(file.getContentType());
             metadata.setContentLength(file.getSize());
-            amazonS3Client.putObject(bucket, dir + "/" + fileName, file.getInputStream(), metadata);
-            String resourceUrl = amazonS3Client.getResourceUrl(bucket, dir + "/" + fileName);
+            amazonS3Client.putObject(bucket, dir + "/" +uuid, file.getInputStream(), metadata);
+            String resourceUrl = amazonS3Client.getResourceUrl(bucket, dir + "/" +uuid);
             return new UploadResponse(resourceUrl);
         }
         catch (IOException e) {
@@ -39,6 +41,7 @@ public class UploadService {
         try {
             URL url = new URL(deleteUrl);
             String keyName = url.getPath().substring(1);
+            System.out.println("keyName = " + keyName);
             boolean isObjectExist = amazonS3Client.doesObjectExist(bucket, keyName);
             if (isObjectExist) {
                 amazonS3Client.deleteObject(bucket, keyName);
