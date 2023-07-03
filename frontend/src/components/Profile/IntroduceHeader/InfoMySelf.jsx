@@ -11,6 +11,7 @@ const InfoMySelf = () => {
       toast.error("1글자 이상은 반드시 입력해야합니다.");
     } else {
       setIsModify(false);
+      toast.success("수정이 완료되었습니다.");
     }
   };
 

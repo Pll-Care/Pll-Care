@@ -1,12 +1,12 @@
-import Introduce from "../components/Profile/Introduce";
+import IntroduceHeader from "../components/Profile/IntroduceHeader";
 import ProfileBody from "../components/Profile/ProfileBody";
 
 const Profile = () => {
   return (
-    <main className="profile">
-      <Introduce />
+    <div>
+      <IntroduceHeader />
       <ProfileBody />
-    </main>
+    </div>
   );
 };
 

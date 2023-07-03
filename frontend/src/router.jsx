@@ -12,6 +12,10 @@ import ScheduleManagement from "./pages/ScheduleManagement";
 import EvaluationManagement from "./pages/EvaluationManagement";
 import TeamMemberManagement from "./components/TeamMemberManagement/TeamMemberManagement";
 import GeneralLayout from "./layout/GeneralLayout";
+import Introduce from "./components/Profile/Introduce";
+import Evaluate from "./components/Profile/Evaluate";
+import MyProject from "./components/Profile/myproject";
+import LikeProject from "./components/Profile/LikeProject";
 
 const routerData = [
   {
@@ -28,9 +32,32 @@ const routerData = [
   },
   {
     id: 2,
-    path: "/profile",
+    path: "/profile/:id",
     element: <Profile />,
     withLogin: true,
+    children: [
+      {
+        path: "introduce",
+        withLogin: true,
+        element: <Introduce />,
+      },
+      {
+        path: "evaluate",
+        withLogin: true,
+        element: <Evaluate />,
+      },
+      {
+        path: "my",
+        withLogin: true,
+        element: <MyProject />,
+      },
+
+      {
+        path: "like",
+        withLogin: true,
+        element: <LikeProject />,
+      },
+    ],
   },
   {
     id: 3,
