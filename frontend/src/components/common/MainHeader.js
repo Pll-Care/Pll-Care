@@ -26,7 +26,7 @@ const MainHeader = () => {
   const authState = useSelector((state) => state.auth.isLoggedIn);
 
   useEffect(() => {
-    if (currentPath === "/profile") setIsProfilePage(true);
+    if (currentPath.includes("/profile")) setIsProfilePage(true);
 
     return () => {
       setIsProfilePage(false);
