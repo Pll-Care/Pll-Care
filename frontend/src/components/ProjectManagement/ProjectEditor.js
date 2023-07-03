@@ -62,6 +62,11 @@ const ProjectEditor = ({
       return;
     }
 
+    if (new Date(startDate).getTime() > new Date(endDate).getTime()) {
+      toast.error("진행기간이 잘못 설정되었습니다. 다시 설정해주세요.");
+      return;
+    }
+
     if (isEdit) {
       editMutate({
         projectId: editData.projectId,
