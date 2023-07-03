@@ -201,8 +201,8 @@ public class ScheduleService {
 
         List<ScheduleSearchResponse> ScheduleSearchResponse = new ArrayList<>();
         List<ScheduleSearchResponse> content = createPageResponse(scheduleList, ScheduleSearchResponse, findMember, pageable);// 미팅, 마일스톤에 맞게 일정 생성 후 응답에 넣기
-
-        return new CustomPageImpl<>(content, pageable, content.size());
+        List<ScheduleSearchResponse> response = pageResponse(pageable, content);
+        return new CustomPageImpl<>(response, pageable, content.size());
     }
 
 
@@ -457,6 +457,11 @@ public class ScheduleService {
             }
         }
 
+
+        return newResponse;
+    }
+
+    private static List<ScheduleSearchResponse> pageResponse(Pageable pageable, List<ScheduleSearchResponse> newResponse) {
         int pageNumber = pageable.getPageNumber();
         Long last = null;
         Long offset = pageable.getOffset();
@@ -468,7 +473,8 @@ public class ScheduleService {
             last = pageable.getOffset() + pageable.getPageSize();
         }
         newResponse.sort(Comparator.comparing(ScheduleSearchResponse::getStartDate));// 날짜 기준 내림차순 정렬
-        return newResponse.subList(offset.intValue(), last.intValue());
+        List<ScheduleSearchResponse> subList = newResponse.subList(offset.intValue(), last.intValue());
+        return subList;
     }
 
     private void checkModify(Member member, Schedule schedule, ScheduleSearchResponse scheduleResponse) {

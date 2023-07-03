@@ -104,16 +104,16 @@ public class EvaluationController {
     // * 최종평가 관련
     @Operation(method = "post", summary = "최종 평가 생성")
     @ApiResponses(value = {
-            @ApiResponse(description = "최종 평가 생성 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
+            @ApiResponse(description = "최종 평가 생성 성공", responseCode = "200", useReturnTypeSchema = true)
     })
     @PostMapping("/final")
-    public ResponseEntity finalEvalCreate(@RequestBody FinalEvalCreateRequest finalEvalCreateRequest,
+    public ResponseEntity<FinalEvaluationCreateResponse> finalEvalCreate(@RequestBody FinalEvalCreateRequest finalEvalCreateRequest,
                                           @CurrentLoginMember Member member) {
         if (!(projectMemberService.validateProjectMember(finalEvalCreateRequest.getProjectId(), member.getId()))) {
             throw new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.");
         }
-        evaluationService.createFinalEvaluation(finalEvalCreateRequest, member);
-        return new ResponseEntity(HttpStatus.OK);
+        Long finalEvalId = evaluationService.createFinalEvaluation(finalEvalCreateRequest, member);
+        return new ResponseEntity(new FinalEvaluationCreateResponse(finalEvalId), HttpStatus.OK);
     }
     @Operation(method = "put", summary = "최종 평가 수정")
     @ApiResponses(value = {

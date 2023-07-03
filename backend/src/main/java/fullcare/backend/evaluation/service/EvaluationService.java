@@ -88,7 +88,7 @@ public class EvaluationService {
     }
 
     @Transactional
-    public void createFinalEvaluation(FinalEvalCreateRequest finalEvalCreateRequest, Member evaluator) {
+    public Long createFinalEvaluation(FinalEvalCreateRequest finalEvalCreateRequest, Member evaluator) {
         Member evaluated = memberRepository.findById(finalEvalCreateRequest.getEvaluatedId()).orElseThrow(() -> new EntityNotFoundException("해당 사용자가 없습니다."));
         Project project = projectRepository.findById(finalEvalCreateRequest.getProjectId()).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트가 없습니다."));
         projectMemberRepository.findByProjectIdAndMemberId(project.getId(), finalEvalCreateRequest.getEvaluatedId()).orElseThrow(() -> new EntityNotFoundException("투표된 사람은 프로젝트에 없습니다."));
@@ -113,7 +113,8 @@ public class EvaluationService {
                 .evaluated(evaluated)
                 .state(finalEvalCreateRequest.getState())
                 .build();
-        finalEvaluationRepository.save(newFinalTermEvaluation);
+        FinalTermEvaluation finalEval = finalEvaluationRepository.save(newFinalTermEvaluation);
+        return finalEval.getId();
     }
 
     @Transactional //* 임시 저장한 평가를 수정 또는 완료할 때 사용
@@ -265,6 +266,7 @@ public class EvaluationService {
                     id(member.getId())
                     .name(member.getName())
                     .imageUrl(member.getImageUrl())
+                    .isMe(member.getId() == memberId)
                     .build();
             for (BadgeDao badgeDao : midtermBadgeList) {
                 if(member.getId() == badgeDao.getMemberId()){
@@ -272,12 +274,12 @@ public class EvaluationService {
                     participantResponse.addBadge(badgeDto);
                 }
             }
-            for (FinalTermEvaluation fe : finalEvalList) { // * 로그인한 사용자가 다른사람 최종평가를 작성한적이 있으면 최종평가 ID 추가 없으면 null
-                if(project.getState().equals(State.COMPLETE) && fe.getEvaluated() == member){
-                    participantResponse.setFinalEvalId(fe.getId());
-                }
-            }
-
+//            for (FinalTermEvaluation fe : finalEvalList) { // * 로그인한 사용자가 다른사람 최종평가를 작성한적이 있으면 최종평가 ID 추가 없으면 null
+//                if(project.getState().equals(State.COMPLETE) && fe.getEvaluated() == member){
+//                    participantResponse.setFinalEvalId(fe.getId());
+//                }
+//            }
+            setBadge(participantResponse.getBadgeDtos());// * 개수가 0인 뱃지 설정
             response.add(participantResponse);
         }
 

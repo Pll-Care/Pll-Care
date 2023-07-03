@@ -12,7 +12,7 @@ import org.springframework.web.context.request.WebRequest;
 public class EvaluationExceptionHandler {
 
     @ExceptionHandler(SelfEvalException.class)
-    public ResponseEntity<?> handleMyEvalException(Exception e, WebRequest request) {
+    public ResponseEntity<?> handleSelfEvalException(Exception e, WebRequest request) {
         ErrorCode message = ErrorCode.getMessage(HttpStatus.FORBIDDEN, e, request);
         return new ResponseEntity(message, HttpStatus.FORBIDDEN);
     }
