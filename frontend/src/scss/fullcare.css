@@ -2251,6 +2251,7 @@ input {
   background-color: #01e89e;
 }
 .profile_introduce_container {
+  z-index: 3;
   width: 95%;
   margin: 0 auto;
   min-height: 150px;
@@ -2301,5 +2302,43 @@ input {
   padding: 8px 16px;
 }
 .profile_body {
-  border: 1px solid blue;
+  width: 100%;
+  height: 100vh;
+  background-color: #01e89e;
+}
+.profile_body_container {
+  height: 100%;
+  background-color: white;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  display: flex;
+}
+.profile_nav {
+  width: 80px;
+  height: 100%;
+  padding-top: 30px;
+  border-top-left-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+  background-color: #f9f9f9;
+}
+.profile_nav_link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background-color: #00aa72;
+  border-radius: 15px;
+}
+.profile_nav_link > img {
+  border: 1px salmon;
+  width: 27px;
+  height: 27px;
+}
+.profile_nav_image_active {
+  background-color: #01e89e;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 22px 22px 0px;
 }/*# sourceMappingURL=fullcare.css.map */
