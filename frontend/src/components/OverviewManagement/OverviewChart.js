@@ -1,16 +1,17 @@
+import { useParams } from "react-router";
+import { useQuery } from "react-query";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
+
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import FlagIcon from "@mui/icons-material/Flag";
 import ComputerIcon from "@mui/icons-material/Computer";
-import { useParams } from "react-router";
-import { useEffect } from "react";
-import { customAxios } from "../../lib/apis/customAxios";
-import { useQuery } from "react-query";
+
 import Card from "../common/Card";
+import { getOverviewAllSchedule } from "../../lib/apis/scheduleManagementApi";
 
 // 더미 데이터
 const datas = {
@@ -72,20 +73,9 @@ const datas = {
 const OverviewChart = () => {
   const { id } = useParams();
 
-  // 모든 일정 가져오는 api 함수
-  const getAllSchedule = async () => {
-    try {
-      const res = await customAxios.get(`/auth/schedule/list?project_id=${id}`);
-      return res;
-    } catch (err) {
-      return err;
-    }
-  };
-  const { isLoading, data, refetch } = useQuery("allSchedule", getAllSchedule);
-
-  useEffect(() => {
-    refetch();
-  }, []);
+  const { isLoading, data, refetch } = useQuery("overviewSchedule", () =>
+    getOverviewAllSchedule(id)
+  );
 
   return (
     <Card>

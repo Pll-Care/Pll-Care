@@ -3,7 +3,7 @@ import { customAxios } from "./customAxios";
 export const getTeamMember = async (project_id) => {
   try {
     const response = await customAxios.get(
-      `/auth/project/memberlist?project_id=${project_id}`
+      `/auth/project/${project_id}/memberlist`
     );
 
     if (response.status === 200) return response.data;

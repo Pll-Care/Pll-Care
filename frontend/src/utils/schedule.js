@@ -1,7 +1,7 @@
 // 오늘 이전 일정을 return
 export const getPastScheduleData = (data) => {
   const today = new Date();
-  const filteredPastData = data.filter((item) => {
+  const filteredPastData = data?.filter((item) => {
     const endDate = new Date(item.endDate);
     return endDate < today;
   });

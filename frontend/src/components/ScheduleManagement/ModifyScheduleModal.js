@@ -7,13 +7,18 @@ import Button from "../common/Button";
 import {
   ModifySchedule,
   getDetailSchedule,
-  makeNewPlan,
 } from "../../lib/apis/scheduleManagementApi";
 import ModalContainer from "../common/ModalContainer";
 
 // 프로젝트 팀원 더미 데이터
 
-const ModifyScheduleModal = ({ open, onClose, scheduleId, state }) => {
+const ModifyScheduleModal = ({
+  open,
+  onClose,
+  scheduleId,
+  state,
+  scheduleInfo,
+}) => {
   const { id } = useParams();
   const today = new Date();
   const [startDate, setStartDate] = useState();
@@ -23,6 +28,7 @@ const ModifyScheduleModal = ({ open, onClose, scheduleId, state }) => {
   const [content, setContent] = useState();
   const [option, setOption] = useState("MILESTONE");
   const [location, setLocation] = useState("");
+  //console.log("모달에서 ", scheduleInfo);
 
   const { data } = useQuery(
     "ScheduleDetail",
@@ -44,7 +50,7 @@ const ModifyScheduleModal = ({ open, onClose, scheduleId, state }) => {
       },
     }
   );
-  console.log(data);
+  //console.log(data);
 
   const titleRef = useRef();
   const contentRef = useRef();
@@ -91,12 +97,12 @@ const ModifyScheduleModal = ({ open, onClose, scheduleId, state }) => {
       return updatedParticipants;
     });
   };
-  const { mutate } = useMutation("ModifySchedule", ModifySchedule, {
-    onSuccess: (data) => {
-      console.log(data);
-      onClose();
-    },
-  });
+  //const { mutate } = useMutation("ModifySchedule", ModifySchedule, {
+  //  onSuccess: (data) => {
+  //    console.log(data);
+  //    onClose();
+  //  },
+  //});
 
   // 수정하는 버튼
   const submitModifyPlan = () => {
@@ -159,7 +165,6 @@ const ModifyScheduleModal = ({ open, onClose, scheduleId, state }) => {
     };
 
     console.log(modifyData);
-    mutate(scheduleId, modifyData);
   };
 
   return (

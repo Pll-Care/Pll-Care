@@ -1,41 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router";
+import { useQuery } from "react-query";
 
 import Card from "../common/Card";
 import ScheduleList from "./ScheduleList";
 import Button from "../common/Button";
+import { getTeamMember } from "../../lib/apis/teamMemberManagementApi";
 
-// 프로젝트 팀원 더미 데이터
-const names = [
-  {
-    id: 1,
-    name: "string1",
-    imageUrl: "string1",
-    position: "string1",
-  },
-  {
-    id: 2,
-    name: "string2",
-    imageUrl: "string2",
-    position: "string2",
-  },
-  {
-    id: 3,
-    name: "string3",
-    imageUrl: "string3",
-    position: "string3",
-  },
-  {
-    id: 4,
-    name: "string4",
-    imageUrl: "string4",
-    position: "string4",
-  },
-];
 const ScheduleOption = () => {
-  const options = ["ALL", "Plan", "Meeting", "지난 Plan", "지난 Meeting"];
+  const { id } = useParams();
+  const { data: names, isLoading } = useQuery(["members", id], () =>
+    getTeamMember(id)
+  );
+  const options = [
+    { name: "ALL", type: "all" },
+    { name: "Plan", type: "MILESTONE" },
+    { name: "Meeting", type: "MEETING" },
+    { name: "지난 일정", type: "pastAll" },
+  ];
 
-  const [optionVisible, setOptionVisible] = useState(options[0]);
-  const [nameVisible, setNameVisible] = useState(names[0].id);
+  const [optionVisible, setOptionVisible] = useState(options[0].type);
+  const [nameVisible, setNameVisible] = useState();
 
   const optionClickHandler = (option) => {
     setOptionVisible(option);
@@ -45,30 +30,46 @@ const ScheduleOption = () => {
     setNameVisible(id);
   };
 
+  useEffect(() => {
+    if (!isLoading && names && names.length > 0) {
+      setNameVisible(names[0].id);
+    }
+  }, [isLoading, names]);
+
   return (
     <>
       <div className="schedule-option">
         {options.map((option, index) => (
           <Button
             key={index}
-            text={option}
-            type={optionVisible === option ? "positive_dark" : ""}
-            onClick={() => optionClickHandler(option)}
+            text={option.name}
+            type={optionVisible === option.type ? "positive_dark" : ""}
+            onClick={() => optionClickHandler(option.type)}
           />
         ))}
       </div>
       <Card className="schedule-option-person">
         <h4>참여자</h4>
-        {names.map((data, index) => (
-          <Button
-            key={index}
-            text={data.name}
-            type={nameVisible === data.id ? "positive_dark" : ""}
-            onClick={() => nameClickHandler(data.id)}
-          />
-        ))}
+        {isLoading && <h1 className="check-schedule">⏳ 로딩 중...</h1>}
+        {!names && !isLoading && (
+          <h1 className="check-schedule">🥲 통신 오류났습니다.</h1>
+        )}
+        {names && names.length === 0 && (
+          <h1 className="check-schedule">아직 참여자가 없습니다.</h1>
+        )}
+        {!isLoading &&
+          names?.map((data, index) => (
+            <Button
+              key={index}
+              text={data.name}
+              type={nameVisible === data.id ? "positive_dark" : ""}
+              onClick={() => nameClickHandler(data.id)}
+            />
+          ))}
       </Card>
-      <ScheduleList option={optionVisible} nameId={nameVisible} />
+      {nameVisible && (
+        <ScheduleList option={optionVisible} nameId={nameVisible} />
+      )}
     </>
   );
 };

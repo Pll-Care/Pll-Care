@@ -1,4 +1,17 @@
 // schedule option 컴포넌트
+.check-schedule {
+  font-family: $heading-font;
+  font-size: 20px;
+  color: white;
+  margin-bottom: 10px;
+  &-gray {
+    color: rgb(173, 173, 173);
+    margin: 20px;
+    font-family: $heading-font;
+    font-size: 20px;
+  }
+}
+
 .schedule-option {
   Button {
     margin-right: 8px;
@@ -9,6 +22,7 @@
     background-color: $background-color;
     margin-top: 20px;
     padding: 1.5rem;
+
     Button {
       margin-right: 8px;
     }
@@ -21,7 +35,16 @@
     }
   }
 }
-
+// ScheduleList 컴포넌트
+.schedule-lists {
+  .empty-schedule {
+    font-family: $heading-font;
+    font-size: 20px;
+    color: gray;
+    margin: 30px 0px;
+    margin-left: 20px;
+  }
+}
 // scheduleItem컴포넌트
 .schedule-list {
   display: flex;

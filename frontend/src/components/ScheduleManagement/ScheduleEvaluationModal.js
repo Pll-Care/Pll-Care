@@ -21,7 +21,6 @@ const ScheduleEvaluationModal = (props) => {
   const [name, setName] = useState(props.members[0].id);
   const [badge, setBadge] = useState("열정적인_참여자");
   const [evaluation, setEvaluation] = useState();
-  console.log(name);
 
   const participantsClickHandler = (name) => {
     setName(name);
@@ -67,7 +66,7 @@ const ScheduleEvaluationModal = (props) => {
       toast.error("뱃지를 골라주세요");
     }
     setEvaluation(data);
-    console.log(data);
+    //console.log(data);
     openConfirmModalHandler();
     //mutate(data);
     //console.log(newEvaluation);
@@ -88,7 +87,6 @@ const ScheduleEvaluationModal = (props) => {
         text="작성 완료한 평가는 수정 또는 삭제할 수 없습니다. 작성 완료 하시겠습니까?"
         clickHandler={() => {
           mutate(evaluation);
-          closeConfirmModalHandler();
         }}
       />
       <div className="schedule-modal">

@@ -9,183 +9,44 @@ import {
   getPastScheduleData,
 } from "../../utils/schedule";
 import ScheduleItem from "./ScheduleItem";
+import { useMemo } from "react";
 
-// 더미 데이터
-const data1 = [
-  {
-    scheduleId: 1,
-    title: "string1",
-    startDate: "2023-04-28T13:33:35.935Z",
-    endDate: "2023-04-30T13:33:35.935Z",
-    scheduleCategory: "MILESTONE",
-    members: [
-      {
-        id: 1,
-        name: "string1",
-        imageUrl: "string1",
-      },
-      {
-        id: 2,
-        name: "string2",
-        imageUrl: "string1",
-      },
-      {
-        id: 3,
-        name: "string3",
-        imageUrl: "string1",
-      },
-      {
-        id: 4,
-        name: "string4",
-        imageUrl: "string1",
-      },
-    ],
-    state: "TBD",
-    modifyDate: "2023-06-28",
-    check: true,
-    evaluationRequired: true,
-  },
-  {
-    scheduleId: 2,
-    title: "string1",
-    startDate: "2023-05-28T13:33:35.935Z",
-    endDate: "2023-05-30T13:33:35.935Z",
-    scheduleCategory: "MILESTONE",
-    members: [
-      {
-        id: 1,
-        name: "string1",
-        imageUrl: "string1",
-      },
-      {
-        id: 3,
-        name: "string3",
-        imageUrl: "string1",
-      },
-    ],
-    state: "ONGOING",
-    modifyDate: "2023-06-28",
-    check: true,
-    evaluationRequired: true,
-  },
-  {
-    scheduleId: 3,
-    title: "string1",
-    startDate: "2023-06-28T13:33:35.935Z",
-    endDate: "2023-07-30T13:33:35.935Z",
-    scheduleCategory: "MILESTONE",
-    members: [
-      {
-        id: 1,
-        name: "string1",
-        imageUrl: "string1",
-      },
-      {
-        id: 2,
-        name: "string2",
-        imageUrl: "string1",
-      },
-      {
-        id: 3,
-        name: "string3",
-        imageUrl: "string1",
-      },
-    ],
-    state: "ONGOING",
-    modifyDate: "2023-06-28",
-    check: true,
-    evaluationRequired: true,
-  },
-  {
-    scheduleId: 4,
-    title: "string2",
-    startDate: "2023-06-29T13:33:35.935Z",
-    endDate: "2023-06-30T13:33:35.935Z",
-    scheduleCategory: "MILESTONE",
-    members: [
-      {
-        id: 1,
-        name: "string1",
-        imageUrl: "string1",
-      },
-      {
-        id: 2,
-        name: "string2",
-        imageUrl: "string1",
-      },
-    ],
-    state: "TBD",
-    modifyDate: "2023-06-29",
-    check: true,
-    evaluationRequired: true,
-  },
-  {
-    scheduleId: 5,
-    title: "string3",
-    startDate: "2023-07-08T13:33:35.935Z",
-    endDate: "2023-07-28T13:33:35.935Z",
-    scheduleCategory: "MILESTONE",
-    members: [
-      {
-        id: 2,
-        name: "string2",
-        imageUrl: "string2",
-      },
-      {
-        id: 3,
-        name: "string3",
-        imageUrl: "string3",
-      },
-      {
-        id: 4,
-        name: "string4",
-        imageUrl: "string4",
-      },
-    ],
-    state: "ONGOING",
-    modifyDate: "2023-06-28",
-    check: true,
-    evaluationRequired: true,
-  },
-];
 const ScheduleList = ({ nameId, option }) => {
-  // 통신해서 리스트 가져오기
-  let type;
-  type = (option === "Plan" || option === "지난 Plan") && "MEETING";
-  type = (option === "Meeting" || option === "지난 Meeting") && "MILESTONE";
-
   const { id } = useParams();
 
-  const { data } = useQuery("FilterSchedule", async () => {
-    if (option === "ALL") {
-      const milestones = await getFilterSchedule(id, nameId, "MILESTONE");
-      const meetings = await getFilterSchedule(id, nameId, "MEETING");
-      return getCombineSortedPlanMeeting(milestones, meetings);
-    } else {
-      return getFilterSchedule(id, nameId, type);
+  const { isLoading, data } = useQuery(
+    ["filterSchedule", id, nameId, option],
+    () => getFilterSchedule(id, nameId)
+  );
+  let schedules = useMemo(() => {
+    if (data && option === "all") {
+      return data;
     }
-  });
-  console.log(data);
+    if (data && option === "MEETING") {
+      return data.filter((item) => item.scheduleCategory === "MEETING");
+    }
+    if (data && option === "MILESTONE") {
+      return data.filter((item) => item.scheduleCategory === "MILESTONE");
+    }
+    if (data && option === "pastAll") {
+      return getPastScheduleData(data);
+    }
+  }, [data, option]);
 
-  // 과거 일정 필터
-  const filteredPastData = getPastScheduleData(data1);
-
-  // 오늘 이후 일정 필터
-  const filteredAfterData = getAfterScheduleData(data1);
-
+  console.log(option, "에 따른", schedules);
   return (
-    <Card>
-      {/*{option === "ALL" &&
-        data &&
-        data?.map((schedule, index) => (
-          <ScheduleItem key={index} data={schedule} />
-        ))}*/}
-      {(option === "Plan" || option === "Meeting") &&
-        filteredAfterData?.map((schedule, index) => (
-          <ScheduleItem key={index} data={schedule} />
-        ))}
-      {(option === "지난 Plan" || option === "지난 Meeting") &&
-        filteredPastData?.map((schedule, index) => (
+    <Card className="schedule-lists">
+      {isLoading && <h1 className="check-schedule-gray">⏳ 로딩 중...</h1>}
+      {!isLoading && schedules && schedules.length === 0 && (
+        <h1 className="check-schedule-gray">해당 일정이 없습니다</h1>
+      )}
+      {!schedules && !isLoading && (
+        <h1 className="check-schedule-gray">🥲 통신 오류났습니다.</h1>
+      )}
+      {schedules &&
+        !isLoading &&
+        schedules.length > 0 &&
+        schedules.map((schedule, index) => (
           <ScheduleItem key={index} data={schedule} />
         ))}
     </Card>
