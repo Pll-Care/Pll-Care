@@ -7,6 +7,7 @@ import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
+import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.projectmember.repository.ProjectMemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -38,12 +39,20 @@ public class ProjectMemberService {
     }
 
     public void updateProjectMemberRole(Long projectId, Long memberId, ProjectMemberRole projectMemberRole) {
-        ProjectMember projectMember = projectMemberRepository.findByProjectIdAndMemberId(projectId, memberId).orElseThrow(() -> new EntityNotFoundException("해당 회원이 존재하지 않습니다."));
+        ProjectMember projectMember = projectMemberRepository.findByProjectIdAndMemberId(projectId, memberId).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트 멤버가 존재하지 않습니다."));
         projectMember.updateRole(projectMemberRole);
     }
 
 
     public void deleteProjectMember(Long projectId, Long memberId) {
         projectMemberRepository.deleteByProjectIdAndMemberId(projectId, memberId);
+    }
+
+    public void changeLeader(Long projectId, Long newLeaderId, Long oldLeaderId) {
+        ProjectMember oldLeader = projectMemberRepository.findByProjectIdAndMemberId(projectId, oldLeaderId).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트 멤버가 존재하지 않습니다."));
+        ProjectMember newLeader = projectMemberRepository.findByProjectIdAndMemberId(projectId, newLeaderId).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트 멤버가 존재하지 않습니다."));
+
+        oldLeader.updateRole(new ProjectMemberRole(ProjectMemberRoleType.팀원, oldLeader.getProjectMemberRole().getPosition()));
+        newLeader.updateRole(new ProjectMemberRole(ProjectMemberRoleType.리더, newLeader.getProjectMemberRole().getPosition()));
     }
 }
