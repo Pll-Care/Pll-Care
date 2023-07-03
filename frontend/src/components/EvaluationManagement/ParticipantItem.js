@@ -7,6 +7,7 @@ const ParticipantItem = ({
   handleFinalEvaluationModal,
   handleClickParticipant,
   isCompleted,
+  isSelf,
 }) => {
   return (
     <div
@@ -45,7 +46,7 @@ const ParticipantItem = ({
             </div>
           </div>
         </div>
-        {isCompleted === "COMPLETE" && !member.finalEvalId && (
+        {isCompleted === "COMPLETE" && !member.finalEvalId && !isSelf && (
           <Button
             text={"최종 평가하기"}
             size={"small"}

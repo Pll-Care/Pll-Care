@@ -35,8 +35,11 @@ const AllParticipants = ({ projectId, isCompleted }) => {
           <ParticipantItem
             member={member}
             handleFinalEvaluationModal={handleFinalEvaluationModal}
-            handleClickParticipant={handleClickParticipant}
+            handleClickParticipant={() =>
+              handleClickParticipant(member.badgeDtos, member.id)
+            }
             isCompleted={isCompleted}
+            isSelf={member.me}
           />
         ))}
       </div>

@@ -5,11 +5,11 @@ export const getProjectList = async (pageNum = 1, state) => {
 
   if (state === "ALL") {
     response = await customAxios.get(
-      `/auth/project?page=${pageNum}&size=4&state=ONGOING&state=COMPLETE`
+      `/auth/project/list?page=${pageNum}&size=4&state=ONGOING&state=COMPLETE`
     );
   } else {
     response = await customAxios.get(
-      `/auth/project?page=${pageNum}&size=4&state=${state}`
+      `/auth/project/list?page=${pageNum}&size=4&state=${state}`
     );
   }
 
@@ -69,3 +69,11 @@ export const uploadImage = async (imgData) => {
 
   return response.data.imageUrl;
 };
+
+export const deleteImage = async (imgUrl) => {
+  const response = await customAxios.delete(
+    `/auth/upload/image?url=${imgUrl}`
+  );
+
+  return response.data;
+}

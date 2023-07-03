@@ -165,11 +165,11 @@ const FinalEvaluation = ({
           <div className="badges">
             <h1>누적 배지</h1>
             <div className="badges-body">
-              {badgeQuantity?.map((item) => (
+              {badgeQuantity?.map((badge) => (
                 <div className="badge">
                   <figure />
-                  <div>{badgeQuantity.evaluationBadge}</div>
-                  <div>{badgeQuantity.quantity}개</div>
+                  <div>{badge.evaluationBadge}</div>
+                  <div>{badge.quantity}개</div>
                 </div>
               ))}
             </div>
