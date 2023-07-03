@@ -125,3 +125,5 @@ const MainHeader = () => {
 };
 
 export default MainHeader;
+
+//TODO: 로그인 시 나의 유저아이디를 발급 -> 발급 받은 아이디를 프로필로 이동 시 사용
