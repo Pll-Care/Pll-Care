@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useLayoutEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 import Button from "../common/Button";
@@ -12,6 +11,7 @@ import useMeetingRecordManagementMutation from "../../hooks/useMeetingRecordMana
 import { toast } from "react-toastify";
 import { getProjectId } from "../../utils/getProjectId";
 import { isCompleteProject } from "../../utils/isCompleteProject";
+import { useEffect } from "react";
 
 const MeetingRecordEditor = () => {
   const content = useSelector((state) => state.meetingRecordManagement.content);
@@ -80,6 +80,10 @@ const MeetingRecordEditor = () => {
       });
     }
   };
+
+  useEffect(() => {
+    dispatch(meetingRecordManagementActions.onEditInitialState(true));
+  }, [dispatch, projectId]);
 
   return (
     <div className="meeting-record-new-meeting-record-editor">
