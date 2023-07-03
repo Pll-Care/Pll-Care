@@ -40,6 +40,8 @@ const Management = () => {
 
   const projectList = data.projectList;
 
+  const totalElements = data.totalElements;
+
   const lastPageNum = data.totalPages;
 
   useEffect(() => {
@@ -117,6 +119,7 @@ const Management = () => {
             <div>
               <ProjectList
                 type={allProjectListVisible ? "all" : "ongoing"}
+                totalElements={totalElements}
                 projectList={projectList}
               />
               <Pagination

@@ -1,15 +1,12 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
 
-import Button from "../../components/common/Button";
 import ProjectButtonModal from "./ProjectButtonModal";
-import useManagementMutation from "../../hooks/useManagementMutation";
 import ProjectEditor from "./ProjectEditor";
-
-import { getStringDate } from "../../utils/date";
 import ProjectItem from "./ProjectItem";
 
-const ProjectList = ({ type, projectList }) => {
+import { getStringDate } from "../../utils/date";
+
+const ProjectList = ({ type, projectList, totalElements }) => {
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [deleteProjectId, setDeleteProjectId] = useState();
 
@@ -78,7 +75,7 @@ const ProjectList = ({ type, projectList }) => {
 
   return (
     <div className="project-list">
-      {projectList.length === 0 ? (
+      {totalElements === 0 ? (
         <div className="project-list-description">
           <p>{type === "all" ? "완료된" : "진행 중인"} 프로젝트가 없습니다.</p>
         </div>
