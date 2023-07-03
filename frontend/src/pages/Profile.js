@@ -1,8 +1,12 @@
+import Introduce from "../components/Profile/Introduce";
+import ProfileBody from "../components/Profile/ProfileBody";
+
 const Profile = () => {
   return (
-    <div>
-      <div>Profile</div>
-    </div>
+    <main className="profile">
+      <Introduce />
+      <ProfileBody />
+    </main>
   );
 };
 

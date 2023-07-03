@@ -417,6 +417,11 @@ input {
   color: #7a7a7a;
   text-decoration: underline;
 }
+.button_profile {
+  background-color: #01e89e;
+  color: white;
+  border: 2px solid white;
+}
 
 @media (min-width: 767px) and (max-width: 1024px) {
   .button {
@@ -2240,4 +2245,61 @@ input {
   justify-content: center;
   align-items: center;
   width: 10%;
+}
+
+.profile_introduce {
+  background-color: #01e89e;
+}
+.profile_introduce_container {
+  width: 95%;
+  margin: 0 auto;
+  min-height: 150px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 30px;
+}
+.profile_introduce_image {
+  width: 90px;
+  height: 90px;
+  background-color: white;
+  border-radius: 50%;
+}
+.profile_introduce_image > img {
+  width: 100%;
+  height: 100%;
+}
+.profile_introduce_info {
+  color: white;
+}
+.profile_introduce_info_name {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  font-weight: bold;
+}
+.profile_introduce_info_name_kr {
+  font-size: 2rem;
+}
+.profile_introduce_info_name_us {
+  font-size: 1.3rem;
+}
+.profile_introduce_info_myself {
+  min-width: 400px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  font-size: 18px;
+}
+.profile_introduce_info_myself > input {
+  border: none;
+  border-radius: 9px;
+  width: 100%;
+  font-size: 18px;
+  padding: 8px 16px;
+}
+.profile_body {
+  border: 1px solid blue;
 }/*# sourceMappingURL=fullcare.css.map */

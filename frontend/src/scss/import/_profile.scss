@@ -1,0 +1,69 @@
+.profile {
+  &_introduce {
+    background-color: #01e89e;
+
+    &_container {
+      width: 95%;
+      margin: 0 auto;
+      min-height: 150px;
+
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      gap: 30px;
+    }
+
+    &_image {
+      width: 90px;
+      height: 90px;
+      background-color: white;
+      border-radius: 50%;
+
+      & > img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    &_info {
+      color: white;
+
+      &_name {
+        height: 50px;
+
+        display: flex;
+        align-items: center;
+        gap: 30px;
+
+        font-weight: bold;
+
+        &_kr {
+          font-size: 2rem;
+        }
+        &_us {
+          font-size: 1.3rem;
+        }
+      }
+      &_myself {
+        min-width: 400px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        font-size: 18px;
+
+        & > input {
+          border: none;
+          border-radius: 9px;
+          width: 100%;
+          font-size: 18px;
+          padding: 8px 16px;
+        }
+      }
+    }
+  }
+
+  &_body {
+    border: 1px solid blue;
+  }
+}
