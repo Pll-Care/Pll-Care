@@ -8,9 +8,14 @@ import AllParticipants from "../components/EvaluationManagement/AllParticipants"
 import EvaluationRanking from "../components/EvaluationManagement/EvaluationRanking";
 import ShowEvaluationChart from "../components/EvaluationManagement/ShowEvaluationChart";
 
-import { getMidEvaluationChartAndRanking } from "../lib/apis/evaluationManagementApi";
+import {
+  getFinalEvaluationChartAndRanking,
+  getMidEvaluationChartAndRanking,
+} from "../lib/apis/evaluationManagementApi";
 
 import { getProjectId } from "../utils/getProjectId";
+import { useSelector } from "react-redux";
+import { isCompleteProject } from "../utils/isCompleteProject";
 
 const EvaluationManagement = () => {
   // 전역 상태로 변경 필요
@@ -18,9 +23,20 @@ const EvaluationManagement = () => {
 
   const projectId = getProjectId(useLocation());
 
+  const completedProjectIdList = useSelector(
+    (state) => state.projectManagement.completedProjectId
+  );
+
+  const isCompleted = isCompleteProject(completedProjectIdList, projectId);
+
   const { data = { charts: [], ranks: [] } } = useQuery(
-    ["managementEvaluationChartAndRanking"],
-    () => getMidEvaluationChartAndRanking(projectId)
+    isCompleted
+      ? ["managementFinalEvaluationChartAndRanking"]
+      : ["managementMidEvaluationChartAndRanking"],
+    () =>
+      isCompleted
+        ? getFinalEvaluationChartAndRanking(projectId)
+        : getMidEvaluationChartAndRanking(projectId)
   );
 
   useEffect(() => {
@@ -36,11 +52,14 @@ const EvaluationManagement = () => {
       }
     >
       <div className="evaluation-management-ranking-wrapper">
-        <ShowEvaluationChart chartData={data.charts} />
-        <EvaluationRanking rankingData={data.ranks} />
+        <ShowEvaluationChart
+          chartData={data.charts}
+          isCompleted={isCompleted}
+        />
+        <EvaluationRanking rankingData={data.ranks} isCompleted={isCompleted} />
       </div>
       <div className="evaluation-management-participant-wrapper">
-        <AllParticipants />
+        <AllParticipants isCompleted={isCompleted} projectId={projectId} />
       </div>
     </div>
   ) : null;

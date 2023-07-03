@@ -67,7 +67,7 @@ function makeChartData(data) {
   return evaluations;
 }
 
-const ShowEvaluationChart = ({ chartData = null }) => {
+const ShowEvaluationChart = ({ chartData = null, isCompleted }) => {
   const data = chartData.map((memberData) => {
     const evaluations = makeChartData([memberData]);
 
@@ -81,7 +81,36 @@ const ShowEvaluationChart = ({ chartData = null }) => {
     data.length < 9 ? data.length : Math.ceil(data.length / 3)
   );
 
-  return chartData && (
+  return (chartData && isCompleted === "COMPLETE") ? (
+    <div className="evaluation-management-chart-wrapper">
+      <h1>최종 평가 차트</h1>
+      <div className="evaluation-management-show-evaluation-chart">
+        <Slider className="slider" {...settings}>
+          {chartIndices(data, chartDataNum).map((i) => (
+            <div key={i}>
+              <BarChart
+                className="chart"
+                width={495}
+                height={320}
+                data={data.slice(i * chartDataNum, (i + 1) * chartDataNum)}
+              >
+                <Tooltip content={<CustomTooltip />} />
+                <XAxis dataKey="name" tickSize={8} />
+                <YAxis
+                  dataKey="averageEvaluation"
+                  domain={[0, evaluateBadgeMaxNumRounded(chartData)]}
+                />
+                <Bar dataKey="성실도" fill="#01E89E" />
+                <Bar dataKey="시간 엄수" fill="#00AA72" />
+                <Bar dataKey="업무 수행 능력" fill="#D7D7D7" />
+                <Bar dataKey="의사 소통" fill="#01E89E" />
+              </BarChart>
+            </div>
+          ))}
+        </Slider>
+      </div>
+    </div>
+  ) : (
     <div className="evaluation-management-chart-wrapper">
       <h1>배지 차트</h1>
       <div className="evaluation-management-show-evaluation-chart">
@@ -100,10 +129,10 @@ const ShowEvaluationChart = ({ chartData = null }) => {
                   dataKey="averageEvaluation"
                   domain={[0, evaluateBadgeMaxNumRounded(chartData)]}
                 />
-                <Bar dataKey="아이디어_뱅크" fill="#01E89E" />
-                <Bar dataKey="열정적인_참여자" fill="#00AA72" />
-                <Bar dataKey="최고의_서포터" fill="#D7D7D7" />
-                <Bar dataKey="탁월한_리더" fill="#01E89E" />
+                <Bar dataKey="아이디어 뱅크" fill="#01E89E" />
+                <Bar dataKey="열정적인 참여자" fill="#00AA72" />
+                <Bar dataKey="최고의 서포터" fill="#D7D7D7" />
+                <Bar dataKey="탁월한 리더" fill="#01E89E" />
               </BarChart>
             </div>
           ))}
