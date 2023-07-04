@@ -153,7 +153,7 @@ public class ScheduleService {
 //        List<ScheduleListResponse> scheduleListResponseList = toListResponse(meetingList, ScheduleCategory.미팅);
 
         List<Schedule> milestoneList = scheduleRepository.findMileStoneByProjectId(projectId);
-        List<ScheduleListResponse> scheduleListResponseList = toListResponse(milestoneList, dateCategory);
+        List<ScheduleListResponse> scheduleListResponseList = toListResponse(startDate, milestoneList, dateCategory);
         /////////////////
         //scheduleListResponseList.addAll(response2);
         CustomResponseDto response =
@@ -337,26 +337,28 @@ public class ScheduleService {
     }
 
 
-    private List<ScheduleListResponse> toListResponse(List<Schedule> scheduleList, DateCategory dateCategory) {
+    private List<ScheduleListResponse> toListResponse(LocalDate startDate, List<Schedule> scheduleList, DateCategory dateCategory) {
         System.out.println("dateCategory = " + dateCategory);
         List<ScheduleListResponse> scheduleListResponseList = new ArrayList<>();
         ScheduleListResponse scheduleListResponse = null;
         if (!scheduleList.isEmpty()) {
-            int month = scheduleList.get(0).getStartDate().getMonthValue(); //초기값
+            int month = startDate.getMonthValue();//scheduleList.get(0).getStartDate().getMonthValue(); //초기값
             LocalDateTime compareDate = scheduleList.get(0).getStartDate();
 
-            int order = 1;
+            Long order = 1l;
             for (Schedule s : scheduleList) {
                 if (dateCategory.equals(DateCategory.MONTH)) {
                     if (month < s.getStartDate().getMonth().getValue()) {
                         month = s.getStartDate().getMonth().getValue();
-                        order++;
+//                        order++;
+                        order = ChronoUnit.MONTHS.between(startDate, s.getStartDate()) + 1;
                     }
                 } else {
-                    if (ChronoUnit.WEEKS.between(compareDate, s.getStartDate()) > 1) {// 2주 차이
-                        compareDate = s.getStartDate();
-                        order++;
-                    }
+                    order = ChronoUnit.WEEKS.between(startDate, s.getStartDate())/2 + 1;
+//                    if (ChronoUnit.WEEKS.between(compareDate, s.getStartDate()) > 1) {//* 2주 차이
+//                        compareDate = s.getStartDate();
+//                        order++;
+//                    }
                 }
                 scheduleListResponse = ScheduleListResponse.builder()
                         .scheduleId(s.getId())

@@ -39,7 +39,8 @@ public class ScheduleRepositoryImpl implements ScheduleRepositoryCustom {
         List<Schedule> content = jpaQueryFactory.selectFrom(schedule)
                 .join(schedule.project, project)
                 .join(schedule.scheduleMembers, scheduleMember)
-                .where(memberIdEq(scheduleCondition.getMemberId()),
+                .where(schedule.project.id.eq(projectId),
+                        memberIdEq(scheduleCondition.getMemberId()),
                         scheduleCategoryEq(scheduleCondition.getScheduleCategory()))
                 .fetch();
         return content;

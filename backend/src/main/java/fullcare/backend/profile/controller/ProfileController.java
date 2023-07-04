@@ -13,16 +13,13 @@ import fullcare.backend.post.service.PostService;
 import fullcare.backend.profile.TechStackResponse;
 import fullcare.backend.profile.dto.request.ProfileBioUpdateRequest;
 import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
-import fullcare.backend.profile.dto.response.ProfileResponse;
+import fullcare.backend.profile.dto.response.*;
 import fullcare.backend.profile.service.ProfileService;
 import fullcare.backend.projectmember.service.ProjectMemberService;
-import fullcare.backend.schedule.service.ScheduleService;
 import fullcare.backend.security.jwt.CurrentLoginMember;
 import fullcare.backend.util.CustomPageImpl;
 import fullcare.backend.util.CustomPageRequest;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,14 +29,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 //import javax.json.JsonMergePatch;
 //import javax.json.JsonPatch;
-import java.util.List;
+
 
 @RequiredArgsConstructor
 @Tag(name = "개인 페이지", description = "개인 페이지 관련 API")
@@ -50,18 +45,60 @@ public class ProfileController {
     private final PostService postService;
     private final EvaluationService evaluationService;
     private final ProjectMemberService projectMemberService;
-    // * 개인 프로필 api
-    @Operation(method = "get", summary = "개인 프로필 조회")
+    // * 개인 프로필 api 조회
+    @Operation(method = "get", summary = "한 줄 소개 조회")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "개인 프로필 조회 성공", useReturnTypeSchema = true),
-//            @ApiResponse(responseCode = "400", description = "개인 프로필 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+            @ApiResponse(responseCode = "200", description = "한 줄 소개 조회 성공", useReturnTypeSchema = true),
+//            @ApiResponse(responseCode = "400", description = "한 줄 소개 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
-    @GetMapping
-    public ResponseEntity<ProfileResponse> findProfile(@PathVariable Long memberId, @CurrentLoginMember Member member) {
-        ProfileResponse response = profileService.findProfile(memberId, member);
+    @GetMapping("/bio")
+    public ResponseEntity<ProfileBioResponse> findBio(@PathVariable Long memberId, @CurrentLoginMember Member member) {
+        ProfileBioResponse response = profileService.findBio(memberId, member);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @Operation(method = "get", summary = "연락처 조회")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "연락처 조회 성공", useReturnTypeSchema = true),
+//            @ApiResponse(responseCode = "400", description = "연락처 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+    })
+    @GetMapping("/contact")
+    public ResponseEntity<ProfileContactResponse> findContact(@PathVariable Long memberId, @CurrentLoginMember Member member) {
+        ProfileContactResponse response = profileService.findContact(memberId, member);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @Operation(method = "get", summary = "직무, 기술스택 조회")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "직무, 기술스택 조회 성공", useReturnTypeSchema = true),
+//            @ApiResponse(responseCode = "400", description = "직무, 기술스택 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+    })
+    @GetMapping("/roletechstack")
+    public ResponseEntity<ProfileTechStackResponse> findRoleAndTechStack(@PathVariable Long memberId, @CurrentLoginMember Member member) {
+        ProfileTechStackResponse response = profileService.findRoleAndTechStack(memberId, member);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @Operation(method = "get", summary = "프로젝트 경험 조회")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "프로젝트 경험 조회 성공", useReturnTypeSchema = true),
+//            @ApiResponse(responseCode = "400", description = "프로젝트 경험 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+    })
+    @GetMapping("/experience")
+    public ResponseEntity<ProfileProjectExperienceResponse> findProjectExperience(@PathVariable Long memberId, @CurrentLoginMember Member member) {
+        ProfileProjectExperienceResponse response = profileService.findProjectExperience(memberId, member);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Operation(method = "get", summary = "내 프로필 검증")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "내 프로필 검증 성공", useReturnTypeSchema = true),
+//            @ApiResponse(responseCode = "400", description = "내 프로필 검증 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+    })
+    @GetMapping("/validate")
+    public ResponseEntity<ValidateMyProfileResponse> validateMyProfile(@PathVariable Long memberId, @CurrentLoginMember Member member) {
+        return new ResponseEntity<>(new ValidateMyProfileResponse(memberId == member.getId()), HttpStatus.OK);
+    }
+
+
+    // * 개인 프로필 api 생성, 수정, 삭제
     @Operation(method = "patch", summary = "개인 프로필 생성, 수정, 삭제")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "개인 프로필 생성, 수정, 삭제 성공", useReturnTypeSchema = true),
@@ -82,7 +119,7 @@ public class ProfileController {
 //            @ApiResponse(responseCode = "400", description = "개인 프로필 한 줄 소개 수정 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @PutMapping
-    public ResponseEntity<ProfileResponse> updateBio(@PathVariable Long memberId, @CurrentLoginMember Member member,@Valid @RequestBody ProfileBioUpdateRequest profileBioUpdateRequest) {
+    public ResponseEntity<ProfileProjectExperienceResponse> updateBio(@PathVariable Long memberId, @CurrentLoginMember Member member, @Valid @RequestBody ProfileBioUpdateRequest profileBioUpdateRequest) {
         if(memberId != member.getId()){
             throw new InvalidAccessException("해당 프로필 권한이 없습니다.");
         }

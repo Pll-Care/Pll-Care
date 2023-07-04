@@ -8,7 +8,10 @@ import fullcare.backend.profile.domain.Profile;
 import fullcare.backend.profile.dto.ProjectExperienceResponseDto;
 import fullcare.backend.profile.dto.request.ProfileBioUpdateRequest;
 import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
-import fullcare.backend.profile.dto.response.ProfileResponse;
+import fullcare.backend.profile.dto.response.ProfileBioResponse;
+import fullcare.backend.profile.dto.response.ProfileContactResponse;
+import fullcare.backend.profile.dto.response.ProfileProjectExperienceResponse;
+import fullcare.backend.profile.dto.response.ProfileTechStackResponse;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +27,32 @@ import java.util.stream.Collectors;
 public class ProfileService {
     private final MemberRepository memberRepository;
     @Transactional(readOnly = true)
-    public ProfileResponse findProfile(Long memberId, Member member){
+    public ProfileBioResponse findBio(Long memberId, Member member) {
+        Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException("해당 사용자 정보가 없습니다."));
+        Profile p = findMember.getProfile();
+        return ProfileBioResponse.builder()
+                .name(findMember.getName())
+                .nickName(findMember.getNickname())
+                .imageUrl(findMember.getImageUrl())
+                .bio(p.getBio())
+                .myProfile(memberId == member.getId())
+                .build();
+    }
+    @Transactional(readOnly = true)
+    public ProfileContactResponse findContact(Long memberId, Member member) {
+        Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException("해당 사용자 정보가 없습니다."));
+        Profile p = findMember.getProfile();
+        return new ProfileContactResponse(p.getContact(), memberId == member.getId());
+    }
+    @Transactional(readOnly = true)
+    public ProfileTechStackResponse findRoleAndTechStack(Long memberId, Member member) {
+        Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException("해당 사용자 정보가 없습니다."));
+        Profile p = findMember.getProfile();
+        List<String> techStacks = Arrays.stream(p.getTechStack().split(",")).collect(Collectors.toList());
+        return new ProfileTechStackResponse(p.getRecruitPosition(), techStacks, memberId == member.getId());
+    }
+    @Transactional(readOnly = true)
+    public ProfileProjectExperienceResponse findProjectExperience(Long memberId, Member member){
         Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException("해당 사용자 정보가 없습니다."));
         Profile p = findMember.getProfile();
         List<ProjectExperienceResponseDto> projectExperienceRequestDtos = p.getProjectExperiences().stream().map(pro -> ProjectExperienceResponseDto.createResponseDto()
@@ -34,13 +62,8 @@ public class ProfileService {
                 .startDate(pro.getStartDate())
                 .endDate(pro.getEndDate())
                 .techStack(pro.getTechStack()).build()).collect(Collectors.toList());
-        List<String> techStacks = Arrays.stream(p.getTechStack().split(",")).collect(Collectors.toList());
 
-        return ProfileResponse.builder()
-                .bio(p.getBio())
-                .contact(p.getContact())
-                .recruitPosition(p.getRecruitPosition())
-                .techStack(techStacks)
+        return ProfileProjectExperienceResponse.builder()
                 .projectExperiences(projectExperienceRequestDtos)
                 .myProfile(memberId == member.getId())
                 .build();
@@ -68,5 +91,7 @@ public class ProfileService {
         }
         return techStackResponse;
     }
+
+
 
 }

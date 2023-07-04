@@ -9,6 +9,7 @@ import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.dto.request.*;
 import fullcare.backend.project.dto.response.ProjectListResponse;
 import fullcare.backend.project.dto.response.ProjectMemberListResponse;
+import fullcare.backend.project.dto.response.ProjectUpdateResponse;
 import fullcare.backend.project.dto.response.ProjectUpdateStateResponse;
 import fullcare.backend.project.service.ProjectService;
 import fullcare.backend.projectmember.domain.ProjectMember;
@@ -87,7 +88,7 @@ public class ProjectController {
         }
 
         projectService.updateProject(projectId, projectUpdateRequest);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(new ProjectUpdateResponse(projectUpdateRequest.getImageUrl()),HttpStatus.OK);
     }
 
     // * 특정 프로젝트 삭제

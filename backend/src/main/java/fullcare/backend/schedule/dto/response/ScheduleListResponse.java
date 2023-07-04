@@ -12,9 +12,9 @@ public class ScheduleListResponse {
     //private String content;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private int order;
+    private Long order;
     @Builder
-    public ScheduleListResponse(Long scheduleId, String title,LocalDateTime startDate,LocalDateTime endDate, int order) {
+    public ScheduleListResponse(Long scheduleId, String title,LocalDateTime startDate,LocalDateTime endDate, Long order) {
         this.scheduleId = scheduleId;
         this.title = title;
         this.startDate = startDate;
