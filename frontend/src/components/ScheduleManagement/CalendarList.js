@@ -1,99 +1,16 @@
 import { useState } from "react";
-import { useQuery } from "react-query";
 import { useParams } from "react-router";
 
 import CalendarItem from "./CalendarItem";
-import NewScheduleModal from "./NewScheduleModal";
+import ScheduleModal from "./ScheduleModal";
 import Button from "../common/Button";
-import { getAllSchedule } from "../../lib/apis/scheduleManagementApi";
 import { getTodayDateEnglish } from "../../utils/date";
 import {
   getAfterScheduleData,
   getCombineSortedPlanMeeting,
 } from "../../utils/schedule";
 
-// 더미 데이터
-const datas = {
-  meetings: [
-    {
-      scheduleId: 0,
-      title: "string",
-      content: "string",
-      startDate: "2023-06-25T05:49:53.840Z",
-      endDate: "2023-06-25T10:49:53.840Z",
-      address: "string1",
-      members: [
-        {
-          id: 0,
-          name: "string",
-          imageUrl: "string",
-        },
-      ],
-    },
-    {
-      scheduleId: 1,
-      title: "string1",
-      content: "string1",
-      startDate: "2023-06-29T05:49:53.840Z",
-      endDate: "2023-06-29T10:49:53.840Z",
-      address: "string2",
-      members: [
-        {
-          id: 0,
-          name: "string",
-          imageUrl: "string",
-        },
-      ],
-    },
-    {
-      scheduleId: 1,
-      title: "string3",
-      content: "string1",
-      startDate: "2023-07-26T05:49:53.840Z",
-      endDate: "2023-07-26T09:49:53.840Z",
-      address: "string3",
-      members: [
-        {
-          id: 0,
-          name: "string",
-          imageUrl: "string",
-        },
-      ],
-    },
-  ],
-  milestones: [
-    {
-      scheduleId: 0,
-      title: "string",
-      content: "string",
-      startDate: "2023-05-26T05:49:53.840Z",
-      endDate: "2023-05-29T05:49:53.840Z",
-      members: [
-        {
-          id: 0,
-          name: "string",
-          imageUrl: "string",
-        },
-      ],
-    },
-    {
-      scheduleId: 0,
-      title: "string",
-      content: "string",
-      startDate: "2023-07-26T05:49:53.840Z",
-      endDate: "2023-07-29T05:49:53.840Z",
-      members: [
-        {
-          id: 0,
-          name: "string",
-          imageUrl: "string",
-        },
-      ],
-    },
-  ],
-};
-
-const CalendarList = () => {
+const CalendarList = ({ data }) => {
   const [modalIsVisible, setModalIsVisible] = useState(false);
   const modalOpen = () => {
     setModalIsVisible(true);
@@ -108,15 +25,15 @@ const CalendarList = () => {
   // 모든 일정 가져오기
   const { id } = useParams();
 
-  //const { isLoading, data } = useQuery("CalendarSchedule", () =>
-  //  getAllSchedule(id)
-  //);
-
   // 오늘 이후의 meeting 가져오기
-  const filteredMeetings = getAfterScheduleData(datas.meetings);
+  const filteredMeetings = data?.meetings
+    ? getAfterScheduleData(data.meetings)
+    : [];
 
   // 오늘 이후의 plan 가져오기
-  const filteredMilestones = getAfterScheduleData(datas.milestones);
+  const filteredMilestones = data?.milestones
+    ? getAfterScheduleData(data.milestones)
+    : [];
 
   // plan과 meeting 시간 순으로 sort해서 합치기
   const sortedEvents = getCombineSortedPlanMeeting(
@@ -130,13 +47,19 @@ const CalendarList = () => {
         <h5>오늘</h5>
         <h1>{calendar}</h1>
       </div>
-      {sortedEvents.map((data, index) => (
+      {!sortedEvents && (
+        <h1 className="check-schedule">🥲 통신 오류났습니다.</h1>
+      )}
+      {sortedEvents && sortedEvents.length === 0 && (
+        <h1 className="check-schedule">오늘 이후의 일정이 없습니다.</h1>
+      )}
+      {sortedEvents?.map((data, index) => (
         <CalendarItem key={index} data={data} />
       ))}
       <div className="button-container">
         <Button text="새 일정 생성" onClick={() => modalOpen()} />
       </div>
-      <NewScheduleModal open={modalIsVisible} onClose={modalClose} />
+      <ScheduleModal open={modalIsVisible} onClose={modalClose} />
     </div>
   );
 };

@@ -7,7 +7,13 @@ const AlertModal = ({ onClose, open, text, clickHandler, width }) => {
       <div className="confirm-modal">
         <h1>{text}</h1>
         <div className="confirm-modal-button">
-          <Button text="네" onClick={clickHandler} />
+          <Button
+            text="네"
+            onClick={() => {
+              clickHandler();
+              onClose();
+            }}
+          />
           <Button text="아니오" onClick={() => onClose()} />
         </div>
       </div>

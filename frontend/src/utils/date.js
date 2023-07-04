@@ -42,17 +42,15 @@ export const getTodayDateEnglish = () => {
 // --월 --일 시간 ~ 시간 : type이 time일 때
 // --월 --일 ~ --월 --일 : type이 date일 때
 export const getDateTimeDuration = (startDate, endDate, type) => {
+  const startMonth = new Date(startDate).getMonth();
+  const endMonth = new Date(endDate).getMonth();
+  const startDay = new Date(startDate).getDay();
+  const endDay = new Date(endDate).getDay();
   if (type === "MILESTONE") {
     return `${startDate.slice(5, 7)}월 ${startDate.slice(
       8,
       10
     )}일 ~ ${endDate.slice(5, 7)}월 ${endDate.slice(8, 10)}일`;
-  }
-  if (type === "MEETING") {
-    return `${startDate.slice(5, 7)}월 ${startDate.slice(
-      8,
-      10
-    )}일 ${startDate.slice(11, 16)} ~ ${endDate.slice(11, 16)}`;
   }
 };
 

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useParams } from "react-router";
 
 import { Avatar } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
@@ -11,14 +12,20 @@ import {
   getRemainDate,
   getStringDate,
 } from "../../utils/date";
-import ModifyScheduleModal from "./ModifyScheduleModal";
 import AlertModal from "./AlertModal";
-import { useParams } from "react-router";
+import { useDeleteScheduleMutation } from "../../lib/apis/scheduleManagementApi";
+import ScheduleModal from "./ScheduleModal";
 
 const ScheduleItem = (props) => {
+  const { id } = useParams();
   const [modalVisible, setModalVisible] = useState(false);
   const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const deleteBody = {
+    scheduleId: props.data.scheduleId,
+    projectId: parseInt(id, 10),
+  };
+  const { mutate: deleteSchedule } = useDeleteScheduleMutation(deleteBody);
 
   const openModalHandler = () => {
     setModalVisible(true);
@@ -62,17 +69,20 @@ const ScheduleItem = (props) => {
         members={props.data.members}
         type={props.data.scheduleCategory}
       />
-      <ModifyScheduleModal
+      <ScheduleModal
         open={modifyModalVisible}
         onClose={hideModifyModalHandler}
-        scheduleId={props.data.scheduleId}
-        state={props.data.state}
+        isEdit={true}
+        editScheduleId={props.data.scheduleId}
+        scheduleState={props.data.state}
       />
+
       <AlertModal
         open={deleteModalVisible}
         onClose={hideDeleteModalHandler}
         width="30%"
         text="정말 일정 삭제하시겠습니까?"
+        clickHandler={() => deleteSchedule(deleteBody)}
       />
       <div className="schedule-list-time">
         <h1>{day}</h1>
