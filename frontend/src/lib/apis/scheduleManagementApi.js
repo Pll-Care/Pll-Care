@@ -42,6 +42,7 @@ export const useAddNewScheduleMutation = () => {
     onSuccess: () => {
       queryClient.invalidateQueries("calendarSchedule");
       queryClient.invalidateQueries("filterSchedule");
+      toast.success("일정이 생성되었습니다");
     },
   });
 };
@@ -73,13 +74,36 @@ export const getDetailSchedule = async (projectId, scheduleId) => {
 };
 
 // 일정 수정
-export const modifySchedule = async (id, data) => {
+const modifySchedule = async (id, data) => {
   try {
-    const res = await customAxios.post(`auth/schedules/${id}`, data);
+    const res = await customAxios.put(`auth/schedule/${id}`, {
+      data: {
+        projectId: data.projectId,
+        startDate: data.startDate,
+        endDate: data.endDate,
+        state: data.state,
+        memberIds: data.memberIds,
+        title: data.title,
+        content: data.content,
+        category: data.category,
+        address: data.category === "MILESTONE" ? "" : data.address,
+      },
+    });
     return res;
   } catch (err) {
     return err;
   }
+};
+
+export const useModifyScheduleMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation(modifySchedule, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("calendarSchedule");
+      queryClient.invalidateQueries("filterSchedule");
+      toast.success("일정이 수정되었습니다");
+    },
+  });
 };
 
 // 일정 삭제

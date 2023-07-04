@@ -12,7 +12,6 @@ import {
   getRemainDate,
   getStringDate,
 } from "../../utils/date";
-import ModifyScheduleModal from "./ModifyScheduleModal";
 import AlertModal from "./AlertModal";
 import { useDeleteScheduleMutation } from "../../lib/apis/scheduleManagementApi";
 import ScheduleModal from "./ScheduleModal";
@@ -70,12 +69,6 @@ const ScheduleItem = (props) => {
         members={props.data.members}
         type={props.data.scheduleCategory}
       />
-      {/*<ModifyScheduleModal
-        
-        scheduleId={props.data.scheduleId}
-        state={props.data.state}
-        scheduleInfo={props.data}
-      />*/}
       <ScheduleModal
         open={modifyModalVisible}
         onClose={hideModifyModalHandler}

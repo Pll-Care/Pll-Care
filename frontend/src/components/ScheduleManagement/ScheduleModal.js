@@ -1,16 +1,16 @@
 import React, { useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useQuery } from "react-query";
 
 import Button from "../common/Button";
 import ModalContainer from "../common/ModalContainer";
-import { useQuery } from "react-query";
 import { getTeamMember } from "../../lib/apis/teamMemberManagementApi";
 import {
   getDetailSchedule,
   useAddNewScheduleMutation,
+  useModifyScheduleMutation,
 } from "../../lib/apis/scheduleManagementApi";
-import { useEffect } from "react";
 
 const ScheduleModal = ({
   open,
@@ -20,6 +20,7 @@ const ScheduleModal = ({
   scheduleState = null,
 }) => {
   const { id } = useParams();
+  // 멤버 리스트 받아오기
   const { data: names } = useQuery(["members", id], () => getTeamMember(id));
 
   const today = new Date();
@@ -37,33 +38,40 @@ const ScheduleModal = ({
     address: "",
   });
 
+  // 일정 상세 정보 가져오기
   const { data } = useQuery(
-    "ScheduleDetail",
-    () => getDetailSchedule(id, editScheduleId),
+    ["ScheduleDetail", editScheduleId, id],
+    async () => await getDetailSchedule(id, editScheduleId),
     {
       enabled: isEdit,
       onSuccess: (data) => {
-        const newMembers = data?.members
-          .filter((member) => member.in) // 'in' 속성이 true인 객체들을 필터링
-          .map((member) => member.id);
-        setFormValues({
-          projectId: parseInt(id, 10),
-          startDate: data.startDate,
-          endDate: data.endDate,
-          state: scheduleState,
-          memberIds: newMembers,
-          title: data.title,
-          content: data.content,
-          category: data.scheduleCategory,
-          address: data.address,
-        });
+        if (isEdit) {
+          const newMembers = data?.members
+            .filter((member) => member.in)
+            .map((member) => member.id);
+          setFormValues({
+            projectId: parseInt(id, 10),
+            startDate: data.startDate,
+            endDate: data.endDate,
+            state: scheduleState,
+            memberIds: newMembers,
+            title: data.title,
+            content: data.content,
+            category: data.scheduleCategory,
+            address: data.scheduleCategory === "MILESTONE" ? "" : data.address,
+          });
+        }
       },
     }
   );
-  console.log(formValues);
-  const { mutate: addSchedule, isLoading } =
+
+  // 일정 생성하는 react query 문
+  const { mutate: addSchedule, isLoading: addIsLoading } =
     useAddNewScheduleMutation(formValues);
 
+  // 일정 수정하는 react query 문
+  const { mutate: modifySchedule, isLoading: modifyIsLoading } =
+    useModifyScheduleMutation(editScheduleId, formValues);
   const {
     startDate,
     endDate,
@@ -105,7 +113,7 @@ const ScheduleModal = ({
     });
   };
 
-  // 일정 생성하기
+  // 일정 생성 또는 수정하기
   const submitNewPlan = () => {
     if (title.length < 2) {
       toast.error("일정 제목을 더 작성해주세요.");
@@ -141,7 +149,18 @@ const ScheduleModal = ({
     }
     console.log(formValues);
 
-    addSchedule(formValues);
+    // 일정 생성하기
+    if (!isEdit) {
+      const { state, ...formData } = formValues;
+      addSchedule(formData);
+    }
+
+    // 일정 수정하기
+    if (isEdit) {
+      console.log("수정", formValues);
+      modifySchedule(editScheduleId, formValues);
+    }
+
     setFormValues({
       projectId: parseInt(id, 10),
       startDate: initialDate,
@@ -242,8 +261,13 @@ const ScheduleModal = ({
           </div>
         </div>
         <div className="button-container">
-          {!isLoading && <Button text="생성 완료" onClick={submitNewPlan} />}
-          {isLoading && <Button text="로딩 중.." />}
+          {!isEdit && !addIsLoading && (
+            <Button text="생성 완료" onClick={submitNewPlan} />
+          )}
+          {isEdit && !modifyIsLoading && (
+            <Button text="수정 완료" onClick={submitNewPlan} />
+          )}
+          {(modifyIsLoading || addIsLoading) && <Button text="로딩 중.." />}
         </div>
       </div>
     </ModalContainer>
