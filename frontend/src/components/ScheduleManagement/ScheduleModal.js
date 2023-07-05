@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useQuery } from "react-query";
 
@@ -11,27 +11,30 @@ import {
   useAddNewScheduleMutation,
   useModifyScheduleMutation,
 } from "../../lib/apis/scheduleManagementApi";
+import { getProjectId } from "../../utils/getProjectId";
 
 const ScheduleModal = ({
   open,
   onClose,
   isEdit = false,
   editScheduleId = null,
-  scheduleState = null,
+  scheduleState = "TBD",
 }) => {
-  const { id } = useParams();
+  const projectId = getProjectId(useLocation());
   // 멤버 리스트 받아오기
-  const { data: names } = useQuery(["members", id], () => getTeamMember(id));
+  const { data: names } = useQuery(["members", projectId], () =>
+    getTeamMember(projectId)
+  );
 
   const today = new Date();
   const initialDate = today.toISOString().slice(0, 16);
 
   const [formValues, setFormValues] = useState({
     scheduleId: editScheduleId,
-    projectId: parseInt(id, 10),
+    projectId: projectId,
     startDate: initialDate,
     endDate: initialDate,
-    state: "TBD",
+    state: scheduleState,
     memberIds: [],
     title: "",
     content: "",
@@ -41,8 +44,8 @@ const ScheduleModal = ({
 
   // 일정 상세 정보 가져오기
   useQuery(
-    ["ScheduleDetail", editScheduleId, id],
-    async () => await getDetailSchedule(id, editScheduleId),
+    ["ScheduleDetail", editScheduleId, projectId],
+    async () => await getDetailSchedule(projectId, editScheduleId),
     {
       enabled: isEdit,
       onSuccess: (data) => {
@@ -52,7 +55,7 @@ const ScheduleModal = ({
             .map((member) => member.id);
           setFormValues({
             scheduleId: editScheduleId,
-            projectId: parseInt(id, 10),
+            projectId: projectId,
             startDate: data.startDate,
             endDate: data.endDate,
             state: scheduleState,
@@ -156,11 +159,11 @@ const ScheduleModal = ({
     }
 
     setFormValues({
-      projectId: parseInt(id, 10),
+      projectId: projectId,
       scheduleId: editScheduleId,
       startDate: initialDate,
       endDate: initialDate,
-      state: "TBD",
+      state: scheduleState,
       memberIds: [],
       title: "",
       content: "",

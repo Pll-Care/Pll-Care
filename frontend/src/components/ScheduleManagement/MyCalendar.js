@@ -1,24 +1,18 @@
-import { useParams } from "react-router";
+import { useLocation } from "react-router";
 import { useQuery } from "react-query";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 
 import CalendarList from "./CalendarList";
 import { getCalendarAllSchedule } from "../../lib/apis/scheduleManagementApi";
+import { getProjectId } from "../../utils/getProjectId";
 
 const MyCalendar = () => {
-  const { id } = useParams();
+  const projectId = getProjectId(useLocation());
 
-  const { data } = useQuery(
-    ["calendarSchedule", id],
-    () => getCalendarAllSchedule(id),
-    {
-      onSuccess: (data) => {
-        console.log("calendarSchedule", "이 샐행됨", data);
-      },
-    }
+  const { data } = useQuery(["calendarSchedule", projectId], () =>
+    getCalendarAllSchedule(projectId)
   );
-  //console.log("calendar 데이터", data);
 
   // 달력에 표시할 모든 일정들을 저장할 배열
   const events = [];

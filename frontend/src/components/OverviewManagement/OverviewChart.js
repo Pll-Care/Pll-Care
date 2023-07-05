@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useLocation } from "react-router";
 import { useQuery } from "react-query";
 import {
   VerticalTimeline,
@@ -13,12 +13,13 @@ import ComputerIcon from "@mui/icons-material/Computer";
 import Card from "../common/Card";
 import { getOverviewAllSchedule } from "../../lib/apis/scheduleManagementApi";
 import { getDateTimeDuration } from "../../utils/date";
+import { getProjectId } from "../../utils/getProjectId";
 
 const OverviewChart = () => {
-  const { id } = useParams();
+  const projectId = getProjectId(useLocation());
 
   const { isLoading, data } = useQuery("overviewSchedule", () =>
-    getOverviewAllSchedule(id)
+    getOverviewAllSchedule(projectId)
   );
   console.log(data);
 
@@ -58,7 +59,6 @@ const OverviewChart = () => {
     }
   }
 
-  console.log(orderGroups);
   return (
     <Card>
       <div className="schedule">

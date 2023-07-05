@@ -1,18 +1,19 @@
 import { useQuery } from "react-query";
-import { useParams } from "react-router";
-import { useMemo, useEffect } from "react";
+import { useLocation } from "react-router";
+import { useMemo } from "react";
 
 import Card from "../common/Card";
 import { getFilterSchedule } from "../../lib/apis/scheduleManagementApi";
 import { getPastScheduleData } from "../../utils/schedule";
 import ScheduleItem from "./ScheduleItem";
+import { getProjectId } from "../../utils/getProjectId";
 
 const ScheduleList = ({ nameId, option }) => {
-  const { id } = useParams();
+  const projectId = getProjectId(useLocation());
 
   const { isLoading, data } = useQuery(
-    ["filterSchedule", id, nameId, option],
-    () => getFilterSchedule(id, nameId)
+    ["filterSchedule", projectId, nameId, option],
+    () => getFilterSchedule(projectId, nameId)
   );
   let schedules = useMemo(() => {
     if (data && option === "all") {
