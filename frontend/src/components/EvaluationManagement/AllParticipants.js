@@ -33,6 +33,7 @@ const AllParticipants = ({ projectId, isCompleted }) => {
       <div className="evaluation-management-participants">
         {memberList.map((member) => (
           <ParticipantItem
+            key={member.id}
             member={member}
             handleFinalEvaluationModal={handleFinalEvaluationModal}
             handleClickParticipant={() =>

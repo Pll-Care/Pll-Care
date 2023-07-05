@@ -83,6 +83,7 @@ const ProjectList = ({ type, projectList, totalElements }) => {
         <>
           {projectList?.map((project) => (
             <ProjectItem
+              key={project.projectId}
               project={project}
               handleCompleteProjectClick={handleCompleteProjectClick}
               handleDeleteProjectClick={handleDeleteProjectClick}
