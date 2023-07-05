@@ -65,8 +65,6 @@
   }
 
   &_body {
-    width: 100%;
-    height: 100vh;
     background-color: #01e89e;
     &_container {
       height: 100%;
@@ -75,10 +73,15 @@
       border-top-right-radius: 24px;
       display: flex;
     }
+
+    &_sec {
+      padding: 30px 60px;
+      width: 100%;
+    }
   }
 
   &_nav {
-    width: 80px;
+    width: 90px;
     height: 100%;
     padding-top: 30px;
     border-top-left-radius: 24px;
@@ -110,6 +113,81 @@
     &_image_active {
       background-color: #01e89e;
       box-shadow: rgba(0, 0, 0, 0.4) 0px 22px 22px 0px;
+    }
+  }
+
+  &_introduce {
+    &_titleBox {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      & > h1 {
+        font-size: 24px;
+        font-weight: bold;
+      }
+    }
+
+    &_informationBox {
+      border: 1px solid red;
+      width: 80%;
+      margin: 0 auto;
+    }
+
+    &_contactBox {
+      padding: 25px;
+      &_title {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 24px;
+        & > h2 {
+          font-size: 18px;
+          font-weight: bold;
+        }
+
+        &_btnBox {
+          & > button {
+            margin-left: 15px;
+          }
+        }
+      }
+
+      &_items {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 24px;
+
+        &_item {
+          min-height: 30px;
+          & > span {
+            display: inline-block;
+            min-width: 60px;
+            font-weight: bold;
+            font-size: 16px;
+          }
+          & > a,
+          input {
+            margin-left: 30px;
+            border: none;
+          }
+
+          & > input {
+            padding: 5px 15px;
+            min-width: 300px;
+            font-size: 16px;
+            border-bottom: 2px solid #cccccc;
+          }
+
+          & > input:focus {
+            outline: none;
+            border-bottom: 2px solid #01e89e;
+          }
+        }
+      }
     }
   }
 }
