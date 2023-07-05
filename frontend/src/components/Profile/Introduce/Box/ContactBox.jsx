@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "../../common/Button";
+import Button from "../../../common/Button";
 
 const ContactBox = ({
   email = "https://www.naver.com",
@@ -31,10 +31,10 @@ const ContactBox = ({
   };
 
   return (
-    <div className="profile_introduce_contactBox">
-      <div className="profile_introduce_contactBox_title">
+    <div className="profile_body_introduce_Box">
+      <div className="profile_body_introduce_contactBox_title">
         <h2>연락처</h2>
-        <div className="profile_introduce_contactBox_title_btnBox">
+        <div className="profile_body_introduce_contactBox_title_btnBox">
           {isModify ? (
             <>
               <Button
@@ -73,20 +73,20 @@ export default ContactBox;
 
 const Default_UI = ({ email, github, websiteUrl }) => {
   return (
-    <div className="profile_introduce_contactBox_items">
-      <div className="profile_introduce_contactBox_items_item">
+    <div className="profile_body_introduce_contactBox_items">
+      <div className="profile_body_introduce_contactBox_items_item">
         <span>Email</span>
         <a href={email} target="_blank" rel="noreferrer">
           {email}
         </a>
       </div>
-      <div className="profile_introduce_contactBox_items_item">
+      <div className="profile_body_introduce_contactBox_items_item">
         <span>Github</span>
         <a href={github} target="_blank" rel="noreferrer">
           {github}
         </a>
       </div>
-      <div className="profile_introduce_contactBox_items_item">
+      <div className="profile_body_introduce_contactBox_items_item">
         <span>Website</span>
         <a href={websiteUrl} target="_blank" rel="noreferrer">
           {websiteUrl}
@@ -98,8 +98,8 @@ const Default_UI = ({ email, github, websiteUrl }) => {
 
 const Modify_UI = (chageEmail, chageGithub, chageWebsite) => {
   return (
-    <div className="profile_introduce_contactBox_items">
-      <div className="profile_introduce_contactBox_items_item">
+    <div className="profile_body_introduce_contactBox_items">
+      <div className="profile_body_introduce_contactBox_items_item">
         <span>Email</span>
         <input
           type="text"
@@ -108,7 +108,7 @@ const Modify_UI = (chageEmail, chageGithub, chageWebsite) => {
           onChange={(e) => chageEmail(e.target.value)}
         />
       </div>
-      <div className="profile_introduce_contactBox_items_item">
+      <div className="profile_body_introduce_contactBox_items_item">
         <span>Github</span>
 
         <input
@@ -118,7 +118,7 @@ const Modify_UI = (chageEmail, chageGithub, chageWebsite) => {
           onChange={(e) => chageGithub(e.target.value)}
         />
       </div>
-      <div className="profile_introduce_contactBox_items_item">
+      <div className="profile_body_introduce_contactBox_items_item">
         <span>Website</span>
 
         <input

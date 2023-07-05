@@ -1,4 +1,4 @@
-import ContactBox from "./ContactBox";
+import ContactBox from "./Box/ContactBox";
 
 const Introduce = () => {
   return (
