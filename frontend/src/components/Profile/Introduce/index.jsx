@@ -1,5 +1,16 @@
+import ContactBox from "./ContactBox";
+
 const Introduce = () => {
-  return <div>Introduce</div>;
+  return (
+    <div>
+      <div className="profile_introduce_titleBox">
+        <h1>개인정보</h1>
+      </div>
+      <div className="profile_introduce_informationBox">
+        <ContactBox />
+      </div>
+    </div>
+  );
 };
 
 export default Introduce;

@@ -6,7 +6,7 @@ const ProfileBody = () => {
     <div className="profile_body">
       <div className="profile_body_container">
         <ProfileNavbar />
-        <section>
+        <section className="profile_body_sec">
           <Outlet />
         </section>
       </div>

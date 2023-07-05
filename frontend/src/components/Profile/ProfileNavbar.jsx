@@ -4,6 +4,28 @@ import INTRODUCE from "../../assets/profile-default-img.png";
 import EVALUATAE from "../../assets/layers-img.png";
 import MY_PROJECT from "../../assets/star-img.png";
 
+const ProfileNavbar = () => {
+  return (
+    <nav className="profile_nav">
+      {navData.map((item) => (
+        <NavLink
+          key={item.title}
+          to={item.to}
+          className={({ isActive }) =>
+            isActive
+              ? "profile_nav_link profile_nav_image_active"
+              : "profile_nav_link"
+          }
+        >
+          {item.child}
+        </NavLink>
+      ))}
+    </nav>
+  );
+};
+
+export default ProfileNavbar;
+
 const navData = [
   {
     title: "개인정보",
@@ -26,25 +48,3 @@ const navData = [
     child: <img src={MY_PROJECT} alt="like_project" />,
   },
 ];
-
-const ProfileNavbar = () => {
-  return (
-    <nav className="profile_nav">
-      {navData.map((item) => (
-        <NavLink
-          key={item.title}
-          to={item.to}
-          className={({ isActive }) =>
-            isActive
-              ? "profile_nav_link profile_nav_image_active"
-              : "profile_nav_link"
-          }
-        >
-          {item.child}
-        </NavLink>
-      ))}
-    </nav>
-  );
-};
-
-export default ProfileNavbar;

@@ -112,6 +112,11 @@ input {
   border-radius: 0;
 }
 
+a {
+  text-decoration: none;
+  color: black;
+}
+
 .login-modal-wrapper {
   background: rgba(0, 0, 0, 0.8);
   -webkit-backdrop-filter: blur(5px);
@@ -2302,8 +2307,6 @@ input {
   padding: 8px 16px;
 }
 .profile_body {
-  width: 100%;
-  height: 100vh;
   background-color: #01e89e;
 }
 .profile_body_container {
@@ -2313,8 +2316,12 @@ input {
   border-top-right-radius: 24px;
   display: flex;
 }
+.profile_body_sec {
+  padding: 30px 60px;
+  width: 100%;
+}
 .profile_nav {
-  width: 80px;
+  width: 90px;
   height: 100%;
   padding-top: 30px;
   border-top-left-radius: 24px;
@@ -2341,4 +2348,66 @@ input {
 .profile_nav_image_active {
   background-color: #01e89e;
   box-shadow: rgba(0, 0, 0, 0.4) 0px 22px 22px 0px;
+}
+.profile_introduce_titleBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.profile_introduce_titleBox > h1 {
+  font-size: 24px;
+  font-weight: bold;
+}
+.profile_introduce_informationBox {
+  border: 1px solid red;
+  width: 80%;
+  margin: 0 auto;
+}
+.profile_introduce_contactBox {
+  padding: 25px;
+}
+.profile_introduce_contactBox_title {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 24px;
+}
+.profile_introduce_contactBox_title > h2 {
+  font-size: 18px;
+  font-weight: bold;
+}
+.profile_introduce_contactBox_title_btnBox > button {
+  margin-left: 15px;
+}
+.profile_introduce_contactBox_items {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 24px;
+}
+.profile_introduce_contactBox_items_item {
+  min-height: 30px;
+}
+.profile_introduce_contactBox_items_item > span {
+  display: inline-block;
+  min-width: 60px;
+  font-weight: bold;
+  font-size: 16px;
+}
+.profile_introduce_contactBox_items_item > a,
+.profile_introduce_contactBox_items_item input {
+  margin-left: 30px;
+  border: none;
+}
+.profile_introduce_contactBox_items_item > input {
+  padding: 5px 15px;
+  min-width: 300px;
+  font-size: 16px;
+  border-bottom: 2px solid #cccccc;
+}
+.profile_introduce_contactBox_items_item > input:focus {
+  outline: none;
+  border-bottom: 2px solid #01e89e;
 }/*# sourceMappingURL=fullcare.css.map */
