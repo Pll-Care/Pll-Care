@@ -1,11 +1,11 @@
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
+import { useMemo, useEffect } from "react";
 
 import Card from "../common/Card";
 import { getFilterSchedule } from "../../lib/apis/scheduleManagementApi";
 import { getPastScheduleData } from "../../utils/schedule";
 import ScheduleItem from "./ScheduleItem";
-import { useMemo } from "react";
 
 const ScheduleList = ({ nameId, option }) => {
   const { id } = useParams();
@@ -29,7 +29,7 @@ const ScheduleList = ({ nameId, option }) => {
     }
   }, [data, option]);
 
-  //console.log(option, "에 따른", schedules);
+  console.log(option, "에 따른", schedules);
   return (
     <Card className="schedule-lists">
       {isLoading && <h1 className="check-schedule-gray">⏳ 로딩 중...</h1>}

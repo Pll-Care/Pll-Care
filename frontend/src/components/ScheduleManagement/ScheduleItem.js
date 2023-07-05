@@ -87,16 +87,19 @@ const ScheduleItem = (props) => {
       <div className="schedule-list-time">
         <h1>{day}</h1>
         <h2>{getEnglishWeekdays(props.data.startDate)}</h2>
-
-        {props.data.state !== "TBD" ? (
+        {props.data.state === "COMPLETE" && (
           <Button
             text={"✍평가 작성"}
             size="small"
             onClick={openModalHandler}
           />
-        ) : (
-          <Button text={"🙂완료됨"} size="small" />
         )}
+        {props.data.state === "ONGOING" && (
+          <Button text={"💻진행 중"} size="small" />
+        )}
+        {/*{props.data.state === "COMPELETE" && (
+          <Button text={"🙂완료됨"} size="small" />
+        )}*/}
       </div>
       <div
         className={`schedule-list-content ${

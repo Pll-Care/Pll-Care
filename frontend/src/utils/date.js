@@ -39,18 +39,36 @@ export const getTodayDateEnglish = () => {
 };
 
 // 시작 일자와 종료 일자 기간을 표시하는 함수
-// --월 --일 시간 ~ 시간 : type이 time일 때
-// --월 --일 ~ --월 --일 : type이 date일 때
+// --월 --일 시간 ~ 시간 : type이 MEETING일 때
+// --월 --일 ~ --월 --일 : type이 MILESTONE일 때
 export const getDateTimeDuration = (startDate, endDate, type) => {
-  const startMonth = new Date(startDate).getMonth();
-  const endMonth = new Date(endDate).getMonth();
-  const startDay = new Date(startDate).getDay();
-  const endDay = new Date(endDate).getDay();
+  const startDateTime = new Date(startDate);
+  const endDateTime = new Date(endDate);
   if (type === "MILESTONE") {
-    return `${startDate.slice(5, 7)}월 ${startDate.slice(
-      8,
-      10
-    )}일 ~ ${endDate.slice(5, 7)}월 ${endDate.slice(8, 10)}일`;
+    const startMonth = startDateTime.toLocaleString("default", {
+      month: "short",
+    });
+    const startDay = startDateTime.getDate();
+
+    const endMonth = endDateTime.toLocaleString("default", { month: "short" });
+    const endDay = endDateTime.getDate();
+
+    return `${startMonth} ${startDay}일 ~ ${endMonth} ${endDay}일`;
+  }
+  if (type === "MEETING") {
+    const formattedStartDate = startDateTime.toLocaleString("default", {
+      month: "short",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    const formattedEndDate = endDateTime.toLocaleString("default", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    return `${formattedStartDate} ~ ${formattedEndDate}`;
   }
 };
 

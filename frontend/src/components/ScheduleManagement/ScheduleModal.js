@@ -27,6 +27,7 @@ const ScheduleModal = ({
   const initialDate = today.toISOString().slice(0, 16);
 
   const [formValues, setFormValues] = useState({
+    scheduleId: editScheduleId,
     projectId: parseInt(id, 10),
     startDate: initialDate,
     endDate: initialDate,
@@ -39,7 +40,7 @@ const ScheduleModal = ({
   });
 
   // 일정 상세 정보 가져오기
-  const { data } = useQuery(
+  useQuery(
     ["ScheduleDetail", editScheduleId, id],
     async () => await getDetailSchedule(id, editScheduleId),
     {
@@ -50,6 +51,7 @@ const ScheduleModal = ({
             .filter((member) => member.in)
             .map((member) => member.id);
           setFormValues({
+            scheduleId: editScheduleId,
             projectId: parseInt(id, 10),
             startDate: data.startDate,
             endDate: data.endDate,
@@ -71,17 +73,10 @@ const ScheduleModal = ({
 
   // 일정 수정하는 react query 문
   const { mutate: modifySchedule, isLoading: modifyIsLoading } =
-    useModifyScheduleMutation(editScheduleId, formValues);
-  const {
-    startDate,
-    endDate,
-    state,
-    memberIds,
-    title,
-    content,
-    category,
-    address,
-  } = formValues;
+    useModifyScheduleMutation(formValues);
+
+  const { startDate, endDate, memberIds, title, content, category, address } =
+    formValues;
 
   const inputRefs = {
     title: useRef(),
@@ -151,18 +146,18 @@ const ScheduleModal = ({
 
     // 일정 생성하기
     if (!isEdit) {
-      const { state, ...formData } = formValues;
+      const { state, scheduleId, ...formData } = formValues;
       addSchedule(formData);
     }
 
     // 일정 수정하기
     if (isEdit) {
-      console.log("수정", formValues);
-      modifySchedule(editScheduleId, formValues);
+      modifySchedule(formValues);
     }
 
     setFormValues({
       projectId: parseInt(id, 10),
+      scheduleId: editScheduleId,
       startDate: initialDate,
       endDate: initialDate,
       state: "TBD",

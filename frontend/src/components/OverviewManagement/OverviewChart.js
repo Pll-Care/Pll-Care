@@ -38,7 +38,7 @@ const OverviewChart = () => {
     "November",
     "December",
   ];
-  console.log(months[month]);
+  //console.log(months[month]);
 
   // 최소 order
   const minOrder = data
@@ -49,8 +49,6 @@ const OverviewChart = () => {
     ? Math.max(...data?.schedules.map((schedule) => schedule.order))
     : null;
 
-  console.log(minOrder, maxOrder);
-
   // order 값에 해당하는 배열 생성
   const orderGroups = [];
   if (data) {
@@ -60,6 +58,7 @@ const OverviewChart = () => {
     }
   }
 
+  console.log(orderGroups);
   return (
     <Card>
       <div className="schedule">
@@ -142,7 +141,7 @@ const OverviewChart = () => {
                       fontSize: "20px",
                     }}
                   >
-                    {index + 1} 주차
+                    {(index + 1) * 2 - 1}주 ~ {(index + 1) * 2}주차
                   </h2>
                 )}
                 {data.dateCategory === "MONTH" && (

@@ -12,11 +12,19 @@ import ModalContainer from "../common/ModalContainer";
 import { getDateTimeDuration } from "../../utils/date";
 import { makeNewMidEvaluation } from "../../lib/apis/evaluationManagementApi";
 import AlertModal from "./AlertModal";
+import { useCompleteScheduleMutation } from "../../lib/apis/scheduleManagementApi";
 
 const ScheduleEvaluationModal = (props) => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
+  const projectId = parseInt(id, 10);
+  const scheduleId = parseInt(props.id, 10);
+  const completeBody = {
+    scheduleId: scheduleId,
+    projectId: projectId,
+    state: "COMPLETE",
+  };
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const [name, setName] = useState(props.members[0].id);
   const [badge, setBadge] = useState("열정적인_참여자");
@@ -31,10 +39,26 @@ const ScheduleEvaluationModal = (props) => {
 
   const time = getDateTimeDuration(props.startDate, props.endDate, props.type);
 
+  // 완료 처리하는 react query 문
+  const { mutate: compeleteSchedule } =
+    useCompleteScheduleMutation(completeBody);
+
+  // 중간 평가하는 react query 문
   const { mutate } = useMutation(makeNewMidEvaluation, {
     onSuccess: () => {
-      props.onClose();
       toast.success("중간평가 성공하였습니다");
+      const newEvaluation = {
+        ...evaluation,
+        isEvaluation: true,
+      };
+      console.log("newevaluation", newEvaluation);
+      dispatch(addEvaluation(evaluation));
+      props.onClose();
+      console.log("완료처리", completeBody);
+      compeleteSchedule(completeBody);
+    },
+    onError: () => {
+      toast.error("중간평가 다시 해주세요");
     },
   });
 
@@ -47,30 +71,14 @@ const ScheduleEvaluationModal = (props) => {
 
   const evaluationClickHandler = () => {
     const data = {
-      projectId: parseInt(id, 10),
+      projectId: projectId,
       votedId: parseInt(name, 10),
-      scheduleId: parseInt(props.id, 10),
+      scheduleId: scheduleId,
       evaluationBadge: badge,
     };
-    if (data.votedId < 0) {
-      toast.error("멤버를 골라주세요");
-      return;
-    }
-    const badges = [
-      "열정적인_참여자",
-      "아이디어_뱅크",
-      "탁월한_리더",
-      "최고의_서포터",
-    ];
-    if (!badges.includes(data.evaluationBadge)) {
-      toast.error("뱃지를 골라주세요");
-    }
     setEvaluation(data);
-    //console.log(data);
     openConfirmModalHandler();
-    //mutate(data);
-    //console.log(newEvaluation);
-    //dispatch(addEvaluation(newEvaluation));
+    console.log(evaluation);
   };
 
   return (
