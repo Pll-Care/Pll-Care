@@ -32,6 +32,7 @@
         font-family: $heading-font;
         font-size: $sub-heading-font-size;
         color: #7a7a7a;
+
         p {
           text-align: center;
         }
@@ -39,7 +40,7 @@
 
       .project-item {
         border: $border;
-        width: 65%;
+        width: 50%;
         border-radius: 20px;
         margin-bottom: 30px;
         text-decoration: none;
@@ -60,11 +61,13 @@
 
         &-right-col {
           display: grid;
-          grid-template-columns: 60% 40%;
+          grid-template-columns: calc(100% - 40px) 40px;
           grid-template-rows: 100%;
+          justify-content: flex-end;
           color: #003b28;
           font-size: $body-font-size;
           font-family: $body-font;
+          height: 100%;
 
           .project-item-heading {
             font-size: $sub-heading-font-size;
@@ -92,9 +95,21 @@
             width: 100%;
             height: 100%;
             display: grid;
-            grid-template-columns: 1 1;
-            grid-template-rows: 50% 50%;
+            grid-template-rows: repeat(25%, 4);
             justify-content: space-between;
+            align-items: space-between;
+          }
+
+          .project-item-button-wrapper figure {
+            background: {
+              position: center;
+              repeat: no-repeat;
+            }
+
+            border: $border;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
           }
         }
 
@@ -186,7 +201,7 @@
         width: 85%;
         font-family: $body-font;
         font-size: $body-font-size;
-        color: #00AA72;
+        color: #00aa72;
 
         input[type="date"] {
           border: none;
@@ -226,11 +241,10 @@
   @include displayFlex;
 }
 
-
 .MuiBox-root {
   .delete-project {
     height: 70%;
-    
+
     &-heading {
       color: white;
       font-family: $heading-font;
@@ -261,8 +275,8 @@
 
       .project-item {
         width: 700px;
-        height: 180px;
-        padding: 20px;
+        height: 200px;
+        padding: 15px;
 
         figure {
           width: 70px;

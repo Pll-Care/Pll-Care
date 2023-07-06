@@ -1997,7 +1997,7 @@ input {
 }
 .management .project-list-wrapper .project-list .project-item {
   border: 2px solid #01e89e;
-  width: 65%;
+  width: 50%;
   border-radius: 20px;
   margin-bottom: 30px;
   text-decoration: none;
@@ -2015,11 +2015,13 @@ input {
 }
 .management .project-list-wrapper .project-list .project-item-right-col {
   display: grid;
-  grid-template-columns: 60% 40%;
+  grid-template-columns: calc(100% - 40px) 40px;
   grid-template-rows: 100%;
+  justify-content: flex-end;
   color: #003b28;
   font-size: 18px;
   font-family: "Noto Sans KR", sans-serif;
+  height: 100%;
 }
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-heading {
   font-size: 25px;
@@ -2041,9 +2043,17 @@ input {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: 1 1;
-  grid-template-rows: 50% 50%;
+  grid-template-rows: repeat(25%, 4);
   justify-content: space-between;
+  align-items: space-between;
+}
+.management .project-list-wrapper .project-list .project-item-right-col .project-item-button-wrapper figure {
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 2px solid #01e89e;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
 }
 .management .pagination-wrapper {
   margin-left: auto;
@@ -2128,7 +2138,7 @@ input {
   width: 85%;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 18px;
-  color: #00AA72;
+  color: #00aa72;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -2193,8 +2203,8 @@ input {
   }
   .management .project-list-wrapper .project-item {
     width: 700px;
-    height: 180px;
-    padding: 20px;
+    height: 200px;
+    padding: 15px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
