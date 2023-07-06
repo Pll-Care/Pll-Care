@@ -75,21 +75,13 @@ export const getDetailSchedule = async (projectId, scheduleId) => {
 };
 
 // 일정 수정
-const modifySchedule = async (id, data) => {
+const modifySchedule = async (data) => {
+  const { scheduleId, ...formBody } = data;
   try {
-    const res = await customAxios.put(`auth/schedule/${id}`, {
-      data: {
-        projectId: data.projectId,
-        startDate: data.startDate,
-        endDate: data.endDate,
-        state: data.state,
-        memberIds: data.memberIds,
-        title: data.title,
-        content: data.content,
-        category: data.category,
-        address: data.category === "MILESTONE" ? "" : data.address,
-      },
-    });
+    const res = await customAxios.put(
+      `auth/schedule/${data.scheduleId}`,
+      formBody
+    );
     return res;
   } catch (err) {
     return err;
@@ -100,6 +92,7 @@ export const useModifyScheduleMutation = () => {
   const queryClient = useQueryClient();
   return useMutation(modifySchedule, {
     onSuccess: () => {
+      console.log("수정실행됨");
       queryClient.invalidateQueries("calendarSchedule");
       queryClient.invalidateQueries("filterSchedule");
       queryClient.invalidateQueries("overviewSchedule");
@@ -136,18 +129,25 @@ export const useDeleteScheduleMutation = () => {
 };
 
 // 일정 완료
-export const updateDoneShcedule = async (scheduleId, projectId) => {
+export const updateDoneShcedule = async (data) => {
+  const { scheduleId, ...body } = data;
   try {
-    const body = {
-      projectId: projectId,
-      state: "TBD",
-    };
     const res = await customAxios.post(
-      `/auth/schedule/${scheduleId}/state`,
+      `/auth/schedule/${data.scheduleId}/state`,
       body
     );
     return res;
   } catch (err) {
     return err;
   }
+};
+
+export const useCompleteScheduleMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation(updateDoneShcedule, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("filterSchedule");
+      toast.success("일정이 완료처리되었습니다");
+    },
+  });
 };

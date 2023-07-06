@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useParams } from "react-router";
+import { useLocation } from "react-router";
+import { useSelector } from "react-redux";
 
 import CalendarItem from "./CalendarItem";
 import ScheduleModal from "./ScheduleModal";
@@ -9,8 +10,19 @@ import {
   getAfterScheduleData,
   getCombineSortedPlanMeeting,
 } from "../../utils/schedule";
+import { getProjectId } from "../../utils/getProjectId";
+import { isCompleteProject } from "../../utils/isCompleteProject";
 
 const CalendarList = ({ data }) => {
+  // 일정 완료 처리되어있을 때
+  const projectId = getProjectId(useLocation());
+
+  const completedProjectId = useSelector(
+    (state) => state.projectManagement.completedProjectId
+  );
+  const isComplete = isCompleteProject(completedProjectId, projectId);
+  console.log(isComplete);
+
   const [modalIsVisible, setModalIsVisible] = useState(false);
   const modalOpen = () => {
     setModalIsVisible(true);
@@ -21,9 +33,6 @@ const CalendarList = ({ data }) => {
 
   // 오늘 날짜 가져오기
   const calendar = getTodayDateEnglish();
-
-  // 모든 일정 가져오기
-  const { id } = useParams();
 
   // 오늘 이후의 meeting 가져오기
   const filteredMeetings = data?.meetings
@@ -57,7 +66,9 @@ const CalendarList = ({ data }) => {
         <CalendarItem key={index} data={data} />
       ))}
       <div className="button-container">
-        <Button text="새 일정 생성" onClick={() => modalOpen()} />
+        {isComplete === "ONGOING" && (
+          <Button text="새 일정 생성" onClick={() => modalOpen()} />
+        )}
       </div>
       <ScheduleModal open={modalIsVisible} onClose={modalClose} />
     </div>

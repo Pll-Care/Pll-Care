@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useParams } from "react-router";
+import { useLocation } from "react-router";
+import { useSelector } from "react-redux";
 
 import { Avatar } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
@@ -15,15 +16,23 @@ import {
 import AlertModal from "./AlertModal";
 import { useDeleteScheduleMutation } from "../../lib/apis/scheduleManagementApi";
 import ScheduleModal from "./ScheduleModal";
+import { getProjectId } from "../../utils/getProjectId";
+import { isCompleteProject } from "../../utils/isCompleteProject";
 
 const ScheduleItem = (props) => {
-  const { id } = useParams();
+  const projectId = getProjectId(useLocation());
+  // 완료 처리했을 때
+  const completedProjectId = useSelector(
+    (state) => state.projectManagement.completedProjectId
+  );
+  const isComplete = isCompleteProject(completedProjectId, projectId);
+
   const [modalVisible, setModalVisible] = useState(false);
   const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const deleteBody = {
     scheduleId: props.data.scheduleId,
-    projectId: parseInt(id, 10),
+    projectId: parseInt(projectId, 10),
   };
   const { mutate: deleteSchedule } = useDeleteScheduleMutation(deleteBody);
 
@@ -88,13 +97,14 @@ const ScheduleItem = (props) => {
         <h1>{day}</h1>
         <h2>{getEnglishWeekdays(props.data.startDate)}</h2>
 
-        {props.data.state !== "TBD" ? (
+        {props.data.state === "ONGOING" && isComplete === "ONGOING" && (
           <Button
             text={"✍평가 작성"}
             size="small"
             onClick={openModalHandler}
           />
-        ) : (
+        )}
+        {props.data.state === "COMPLETE" && isComplete === "ONGOING" && (
           <Button text={"🙂완료됨"} size="small" />
         )}
       </div>
@@ -120,16 +130,20 @@ const ScheduleItem = (props) => {
 
         <div className="schedule-list-content-time">
           {remainDate !== "past" && <h1>{remainDate}</h1>}
-          <Button
-            text="수정하기"
-            size="small"
-            onClick={openModifyModalHandler}
-          />
-          <Button
-            text="삭제하기"
-            size="small"
-            onClick={openDeleteModalHandler}
-          />
+          {isComplete === "ONGOING" && (
+            <Button
+              text="수정하기"
+              size="small"
+              onClick={openModifyModalHandler}
+            />
+          )}
+          {isComplete === "ONGOING" && (
+            <Button
+              text="삭제하기"
+              size="small"
+              onClick={openDeleteModalHandler}
+            />
+          )}
         </div>
       </div>
     </div>

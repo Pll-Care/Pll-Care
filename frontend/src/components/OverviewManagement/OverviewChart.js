@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useLocation } from "react-router";
 import { useQuery } from "react-query";
 import {
   VerticalTimeline,
@@ -13,12 +13,13 @@ import ComputerIcon from "@mui/icons-material/Computer";
 import Card from "../common/Card";
 import { getOverviewAllSchedule } from "../../lib/apis/scheduleManagementApi";
 import { getDateTimeDuration } from "../../utils/date";
+import { getProjectId } from "../../utils/getProjectId";
 
 const OverviewChart = () => {
-  const { id } = useParams();
+  const projectId = getProjectId(useLocation());
 
   const { isLoading, data } = useQuery("overviewSchedule", () =>
-    getOverviewAllSchedule(id)
+    getOverviewAllSchedule(projectId)
   );
   console.log(data);
 
@@ -38,7 +39,7 @@ const OverviewChart = () => {
     "November",
     "December",
   ];
-  console.log(months[month]);
+  //console.log(months[month]);
 
   // 최소 order
   const minOrder = data
@@ -48,8 +49,6 @@ const OverviewChart = () => {
   const maxOrder = data
     ? Math.max(...data?.schedules.map((schedule) => schedule.order))
     : null;
-
-  console.log(minOrder, maxOrder);
 
   // order 값에 해당하는 배열 생성
   const orderGroups = [];
@@ -142,7 +141,7 @@ const OverviewChart = () => {
                       fontSize: "20px",
                     }}
                   >
-                    {index + 1} 주차
+                    {(index + 1) * 2 - 1}주 ~ {(index + 1) * 2}주차
                   </h2>
                 )}
                 {data.dateCategory === "MONTH" && (
