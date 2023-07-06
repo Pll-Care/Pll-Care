@@ -49,9 +49,7 @@ export const editProject = async (newProjectData) => {
 };
 
 export const completeProject = async (projectId) => {
-  const response = await customAxios.put(`/auth/project/${projectId}/state`, {
-    state: "COMPLETE",
-  });
+  const response = await customAxios.post(`/auth/project/${projectId}/complete`);
 
   return response.data;
 };
