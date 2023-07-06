@@ -4,7 +4,7 @@ import { getStringDate } from "../../utils/date";
 
 import projectDefaultImg from "../../assets/project-default-img.jpg";
 
-import { uploadImage } from "../../lib/apis/projectManagementApi";
+import { deleteImage, uploadImage } from "../../lib/apis/projectManagementApi";
 import ModalContainer from "../common/ModalContainer";
 import useManagementMutation from "../../hooks/useManagementMutation";
 
@@ -63,7 +63,7 @@ const ProjectEditor = ({
     }
 
     if (new Date(startDate).getTime() > new Date(endDate).getTime()) {
-      toast.error("진행기간이 잘못 설정되었습니다. 다시 설정해주세요.");
+      toast.error("진행 기간이 잘못 설정되었습니다. 다시 설정해주세요.");
       return;
     }
 
@@ -122,9 +122,15 @@ const ProjectEditor = ({
     inputRef.current.click();
   };
 
+  const handleRemoveImageClick = () => {
+    deleteImage('');
+
+    setImgUrl(null);
+    setResponseImgUrl(null);
+  };
+
   useEffect(() => {
     if (isEdit) {
-      console.log(editData);
       setTitle(editData.title);
       setStartDate(editData.startDate);
       setEndDate(editData.endDate);
@@ -171,6 +177,11 @@ const ProjectEditor = ({
               <Button
                 onClick={handleUploadImageClick}
                 text={"이미지 업로드"}
+                size={"small"}
+              />
+              <Button
+                onClick={handleRemoveImageClick}
+                text={"이미지 제거"}
                 size={"small"}
               />
             </div>
