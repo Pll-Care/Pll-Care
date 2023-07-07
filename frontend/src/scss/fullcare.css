@@ -2326,6 +2326,13 @@ input {
   }
 }
 
+.recruitment-post-link {
+  text-decoration: none;
+}
+.recruitment-post-link:hover {
+  text-decoration: none;
+}
+
 .recruitment-post {
   border: 1px solid rgb(249, 249, 249);
   box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1);
@@ -2333,6 +2340,10 @@ input {
   margin: 15px;
   display: flex;
   flex-direction: column;
+}
+.recruitment-post:hover {
+  transform: scale(1.011);
+  transition: transform 0.2s ease-in-out;
 }
 .recruitment-post img {
   border-radius: 20px;
@@ -2343,8 +2354,8 @@ input {
   margin-left: auto;
 }
 .recruitment-post-stack img {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 }
 .recruitment-post-project {
   padding: 1rem;
@@ -2356,25 +2367,29 @@ input {
   display: flex;
   justify-content: space-between;
 }
+.recruitment-post-project-title h2 {
+  text-decoration: none;
+}
 .recruitment-post-project-title .post-icon {
   color: #01e89e;
+  border: 1px solid #01e89e;
+  border-radius: 50px;
+  padding: 3px;
+  transform: scale(1.2);
 }
-.recruitment-post-project-title .post-icon.liked {
-  color: orange;
-  border: none;
-}
-.recruitment-post-project-title .post-icon:not(.liked) {
-  color: white;
-  border: 2px solid black;
+.recruitment-post-project-title .post-bordericon {
+  transform: scale(1.2);
+  color: #01e89e;
+  border: 1px solid #01e89e;
+  border-radius: 50px;
+  padding: 3px;
 }
 .recruitment-post-project h2 {
   font-size: 25px;
-  text-decoration: none;
   margin-bottom: 10px;
 }
 .recruitment-post-project h3 {
   margin-bottom: 10px;
-  text-decoration: none;
 }
 
 .modal-title {
