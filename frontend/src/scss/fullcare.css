@@ -2310,8 +2310,20 @@ input {
 
 .recruitment {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin: 10px 10%;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .recruitment {
+    margin: 5px 0px;
+  }
+}
+@media (max-width: 767px) {
+  .recruitment {
+    margin: 5px 0px;
+  }
 }
 
 .recruitment-post {
