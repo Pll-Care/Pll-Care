@@ -1,0 +1,112 @@
+.detail_title {
+  @include displayFlex(row, space-between, center);
+  font-family: $heading-font;
+  padding: 2.5rem;
+  &_content {
+    img {
+      width: 80px;
+      height: 80px;
+      border-radius: 30px;
+    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &_description {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 15px;
+      h1 {
+        font-size: $heading-font-size;
+        color: rgb(109, 109, 109);
+      }
+      h2 {
+        color: gray;
+        margin-left: 20px;
+      }
+    }
+  }
+  h5 {
+    color: gray;
+  }
+}
+
+.recruitment_detail {
+  border: $border;
+  border-radius: 20px;
+  padding: 2.5rem;
+  margin-left: 3%;
+  margin-right: 3%;
+  font-family: $body-font;
+  h4 {
+    color: $font-color;
+    font-size: $body-font-size;
+    margin-right: 20px;
+  }
+  &_content {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    &_name {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &_content_last {
+    border-bottom: 1px solid rgb(204, 204, 204);
+
+    &_content {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &_container {
+    display: flex;
+    h4 {
+      margin-top: 25px;
+    }
+    border-bottom: 1px solid rgb(204, 204, 204);
+
+    &_select {
+      &_element {
+        align-items: center;
+        justify-content: space-between;
+        display: flex;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        &_member {
+          display: flex;
+          margin-left: 2rem;
+          align-items: center;
+          div {
+            background-color: rgb(173, 173, 173);
+            width: 20px;
+            height: 20px;
+            border-radius: 10px;
+            margin-right: 10px;
+          }
+          h5 {
+            margin-right: 20px;
+          }
+        }
+      }
+    }
+  }
+
+  &_description {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid rgb(204, 204, 204);
+    h4 {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    h5 {
+      margin-bottom: 20px;
+    }
+  }
+}

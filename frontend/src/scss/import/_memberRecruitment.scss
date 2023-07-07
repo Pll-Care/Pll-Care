@@ -1,0 +1,148 @@
+.member-option {
+  background-color: $background-color;
+  padding: 2rem;
+  top: 0;
+
+  &-title {
+    display: flex;
+    align-items: center;
+    color: white;
+    margin-top: 80px;
+    font-family: $heading-font;
+    h2 {
+      font-size: $heading-font-size;
+    }
+    h3 {
+      font-size: $sub-heading-font-size;
+      margin-left: 10px;
+    }
+  }
+}
+.member-filter {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+.filter-options {
+  margin-top: 10px;
+  &-option {
+    color: $background-color;
+  }
+}
+.recruitment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// RecruitmentPost 컴포넌트
+.recruitment-post {
+  //width: 100%;
+  border: 1px solid rgb(249, 249, 249);
+  box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+
+  img {
+    border-radius: 20px;
+    width: 100%;
+    height: 200px;
+  }
+
+  &-stack {
+    margin-left: auto;
+    img {
+      width: 50px;
+      height: 50px;
+    }
+  }
+
+  &-project {
+    padding: 1rem;
+    font-family: $heading-font;
+    color: $body-font-color;
+    text-decoration: none;
+    &-title {
+      display: flex;
+      justify-content: space-between;
+      .post-icon {
+        color: $font-color;
+        &.liked {
+          color: orange;
+          border: none;
+        }
+
+        &:not(.liked) {
+          color: white;
+          border: 2px solid black;
+        }
+      }
+    }
+    h2 {
+      font-size: $sub-heading-font-size;
+      text-decoration: none;
+      margin-bottom: 10px;
+    }
+    h3 {
+      margin-bottom: 10px;
+      text-decoration: none;
+    }
+  }
+}
+
+.modal-title {
+  display: flex;
+  justify-content: space-between;
+  font-family: $heading-font;
+  margin: 15px;
+  &-text {
+    display: flex;
+    align-items: center;
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 20px;
+      margin-left: 20px;
+    }
+    h2 {
+      font-size: $sub-heading-font-size;
+      margin-left: 10px;
+      color: white;
+    }
+  }
+}
+
+.modal-content {
+  &-project,
+  &-options {
+    display: flex;
+    align-items: center;
+    font-family: $heading-font;
+    h3 {
+      margin: 20px;
+      color: $sub-heading-color;
+    }
+  }
+  &-options {
+    border-bottom: 2px solid rgb(214, 214, 214);
+    &-types {
+      display: flex;
+      flex-direction: column;
+      color: gray;
+      &-select {
+        display: flex;
+        margin: 15px;
+      }
+    }
+  }
+  &-description {
+    flex-direction: column;
+    h3 {
+      margin: 20px;
+      color: $sub-heading-color;
+      font-family: $heading-font;
+    }
+  }
+}
