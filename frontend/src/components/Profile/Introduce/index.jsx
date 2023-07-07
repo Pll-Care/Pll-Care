@@ -1,4 +1,5 @@
-import ContactBox from "./Box/ContactBox";
+import ContactBox from "./ContactBox";
+import PositionBox from "./PositionBox";
 
 const Introduce = () => {
   return (
@@ -8,6 +9,7 @@ const Introduce = () => {
       </div>
       <div className="profile_introduce_informationBox">
         <ContactBox />
+        <PositionBox />
       </div>
     </div>
   );

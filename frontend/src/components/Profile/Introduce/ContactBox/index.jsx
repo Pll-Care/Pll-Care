@@ -32,9 +32,9 @@ const ContactBox = ({
 
   return (
     <div className="profile_body_introduce_Box">
-      <div className="profile_body_introduce_contactBox_title">
+      <div className="profile_body_introduce_Box_title">
         <h2>연락처</h2>
-        <div className="profile_body_introduce_contactBox_title_btnBox">
+        <div className="profile_body_introduce_Box_title_btnBox">
           {isModify ? (
             <>
               <Button
