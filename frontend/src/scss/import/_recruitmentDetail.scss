@@ -1,8 +1,16 @@
+// RecruitmentDetailTitle 컴포넌트
 .detail_title {
   @include displayFlex(row, space-between, center);
+  @include mobile {
+    flex-direction: column;
+  }
   font-family: $heading-font;
   padding: 2.5rem;
   &_content {
+    .mui_arrow {
+      color: black;
+      margin-right: 20px;
+    }
     img {
       width: 80px;
       height: 80px;
@@ -11,26 +19,28 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    &_description {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-left: 15px;
-      h1 {
-        font-size: $heading-font-size;
-        color: rgb(109, 109, 109);
-      }
-      h2 {
-        color: gray;
-        margin-left: 20px;
-      }
+
+    h1 {
+      font-size: $heading-font-size;
+      color: rgb(109, 109, 109);
+      margin-left: 20px;
+    }
+    h2 {
+      color: gray;
+      margin-left: 20px;
     }
   }
-  h5 {
-    color: gray;
+  &_plus {
+    @include displayFlex(row, center, center);
+    h5,
+    h2 {
+      color: gray;
+      margin-right: 15px;
+    }
   }
 }
 
+// RecruitmentDetailContent 컴포넌트
 .recruitment_detail {
   border: $border;
   border-radius: 20px;
@@ -47,10 +57,16 @@
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    h5 {
+      margin-left: 15px;
+    }
 
     &_name {
       display: flex;
       align-items: center;
+      h5 {
+        margin-left: 10px;
+      }
     }
   }
 
@@ -61,38 +77,54 @@
       margin-bottom: 20px;
       display: flex;
       align-items: center;
+      h5 {
+        margin-left: 15px;
+      }
     }
   }
 
   &_container {
     display: flex;
-    h4 {
-      margin-top: 25px;
-    }
+    align-items: center;
+    justify-content: center;
     border-bottom: 1px solid rgb(204, 204, 204);
-
-    &_select {
-      &_element {
-        align-items: center;
-        justify-content: space-between;
+    h4 {
+      width: 10%;
+      text-align: left;
+      white-space: nowrap;
+    }
+    @include mobile {
+      flex-direction: column;
+      h4 {
+        width: auto;
+      }
+    }
+    &_options {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      &_content {
         display: flex;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        &_member {
-          display: flex;
-          margin-left: 2rem;
-          align-items: center;
-          div {
-            background-color: rgb(173, 173, 173);
-            width: 20px;
-            height: 20px;
-            border-radius: 10px;
-            margin-right: 10px;
-          }
-          h5 {
-            margin-right: 20px;
-          }
-        }
+      }
+    }
+
+    &_select,
+    &_member,
+    &_button {
+      h5 {
+        margin-bottom: 30px;
+        margin-top: 30px;
+      }
+    }
+    &_member {
+      margin-right: 20px;
+    }
+    &_button {
+      display: flex;
+      flex-direction: column;
+      margin-top: 17px;
+      Button {
+        margin: 8px 20px;
       }
     }
   }

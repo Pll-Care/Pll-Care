@@ -1,4 +1,5 @@
 import { Avatar } from "@mui/material";
+
 import Button from "../common/Button";
 
 const RecruitmentDetailContent = () => {
@@ -26,48 +27,31 @@ const RecruitmentDetailContent = () => {
 
       <div className="recruitment_detail_container">
         <h4>포지션</h4>
-        <div className="recruitment_detail_container_select">
-          <div className="recruitment_detail_container_select_element">
+        <div className="recruitment_detail_container_options">
+          <div className="recruitment_detail_container_select">
             <h5>백엔드</h5>
-            <div className="recruitment_detail_container_select_element_member">
-              <div />
-              <div />
-              <div />
-              <h5>3/3</h5>
-              <Button text="지원" size="small" />
-            </div>
-          </div>
-
-          <div className="recruitment_detail_container_select_element">
             <h5>프론트 엔드</h5>
-            <div className="recruitment_detail_container_select_element_member">
-              <div />
-              <div />
-              <div />
-              <h5>3/3</h5>
-              <Button text="지원" size="small" />
-            </div>
-          </div>
-
-          <div className="recruitment_detail_container_select_element">
             <h5>디자인</h5>
-            <div className="recruitment_detail_container_select_element_member">
-              <div />
-              <div />
-              <div />
-              <h5>3/3</h5>
-              <Button text="지원" size="small" />
-            </div>
-          </div>
-
-          <div className="recruitment_detail_container_select_element">
             <h5>기획</h5>
-            <div className="recruitment_detail_container_select_element_member">
-              <div />
-              <div />
-              <div />
-              <h5>3/3</h5>
-              <Button text="지원" size="small" />
+          </div>
+          <div className="recruitment_detail_container_options_content">
+            <div className="recruitment_detail_container_member">
+              <h5>⚪⚪⚪⚪</h5>
+              <h5>⚪⚪⚪⚪</h5>
+              <h5>⚪⚪⚪⚪</h5>
+              <h5>⚪⚪</h5>
+            </div>
+            <div className="recruitment_detail_container_member">
+              <h5>2/2</h5>
+              <h5>2/2</h5>
+              <h5>2/2</h5>
+              <h5>2/2</h5>
+            </div>
+            <div className="recruitment_detail_container_button">
+              <Button size="small" text="지원" />
+              <Button size="small" text="지원" />
+              <Button size="small" text="지원" />
+              <Button size="small" text="지원" />
             </div>
           </div>
         </div>

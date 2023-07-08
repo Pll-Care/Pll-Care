@@ -2452,32 +2452,44 @@ input {
   font-family: "IBM Plex Sans KR", sans-serif;
   padding: 2.5rem;
 }
+@media (max-width: 767px) {
+  .detail_title {
+    flex-direction: column;
+  }
+}
 .detail_title_content {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.detail_title_content .mui_arrow {
+  color: black;
+  margin-right: 20px;
 }
 .detail_title_content img {
   width: 80px;
   height: 80px;
   border-radius: 30px;
 }
-.detail_title_content_description {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 15px;
-}
-.detail_title_content_description h1 {
+.detail_title_content h1 {
   font-size: 40px;
   color: rgb(109, 109, 109);
+  margin-left: 20px;
 }
-.detail_title_content_description h2 {
+.detail_title_content h2 {
   color: gray;
   margin-left: 20px;
 }
-.detail_title h5 {
+.detail_title_plus {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.detail_title_plus h5,
+.detail_title_plus h2 {
   color: gray;
+  margin-right: 15px;
 }
 
 .recruitment_detail {
@@ -2498,9 +2510,15 @@ input {
   align-items: center;
   margin-bottom: 20px;
 }
+.recruitment_detail_content h5 {
+  margin-left: 15px;
+}
 .recruitment_detail_content_name {
   display: flex;
   align-items: center;
+}
+.recruitment_detail_content_name h5 {
+  margin-left: 10px;
 }
 .recruitment_detail_content_last {
   border-bottom: 1px solid rgb(204, 204, 204);
@@ -2510,34 +2528,50 @@ input {
   display: flex;
   align-items: center;
 }
+.recruitment_detail_content_last_content h5 {
+  margin-left: 15px;
+}
 .recruitment_detail_container {
   display: flex;
+  align-items: center;
+  justify-content: center;
   border-bottom: 1px solid rgb(204, 204, 204);
 }
 .recruitment_detail_container h4 {
-  margin-top: 25px;
+  width: 10%;
+  text-align: left;
+  white-space: nowrap;
 }
-.recruitment_detail_container_select_element {
-  align-items: center;
+@media (max-width: 767px) {
+  .recruitment_detail_container {
+    flex-direction: column;
+  }
+  .recruitment_detail_container h4 {
+    width: auto;
+  }
+}
+.recruitment_detail_container_options {
+  display: flex;
+  width: 100%;
   justify-content: space-between;
+}
+.recruitment_detail_container_options_content {
   display: flex;
-  margin-top: 20px;
-  margin-bottom: 20px;
 }
-.recruitment_detail_container_select_element_member {
-  display: flex;
-  margin-left: 2rem;
-  align-items: center;
+.recruitment_detail_container_select h5, .recruitment_detail_container_member h5, .recruitment_detail_container_button h5 {
+  margin-bottom: 30px;
+  margin-top: 30px;
 }
-.recruitment_detail_container_select_element_member div {
-  background-color: rgb(173, 173, 173);
-  width: 20px;
-  height: 20px;
-  border-radius: 10px;
-  margin-right: 10px;
-}
-.recruitment_detail_container_select_element_member h5 {
+.recruitment_detail_container_member {
   margin-right: 20px;
+}
+.recruitment_detail_container_button {
+  display: flex;
+  flex-direction: column;
+  margin-top: 17px;
+}
+.recruitment_detail_container_button Button {
+  margin: 8px 20px;
 }
 .recruitment_detail_description {
   display: flex;
