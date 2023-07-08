@@ -1,3 +1,4 @@
+// MemberOption 컴포넌트
 .member-option {
   background-color: $background-color;
   padding: 2rem;
@@ -19,14 +20,185 @@
   }
 }
 .member-filter {
-  padding: 1rem;
   display: flex;
   justify-content: space-between;
 }
-.filter-options {
-  margin-top: 10px;
-  &-option {
-    color: $background-color;
+.member-button {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  Button {
+    height: 40px;
+    margin: 10px;
+  }
+}
+
+// MemberRecuritmentWrite 컴포넌트
+.member-write {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: $background-color;
+  padding: 1rem;
+  @include mobile {
+    padding: 0.3rem;
+  }
+
+  .member-title {
+    display: flex;
+    justify-content: space-between;
+    font-family: $heading-font;
+    margin: 10px 7%;
+    margin-top: 30px;
+
+    &-text {
+      display: flex;
+      align-items: center;
+      .recruitment-direction {
+        color: white;
+      }
+      img {
+        width: 50px;
+        height: 50px;
+        border-radius: 20px;
+        margin-left: 20px;
+      }
+      h2 {
+        font-size: $heading-font-size;
+        margin-left: 15px;
+        color: white;
+      }
+    }
+    &-button {
+      margin-top: 10px;
+      Button {
+        margin-left: 10px;
+      }
+    }
+  }
+  &-card {
+    margin: 20px 7%;
+  }
+
+  .member-content {
+    padding: 2rem 3rem;
+    @include mobile {
+      padding: 0.3rem;
+    }
+    &-project,
+    &-options,
+    &-position {
+      display: flex;
+      align-items: center;
+      font-family: $heading-font;
+      h3 {
+        margin: 30px 20px;
+        color: $sub-heading-color;
+      }
+      input,
+      select {
+        border-radius: 20px;
+        padding: 0.3rem;
+        font-family: $heading-font;
+        color: gray;
+      }
+
+      .member-select1 {
+        margin-left: 20px;
+      }
+      .member-select2 {
+        margin-left: 45px;
+      }
+      .member-select3 {
+        margin-left: 50px;
+      }
+      .member-select4 {
+        margin-left: 85px;
+      }
+    }
+    &-options {
+      border-bottom: 2px solid rgb(214, 214, 214);
+    }
+
+    // 기술 스택 입력하기
+    &-position {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 2px solid rgb(214, 214, 214);
+      @include mobile {
+        flex-direction: column;
+      }
+      h3 {
+        width: 10%;
+      }
+
+      &-container {
+        display: flex;
+        width: 90%;
+        .member-position-title {
+          h5 {
+            margin: 40px 10px;
+          }
+        }
+        .member-list {
+          display: flex;
+          justify-content: flex-start;
+          @include mobile {
+            flex-direction: column;
+          }
+          .member-stack {
+            display: flex;
+            flex-direction: column;
+            input {
+              height: 25px;
+              margin-top: 33px;
+              width: 50px;
+              border-radius: 50px;
+              margin-left: 20px;
+            }
+          }
+          .member-stackbuttons {
+            margin-left: 30px;
+            .member-stackbutton {
+              margin-top: 29px;
+              Button {
+                margin-right: 10px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &-description {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      h3 {
+        align-self: flex-start;
+        margin: 20px 40px;
+        color: $sub-heading-color;
+        font-family: $heading-font;
+      }
+      input {
+        border-radius: 20px;
+        width: 90%;
+        box-shadow: 0px 10px 10px 5px rgba(40, 40, 40, 0.1);
+        border: none;
+        height: 200px;
+      }
+      .member-file {
+        width: 200px;
+        height: 30px;
+        border-radius: 10px;
+        margin: 10px 5%;
+        align-self: flex-start;
+        @include mobile {
+          width: 100px;
+        }
+      }
+    }
   }
 }
 
@@ -113,61 +285,6 @@
     }
     h3 {
       margin-bottom: 10px;
-    }
-  }
-}
-
-.modal-title {
-  display: flex;
-  justify-content: space-between;
-  font-family: $heading-font;
-  margin: 15px;
-  &-text {
-    display: flex;
-    align-items: center;
-    img {
-      width: 50px;
-      height: 50px;
-      border-radius: 20px;
-      margin-left: 20px;
-    }
-    h2 {
-      font-size: $sub-heading-font-size;
-      margin-left: 10px;
-      color: white;
-    }
-  }
-}
-
-.modal-content {
-  &-project,
-  &-options {
-    display: flex;
-    align-items: center;
-    font-family: $heading-font;
-    h3 {
-      margin: 20px;
-      color: $sub-heading-color;
-    }
-  }
-  &-options {
-    border-bottom: 2px solid rgb(214, 214, 214);
-    &-types {
-      display: flex;
-      flex-direction: column;
-      color: gray;
-      &-select {
-        display: flex;
-        margin: 15px;
-      }
-    }
-  }
-  &-description {
-    flex-direction: column;
-    h3 {
-      margin: 20px;
-      color: $sub-heading-color;
-      font-family: $heading-font;
     }
   }
 }
