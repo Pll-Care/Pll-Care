@@ -78,44 +78,75 @@ const MemberRecruitmentWrite = () => {
           <div className="member-content-position">
             <h3>포지션</h3>
             <div className="member-content-position-container">
-              <div className="member-position-title">
-                <h5>백엔드</h5>
-                <h5>프론트 엔드</h5>
-                <h5>디자인</h5>
-                <h5>기획</h5>
-              </div>
-              <div className="member-list">
+              <div className="member-content-position-container-option">
                 <div className="member-stack">
-                  <input type="number" min="0" />
-                  <input type="number" min="0" />
-                  <input type="number" min="0" />
-                  <input type="number" min="0" />
+                  <h5>백엔드</h5>
+                  <input
+                    className="position-number"
+                    type="number"
+                    min="0"
+                    placeholder="0"
+                  />
                 </div>
-                <div className="member-stackbuttons">
-                  <div className="member-stackbutton">
-                    {array.map((stack) => (
-                      <Button text={stack} size="small" />
-                    ))}
-                    <input placeholder="백엔드 기술 스택을 입력하세요" />
-                  </div>
-                  <div className="member-stackbutton">
-                    {array.map((stack) => (
-                      <Button text={stack} size="small" />
-                    ))}
-                    <input placeholder="프론트 기술 스택을 입력하세요" />
-                  </div>
-                  <div className="member-stackbutton">
-                    {array.map((stack) => (
-                      <Button text={stack} size="small" />
-                    ))}
-                    <input placeholder="디자인 기술 스택을 입력하세요" />
-                  </div>
-                  <div className="member-stackbutton">
-                    {array.map((stack) => (
-                      <Button text={stack} size="small" />
-                    ))}
-                    <input placeholder="기획 기술 스택을 입력하세요" />
-                  </div>
+                <div className="member-stackinput">
+                  {array.map((stack) => (
+                    <Button text={stack} size="small" />
+                  ))}
+                  <input placeholder="백엔드 기술 스택을 입력하세요" />
+                </div>
+              </div>
+
+              <div className="member-content-position-container-option">
+                <div className="member-stack">
+                  <h5>프론트엔드</h5>
+                  <input
+                    className="position-number"
+                    type="number"
+                    min="0"
+                    placeholder="0"
+                  />
+                </div>
+                <div className="member-stackinput">
+                  {array.map((stack) => (
+                    <Button text={stack} size="small" />
+                  ))}
+                  <input placeholder="프론트 기술 스택을 입력하세요" />
+                </div>
+              </div>
+
+              <div className="member-content-position-container-option">
+                <div className="member-stack">
+                  <h5>디자인</h5>
+                  <input
+                    className="position-number"
+                    type="number"
+                    min="0"
+                    placeholder="0"
+                  />
+                </div>
+                <div className="member-stackinput">
+                  {array.map((stack) => (
+                    <Button text={stack} size="small" />
+                  ))}
+                  <input placeholder="디자인 기술 스택을 입력하세요" />
+                </div>
+              </div>
+
+              <div className="member-content-position-container-option">
+                <div className="member-stack">
+                  <h5>기획</h5>
+                  <input
+                    className="position-number"
+                    type="number"
+                    min="0"
+                    placeholder="0"
+                  />
+                </div>
+                <div className="member-stackinput">
+                  {array.map((stack) => (
+                    <Button text={stack} size="small" />
+                  ))}
+                  <input placeholder="기획 기술 스택을 입력하세요" />
                 </div>
               </div>
             </div>
@@ -123,21 +154,22 @@ const MemberRecruitmentWrite = () => {
 
           <div className="member-content-description">
             <h3>설명</h3>
-            <input />
+            <textarea />
           </div>
 
           <div className="member-content-description">
             <h3>레퍼런스</h3>
-            <input />
+            <textarea />
             <input className="member-file" placeholder="파일을 첨부하세요" />
           </div>
 
           <div className="member-content-description">
             <h3>컨택</h3>
-            <input />
+            <textarea />
           </div>
         </div>
       </Card>
+      <Button text="수정 완료" />
     </div>
   );
 };

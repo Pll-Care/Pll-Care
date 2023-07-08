@@ -2317,6 +2317,10 @@ input {
   background-color: #01e89e;
   padding: 1rem;
 }
+.member-write > Button {
+  margin-left: auto;
+  margin-right: 7%;
+}
 @media (max-width: 767px) {
   .member-write {
     padding: 0.3rem;
@@ -2408,44 +2412,57 @@ input {
     flex-direction: column;
   }
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .member-write .member-content-position {
+    flex-direction: column;
+  }
+}
 .member-write .member-content-position h3 {
   width: 10%;
 }
 .member-write .member-content-position-container {
   display: flex;
+  flex-direction: column;
   width: 90%;
 }
-.member-write .member-content-position-container .member-position-title h5 {
-  margin: 40px 10px;
-}
-.member-write .member-content-position-container .member-list {
+.member-write .member-content-position-container-option {
   display: flex;
-  justify-content: flex-start;
+  align-items: center;
+  margin: 40px 0px;
 }
 @media (max-width: 767px) {
-  .member-write .member-content-position-container .member-list {
+  .member-write .member-content-position-container-option {
     flex-direction: column;
   }
 }
-.member-write .member-content-position-container .member-list .member-stack {
+@media (min-width: 767px) and (max-width: 1024px) {
+  .member-write .member-content-position-container-option {
+    flex-direction: column;
+  }
+}
+.member-write .member-content-position-container-option .member-stack {
   display: flex;
-  flex-direction: column;
+  align-items: center;
 }
-.member-write .member-content-position-container .member-list .member-stack input {
-  height: 25px;
-  margin-top: 33px;
+@media (max-width: 767px) {
+  .member-write .member-content-position-container-option .member-stack {
+    justify-content: space-between;
+  }
+}
+.member-write .member-content-position-container-option .member-stackinput {
+  align-items: center;
+  justify-content: center;
+}
+.member-write .member-content-position-container-option .member-stackinput Button {
+  margin: 10px 10px;
+}
+.member-write .member-content-position-container-option h5 {
+  margin-right: 20px;
+}
+.member-write .member-content-position-container-option .position-number {
   width: 50px;
+  margin: 0px 40px;
   border-radius: 50px;
-  margin-left: 20px;
-}
-.member-write .member-content-position-container .member-list .member-stackbuttons {
-  margin-left: 30px;
-}
-.member-write .member-content-position-container .member-list .member-stackbuttons .member-stackbutton {
-  margin-top: 29px;
-}
-.member-write .member-content-position-container .member-list .member-stackbuttons .member-stackbutton Button {
-  margin-right: 10px;
 }
 .member-write .member-content-description {
   display: flex;
@@ -2458,12 +2475,13 @@ input {
   color: #00aa72;
   font-family: "IBM Plex Sans KR", sans-serif;
 }
-.member-write .member-content-description input {
+.member-write .member-content-description textarea {
   border-radius: 20px;
   width: 90%;
   box-shadow: 0px 10px 10px 5px rgba(40, 40, 40, 0.1);
   border: none;
   height: 200px;
+  padding: 0.5rem;
 }
 .member-write .member-content-description .member-file {
   width: 200px;

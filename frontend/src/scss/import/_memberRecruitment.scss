@@ -40,6 +40,11 @@
   flex-direction: column;
   background-color: $background-color;
   padding: 1rem;
+  & > Button {
+    margin-left: auto;
+    margin-right: 7%;
+  }
+
   @include mobile {
     padding: 0.3rem;
   }
@@ -129,43 +134,49 @@
       @include mobile {
         flex-direction: column;
       }
+      @include tablet {
+        flex-direction: column;
+      }
       h3 {
         width: 10%;
       }
 
       &-container {
         display: flex;
+        flex-direction: column;
         width: 90%;
-        .member-position-title {
-          h5 {
-            margin: 40px 10px;
-          }
-        }
-        .member-list {
+        &-option {
           display: flex;
-          justify-content: flex-start;
+          align-items: center;
+          margin: 40px 0px;
           @include mobile {
+            flex-direction: column;
+          }
+          @include tablet {
             flex-direction: column;
           }
           .member-stack {
             display: flex;
-            flex-direction: column;
-            input {
-              height: 25px;
-              margin-top: 33px;
-              width: 50px;
-              border-radius: 50px;
-              margin-left: 20px;
+            align-items: center;
+            @include mobile {
+              justify-content: space-between;
             }
           }
-          .member-stackbuttons {
-            margin-left: 30px;
-            .member-stackbutton {
-              margin-top: 29px;
-              Button {
-                margin-right: 10px;
-              }
+          .member-stackinput {
+            align-items: center;
+            justify-content: center;
+            Button {
+              margin: 10px 10px;
             }
+          }
+          h5 {
+            margin-right: 20px;
+          }
+
+          .position-number {
+            width: 50px;
+            margin: 0px 40px;
+            border-radius: 50px;
           }
         }
       }
@@ -181,12 +192,13 @@
         color: $sub-heading-color;
         font-family: $heading-font;
       }
-      input {
+      textarea {
         border-radius: 20px;
         width: 90%;
         box-shadow: 0px 10px 10px 5px rgba(40, 40, 40, 0.1);
         border: none;
         height: 200px;
+        padding: 0.5rem;
       }
       .member-file {
         width: 200px;
