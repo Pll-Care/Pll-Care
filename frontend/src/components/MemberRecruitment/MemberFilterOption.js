@@ -1,35 +1,57 @@
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import { useState } from "react";
 
-const MemberFilterOption = () => {
-  const [backend, setBackend] = useState("");
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import SearchIcon from "@mui/icons-material/Search";
 
-  const handleBackendChange = (e) => {
-    setBackend(e.target.value);
-  };
+import Button from "../common/Button";
+
+const MemberFilterOption = () => {
+  const [optionClick, setOptionClick] = useState(false);
+
+  const backend = ["spring", "django", "express", "flask", "php"];
+  const frontend = [
+    "React",
+    "Vue",
+    "typescript",
+    "react-query",
+    "redux",
+    "recoil",
+    "Next",
+  ];
+  const design = ["adobe", "figma", "sketch"];
+  const [backendStack, setBackendStack] = useState("");
+  const [frontendStack, setFrontendStack] = useState("");
+  const [designStack, setDesignStack] = useState("");
   return (
     <div className="filter-options">
-      <FormControl
-        sx={{ m: 1, minWidth: 120 }}
-        size="small"
-        className="filter-options-option"
-      >
-        <InputLabel id="demo-select-small-label">백엔드</InputLabel>
-        <Select
-          labelId="demo-select-small-label"
-          id="demo-select-small"
-          value={backend}
-          label="백엔드"
-          onChange={handleBackendChange}
-        >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-      </FormControl>
+      <div className="filter-options-select">
+        <ArrowDropDownIcon
+          onClick={() => setOptionClick((prevOptionClick) => !prevOptionClick)}
+        />
+        <SearchIcon />
+      </div>
+      {optionClick && (
+        <div className="filter-options-box">
+          <h5>많이 찾는 기술 스택</h5>
+
+          <h5>백엔드</h5>
+          {backend.map((stack) => (
+            <Button
+              text={stack}
+              size="small"
+              onClick={() => setBackendStack(stack)}
+            />
+          ))}
+          <h5>프론트 엔드</h5>
+          {frontend.map((stack) => (
+            <Button text={stack} size="small" />
+          ))}
+          <h5>디자인</h5>
+          {design.map((stack) => (
+            <Button text={stack} size="small" />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

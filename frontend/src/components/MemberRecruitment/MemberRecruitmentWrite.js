@@ -92,8 +92,8 @@ const MemberRecruitmentWrite = () => {
                   {array.map((stack) => (
                     <Button text={stack} size="small" />
                   ))}
-                  <input placeholder="백엔드 기술 스택을 입력하세요" />
                 </div>
+                <input placeholder="백엔드 기술 스택을 입력하세요" />
               </div>
 
               <div className="member-content-position-container-option">
@@ -110,8 +110,8 @@ const MemberRecruitmentWrite = () => {
                   {array.map((stack) => (
                     <Button text={stack} size="small" />
                   ))}
-                  <input placeholder="프론트 기술 스택을 입력하세요" />
                 </div>
+                <input placeholder="프론트 기술 스택을 입력하세요" />
               </div>
 
               <div className="member-content-position-container-option">
@@ -128,8 +128,8 @@ const MemberRecruitmentWrite = () => {
                   {array.map((stack) => (
                     <Button text={stack} size="small" />
                   ))}
-                  <input placeholder="디자인 기술 스택을 입력하세요" />
                 </div>
+                <input placeholder="디자인 기술 스택을 입력하세요" />
               </div>
 
               <div className="member-content-position-container-option">
@@ -142,12 +142,12 @@ const MemberRecruitmentWrite = () => {
                     placeholder="0"
                   />
                 </div>
-                <div className="member-stackinput">
+                {/*<div className="member-stackinput">
                   {array.map((stack) => (
                     <Button text={stack} size="small" />
                   ))}
-                  <input placeholder="기획 기술 스택을 입력하세요" />
                 </div>
+                <input placeholder="기획 기술 스택을 입력하세요" />*/}
               </div>
             </div>
           </div>
