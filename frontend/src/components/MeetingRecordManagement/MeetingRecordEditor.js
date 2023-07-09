@@ -44,9 +44,9 @@ const MeetingRecordEditor = () => {
   const dispatch = useDispatch();
 
   const handleInitialState = () => {
-    dispatch(meetingRecordManagementActions.onEditInitialState(false));
+    dispatch(meetingRecordManagementActions.setInitialState(false));
     dispatch(
-      meetingRecordManagementActions.onEditSelectedMeetingRecordState(false)
+      meetingRecordManagementActions.setSelectedMeetingRecordState(false)
     );
   };
 
@@ -82,7 +82,7 @@ const MeetingRecordEditor = () => {
   };
 
   useEffect(() => {
-    dispatch(meetingRecordManagementActions.onEditInitialState(true));
+    dispatch(meetingRecordManagementActions.setInitialState(true));
   }, [dispatch, projectId]);
 
   return (
