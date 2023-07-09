@@ -2338,6 +2338,7 @@ a {
   border: 2px solid #01e89e;
   border-radius: 10px;
   margin-top: 18px;
+  min-height: 200px;
 }
 .profile_body_introduce_Box_title {
   width: 100%;
@@ -2526,4 +2527,81 @@ a {
 
 .highlighted {
   background-color: #01e89e;
+}
+
+.project_list {
+  width: 100%;
+}
+.project_list_item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 2px solid #dee2e6;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  padding: 5px 10px;
+}
+.project_list_item > :last-child {
+  width: 100%;
+}
+.project_list_item_title-date {
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 46px;
+}
+.project_list_item_title-date > :first-child {
+  width: 60%;
+}
+.project_list_item_title-date > :last-child {
+  width: 40%;
+}
+.project_list_item_stack {
+  display: flex;
+  padding: 10px;
+}
+.project_list_item_stack-list > ul {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 10px;
+}
+.project_list_item_stack-list > ul > li {
+  border: 2px solid #01e89e;
+  padding: 5px 10px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+}
+.project_list_item_description {
+  display: flex;
+  padding: 10px;
+}
+.project_list_blank {
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.project_list_blank > span {
+  font-size: 18px;
+  font-weight: bold;
+}
+.project_item_name {
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+}
+
+.fl_bw {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fl {
+  width: 100%;
+  display: flex;
 }/*# sourceMappingURL=fullcare.css.map */
