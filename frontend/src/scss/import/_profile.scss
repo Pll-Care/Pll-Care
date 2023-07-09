@@ -101,6 +101,7 @@
         border: 2px solid #01e89e;
         border-radius: 10px;
         margin-top: 18px;
+        min-height: 200px;
 
         &_title {
           width: 100%;
@@ -338,4 +339,103 @@
 
 .highlighted {
   background-color: #01e89e;
+}
+
+.project {
+  &_list {
+    width: 100%;
+
+    &_item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 2px solid #dee2e6;
+      border-radius: 15px;
+      margin-bottom: 15px;
+      padding: 5px 10px;
+
+      & > :last-child {
+        width: 100%;
+      }
+
+      &_title-date {
+        padding: 10px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 46px;
+        & > :first-child {
+          width: 60%;
+        }
+        & > :last-child {
+          width: 40%;
+        }
+      }
+      &_title {
+      }
+      &_year {
+      }
+
+      &_date {
+      }
+
+      &_stack {
+        display: flex;
+        padding: 10px;
+      }
+
+      &_stack-list {
+        & > ul {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          grid-gap: 10px;
+
+          & > li {
+            border: 2px solid #01e89e;
+            padding: 5px 10px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+          }
+        }
+      }
+
+      &_description {
+        display: flex;
+        padding: 10px;
+      }
+    }
+    &_blank {
+      min-height: 80px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      & > span {
+        font-size: 18px;
+        font-weight: bold;
+      }
+    }
+  }
+
+  &_item_name {
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+
+    font-weight: 700;
+  }
+}
+
+.fl_bw {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fl {
+  width: 100%;
+  display: flex;
 }
