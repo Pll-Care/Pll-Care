@@ -10,6 +10,7 @@ import { authActions } from "../../redux/authSlice";
 import { useRouter } from "../../hooks/useRouter";
 import profile_default from "../../assets/profile-default-img.png";
 import profile_isProfile from "../../assets/ranking-img.png";
+import { getProfileImage } from "../../lib/apis/mainHeaderApi";
 
 export const headerMenu = [
   { id: 1, link: "/management", title: "프로젝트 관리" },
@@ -20,6 +21,7 @@ const MainHeader = () => {
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
   const [isToggleMenuOpen, setIsToggleMenuOpen] = useState(false);
   const [isProfilePage, setIsProfilePage] = useState(false);
+  const [profileImage, setProfileImage] = useState({ id: "", imageUrl: "" });
 
   const { replaceTo, currentPath } = useRouter();
   const dispatch = useDispatch();
@@ -27,9 +29,16 @@ const MainHeader = () => {
 
   useEffect(() => {
     if (currentPath.includes("/profile")) setIsProfilePage(true);
-
+    const getProfile = async () => {
+      const response = await getProfileImage();
+      if (response) {
+        setProfileImage(response);
+      }
+    };
+    getProfile();
     return () => {
       setIsProfilePage(false);
+      setProfileImage({ id: "", imageUrl: "" });
     };
   }, [currentPath]);
 
@@ -100,10 +109,16 @@ const MainHeader = () => {
                   ? "main-header-user-profile-img profile_header_image_background"
                   : "main-header-user-profile-img "
               }
-              to={"/profile"}
+              to={`/profile/${profileImage.id}/introduce`}
             >
               <img
-                src={isProfilePage ? profile_isProfile : profile_default}
+                src={
+                  profileImage.imageUrl === ""
+                    ? isProfilePage
+                      ? profile_isProfile
+                      : profile_default
+                    : profileImage.imageUrl
+                }
                 alt="유저프로필"
               />
             </Link>
