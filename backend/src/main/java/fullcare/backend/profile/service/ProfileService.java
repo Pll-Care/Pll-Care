@@ -10,6 +10,7 @@ import fullcare.backend.profile.dto.request.ProfileBioUpdateRequest;
 import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
 import fullcare.backend.profile.dto.response.ProfileBioResponse;
 import fullcare.backend.profile.dto.response.ProfileContactResponse;
+import fullcare.backend.profile.dto.response.ProfileImageResponse;
 import fullcare.backend.profile.dto.response.ProfileProjectExperienceResponse;
 import fullcare.backend.profile.dto.response.ProfileTechStackResponse;
 import jakarta.persistence.EntityNotFoundException;
@@ -93,5 +94,8 @@ public class ProfileService {
     }
 
 
-
+    public ProfileImageResponse findProfileImage(Member member) {
+        Member findMember = memberRepository.findById(member.getId()).orElseThrow(() -> new EntityNotFoundException("해당 사용자 정보가 없습니다."));
+        return new ProfileImageResponse(findMember.getId(), findMember.getImageUrl());
+    }
 }
