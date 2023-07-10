@@ -1,25 +1,54 @@
-import { useState } from "react";
-import Button from "../../../common/Button";
+import { useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
-const ContactBox = ({
-  email = "https://www.naver.com",
-  github = "https://www.naver.com",
-  websiteUrl = "https://www.naver.com",
-}) => {
-  //TODO: API를 통해 contact data 받아오기
+import Button from "../../../common/Button";
+import { getContact, patchProfile } from "../../../../lib/apis/profileApi";
+import { useProfile } from "../../../../context/ProfileContext";
+import { toast } from "react-toastify";
+
+const QUERY = {
+  KEY: "profile-contact",
+};
+// const QUERY_KEY : "profile-contact";
+// const QUERY_FN : (memberId) => getContact(memberId);
+
+const ContactBox = () => {
   const [isModify, setIsModify] = useState(false);
   const [userInfo, setUserInfo] = useState({
-    email: email,
-    github: github,
-    websiteUrl: websiteUrl,
+    email: "",
+    github: "",
+    websiteUrl: "",
   });
 
-  const submitModify = () => {
-    console.log(userInfo);
+  const { isMyProfile, memberId } = useProfile();
+
+  useEffect(() => {
+    const getUserContact = async () => {
+      const { contact } = await getContact(memberId);
+      if (contact) setUserInfo(contact);
+    };
+
+    getUserContact();
+  }, [memberId, isModify]);
+
+  const submitModify = async () => {
+    if (userInfo.email === "") {
+      return toast.error("이메일을 반드시 입력해야합니다.");
+    }
+
+    if (userInfo.github === "") {
+      return toast.error("github 주소를 반드시 입력해야합니다.");
+    }
+
+    if (userInfo.websiteUrl === "") {
+      return toast.error("웹사이트 주소를 반드시 입력해야합니다.");
+    }
+
+    await patchProfile(memberId, userInfo);
     setIsModify(false);
   };
 
-  const chageEmail = (email) => {
+  const changeEmail = (email) => {
     setUserInfo((prev) => ({ ...prev, email: email }));
   };
 
@@ -35,31 +64,33 @@ const ContactBox = ({
       <div className="profile_body_introduce_Box_title">
         <h2>연락처</h2>
         <div className="profile_body_introduce_Box_title_btnBox">
-          {isModify ? (
-            <>
+          {isMyProfile ? (
+            isModify ? (
+              <>
+                <Button
+                  text="취소"
+                  size="small"
+                  onClick={() => setIsModify(false)}
+                />
+                <Button
+                  type="submit"
+                  text="완료"
+                  size="small"
+                  onClick={submitModify}
+                />
+              </>
+            ) : (
               <Button
-                text="취소"
+                text="수정"
                 size="small"
-                onClick={() => setIsModify(false)}
+                onClick={() => setIsModify(true)}
               />
-              <Button
-                type="submit"
-                text="완료"
-                size="small"
-                onClick={submitModify}
-              />
-            </>
-          ) : (
-            <Button
-              text="수정"
-              size="small"
-              onClick={() => setIsModify(true)}
-            />
-          )}
+            )
+          ) : null}
         </div>
       </div>
       {isModify
-        ? Modify_UI(chageEmail, chageGithub, chageWebsite)
+        ? Modify_UI(changeEmail, chageGithub, chageWebsite)
         : Default_UI({
             email: userInfo.email,
             github: userInfo.github,
@@ -71,14 +102,12 @@ const ContactBox = ({
 
 export default ContactBox;
 
-const Default_UI = ({ email, github, websiteUrl }) => {
+const Default_UI = ({ email = "", github = "", websiteUrl = "" }) => {
   return (
     <div className="profile_body_introduce_contactBox_items">
       <div className="profile_body_introduce_contactBox_items_item">
         <span>Email</span>
-        <a href={email} target="_blank" rel="noreferrer">
-          {email}
-        </a>
+        <p>{email}</p>
       </div>
       <div className="profile_body_introduce_contactBox_items_item">
         <span>Github</span>
@@ -96,7 +125,7 @@ const Default_UI = ({ email, github, websiteUrl }) => {
   );
 };
 
-const Modify_UI = (chageEmail, chageGithub, chageWebsite) => {
+const Modify_UI = (changeEmail, chageGithub, chageWebsite) => {
   return (
     <div className="profile_body_introduce_contactBox_items">
       <div className="profile_body_introduce_contactBox_items_item">
@@ -105,7 +134,7 @@ const Modify_UI = (chageEmail, chageGithub, chageWebsite) => {
           type="text"
           placeholder="주소를 입력해주세요."
           name="email"
-          onChange={(e) => chageEmail(e.target.value)}
+          onChange={(e) => changeEmail(e.target.value)}
         />
       </div>
       <div className="profile_body_introduce_contactBox_items_item">
