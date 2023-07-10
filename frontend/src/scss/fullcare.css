@@ -2363,6 +2363,7 @@ a {
 }
 .profile_body_introduce_contactBox_items_item {
   min-height: 30px;
+  display: flex;
 }
 .profile_body_introduce_contactBox_items_item > span {
   display: inline-block;
@@ -2371,7 +2372,8 @@ a {
   font-size: 16px;
 }
 .profile_body_introduce_contactBox_items_item > a,
-.profile_body_introduce_contactBox_items_item input {
+.profile_body_introduce_contactBox_items_item input,
+.profile_body_introduce_contactBox_items_item p {
   margin-left: 30px;
   border: none;
 }
