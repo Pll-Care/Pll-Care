@@ -2,7 +2,7 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ "backend", "backend_mypage" ]
+    branches: [ "backend", "backend_mypage", "backend_exceptionhandler" ]
 
 permissions:
   contents: read
