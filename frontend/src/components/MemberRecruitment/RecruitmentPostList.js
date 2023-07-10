@@ -7,25 +7,25 @@ import RecruitmentPost from "./RecruitmentPost";
 import { getAllRecruitmentPost } from "../../lib/apis/memberRecruitmentApi";
 
 const RecruitmentPostList = () => {
-  const itemCount = 16; // 총 RecruitmentPost 아이템 개수
-  const itemsPerPageMd = 9; // md 화면 크기에서 한 페이지에 표시할 아이템 개수
+  // 현재 페이지
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPageMd = 9;
   const itemsPerPageSm = 8;
-
   const isMobile = useMediaQuery("(max-width:900px)");
 
+  // 모집글 리스트 조회하는 함수
+  const { data } = useQuery(["allRecruitmentPosts", currentPage], () =>
+    getAllRecruitmentPost(currentPage + 1)
+  );
+  console.log(data);
+  const itemCount = data?.size;
   const pageCount = isMobile
     ? Math.ceil(itemCount / itemsPerPageSm)
     : Math.ceil(itemCount / itemsPerPageMd); // 전체 페이지 수
-  const [currentPage, setCurrentPage] = useState(0); // 현재 페이지
 
   const startIndex = currentPage * (isMobile ? itemsPerPageSm : itemsPerPageMd);
   const endIndex =
     (currentPage + 1) * (isMobile ? itemsPerPageSm : itemsPerPageMd);
-
-  //const { data } = useQuery(["allRecruitmentPosts", currentPage], () =>
-  //  getAllRecruitmentPost(currentPage + 1)
-  //);
-  //console.log(data);
 
   return (
     <div className="recruitment">
@@ -38,7 +38,7 @@ const RecruitmentPostList = () => {
           .slice(startIndex, endIndex)
           .map((_, index) => (
             <Grid item xs={4} sm={4} md={4} key={index}>
-              <RecruitmentPost />
+              <RecruitmentPost data={data.content[index]} />
             </Grid>
           ))}
       </Grid>

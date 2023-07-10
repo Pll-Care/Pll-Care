@@ -1,11 +1,13 @@
-import axios from "axios";
+import { customAxios } from "./customAxios";
 
+// 페이지네이션 모집글 조회하는 함수
+//
 export const getAllRecruitmentPost = async (page) => {
   try {
-    const res = await axios.get(
-      `/auth/post/list?page=1&size=1&direction=ASC&sortingProperty=string`
+    const res = await customAxios.get(
+      `/auth/post/list?page=1&size=${page}&direction=ASC`
     );
-    return res;
+    return res.data;
   } catch (err) {
     return err;
   }
