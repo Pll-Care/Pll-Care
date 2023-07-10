@@ -19,9 +19,7 @@ const MemberFilterOption = () => {
     "Next",
   ];
   const design = ["adobe", "figma", "sketch"];
-  const [backendStack, setBackendStack] = useState("");
-  const [frontendStack, setFrontendStack] = useState("");
-  const [designStack, setDesignStack] = useState("");
+
   return (
     <div className="filter-options">
       <div className="filter-options-select">
@@ -36,19 +34,15 @@ const MemberFilterOption = () => {
 
           <h5>백엔드</h5>
           {backend.map((stack) => (
-            <Button
-              text={stack}
-              size="small"
-              onClick={() => setBackendStack(stack)}
-            />
+            <Button key={stack} text={stack} size="small" />
           ))}
           <h5>프론트 엔드</h5>
           {frontend.map((stack) => (
-            <Button text={stack} size="small" />
+            <Button key={stack} text={stack} size="small" />
           ))}
           <h5>디자인</h5>
           {design.map((stack) => (
-            <Button text={stack} size="small" />
+            <Button key={stack} text={stack} size="small" />
           ))}
         </div>
       )}

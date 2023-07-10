@@ -2484,6 +2484,9 @@ input {
   align-items: center;
   margin: 40px 0px;
 }
+.member-write .member-content-position-container-option h5 {
+  margin-right: 20px;
+}
 @media (max-width: 767px) {
   .member-write .member-content-position-container-option {
     flex-direction: column;
@@ -2493,6 +2496,11 @@ input {
   .member-write .member-content-position-container-option {
     flex-direction: column;
   }
+}
+.member-write .member-content-position-container-option .position-number {
+  width: 50px;
+  margin: 0px 40px;
+  border-radius: 50px;
 }
 .member-write .member-content-position-container-option .member-stack {
   display: flex;
@@ -2515,13 +2523,53 @@ input {
 .member-write .member-content-position-container-option .member-stackinput Button {
   margin: 10px 10px;
 }
-.member-write .member-content-position-container-option h5 {
-  margin-right: 20px;
+@media (max-width: 767px) {
+  .member-write .member-content-position-container-option .member-stackinput {
+    margin: 20px 0px;
+  }
 }
-.member-write .member-content-position-container-option .position-number {
-  width: 50px;
-  margin: 0px 40px;
-  border-radius: 50px;
+@media (min-width: 767px) and (max-width: 1024px) {
+  .member-write .member-content-position-container-option .member-stackinput {
+    margin: 20px 0px;
+  }
+}
+.member-write .member-content-position-container-option .member-stackcontainer {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.member-write .member-content-position-container-option .member-stackcontainer-input {
+  display: flex;
+  align-items: center;
+}
+.member-write .member-content-position-container-option .member-stackcontainer input {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+}
+.member-write .member-content-position-container-option .member-stackcontainer > .member-inputcontainer-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 1;
+  position: absolute;
+  width: 85%;
+  top: 100%;
+  transform: translateY(5px);
+  background-color: rgb(248, 248, 248);
+}
+.member-write .member-content-position-container-option .member-stackcontainer > .member-inputcontainer-box h5 {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  border-bottom: 1px solid rgb(211, 211, 211);
+  text-align: center;
+  cursor: pointer;
+}
+.member-write .member-content-position-container-option .mui-icon {
+  color: #01e89e;
+  margin-left: 10px;
+  cursor: pointer;
 }
 .member-write .member-content-description {
   display: flex;

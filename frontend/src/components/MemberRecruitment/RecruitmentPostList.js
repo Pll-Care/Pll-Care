@@ -1,6 +1,10 @@
-import { Grid, Pagination, useMediaQuery } from "@mui/material";
-import RecruitmentPost from "./RecruitmentPost";
 import { useState } from "react";
+import { useQuery } from "react-query";
+
+import { Grid, Pagination, useMediaQuery } from "@mui/material";
+
+import RecruitmentPost from "./RecruitmentPost";
+import { getAllRecruitmentPost } from "../../lib/apis/memberRecruitmentApi";
 
 const RecruitmentPostList = () => {
   const itemCount = 16; // 총 RecruitmentPost 아이템 개수
@@ -17,6 +21,11 @@ const RecruitmentPostList = () => {
   const startIndex = currentPage * (isMobile ? itemsPerPageSm : itemsPerPageMd);
   const endIndex =
     (currentPage + 1) * (isMobile ? itemsPerPageSm : itemsPerPageMd);
+
+  //const { data } = useQuery(["allRecruitmentPosts", currentPage], () =>
+  //  getAllRecruitmentPost(currentPage + 1)
+  //);
+  //console.log(data);
 
   return (
     <div className="recruitment">
