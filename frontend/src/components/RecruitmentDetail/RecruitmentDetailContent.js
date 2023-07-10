@@ -9,6 +9,7 @@ import Button from "../common/Button";
 import RecruitmentDetailTitle from "./RecruitmentDetailTitle";
 import { useQuery } from "react-query";
 import { getRecruitmentPostDetail } from "../../lib/apis/memberRecruitmentApi";
+import { useAddLikeRecruitmentMutation } from "../../hooks/useRecruitmentMutation";
 
 const RecruitmentDetailContent = () => {
   const { id } = useParams();
@@ -18,6 +19,8 @@ const RecruitmentDetailContent = () => {
     getRecruitmentPostDetail(id)
   );
   console.log(data);
+
+  const { mutate } = useAddLikeRecruitmentMutation(id);
   return (
     <>
       <RecruitmentDetailTitle
@@ -97,7 +100,10 @@ const RecruitmentDetailContent = () => {
         {data?.liked ? (
           <FavoriteIcon className="post-icon" />
         ) : (
-          <FavoriteBorderIcon className="post-icon" />
+          <FavoriteBorderIcon
+            className="post-icon"
+            onClick={() => mutate(id)}
+          />
         )}
         <ShareIcon className="post-icon" />
       </div>
