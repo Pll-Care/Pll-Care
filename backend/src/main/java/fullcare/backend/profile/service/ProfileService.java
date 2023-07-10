@@ -49,7 +49,10 @@ public class ProfileService {
     public ProfileTechStackResponse findRoleAndTechStack(Long memberId, Member member) {
         Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException("해당 사용자 정보가 없습니다."));
         Profile p = findMember.getProfile();
-        List<String> techStacks = Arrays.stream(p.getTechStack().split(",")).collect(Collectors.toList());
+        List<String> techStacks = null;
+        if(p.getTechStack() != null && !p.getTechStack().isEmpty()) {
+            techStacks = Arrays.stream(p.getTechStack().split(",")).collect(Collectors.toList());
+        }
         return new ProfileTechStackResponse(p.getRecruitPosition(), techStacks, memberId == member.getId());
     }
     @Transactional(readOnly = true)
