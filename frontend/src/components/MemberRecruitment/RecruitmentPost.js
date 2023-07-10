@@ -23,7 +23,7 @@ const RecruitmentPost = ({ data }) => {
 
         <div className="recruitment-post-project">
           <div className="recruitment-post-project-title">
-            <h2>{data?.projectName}</h2>
+            <h2>{data?.title}</h2>
             {data?.liked ? (
               <FavoriteIcon className="post-icon" />
             ) : (

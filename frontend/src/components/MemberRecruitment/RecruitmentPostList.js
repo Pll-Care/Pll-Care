@@ -19,7 +19,7 @@ const RecruitmentPostList = () => {
 
   // 모집글 리스트 조회하는 함수
   const { data, isLoading } = useQuery(
-    ["allRecruitmentPosts", currentPage],
+    ["allRecruitmentPosts", currentPage, isMobile],
     () => getAllRecruitmentPost(currentPage + 1, itemsPerPage)
   );
   if (data && !isLoading) {
@@ -29,27 +29,25 @@ const RecruitmentPostList = () => {
 
   return (
     <div className="recruitment">
-      <>
-        <Grid
-          container
-          spacing={{ xs: 2, md: 3 }}
-          columns={{ xs: 4, sm: 8, md: 12 }}
-        >
-          {!isLoading &&
-            data?.content.map((content, index) => (
-              <Grid item xs={4} sm={4} md={4} key={index}>
-                <RecruitmentPost data={content} />
-              </Grid>
-            ))}
-        </Grid>
-        {pageCount > 0 && (
-          <Pagination
-            count={pageCount}
-            page={currentPage + 1}
-            onChange={(event, page) => setCurrentPage(page - 1)}
-          />
-        )}
-      </>
+      <Grid
+        container
+        spacing={{ xs: 2, md: 3 }}
+        columns={{ xs: 4, sm: 8, md: 12 }}
+      >
+        {!isLoading &&
+          data?.content.map((content, index) => (
+            <Grid item xs={4} sm={4} md={4} key={index}>
+              <RecruitmentPost data={content} />
+            </Grid>
+          ))}
+      </Grid>
+      {pageCount > 0 && (
+        <Pagination
+          count={pageCount}
+          page={currentPage + 1}
+          onChange={(event, page) => setCurrentPage(page - 1)}
+        />
+      )}
     </div>
   );
 };

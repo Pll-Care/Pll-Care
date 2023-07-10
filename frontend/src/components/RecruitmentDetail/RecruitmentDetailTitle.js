@@ -1,5 +1,7 @@
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { Link } from "react-router-dom";
+
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+
 import { getStringDate } from "../../utils/date";
 
 const RecruitmentDetailTitle = ({ title, writeTime, views }) => {

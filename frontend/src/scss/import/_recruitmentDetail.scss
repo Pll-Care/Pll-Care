@@ -1,5 +1,9 @@
 // RecruitmentDetailTitle 컴포넌트
 .detail_title {
+  margin: 0px 5%;
+  @include mobile {
+    margin: 0px 0px;
+  }
   @include displayFlex(row, space-between, center);
   @include mobile {
     flex-direction: column;
@@ -7,6 +11,10 @@
   font-family: $heading-font;
   padding: 2.5rem;
   &_content {
+    @include mobile {
+      float: left;
+      width: 100%;
+    }
     .mui_arrow {
       color: black;
       margin-right: 20px;
@@ -37,6 +45,9 @@
       color: gray;
       margin-right: 15px;
     }
+    @include mobile {
+      margin-top: 15px;
+    }
   }
 }
 
@@ -45,8 +56,8 @@
   border: $border;
   border-radius: 20px;
   padding: 2.5rem;
-  margin-left: 3%;
-  margin-right: 3%;
+  margin-left: 7%;
+  margin-right: 7%;
   font-family: $body-font;
   h4 {
     color: $font-color;
@@ -140,5 +151,20 @@
     h5 {
       margin-bottom: 20px;
     }
+  }
+}
+.recruitment-detail-icon {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 20px 7%;
+  .post-icon {
+    color: $background-color;
+    border: $border;
+    border-radius: 50px;
+    transform: scale(1.4);
+    padding: 1px;
+    margin-left: 35px;
+    margin-right: 10px;
   }
 }

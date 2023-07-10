@@ -1,6 +1,9 @@
 import { useParams } from "react-router";
 
 import { Avatar } from "@mui/material";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import ShareIcon from "@mui/icons-material/Share";
 
 import Button from "../common/Button";
 import RecruitmentDetailTitle from "./RecruitmentDetailTitle";
@@ -9,6 +12,8 @@ import { getRecruitmentPostDetail } from "../../lib/apis/memberRecruitmentApi";
 
 const RecruitmentDetailContent = () => {
   const { id } = useParams();
+
+  // 모집글 디테일 페이지 조회
   const { data } = useQuery(["recruitmentDetail"], () =>
     getRecruitmentPostDetail(id)
   );
@@ -87,6 +92,14 @@ const RecruitmentDetailContent = () => {
           <h4>컨택</h4>
           <h5>{data?.contact}</h5>
         </div>
+      </div>
+      <div className="recruitment-detail-icon">
+        {data?.liked ? (
+          <FavoriteIcon className="post-icon" />
+        ) : (
+          <FavoriteBorderIcon className="post-icon" />
+        )}
+        <ShareIcon className="post-icon" />
       </div>
     </>
   );

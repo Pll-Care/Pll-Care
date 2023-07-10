@@ -2688,12 +2688,18 @@ input {
 }
 
 .detail_title {
+  margin: 0px 5%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   font-family: "IBM Plex Sans KR", sans-serif;
   padding: 2.5rem;
+}
+@media (max-width: 767px) {
+  .detail_title {
+    margin: 0px 0px;
+  }
 }
 @media (max-width: 767px) {
   .detail_title {
@@ -2704,6 +2710,12 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+@media (max-width: 767px) {
+  .detail_title_content {
+    float: left;
+    width: 100%;
+  }
 }
 .detail_title_content .mui_arrow {
   color: black;
@@ -2734,13 +2746,18 @@ input {
   color: gray;
   margin-right: 15px;
 }
+@media (max-width: 767px) {
+  .detail_title_plus {
+    margin-top: 15px;
+  }
+}
 
 .recruitment_detail {
   border: 2px solid #01e89e;
   border-radius: 20px;
   padding: 2.5rem;
-  margin-left: 3%;
-  margin-right: 3%;
+  margin-left: 7%;
+  margin-right: 7%;
   font-family: "Noto Sans KR", sans-serif;
 }
 .recruitment_detail h4 {
@@ -2827,4 +2844,20 @@ input {
 }
 .recruitment_detail_description h5 {
   margin-bottom: 20px;
+}
+
+.recruitment-detail-icon {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 20px 7%;
+}
+.recruitment-detail-icon .post-icon {
+  color: #01e89e;
+  border: 2px solid #01e89e;
+  border-radius: 50px;
+  transform: scale(1.4);
+  padding: 1px;
+  margin-left: 35px;
+  margin-right: 10px;
 }/*# sourceMappingURL=fullcare.css.map */
