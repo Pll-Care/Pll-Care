@@ -67,7 +67,7 @@ public class ProfileService {
         Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
         Profile p = findMember.getProfile();
         List<ProjectExperienceDto> ProjectExperienceDtos = p.getProjectExperiences().stream().map(pro -> ProjectExperienceDto.createResponseDto()
-//                .projectId(pro.getId())
+                .projectId(pro.getId())
                 .title(pro.getTitle())
                 .description(pro.getDescription())
                 .startDate(pro.getStartDate())

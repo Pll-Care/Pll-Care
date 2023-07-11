@@ -8,10 +8,12 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class ProjectExperienceDto extends ProjectExperienceRequestDto{
-//    private Long projectId;
+    private Long projectId;
     @Builder(builderMethodName = "createResponseDto")
-    public ProjectExperienceDto(String title, String description, LocalDate startDate, LocalDate endDate, String techStack) {
+    public ProjectExperienceDto(Long projectId, String title, String description,
+        LocalDate startDate,
+        LocalDate endDate, String techStack) {
         super(title, description, startDate, endDate, techStack);
-//        this.projectId = projectId;
+        this.projectId = projectId;
     }
 }
