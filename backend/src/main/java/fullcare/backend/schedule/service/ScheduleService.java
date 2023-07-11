@@ -105,6 +105,9 @@ public class ScheduleService {
         if ((schedule instanceof Meeting && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.MILESTONE)) || (schedule instanceof Milestone && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.MEETING))) {
             throw new ScheduleCategoryMisMatchException(ScheduleErrorCode.CATEGORY_MISMATCH); // todo "수정하려는 일정의 카테고리가 맞지 않습니다."
         }
+        if(schedule.getState().equals(State.COMPLETE)){
+            throw new ScheduleCategoryMisMatchException(ScheduleErrorCode.CATEGORY_MISMATCH); // todo 완료된 일정 수정 불가
+        }
         Project project = projectRepository.findById(scheduleUpdateRequest.getProjectId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
         LocalDateTime startDate = project.getStartDate().atStartOfDay();
         LocalDateTime endDate = project.getEndDate().atStartOfDay();

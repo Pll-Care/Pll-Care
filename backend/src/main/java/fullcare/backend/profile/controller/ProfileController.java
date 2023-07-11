@@ -205,14 +205,5 @@ public class ProfileController {
     }
 
 
-    @Operation(method = "get", summary = "기술스택 검색")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "기술스택 검색 성공", useReturnTypeSchema = true),
-//            @ApiResponse(responseCode = "400", description = "기술스택 검색 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
-    })
-    @GetMapping(value = "/techstack")
-    public ResponseEntity<TechStackResponse> findTechStack(@RequestParam("tech") String tech) {
-        TechStackResponse response = profileService.findTechStack(tech);
-        return new ResponseEntity(response, HttpStatus.OK);
-    }
+
 }

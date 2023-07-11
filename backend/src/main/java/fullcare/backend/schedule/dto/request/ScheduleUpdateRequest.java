@@ -1,6 +1,7 @@
 package fullcare.backend.schedule.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import fullcare.backend.global.State;
 import fullcare.backend.schedule.ScheduleCategory;
 import jakarta.validation.constraints.NotBlank;
@@ -19,11 +20,13 @@ public class ScheduleUpdateRequest {
     private Long projectId;
 
     @NotNull
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
+    @JsonSerialize
     private LocalDateTime startDate;
 
     @NotNull
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
+    @JsonSerialize
     private LocalDateTime endDate;
 
     // ? NotBlank인가 NotEmpty인가?

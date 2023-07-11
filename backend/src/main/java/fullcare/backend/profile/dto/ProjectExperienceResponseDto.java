@@ -1,18 +1,16 @@
 package fullcare.backend.profile.dto;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import java.util.List;
 
-import java.time.LocalDate;
-@Getter
-@Setter
-public class ProjectExperienceResponseDto extends ProjectExperienceRequestDto{
-    private Long projectId;
-    @Builder(builderMethodName = "createResponseDto")
-    public ProjectExperienceResponseDto(Long projectId, String title, String description, LocalDate startDate, LocalDate endDate, String techStack) {
-        super(title, description, startDate, endDate, techStack);
-        this.projectId = projectId;
+import lombok.Data;
+
+@Data
+public class ProjectExperienceResponseDto {
+    private int year;
+    private List<ProjectExperienceDto> projectExperiences;
+
+    public ProjectExperienceResponseDto(int year, List<ProjectExperienceDto> projectExperiences) {
+        this.year = year;
+        this.projectExperiences = projectExperiences;
     }
 }
