@@ -2,9 +2,10 @@ package fullcare.backend.project.controller;
 
 import fullcare.backend.global.State;
 import fullcare.backend.global.dto.ErrorResponse;
-import fullcare.backend.global.exception.InvalidAccessException;
+import fullcare.backend.global.errorcode.ProjectErrorCode;
+import fullcare.backend.global.exceptionhandling.exception.CompletedProjectException;
+import fullcare.backend.global.exceptionhandling.exception.InvalidAccessException;
 import fullcare.backend.member.domain.Member;
-import fullcare.backend.project.CompletedProjectException;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.dto.request.*;
 import fullcare.backend.project.dto.response.ProjectListResponse;
@@ -41,6 +42,7 @@ import java.util.List;
 @RequestMapping("/api/auth/project")
 @RestController
 public class ProjectController {
+
     private final ProjectService projectService;
     private final ProjectMemberService projectMemberService;
 
@@ -56,8 +58,7 @@ public class ProjectController {
     })
     @PostMapping
     public ResponseEntity create(@Valid @RequestBody ProjectCreateRequest projectCreateRequest, @CurrentLoginMember Member member) {
-
-        projectService.createProject(member.getId(), projectCreateRequest);
+        projectService.createProject(member, projectCreateRequest);
 
         return new ResponseEntity(HttpStatus.CREATED);
     }
@@ -75,20 +76,20 @@ public class ProjectController {
 
         // ! 2. 완료된 프로젝트 -> 수정 불가 -> 403 Forbidden
         if (project.getState() == State.COMPLETE) {
-            throw new CompletedProjectException("이미 완료된 프로젝트는 수정할 수 없습니다.");
+            throw new CompletedProjectException(ProjectErrorCode.PROJECT_COMPLETED);
         }
 
         ProjectMember findProjectMember = project.getProjectMembers().stream()
                 .filter(pmm -> pmm.getMember().getId().equals(member.getId())).findAny()
-                .orElseThrow(() -> new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.")); // ! 3. 프로젝트에 소속되지 않아서 접근 권한없음 -> 403 Forbidden
+                .orElseThrow(() -> new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS)); // ! 3. 프로젝트에 소속되지 않아서 접근 권한없음 -> 403 Forbidden
 
         // ! 4. 프로젝트에 소속되어있지만 리더가 아니라서 수정 권한이 없음 -> 403 Forbidden
         if (!(findProjectMember.isLeader())) {
-            throw new InvalidAccessException("프로젝트에 대한 수정 권한이 없습니다.(리더가 아님)");
+            throw new InvalidAccessException(ProjectErrorCode.INVALID_MODIFY);
         }
 
         projectService.updateProject(projectId, projectUpdateRequest);
-        return new ResponseEntity(new ProjectUpdateResponse(projectUpdateRequest.getImageUrl()),HttpStatus.OK);
+        return new ResponseEntity(new ProjectUpdateResponse(projectUpdateRequest.getImageUrl()), HttpStatus.OK);
     }
 
     // * 특정 프로젝트 삭제
@@ -104,23 +105,23 @@ public class ProjectController {
 
         // ! 2. 완료된 프로젝트 -> 삭제 불가 -> 403 Forbidden
         if (project.getState() == State.COMPLETE) {
-            throw new CompletedProjectException("이미 완료된 프로젝트는 삭제할 수 없습니다.");
+            throw new CompletedProjectException(ProjectErrorCode.PROJECT_COMPLETED);
         }
 
         ProjectMember findProjectMember = project.getProjectMembers().stream()
                 .filter(pmm -> pmm.getMember().getId().equals(member.getId())).findAny()
-                .orElseThrow(() -> new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.")); // ! 3. 프로젝트에 소속되지 않아서 접근 권한없음 -> 403 Forbidden
+                .orElseThrow(() -> new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS)); // ! 3. 프로젝트에 소속되지 않아서 접근 권한없음 -> 403 Forbidden
 
         // ! 4. 프로젝트에 소속되어있지만 리더가 아니라서 삭제 권한이 없음 -> 403 Forbidden
         if (!(findProjectMember.isLeader())) {
-            throw new InvalidAccessException("프로젝트에 대한 삭제 권한이 없습니다.(리더가 아님)");
+            throw new InvalidAccessException(ProjectErrorCode.INVALID_DELETE);
         }
 
         projectService.deleteProject(projectId);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    // * 특정 프로젝트 상태 수정
+    // * 특정 프로젝트 완료 처리
     @Operation(method = "post", summary = "프로젝트 완료 처리")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "프로젝트 완료 처리 성공", content = @Content),
@@ -131,21 +132,21 @@ public class ProjectController {
         // ! 1. 존재하지 않는 프로젝트에 접근 -> 404 Not Found
         Project project = projectService.findProject(projectId);
 
-        // ! 2. 완료된 프로젝트 -> 상태 수정 불가 -> 403 Forbidden
+        // ! 2. 완료된 프로젝트 -> 완료 불가 -> 403 Forbidden
         if (project.getState() == State.COMPLETE) {
-            throw new CompletedProjectException("이미 완료된 프로젝트는 완료할 수 없습니다.");
+            throw new CompletedProjectException(ProjectErrorCode.PROJECT_COMPLETED);
         }
 
         ProjectMember findProjectMember = project.getProjectMembers().stream()
                 .filter(pmm -> pmm.getMember().getId().equals(member.getId())).findAny()
-                .orElseThrow(() -> new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.")); // ! 3. 프로젝트에 소속되지 않아서 접근 권한없음 -> 403 Forbidden
+                .orElseThrow(() -> new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS)); // ! 3. 프로젝트에 소속되지 않아서 접근 권한없음 -> 403 Forbidden
 
         // ! 4. 프로젝트에 소속되어있지만 리더가 아니라서 상태 수정 권한이 없음 -> 403 Forbidden
         if (!(findProjectMember.isLeader())) {
-            throw new InvalidAccessException("프로젝트에 대한 완료 권한이 없습니다.(리더가 아님)");
+            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS); // todo "프로젝트에 대한 완료 권한이 없습니다.(리더가 아님)"
         }
 
-        projectService.updateState(projectId, State.COMPLETE);
+        projectService.completeProject(projectId);
         return new ResponseEntity(new ProjectUpdateStateResponse(projectId), HttpStatus.OK);
     }
 
@@ -176,16 +177,16 @@ public class ProjectController {
 
         // ! 2. 완료된 프로젝트 -> 멤버 역할 수정 불가 -> 403 Forbidden
         if (project.getState() == State.COMPLETE) {
-            throw new CompletedProjectException("이미 완료된 프로젝트는 프로젝트 멤버 역할을 수정할 수 없습니다.");
+            throw new CompletedProjectException(ProjectErrorCode.PROJECT_COMPLETED);
         }
 
         ProjectMember findProjectMember = project.getProjectMembers().stream()
                 .filter(pmm -> pmm.getMember().getId().equals(member.getId())).findAny()
-                .orElseThrow(() -> new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.")); // ! 3. 프로젝트에 소속되지 않아서 접근 권한없음 -> 403 Forbidden
+                .orElseThrow(() -> new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS)); // ! 3. 프로젝트에 소속되지 않아서 접근 권한없음 -> 403 Forbidden
 
         // ! 4. 프로젝트에 소속되어있지만 리더가 아니라서 멤버 역할 수정 권한이 없음 -> 403 Forbidden
         if (!(findProjectMember.isLeader())) {
-            throw new InvalidAccessException("프로젝트 멤버 역할 수정 권한이 없습니다.(리더가 아님)");
+            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS); // todo "프로젝트 멤버 역할 수정 권한이 없습니다.(리더가 아님)"
         }
 
         projectMemberService.updateProjectMemberRole(projectId, projectMemberRoleUpdateRequest.getMemberId(), projectMemberRoleUpdateRequest.getProjectMemberRole());
@@ -205,19 +206,19 @@ public class ProjectController {
 
         // ! 2. 완료된 프로젝트 -> 리더 위임 불가 -> 403 Forbidden
         if (project.getState() == State.COMPLETE) {
-            throw new CompletedProjectException("이미 완료된 프로젝트는 프로젝트 리더를 변경할 수 없습니다.");
+            throw new CompletedProjectException(ProjectErrorCode.PROJECT_COMPLETED);
         }
 
         ProjectMember findProjectMember = project.getProjectMembers().stream()
                 .filter(pmm -> pmm.getMember().getId().equals(member.getId())).findAny()
-                .orElseThrow(() -> new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.")); // ! 3. 프로젝트에 소속되지 않아서 접근 권한없음 -> 403 Forbidden
+                .orElseThrow(() -> new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS)); // ! 3. 프로젝트에 소속되지 않아서 접근 권한없음 -> 403 Forbidden
 
         // ! 4. 프로젝트에 소속되어있지만 리더가 아니라서 리더 위임 권한이 없음 -> 403 Forbidden
         if (!(findProjectMember.isLeader())) {
-            throw new InvalidAccessException("프로젝트 리더 위임 권한이 없습니다.(리더가 아님)");
+            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS); // todo "프로젝트 리더 위임 권한이 없습니다.(리더가 아님)"
         }
 
-        projectMemberService.changeLeader(projectId, projectLeaderChangeRequest.getMemberId(), member.getId());
+        projectMemberService.changeProjectLeader(projectId, projectLeaderChangeRequest.getMemberId(), member.getId());
 
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -236,16 +237,16 @@ public class ProjectController {
 
         // ! 2. 완료된 프로젝트 -> 멤버 추가 불가 -> 403 Forbidden
         if (project.getState() == State.COMPLETE) {
-            throw new CompletedProjectException("이미 완료된 프로젝트는 멤버를 추가할 수 없습니다.");
+            throw new CompletedProjectException(ProjectErrorCode.PROJECT_COMPLETED);
         }
 
         ProjectMember findProjectMember = project.getProjectMembers().stream()
                 .filter(pmm -> pmm.getMember().getId().equals(member.getId())).findAny()
-                .orElseThrow(() -> new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.")); // ! 3. 프로젝트에 소속되지 않아서 접근 권한없음 -> 403 Forbidden
+                .orElseThrow(() -> new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS)); // ! 3. 프로젝트에 소속되지 않아서 접근 권한없음 -> 403 Forbidden
 
         // ! 4. 프로젝트에 소속되어있지만 리더가 아니라서 리더 위임 권한이 없음 -> 403 Forbidden
         if (!(findProjectMember.isLeader())) {
-            throw new InvalidAccessException("프로젝트 멤버 추가 권한이 없습니다.(리더가 아님)");
+            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS); // todo "프로젝트 멤버 추가 권한이 없습니다.(리더가 아님)"
         }
 
         projectMemberService.updateProjectMemberRole(projectId, request.getMemberId(), new ProjectMemberRole(ProjectMemberRoleType.팀원, request.getPosition()));
@@ -260,27 +261,27 @@ public class ProjectController {
             @ApiResponse(responseCode = "400", description = "프로젝트 멤버 탈퇴 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @DeleteMapping("/{projectId}/selfout")
-    public ResponseEntity selfOutProjectMember(@PathVariable Long projectId, @RequestBody ProjectMemberDeleteRequest request, @CurrentLoginMember Member member) {
+    public ResponseEntity selfOutProjectMember(@PathVariable Long projectId, @CurrentLoginMember Member member) {
         // ! 1. 존재하지 않는 프로젝트에 접근 -> 404 Not Found
         Project project = projectService.findProject(projectId);
 
         // ! 2. 완료된 프로젝트 -> 탈퇴 처리 불가 -> 403 Forbidden
         if (project.getState() == State.COMPLETE) {
-            throw new CompletedProjectException("이미 완료된 프로젝트는 프로젝트 멤버가 탈퇴할 수 없습니다.");
+            throw new CompletedProjectException(ProjectErrorCode.PROJECT_COMPLETED);
         }
 
         ProjectMember findProjectMember = project.getProjectMembers().stream()
                 .filter(pmm -> pmm.getMember().getId().equals(member.getId())).findAny()
-                .orElseThrow(() -> new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.")); // ! 3. 프로젝트에 소속되지 않아서 접근 권한없음 -> 403 Forbidden
+                .orElseThrow(() -> new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS)); // ! 3. 프로젝트에 소속되지 않아서 접근 권한없음 -> 403 Forbidden
 
         // ! 리더인 경우 -> 자기를 제외한 모두를 탈퇴시킬 수 있음(본인이 탈퇴하려면 누군가에게 리더를 위임해야함)
         if (findProjectMember.isLeader()) {
-            throw new InvalidAccessException("프로젝트 리더는 스스로 탈퇴할 수 없습니다.");
-        } else if (findProjectMember.getMember().getId() != request.getMemberId()) {
-            throw new InvalidAccessException("프로젝트 팀원은 타인을 탈퇴시킬 수 없습니다.");
+            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS); // todo "프로젝트 리더는 스스로 탈퇴할 수 없습니다."
+        } else if (findProjectMember.getMember().getId() != member.getId()) {
+            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS); // todo "프로젝트 팀원은 타인을 탈퇴시킬 수 없습니다."
         }
 
-        projectMemberService.deleteProjectMember(projectId, request.getMemberId());
+        projectMemberService.deleteProjectMember(projectId, member.getId());
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -298,19 +299,19 @@ public class ProjectController {
 
         // ! 2. 완료된 프로젝트 -> 멤버 강퇴 불가 -> 403 Forbidden
         if (project.getState() == State.COMPLETE) {
-            throw new CompletedProjectException("이미 완료된 프로젝트는 멤버를 강퇴할 수 없습니다.");
+            throw new CompletedProjectException(ProjectErrorCode.PROJECT_COMPLETED);
         }
 
         // ! 3. 프로젝트에 소속되지 않아서 접근 권한없음 -> 403 Forbidden
         ProjectMember findProjectMember = project.getProjectMembers().stream()
                 .filter(pmm -> pmm.getMember().getId().equals(member.getId())).findAny()
-                .orElseThrow(() -> new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다."));
+                .orElseThrow(() -> new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS));
 
         // ! 4. 프로젝트에 소속되어있지만 리더가 아니라서 강퇴 권한이 없음 -> 403 Forbidden
         if (!(findProjectMember.isLeader())) {
-            throw new InvalidAccessException("프로젝트 멤버 강퇴 권한이 없습니다.(리더가 아님)");
+            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS); // todo "프로젝트 멤버 강퇴 권한이 없습니다.(리더가 아님)"
         } else if (findProjectMember.getMember().getId() == request.getMemberId()) {
-            throw new InvalidAccessException("프로젝트 리더는 자신을 강퇴할 수 없습니다.");
+            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS); // todo "프로젝트 리더는 자신을 강퇴할 수 없습니다."
         }
 
         projectMemberService.deleteProjectMember(projectId, request.getMemberId());
@@ -327,9 +328,9 @@ public class ProjectController {
     @GetMapping("/{projectId}/applylist")
     public ResponseEntity<List<ProjectMemberListResponse>> findApplyList(@PathVariable Long projectId, @CurrentLoginMember Member member) {
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
+            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
         }
-        List<ProjectMemberListResponse> response = projectService.findApplyList(projectId);
+        List<ProjectMemberListResponse> response = projectMemberService.findApplyList(projectId);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
@@ -342,9 +343,9 @@ public class ProjectController {
     @GetMapping("/{projectId}/memberlist")
     public ResponseEntity<List<ProjectMemberListResponse>> projectMemberList(@PathVariable Long projectId, @CurrentLoginMember Member member) {
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
+            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
         }
-        List<ProjectMemberListResponse> response = projectService.findProjectMembers(projectId);
+        List<ProjectMemberListResponse> response = projectMemberService.findProjectMembers(projectId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

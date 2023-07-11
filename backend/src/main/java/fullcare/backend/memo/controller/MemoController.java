@@ -1,7 +1,9 @@
 package fullcare.backend.memo.controller;
 
 import fullcare.backend.global.dto.ErrorResponse;
-import fullcare.backend.global.exception.InvalidAccessException;
+import fullcare.backend.global.errorcode.MemoErrorCode;
+import fullcare.backend.global.errorcode.ProjectErrorCode;
+import fullcare.backend.global.exceptionhandling.exception.InvalidAccessException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.memo.domain.Memo;
 import fullcare.backend.memo.dto.request.MemoCreateRequest;
@@ -55,7 +57,7 @@ public class MemoController {
                                  @CurrentLoginMember Member member) {
 
         if (!(projectMemberService.validateProjectMember(memoCreateRequest.getProjectId(), member.getId()))) {
-            throw new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.");
+            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
         }
 
         Memo newMemo = memoService.createMemo(memoCreateRequest, member);
@@ -77,7 +79,7 @@ public class MemoController {
         Long projectId = memo.getProject().getId();
 
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.");
+            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
         }
 
         memoService.updateMemo(memoId, memoUpdateRequest);
@@ -99,9 +101,9 @@ public class MemoController {
 
 
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.");
+            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
         } else if (memo.getAuthor().getId() != member.getId() || projectMemberService.findProjectMember(projectId, member.getId()).getProjectMemberRole().getRole() != ProjectMemberRoleType.리더) {
-            throw new InvalidAccessException("해당 회의록에 대한 삭제 권한이 없습니다.");
+            throw new InvalidAccessException(MemoErrorCode.INVALID_DELETE);
         }
 
         memoService.deleteMemo(memoId);
@@ -123,14 +125,14 @@ public class MemoController {
         Long projectId = memo.getProject().getId();
 
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.");
+            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
         }
 
         MemoDetailResponse memoDetailResponse = memoService.findMemoDetailResponse(member.getId(), memoId);
         return new ResponseEntity<>(memoDetailResponse, HttpStatus.OK);
     }
 
-    // * 회의록 목록 조회 -> 필터링 조건은 프론트에서 설정해서 날려주기
+    // * 회의록 목록 조회
     @Operation(method = "get", summary = "회의록 리스트 조회")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "회의록 리스트 조회 성공", useReturnTypeSchema = true),
@@ -142,7 +144,7 @@ public class MemoController {
                                                                  @CurrentLoginMember Member member) {
 
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.");
+            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
         }
 
         PageRequest of = pageRequest.of();
@@ -164,7 +166,7 @@ public class MemoController {
                                                                                  @CurrentLoginMember Member member) {
 
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.");
+            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
         }
 
         PageRequest of = pageRequest.of();
@@ -187,7 +189,7 @@ public class MemoController {
         Long projectId = memo.getProject().getId();
 
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException("해당 프로젝트에 접근 권한이 없습니다.");
+            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
         }
 
         bookmarkMemoService.bookmarkMemo(memo, member);

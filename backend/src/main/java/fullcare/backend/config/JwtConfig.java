@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -45,8 +46,9 @@ public class JwtConfig {
         http
                 .securityMatcher("/api/**")
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/auth/post/list").hasAnyRole("USER", "ANONYMOUS")
+                        .requestMatchers(HttpMethod.GET, "/api/auth/post/{postId}").hasAnyRole("USER", "ANONYMOUS")
                         .requestMatchers("/api/auth/**").hasRole("USER")
-                        .requestMatchers("/api/all/**").permitAll() // ? 개발 단계동안 swagger 임시 허용
                         .anyRequest().authenticated())
 
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

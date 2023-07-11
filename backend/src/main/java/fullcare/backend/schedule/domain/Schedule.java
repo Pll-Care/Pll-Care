@@ -2,10 +2,10 @@ package fullcare.backend.schedule.domain;
 
 
 import fullcare.backend.global.State;
+import fullcare.backend.global.errorcode.ScheduleErrorCode;
+import fullcare.backend.global.exceptionhandling.exception.ScheduleOutOfRangeException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
-import fullcare.backend.projectmember.domain.ProjectMember;
-import fullcare.backend.schedule.exceptionhandler.exception.ScheduleOutOfRangeException;
 import fullcare.backend.schedulemember.domain.ScheduleMember;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -85,10 +85,10 @@ public abstract class Schedule {
         if (pStartDate.isAfter(sStartDate) || pStartDate.isAfter(sEndDate) ||
                 pEndDate.isBefore(sStartDate) || pEndDate.isBefore(sEndDate)
         ) {
-            throw new ScheduleOutOfRangeException("프로젝트 일정 범위를 벗어났습니다.");
+            throw new ScheduleOutOfRangeException(ScheduleErrorCode.SCHEDULE_OUT_OF_RANGE); // todo "프로젝트 일정 범위를 벗어났습니다."
         }
         if (sStartDate.isAfter(sEndDate) || sEndDate.isBefore(sStartDate)) {
-            throw new ScheduleOutOfRangeException("시작일정과 종료일정이 올바르지 않습니다.");
+            throw new ScheduleOutOfRangeException(ScheduleErrorCode.SCHEDULE_OUT_OF_RANGE); // todo "시작일정과 종료일정이 올바르지 않습니다."
         }
     }
 

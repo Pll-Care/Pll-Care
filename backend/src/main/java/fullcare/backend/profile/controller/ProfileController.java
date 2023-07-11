@@ -4,9 +4,9 @@ import fullcare.backend.evaluation.dto.response.MyEvalChartResponse;
 import fullcare.backend.evaluation.dto.response.MyEvalDetailResponse;
 import fullcare.backend.evaluation.dto.response.MyEvalListResponse;
 import fullcare.backend.evaluation.service.EvaluationService;
-//import fullcare.backend.global.dto.FailureResponse;
 import fullcare.backend.global.State;
-import fullcare.backend.global.exception.InvalidAccessException;
+import fullcare.backend.global.errorcode.MemberErrorCode;
+import fullcare.backend.global.exceptionhandling.exception.InvalidAccessException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.post.dto.response.MyPostResponse;
 import fullcare.backend.post.service.PostService;
@@ -45,6 +45,7 @@ public class ProfileController {
     private final PostService postService;
     private final EvaluationService evaluationService;
     private final ProjectMemberService projectMemberService;
+
     // * 개인 프로필 api 조회
     @Operation(method = "get", summary = "한 줄 소개 조회")
     @ApiResponses(value = {
@@ -56,6 +57,7 @@ public class ProfileController {
         ProfileBioResponse response = profileService.findBio(memberId, member);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
     @Operation(method = "get", summary = "연락처 조회")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "연락처 조회 성공", useReturnTypeSchema = true),
@@ -66,6 +68,7 @@ public class ProfileController {
         ProfileContactResponse response = profileService.findContact(memberId, member);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
     @Operation(method = "get", summary = "직무, 기술스택 조회")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "직무, 기술스택 조회 성공", useReturnTypeSchema = true),
@@ -76,6 +79,7 @@ public class ProfileController {
         ProfileTechStackResponse response = profileService.findRoleAndTechStack(memberId, member);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
     @Operation(method = "get", summary = "프로젝트 경험 조회")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "프로젝트 경험 조회 성공", useReturnTypeSchema = true),
@@ -106,8 +110,8 @@ public class ProfileController {
     })
     @PatchMapping
     public ResponseEntity updateProfile(@PathVariable Long memberId, @CurrentLoginMember Member member, @Valid @RequestBody ProfileUpdateRequest profileUpdateRequest) {
-        if(memberId != member.getId()){
-            throw new InvalidAccessException("해당 프로필 권한이 없습니다.");
+        if (memberId != member.getId()) {
+            throw new InvalidAccessException(MemberErrorCode.MEMBER_PROFILE_INVALID_ACCESS); // todo "해당 프로필 권한이 없습니다."
         }
         profileService.updateProfile(member, profileUpdateRequest);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -120,8 +124,8 @@ public class ProfileController {
     })
     @PutMapping
     public ResponseEntity<ProfileProjectExperienceResponse> updateBio(@PathVariable Long memberId, @CurrentLoginMember Member member, @Valid @RequestBody ProfileBioUpdateRequest profileBioUpdateRequest) {
-        if(memberId != member.getId()){
-            throw new InvalidAccessException("해당 프로필 권한이 없습니다.");
+        if (memberId != member.getId()) {
+            throw new InvalidAccessException(MemberErrorCode.MEMBER_PROFILE_INVALID_ACCESS); // todo "해당 프로필 권한이 없습니다."
         }
         profileService.updateBio(member, profileBioUpdateRequest);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -135,9 +139,9 @@ public class ProfileController {
 //            @ApiResponse(responseCode = "400", description = "개인페이지 작성한 모집글 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @GetMapping("/post")
-    public ResponseEntity<CustomPageImpl<MyPostResponse>> findMyPost(@PathVariable Long memberId, @RequestParam(value = "state", defaultValue = "TBD")State state, CustomPageRequest pageRequest, @CurrentLoginMember Member member) {
-        if(memberId != member.getId()){
-            throw new InvalidAccessException("해당 프로필 권한이 없습니다.");
+    public ResponseEntity<CustomPageImpl<MyPostResponse>> findMyPost(@PathVariable Long memberId, @RequestParam(value = "state", defaultValue = "TBD") State state, CustomPageRequest pageRequest, @CurrentLoginMember Member member) {
+        if (memberId != member.getId()) {
+            throw new InvalidAccessException(MemberErrorCode.MEMBER_PROFILE_INVALID_ACCESS); // todo "해당 프로필 권한이 없습니다."
         }
         PageRequest of = pageRequest.of();
         Pageable pageable = (Pageable) of;
@@ -153,15 +157,14 @@ public class ProfileController {
     })
     @GetMapping("/post/like")
     public ResponseEntity<CustomPageImpl<MyPostResponse>> findMyLikePost(@PathVariable Long memberId, CustomPageRequest pageRequest, @CurrentLoginMember Member member) {
-        if(memberId != member.getId()){
-            throw new InvalidAccessException("해당 프로필 권한이 없습니다.");
+        if (memberId != member.getId()) {
+            throw new InvalidAccessException(MemberErrorCode.MEMBER_PROFILE_INVALID_ACCESS); // todo "해당 프로필 권한이 없습니다."
         }
         PageRequest of = pageRequest.of();
         Pageable pageable = (Pageable) of;
         CustomPageImpl<MyPostResponse> response = postService.findMyLikePost(member.getId(), pageable);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
 
 
     //* 평가 api
@@ -174,11 +177,12 @@ public class ProfileController {
         PageRequest of = pageRequest.of("project");
         Pageable pageable = (Pageable) of;
         Page<MyEvalListResponse> response = evaluationService.findMyEvalList(pageable, memberId);
-        return new ResponseEntity(response,HttpStatus.OK);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
+
     @Operation(method = "get", summary = "개인페이지 프로젝트 평가 조회")
     @ApiResponses(value = {
-            @ApiResponse(description = "개인페이지 프로젝트 평가 조회 성공", responseCode = "200",useReturnTypeSchema = true)
+            @ApiResponse(description = "개인페이지 프로젝트 평가 조회 성공", responseCode = "200", useReturnTypeSchema = true)
     })
     @GetMapping("/evaluation/{projectId}")
     public ResponseEntity<MyEvalDetailResponse> findMyEvalDetail(@PathVariable Long memberId, @PathVariable Long projectId, @CurrentLoginMember Member member) {
@@ -187,8 +191,9 @@ public class ProfileController {
 //        }
         MyEvalDetailResponse response = evaluationService.findMyEval(projectId, memberId);
 
-        return new ResponseEntity(response,HttpStatus.OK);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
+
     @Operation(method = "get", summary = "개인페이지 평가 차트 조회")
     @ApiResponses(value = {
             @ApiResponse(description = "개인페이지 평가 차트 조회 성공", responseCode = "200", useReturnTypeSchema = true)
@@ -196,7 +201,7 @@ public class ProfileController {
     @GetMapping("/evaluation/chart")
     public ResponseEntity<MyEvalChartResponse> findMyEvalChart(@PathVariable Long memberId, @CurrentLoginMember Member member) {
         MyEvalChartResponse response = evaluationService.findMyEvalChart(memberId);
-        return new ResponseEntity(response,HttpStatus.OK);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
 
@@ -208,6 +213,6 @@ public class ProfileController {
     @GetMapping(value = "/techstack")
     public ResponseEntity<TechStackResponse> findTechStack(@RequestParam("tech") String tech) {
         TechStackResponse response = profileService.findTechStack(tech);
-        return new ResponseEntity(response,HttpStatus.OK);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 }

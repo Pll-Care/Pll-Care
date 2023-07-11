@@ -6,7 +6,10 @@ import fullcare.backend.likes.domain.Likes;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.BatchSize;
 
 import java.util.ArrayList;
@@ -14,7 +17,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@ToString(of = {"id", "title", "recruitments"})
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity

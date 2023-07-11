@@ -1,10 +1,12 @@
 package fullcare.backend.post.service;
 
 import fullcare.backend.global.State;
+import fullcare.backend.global.errorcode.PostErrorCode;
+import fullcare.backend.global.errorcode.ProjectErrorCode;
+import fullcare.backend.global.exceptionhandling.exception.EntityNotFoundException;
 import fullcare.backend.likes.domain.Likes;
 import fullcare.backend.likes.repository.LikesRepository;
 import fullcare.backend.member.domain.Member;
-import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.post.domain.Post;
 import fullcare.backend.post.domain.Recruitment;
 import fullcare.backend.post.dto.request.PostCreateRequest;
@@ -18,7 +20,6 @@ import fullcare.backend.post.repository.RecruitmentRepository;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.util.CustomPageImpl;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -26,7 +27,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -38,15 +41,12 @@ public class PostService {
     private final PostRepository postRepository;
 
     private final ProjectRepository projectRepository;
-    private final MemberRepository memberRepository;
     private final LikesRepository likesRepository;
     private final RecruitmentRepository recruitmentRepository;
 
     @Transactional
-    public Post createPost(PostCreateRequest request, Long memberId) {
-        Project project = projectRepository.findById(request.getProjectId()).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트 정보가 없습니다."));
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException("해당 사용자 정보가 없습니다."));
-
+    public Post createPost(PostCreateRequest request, Member member) {
+        Project project = projectRepository.findById(request.getProjectId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
 
         Post newPost = Post.createNewPost()
                 .project(project)
@@ -74,7 +74,7 @@ public class PostService {
 
     @Transactional
     public void updatePost(Long postId, PostUpdateRequest request) {
-        Post post = postRepository.findById(postId).orElseThrow(() -> new EntityNotFoundException("해당 모집글이 존재하지 않습니다."));
+        Post post = postRepository.findById(postId).orElseThrow(() -> new EntityNotFoundException(PostErrorCode.POST_NOT_FOUND));
 
         List<RecruitInfo> recruitInfo = request.getRecruitInfo();
         List<Recruitment> recruitments = recruitInfo.stream().map(r -> Recruitment.createNewRecruitment()
@@ -94,14 +94,13 @@ public class PostService {
     }
 
     public Post findPost(Long postId) {
-        return postRepository.findById(postId).orElseThrow(() -> new EntityNotFoundException("해당 모집글이 존재하지 않습니다."));
+        return postRepository.findById(postId).orElseThrow(() -> new EntityNotFoundException(PostErrorCode.POST_NOT_FOUND));
     }
 
-    public PostDetailResponse findPostDetailResponse(Long postId) {
-        Post findPost = findPost(postId);
-        PostDetailResponse postDetailResponse = PostDetailResponse.entityToDto(findPost);
+    public PostDetailResponse findPostDetailResponse(Long memberId, Long postId) {
+        PostDetailResponse postDetailResponse = postRepository.findPostDto(memberId, postId).orElseThrow(() -> new EntityNotFoundException(PostErrorCode.POST_NOT_FOUND));
 
-        List<Recruitment> recruitments = recruitmentRepository.findByPostId(findPost.getId());
+        List<Recruitment> recruitments = recruitmentRepository.findByPostId(postDetailResponse.getPostId());
         postDetailResponse.setRecruitInfoList(recruitments.stream().map(r -> new RecruitInfo(r)).toList());
 
         return postDetailResponse;
@@ -137,12 +136,9 @@ public class PostService {
             likesRepository.delete(likes);
         }
 
-
-        //            throw new InvalidAccessException("이미 좋아요 처리한 모집글입니다.");
-
     }
 
-    public CustomPageImpl<MyPostResponse> findMyPost(Long memberId, State state, Pageable pageable){
+    public CustomPageImpl<MyPostResponse> findMyPost(Long memberId, State state, Pageable pageable) {
         Page<Post> posts = postRepository.findPageByMemberId(memberId, state, pageable);
         List<MyPostResponse> content = posts.stream().map(p -> MyPostResponse.builder()
                 .postId(p.getId())
@@ -151,10 +147,11 @@ public class PostService {
                 .state(p.getState())
                 .build()
         ).collect(Collectors.toList());
+
         return new CustomPageImpl<>(content, pageable, posts.getTotalElements());
     }
 
-    public CustomPageImpl<MyPostResponse> findMyLikePost(Long memberId, Pageable pageable){
+    public CustomPageImpl<MyPostResponse> findMyLikePost(Long memberId, Pageable pageable) {
         Page<Post> posts = postRepository.findLikePageByMemberId(memberId, pageable);
         List<MyPostResponse> content = posts.stream().map(p -> MyPostResponse.builder()
                 .postId(p.getId())
@@ -163,6 +160,7 @@ public class PostService {
                 .state(p.getState())
                 .build()
         ).collect(Collectors.toList());
+
         return new CustomPageImpl<>(content, pageable, posts.getTotalElements());
     }
 }

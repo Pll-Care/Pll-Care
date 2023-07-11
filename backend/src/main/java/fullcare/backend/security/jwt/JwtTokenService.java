@@ -103,7 +103,7 @@ public class JwtTokenService {
             }
         }
         log.info("등록되지 않은 사용자입니다.");
-        throw new CustomJwtException("등록되지 않은 사용자입니다.", JwtErrorCode.NOT_FOUND_USER);
+        throw new CustomJwtException(JwtErrorCode.NOT_FOUND_USER);
     }
 
 
@@ -114,16 +114,16 @@ public class JwtTokenService {
             return true;
         } catch (SecurityException | MalformedJwtException e) {
             log.info("잘못된 JWT 서명입니다.");
-            throw new CustomJwtException("잘못된 JWT 서명입니다.");
+            throw new CustomJwtException(JwtErrorCode.MALFORMED_TOKEN);
         } catch (ExpiredJwtException e) {
             log.info("만료된 JWT 토큰입니다.");
-            throw new CustomJwtException("만료된 JWT 토큰입니다.");
+            throw new CustomJwtException(JwtErrorCode.EXPIRED_TOKEN);
         } catch (UnsupportedJwtException e) {
             log.info("지원되지 않는 JWT 서명입니다.");
-            throw new CustomJwtException("지원되지 않는 JWT 서명입니다.");
+            throw new CustomJwtException(JwtErrorCode.UNSUPPORTED_TOKEN);
         } catch (IllegalArgumentException e) {
             log.info("JWT 토큰이 잘못되었습니다.");
-            throw new CustomJwtException("JWT 토큰이 잘못되었습니다.");
+            throw new CustomJwtException(JwtErrorCode.ILLEGAL_TOKEN);
         }
     }
 
@@ -136,15 +136,10 @@ public class JwtTokenService {
 
         String memberId = claims.getSubject();
 
-        Member member = memberRepository.findById(Long.valueOf(memberId)).orElseThrow(() -> new CustomJwtException("등록되지 않은 사용자입니다.", JwtErrorCode.NOT_FOUND_USER));
+        Member member = memberRepository.findById(Long.valueOf(memberId)).orElseThrow(() -> new CustomJwtException(JwtErrorCode.NOT_FOUND_USER));
         List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(member.getRole().getValue()));
 
         return new UsernamePasswordAuthenticationToken(member, null, authorities);
-
-        // * 구버전
-//        int i = member.getOAuth2Id().indexOf('_');
-//        String providerName = member.getOAuth2Id().substring(0, i);
-//        return new OAuth2AuthenticationToken(oAuth2User, oAuth2User.getAuthorities(), providerName);
     }
 
 }

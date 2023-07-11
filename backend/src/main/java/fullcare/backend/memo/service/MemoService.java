@@ -1,5 +1,8 @@
 package fullcare.backend.memo.service;
 
+import fullcare.backend.global.errorcode.MemoErrorCode;
+import fullcare.backend.global.errorcode.ProjectErrorCode;
+import fullcare.backend.global.exceptionhandling.exception.EntityNotFoundException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.memo.domain.Memo;
 import fullcare.backend.memo.dto.request.MemoCreateRequest;
@@ -10,7 +13,6 @@ import fullcare.backend.memo.repository.MemoRepository;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.util.CustomPageImpl;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -32,7 +34,7 @@ public class MemoService {
 
     @Transactional
     public Memo createMemo(MemoCreateRequest request, Member author) {
-        Project project = projectRepository.findById(request.getProjectId()).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트가 존재하지 않습니다."));
+        Project project = projectRepository.findById(request.getProjectId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
 
         Memo newMemo = Memo.createNewMemo()
                 .project(project)
@@ -40,7 +42,6 @@ public class MemoService {
                 .content(request.getContent())
                 .author(author)
                 .build();
-
 
         return memoRepository.save(newMemo);
     }
@@ -58,11 +59,10 @@ public class MemoService {
     }
 
     public Memo findMemo(Long memoId) {
-        return memoRepository.findById(memoId).orElseThrow(() -> new EntityNotFoundException("해당 회의록이 존재하지 않습니다."));
+        return memoRepository.findById(memoId).orElseThrow(() -> new EntityNotFoundException(MemoErrorCode.MEMO_NOT_FOUND));
     }
 
     public MemoDetailResponse findMemoDetailResponse(Long memberId, Long memoId) {
-
         MemoDetailResponse result = memoRepository.findMemoDetailDto(memberId, memoId);
         return result;
     }

@@ -41,6 +41,7 @@ public class Project extends BaseEntity {
     @Lob
     @Column(name = "description", nullable = false)
     private String description;
+
     private String imageUrl;
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -78,6 +79,10 @@ public class Project extends BaseEntity {
         this.imageUrl = imageUrl;
     }
 
+    public void complete() {
+        this.state = State.COMPLETE;
+    }
+
     public void updateState(State state) {
         this.state = state;
     }
@@ -88,8 +93,7 @@ public class Project extends BaseEntity {
                 .project(this)
                 .projectMemberRole(role).build();
 
-        projectMembers.add(pm); // ! project save시에 projectmember도 cascade 옵션으로 똑바로 저장되는지 확인 필요
-        member.getProjectMembers().add(pm); // ? member 엔티티에서 projectMembers 컬렉션은 필요없을듯?
+        projectMembers.add(pm);
     }
 
     public void update(ProjectUpdateRequest projectUpdateRequest) {

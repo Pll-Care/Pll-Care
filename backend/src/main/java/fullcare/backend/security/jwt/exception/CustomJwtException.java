@@ -5,16 +5,12 @@ import org.springframework.security.core.AuthenticationException;
 
 @Getter
 public class CustomJwtException extends AuthenticationException {
-    private JwtErrorCode errorCode;
-    public CustomJwtException(String msg, Throwable cause) {
-        super(msg, cause);
-    }
 
-    public CustomJwtException(String msg) {
-        super(msg);
-    }
-    public CustomJwtException(String msg, JwtErrorCode errorCode) {
-        super(msg);
+    private final JwtErrorCode errorCode;
+
+    public CustomJwtException(JwtErrorCode errorCode) {
+        super(errorCode.getMessage());
         this.errorCode = errorCode;
     }
+    
 }

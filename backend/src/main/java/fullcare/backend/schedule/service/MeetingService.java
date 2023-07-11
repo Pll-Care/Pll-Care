@@ -1,9 +1,10 @@
 package fullcare.backend.schedule.service;
 
 import fullcare.backend.global.State;
+import fullcare.backend.global.errorcode.ProjectErrorCode;
+import fullcare.backend.global.exceptionhandling.exception.CompletedProjectException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
-import fullcare.backend.project.CompletedProjectException;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.projectmember.domain.ProjectMember;
@@ -39,8 +40,8 @@ public class MeetingService {
         LocalDateTime startDate = project.getStartDate().atStartOfDay();
         LocalDateTime endDate = project.getEndDate().atStartOfDay();
         Schedule.validDate(startDate, endDate, scheduleCreateRequest.getStartDate(), scheduleCreateRequest.getEndDate());
-        if(project.isCompleted()){
-            throw new CompletedProjectException("완료된 프로젝트는 일정을 생성하지 못합니다.");
+        if (project.isCompleted()) {
+            throw new CompletedProjectException(ProjectErrorCode.PROJECT_COMPLETED); // todo "완료된 프로젝트는 일정을 생성하지 못합니다."
         }
         List<Long> memberIds = scheduleCreateRequest.getMemberIds();
         List<Member> memberList = new ArrayList<>();
