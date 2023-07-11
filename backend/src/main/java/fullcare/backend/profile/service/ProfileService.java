@@ -12,6 +12,7 @@ import fullcare.backend.profile.dto.request.ProfileBioUpdateRequest;
 import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
 import fullcare.backend.profile.dto.response.ProfileBioResponse;
 import fullcare.backend.profile.dto.response.ProfileContactResponse;
+import fullcare.backend.profile.dto.response.ProfileImageResponse;
 import fullcare.backend.profile.dto.response.ProfileProjectExperienceResponse;
 import fullcare.backend.profile.dto.response.ProfileTechStackResponse;
 import lombok.RequiredArgsConstructor;
@@ -97,6 +98,9 @@ public class ProfileService {
         }
         return techStackResponse;
     }
-
+    public ProfileImageResponse findProfileImage(Member member) {
+        Member findMember = memberRepository.findById(member.getId()).orElseThrow();
+        return new ProfileImageResponse(findMember.getId(), findMember.getImageUrl());
+    }
 
 }

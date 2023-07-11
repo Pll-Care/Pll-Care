@@ -2,10 +2,10 @@ spring:
 
   #Database
   datasource:
-    url: jdbc:h2:tcp://localhost/~/userdb
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:tcp://localhost/~/userdb
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
   #
   #      driver-class-name: com.mysql.cj.jdbc.Driver
   #      url: jdbc:mysql://localhost:3306/fullcare?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
@@ -13,15 +13,15 @@ spring:
   #      password: 1234
 
   ## AWS RDS 설정
-  #  driver-class-name: com.mysql.cj.jdbc.Driver
-  #  url: jdbc:mysql://fullcare.ctyerwfyq4ca.ap-northeast-2.rds.amazonaws.com:3306/fullcare
-  #  username: root
-  #  password: fullcare1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://fullcare.ctyerwfyq4ca.ap-northeast-2.rds.amazonaws.com:3306/fullcare
+    username: root
+    password: fullcare1234
 
   # JPA
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     show-sql: false
     properties:
       hibernate:
