@@ -2,7 +2,7 @@ package fullcare.backend.profile.domain;
 
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.post.domain.RecruitPosition;
-import fullcare.backend.profile.TechStack;
+import fullcare.backend.util.dto.TechStack;
 import fullcare.backend.profile.dto.ProjectExperienceRequestDto;
 import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
 import jakarta.persistence.*;

@@ -99,9 +99,9 @@ public class EvaluationService {
         if (validateMidDuplicationAuthor(midTermEvalCreateRequest.getScheduleId(), voter.getId())) {
             throw new DuplicateEvalException(EvaluationErrorCode.DUPLICATE_EVALUATION);
         }
-        scheduleMemberRepository.findByScheduleIdAndMemberId(midTermEvalCreateRequest.getScheduleId(), voter.getId()).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_MEMBER_NOT_FOUND)); // todo "일정에 해당 사용자가 없습니다." // * 일정에 투표하는 사람이 없을때
-        scheduleMemberRepository.findByScheduleIdAndMemberId(midTermEvalCreateRequest.getScheduleId(), voted.getId()).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_MEMBER_NOT_FOUND)); // todo "일정에 해당 사용자가 없습니다." //* 일정에 투표된 사람이 없을때
-        Schedule schedule = scheduleRepository.findByIdAndState(midTermEvalCreateRequest.getScheduleId(), State.COMPLETE).orElseThrow(() -> new InvalidAccessException(ScheduleErrorCode.SCHEDULE_UNCOMPLETED)); // todo "일정이 완료 안됐습니다." //* 일정이 완료 됐을때만 가능
+        scheduleMemberRepository.findByScheduleIdAndMemberId(midTermEvalCreateRequest.getScheduleId(), voter.getId()).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_MEMBER_NOT_FOUND));
+        scheduleMemberRepository.findByScheduleIdAndMemberId(midTermEvalCreateRequest.getScheduleId(), voted.getId()).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_MEMBER_NOT_FOUND));
+        Schedule schedule = scheduleRepository.findByIdAndState(midTermEvalCreateRequest.getScheduleId(), State.COMPLETE).orElseThrow(() -> new InvalidAccessException(EvaluationErrorCode.MID_EVAL_NOT_CREATE));
         Project project = projectRepository.findById(midTermEvalCreateRequest.getProjectId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
         MidtermEvaluation newMidtermEvaluation = MidtermEvaluation.createNewMidtermEval()
                 .evaluationBadge(midTermEvalCreateRequest.getEvaluationBadge())
@@ -118,7 +118,7 @@ public class EvaluationService {
     public Long createFinalEvaluation(FinalEvalCreateRequest finalEvalCreateRequest, Member evaluator) {
         Member evaluated = memberRepository.findById(finalEvalCreateRequest.getEvaluatedId()).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
         Project project = projectRepository.findById(finalEvalCreateRequest.getProjectId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
-        projectMemberRepository.findByProjectIdAndMemberId(project.getId(), finalEvalCreateRequest.getEvaluatedId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND)); // todo "투표된 사람은 프로젝트에 없습니다."
+        projectMemberRepository.findByProjectIdAndMemberId(project.getId(), finalEvalCreateRequest.getEvaluatedId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
         //? 점수 5점 이상일 경우 에러처리
         if (!Score.valid(finalEvalCreateRequest.getScore())) {
             throw new EvalOutOfRangeException(EvaluationErrorCode.SCORE_OUT_OF_RANGE);

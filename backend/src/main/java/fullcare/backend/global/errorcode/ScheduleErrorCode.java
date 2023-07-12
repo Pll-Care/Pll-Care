@@ -17,12 +17,15 @@ public enum ScheduleErrorCode implements ErrorCode {
 
     // ! 400 BAD_REQUEST
     CATEGORY_NOT_FOUND("SCHEDULE_006", HttpStatus.BAD_REQUEST, "일정 카테고리가 존재하지 않습니다."), // -> NotFoundCategoryException
-    CATEGORY_MISMATCH("SCHEDULE_007", HttpStatus.BAD_REQUEST, "일정 카테고리를 변경할 수 없습니다."), // -> ScheduleCategoryMisMatchException
-    SCHEDULE_OUT_OF_RANGE("SCHEDULE_008", HttpStatus.BAD_REQUEST, "일정의 날짜 값이 올바르지 않습니다."), // -> ScheduleOutOfRangeException
+    CATEGORY_NOT_MODIFY("SCHEDULE_007", HttpStatus.BAD_REQUEST, "일정 카테고리는 변경할 수 없습니다."), // -> ScheduleCategoryMisMatchException
+    SCHEDULE_OUT_OF_RANGE("SCHEDULE_008", HttpStatus.BAD_REQUEST, "시작일정과 종료일정이 올바르지 않습니다."), // -> ScheduleOutOfRangeException
+    PS_OUT_OF_RANGE("SCHEDULE_009", HttpStatus.BAD_REQUEST, "일정이 프로젝트 일정을 벗어났습니다."), //* (PS -> PROJECT SCHEDULE)  ScheduleOutOfRangeException
+    PC_SCHEDULE_NOT_PATCH("SCHEDULE_010", HttpStatus.BAD_REQUEST, "완료된 프로젝트는 일정을 생성, 수정, 삭제 할 수 없습니다."), //* (PC -> PROJECT COMPLETE) ScheduleOutOfRangeException
+
 
     // ! 404 NOT_FOUND
-    SCHEDULE_NOT_FOUND("SCHEDULE_009", HttpStatus.NOT_FOUND, "일정을 찾을 수 없습니다."),
-    SCHEDULE_MEMBER_NOT_FOUND("SCHEDULE_010", HttpStatus.NOT_FOUND, "일정에서 해당 사용자를 찾을 수 없습니다.");
+    SCHEDULE_NOT_FOUND("SCHEDULE_011", HttpStatus.NOT_FOUND, "일정을 찾을 수 없습니다."),
+    SCHEDULE_MEMBER_NOT_FOUND("SCHEDULE_012", HttpStatus.NOT_FOUND, "일정에서 해당 사용자를 찾을 수 없습니다.");
 
     private final String code;
     private final HttpStatus status;

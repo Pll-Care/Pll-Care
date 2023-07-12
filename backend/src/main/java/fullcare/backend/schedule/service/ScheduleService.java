@@ -103,17 +103,17 @@ public class ScheduleService {
     public boolean updateSchedule(ScheduleUpdateRequest scheduleUpdateRequest, Long scheduleId) {// 멤버 로그인 사용자 검증 수정
         Schedule schedule = scheduleRepository.findJoinSMById(scheduleId).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
         if ((schedule instanceof Meeting && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.MILESTONE)) || (schedule instanceof Milestone && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.MEETING))) {
-            throw new ScheduleCategoryMisMatchException(ScheduleErrorCode.CATEGORY_MISMATCH); // todo "수정하려는 일정의 카테고리가 맞지 않습니다."
+            throw new ScheduleCategoryMisMatchException(ScheduleErrorCode.CATEGORY_NOT_MODIFY);
         }
         if(schedule.getState().equals(State.COMPLETE)){
-            throw new ScheduleCategoryMisMatchException(ScheduleErrorCode.CATEGORY_MISMATCH); // todo 완료된 일정 수정 불가
+            throw new ScheduleCategoryMisMatchException(ScheduleErrorCode.SCHEDULE_COMPLETED);
         }
         Project project = projectRepository.findById(scheduleUpdateRequest.getProjectId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
         LocalDateTime startDate = project.getStartDate().atStartOfDay();
         LocalDateTime endDate = project.getEndDate().atStartOfDay();
         Schedule.validDate(startDate, endDate, scheduleUpdateRequest.getStartDate(), scheduleUpdateRequest.getEndDate());
         if (project.isCompleted()) {
-            throw new CompletedProjectException(ProjectErrorCode.PROJECT_COMPLETED); // todo "완료된 프로젝트는 일정을 수정하지 못합니다."
+            throw new CompletedProjectException(ScheduleErrorCode.PC_SCHEDULE_NOT_PATCH);
         }
         List<ProjectMember> pmList = projectMemberRepository.findByProjectIdAndProjectMemberRole(scheduleUpdateRequest.getProjectId(), ProjectMemberRoleType.미정);
 
@@ -150,7 +150,7 @@ public class ScheduleService {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
         if (project.isCompleted()) {
-            throw new CompletedProjectException(ProjectErrorCode.PROJECT_COMPLETED); // todo "완료된 프로젝트는 일정을 삭제하지 못합니다."
+            throw new CompletedProjectException(ScheduleErrorCode.PC_SCHEDULE_NOT_PATCH);
         }
         scheduleRepository.delete(schedule);
     }
@@ -240,7 +240,7 @@ public class ScheduleService {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
         Project project = projectRepository.findById(scheduleStateUpdateRequest.getProjectId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
         if (project.isCompleted()) {
-            throw new CompletedProjectException(ProjectErrorCode.PROJECT_COMPLETED); // todo "완료된 프로젝트는 일정을 생성하지 못합니다."
+            throw new CompletedProjectException(ScheduleErrorCode.PC_SCHEDULE_NOT_PATCH);
         }
         LocalDateTime now = LocalDateTime.now();
         schedule.updateState(now, scheduleStateUpdateRequest.getState());

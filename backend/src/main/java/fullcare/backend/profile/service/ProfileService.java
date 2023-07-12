@@ -4,8 +4,6 @@ import fullcare.backend.global.errorcode.MemberErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.EntityNotFoundException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
-import fullcare.backend.profile.TechStack;
-import fullcare.backend.profile.TechStackResponse;
 import fullcare.backend.profile.domain.Profile;
 import fullcare.backend.profile.dto.ProjectExperienceDto;
 import fullcare.backend.profile.dto.ProjectExperienceResponseDto;
@@ -111,7 +109,7 @@ public class ProfileService {
 
 
     public ProfileImageResponse findProfileImage(Member member) {
-        Member findMember = memberRepository.findById(member.getId()).orElseThrow();
+        Member findMember = memberRepository.findById(member.getId()).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
         return new ProfileImageResponse(findMember.getId(), findMember.getImageUrl());
     }
 

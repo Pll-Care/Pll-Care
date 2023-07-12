@@ -1,7 +1,7 @@
 package fullcare.backend.util.controller;
 
-import fullcare.backend.profile.TechStackResponse;
-import fullcare.backend.util.service.UtilService;
+import fullcare.backend.util.dto.TechStackResponse;
+import fullcare.backend.util.Util;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/auth/util")
 @RestController
 public class UtilController {
-    private final UtilService utilService;
     @Operation(method = "get", summary = "기술스택 검색")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "기술스택 검색 성공", useReturnTypeSchema = true),
@@ -28,7 +27,7 @@ public class UtilController {
     })
     @GetMapping(value = "/techstack")
     public ResponseEntity<TechStackResponse> findTechStack(@RequestParam("tech") String tech) {
-        TechStackResponse response = utilService.findTechStack(tech);
+        TechStackResponse response = Util.findTechStack(tech);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 }

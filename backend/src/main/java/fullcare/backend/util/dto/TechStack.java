@@ -1,4 +1,4 @@
-package fullcare.backend.profile;
+package fullcare.backend.util.dto;
 
 import java.util.List;
 

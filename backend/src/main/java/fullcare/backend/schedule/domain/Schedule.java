@@ -85,10 +85,10 @@ public abstract class Schedule {
         if (pStartDate.isAfter(sStartDate) || pStartDate.isAfter(sEndDate) ||
                 pEndDate.isBefore(sStartDate) || pEndDate.isBefore(sEndDate)
         ) {
-            throw new ScheduleOutOfRangeException(ScheduleErrorCode.SCHEDULE_OUT_OF_RANGE); // todo "프로젝트 일정 범위를 벗어났습니다."
+            throw new ScheduleOutOfRangeException(ScheduleErrorCode.PS_OUT_OF_RANGE);
         }
         if (sStartDate.isAfter(sEndDate) || sEndDate.isBefore(sStartDate)) {
-            throw new ScheduleOutOfRangeException(ScheduleErrorCode.SCHEDULE_OUT_OF_RANGE); // todo "시작일정과 종료일정이 올바르지 않습니다."
+            throw new ScheduleOutOfRangeException(ScheduleErrorCode.SCHEDULE_OUT_OF_RANGE);
         }
     }
 
