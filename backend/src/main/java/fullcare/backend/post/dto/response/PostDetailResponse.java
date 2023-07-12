@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,13 +16,22 @@ public class PostDetailResponse {
 
     private Long postId;
     private String projectName; // * 프로젝트 이름
-    private String memberName; // * 작성자 이름
+    private String projectImageUrl;
+
+    private String author; // * 작성자 이름
+    private String authorImageUrl;
 
     private String title;
     private String description;
+
+    private LocalDate recruitStartDate;
+    private LocalDate recruitEndDate;
+
     private String reference;
     private String contact;
     private String region;
+
+    private List<String> techStackImageUrls;
     private String techStack;
     private boolean isLiked;
 
@@ -31,16 +41,20 @@ public class PostDetailResponse {
     private LocalDateTime modifiedDate;
 
     @Builder
-    public PostDetailResponse(Long postId, String projectName, String memberName, String title,
-                              String description, String reference, String contact, String region,
-                              String techStack, boolean isLiked,
+    public PostDetailResponse(Long postId, String projectName, String projectImageUrl, String author, String authorImageUrl,
+                              String title, String description, LocalDate recruitStartDate, LocalDate recruitEndDate,
+                              String reference, String contact, String region, String techStack, boolean isLiked,
                               LocalDateTime createdDate, LocalDateTime modifiedDate) {
 
         this.postId = postId;
         this.projectName = projectName;
-        this.memberName = memberName;
+        this.projectImageUrl = projectImageUrl;
+        this.author = author;
+        this.authorImageUrl = authorImageUrl;
         this.title = title;
         this.description = description;
+        this.recruitStartDate = recruitStartDate;
+        this.recruitEndDate = recruitEndDate;
         this.reference = reference;
         this.contact = contact;
         this.region = region;
@@ -54,7 +68,9 @@ public class PostDetailResponse {
         return PostDetailResponse.builder()
                 .postId(post.getId())
                 .projectName(post.getProject().getTitle())
-                .memberName(post.getAuthor().getNickname())
+                .projectImageUrl(post.getProject().getImageUrl())
+                .author(post.getAuthor().getNickname())
+                .authorImageUrl(post.getAuthor().getImageUrl())
                 .title(post.getTitle())
                 .description(post.getDescription())
                 .reference(post.getReference())

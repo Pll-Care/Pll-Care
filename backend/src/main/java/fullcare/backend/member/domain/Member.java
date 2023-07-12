@@ -3,8 +3,8 @@ package fullcare.backend.member.domain;
 import fullcare.backend.evaluation.domain.FinalTermEvaluation;
 import fullcare.backend.evaluation.domain.MidtermEvaluation;
 import fullcare.backend.likes.domain.Likes;
-import fullcare.backend.profile.domain.Profile;
 import fullcare.backend.post.domain.Post;
+import fullcare.backend.profile.domain.Profile;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.schedule.domain.Schedule;
 import jakarta.persistence.*;
@@ -52,10 +52,11 @@ public class Member {
 
     @Column(name = "refreshToken")
     private String refreshToken;
+
     private String imageUrl;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name="profile_id", nullable = false)
+    @JoinColumn(name = "profile_id", nullable = false)
     private Profile profile;
     //    @Column
 //    private String profileContent;
