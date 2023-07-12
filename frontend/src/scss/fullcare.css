@@ -2382,34 +2382,25 @@ input {
 }
 .member-write .member-title {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   font-family: "IBM Plex Sans KR", sans-serif;
   margin: 10px 7%;
   margin-top: 30px;
-}
-.member-write .member-title-text {
-  display: flex;
   align-items: center;
 }
-.member-write .member-title-text .recruitment-direction {
+.member-write .member-title .recruitment-direction {
   color: white;
 }
-.member-write .member-title-text img {
+.member-write .member-title img {
   width: 50px;
   height: 50px;
   border-radius: 20px;
   margin-left: 20px;
 }
-.member-write .member-title-text h2 {
+.member-write .member-title h2 {
   font-size: 40px;
   margin-left: 15px;
   color: white;
-}
-.member-write .member-title-button {
-  margin-top: 10px;
-}
-.member-write .member-title-button Button {
-  margin-left: 10px;
 }
 .member-write-card {
   margin: 20px 7%;
@@ -2457,8 +2448,6 @@ input {
 }
 .member-write .member-content-position {
   display: flex;
-  align-items: center;
-  justify-content: center;
   border-bottom: 2px solid rgb(214, 214, 214);
 }
 @media (max-width: 767px) {
@@ -2471,105 +2460,91 @@ input {
     flex-direction: column;
   }
 }
-.member-write .member-content-position h3 {
-  width: 10%;
-}
 .member-write .member-content-position-container {
   display: flex;
   flex-direction: column;
-  width: 90%;
+  margin-left: 10%;
 }
-.member-write .member-content-position-container-option {
+.member-write .member-content-position-container .member-stack {
   display: flex;
   align-items: center;
-  margin: 40px 0px;
+  margin: 10px 0px;
 }
-.member-write .member-content-position-container-option h5 {
-  margin-right: 20px;
+.member-write .member-content-position-container .member-stack h5 {
+  white-space: nowrap;
 }
-@media (max-width: 767px) {
-  .member-write .member-content-position-container-option {
-    flex-direction: column;
-  }
-}
-@media (min-width: 767px) and (max-width: 1024px) {
-  .member-write .member-content-position-container-option {
-    flex-direction: column;
-  }
-}
-.member-write .member-content-position-container-option .position-number {
+.member-write .member-content-position-container .member-stack .position-number {
   width: 50px;
   margin: 0px 40px;
   border-radius: 50px;
 }
-.member-write .member-content-position-container-option .member-stack {
+.member-write .member-content-position-stack {
+  margin-left: 10%;
   display: flex;
-  align-items: center;
-}
-@media (max-width: 767px) {
-  .member-write .member-content-position-container-option .member-stack {
-    justify-content: space-between;
-  }
-}
-.member-write .member-content-position-container-option .member-stack input {
-  margin-left: 10px;
-}
-.member-write .member-content-position-container-option .member-stackinput {
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1);
-  border-radius: 20px;
 }
-.member-write .member-content-position-container-option .member-stackinput Button {
-  margin: 10px 10px;
+.member-write .member-content-position-stack h5 {
+  color: #00aa72;
+  margin: 10px 0px;
+}
+.member-write .member-content-position-stack .member-stack {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 @media (max-width: 767px) {
-  .member-write .member-content-position-container-option .member-stackinput {
+  .member-write .member-content-position-stack .member-stack {
     margin: 20px 0px;
   }
 }
 @media (min-width: 767px) and (max-width: 1024px) {
-  .member-write .member-content-position-container-option .member-stackinput {
+  .member-write .member-content-position-stack .member-stack {
     margin: 20px 0px;
   }
 }
-.member-write .member-content-position-container-option .member-stackcontainer {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-.member-write .member-content-position-container-option .member-stackcontainer-input {
+.member-write .member-content-position-stack .member-stack-input {
   display: flex;
   align-items: center;
+  width: 100%;
 }
-.member-write .member-content-position-container-option .member-stackcontainer input {
-  display: flex;
-  align-items: center;
-  margin-left: 15px;
+.member-write .member-content-position-stack .member-stack-input input {
+  width: 200px;
 }
-.member-write .member-content-position-container-option .member-stackcontainer > .member-inputcontainer-box {
+.member-write .member-content-position-stack .member-stack > .member-inputcontainer-box {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   z-index: 1;
   position: absolute;
-  width: 85%;
-  top: 100%;
-  transform: translateY(5px);
-  background-color: rgb(248, 248, 248);
+  width: 200px;
+  top: calc(100% + 5px);
+  left: 0;
+  padding: 0.1rem;
+  background-color: white;
 }
-.member-write .member-content-position-container-option .member-stackcontainer > .member-inputcontainer-box h5 {
+.member-write .member-content-position-stack .member-stack > .member-inputcontainer-box h5 {
   display: flex;
-  width: 100%;
+  width: 90%;
   justify-content: center;
-  border-bottom: 1px solid rgb(211, 211, 211);
+  border-bottom: 1px solid rgb(238, 238, 238);
   text-align: center;
   cursor: pointer;
 }
-.member-write .member-content-position-container-option .mui-icon {
-  color: #01e89e;
-  margin-left: 10px;
-  cursor: pointer;
+.member-write .member-content-position-stack .member-stack-button {
+  width: 100%;
+  padding: 0.5rem;
+  box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1);
+  margin: 15px 0px;
+  border-radius: 20px;
+  height: 180px;
+  text-align: center;
+}
+.member-write .member-content-position-stack .member-stack-button Button {
+  margin: 10px 10px;
 }
 .member-write .member-content-description {
   display: flex;
@@ -2609,6 +2584,13 @@ input {
   align-items: center;
   justify-content: center;
   margin: 10px 10%;
+}
+.recruitment h1 {
+  font-size: 27px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  color: gray;
+  margin-left: 15px;
+  margin-top: 10px;
 }
 @media (min-width: 767px) and (max-width: 1024px) {
   .recruitment {
@@ -2860,4 +2842,5 @@ input {
   padding: 1px;
   margin-left: 35px;
   margin-right: 10px;
+  cursor: pointer;
 }/*# sourceMappingURL=fullcare.css.map */

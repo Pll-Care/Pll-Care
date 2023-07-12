@@ -108,36 +108,27 @@
 
   .member-title {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     font-family: $heading-font;
     margin: 10px 7%;
     margin-top: 30px;
-
-    &-text {
-      display: flex;
-      align-items: center;
-      .recruitment-direction {
-        color: white;
-      }
-      img {
-        width: 50px;
-        height: 50px;
-        border-radius: 20px;
-        margin-left: 20px;
-      }
-      h2 {
-        font-size: $heading-font-size;
-        margin-left: 15px;
-        color: white;
-      }
+    align-items: center;
+    .recruitment-direction {
+      color: white;
     }
-    &-button {
-      margin-top: 10px;
-      Button {
-        margin-left: 10px;
-      }
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 20px;
+      margin-left: 20px;
+    }
+    h2 {
+      font-size: $heading-font-size;
+      margin-left: 15px;
+      color: white;
     }
   }
+
   &-card {
     margin: 20px 7%;
   }
@@ -185,8 +176,6 @@
     // 기술 스택 입력하기
     &-position {
       display: flex;
-      align-items: center;
-      justify-content: center;
       border-bottom: 2px solid rgb(214, 214, 214);
       @include mobile {
         flex-direction: column;
@@ -194,96 +183,91 @@
       @include tablet {
         flex-direction: column;
       }
-      h3 {
-        width: 10%;
-      }
 
       &-container {
         display: flex;
         flex-direction: column;
-        width: 90%;
-        &-option {
-          h5 {
-            margin-right: 20px;
-          }
+        margin-left: 10%;
+        .member-stack {
           display: flex;
           align-items: center;
-          margin: 40px 0px;
-          @include mobile {
-            flex-direction: column;
-          }
-          @include tablet {
-            flex-direction: column;
+          margin: 10px 0px;
+          h5 {
+            white-space: nowrap;
           }
           .position-number {
             width: 50px;
             margin: 0px 40px;
             border-radius: 50px;
           }
-          .member-stack {
+        }
+      }
+
+      &-stack {
+        margin-left: 10%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        h5 {
+          color: $sub-heading-color;
+          margin: 10px 0px;
+        }
+        .member-stack {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          @include mobile {
+            margin: 20px 0px;
+          }
+          @include tablet {
+            margin: 20px 0px;
+          }
+          width: 100%;
+
+          &-input {
             display: flex;
             align-items: center;
-            @include mobile {
-              justify-content: space-between;
-            }
+            width: 100%;
             input {
-              margin-left: 10px;
-            }
-          }
-          .member-stackinput {
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1);
-            border-radius: 20px;
-            Button {
-              margin: 10px 10px;
-            }
-            @include mobile {
-              margin: 20px 0px;
-            }
-            @include tablet {
-              margin: 20px 0px;
+              width: 200px;
             }
           }
 
-          .member-stackcontainer {
+          & > .member-inputcontainer-box {
             display: flex;
             flex-direction: column;
-            position: relative;
-            &-input {
-              display: flex;
-              align-items: center;
-            }
-            input {
-              display: flex;
-              align-items: center;
-              margin-left: 15px;
-            }
+            justify-content: flex-start;
+            z-index: 1;
+            position: absolute;
+            width: 200px;
+            top: calc(100% + 5px);
+            left: 0;
+            padding: 0.1rem;
 
-            & > .member-inputcontainer-box {
+            background-color: white;
+            h5 {
               display: flex;
-              flex-direction: column;
+              width: 90%;
               justify-content: center;
-              z-index: 1;
-              position: absolute;
-              width: 85%;
-              top: 100%;
-              transform: translateY(5px);
-              background-color: rgb(248, 248, 248);
-              h5 {
-                display: flex;
-                width: 100%;
-                justify-content: center;
-                border-bottom: 1px solid rgb(211, 211, 211);
-                text-align: center;
-                cursor: pointer;
-              }
+              border-bottom: 1px solid rgb(238, 238, 238);
+              text-align: center;
+              cursor: pointer;
             }
           }
-          .mui-icon {
-            color: $background-color;
-            margin-left: 10px;
-            cursor: pointer;
+        }
+        .member-stack-button {
+          width: 100%;
+          padding: 0.5rem;
+          box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1);
+          margin: 15px 0px;
+          border-radius: 20px;
+          height: 180px;
+          text-align: center;
+          Button {
+            margin: 10px 10px;
           }
         }
       }
@@ -328,6 +312,13 @@
   align-items: center;
   justify-content: center;
   margin: 10px 10%;
+  h1 {
+    font-size: 27px;
+    font-family: $heading-font;
+    color: gray;
+    margin-left: 15px;
+    margin-top: 10px;
+  }
   @include tablet {
     margin: 5px 0px;
   }

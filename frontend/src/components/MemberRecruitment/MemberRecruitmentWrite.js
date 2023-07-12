@@ -10,90 +10,41 @@ import { backendStacks, designStacks, frontendStacks } from "./data/stack";
 
 const MemberRecruitmentWrite = () => {
   // 기술 스택들 태그들
-  const [backend, setBackend] = useState([]);
-  const [frontend, setFrontend] = useState([]);
-  const [design, setDesign] = useState([]);
+  const [stacks, setStacks] = useState([]);
 
   // 입력받은 스택
-  const [backendInput, setBackendInput] = useState("");
-  const [frontendInput, setFrontendInput] = useState("");
-  const [designInput, setDesignInput] = useState("");
+  const [stackInput, setStackInput] = useState("");
 
   // 입력한 값이 포함한 stack 보여주기
-  const filteredBackendStacks = backendStacks.filter((stack) =>
-    stack.includes(backendInput.toLowerCase())
-  );
-  const filteredFrontendStacks = frontendStacks.filter((stack) =>
-    stack.includes(frontendInput.toLowerCase())
-  );
-  const filteredDesignStacks = designStacks.filter((stack) =>
-    stack.includes(designInput.toLowerCase())
+  const filteredStacks = backendStacks.filter((stack) =>
+    stack.includes(stackInput.toLowerCase())
   );
 
-  // 백엔드
-  const handleBackendInputChange = (e) => {
-    setBackendInput(e.target.value);
+  const handleStackInputChange = (e) => {
+    setStackInput(e.target.value);
   };
-
-  const backendStackPlusClickHandler = () => {
-    if (backend.includes(backendInput)) {
+  const stackPlusClickHandler = () => {
+    if (stacks.includes(stackInput)) {
       return;
     }
-    setBackend((prevState) => [...prevState, backendInput]);
-    setBackendInput("");
+    setStacks((prevState) => [...prevState, stackInput]);
+    setStackInput("");
+  };
+  const stackMinusClickHandler = (project) => {
+    setStacks((prevState) => prevState.filter((stack) => stack !== project));
   };
 
-  const backendStackMinusClickHandler = (backend) => {
-    setBackend((prevState) => prevState.filter((stack) => stack !== backend));
-  };
-
-  // 프론트
-  const handleFrontendInputChange = (e) => {
-    setFrontendInput(e.target.value);
-  };
-  const frontendStackPlusClickHandler = () => {
-    if (frontend.includes(frontendInput)) {
-      return;
-    }
-    setFrontend((prevState) => [...prevState, frontendInput]);
-    setFrontendInput("");
-  };
-  const frontendStackMinusClickHandler = (frontend) => {
-    setFrontend((prevState) => prevState.filter((stack) => stack !== frontend));
-  };
-
-  // 디자인
-  const handleDesignInputChange = (e) => {
-    setDesignInput(e.target.value);
-  };
-  const designStackPlusClickHandler = () => {
-    if (design.includes(designInput)) {
-      return;
-    }
-    setDesign((prevState) => [...prevState, designInput]);
-    setDesignInput("");
-  };
-  const designStackMinusClickHandler = (design) => {
-    setDesign((prevState) => prevState.filter((stack) => stack !== design));
-  };
   return (
     <div className="member-write">
       <div className="member-title">
-        <div className="member-title-text">
-          <Link to="/recruitment">
-            <ArrowBackIosNewIcon className="recruitment-direction" />
-          </Link>
-          <img
-            src="https://cdn.pixabay.com/photo/2015/06/24/15/45/hands-820272_640.jpg"
-            alt=""
-          />
-          <h2>New Project</h2>
-        </div>
-
-        <div className="member-title-button">
-          <Button text="수정" size="small" />
-          <Button text="삭제" size="small" />
-        </div>
+        <Link to="/recruitment">
+          <ArrowBackIosNewIcon className="recruitment-direction" />
+        </Link>
+        <img
+          src="https://cdn.pixabay.com/photo/2015/06/24/15/45/hands-820272_640.jpg"
+          alt=""
+        />
+        <h2>New Project</h2>
       </div>
 
       <Card className="member-write-card">
@@ -148,153 +99,85 @@ const MemberRecruitmentWrite = () => {
           <div className="member-content-position">
             <h3>포지션</h3>
             <div className="member-content-position-container">
-              <div className="member-content-position-container-option">
-                <div className="member-stack">
-                  <h5>백엔드</h5>
+              <div className="member-stack">
+                <h5>백엔드</h5>
+                <input
+                  className="position-number"
+                  type="number"
+                  min="0"
+                  placeholder="0"
+                />
+              </div>
+
+              <div className="member-stack">
+                <h5>프론트엔드</h5>
+                <input
+                  className="position-number"
+                  type="number"
+                  min="0"
+                  placeholder="0"
+                />
+              </div>
+
+              <div className="member-stack">
+                <h5>디자인</h5>
+                <input
+                  className="position-number"
+                  type="number"
+                  min="0"
+                  placeholder="0"
+                />
+              </div>
+
+              <div className="member-stack">
+                <h5>기획</h5>
+                <input
+                  className="position-number"
+                  type="number"
+                  min="0"
+                  placeholder="0"
+                />
+              </div>
+            </div>
+
+            {/*스택 입력하는 칸*/}
+            <div className="member-content-position-stack">
+              <h5>기술 스택</h5>
+              <div className="member-stack">
+                <div className="member-stack-input">
                   <input
-                    className="position-number"
-                    type="number"
-                    min="0"
-                    placeholder="0"
+                    placeholder="기술 스택을 추가하세요"
+                    type="text"
+                    value={stackInput}
+                    onChange={handleStackInputChange}
+                  />
+                  <AddCircleIcon
+                    className="mui-icon"
+                    onClick={stackPlusClickHandler}
                   />
                 </div>
-                <div className="member-stackinput">
-                  {backend.map((stack) => (
+                {stackInput && (
+                  <div className="member-inputcontainer-box">
+                    {filteredStacks.map((stack, index) => (
+                      <h5 key={index} onClick={() => setStackInput(stack)}>
+                        {stack}
+                      </h5>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="member-stack-button">
+                {stacks.length > 0 &&
+                  stacks.map((stack) => (
                     <Button
                       text={stack}
                       size="small"
-                      onClick={() => backendStackMinusClickHandler(stack)}
+                      onClick={() => stackMinusClickHandler(stack)}
                     />
                   ))}
-                </div>
-                <div className="member-stackcontainer">
-                  <div className="member-stackcontainer-input">
-                    <input
-                      placeholder="백엔드 기술 스택을 입력하세요"
-                      type="text"
-                      value={backendInput}
-                      onChange={handleBackendInputChange}
-                    />
-                    <AddCircleIcon
-                      className="mui-icon"
-                      onClick={backendStackPlusClickHandler}
-                    />
-                  </div>
-
-                  {backendInput && (
-                    <div className="member-inputcontainer-box">
-                      {filteredBackendStacks.map((stack, index) => (
-                        <h5 key={index} onClick={() => setBackendInput(stack)}>
-                          {stack}
-                        </h5>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="member-content-position-container-option">
-                <div className="member-stack">
-                  <h5>프론트엔드</h5>
-                  <input
-                    className="position-number"
-                    type="number"
-                    min="0"
-                    placeholder="0"
-                  />
-                </div>
-
-                <div className="member-stackinput">
-                  {frontend.map((stack) => (
-                    <Button
-                      text={stack}
-                      size="small"
-                      onClick={() => frontendStackMinusClickHandler(stack)}
-                    />
-                  ))}
-                </div>
-                <div className="member-stackcontainer">
-                  <div className="member-stackcontainer-input">
-                    <input
-                      placeholder="프론트 기술 스택을 입력하세요"
-                      type="text"
-                      value={frontendInput}
-                      onChange={handleFrontendInputChange}
-                    />
-                    <AddCircleIcon
-                      className="mui-icon"
-                      onClick={frontendStackPlusClickHandler}
-                    />
-                  </div>
-
-                  {frontendInput && (
-                    <div className="member-inputcontainer-box">
-                      {filteredFrontendStacks.map((stack, index) => (
-                        <h5 key={index} onClick={() => setFrontendInput(stack)}>
-                          {stack}
-                        </h5>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="member-content-position-container-option">
-                <div className="member-stack">
-                  <h5>디자인</h5>
-                  <input
-                    className="position-number"
-                    type="number"
-                    min="0"
-                    placeholder="0"
-                  />
-                </div>
-
-                <div className="member-stackinput">
-                  {design.map((stack) => (
-                    <Button
-                      text={stack}
-                      size="small"
-                      onClick={() => designStackMinusClickHandler(stack)}
-                    />
-                  ))}
-                </div>
-                <div className="member-stackcontainer">
-                  <div className="member-stackcontainer-input">
-                    <input
-                      placeholder="디자인 기술 스택을 입력하세요"
-                      type="text"
-                      value={designInput}
-                      onChange={handleDesignInputChange}
-                    />
-                    <AddCircleIcon
-                      className="mui-icon"
-                      onClick={designStackPlusClickHandler}
-                    />
-                  </div>
-
-                  {designInput && (
-                    <div className="member-inputcontainer-box">
-                      {filteredDesignStacks.map((stack, index) => (
-                        <h5 key={index} onClick={() => setDesignInput(stack)}>
-                          {stack}
-                        </h5>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="member-content-position-container-option">
-                <div className="member-stack">
-                  <h5>기획</h5>
-                  <input
-                    className="position-number"
-                    type="number"
-                    min="0"
-                    placeholder="0"
-                  />
-                </div>
+                {stacks.length === 0 && (
+                  <h6>프로젝트에서 사용할 스택을 추가해보세요</h6>
+                )}
               </div>
             </div>
           </div>

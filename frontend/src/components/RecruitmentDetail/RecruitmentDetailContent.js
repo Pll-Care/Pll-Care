@@ -1,4 +1,5 @@
 import { useParams } from "react-router";
+import { useQuery } from "react-query";
 
 import { Avatar } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -7,7 +8,6 @@ import ShareIcon from "@mui/icons-material/Share";
 
 import Button from "../common/Button";
 import RecruitmentDetailTitle from "./RecruitmentDetailTitle";
-import { useQuery } from "react-query";
 import { getRecruitmentPostDetail } from "../../lib/apis/memberRecruitmentApi";
 import { useAddLikeRecruitmentMutation } from "../../hooks/useRecruitmentMutation";
 

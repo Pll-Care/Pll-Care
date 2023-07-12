@@ -18,8 +18,6 @@ export const backendStacks = [
   "mongodb",
   "oracle",
   "sqlite",
-];
-export const frontendStacks = [
   "javascript",
   "python",
   "react",
@@ -31,5 +29,7 @@ export const frontendStacks = [
   "react-query",
   "react-native",
   "angular",
+  "figma",
+  "adobe",
+  "sketch",
 ];
-export const designStacks = ["figma", "adobe", "sketch"];

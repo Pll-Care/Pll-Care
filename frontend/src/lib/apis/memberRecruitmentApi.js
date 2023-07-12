@@ -1,6 +1,4 @@
-import { useMutation, useQueryClient } from "react-query";
 import { customAxios } from "./customAxios";
-import { toast } from "react-toastify";
 
 // 페이지네이션 모집글 조회하는 함수
 export const getAllRecruitmentPost = async (page, size) => {
@@ -28,6 +26,16 @@ export const getRecruitmentPostDetail = async (postId) => {
 export const addLikeRecruitmentPost = async (postId) => {
   try {
     const res = await customAxios.post(`/auth/post/${postId}/like`);
+    return res.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+// 모집글 작성할 프로젝트 조회
+export const getRecruitmentProject = async () => {
+  try {
+    const res = await customAxios.get("/auth/post/projectlist");
     return res.data;
   } catch (err) {
     return err;

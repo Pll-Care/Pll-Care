@@ -40,6 +40,11 @@ const RecruitmentPostList = () => {
               <RecruitmentPost data={content} />
             </Grid>
           ))}
+        {!isLoading && data?.content.length === 0 && (
+          <Grid item xs={4} sm={8} md={12}>
+            <h1>아직 모집 중인 프로젝트가 없습니다.</h1>
+          </Grid>
+        )}
       </Grid>
       {pageCount > 0 && (
         <Pagination
