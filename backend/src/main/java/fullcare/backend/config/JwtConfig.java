@@ -5,6 +5,7 @@ import fullcare.backend.security.jwt.JwtAuthenticationEntryPoint;
 import fullcare.backend.security.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -47,7 +48,8 @@ public class JwtConfig {
                 .securityMatcher("/api/**")
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/post/list").hasAnyRole("USER", "ANONYMOUS")
-                        .requestMatchers(HttpMethod.GET, "/api/auth/post/{postId}").hasAnyRole("USER", "ANONYMOUS")
+                        .requestMatchers("/api/auth/profile/{memberId}/validate", "/api/auth/profile/{memberId}/post", "/api/auth/profile/{memberId}/post/like").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/auth/post/{postId}", "/api/auth/util/techstack").hasAnyRole("USER", "ANONYMOUS")
                         .requestMatchers("/api/auth/**").hasRole("USER")
                         .anyRequest().authenticated())
 

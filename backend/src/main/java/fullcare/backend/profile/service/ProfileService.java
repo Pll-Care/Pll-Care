@@ -35,12 +35,13 @@ public class ProfileService {
     public ProfileBioResponse findBio(Long memberId, Member member) {
         Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
         Profile p = findMember.getProfile();
+        Long id = member == null ? null : member.getId();
         return ProfileBioResponse.builder()
                 .name(findMember.getName())
                 .nickName(findMember.getNickname())
                 .imageUrl(findMember.getImageUrl())
                 .bio(p.getBio())
-                .myProfile(memberId == member.getId())
+                .myProfile(memberId == id)
                 .build();
     }
 
@@ -48,7 +49,9 @@ public class ProfileService {
     public ProfileContactResponse findContact(Long memberId, Member member) {
         Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
         Profile p = findMember.getProfile();
-        return new ProfileContactResponse(p.getContact(), memberId == member.getId());
+        Long id = member == null ? null : member.getId();
+
+        return new ProfileContactResponse(p.getContact(), memberId == id);
     }
 
     @Transactional(readOnly = true)
@@ -59,7 +62,8 @@ public class ProfileService {
         if(p.getTechStack() != null && !p.getTechStack().isEmpty()) {
             techStacks = Arrays.stream(p.getTechStack().split(",")).collect(Collectors.toList());
         }
-        return new ProfileTechStackResponse(p.getRecruitPosition(), techStacks, memberId == member.getId());
+        Long id = member == null ? null : member.getId();
+        return new ProfileTechStackResponse(p.getRecruitPosition(), techStacks, memberId == id);
     }
 
     @Transactional(readOnly = true)
@@ -87,9 +91,10 @@ public class ProfileService {
                     projectExperienceDtos));
             }
         }
+        Long id = member == null ? null : member.getId();
         return ProfileProjectExperienceResponse.builder()
                 .data(data)
-                .myProfile(memberId == member.getId())
+                .myProfile(memberId == id)
                 .build();
     }
 
