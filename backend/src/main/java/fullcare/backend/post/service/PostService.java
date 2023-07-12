@@ -53,18 +53,21 @@ public class PostService {
                 .author(member)
                 .title(request.getTitle())
                 .description(request.getDescription())
+                .recruitStartDate(request.getRecruitStartDate())
+                .recruitEndDate(request.getRecruitEndDate())
                 .contact(request.getContact())
                 .reference(request.getReference())
                 .region(request.getRegion())
                 .techStack(request.getTechStack())
-                .state(State.TBD)
+                .state(State.ONGOING)
                 .build();
 
         List<RecruitInfo> recruitInfo = request.getRecruitInfo();
         List<Recruitment> recruitments = recruitInfo.stream().map(r -> Recruitment.createNewRecruitment()
                 .post(newPost)
                 .recruitPosition(r.getPosition())
-                .amount(r.getCnt())
+                .currentAmount(r.getCurrentCnt())
+                .totalAmount(r.getTotalCnt())
                 .build()).toList();
 
         newPost.updateRecruit(recruitments);
@@ -80,12 +83,13 @@ public class PostService {
         List<Recruitment> recruitments = recruitInfo.stream().map(r -> Recruitment.createNewRecruitment()
                 .post(post)
                 .recruitPosition(r.getPosition())
-                .amount(r.getCnt())
+                .currentAmount(r.getCurrentCnt())
+                .totalAmount(r.getTotalCnt())
                 .build()).toList();
 
-        post.updateAll(request.getTitle(), request.getReference(),
-                request.getContact(), request.getDescription(),
-                request.getRegion(), recruitments);
+        post.updateAll(request.getTitle(), request.getDescription(),
+                request.getRecruitStartDate(), request.getRecruitEndDate(),
+                request.getReference(), request.getContact(), request.getRegion(), recruitments);
     }
 
     @Transactional

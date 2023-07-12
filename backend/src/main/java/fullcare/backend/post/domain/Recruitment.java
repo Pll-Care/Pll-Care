@@ -24,12 +24,16 @@ public class Recruitment {
     private RecruitPosition recruitPosition;
 
     @Column
-    private long amount;
+    private long currentAmount;
+
+    @Column
+    private long totalAmount;
 
     @Builder(builderMethodName = "createNewRecruitment")
-    public Recruitment(Post post, RecruitPosition recruitPosition, long amount) {
+    public Recruitment(Post post, RecruitPosition recruitPosition, long currentAmount, long totalAmount) {
         this.post = post;
         this.recruitPosition = recruitPosition;
-        this.amount = amount;
+        this.currentAmount = currentAmount;
+        this.totalAmount = totalAmount;
     }
 }

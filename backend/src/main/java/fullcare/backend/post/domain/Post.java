@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.BatchSize;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -38,6 +39,16 @@ public class Post extends BaseEntity {
     private String title;
 
     @Lob
+    @Column(name = "description", nullable = false)
+    private String description;
+
+    @Column(name = "recruit_start_dt", nullable = false)
+    private LocalDate recruitStartDate;
+
+    @Column(name = "recruit_end_dt", nullable = false)
+    private LocalDate recruitEndDate;
+
+    @Lob
     @Column(name = "reference", nullable = false)
     private String reference;
 
@@ -46,16 +57,13 @@ public class Post extends BaseEntity {
     private String contact;
 
     @Lob
-    @Column(name = "description", nullable = false)
-    private String description;
-
-    @Lob
     @Column(name = "region", nullable = false)
     private String region;
 
     @Lob
     @Column(name = "tech_stack", nullable = false)
     private String techStack;
+
 
     @BatchSize(size = 50)
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -69,23 +77,30 @@ public class Post extends BaseEntity {
     private State state;
 
     @Builder(builderMethodName = "createNewPost")
-    public Post(Project project, Member author, String title, String reference, String contact, String description, String region, String techStack, State state) {
+    public Post(Project project, Member author, String title, String description,
+                LocalDate recruitStartDate, LocalDate recruitEndDate,
+                String reference, String contact, String region, String techStack, State state) {
         this.project = project;
         this.author = author;
         this.title = title;
+        this.description = description;
+        this.recruitStartDate = recruitStartDate;
+        this.recruitEndDate = recruitEndDate;
         this.reference = reference;
         this.contact = contact;
-        this.description = description;
         this.region = region;
         this.techStack = techStack;
         this.state = state;
     }
 
-    public void updateAll(String title, String reference, String contact, String description, String region, List<Recruitment> recruitments) {
+
+    public void updateAll(String title, String description, LocalDate recruitStartDate, LocalDate recruitEndDate, String reference, String contact, String region, List<Recruitment> recruitments) {
         this.title = title;
+        this.description = description;
+        this.recruitStartDate = recruitStartDate;
+        this.recruitEndDate = recruitEndDate;
         this.reference = reference;
         this.contact = contact;
-        this.description = description;
         this.region = region;
 
         updateRecruit(recruitments);

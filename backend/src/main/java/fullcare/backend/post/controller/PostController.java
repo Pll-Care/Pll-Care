@@ -2,6 +2,7 @@ package fullcare.backend.post.controller;
 
 
 import fullcare.backend.global.dto.ErrorResponse;
+import fullcare.backend.global.dto.SuccessResponse;
 import fullcare.backend.global.errorcode.PostErrorCode;
 import fullcare.backend.global.errorcode.ProjectErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.DuplicateProjectMemberException;
@@ -15,6 +16,8 @@ import fullcare.backend.post.dto.response.PostListResponse;
 import fullcare.backend.post.service.PostService;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.dto.request.ProjectApplyRequest;
+import fullcare.backend.project.dto.response.ProjectSimpleListResponse;
+import fullcare.backend.project.service.ProjectService;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.projectmember.service.ProjectMemberService;
@@ -35,6 +38,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RequiredArgsConstructor
 @Tag(name = "모집글", description = "모집글 관련 API")
@@ -44,6 +49,7 @@ public class PostController {
 
     private final PostService postService;
     private final ProjectMemberService projectMemberService;
+    private final ProjectService projectService;
 
 
     // * 새로운 모집글 생성
@@ -193,6 +199,20 @@ public class PostController {
 
         projectMemberService.addProjectMember(findProject.getId(), member, new ProjectMemberRole(ProjectMemberRoleType.미정, projectApplyRequest.getPosition()));
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // * 사용자가 속한 프로젝트 목록
+    @Operation(method = "get", summary = "사용자 프로젝트 리스트 조회")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "사용자 프로젝트 리스트 조회 성공", useReturnTypeSchema = true),
+            @ApiResponse(responseCode = "400", description = "사용자 프로젝트 리스트 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @GetMapping("/projectlist")
+    public ResponseEntity<SuccessResponse<List<ProjectSimpleListResponse>>> projectlist(@CurrentLoginMember Member member) {
+        List<ProjectSimpleListResponse> result = projectService.findSimpleProjectList(member.getId());
+        SuccessResponse<List<ProjectSimpleListResponse>> responses = new SuccessResponse<>(result);
+
+        return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
 }

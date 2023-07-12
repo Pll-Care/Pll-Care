@@ -9,6 +9,7 @@ import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.dto.request.ProjectCreateRequest;
 import fullcare.backend.project.dto.request.ProjectUpdateRequest;
 import fullcare.backend.project.dto.response.ProjectListResponse;
+import fullcare.backend.project.dto.response.ProjectSimpleListResponse;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
@@ -96,5 +97,11 @@ public class ProjectService {
         ).collect(Collectors.toList());
 
         return new CustomPageImpl<>(content, pageable, pageProject.getTotalElements());
+    }
+
+    public List<ProjectSimpleListResponse> findSimpleProjectList(Long memberId) {
+        List<ProjectSimpleListResponse> simpleProjectList = projectRepository.findSimpleProjectList(memberId);
+        
+        return simpleProjectList;
     }
 }

@@ -9,15 +9,19 @@ import lombok.ToString;
 @Getter
 public class RecruitInfo {
     private RecruitPosition position;
-    private long cnt;
+    private long currentCnt;
+    private long totalCnt;
 
-    public RecruitInfo(RecruitPosition position, long cnt) {
+    public RecruitInfo(RecruitPosition position, long currentCnt, long totalCnt) {
         this.position = position;
-        this.cnt = cnt;
+        this.currentCnt = currentCnt;
+        this.totalCnt = totalCnt;
     }
 
+
     public RecruitInfo(Recruitment recruitment) {
-        position = recruitment.getRecruitPosition();
-        cnt = recruitment.getAmount();
+        this.position = recruitment.getRecruitPosition();
+        this.currentCnt = recruitment.getCurrentAmount();
+        this.totalCnt = recruitment.getTotalAmount();
     }
 }
