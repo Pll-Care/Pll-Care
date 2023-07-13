@@ -4,8 +4,13 @@
  */
 
 const Select = ({ options, type = "small", onChange }) => {
+  const isTypeSmall = type === "small";
+
   return (
-    <select onChange={onChange} className="select_small">
+    <select
+      onChange={onChange}
+      className={isTypeSmall ? "select_small" : "select_large"}
+    >
       {options.map((option) => (
         <option key={option.value} value={option.value}>
           {option.title}
