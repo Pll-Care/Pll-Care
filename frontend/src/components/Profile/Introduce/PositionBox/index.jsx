@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../../common/Button";
 import SearchStack from "./SearchStack";
 import SearchPosition from "./SearchPosition";
+import { useProfile } from "../../../../context/ProfileContext";
+import { getPositionAPI } from "../../../../lib/apis/profileApi";
+
+import Select from "../../../../components/common/Select";
+import { positionSelect } from "../../../../utils/optionData";
 
 const PositionBox = () => {
   const [isModify, setIsModify] = useState(false);
@@ -9,6 +14,8 @@ const PositionBox = () => {
     position: POSITION_DATA,
     stack: [...stackList],
   });
+  const { isMyProfile, memberId } = useProfile();
+
   /*
   FIXME: 
   positionAndStack state은 수정 완료 시 전송할 데이터(ui에 뿌릴 데이터가 아니다)
@@ -18,6 +25,15 @@ const PositionBox = () => {
   완료버튼 누르면 데이터 전송
   */
 
+  useEffect(() => {
+    const getPosition = async () => {
+      const response = await getPositionAPI(memberId);
+      console.log("Position API", response);
+    };
+
+    getPosition();
+  }, [memberId]);
+
   //TODO: 직무와 스텍 데이터 여기서 받기
 
   const submitModify = () => {
@@ -25,8 +41,8 @@ const PositionBox = () => {
     setIsModify(false);
   };
 
-  const changePosition = (position) => {
-    setPositionAndStack((prev) => ({ ...prev, position }));
+  const changePosition = (event) => {
+    setPositionAndStack((prev) => ({ ...prev, position: event.target.value }));
   };
 
   const changeStack = (stack) => {
@@ -37,33 +53,36 @@ const PositionBox = () => {
       <div className="profile_body_introduce_Box_title">
         <h2>개발 직무</h2>
         <div className="profile_body_introduce_Box_title_btnBox">
-          {isModify ? (
-            <>
+          {isMyProfile ? (
+            isModify ? (
+              <>
+                <Button
+                  text="취소"
+                  size="small"
+                  onClick={() => setIsModify(false)}
+                />
+                <Button
+                  type="submit"
+                  text="완료"
+                  size="small"
+                  onClick={submitModify}
+                />
+              </>
+            ) : (
               <Button
-                text="취소"
+                text="수정"
                 size="small"
-                onClick={() => setIsModify(false)}
+                onClick={() => setIsModify(true)}
               />
-              <Button
-                type="submit"
-                text="완료"
-                size="small"
-                onClick={submitModify}
-              />
-            </>
-          ) : (
-            <Button
-              text="수정"
-              size="small"
-              onClick={() => setIsModify(true)}
-            />
-          )}
+            )
+          ) : null}
         </div>
       </div>
       {isModify ? (
-        <SearchPosition
-          positionData={POSITION_DATA}
-          changePosition={changePosition}
+        <Select
+          options={positionSelect}
+          type="large"
+          onChange={changePosition}
         />
       ) : (
         <div className="profile_body_introduce_positionBox_position">
@@ -80,6 +99,7 @@ const PositionBox = () => {
           //FIXME: 기술스택 데이터 fetch 받아서 내려주기
           stackList={stackList}
           changeStack={changeStack}
+          memberId={memberId}
         />
       ) : (
         //FIXME: fetch 받은 데이터로 map 돌리기

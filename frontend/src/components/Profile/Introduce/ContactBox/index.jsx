@@ -44,7 +44,7 @@ const ContactBox = () => {
       return toast.error("웹사이트 주소를 반드시 입력해야합니다.");
     }
 
-    await patchProfile(memberId, userInfo);
+    await patchProfile(memberId, { contact: userInfo });
     setIsModify(false);
   };
 

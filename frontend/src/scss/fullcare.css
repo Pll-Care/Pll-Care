@@ -2668,4 +2668,18 @@ a {
   color: #00aa72;
   font-size: 14px;
   font-weight: bold;
+}
+
+.select_large {
+  width: 100%;
+  border: 1px solid #d7e2eb;
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 9px;
+  outline: none;
+}
+
+.select_large:focus {
+  border: 2px solid #01e89e;
 }/*# sourceMappingURL=fullcare.css.map */
