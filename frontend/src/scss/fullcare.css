@@ -2606,4 +2606,66 @@ a {
 .fl {
   width: 100%;
   display: flex;
+}
+
+.myProject {
+  width: 100%;
+}
+.myProject_selectContainer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  padding-bottom: 30px;
+}
+.myProject_project {
+  width: 80%;
+  margin: 0 auto;
+}
+.myProject_project > ul {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.myProject_item {
+  border: 2px solid #01e89e;
+  border-radius: 20px;
+  width: 100%;
+  padding: 18px;
+  display: flex;
+  gap: 18px;
+}
+.myProject_item_img {
+  width: 44px;
+  height: 44px;
+}
+.myProject_item_img > img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.myProject_item_wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.myProject_item_wrap_title {
+  font-size: 18px;
+  font-weight: bold;
+}
+.myProject_item_wrap_description {
+  color: #7a7a7a;
+}
+.myProject_item_wrap_description > :first-child {
+  font-weight: bold;
+  padding-bottom: 5px;
+}
+
+.select_small {
+  border: 2px solid #01e89e;
+  border-radius: 15px;
+  padding: 3px 5px 3px 10px;
+  color: #00aa72;
+  font-size: 14px;
+  font-weight: bold;
 }/*# sourceMappingURL=fullcare.css.map */
