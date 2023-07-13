@@ -36,7 +36,7 @@ export const addLikeRecruitmentPost = async (postId) => {
 export const getRecruitmentProject = async () => {
   try {
     const res = await customAxios.get("/auth/post/projectlist");
-    return res.data;
+    return res.data.data;
   } catch (err) {
     return err;
   }

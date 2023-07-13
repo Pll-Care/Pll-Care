@@ -22,6 +22,7 @@ const RecruitmentPostList = () => {
     ["allRecruitmentPosts", currentPage, isMobile],
     () => getAllRecruitmentPost(currentPage + 1, itemsPerPage)
   );
+
   if (data && !isLoading) {
     itemCount = data.totalElements;
     pageCount = Math.ceil(itemCount / itemsPerPage);
@@ -35,16 +36,17 @@ const RecruitmentPostList = () => {
         columns={{ xs: 4, sm: 8, md: 12 }}
       >
         {!isLoading &&
+          data?.content &&
           data?.content.map((content, index) => (
             <Grid item xs={4} sm={4} md={4} key={index}>
               <RecruitmentPost data={content} />
             </Grid>
           ))}
-        {!isLoading && data?.content.length === 0 && (
+        {/*{!isLoading && data?.content.length === 0 && (
           <Grid item xs={4} sm={8} md={12}>
             <h1>아직 모집 중인 프로젝트가 없습니다.</h1>
           </Grid>
-        )}
+        )}*/}
       </Grid>
       {pageCount > 0 && (
         <Pagination

@@ -2366,6 +2366,7 @@ input {
 
 .member-write {
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   background-color: #01e89e;
@@ -2379,6 +2380,12 @@ input {
   .member-write {
     padding: 0.3rem;
   }
+}
+.member-write h1 {
+  color: white;
+  font-size: 25px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  margin: 40px;
 }
 .member-write .member-title {
   display: flex;
@@ -2421,6 +2428,7 @@ input {
 .member-write .member-content-project h3, .member-write .member-content-options h3, .member-write .member-content-position h3 {
   margin: 30px 20px;
   color: #00aa72;
+  white-space: nowrap;
 }
 .member-write .member-content-project input,
 .member-write .member-content-project select, .member-write .member-content-options input,
@@ -2460,29 +2468,42 @@ input {
     flex-direction: column;
   }
 }
-.member-write .member-content-position-container {
-  display: flex;
-  flex-direction: column;
-  margin-left: 10%;
-}
-.member-write .member-content-position-container .member-stack {
+.member-write .member-content-position .options {
   display: flex;
   align-items: center;
-  margin: 10px 0px;
+  justify-content: center;
 }
-.member-write .member-content-position-container .member-stack h5 {
+.member-write .member-content-position .options-container, .member-write .member-content-position .options-count {
+  display: flex;
+  flex-direction: column;
+  margin-left: 100px;
+}
+@media (max-width: 767px) {
+  .member-write .member-content-position .options-container, .member-write .member-content-position .options-count {
+    margin-left: 0px;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .member-write .member-content-position .options-container, .member-write .member-content-position .options-count {
+    margin-left: 0px;
+  }
+}
+.member-write .member-content-position .options-container h5, .member-write .member-content-position .options-count h5 {
+  margin: 26px 0px;
   white-space: nowrap;
 }
-.member-write .member-content-position-container .member-stack .position-number {
-  width: 50px;
+.member-write .member-content-position .options-container .position-number, .member-write .member-content-position .options-count .position-number {
+  width: 47px;
   margin: 0px 40px;
   border-radius: 50px;
+  margin: 18px 0px;
 }
 .member-write .member-content-position-stack {
-  margin-left: 10%;
+  margin: 0px 6%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 100%;
 }
 .member-write .member-content-position-stack h5 {
   color: #00aa72;
@@ -2538,7 +2559,7 @@ input {
   width: 100%;
   padding: 0.5rem;
   box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1);
-  margin: 15px 0px;
+  margin: 10px 0px;
   border-radius: 20px;
   height: 180px;
   text-align: center;
