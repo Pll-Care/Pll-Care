@@ -1,14 +1,14 @@
 import Button from "../components/common/Button";
-import ProjectList from "../components/ProjectManagement/ProjectList";
+import ProjectList from "../components/Management/ProjectList";
 import NonAuthenticatedManagement from "./NonAuthenticatedManagement";
 import Pagination from "../components/common/Pagination";
+import NewProject from "../components/Management/NewProject";
 
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
 import { useQuery } from "react-query";
 import { getProjectList } from "../lib/apis/projectManagementApi";
-import NewProject from "../components/ProjectManagement/NewProject";
 
 const Management = () => {
   const [currentPage, setCurrentPage] = useState(1);
