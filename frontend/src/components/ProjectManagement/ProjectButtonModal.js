@@ -8,7 +8,7 @@ const ProjectButtonModal = ({
   modalVisible,
   setModalVisible,
 }) => {
-  const { deleteMutate, completeMutate } = useManagementMutation();
+  const { deleteMutate, completeMutate, leaveMutate } = useManagementMutation();
 
   const handleModalClose = () => {
     setModalVisible(false);
@@ -26,7 +26,11 @@ const ProjectButtonModal = ({
     setModalVisible(false);
   };
 
-  const handleLeaveClick = () => {};
+  const handleLeaveClick = () => {
+    leaveMutate(projectId);
+
+    setModalVisible(false);
+  };
 
   return (
     <ModalContainer

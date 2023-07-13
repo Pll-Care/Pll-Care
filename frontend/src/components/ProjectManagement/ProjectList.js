@@ -1,69 +1,11 @@
 import { useState } from "react";
 
 import ProjectButtonModal from "./ProjectButtonModal";
-import ProjectEditor from "./ProjectEditor";
 import ProjectItem from "./ProjectItem";
 
-import { getStringDate } from "../../utils/date";
-
 const ProjectList = ({ type, projectList, totalElements }) => {
-  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
-  const [deleteProjectId, setDeleteProjectId] = useState();
-
   const [leaveModalVisible, setLeaveModalVisible] = useState(false);
   const [leaveProjectId, setLeaveProjectId] = useState();
-
-  const [completeModalVisible, setCompleteModalVisible] = useState(false);
-  const [completeProjectId, setCompleteProjectId] = useState();
-
-  const [editModalVisible, setEditModalVisible] = useState(false);
-  const [editData, setEditData] = useState({
-    projectId: 0,
-    title: "",
-    startDate: new Date(),
-    endDate: new Date(),
-    imageUrl: "",
-    description: "",
-  });
-
-  const handleCompleteProjectClick = (e, projectId) => {
-    e.preventDefault();
-
-    setCompleteProjectId(projectId);
-
-    setCompleteModalVisible(true);
-  };
-
-  const handleDeleteProjectClick = (e, projectId) => {
-    e.preventDefault();
-
-    setDeleteProjectId(projectId);
-
-    setDeleteModalVisible(true);
-  };
-
-  const handleEditProjectClick = (
-    e,
-    projectId,
-    title,
-    startDate,
-    endDate,
-    description,
-    imageUrl
-  ) => {
-    e.preventDefault();
-
-    setEditModalVisible(true);
-
-    setEditData({
-      title,
-      projectId,
-      startDate: getStringDate(new Date(startDate)),
-      endDate: getStringDate(new Date(endDate)),
-      description,
-      imageUrl,
-    });
-  };
 
   const handleLeaveProjectClick = (e, projectId) => {
     e.preventDefault();
@@ -85,42 +27,15 @@ const ProjectList = ({ type, projectList, totalElements }) => {
             <ProjectItem
               key={project.projectId}
               project={project}
-              handleCompleteProjectClick={handleCompleteProjectClick}
-              handleDeleteProjectClick={handleDeleteProjectClick}
-              handleEditProjectClick={handleEditProjectClick}
               handleLeaveProjectClick={handleLeaveProjectClick}
             />
           ))}
-          {deleteModalVisible && (
-            <ProjectButtonModal
-              type={"삭제"}
-              projectId={deleteProjectId}
-              modalVisible={deleteModalVisible}
-              setModalVisible={setDeleteModalVisible}
-            />
-          )}
           {leaveModalVisible && (
             <ProjectButtonModal
-              type={"탈퇴"}
+              type={"팀 탈퇴"}
               projectId={leaveProjectId}
               modalVisible={leaveModalVisible}
               setModalVisible={setLeaveModalVisible}
-            />
-          )}
-          {completeModalVisible && (
-            <ProjectButtonModal
-              type={"완료"}
-              projectId={completeProjectId}
-              modalVisible={completeModalVisible}
-              setModalVisible={setCompleteModalVisible}
-            />
-          )}
-          {editModalVisible && (
-            <ProjectEditor
-              isModalVisible={editModalVisible}
-              setIsModalVisible={setEditModalVisible}
-              isEdit={true}
-              editData={editData}
             />
           )}
         </>
