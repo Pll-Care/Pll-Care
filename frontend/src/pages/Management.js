@@ -6,13 +6,11 @@ import Pagination from "../components/common/Pagination";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { getProjectList } from "../lib/apis/projectManagementApi";
 import NewProject from "../components/ProjectManagement/NewProject";
 
 const Management = () => {
-  const queryClient = useQueryClient();
-
   const [currentPage, setCurrentPage] = useState(1);
   const [ongoingCurrentPage, setOngoingCurrentPage] = useState(1);
   const [allProjectListVisible, setAllProjectListVisible] = useState(false);
@@ -41,36 +39,6 @@ const Management = () => {
   const projectList = data.projectList;
 
   const totalElements = data.totalElements;
-
-  const lastPageNum = data.totalPages;
-
-  useEffect(() => {
-    if (allProjectListVisible) {
-      const nextPage = currentPage + 1;
-
-      if (nextPage <= lastPageNum) {
-        queryClient.prefetchQuery(
-          ["managementAllProjectList", nextPage, allProjectListVisible],
-          () => getProjectList(nextPage, "ALL")
-        );
-      }
-    } else {
-      const nextPage = ongoingCurrentPage + 1;
-
-      if (nextPage <= lastPageNum) {
-        queryClient.prefetchQuery(
-          ["managementOngoingProjectList", nextPage, allProjectListVisible],
-          () => getProjectList(nextPage, "ONGOING")
-        );
-      }
-    }
-  }, [
-    allProjectListVisible,
-    currentPage,
-    lastPageNum,
-    ongoingCurrentPage,
-    queryClient,
-  ]);
 
   useEffect(() => {
     if (allProjectListVisible) {
