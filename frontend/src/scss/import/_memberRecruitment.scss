@@ -123,6 +123,14 @@
     .recruitment-direction {
       color: white;
     }
+    input {
+      padding: 0.5rem;
+      border-radius: 20px;
+      margin-left: 20px;
+      width: 50%;
+      font-family: $heading-font;
+      color: gray;
+    }
     img {
       width: 50px;
       height: 50px;

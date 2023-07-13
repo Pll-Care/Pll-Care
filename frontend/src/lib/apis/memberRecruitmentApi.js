@@ -1,5 +1,6 @@
 import { customAxios } from "./customAxios";
 
+// allRecruitmentPosts 키 값
 // 페이지네이션 모집글 조회하는 함수
 export const getAllRecruitmentPost = async (page, size) => {
   try {
@@ -37,6 +38,16 @@ export const getRecruitmentProject = async () => {
   try {
     const res = await customAxios.get("/auth/post/projectlist");
     return res.data.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+// 모집글 생성
+export const addRecruitmentPost = async (body) => {
+  try {
+    const res = await customAxios.post("/auth/post", body);
+    return res.data;
   } catch (err) {
     return err;
   }
