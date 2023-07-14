@@ -2698,7 +2698,7 @@ input {
   margin-bottom: 10px;
 }
 
-.detail_title {
+.detail-title {
   margin: 0px 5%;
   display: flex;
   flex-direction: row;
@@ -2708,62 +2708,56 @@ input {
   padding: 2.5rem;
 }
 @media (max-width: 767px) {
-  .detail_title {
+  .detail-title {
     margin: 0px 0px;
   }
 }
 @media (max-width: 767px) {
-  .detail_title {
+  .detail-title {
     flex-direction: column;
   }
 }
-.detail_title_content {
+.detail-title-content {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 @media (max-width: 767px) {
-  .detail_title_content {
+  .detail-title-content {
     float: left;
     width: 100%;
   }
 }
-.detail_title_content .mui_arrow {
+.detail-title-content .mui-arrow {
   color: black;
   margin-right: 20px;
 }
-.detail_title_content img {
+.detail-title-content img {
   width: 80px;
   height: 80px;
   border-radius: 30px;
 }
-.detail_title_content h1 {
+.detail-title-content input {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  margin-left: 20px;
+  border-radius: 20px;
+  padding: 10px;
+}
+.detail-title-content h1 {
   font-size: 40px;
   color: rgb(109, 109, 109);
   margin-left: 20px;
 }
-.detail_title_content h2 {
+.detail-title-content h2 {
   color: gray;
   margin-left: 20px;
 }
-.detail_title_plus {
+.detail-title-button {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
   align-items: center;
 }
-.detail_title_plus h5,
-.detail_title_plus h2 {
-  color: gray;
-  margin-right: 15px;
-}
-@media (max-width: 767px) {
-  .detail_title_plus {
-    margin-top: 15px;
-  }
-}
 
-.recruitment_detail {
+.recruitment-detail {
   border: 2px solid #01e89e;
   border-radius: 20px;
   padding: 2.5rem;
@@ -2771,90 +2765,124 @@ input {
   margin-right: 7%;
   font-family: "Noto Sans KR", sans-serif;
 }
-.recruitment_detail h4 {
+.recruitment-detail input,
+.recruitment-detail textarea,
+.recruitment-detail select {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  border-radius: 20px;
+}
+.recruitment-detail textarea {
+  padding: 10px;
+  margin: 10px 0px;
+}
+.recruitment-detail h4 {
   color: #01e89e;
   font-size: 18px;
   margin-right: 20px;
 }
-.recruitment_detail_content {
+.recruitment-detail-content {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
 }
-.recruitment_detail_content h5 {
+.recruitment-detail-content h5 {
   margin-left: 15px;
 }
-.recruitment_detail_content_name {
+.recruitment-detail-content-name {
   display: flex;
   align-items: center;
 }
-.recruitment_detail_content_name h5 {
+.recruitment-detail-content-name h5 {
   margin-left: 10px;
 }
-.recruitment_detail_content_last {
+.recruitment-detail-content-last {
   border-bottom: 1px solid rgb(204, 204, 204);
 }
-.recruitment_detail_content_last_content {
+.recruitment-detail-content-last-content {
   margin-bottom: 20px;
   display: flex;
   align-items: center;
 }
-.recruitment_detail_content_last_content h5 {
+.recruitment-detail-content-last-content h5 {
   margin-left: 15px;
 }
-.recruitment_detail_container {
+.recruitment-detail-container {
   display: flex;
   align-items: center;
-  justify-content: center;
   border-bottom: 1px solid rgb(204, 204, 204);
 }
-.recruitment_detail_container h4 {
-  width: 10%;
-  text-align: left;
+.recruitment-detail-container h4 {
   white-space: nowrap;
+  margin: 0px, 50px;
 }
-@media (max-width: 767px) {
-  .recruitment_detail_container {
-    flex-direction: column;
-  }
-  .recruitment_detail_container h4 {
-    width: auto;
-  }
+.recruitment-detail-container-select, .recruitment-detail-container-member, .recruitment-detail-container-button {
+  margin-left: 20px;
 }
-.recruitment_detail_container_options {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
+.recruitment-detail-container-select h5, .recruitment-detail-container-member h5, .recruitment-detail-container-button h5 {
+  margin: 30px 20px;
 }
-.recruitment_detail_container_options_content {
-  display: flex;
-}
-.recruitment_detail_container_select h5, .recruitment_detail_container_member h5, .recruitment_detail_container_button h5 {
-  margin-bottom: 30px;
-  margin-top: 30px;
-}
-.recruitment_detail_container_member {
+.recruitment-detail-container-member {
   margin-right: 20px;
 }
-.recruitment_detail_container_button {
+.recruitment-detail-container-member-cnt {
+  display: flex;
+  align-items: center;
+}
+.recruitment-detail-container-member-cnt input {
+  height: 25px;
+  width: 40px;
+}
+.recruitment-detail-container-button {
   display: flex;
   flex-direction: column;
-  margin-top: 17px;
+  margin-top: 9px;
 }
-.recruitment_detail_container_button Button {
-  margin: 8px 20px;
+.recruitment-detail-container-button Button {
+  margin: 7px 40px;
 }
-.recruitment_detail_description {
+.recruitment-detail-description {
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid rgb(204, 204, 204);
 }
-.recruitment_detail_description h4 {
+.recruitment-detail-description-stacks {
+  display: flex;
+}
+.recruitment-detail-description-stacks img {
+  width: 50px;
+  height: 50px;
+  margin: 10px 5px;
+}
+.recruitment-detail-description h4 {
   margin-top: 20px;
   margin-bottom: 20px;
 }
-.recruitment_detail_description h5 {
+.recruitment-detail-description h5 {
   margin-bottom: 20px;
+}
+.recruitment-detail-description .member-stack-button {
+  border: 1px solid rgb(246, 246, 246);
+  border-radius: 20px;
+  margin: 10px 0px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.recruitment-detail-description .member-stack-button Button {
+  margin: 15px;
+}
+.recruitment-detail-description .member-stack {
+  position: relative;
+}
+.recruitment-detail-description .member-stack .member-inputcontainer-box {
+  cursor: pointer;
+  z-index: 1;
+  position: absolute;
+  top: calc(100% + 5px);
+  background-color: white;
+  width: 180px;
+}
+.recruitment-detail-description .member-stack .member-inputcontainer-box h5 {
+  border-bottom: 1px solid rgb(234, 234, 234);
+  text-align: center;
 }
 
 .recruitment-detail-icon {

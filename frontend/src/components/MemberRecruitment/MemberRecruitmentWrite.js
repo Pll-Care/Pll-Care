@@ -1,46 +1,21 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
+import projectDefaultImg from "../../assets/project-default-img.jpg";
 import Button from "../common/Button";
 import Card from "../common/Card";
-import { backendStacks } from "./data/stack";
+
 import { useQuery } from "react-query";
 import { getRecruitmentProject } from "../../lib/apis/memberRecruitmentApi";
 import { useAddRecruitmentPostMutation } from "../../hooks/useRecruitmentMutation";
+import { backendStacks, concepts, location } from "../../utils/recruitment";
 
 const MemberRecruitmentWrite = () => {
   const navigate = useNavigate();
-  // 지역 선택
-  const location = [
-    "서울",
-    "경기",
-    "인천",
-    "대구",
-    "부산",
-    "울산",
-    "광주",
-    "전주",
-    "대전",
-    "세종",
-    "강원",
-  ];
-  // 주제/ 분야
-  const concepts = [
-    "IOS",
-    "안드로이드",
-    "웹프론트엔드",
-    "웹퍼블리셔",
-    "웹서버",
-    "블록체인",
-    "AI",
-    "DB/빅데이터",
-    "게임 서버",
-    "UI/UX 디자인",
-    "3D 디자인",
-  ];
   const initialDate = new Date().toISOString().split("T")[0];
 
   // 모집글 생성 입력값들
@@ -54,12 +29,13 @@ const MemberRecruitmentWrite = () => {
     reference: "",
     contact: "",
     region: "서울",
-    techStack: "",
     backendCnt: 0,
     frontendCnt: 0,
     managerCnt: 0,
     designCnt: 0,
   });
+
+  const { title, description, recruitStartDate, recruitEndDate } = formValues;
 
   const inputRefs = {
     title: useRef(),
@@ -70,6 +46,7 @@ const MemberRecruitmentWrite = () => {
     region: useRef(),
     techStack: useRef(),
     contact: useRef(),
+    backendCnt: useRef(),
   };
 
   const { data, isLoading } = useQuery(
@@ -84,6 +61,9 @@ const MemberRecruitmentWrite = () => {
       },
     }
   );
+
+  // 기본 프로젝트 이미지 => projectId에 따라 이미지 바뀔 수 있게 처리
+  let imageUrl = projectDefaultImg;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -104,9 +84,12 @@ const MemberRecruitmentWrite = () => {
     stack.includes(stackInput.toLowerCase())
   );
 
+  // 입력 스택
   const handleStackInputChange = (e) => {
     setStackInput(e.target.value);
   };
+
+  // 스택 추가하기
   const stackPlusClickHandler = () => {
     if (stacks.includes(stackInput)) {
       return;
@@ -114,6 +97,8 @@ const MemberRecruitmentWrite = () => {
     setStacks((prevState) => [...prevState, stackInput]);
     setStackInput("");
   };
+
+  // 스택 빼기
   const stackMinusClickHandler = (project) => {
     setStacks((prevState) => prevState.filter((stack) => stack !== project));
   };
@@ -124,6 +109,36 @@ const MemberRecruitmentWrite = () => {
   const handleAddRecruitmetPost = () => {
     const { backendCnt, frontendCnt, designCnt, managerCnt, ...allData } =
       formValues;
+
+    if (title.length < 2) {
+      toast.error("모집글 제목을 입력해주세요");
+      inputRefs.title.current.focus();
+      return;
+    }
+    const start = new Date(recruitStartDate);
+    const end = new Date(recruitEndDate);
+    if (start > end) {
+      toast.error("모집 기간 수정해주세요");
+      inputRefs.startDate.current.focus();
+      return;
+    }
+    if (description.length < 2) {
+      toast.error("모집글 설명을 입력해주세요");
+      inputRefs.description.current.focus();
+      return;
+    }
+    if (
+      parseInt(backendCnt, 10) +
+        parseInt(frontendCnt, 10) +
+        parseInt(managerCnt, 10) +
+        parseInt(designCnt, 10) ===
+      0
+    ) {
+      toast.error("포지션 인원 1명 이상이어야 합니다");
+      inputRefs.backendCnt.current.focus();
+      return;
+    }
+
     const recruitCnt = [
       {
         position: "BACKEND",
@@ -149,6 +164,7 @@ const MemberRecruitmentWrite = () => {
     const body = {
       ...allData,
       recruitInfo: recruitCnt,
+      techStack: stacks,
     };
     // addPostMutate(body);
     console.log(body);
@@ -179,10 +195,7 @@ const MemberRecruitmentWrite = () => {
         <Link to="/recruitment">
           <ArrowBackIosNewIcon className="recruitment-direction" />
         </Link>
-        <img
-          src="https://cdn.pixabay.com/photo/2015/06/24/15/45/hands-820272_640.jpg"
-          alt=""
-        />
+        <img src={imageUrl} alt="" />
         {data && data?.length !== 0 ? (
           <input
             type="text"
@@ -213,9 +226,9 @@ const MemberRecruitmentWrite = () => {
                   className="member-select1"
                   name="projectId"
                   onChange={handleChange}
-                  value={formValues.projectId}
+                  value={formValues.projectId || ""}
                 >
-                  <option disabled selected hidden>
+                  <option disabled hidden>
                     선택하세요
                   </option>
                   {data?.map((project, index) => (
@@ -231,10 +244,10 @@ const MemberRecruitmentWrite = () => {
                 <select
                   className="member-select2"
                   onChange={handleChange}
-                  value={formValues.concept}
+                  value={formValues.concept || ""}
                   name="concept"
                 >
-                  <option disabled selected hidden>
+                  <option disabled hidden>
                     선택하세요
                   </option>
                   {concepts.map((concept, index) => (
@@ -275,10 +288,10 @@ const MemberRecruitmentWrite = () => {
                   className="member-select4"
                   onChange={handleChange}
                   name="region"
-                  value={formValues.region}
+                  value={formValues.region || ""}
                   ref={inputRefs.region}
                 >
-                  <option disabled selected hidden>
+                  <option disabled hidden>
                     선택하세요
                   </option>
                   {location.map((place, index) => (
@@ -308,6 +321,7 @@ const MemberRecruitmentWrite = () => {
                       value={formValues.backendCnt}
                       name="backendCnt"
                       onChange={handleChange}
+                      ref={inputRefs.backendCnt}
                     />
                     <input
                       className="position-number"
@@ -348,6 +362,7 @@ const MemberRecruitmentWrite = () => {
                         type="text"
                         value={stackInput}
                         onChange={handleStackInputChange}
+                        ref={inputRefs.techStack}
                       />
                       <AddCircleIcon
                         className="mui-icon"

@@ -1,6 +1,6 @@
 import { customAxios } from "./customAxios";
 
-// allRecruitmentPosts 키 값
+// 키값 : allRecruitmentPosts
 // 페이지네이션 모집글 조회하는 함수
 export const getAllRecruitmentPost = async (page, size) => {
   try {
@@ -13,6 +13,7 @@ export const getAllRecruitmentPost = async (page, size) => {
   }
 };
 
+// 키값 : recruitmentDetail
 // 모집글 디테일 조회하는 함수
 export const getRecruitmentPostDetail = async (postId) => {
   try {
@@ -47,6 +48,17 @@ export const getRecruitmentProject = async () => {
 export const addRecruitmentPost = async (body) => {
   try {
     const res = await customAxios.post("/auth/post", body);
+    return res.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+// 모집글 수정
+export const modifyRecruitmentPost = async (body) => {
+  const { postId, ...formData } = body;
+  try {
+    const res = await customAxios.put(`/auth/post/${postId}`, formData);
     return res.data;
   } catch (err) {
     return err;

@@ -1,5 +1,5 @@
 // RecruitmentDetailTitle 컴포넌트
-.detail_title {
+.detail-title {
   margin: 0px 5%;
   @include mobile {
     margin: 0px 0px;
@@ -8,14 +8,16 @@
   @include mobile {
     flex-direction: column;
   }
+
   font-family: $heading-font;
   padding: 2.5rem;
-  &_content {
+
+  &-content {
     @include mobile {
       float: left;
       width: 100%;
     }
-    .mui_arrow {
+    .mui-arrow {
       color: black;
       margin-right: 20px;
     }
@@ -23,6 +25,12 @@
       width: 80px;
       height: 80px;
       border-radius: 30px;
+    }
+    input {
+      font-family: $heading-font;
+      margin-left: 20px;
+      border-radius: 20px;
+      padding: 10px;
     }
     display: flex;
     align-items: center;
@@ -38,33 +46,37 @@
       margin-left: 20px;
     }
   }
-  &_plus {
-    @include displayFlex(row, center, center);
-    h5,
-    h2 {
-      color: gray;
-      margin-right: 15px;
-    }
-    @include mobile {
-      margin-top: 15px;
-    }
+  &-button {
+    display: flex;
+    align-items: center;
   }
 }
 
 // RecruitmentDetailContent 컴포넌트
-.recruitment_detail {
+.recruitment-detail {
   border: $border;
   border-radius: 20px;
   padding: 2.5rem;
   margin-left: 7%;
   margin-right: 7%;
   font-family: $body-font;
+  input,
+  textarea,
+  select {
+    font-family: $heading-font;
+    border-radius: 20px;
+  }
+  textarea {
+    padding: 10px;
+    margin: 10px 0px;
+  }
+
   h4 {
     color: $font-color;
     font-size: $body-font-size;
     margin-right: 20px;
   }
-  &_content {
+  &-content {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
@@ -72,7 +84,7 @@
       margin-left: 15px;
     }
 
-    &_name {
+    &-name {
       display: flex;
       align-items: center;
       h5 {
@@ -81,10 +93,10 @@
     }
   }
 
-  &_content_last {
+  &-content-last {
     border-bottom: 1px solid rgb(204, 204, 204);
 
-    &_content {
+    &-content {
       margin-bottom: 20px;
       display: flex;
       align-items: center;
@@ -94,62 +106,90 @@
     }
   }
 
-  &_container {
+  // 포지션
+  &-container {
     display: flex;
     align-items: center;
-    justify-content: center;
     border-bottom: 1px solid rgb(204, 204, 204);
     h4 {
-      width: 10%;
-      text-align: left;
       white-space: nowrap;
-    }
-    @include mobile {
-      flex-direction: column;
-      h4 {
-        width: auto;
-      }
-    }
-    &_options {
-      display: flex;
-      width: 100%;
-      justify-content: space-between;
-      &_content {
-        display: flex;
-      }
+      margin: 0px, 50px;
     }
 
-    &_select,
-    &_member,
-    &_button {
+    &-select,
+    &-member,
+    &-button {
+      margin-left: 20px;
       h5 {
-        margin-bottom: 30px;
-        margin-top: 30px;
+        margin: 30px 20px;
       }
     }
-    &_member {
+    &-member {
       margin-right: 20px;
+      &-cnt {
+        display: flex;
+        align-items: center;
+        input {
+          height: 25px;
+          width: 40px;
+        }
+      }
     }
-    &_button {
+    &-button {
       display: flex;
       flex-direction: column;
-      margin-top: 17px;
+      margin-top: 9px;
       Button {
-        margin: 8px 20px;
+        margin: 7px 40px;
       }
     }
   }
 
-  &_description {
+  &-description {
     display: flex;
     flex-direction: column;
     border-bottom: 1px solid rgb(204, 204, 204);
+    &-stacks {
+      display: flex;
+      img {
+        width: 50px;
+        height: 50px;
+        margin: 10px 5px;
+      }
+    }
+
     h4 {
       margin-top: 20px;
       margin-bottom: 20px;
     }
     h5 {
       margin-bottom: 20px;
+    }
+
+    .member-stack-button {
+      border: 1px solid rgb(246, 246, 246);
+      border-radius: 20px;
+      margin: 10px 0px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      Button {
+        margin: 15px;
+      }
+    }
+
+    .member-stack {
+      position: relative;
+      .member-inputcontainer-box {
+        cursor: pointer;
+        z-index: 1;
+        position: absolute;
+        top: calc(100% + 5px);
+        background-color: white;
+        width: 180px;
+        h5 {
+          border-bottom: 1px solid rgb(234, 234, 234);
+          text-align: center;
+        }
+      }
     }
   }
 }

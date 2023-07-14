@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import {
   addLikeRecruitmentPost,
   addRecruitmentPost,
+  modifyRecruitmentPost,
 } from "../lib/apis/memberRecruitmentApi";
 
 // 특정 모집글 좋아요
@@ -27,6 +28,19 @@ export const useAddRecruitmentPostMutation = () => {
   return useMutation(addRecruitmentPost, {
     onSuccess: () => {
       toast.success("모집글이 생성되었습니다.");
+      queryClient.invalidateQueries("allRecruitmentPosts");
+    },
+  });
+};
+
+// 모집글 수정
+export const useModifyRecruitmentPostMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(modifyRecruitmentPost, {
+    onSuccess: () => {
+      toast.success("모집글이 수정되었습니다.");
+      queryClient.invalidateQueries("recruitmentDetail");
       queryClient.invalidateQueries("allRecruitmentPosts");
     },
   });
