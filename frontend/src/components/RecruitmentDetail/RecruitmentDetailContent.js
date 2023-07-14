@@ -14,11 +14,13 @@ import Button from "../common/Button";
 import { getRecruitmentPostDetail } from "../../lib/apis/memberRecruitmentApi";
 import {
   useAddLikeRecruitmentMutation,
+  useDeleteRecruitmentPostMutation,
   useModifyRecruitmentPostMutation,
 } from "../../hooks/useRecruitmentMutation";
 import { getStringDate } from "../../utils/date";
 
 import { backendStacks, location } from "../../utils/recruitment";
+import AlertCheckModal from "../common/AlertCheckModal";
 
 const data = {
   postId: 0,
@@ -76,6 +78,7 @@ const data = {
 const RecruitmentDetailContent = () => {
   const { id } = useParams();
   const [isEdit, setIsEdit] = useState(false);
+  const [deleteIsModalVisible, setDeleteIsModalVisible] = useState(false);
 
   // 모집글 디테일 페이지 조회
   //const { data } = useQuery(["recruitmentDetail"], () =>
@@ -107,6 +110,9 @@ const RecruitmentDetailContent = () => {
   // 모집글 수정
   //const { mutate: modifyPostMutate } =
   //  useModifyRecruitmentPostMutation(formValues);
+
+  // 모집글 삭제
+  const { mutate: deletePostMutate } = useDeleteRecruitmentPostMutation(id);
 
   // 기술 스택들 태그들
   const [stacks, setStacks] = useState(data?.techStack);
@@ -271,8 +277,19 @@ const RecruitmentDetailContent = () => {
     setIsEdit((prevState) => !prevState);
   };
 
+  // 삭제 버튼을 눌렀을 때
+  const deleteRecruitmentPost = () => {
+    deletePostMutate(id);
+  };
+
   return (
     <>
+      <AlertCheckModal
+        open={deleteIsModalVisible}
+        onClose={() => setDeleteIsModalVisible(false)}
+        text="인원 모집글 삭제하시겠습니까?"
+        //clickHandler={deleteRecruitmentPost}
+      />
       <div className="detail-title">
         <div className="detail-title-content">
           <Link to="/recruitment" className="mui-arrow">
@@ -307,7 +324,11 @@ const RecruitmentDetailContent = () => {
                 text="수정"
                 onClick={() => setIsEdit((prevState) => !prevState)}
               />
-              <Button type="underlined" text="삭제" />
+              <Button
+                type="underlined"
+                text="삭제"
+                onClick={() => setDeleteIsModalVisible(true)}
+              />
             </>
           )}
         </div>

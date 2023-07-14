@@ -64,3 +64,13 @@ export const modifyRecruitmentPost = async (body) => {
     return err;
   }
 };
+
+// 모집글 삭제
+export const deleteRecruitmentPost = async (postId) => {
+  try {
+    const res = await customAxios.delete(`/auth/post/${postId}`);
+    return res.data;
+  } catch (err) {
+    return err;
+  }
+};
