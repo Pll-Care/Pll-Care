@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMeetingRecord } from "../../lib/apis/meetingRecordManagementApi";
 import useMeetingRecordManagementMutation from "../../hooks/useMeetingRecordManagementMutation";
 import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
-import { useEffect, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 import Button from "../common/Button";
 import { getProjectId } from "../../utils/getProjectId";
 import { useLocation } from "react-router-dom";
@@ -48,12 +48,12 @@ const MeetingRecord = ({ state }) => {
   );
 
   const handleEditMeetingRecord = () => {
-    dispatch(meetingRecordManagementActions.onChangeIsEditState(true));
+    dispatch(meetingRecordManagementActions.setIsEditState(true));
     dispatch(
-      meetingRecordManagementActions.onEditSelectedMeetingRecordState(false)
+      meetingRecordManagementActions.setSelectedMeetingRecordState(false)
     );
     dispatch(
-      meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(
+      meetingRecordManagementActions.setIsCreatedMeetingRecordVisibleState(
         false
       )
     );
@@ -63,14 +63,14 @@ const MeetingRecord = ({ state }) => {
     state === "selectedMeetingRecord"
       ? deleteMutate(selectedData.memoId)
       : deleteMutate(createdData.memoId);
-    dispatch(meetingRecordManagementActions.onEditInitialState(true));
+    dispatch(meetingRecordManagementActions.setInitialState(true));
   };
 
   const handleBookMarkMeetingRecord = () => {
     state === "selectedMeetingRecord"
       ? createBookMarkMutate(selectedData.memoId)
       : createBookMarkMutate(createdData.memoId);
-    dispatch(meetingRecordManagementActions.onEditInitialState(true));
+    dispatch(meetingRecordManagementActions.setInitialState(true));
   };
 
   useLayoutEffect(() => {

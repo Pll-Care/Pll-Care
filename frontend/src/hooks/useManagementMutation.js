@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "react-query";
-import { completeProject, createProject, deleteProject, editProject } from "../lib/apis/projectManagementApi";
+import { completeProject, createProject, deleteProject, editProject, leaveProject } from "../lib/apis/projectManagementApi";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 
@@ -55,9 +55,20 @@ const useManagementMutation = () => {
     onError: () => {
       toast.error("수정 실패하였습니다. 잠시 후 다시 시도해주세요.");
     }
-  })
+  });
 
-  return { createMutate, deleteMutate, completeMutate, editMutate };
+  const { mutate: leaveMutate } = useMutation(leaveProject, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["managementOngoingProjectList"]);
+      queryClient.invalidateQueries(["managementAllProjectList"]);
+      toast.success("팀에서 탈퇴되었습니다!");
+    },
+    onError: () => {
+      toast.error("팀 탈퇴를 실패하였습니다. 잠시 후 다시 시도해주세요.");
+    }
+  });
+
+  return { createMutate, deleteMutate, completeMutate, editMutate, leaveMutate };
 };
 
 export default useManagementMutation;

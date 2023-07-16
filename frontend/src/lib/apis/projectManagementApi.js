@@ -54,6 +54,12 @@ export const completeProject = async (projectId) => {
   return response.data;
 };
 
+export const leaveProject = async (projectId) => {
+  const response = await customAxios.delete(`/auth/project/${projectId}/selfout`);
+
+  return response.data;
+}
+
 export const uploadImage = async (imgData) => {
   const response = await customAxios.post(
     `/auth/upload/image?dir=${imgData.dir}`,
