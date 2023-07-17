@@ -118,7 +118,9 @@ public class EvaluationService {
     public Long createFinalEvaluation(FinalEvalCreateRequest finalEvalCreateRequest, Member evaluator) {
         Member evaluated = memberRepository.findById(finalEvalCreateRequest.getEvaluatedId()).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
         Project project = projectRepository.findById(finalEvalCreateRequest.getProjectId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
+
         projectMemberRepository.findByProjectIdAndMemberId(project.getId(), finalEvalCreateRequest.getEvaluatedId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
+
         //? 점수 5점 이상일 경우 에러처리
         if (!Score.valid(finalEvalCreateRequest.getScore())) {
             throw new EvalOutOfRangeException(EvaluationErrorCode.SCORE_OUT_OF_RANGE);

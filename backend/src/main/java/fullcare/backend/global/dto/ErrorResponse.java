@@ -38,4 +38,5 @@ public class ErrorResponse {
                 errorCode.getMessage(),
                 request.getServletPath());
     }
+
 }

@@ -94,7 +94,7 @@ public class Post extends BaseEntity {
     }
 
 
-    public void updateAll(String title, String description, LocalDate recruitStartDate, LocalDate recruitEndDate, String reference, String contact, String region, List<Recruitment> recruitments) {
+    public void updateAll(String title, String description, LocalDate recruitStartDate, LocalDate recruitEndDate, String reference, String contact, String region, String techStack, List<Recruitment> recruitments) {
         this.title = title;
         this.description = description;
         this.recruitStartDate = recruitStartDate;
@@ -102,6 +102,7 @@ public class Post extends BaseEntity {
         this.reference = reference;
         this.contact = contact;
         this.region = region;
+        this.techStack = techStack;
 
         updateRecruit(recruitments);
     }

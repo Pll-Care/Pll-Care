@@ -105,7 +105,7 @@ public class ScheduleService {
         if ((schedule instanceof Meeting && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.MILESTONE)) || (schedule instanceof Milestone && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.MEETING))) {
             throw new ScheduleCategoryMisMatchException(ScheduleErrorCode.CATEGORY_NOT_MODIFY);
         }
-        if(schedule.getState().equals(State.COMPLETE)){
+        if (schedule.getState().equals(State.COMPLETE)) {
             throw new ScheduleCategoryMisMatchException(ScheduleErrorCode.SCHEDULE_COMPLETED);
         }
         Project project = projectRepository.findById(scheduleUpdateRequest.getProjectId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
@@ -521,6 +521,7 @@ public class ScheduleService {
                 .endDate(schedule.getEndDate())
                 .deleteAuthorization(validateDelete(scheduleId, projectId, memberId, pmMe))
                 .build();
+
         for (ProjectMember projectMember : projectMembers) {
             DetailMemberDto detailMemberDto = DetailMemberDto.builder().id(projectMember.getMember().getId())
                     .name(projectMember.getMember().getName()).build();

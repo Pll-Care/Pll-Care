@@ -152,7 +152,7 @@ public class PostController {
     })
     @GetMapping("/list")
     public ResponseEntity<CustomPageImpl<PostListResponse>> list(@ModelAttribute CustomPageRequest pageRequest,
-                                                                 @CurrentLoginMember Member member) { // ? @ModelAttribute가 맞는가
+                                                                 @CurrentLoginMember Member member) {
         PageRequest of = pageRequest.of();
         Pageable pageable = (Pageable) of;
         CustomPageImpl<PostListResponse> responses;

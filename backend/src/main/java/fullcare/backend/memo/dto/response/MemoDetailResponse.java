@@ -14,11 +14,14 @@ public class MemoDetailResponse {
     private String title;
     private String content;
     private boolean isBookmarked;
+    private boolean isEditable;
+    private boolean isDeletable;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
     @Builder
-    public MemoDetailResponse(Long memoId, String author, String title, String content, boolean isBookmarked, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    public MemoDetailResponse(Long memoId, String author, String title, String content,
+                              boolean isBookmarked, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.memoId = memoId;
         this.author = author;
         this.title = title;
@@ -38,5 +41,13 @@ public class MemoDetailResponse {
                 .createdDate(memo.getCreatedDate())
                 .modifiedDate(memo.getModifiedDate())
                 .build();
+    }
+
+    public void setEditable(boolean editable) {
+        isEditable = editable;
+    }
+
+    public void setDeletable(boolean deletable) {
+        isDeletable = deletable;
     }
 }

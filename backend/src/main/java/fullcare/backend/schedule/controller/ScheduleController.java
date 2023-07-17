@@ -104,6 +104,7 @@ public class ScheduleController {
         if (!scheduleService.validateDelete(scheduleId, scheduleDeleteRequest.getProjectId(), member.getId(), projectMember)) {
             throw new InvalidAccessException(ScheduleErrorCode.INVALID_DELETE);
         }
+
         scheduleService.deleteSchedule(scheduleId, scheduleDeleteRequest.getProjectId());
         return new ResponseEntity(HttpStatus.OK);
     }

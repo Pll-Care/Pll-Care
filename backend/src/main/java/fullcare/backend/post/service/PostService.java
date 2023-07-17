@@ -20,6 +20,7 @@ import fullcare.backend.post.repository.RecruitmentRepository;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.util.CustomPageImpl;
+import fullcare.backend.util.TechStackUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -58,7 +59,7 @@ public class PostService {
                 .contact(request.getContact())
                 .reference(request.getReference())
                 .region(request.getRegion())
-                .techStack(request.getTechStack())
+                .techStack(TechStackUtil.listToString(request.getTechStack()))
                 .state(State.ONGOING)
                 .build();
 
@@ -89,7 +90,7 @@ public class PostService {
 
         post.updateAll(request.getTitle(), request.getDescription(),
                 request.getRecruitStartDate(), request.getRecruitEndDate(),
-                request.getReference(), request.getContact(), request.getRegion(), recruitments);
+                request.getReference(), request.getContact(), request.getRegion(), TechStackUtil.listToString(request.getTechStack()), recruitments);
     }
 
     @Transactional

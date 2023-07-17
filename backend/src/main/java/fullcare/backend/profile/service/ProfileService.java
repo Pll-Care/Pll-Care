@@ -15,15 +15,16 @@ import fullcare.backend.profile.dto.response.ProfileImageResponse;
 import fullcare.backend.profile.dto.response.ProfileProjectExperienceResponse;
 import fullcare.backend.profile.dto.response.ProfileTechStackResponse;
 import fullcare.backend.s3.S3Service;
+import fullcare.backend.profile.dto.response.*;
 import fullcare.backend.util.TechStackUtil;
 import fullcare.backend.util.dto.TechStack;
 import fullcare.backend.util.dto.TechStackDto;
+import fullcare.backend.util.dto.TechStack;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -90,13 +91,13 @@ public class ProfileService {
         for (ProjectExperienceDto dto : ProjectExperienceDtos) {
             int year = dto.getStartDate().getYear();
             equalList = data.stream().filter(d -> d.getYear() == year).collect(Collectors.toList());
-            if(equalList.size()>0) {
+            if (equalList.size() > 0) {
                 equalList.get(0).getProjectExperiences().add(dto);
-            }else{
+            } else {
                 List<ProjectExperienceDto> projectExperienceDtos = new ArrayList<>();
                 projectExperienceDtos.add(dto);
                 data.add(new ProjectExperienceResponseDto(dto.getStartDate().getYear(),
-                    projectExperienceDtos));
+                        projectExperienceDtos));
             }
         }
         Long id = member == null ? null : member.getId();

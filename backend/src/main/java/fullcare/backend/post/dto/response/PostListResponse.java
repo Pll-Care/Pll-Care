@@ -1,13 +1,17 @@
 package fullcare.backend.post.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fullcare.backend.post.domain.Post;
 import fullcare.backend.post.dto.request.RecruitInfo;
+import fullcare.backend.util.dto.TechStack;
+import fullcare.backend.util.dto.TechStackDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @ToString
@@ -25,7 +29,8 @@ public class PostListResponse {
     private LocalDate recruitEndDate;
 
 
-    private List<String> techStackImageUrls;
+    private List<TechStackDto> techStackList = new ArrayList<>();
+    @JsonIgnore
     private String techStack;
     private boolean isLiked;
 
@@ -59,7 +64,13 @@ public class PostListResponse {
         this.title = title;
         this.recruitStartDate = recruitStartDate;
         this.recruitEndDate = recruitEndDate;
-        this.techStack = techStack;
+
+        for (TechStack t : TechStack.values()) {
+            if (t.getValue().toLowerCase().startsWith(techStack.toLowerCase())) {
+                this.techStackList.add(new TechStackDto(t.getValue(), null));
+            }
+        }
+
         this.isLiked = isLiked;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
