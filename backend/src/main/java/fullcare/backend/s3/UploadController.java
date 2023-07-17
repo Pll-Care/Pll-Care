@@ -22,7 +22,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping(value = "/api/auth/upload", produces = APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class UploadController {
-    private final UploadService uploadService;
+    private final S3Service s3Service;
 
     //* 이미지 관련 api
     @Operation(method = "post", summary = "이미지 업로드")
@@ -32,7 +32,7 @@ public class UploadController {
     })
     @PostMapping("/image")
     public ResponseEntity<UploadResponse> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("dir") String dir) {
-        UploadResponse response = uploadService.upload(file, dir);
+        UploadResponse response = s3Service.upload(file, dir);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -44,7 +44,7 @@ public class UploadController {
 
     @DeleteMapping("/image")
     public ResponseEntity<UploadResponse> uploadFile(@RequestParam("url") String url) {
-        uploadService.delete(url);
+        s3Service.delete(url);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -13,7 +13,7 @@ import fullcare.backend.project.dto.response.ProjectSimpleListResponse;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
-import fullcare.backend.s3.UploadService;
+import fullcare.backend.s3.S3Service;
 import fullcare.backend.util.CustomPageImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class ProjectService {
     private final ProjectRepository projectRepository;
-    private final UploadService uploadService;
+    private final S3Service s3Service;
 
 
     public Project createProject(Member member, ProjectCreateRequest request) {
@@ -52,7 +52,7 @@ public class ProjectService {
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
         String imageUrl = project.getImageUrl();
         project.update(projectUpdateRequest);
-        uploadService.delete(imageUrl);
+        s3Service.delete(imageUrl);
     }
 
     public Project findProject(Long projectId) {
@@ -72,7 +72,7 @@ public class ProjectService {
 
         projectRepository.deleteById(projectId);
         if (project.getImageUrl() != null) {
-            uploadService.delete(project.getImageUrl());
+            s3Service.delete(project.getImageUrl());
         }
     }
 

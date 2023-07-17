@@ -4,21 +4,43 @@ import java.util.List;
 
 public enum TechStack {
     // ? Back 관련
-    SPRING("Spring"), SPRINGBOOT("SpringBoot"), DJANGO("Django"), FLASK("Flask"),
+    SPRING("Spring", "svg"), SPRINGBOOT("SpringBoot", "png"), DJANGO("Django", "svg"), FLASK("Flask", "png"),
+    NodeJs("NodeJs","svg"),
     // ? Front 관련
-    REACT("React"), VUE("Vue"), JAVASCRIPT("JavaScript"),
+    REACT("React", "svg"), VUE("Vue", "svg"), JAVASCRIPT("JavaScript", "svg"), REDUX("Redux", "png"),
+    ANGULAR("Angular", "png"), Css3("CSS3", "svg"), Html5("Html5","svg"), NestJs("NestJs","svg"),
+    NextJs("NextJs","svg"), ReactNative("ReactNative","png"), ReactQuery("ReactQuery","png"),Typescript("Typescript","svg"),
+
     // ? DevOps 관련
-    AWS("AWS"),
+    AWS("AWS", "svg"),
     // ? DB 관련
-    MYSQL("MySql"),
+    MYSQL("MySql", "svg"), MongoDb("MongoDb","svg"),
     // ? 언어 관련
-    CSHOP("C#"), CPP("C++"), PYTHON("Python"),
+    CSHOP("C#", "png"), CPP("C++", "png"), PYTHON("Python", "svg"),
     //? 형상관리
-    GIT("Git")
+    GIT("Git", "svg"), Github("Github","svg"),
+    //? 기타
+    ANDROID("Android", "svg"), ANDROIDSTUDIO("AndroidStudio", "svg"), Apple("Apple", "svg"),
+    Blender("Blender", "svg"), Docker("Docker","svg"), Express("Express","svg"), Fastapi("Fastapi","svg"),
+    Figma("Figma","svg"), Firebase("Firebase","svg"), Flutter("Flutter","svg"), Illustrator("Illustrator","svg"),
+    Java("Java","svg"), Jira("Jira","svg"), Kotlin("Kotlin","svg"), Kubernetes("Kubernetes","svg"),
+    Linux("Linux","svg"), Mobx("Mobx","jpeg"),Photoshop("Photoshop","svg"),Recoil("Recoil","png"),
+    Slack("Slack","svg"),StyledComponent("StyledComponent","png"),Svelte("Svelte","svg"),Swift("Swift","svg"),
+    Tailwind("Tailwind","png"),Unity("Unity","svg"),Vscode("Vscode","svg"), Xd("Xd","svg"), Zeplin("Zeplin","png")
     ;
     private final String value;
-    TechStack(String value){this.value = value;}
-    public String getValue(){
+    private final String contentType;
+
+    TechStack(String value, String contentType) {
+        this.value = value;
+        this.contentType = contentType;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public String getValue() {
         return value;
     }
 

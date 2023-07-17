@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/auth/util")
 @RestController
 public class UtilController {
+    private final TechStackUtil techStackUtil;
     @Operation(method = "get", summary = "기술스택 검색")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "기술스택 검색 성공", useReturnTypeSchema = true),
@@ -27,7 +28,7 @@ public class UtilController {
     })
     @GetMapping(value = "/techstack")
     public ResponseEntity<TechStackResponse> findTechStack(@RequestParam("tech") String tech) {
-        TechStackResponse response = TechStackUtil.findTechStack(tech);
+        TechStackResponse response = techStackUtil.findTechStack(tech);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 }

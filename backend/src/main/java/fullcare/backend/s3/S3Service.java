@@ -14,11 +14,14 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class UploadService {
+public class S3Service {
     private final AmazonS3Client amazonS3Client;
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
+    public String find(String fileName, String contentType){
+        return amazonS3Client.getResourceUrl(bucket,  "techstack/" + fileName + "." + contentType);
+    }
     public UploadResponse upload(MultipartFile file, String dir){
         UUID uuid = UUID.randomUUID();
         try {
