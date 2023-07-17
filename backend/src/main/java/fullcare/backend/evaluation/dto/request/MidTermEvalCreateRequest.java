@@ -21,4 +21,10 @@ public class MidTermEvalCreateRequest {
     @NotNull
     private EvaluationBadge evaluationBadge;
 
+    public MidTermEvalCreateRequest(Long projectId, Long votedId, Long scheduleId, EvaluationBadge evaluationBadge) {
+        this.projectId = projectId;
+        this.votedId = votedId;
+        this.scheduleId = scheduleId;
+        this.evaluationBadge = evaluationBadge;
+    }
 }

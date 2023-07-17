@@ -2,11 +2,15 @@ package fullcare.backend.evaluation.domain;
 
 import fullcare.backend.evaluation.dto.ScoreDto;
 import jakarta.persistence.Embeddable;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Embeddable
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Score {
     private int sincerity;
     private int jobPerformance;
@@ -26,4 +30,6 @@ public class Score {
         }
         return true;
     }
+
+
 }
