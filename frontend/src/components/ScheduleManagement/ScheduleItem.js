@@ -27,21 +27,15 @@ const ScheduleItem = (props) => {
 
   const [modalVisible, setModalVisible] = useState(false);
   const [modifyModalVisible, setModifyModalVisible] = useState(false);
-  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+
   const [completeModalVisible, setCompleteModalVisible] = useState(false);
   const [detailModalVisible, setDetailModalVisible] = useState(false);
 
-  const deleteBody = {
-    scheduleId: props.data.scheduleId,
-    projectId: projectId,
-  };
   const completeBody = {
     scheduleId: props.data.scheduleId,
     projectId: projectId,
     state: "COMPLETE",
   };
-  // 삭제 처리하는 react query 문
-  const { mutate: deleteSchedule } = useDeleteScheduleMutation(deleteBody);
 
   // 완료 처리하는 react query 문
   const { mutate: compeleteSchedule } =
@@ -61,14 +55,6 @@ const ScheduleItem = (props) => {
   };
   const hideModifyModalHandler = () => {
     setModifyModalVisible(false);
-  };
-
-  // 삭제 모달
-  const openDeleteModalHandler = () => {
-    setDeleteModalVisible(true);
-  };
-  const hideDeleteModalHandler = () => {
-    setDeleteModalVisible(false);
   };
 
   // 완료 모달
@@ -114,14 +100,6 @@ const ScheduleItem = (props) => {
         isEdit={true}
         editScheduleId={props.data.scheduleId}
         scheduleState={props.data.state}
-      />
-
-      <AlertModal
-        open={deleteModalVisible}
-        onClose={hideDeleteModalHandler}
-        width="30%"
-        text="정말 일정 삭제하시겠습니까?"
-        clickHandler={() => deleteSchedule(deleteBody)}
       />
 
       <AlertModal
@@ -181,18 +159,6 @@ const ScheduleItem = (props) => {
 
         <div className="schedule-list-content-time">
           {remainDate !== "past" && <h1>{remainDate}</h1>}
-
-          {/*<Button
-            text="수정하기"
-            size="small"
-            onClick={openModifyModalHandler}
-          />
-
-          <Button
-            text="삭제하기"
-            size="small"
-            onClick={openDeleteModalHandler}
-          />*/}
         </div>
       </div>
     </div>

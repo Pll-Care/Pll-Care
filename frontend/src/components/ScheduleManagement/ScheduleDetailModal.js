@@ -2,9 +2,13 @@ import React, { useState, useRef } from "react";
 import { useQuery } from "react-query";
 
 import ModalContainer from "../common/ModalContainer";
-import { getDetailSchedule } from "../../lib/apis/scheduleManagementApi";
+import {
+  getDetailSchedule,
+  useDeleteScheduleMutation,
+} from "../../lib/apis/scheduleManagementApi";
 import { getDateTimeDuration } from "../../utils/date";
 import Button from "../common/Button";
+import AlertModal from "./AlertModal";
 
 const ScheduleDetailModal = ({
   open,
@@ -25,6 +29,25 @@ const ScheduleDetailModal = ({
     category: "",
     address: "",
   });
+
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+
+  const deleteBody = {
+    scheduleId: scheduleId,
+    projectId: projectId,
+  };
+
+  // 삭제 처리하는 react query 문
+  const { mutate: deleteSchedule } = useDeleteScheduleMutation(deleteBody);
+
+  // 삭제 모달
+  const hideDeleteModalHandler = () => {
+    setDeleteModalVisible(false);
+    onClose();
+  };
+
+  // 일정 상세 조회
   const { data, isLoading } = useQuery(
     ["ScheduleDetail", projectId, scheduleId],
     async () => await getDetailSchedule(projectId, scheduleId),
@@ -51,6 +74,13 @@ const ScheduleDetailModal = ({
 
   return (
     <ModalContainer open={open} onClose={onClose}>
+      <AlertModal
+        open={deleteModalVisible}
+        onClose={hideDeleteModalHandler}
+        width="35%"
+        text="정말 일정 삭제하시겠습니까?"
+        clickHandler={() => deleteSchedule(deleteBody)}
+      />
       <div className="schedule-detail-modal">
         <h1>{title}</h1>
         <div className="schedule-detail-modal-content">
@@ -75,7 +105,14 @@ const ScheduleDetailModal = ({
           </div>
         </div>
         <div className="schedule-detail-modal-button">
-          <Button text="삭제" type="underlined" size="small" />
+          {data?.deleteAuthorization && (
+            <Button
+              text="삭제"
+              type="underlined"
+              size="small"
+              onClick={() => setDeleteModalVisible((prevState) => !prevState)}
+            />
+          )}
           <Button text="수정하기" size="small" type="positive" />
         </div>
       </div>
