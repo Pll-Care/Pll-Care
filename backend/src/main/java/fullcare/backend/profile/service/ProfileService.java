@@ -5,6 +5,7 @@ import fullcare.backend.global.exceptionhandling.exception.EntityNotFoundExcepti
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.profile.domain.Profile;
+import fullcare.backend.profile.domain.ProjectExperience;
 import fullcare.backend.profile.dto.ProjectExperienceDto;
 import fullcare.backend.profile.dto.ProjectExperienceResponseDto;
 import fullcare.backend.profile.dto.request.ProfileBioUpdateRequest;
@@ -27,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @RequiredArgsConstructor
 @Service
@@ -66,8 +68,6 @@ public class ProfileService {
         if(p.getTechStack() != null && !p.getTechStack().isEmpty()) {
             List<TechStack>  techStacks = TechStackUtil.stringToList(p.getTechStack());
             for (TechStack t : techStacks) {
-                System.out.println("t.getValue() = " + t.getValue());
-                System.out.println("t.getContentType() = " + t.getContentType());
                 techStackDtos.add(new TechStackDto(t.getValue(), s3Service.find(t.getValue(), t.getContentType())));
             }
         }
@@ -79,13 +79,27 @@ public class ProfileService {
     public ProfileProjectExperienceResponse findProjectExperience(Long memberId, Member member) {
         Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
         Profile p = findMember.getProfile();
-        List<ProjectExperienceDto> ProjectExperienceDtos = p.getProjectExperiences().stream().map(pro -> ProjectExperienceDto.createResponseDto()
-                .projectId(pro.getId())
-                .title(pro.getTitle())
-                .description(pro.getDescription())
-                .startDate(pro.getStartDate())
-                .endDate(pro.getEndDate())
-                .techStack(pro.getTechStack()).build()).collect(Collectors.toList());
+
+        List<ProjectExperienceDto> ProjectExperienceDtos = new ArrayList<>();
+        for (ProjectExperience pro : p.getProjectExperiences()) {
+            String techStack = pro.getTechStack();
+            List<TechStackDto> techStackDtos = new ArrayList<>();
+            if(pro.getTechStack() != null && !pro.getTechStack().isEmpty()) {
+                List<TechStack> techStacks = TechStackUtil.stringToList(techStack);
+                for (TechStack t : techStacks) {
+                    techStackDtos.add(new TechStackDto(t.getValue(), s3Service.find(t.getValue(), t.getContentType())));
+                }
+            }
+            ProjectExperienceDto projectExperienceDto = ProjectExperienceDto.createResponseDto()
+                    .projectId(pro.getId())
+                    .title(pro.getTitle())
+                    .description(pro.getDescription())
+                    .startDate(pro.getStartDate())
+                    .endDate(pro.getEndDate())
+                    .techStack(techStackDtos).build();
+            ProjectExperienceDtos.add(projectExperienceDto);
+        }
+
         List<ProjectExperienceResponseDto> data = new ArrayList<>();
         List<ProjectExperienceResponseDto> equalList = null;
         for (ProjectExperienceDto dto : ProjectExperienceDtos) {

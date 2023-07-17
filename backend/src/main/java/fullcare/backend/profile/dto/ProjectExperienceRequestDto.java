@@ -2,10 +2,12 @@ package fullcare.backend.profile.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import fullcare.backend.util.dto.TechStack;
 import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class ProjectExperienceRequestDto {
@@ -15,9 +17,9 @@ public class ProjectExperienceRequestDto {
     private LocalDate startDate;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate endDate;
-    private String techStack;
+    private List<TechStack> techStack;
     @Builder
-    public ProjectExperienceRequestDto(String title, String description, LocalDate startDate, LocalDate endDate, String techStack) {
+    public ProjectExperienceRequestDto(String title, String description, LocalDate startDate, LocalDate endDate, List<TechStack> techStack) {
         this.title = title;
         this.description = description;
         this.startDate = startDate;

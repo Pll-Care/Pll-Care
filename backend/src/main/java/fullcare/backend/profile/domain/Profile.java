@@ -49,6 +49,7 @@ public class Profile {
         this.bio = bio;
     }
     public void updateProfile(ProfileUpdateRequest profileUpdateRequest){
+
         this.contact = profileUpdateRequest.getContact();
         this.recruitPosition = profileUpdateRequest.getRecruitPosition();
         this.techStack = TechStackUtil.listToString(profileUpdateRequest.getTechStack());
@@ -60,12 +61,13 @@ public class Profile {
             if(profileUpdateRequest.getProjectExperiences() != null) {
                 List<ProjectExperienceRequestDto> peList = profileUpdateRequest.getProjectExperiences();
                 for (ProjectExperienceRequestDto peDto : peList) {
+
                     ProjectExperience projectExperience = ProjectExperience.builder()
                             .title(peDto.getTitle())
                             .description(peDto.getDescription())
                             .startDate(peDto.getStartDate())
                             .endDate(peDto.getEndDate())
-                            .techStack(peDto.getTechStack())
+                            .techStack(TechStackUtil.listToString(peDto.getTechStack()))
                             .profile(this)
                             .build();
                     this.projectExperiences.add(projectExperience);
