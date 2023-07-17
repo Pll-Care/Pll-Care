@@ -1,4 +1,5 @@
 import ChartBox from "./ChartBox";
+import ProjectBox from "./ProjectBox";
 
 const Evaluate = () => {
   return (
@@ -6,13 +7,10 @@ const Evaluate = () => {
       <div className="profile_introduce_titleBox">
         <h1>평가 관리</h1>
       </div>
-      <ChartBox />
-      <section>
-        <div>
-          <h2>받은 평가</h2>
-        </div>
-        <div></div>
-      </section>
+      <div className="evaluate">
+        <ChartBox />
+        <ProjectBox />
+      </div>
     </div>
   );
 };
