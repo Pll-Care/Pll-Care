@@ -32,7 +32,7 @@ export const getTodayDateEnglish = () => {
     "December",
   ];
   const month = months[today.getMonth()];
-  const daysOfWeek = ["Sun", "Mon", "Tues", "Wednes", "Thurs", "Fri", "Satur"];
+  const daysOfWeek = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Satur"];
   const dayOfWeek = daysOfWeek[today.getDay()];
   const date = today.getDate();
   return `${month} ${date}, ${dayOfWeek}`;

@@ -82,6 +82,7 @@
     border-radius: 35px;
     width: 85%;
     padding: 1.5rem;
+    cursor: pointer;
     @include displayFlex(row, space-between, center);
     @include mobile {
       @include displayFlex(column);
@@ -228,5 +229,47 @@
     Button {
       margin: 0px 5px;
     }
+  }
+}
+
+// scheduleDetailModal 컴포넌트
+.schedule-detail-modal {
+  border: $border;
+  border-radius: 10px;
+  padding: 1rem;
+  color: $body-font-color;
+  font-family: $heading-font;
+  h1 {
+    font-size: $sub-heading-font-size;
+    margin: 15px;
+  }
+
+  &-content {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+
+    &-title {
+      h5 {
+        margin-top: 39px;
+      }
+    }
+
+    &-option {
+      margin-left: 30px;
+      margin-top: 5px;
+      h5 {
+        margin-top: 33px;
+      }
+      Button {
+        margin-top: 35px;
+      }
+    }
+  }
+
+  &-button {
+    justify-content: flex-end;
+    display: flex;
+    margin-top: 30px;
   }
 }

@@ -991,6 +991,7 @@ input {
   border-radius: 35px;
   width: 85%;
   padding: 1.5rem;
+  cursor: pointer;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -1150,6 +1151,41 @@ input {
 }
 .confirm-modal-button Button {
   margin: 0px 5px;
+}
+
+.schedule-detail-modal {
+  border: 2px solid #01e89e;
+  border-radius: 10px;
+  padding: 1rem;
+  color: #7a7a7a;
+  font-family: "IBM Plex Sans KR", sans-serif;
+}
+.schedule-detail-modal h1 {
+  font-size: 25px;
+  margin: 15px;
+}
+.schedule-detail-modal-content {
+  display: flex;
+  align-items: center;
+  margin: 20px;
+}
+.schedule-detail-modal-content-title h5 {
+  margin-top: 39px;
+}
+.schedule-detail-modal-content-option {
+  margin-left: 30px;
+  margin-top: 5px;
+}
+.schedule-detail-modal-content-option h5 {
+  margin-top: 33px;
+}
+.schedule-detail-modal-content-option Button {
+  margin-top: 35px;
+}
+.schedule-detail-modal-button {
+  justify-content: flex-end;
+  display: flex;
+  margin-top: 30px;
 }
 
 /* MEETING RECORD MANAGEMENT */

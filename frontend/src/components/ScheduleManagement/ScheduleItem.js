@@ -19,6 +19,8 @@ import {
 } from "../../lib/apis/scheduleManagementApi";
 import ScheduleModal from "./ScheduleModal";
 import { getProjectId } from "../../utils/getProjectId";
+import { Link } from "react-router-dom";
+import ScheduleDetailModal from "./ScheduleDetailModal";
 
 const ScheduleItem = (props) => {
   const projectId = getProjectId(useLocation());
@@ -27,6 +29,7 @@ const ScheduleItem = (props) => {
   const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [completeModalVisible, setCompleteModalVisible] = useState(false);
+  const [detailModalVisible, setDetailModalVisible] = useState(false);
 
   const deleteBody = {
     scheduleId: props.data.scheduleId,
@@ -76,6 +79,14 @@ const ScheduleItem = (props) => {
     setCompleteModalVisible(false);
   };
 
+  // 디테일 모달
+  const openDetailModalHandler = () => {
+    setDetailModalVisible((prevState) => !prevState);
+  };
+  const hideDetailModalHandler = () => {
+    setDetailModalVisible((prevState) => !prevState);
+  };
+
   const time = getDateTimeDuration(
     props.data.startDate,
     props.data.endDate,
@@ -119,6 +130,14 @@ const ScheduleItem = (props) => {
         text="일정이 완료되었습니까?"
         clickHandler={() => compeleteSchedule(completeBody)}
       />
+
+      <ScheduleDetailModal
+        open={detailModalVisible}
+        onClose={hideDetailModalHandler}
+        scheduleId={props.data.scheduleId}
+        projectId={projectId}
+        scheduleState={props.data.state}
+      />
       <div className="schedule-list-time">
         <h1>{day}</h1>
         <h2>{getEnglishWeekdays(props.data.startDate)}</h2>
@@ -138,10 +157,12 @@ const ScheduleItem = (props) => {
           />
         )}
       </div>
+
       <div
         className={`schedule-list-content ${
           remainDate === "past" ? "schedule-list-content-past" : ""
         }`}
+        onClick={() => openDetailModalHandler()}
       >
         <div>
           <h5>{time}</h5>
@@ -161,7 +182,7 @@ const ScheduleItem = (props) => {
         <div className="schedule-list-content-time">
           {remainDate !== "past" && <h1>{remainDate}</h1>}
 
-          <Button
+          {/*<Button
             text="수정하기"
             size="small"
             onClick={openModifyModalHandler}
@@ -171,7 +192,7 @@ const ScheduleItem = (props) => {
             text="삭제하기"
             size="small"
             onClick={openDeleteModalHandler}
-          />
+          />*/}
         </div>
       </div>
     </div>
