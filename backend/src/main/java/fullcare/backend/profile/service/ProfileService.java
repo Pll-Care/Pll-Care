@@ -14,6 +14,7 @@ import fullcare.backend.profile.dto.response.ProfileContactResponse;
 import fullcare.backend.profile.dto.response.ProfileImageResponse;
 import fullcare.backend.profile.dto.response.ProfileProjectExperienceResponse;
 import fullcare.backend.profile.dto.response.ProfileTechStackResponse;
+import fullcare.backend.util.TechStackUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,7 +59,7 @@ public class ProfileService {
         Profile p = findMember.getProfile();
         List<String> techStacks = null;
         if(p.getTechStack() != null && !p.getTechStack().isEmpty()) {
-            techStacks = Arrays.stream(p.getTechStack().split(",")).collect(Collectors.toList());
+            techStacks = TechStackUtil.stringToList(p.getTechStack());
         }
         Long id = member == null ? null : member.getId();
         return new ProfileTechStackResponse(p.getRecruitPosition(), techStacks, memberId == id);

@@ -22,19 +22,5 @@ public enum TechStack {
         return value;
     }
 
-    public static String listToString(List<TechStack> techStacks){
-        String string = techStacks.stream().toString();
-        System.out.println("스트림 string = " + string);
-        String s = null;
-        for (int i=0; i< techStacks.size();i++){
-            if(i==0){
-                 s = techStacks.size() == 1 ? techStacks.get(i).getValue() : techStacks.get(i).getValue() + "," ;
-            }else if(i == techStacks.size() - 1){
-                s += techStacks.get(i).getValue();
-            }else{
-                s += techStacks.get(i).getValue() + ",";
-            }
-        }
-        return s;
-    }
+
 }

@@ -1,7 +1,7 @@
 package fullcare.backend.util.controller;
 
 import fullcare.backend.util.dto.TechStackResponse;
-import fullcare.backend.util.Util;
+import fullcare.backend.util.TechStackUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -27,7 +27,7 @@ public class UtilController {
     })
     @GetMapping(value = "/techstack")
     public ResponseEntity<TechStackResponse> findTechStack(@RequestParam("tech") String tech) {
-        TechStackResponse response = Util.findTechStack(tech);
+        TechStackResponse response = TechStackUtil.findTechStack(tech);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 }

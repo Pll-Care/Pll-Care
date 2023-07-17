@@ -52,48 +52,48 @@
 //    @Transactional
 //    public void initData() {
 //        createMember();
-//        createProject();
+////        createProject();
 //        createSchedule();
-//        createMemoAndBookMark();
-//        createPostAndLikes();
+////        createMemoAndBookMark();
+////        createPostAndLikes();
 //
 //    }
 //
-//    @Transactional
-//    private void createPostAndLikes() {
-//        Random rand = new Random();
-//        for (long i = 1l; i < 25; i++) {
-//            long findMemberId = rand.nextLong(1, 10);
+////    @Transactional
+////    private void createPostAndLikes() {
+////        Random rand = new Random();
+////        for (long i = 1l; i < 25; i++) {
+////            long findMemberId = rand.nextLong(1, 10);
+////
+////            RecruitInfo recruitInfo1 = new RecruitInfo(RecruitPosition.BACKEND, rand.nextInt(1, 5));
+////            RecruitInfo recruitInfo2 = new RecruitInfo(RecruitPosition.FRONTEND, rand.nextInt(1, 5));
+////            RecruitInfo recruitInfo3 = new RecruitInfo(RecruitPosition.MANAGER, rand.nextInt(1, 5));
+////            RecruitInfo recruitInfo4 = new RecruitInfo(RecruitPosition.DESIGN, rand.nextInt(1, 5));
+////
+////            ArrayList<RecruitInfo> recruitInfos = new ArrayList<>();
+////            recruitInfos.add(recruitInfo1);
+////            recruitInfos.add(recruitInfo2);
+////            recruitInfos.add(recruitInfo3);
+////            recruitInfos.add(recruitInfo4);
+////
+////            Post post = postService.createPost(new PostCreateRequest(rand.nextLong(1, 8), "모집글" + i, "내용" + i, "참조" + i, "연락" + i, "지역" + i, "기술스택" + i, recruitInfos), findMemberId);
+////            if (i % 3 == 0) {
+////                postService.likePost(post, memberRepository.findById(findMemberId).get());
+//////                postService.likePost(post.getId(), memberRepository.findById(rand.nextLong(1, 10)).get());
+////            }
+////        }
+////    }
 //
-//            RecruitInfo recruitInfo1 = new RecruitInfo(RecruitPosition.BACKEND, rand.nextInt(1, 5));
-//            RecruitInfo recruitInfo2 = new RecruitInfo(RecruitPosition.FRONTEND, rand.nextInt(1, 5));
-//            RecruitInfo recruitInfo3 = new RecruitInfo(RecruitPosition.MANAGER, rand.nextInt(1, 5));
-//            RecruitInfo recruitInfo4 = new RecruitInfo(RecruitPosition.DESIGN, rand.nextInt(1, 5));
-//
-//            ArrayList<RecruitInfo> recruitInfos = new ArrayList<>();
-//            recruitInfos.add(recruitInfo1);
-//            recruitInfos.add(recruitInfo2);
-//            recruitInfos.add(recruitInfo3);
-//            recruitInfos.add(recruitInfo4);
-//
-//            Post post = postService.createPost(new PostCreateRequest(rand.nextLong(1, 8), "모집글" + i, "내용" + i, "참조" + i, "연락" + i, "지역" + i, "기술스택" + i, recruitInfos), findMemberId);
-//            if (i % 3 == 0) {
-//                postService.likePost(post, memberRepository.findById(findMemberId).get());
-////                postService.likePost(post.getId(), memberRepository.findById(rand.nextLong(1, 10)).get());
-//            }
-//        }
-//    }
-//
-//    private void createMemoAndBookMark() {
-//        Random rand = new Random();
-//        for (long i = 1l; i < 25; i++) {
-//            long findMemberId = rand.nextLong(1, 10);
-//            Memo memo = memoService.createMemo(new MemoCreateRequest(1l, "제목" + i, "내용" + i), memberRepository.findById(findMemberId).get());
-//            if (i % 3 == 0) {
-//                bookmarkMemoService.bookmarkMemo(memo, memberRepository.findById(1l).get());
-//            }
-//        }
-//    }
+////    private void createMemoAndBookMark() {
+////        Random rand = new Random();
+////        for (long i = 1l; i < 25; i++) {
+////            long findMemberId = rand.nextLong(1, 10);
+////            Memo memo = memoService.createMemo(new MemoCreateRequest(1l, "제목" + i, "내용" + i), memberRepository.findById(findMemberId).get());
+////            if (i % 3 == 0) {
+////                bookmarkMemoService.bookmarkMemo(memo, memberRepository.findById(1l).get());
+////            }
+////        }
+////    }
 //
 //    private void createSchedule() {
 //        Random rand = new Random();
@@ -140,24 +140,24 @@
 //        }
 //    }
 //
-//    private void createProject() {
-//        LocalDate startDate = LocalDate.of(2023, 1, 1);
-//        LocalDate endDate = LocalDate.of(2023, 12, 31);
-//        for (long i = 1l; i < 10l; i++) {
-//            Project project = projectService.createProject(1l, new ProjectCreateRequest("제목" + i, "내용" + i, startDate.plusMonths(i), endDate, null));
-//            for (long j = 2l; j < 10l; j++) {
-//                if (j < 4l) {
-//                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberRole(ProjectMemberRoleType.팀원, ProjectMemberRoleType.백엔드));
-//                } else if (j < 7l) {
-//                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberRole(ProjectMemberRoleType.팀원, ProjectMemberRoleType.프론트엔드));
-//                } else if (j < 9l) {
-//                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberRole(ProjectMemberRoleType.팀원, ProjectMemberRoleType.디자인));
-//                } else {
-//                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberRole(ProjectMemberRoleType.팀원, ProjectMemberRoleType.기획));
-//                }
-//            }
-//        }
-//    }
+////    private void createProject() {
+////        LocalDate startDate = LocalDate.of(2023, 1, 1);
+////        LocalDate endDate = LocalDate.of(2023, 12, 31);
+////        for (long i = 1l; i < 10l; i++) {
+////            Project project = projectService.createProject(1l, new ProjectCreateRequest("제목" + i, "내용" + i, startDate.plusMonths(i), endDate, null));
+////            for (long j = 2l; j < 10l; j++) {
+////                if (j < 4l) {
+////                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberRole(ProjectMemberRoleType.팀원, ProjectMemberRoleType.백엔드));
+////                } else if (j < 7l) {
+////                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberRole(ProjectMemberRoleType.팀원, ProjectMemberRoleType.프론트엔드));
+////                } else if (j < 9l) {
+////                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberRole(ProjectMemberRoleType.팀원, ProjectMemberRoleType.디자인));
+////                } else {
+////                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberRole(ProjectMemberRoleType.팀원, ProjectMemberRoleType.기획));
+////                }
+////            }
+////        }
+////    }
 //
 //    private void createMember() {
 //        Member member = new Member("naver_h9Vdq-6-ZRXzfDGDQKeQ6mUM6VOvrCsBeBXGLlbPeyE", "nick", "name", "fullcaredummy@gmail.com", MemberRole.USER, LocalDateTime.now(), "refresh", new Profile("한 줄 소개 입니다."));
