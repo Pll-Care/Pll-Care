@@ -23,6 +23,7 @@ public class TechStackUtil {
 //                System.out.println("techStack = " + techStack);
                 techStackResponse.addTechStack(new TechStackDto(t.getValue(), s3Service.find(t.getValue(), t.getContentType())));
             }
+
         }
         return techStackResponse;
     }
@@ -44,7 +45,7 @@ public class TechStackUtil {
         return s;
     }
 
-    public static List<String> stringToList(String techStack){
-        return Arrays.stream(techStack.split(",")).collect(Collectors.toList());
+    public static List<TechStack> stringToList(String techStack){
+        return Arrays.stream(techStack.split(",")).map(s -> TechStack.valueOf(s)).collect(Collectors.toList());
     }
 }

@@ -14,7 +14,10 @@ import fullcare.backend.profile.dto.response.ProfileContactResponse;
 import fullcare.backend.profile.dto.response.ProfileImageResponse;
 import fullcare.backend.profile.dto.response.ProfileProjectExperienceResponse;
 import fullcare.backend.profile.dto.response.ProfileTechStackResponse;
+import fullcare.backend.s3.S3Service;
 import fullcare.backend.util.TechStackUtil;
+import fullcare.backend.util.dto.TechStack;
+import fullcare.backend.util.dto.TechStackDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +32,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class ProfileService {
     private final MemberRepository memberRepository;
+    private final S3Service s3Service;
 
     @Transactional(readOnly = true)
     public ProfileBioResponse findBio(Long memberId, Member member) {
@@ -57,12 +61,17 @@ public class ProfileService {
     public ProfileTechStackResponse findRoleAndTechStack(Long memberId, Member member) {
         Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
         Profile p = findMember.getProfile();
-        List<String> techStacks = null;
+        List<TechStackDto> techStackDtos = new ArrayList<>();
         if(p.getTechStack() != null && !p.getTechStack().isEmpty()) {
-            techStacks = TechStackUtil.stringToList(p.getTechStack());
+            List<TechStack>  techStacks = TechStackUtil.stringToList(p.getTechStack());
+            for (TechStack t : techStacks) {
+                System.out.println("t.getValue() = " + t.getValue());
+                System.out.println("t.getContentType() = " + t.getContentType());
+                techStackDtos.add(new TechStackDto(t.getValue(), s3Service.find(t.getValue(), t.getContentType())));
+            }
         }
         Long id = member == null ? null : member.getId();
-        return new ProfileTechStackResponse(p.getRecruitPosition(), techStacks, memberId == id);
+        return new ProfileTechStackResponse(p.getRecruitPosition(), techStackDtos, memberId == id);
     }
 
     @Transactional(readOnly = true)

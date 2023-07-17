@@ -4,23 +4,23 @@ import java.util.List;
 
 public enum TechStack {
     // ? Back 관련
-    SPRING("Spring", "svg"), SPRINGBOOT("SpringBoot", "png"), DJANGO("Django", "svg"), FLASK("Flask", "png"),
+    Spring("Spring", "svg"), SpringBoot("SpringBoot", "png"), Django("Django", "svg"), Flask("Flask", "png"),
     NodeJs("NodeJs","svg"),
     // ? Front 관련
-    REACT("React", "svg"), VUE("Vue", "svg"), JAVASCRIPT("JavaScript", "svg"), REDUX("Redux", "png"),
-    ANGULAR("Angular", "png"), Css3("CSS3", "svg"), Html5("Html5","svg"), NestJs("NestJs","svg"),
+    React("React", "svg"), Vue("Vue", "svg"), JavaScript("JavaScript", "svg"), Redux("Redux", "png"),
+    Angular("Angular", "png"), CSS3("CSS3", "svg"), Html5("Html5","svg"), NestJs("NestJs","svg"),
     NextJs("NextJs","svg"), ReactNative("ReactNative","png"), ReactQuery("ReactQuery","png"),Typescript("Typescript","svg"),
 
     // ? DevOps 관련
     AWS("AWS", "svg"),
     // ? DB 관련
-    MYSQL("MySql", "svg"), MongoDb("MongoDb","svg"),
+    MySql("MySql", "svg"), MongoDb("MongoDb","svg"),
     // ? 언어 관련
-    CSHOP("C#", "png"), CPP("C++", "png"), PYTHON("Python", "svg"),
+    CSHOP("C#", "png"), CPP("CPP", "png"), Python("Python", "svg"),
     //? 형상관리
-    GIT("Git", "svg"), Github("Github","svg"),
+    Git("Git", "svg"), Github("Github","svg"),
     //? 기타
-    ANDROID("Android", "svg"), ANDROIDSTUDIO("AndroidStudio", "svg"), Apple("Apple", "svg"),
+    Android("Android", "svg"), AndroidStudio("AndroidStudio", "svg"), Apple("Apple", "svg"),
     Blender("Blender", "svg"), Docker("Docker","svg"), Express("Express","svg"), Fastapi("Fastapi","svg"),
     Figma("Figma","svg"), Firebase("Firebase","svg"), Flutter("Flutter","svg"), Illustrator("Illustrator","svg"),
     Java("Java","svg"), Jira("Jira","svg"), Kotlin("Kotlin","svg"), Kubernetes("Kubernetes","svg"),
