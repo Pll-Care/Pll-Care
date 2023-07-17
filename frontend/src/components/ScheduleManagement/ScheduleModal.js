@@ -6,17 +6,12 @@ import { useQuery } from "react-query";
 import Button from "../common/Button";
 import ModalContainer from "../common/ModalContainer";
 import { getTeamMember } from "../../lib/apis/teamMemberManagementApi";
-import {
-  getDetailSchedule,
-  useAddNewScheduleMutation,
-  useModifyScheduleMutation,
-} from "../../lib/apis/scheduleManagementApi";
+import { useAddNewScheduleMutation } from "../../lib/apis/scheduleManagementApi";
 import { getProjectId } from "../../utils/getProjectId";
 
 const ScheduleModal = ({
   open,
   onClose,
-  isEdit = false,
   editScheduleId = null,
   scheduleState = "TBD",
 }) => {
@@ -42,41 +37,9 @@ const ScheduleModal = ({
     address: "",
   });
 
-  // 일정 상세 정보 가져오기
-  useQuery(
-    ["ScheduleDetail", editScheduleId, projectId],
-    async () => await getDetailSchedule(projectId, editScheduleId),
-    {
-      enabled: isEdit,
-      onSuccess: (data) => {
-        if (isEdit) {
-          const newMembers = data?.members
-            .filter((member) => member.in)
-            .map((member) => member.id);
-          setFormValues({
-            scheduleId: editScheduleId,
-            projectId: projectId,
-            startDate: data.startDate,
-            endDate: data.endDate,
-            state: scheduleState,
-            memberIds: newMembers,
-            title: data.title,
-            content: data.content,
-            category: data.scheduleCategory,
-            address: data.scheduleCategory === "MILESTONE" ? "" : data.address,
-          });
-        }
-      },
-    }
-  );
-
   // 일정 생성하는 react query 문
   const { mutate: addSchedule, isLoading: addIsLoading } =
     useAddNewScheduleMutation(formValues);
-
-  // 일정 수정하는 react query 문
-  const { mutate: modifySchedule, isLoading: modifyIsLoading } =
-    useModifyScheduleMutation(formValues);
 
   const { startDate, endDate, memberIds, title, content, category, address } =
     formValues;
@@ -148,15 +111,9 @@ const ScheduleModal = ({
     console.log(formValues);
 
     // 일정 생성하기
-    if (!isEdit) {
-      const { state, scheduleId, ...formData } = formValues;
-      addSchedule(formData);
-    }
 
-    // 일정 수정하기
-    if (isEdit) {
-      modifySchedule(formValues);
-    }
+    const { state, scheduleId, ...formData } = formValues;
+    addSchedule(formData);
 
     setFormValues({
       projectId: projectId,
@@ -259,13 +216,8 @@ const ScheduleModal = ({
           </div>
         </div>
         <div className="button-container">
-          {!isEdit && !addIsLoading && (
-            <Button text="생성 완료" onClick={submitNewPlan} />
-          )}
-          {isEdit && !modifyIsLoading && (
-            <Button text="수정 완료" onClick={submitNewPlan} />
-          )}
-          {(modifyIsLoading || addIsLoading) && <Button text="로딩 중.." />}
+          {!addIsLoading && <Button text="생성 완료" onClick={submitNewPlan} />}
+          {addIsLoading && <Button text="로딩 중.." />}
         </div>
       </div>
     </ModalContainer>

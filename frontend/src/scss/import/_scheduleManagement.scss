@@ -236,34 +236,61 @@
 .schedule-detail-modal {
   border: $border;
   border-radius: 10px;
+  width: 100%;
   padding: 1rem;
   color: $body-font-color;
   font-family: $heading-font;
+
+  input {
+    border-radius: 20px;
+    height: 30px;
+    font-family: $heading-font;
+    color: $body-font-color;
+  }
   h1 {
     font-size: $sub-heading-font-size;
     margin: 15px;
   }
 
-  &-content {
+  &-title {
     display: flex;
     align-items: center;
-    margin: 20px;
+    .mui-icon {
+      cursor: pointer;
+      margin-right: 10px;
+    }
+  }
 
-    &-title {
-      h5 {
-        margin-top: 39px;
-      }
+  &-content {
+    display: flex;
+    margin: 40px 20px;
+    align-items: center;
+
+    h5 {
+      margin-right: 20px;
     }
 
-    &-option {
-      margin-left: 30px;
-      margin-top: 5px;
-      h5 {
-        margin-top: 33px;
-      }
-      Button {
-        margin-top: 35px;
-      }
+    &-time {
+      display: flex;
+    }
+  }
+
+  &-member {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    @include mobile {
+      flex-direction: column;
+    }
+    h5 {
+      width: 15%;
+      margin-left: 20px;
+      display: inline-block;
+      line-height: normal;
+      vertical-align: middle;
+    }
+    &-buttons {
+      width: 90%;
     }
   }
 
