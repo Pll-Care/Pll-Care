@@ -9,18 +9,14 @@ import fullcare.backend.profile.dto.ProjectExperienceDto;
 import fullcare.backend.profile.dto.ProjectExperienceResponseDto;
 import fullcare.backend.profile.dto.request.ProfileBioUpdateRequest;
 import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
-import fullcare.backend.profile.dto.response.ProfileBioResponse;
-import fullcare.backend.profile.dto.response.ProfileContactResponse;
-import fullcare.backend.profile.dto.response.ProfileImageResponse;
-import fullcare.backend.profile.dto.response.ProfileProjectExperienceResponse;
-import fullcare.backend.profile.dto.response.ProfileTechStackResponse;
+import fullcare.backend.profile.dto.response.*;
 import fullcare.backend.util.TechStackUtil;
+import fullcare.backend.util.dto.TechStack;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,8 +53,8 @@ public class ProfileService {
     public ProfileTechStackResponse findRoleAndTechStack(Long memberId, Member member) {
         Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
         Profile p = findMember.getProfile();
-        List<String> techStacks = null;
-        if(p.getTechStack() != null && !p.getTechStack().isEmpty()) {
+        List<TechStack> techStacks = null;
+        if (p.getTechStack() != null && !p.getTechStack().isEmpty()) {
             techStacks = TechStackUtil.stringToList(p.getTechStack());
         }
         Long id = member == null ? null : member.getId();
@@ -81,13 +77,13 @@ public class ProfileService {
         for (ProjectExperienceDto dto : ProjectExperienceDtos) {
             int year = dto.getStartDate().getYear();
             equalList = data.stream().filter(d -> d.getYear() == year).collect(Collectors.toList());
-            if(equalList.size()>0) {
+            if (equalList.size() > 0) {
                 equalList.get(0).getProjectExperiences().add(dto);
-            }else{
+            } else {
                 List<ProjectExperienceDto> projectExperienceDtos = new ArrayList<>();
                 projectExperienceDtos.add(dto);
                 data.add(new ProjectExperienceResponseDto(dto.getStartDate().getYear(),
-                    projectExperienceDtos));
+                        projectExperienceDtos));
             }
         }
         Long id = member == null ? null : member.getId();

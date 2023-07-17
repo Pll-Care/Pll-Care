@@ -59,6 +59,10 @@ public class ProjectService {
         return projectRepository.findJoinPMJoinMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
     }
 
+    public Project findSimpleProject(Long projectId) {
+        return projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
+    }
+
     public void deleteProject(Long projectId) {
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
 
@@ -101,7 +105,7 @@ public class ProjectService {
 
     public List<ProjectSimpleListResponse> findSimpleProjectList(Long memberId) {
         List<ProjectSimpleListResponse> simpleProjectList = projectRepository.findSimpleProjectList(memberId);
-        
+
         return simpleProjectList;
     }
 }

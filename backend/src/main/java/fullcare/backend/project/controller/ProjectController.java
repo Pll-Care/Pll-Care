@@ -8,10 +8,7 @@ import fullcare.backend.global.exceptionhandling.exception.InvalidAccessExceptio
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.dto.request.*;
-import fullcare.backend.project.dto.response.ProjectListResponse;
-import fullcare.backend.project.dto.response.ProjectMemberListResponse;
-import fullcare.backend.project.dto.response.ProjectUpdateResponse;
-import fullcare.backend.project.dto.response.ProjectUpdateStateResponse;
+import fullcare.backend.project.dto.response.*;
 import fullcare.backend.project.service.ProjectService;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
@@ -121,6 +118,33 @@ public class ProjectController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    // * 특정 프로젝트 조회
+    @Operation(method = "get", summary = "프로젝트 단건 조회")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "프로젝트 단건 조회 성공", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ProjectDetailResponse.class))),
+            @ApiResponse(responseCode = "400", description = "프로젝트 단건 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @GetMapping("/{projectId}")
+    public ResponseEntity<?> details(@PathVariable Long projectId,
+                                     @CurrentLoginMember Member member) {
+        if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
+            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
+        }
+
+        Project findProject = projectService.findSimpleProject(projectId);
+
+        ProjectDetailResponse response = ProjectDetailResponse.builder()
+                .title(findProject.getTitle())
+                .description(findProject.getDescription())
+                .startDate(findProject.getStartDate())
+                .endDate(findProject.getEndDate())
+                .imageUrl(findProject.getImageUrl())
+                .state(findProject.getState())
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     // * 특정 프로젝트 완료 처리
     @Operation(method = "post", summary = "프로젝트 완료 처리")
     @ApiResponses(value = {
@@ -201,6 +225,8 @@ public class ProjectController {
     })
     @PutMapping("/{projectId}/leaderchange")
     public ResponseEntity changeProjectLeader(@PathVariable Long projectId, @RequestBody ProjectLeaderChangeRequest projectLeaderChangeRequest, @CurrentLoginMember Member member) {
+        // todo 리더는 팀에서 한 명만 존재해야한다.
+
         // ! 1. 존재하지 않는 프로젝트에 접근 -> 404 Not Found
         Project project = projectService.findProject(projectId);
 
@@ -349,4 +375,44 @@ public class ProjectController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    // * 특정 프로젝트의 완료 여부
+    @Operation(method = "get", summary = "프로젝트 완료 여부 조회")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "프로젝트 완료 여부 조회 성공", content = @Content),
+            @ApiResponse(responseCode = "400", description = "프로젝트 완료 여부 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @GetMapping("/{projectId}/iscompleted")
+    public ResponseEntity<ProjectCompleteResponse> isProjectCompleted(@PathVariable Long projectId, @CurrentLoginMember Member member) {
+        if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
+            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
+        }
+
+        Project project = projectService.findSimpleProject(projectId);
+
+        ProjectCompleteResponse response = ProjectCompleteResponse.builder()
+                .isCompleted(project.getState() == State.COMPLETE)
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    // * 특정 프로젝트의 리더 여부
+    @Operation(method = "get", summary = "프로젝트 리더 여부 조회")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "프로젝트 리더 여부 조회 성공", content = @Content),
+            @ApiResponse(responseCode = "400", description = "프로젝트 리더 여부 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @GetMapping("/{projectId}/isleader")
+    public ResponseEntity<ProjectLeaderResponse> isProjectLeader(@PathVariable Long projectId, @CurrentLoginMember Member member) {
+        if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
+            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
+        }
+
+        ProjectMember projectMember = projectMemberService.findProjectMember(projectId, member.getId());
+        ProjectLeaderResponse response = ProjectLeaderResponse.builder()
+                .isLeader(projectMember.isLeader())
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

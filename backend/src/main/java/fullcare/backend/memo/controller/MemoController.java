@@ -14,6 +14,7 @@ import fullcare.backend.memo.dto.response.MemoIdResponse;
 import fullcare.backend.memo.dto.response.MemoListResponse;
 import fullcare.backend.memo.service.BookmarkMemoService;
 import fullcare.backend.memo.service.MemoService;
+import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.security.jwt.CurrentLoginMember;
@@ -33,6 +34,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 
 @Slf4j
@@ -99,12 +102,17 @@ public class MemoController {
         Memo memo = memoService.findMemo(memoId);
         Long projectId = memo.getProject().getId();
 
-
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
             throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
         } else if (memo.getAuthor().getId() != member.getId() || projectMemberService.findProjectMember(projectId, member.getId()).getProjectMemberRole().getRole() != ProjectMemberRoleType.리더) {
             throw new InvalidAccessException(MemoErrorCode.INVALID_DELETE);
         }
+
+        // ? 회의록 있는지 없는지 확인 -> 프로젝트 소속 확인 : 이 순서대로 해야한다는게 이상함
+
+        // ! 프로젝트 소속 확인 -> 회의록 있는지 없는지 확인
+
+        // ! 프로젝트 소속 확인 -> 일정 있는지 없는지 확인
 
         memoService.deleteMemo(memoId);
         return new ResponseEntity(HttpStatus.OK);
@@ -124,11 +132,21 @@ public class MemoController {
         Memo memo = memoService.findMemo(memoId);
         Long projectId = memo.getProject().getId();
 
-        if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
+        Optional<ProjectMember> projectMember = projectMemberService.findProjectMemberOptional(projectId, member.getId());
+
+        if (!projectMember.isPresent()) {
             throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
         }
 
         MemoDetailResponse memoDetailResponse = memoService.findMemoDetailResponse(member.getId(), memoId);
+        memoDetailResponse.setEditable(true);
+
+        if (memo.getAuthor().getId() == member.getId() || projectMember.get().isLeader()) {
+            memoDetailResponse.setDeletable(true);
+        } else {
+            memoDetailResponse.setDeletable(false);
+        }
+
         return new ResponseEntity<>(memoDetailResponse, HttpStatus.OK);
     }
 

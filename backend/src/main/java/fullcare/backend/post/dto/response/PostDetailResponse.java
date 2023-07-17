@@ -1,14 +1,19 @@
 package fullcare.backend.post.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fullcare.backend.post.domain.Post;
 import fullcare.backend.post.dto.request.RecruitInfo;
+import fullcare.backend.util.TechStackUtil;
+import fullcare.backend.util.dto.TechStackDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ToString
 @Getter
@@ -31,19 +36,25 @@ public class PostDetailResponse {
     private String contact;
     private String region;
 
-    private List<String> techStackImageUrls;
+    private List<TechStackDto> techStackDtoList = new ArrayList<>();
+
+    @JsonIgnore
     private String techStack;
+
     private boolean isLiked;
+    private boolean isEditable;
+    private boolean isDeletable;
 
 
-    private List<RecruitInfo> recruitInfoList;
+    private List<RecruitInfo> recruitInfoList = new ArrayList<>();
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
     @Builder
     public PostDetailResponse(Long postId, String projectName, String projectImageUrl, String author, String authorImageUrl,
                               String title, String description, LocalDate recruitStartDate, LocalDate recruitEndDate,
-                              String reference, String contact, String region, String techStack, boolean isLiked,
+                              String reference, String contact, String region, String techStack,
+                              boolean isLiked, boolean isEditable, boolean isDeletable,
                               LocalDateTime createdDate, LocalDateTime modifiedDate) {
 
         this.postId = postId;
@@ -58,8 +69,10 @@ public class PostDetailResponse {
         this.reference = reference;
         this.contact = contact;
         this.region = region;
-        this.techStack = techStack;
+        this.techStackDtoList = TechStackUtil.stringToList(techStack).stream().map(t -> new TechStackDto(t.getValue(), null)).collect(Collectors.toList());
         this.isLiked = isLiked;
+        this.isEditable = isEditable;
+        this.isDeletable = isDeletable;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
     }
@@ -84,5 +97,13 @@ public class PostDetailResponse {
 
     public void setRecruitInfoList(List<RecruitInfo> list) {
         this.recruitInfoList = list;
+    }
+
+    public void setEditable(boolean editable) {
+        isEditable = editable;
+    }
+
+    public void setDeletable(boolean deletable) {
+        isDeletable = deletable;
     }
 }

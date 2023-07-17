@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -29,6 +30,10 @@ public class ProjectMemberService {
 
     public boolean validateProjectMember(Long projectId, Long memberId) {
         return projectMemberRepository.existsByProjectIdAndMemberId(projectId, memberId);
+    }
+
+    public Optional<ProjectMember> findProjectMemberOptional(Long projectId, Long memberId) {
+        return projectMemberRepository.findByProjectIdAndMemberId(projectId, memberId);
     }
 
     public ProjectMember findProjectMember(Long projectId, Long memberId) {
