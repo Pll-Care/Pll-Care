@@ -23,7 +23,7 @@ const OverviewChart = () => {
   );
   console.log(data);
 
-  const month = data && new Date(data.startDate).getMonth();
+  const month = data && new Date(data.startDate).getMonth() - 1;
 
   const months = [
     "January",
@@ -39,7 +39,7 @@ const OverviewChart = () => {
     "November",
     "December",
   ];
-  //console.log(months[month]);
+  console.log(months[month]);
 
   // 최소 order
   const minOrder = data
@@ -58,6 +58,7 @@ const OverviewChart = () => {
       orderGroups.push(group.length > 0 ? group : []);
     }
   }
+  orderGroups.map((schedule) => console.log(schedule));
 
   return (
     <Card>
@@ -153,7 +154,7 @@ const OverviewChart = () => {
                       fontSize: "20px",
                     }}
                   >
-                    {months[(month + index) % 12]}
+                    {months[(month + schedule[0].order) % 12]}
                   </h2>
                 )}
                 {schedule.length === 0 && (
