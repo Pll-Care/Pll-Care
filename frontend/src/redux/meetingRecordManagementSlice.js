@@ -15,22 +15,22 @@ const meetingRecordManagementSlice = createSlice({
   name: "meetingRecordManagement",
   initialState: meetingRecordManagementInitialState,
   reducers: {
-    onEditInitialState(state, action) {
+    setInitialState(state, action) {
       state.initialState = action.payload;
     },
-    onEditSelectedMeetingRecordState(state, action) {
+    setSelectedMeetingRecordState(state, action) {
       state.isSelectedMeetingRecord = action.payload;
     },
-    onEditIsCreatedMeetingRecordVisibleState(state, action) {
+    setIsCreatedMeetingRecordVisibleState(state, action) {
       state.isCreatedMeetingRecordVisible = action.payload;
     },
-    onEditSelectedMeetingRecordId(state, action) {
+    setSelectedMeetingRecordId(state, action) {
       state.selectedMeetingRecordId = action.payload;
     },
-    onEditCreatedMeetingRecordId(state, action) {
+    setCreatedMeetingRecordId(state, action) {
       state.createdMeetingRecordId = action.payload;
     },
-    onChangeIsEditState(state, action) {
+    setIsEditState(state, action) {
       state.isEdit = action.payload;
     },
     setTitle(state, action) {

@@ -21,9 +21,6 @@ const OverviewChart = () => {
   const { isLoading, data } = useQuery("overviewSchedule", () =>
     getOverviewAllSchedule(projectId)
   );
-  console.log(data);
-
-  const month = data && new Date(data.startDate).getMonth();
 
   const months = [
     "January",
@@ -39,7 +36,6 @@ const OverviewChart = () => {
     "November",
     "December",
   ];
-  //console.log(months[month]);
 
   // 최소 order
   const minOrder = data
@@ -50,6 +46,8 @@ const OverviewChart = () => {
     ? Math.max(...data?.schedules.map((schedule) => schedule.order))
     : null;
 
+  const month = data && new Date(data.startDate).getMonth() + minOrder;
+
   // order 값에 해당하는 배열 생성
   const orderGroups = [];
   if (data) {
@@ -58,6 +56,7 @@ const OverviewChart = () => {
       orderGroups.push(group.length > 0 ? group : []);
     }
   }
+  console.log(orderGroups);
 
   return (
     <Card>
@@ -89,7 +88,7 @@ const OverviewChart = () => {
           )}
 
           {/*계획이 없는 경우*/}
-          {data && !isLoading && data.schedules.length === 0 && (
+          {data && !isLoading && data?.schedules.length === 0 && (
             <VerticalTimelineElement
               className="vertical-timeline-element-small"
               contentStyle={{
@@ -116,7 +115,8 @@ const OverviewChart = () => {
           {/*프로젝트 일정들*/}
           {data &&
             !isLoading &&
-            orderGroups.map((schedule, index) => (
+            orderGroups &&
+            orderGroups?.map((schedule, index) => (
               <VerticalTimelineElement
                 key={index}
                 className="vertical-timeline-element-small"
@@ -132,7 +132,7 @@ const OverviewChart = () => {
                 }}
                 icon={<ComputerIcon />}
               >
-                {data.dateCategory === "WEEK" && (
+                {data?.dateCategory === "WEEK" && (
                   <h2
                     className="vertical-timeline-element-title"
                     style={{
@@ -144,7 +144,7 @@ const OverviewChart = () => {
                     {(index + 1) * 2 - 1}주 ~ {(index + 1) * 2}주차
                   </h2>
                 )}
-                {data.dateCategory === "MONTH" && (
+                {data?.dateCategory === "MONTH" && (
                   <h2
                     className="vertical-timeline-element-title"
                     style={{
@@ -156,13 +156,13 @@ const OverviewChart = () => {
                     {months[(month + index) % 12]}
                   </h2>
                 )}
-                {schedule.length === 0 && (
+                {schedule?.length === 0 && (
                   <div className="simple">
                     <h2>해당 일정이 없습니다</h2>
                   </div>
                 )}
 
-                {schedule.length > 0 &&
+                {schedule?.length > 0 &&
                   schedule?.map((meeting, meetingIndex) => (
                     <div key={meetingIndex} className="simple">
                       <h2>{meeting.title}</h2>

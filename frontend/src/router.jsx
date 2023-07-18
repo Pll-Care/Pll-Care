@@ -12,9 +12,13 @@ import ScheduleManagement from "./pages/ScheduleManagement";
 import EvaluationManagement from "./pages/EvaluationManagement";
 import TeamMemberManagement from "./components/TeamMemberManagement/TeamMemberManagement";
 import GeneralLayout from "./layout/GeneralLayout";
+<<<<<<< HEAD
 import Recruitment from "./pages/Recruitment";
 import RecruitmentDetailPage from "./pages/RecruitmentDetailPage";
 import RecruitmentWritePage from "./pages/RecruitmentWritePage";
+=======
+import ProjectManagement from "./components/ProjectManagement/ProjectManagement";
+>>>>>>> a614d1da34cabb847773b7903627e10b507783f2
 
 const routerData = [
   {
@@ -90,6 +94,11 @@ const routerData = [
         element: <TeamMemberManagement />,
         withLogin: true,
       },
+      {
+        path: "project",
+        element: <ProjectManagement />,
+        withLogin: true,
+      }
     ],
   },
 ];

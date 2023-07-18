@@ -53,12 +53,12 @@ const AllMeetingRecordList = () => {
   const handleCreateMeetingRecord = () => {
     dispatch(meetingRecordManagementActions.setTitle(""));
     dispatch(meetingRecordManagementActions.setContent(""));
-    dispatch(meetingRecordManagementActions.onEditInitialState(false));
+    dispatch(meetingRecordManagementActions.setInitialState(false));
     dispatch(
-      meetingRecordManagementActions.onEditSelectedMeetingRecordState(false)
+      meetingRecordManagementActions.setSelectedMeetingRecordState(false)
     );
     dispatch(
-      meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(
+      meetingRecordManagementActions.setIsCreatedMeetingRecordVisibleState(
         false
       )
     );

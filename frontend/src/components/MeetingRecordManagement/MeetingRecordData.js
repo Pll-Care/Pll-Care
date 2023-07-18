@@ -6,16 +6,16 @@ const MeetingRecordData = ({ sortedMeetingRecordList }) => {
 
   const handleClickMeetingRecord = (e) => {
     dispatch(
-      meetingRecordManagementActions.onEditSelectedMeetingRecordId(e.target.id)
+      meetingRecordManagementActions.setSelectedMeetingRecordId(e.target.id)
     );
-    dispatch(meetingRecordManagementActions.onEditInitialState(false));
+    dispatch(meetingRecordManagementActions.setInitialState(false));
     dispatch(
-      meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(
+      meetingRecordManagementActions.setIsCreatedMeetingRecordVisibleState(
         false
       )
     );
     dispatch(
-      meetingRecordManagementActions.onEditSelectedMeetingRecordState(true)
+      meetingRecordManagementActions.setSelectedMeetingRecordState(true)
     );
   };
 

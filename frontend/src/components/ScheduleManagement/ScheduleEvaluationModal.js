@@ -12,7 +12,6 @@ import ModalContainer from "../common/ModalContainer";
 import { getDateTimeDuration } from "../../utils/date";
 import { makeNewMidEvaluation } from "../../lib/apis/evaluationManagementApi";
 import AlertModal from "./AlertModal";
-import { useCompleteScheduleMutation } from "../../lib/apis/scheduleManagementApi";
 
 const ScheduleEvaluationModal = (props) => {
   const dispatch = useDispatch();
@@ -20,11 +19,7 @@ const ScheduleEvaluationModal = (props) => {
 
   const projectId = parseInt(id, 10);
   const scheduleId = parseInt(props.id, 10);
-  const completeBody = {
-    scheduleId: scheduleId,
-    projectId: projectId,
-    state: "COMPLETE",
-  };
+
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const [name, setName] = useState(props.members[0].id);
   const [badge, setBadge] = useState("열정적인_참여자");
@@ -39,10 +34,6 @@ const ScheduleEvaluationModal = (props) => {
 
   const time = getDateTimeDuration(props.startDate, props.endDate, props.type);
 
-  // 완료 처리하는 react query 문
-  const { mutate: compeleteSchedule } =
-    useCompleteScheduleMutation(completeBody);
-
   // 중간 평가하는 react query 문
   const { mutate } = useMutation(makeNewMidEvaluation, {
     onSuccess: () => {
@@ -54,8 +45,6 @@ const ScheduleEvaluationModal = (props) => {
       console.log("newevaluation", newEvaluation);
       dispatch(addEvaluation(evaluation));
       props.onClose();
-      console.log("완료처리", completeBody);
-      compeleteSchedule(completeBody);
     },
     onError: () => {
       toast.error("중간평가 다시 해주세요");
@@ -78,7 +67,6 @@ const ScheduleEvaluationModal = (props) => {
     };
     setEvaluation(data);
     openConfirmModalHandler();
-    console.log(evaluation);
   };
 
   return (

@@ -1,0 +1,51 @@
+.project-management {
+  height: 300px;
+
+  .project-button-wrapper {
+    figure {
+      border-radius: 50%;
+      width: 230px;
+      height: 230px;
+      background: {
+        position: center;
+        repeat: no-repeat;
+        size: 100% 100%;
+      }
+      cursor: pointer;
+    }
+
+    h1 {
+      color: #003b28;
+      font-size: $body-font-size;
+      font-family: $body-font;
+    }
+
+    @include displayFlex(column, space-around);
+  }
+
+  .completed-project {
+    display: grid;
+    grid-template-columns: repeat(3, 30%);
+    justify-content: space-between;
+
+    .project-button-wrapper {
+      figure {
+        border-radius: 50%;
+        width: 230px;
+        height: 230px;
+        background: {
+          position: center;
+          repeat: no-repeat;
+          size: 100% 100%;
+        }
+        pointer-events: none;
+      }
+    }
+  }
+
+  .ongoing-project {
+    display: grid;
+    grid-template-columns: repeat(3, 30%);
+    justify-content: space-between;
+  }
+}
