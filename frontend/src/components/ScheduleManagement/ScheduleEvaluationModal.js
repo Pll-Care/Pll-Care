@@ -66,6 +66,8 @@ const ScheduleEvaluationModal = (props) => {
       evaluationBadge: badge,
     };
     setEvaluation(data);
+
+    //console.log(data);
     openConfirmModalHandler();
   };
 

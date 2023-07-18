@@ -17,7 +17,6 @@ import { getProjectId } from "../../utils/getProjectId";
 
 const OverviewChart = () => {
   const projectId = getProjectId(useLocation());
-
   const { isLoading, data } = useQuery("overviewSchedule", () =>
     getOverviewAllSchedule(projectId)
   );
