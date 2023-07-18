@@ -20,7 +20,10 @@ const MeetingRecordEditor = () => {
 
   const projectId = getProjectId(useLocation());
 
-  const { data: isCompleted } = useQuery(['completeProjectData', projectId], () => getCompleteProjectData(projectId));
+  const { data: isCompleted } = useQuery(
+    ["completeProjectData", projectId],
+    () => getCompleteProjectData(projectId)
+  );
 
   const isCreatedMeetingRecordVisible = useSelector(
     (state) => state.meetingRecordManagement.isCreatedMeetingRecordVisible
@@ -46,6 +49,8 @@ const MeetingRecordEditor = () => {
     dispatch(
       meetingRecordManagementActions.setSelectedMeetingRecordState(false)
     );
+    dispatch(meetingRecordManagementActions.setTitle(""));
+    dispatch(meetingRecordManagementActions.setContent(""));
   };
 
   const handleChangeTitle = (e) => {
