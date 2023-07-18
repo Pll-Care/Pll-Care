@@ -47,6 +47,11 @@ const RecruitmentPostList = () => {
             <h1>아직 모집 중인 프로젝트가 없습니다.</h1>
           </Grid>
         )}
+        {!isLoading && !data && (
+          <Grid item xs={4} sm={8} md={12}>
+            <h1>통신 오류가 났습니다.</h1>
+          </Grid>
+        )}
       </Grid>
       {pageCount > 0 && (
         <Pagination

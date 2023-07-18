@@ -2669,6 +2669,10 @@ input {
   color: #7a7a7a;
   text-decoration: none;
 }
+.recruitment-post-project h6 {
+  margin: 10px 0px;
+  font-size: 13px;
+}
 .recruitment-post-project-title {
   display: flex;
   justify-content: space-between;

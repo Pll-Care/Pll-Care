@@ -61,6 +61,7 @@ const MemberRecruitmentWrite = () => {
       },
     }
   );
+  console.log("프로젝트", data);
 
   // 기본 프로젝트 이미지 => projectId에 따라 이미지 바뀔 수 있게 처리
   let imageUrl = projectDefaultImg;
@@ -103,6 +104,7 @@ const MemberRecruitmentWrite = () => {
     setStacks((prevState) => prevState.filter((stack) => stack !== project));
   };
 
+  // 모집글 생성 react query문
   const { mutate: addPostMutate } = useAddRecruitmentPostMutation(formValues);
 
   // 생성하기
@@ -166,8 +168,8 @@ const MemberRecruitmentWrite = () => {
       recruitInfo: recruitCnt,
       techStack: stacks,
     };
-    // addPostMutate(body);
     console.log(body);
+    addPostMutate(body);
 
     setFormValues({
       projectId: "",

@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -77,14 +77,23 @@ const data = {
 
 const RecruitmentDetailContent = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [isEdit, setIsEdit] = useState(false);
   const [deleteIsModalVisible, setDeleteIsModalVisible] = useState(false);
 
-  // 모집글 디테일 페이지 조회
-  //const { data } = useQuery(["recruitmentDetail"], () =>
-  //  getRecruitmentPostDetail(id)
-  //);
-  //console.log(data);
+  //const [formValues, setFormValues] = useState({
+  //  title: "",
+  //  description: "",
+  //  recruitStartDate: "",
+  //  recruitEndDate: "",
+  //  reference: "",
+  //  contact: "",
+  //  region: "",
+  //  backendCnt: 0,
+  //  frontendCnt: 0,
+  //  designCnt: 0,
+  //  managerCnt: 0,
+  //});
 
   const [formValues, setFormValues] = useState({
     title: data?.title,
@@ -107,6 +116,39 @@ const RecruitmentDetailContent = () => {
       (stack) => stack.position === "MANAGER"
     )[0].totalCnt,
   });
+
+  // 모집글 디테일 페이지 조회
+  //const { data } = useQuery(
+  //  ["recruitmentDetail"],
+  //  () => getRecruitmentPostDetail(id),
+  //  {
+  //    onSuccess: (data) =>
+  //      setFormValues({
+  //        title: data?.title,
+  //        description: data?.description,
+  //        recruitStartDate: data?.recruitStartDate,
+  //        recruitEndDate: data?.recruitEndDate,
+  //        reference: data?.reference,
+  //        contact: data?.contact,
+  //        region: data?.region,
+  //        backendCnt: data?.recruitInfoList.filter(
+  //          (stack) => stack.position === "BACKEND"
+  //        )[0].totalCnt,
+  //        frontendCnt: data?.recruitInfoList.filter(
+  //          (stack) => stack.position === "FRONTEND"
+  //        )[0].totalCnt,
+  //        designCnt: data?.recruitInfoList.filter(
+  //          (stack) => stack.position === "DESIGN"
+  //        )[0].totalCnt,
+  //        managerCnt: data?.recruitInfoList.filter(
+  //          (stack) => stack.position === "MANAGER"
+  //        )[0].totalCnt,
+  //      }),
+  //  }
+  //);
+  //console.log(data);
+  //console.log(formValues);
+
   // 모집글 수정
   //const { mutate: modifyPostMutate } =
   //  useModifyRecruitmentPostMutation(formValues);
@@ -170,7 +212,7 @@ const RecruitmentDetailContent = () => {
     backendCnt: useRef(),
   };
 
-  const time = getStringDate(new Date(data.createdDate));
+  const time = data ? getStringDate(new Date(data.createdDate)) : "";
 
   const { mutate } = useAddLikeRecruitmentMutation(id);
 
@@ -280,6 +322,7 @@ const RecruitmentDetailContent = () => {
   // 삭제 버튼을 눌렀을 때
   const deleteRecruitmentPost = () => {
     deletePostMutate(id);
+    navigate("/recruitment");
   };
 
   return (
@@ -288,7 +331,7 @@ const RecruitmentDetailContent = () => {
         open={deleteIsModalVisible}
         onClose={() => setDeleteIsModalVisible(false)}
         text="인원 모집글 삭제하시겠습니까?"
-        //clickHandler={deleteRecruitmentPost}
+        clickHandler={deleteRecruitmentPost}
       />
       <div className="detail-title">
         <div className="detail-title-content">

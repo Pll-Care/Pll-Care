@@ -8,6 +8,11 @@ import firebase from "./img/firebase.png";
 import vue from "./img/vue.png";
 
 const RecruitmentPost = ({ data }) => {
+  console.log(data);
+  const filteredPositions = data?.recruitInfoList
+    .filter((recruitment) => recruitment.totalCnt - recruitment.currentCnt > 0)
+    .map((recruitment) => recruitment.position);
+
   return (
     <Link to={`/recruitment/${data?.postId}`} className="recruitment-post-link">
       <div className="recruitment-post">
@@ -30,8 +35,14 @@ const RecruitmentPost = ({ data }) => {
               <FavoriteBorderIcon className="post-icon" />
             )}
           </div>
-          <h3>모집 기간: ----</h3>
-          <h3>모집 포지션: {data?.techStack}</h3>
+          <h3>모집 기간</h3>
+          <h6>
+            {data?.recruitStartDate} ~ {data?.recruitEndDate}
+          </h6>
+          <h3>모집 포지션</h3>
+          {filteredPositions?.map((item, index) => (
+            <h6 key={index}>{item}</h6>
+          ))}
         </div>
       </div>
     </Link>
