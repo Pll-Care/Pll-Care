@@ -22,8 +22,6 @@ const OverviewChart = () => {
     getOverviewAllSchedule(projectId)
   );
 
-  const month = data && new Date(data.startDate).getMonth() - 1;
-
   const months = [
     "January",
     "February",
@@ -38,7 +36,6 @@ const OverviewChart = () => {
     "November",
     "December",
   ];
-  console.log(months[month]);
 
   // 최소 order
   const minOrder = data
@@ -49,6 +46,8 @@ const OverviewChart = () => {
     ? Math.max(...data?.schedules.map((schedule) => schedule.order))
     : null;
 
+  const month = data && new Date(data.startDate).getMonth() + minOrder;
+
   // order 값에 해당하는 배열 생성
   const orderGroups = [];
   if (data) {
@@ -57,6 +56,7 @@ const OverviewChart = () => {
       orderGroups.push(group.length > 0 ? group : []);
     }
   }
+  console.log(orderGroups);
 
   return (
     <Card>
@@ -115,6 +115,7 @@ const OverviewChart = () => {
           {/*프로젝트 일정들*/}
           {data &&
             !isLoading &&
+            orderGroups &&
             orderGroups?.map((schedule, index) => (
               <VerticalTimelineElement
                 key={index}
@@ -152,7 +153,7 @@ const OverviewChart = () => {
                       fontSize: "20px",
                     }}
                   >
-                    {months[(month + schedule[0].order) % 12]}
+                    {months[(month + index) % 12]}
                   </h2>
                 )}
                 {schedule?.length === 0 && (
