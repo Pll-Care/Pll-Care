@@ -4,7 +4,7 @@ import { getStringDate } from "../../utils/date";
 
 import projectDefaultImg from "../../assets/project-default-img.jpg";
 
-import { deleteImage, uploadImage } from "../../lib/apis/projectManagementApi";
+import { deleteImage, uploadImage } from "../../lib/apis/managementApi";
 import ModalContainer from "../common/ModalContainer";
 import useManagementMutation from "../../hooks/useManagementMutation";
 
@@ -123,7 +123,7 @@ const ProjectEditor = ({
   };
 
   const handleRemoveImageClick = () => {
-    deleteImage('');
+    deleteImage("");
 
     setImgUrl(null);
     setResponseImgUrl(null);

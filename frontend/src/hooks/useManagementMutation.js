@@ -1,9 +1,15 @@
 import { useMutation, useQueryClient } from "react-query";
-import { completeProject, createProject, deleteProject, editProject, leaveProject } from "../lib/apis/projectManagementApi";
+import {
+  completeProject,
+  createProject,
+  deleteProject,
+  editProject,
+  leaveProject,
+} from "../lib/apis/managementApi";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 
-import {projectManagementActions } from "../redux/projectManagementSlice";
+import { projectManagementActions } from "../redux/projectManagementSlice";
 
 const useManagementMutation = () => {
   const queryClient = useQueryClient();
@@ -18,7 +24,7 @@ const useManagementMutation = () => {
     },
     onError: () => {
       toast.error("생성 실패하였습니다. 잠시 후 다시 시도해주세요.");
-    }
+    },
   });
 
   const { mutate: deleteMutate } = useMutation(deleteProject, {
@@ -29,7 +35,7 @@ const useManagementMutation = () => {
     },
     onError: () => {
       toast.error("삭제 실패하였습니다. 잠시 후 다시 시도해주세요.");
-    }
+    },
   });
 
   const { mutate: completeMutate } = useMutation(completeProject, {
@@ -43,8 +49,8 @@ const useManagementMutation = () => {
     },
     onError: () => {
       toast.error("완료 처리 실패하였습니다. 잠시 후 다시 시도해주세요.");
-    }
-  })
+    },
+  });
 
   const { mutate: editMutate } = useMutation(editProject, {
     onSuccess: () => {
@@ -54,7 +60,7 @@ const useManagementMutation = () => {
     },
     onError: () => {
       toast.error("수정 실패하였습니다. 잠시 후 다시 시도해주세요.");
-    }
+    },
   });
 
   const { mutate: leaveMutate } = useMutation(leaveProject, {
@@ -65,10 +71,16 @@ const useManagementMutation = () => {
     },
     onError: () => {
       toast.error("팀 탈퇴를 실패하였습니다. 잠시 후 다시 시도해주세요.");
-    }
+    },
   });
 
-  return { createMutate, deleteMutate, completeMutate, editMutate, leaveMutate };
+  return {
+    createMutate,
+    deleteMutate,
+    completeMutate,
+    editMutate,
+    leaveMutate,
+  };
 };
 
 export default useManagementMutation;

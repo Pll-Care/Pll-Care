@@ -12,7 +12,7 @@ import ScheduleManagement from "./pages/ScheduleManagement";
 import EvaluationManagement from "./pages/EvaluationManagement";
 import TeamMemberManagement from "./components/TeamMemberManagement/TeamMemberManagement";
 import GeneralLayout from "./layout/GeneralLayout";
-import ManagementProjectList from "./components/ProjectManagement/ManagementProjectList";
+import ProjectManagement from "./components/ProjectManagement/ProjectManagement";
 
 const routerData = [
   {
@@ -84,7 +84,7 @@ const routerData = [
       },
       {
         path: "project",
-        element: <ManagementProjectList />,
+        element: <ProjectManagement />,
         withLogin: true,
       }
     ],

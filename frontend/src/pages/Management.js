@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
 import { useQuery } from "react-query";
-import { getProjectList } from "../lib/apis/projectManagementApi";
+import { getProjectList } from "../lib/apis/managementApi";
 
 const Management = () => {
   const [currentPage, setCurrentPage] = useState(1);
