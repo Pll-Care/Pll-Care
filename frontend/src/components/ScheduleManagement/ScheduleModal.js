@@ -5,9 +5,10 @@ import { useQuery } from "react-query";
 
 import Button from "../common/Button";
 import ModalContainer from "../common/ModalContainer";
+
 import { getTeamMember } from "../../lib/apis/teamMemberManagementApi";
-import { useAddNewScheduleMutation } from "../../lib/apis/scheduleManagementApi";
 import { getProjectId } from "../../utils/getProjectId";
+import { useAddNewScheduleMutation } from "../../hooks/useScheduleManagementMutation";
 
 const ScheduleModal = ({
   open,

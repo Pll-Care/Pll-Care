@@ -1,6 +1,4 @@
-import { useMutation, useQueryClient } from "react-query";
 import { customAxios } from "./customAxios";
-import { toast } from "react-toastify";
 
 // query key : overviewSchedule
 // 오버뷰 일정 가져오는 api 함수
@@ -27,25 +25,13 @@ export const getCalendarAllSchedule = async (id) => {
 };
 
 // 일정 생성하는 함수
-const createNewSchedule = async (data) => {
+export const createNewSchedule = async (data) => {
   try {
     const res = await customAxios.post("/auth/schedule", data);
     return res;
   } catch (err) {
     return err;
   }
-};
-
-export const useAddNewScheduleMutation = () => {
-  const queryClient = useQueryClient();
-  return useMutation(createNewSchedule, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("calendarSchedule");
-      queryClient.invalidateQueries("filterSchedule");
-      queryClient.invalidateQueries("overviewSchedule");
-      toast.success("일정이 생성되었습니다");
-    },
-  });
 };
 
 // query key : filterSchedule
@@ -75,7 +61,7 @@ export const getDetailSchedule = async (projectId, scheduleId) => {
 };
 
 // 일정 수정
-const modifySchedule = async (data) => {
+export const modifySchedule = async (data) => {
   const { scheduleId, ...formBody } = data;
   try {
     const res = await customAxios.put(
@@ -88,21 +74,8 @@ const modifySchedule = async (data) => {
   }
 };
 
-export const useModifyScheduleMutation = () => {
-  const queryClient = useQueryClient();
-  return useMutation(modifySchedule, {
-    onSuccess: () => {
-      console.log("수정실행됨");
-      queryClient.invalidateQueries("calendarSchedule");
-      queryClient.invalidateQueries("filterSchedule");
-      queryClient.invalidateQueries("overviewSchedule");
-      toast.success("일정이 수정되었습니다");
-    },
-  });
-};
-
 // 일정 삭제
-const deleteSchedule = async (deleteBody) => {
+export const deleteSchedule = async (deleteBody) => {
   try {
     const res = await customAxios.delete(
       `/auth/schedule/${deleteBody.scheduleId}`,
@@ -116,20 +89,8 @@ const deleteSchedule = async (deleteBody) => {
   }
 };
 
-export const useDeleteScheduleMutation = () => {
-  const queryClient = useQueryClient();
-  return useMutation(deleteSchedule, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("calendarSchedule");
-      queryClient.invalidateQueries("filterSchedule");
-      queryClient.invalidateQueries("overviewSchedule");
-      toast.success("일정이 삭제되었습니다");
-    },
-  });
-};
-
 // 일정 완료
-export const updateDoneShcedule = async (data) => {
+export const updateDoneSchedule = async (data) => {
   const { scheduleId, ...body } = data;
   try {
     const res = await customAxios.post(
@@ -140,14 +101,4 @@ export const updateDoneShcedule = async (data) => {
   } catch (err) {
     return err;
   }
-};
-
-export const useCompleteScheduleMutation = () => {
-  const queryClient = useQueryClient();
-  return useMutation(updateDoneShcedule, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("filterSchedule");
-      toast.success("일정이 완료처리되었습니다");
-    },
-  });
 };

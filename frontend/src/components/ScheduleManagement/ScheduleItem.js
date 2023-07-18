@@ -6,29 +6,26 @@ import Tooltip from "@mui/material/Tooltip";
 
 import Button from "../common/Button";
 import ScheduleEvaluationModal from "./ScheduleEvaluationModal";
+import AlertModal from "./AlertModal";
+import ScheduleDetailModal from "./ScheduleDetailModal";
+
 import {
   getDateTimeDuration,
   getEnglishWeekdays,
   getRemainDate,
   getStringDate,
 } from "../../utils/date";
-import AlertModal from "./AlertModal";
-import {
-  useCompleteScheduleMutation,
-  useDeleteScheduleMutation,
-} from "../../lib/apis/scheduleManagementApi";
-import ScheduleModal from "./ScheduleModal";
 import { getProjectId } from "../../utils/getProjectId";
-import { Link } from "react-router-dom";
-import ScheduleDetailModal from "./ScheduleDetailModal";
+import { useCompleteScheduleMutation } from "../../hooks/useScheduleManagementMutation";
 
 const ScheduleItem = (props) => {
   const projectId = getProjectId(useLocation());
 
+  // 평가 모달
   const [modalVisible, setModalVisible] = useState(false);
-  const [modifyModalVisible, setModifyModalVisible] = useState(false);
-
+  // 완료 모달
   const [completeModalVisible, setCompleteModalVisible] = useState(false);
+  // 디테일 모달
   const [detailModalVisible, setDetailModalVisible] = useState(false);
 
   const completeBody = {
@@ -47,14 +44,6 @@ const ScheduleItem = (props) => {
   };
   const hideModalHandler = () => {
     setModalVisible(false);
-  };
-
-  // 수정 모달
-  const openModifyModalHandler = () => {
-    setModifyModalVisible(true);
-  };
-  const hideModifyModalHandler = () => {
-    setModifyModalVisible(false);
   };
 
   // 완료 모달
@@ -93,13 +82,6 @@ const ScheduleItem = (props) => {
         endDate={props.data.endDate}
         members={props.data.members}
         type={props.data.scheduleCategory}
-      />
-      <ScheduleModal
-        open={modifyModalVisible}
-        onClose={hideModifyModalHandler}
-        isEdit={true}
-        editScheduleId={props.data.scheduleId}
-        scheduleState={props.data.state}
       />
 
       <AlertModal

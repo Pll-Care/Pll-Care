@@ -4,15 +4,15 @@ import { useQuery } from "react-query";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import ModalContainer from "../common/ModalContainer";
-import {
-  getDetailSchedule,
-  useDeleteScheduleMutation,
-  useModifyScheduleMutation,
-} from "../../lib/apis/scheduleManagementApi";
+import { getDetailSchedule } from "../../lib/apis/scheduleManagementApi";
 import { getDateTimeDuration } from "../../utils/date";
 import Button from "../common/Button";
 import AlertModal from "./AlertModal";
 import { toast } from "react-toastify";
+import {
+  useDeleteScheduleMutation,
+  useModifyScheduleMutation,
+} from "../../hooks/useScheduleManagementMutation";
 
 const ScheduleDetailModal = ({
   open,
@@ -56,7 +56,7 @@ const ScheduleDetailModal = ({
 
   // 일정 상세 조회
   const { data } = useQuery(
-    ["ScheduleDetail", projectId, scheduleId],
+    ["scheduleDetail", projectId, scheduleId],
     async () => await getDetailSchedule(projectId, scheduleId),
     {
       onSuccess: (data) => {
