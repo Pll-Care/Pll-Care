@@ -2237,6 +2237,33 @@ input {
     align-items: center;
   }
 }
+.project-management {
+  height: 300px;
+  display: grid;
+  grid-template-columns: repeat(3, 30%);
+  justify-content: space-between;
+}
+.project-management .project-button-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.project-management .project-button-wrapper figure {
+  border-radius: 50%;
+  width: 230px;
+  height: 230px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  cursor: pointer;
+}
+.project-management .project-button-wrapper h1 {
+  color: #003b28;
+  font-size: 18px;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
 .home {
   border: 2px solid blue;
   padding: 40px;
