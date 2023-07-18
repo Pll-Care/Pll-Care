@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import { useLocation } from "react-router";
 
 import { Avatar } from "@mui/material";
@@ -99,6 +98,7 @@ const ScheduleItem = (props) => {
         projectId={projectId}
         scheduleState={props.data.state}
       />
+
       <div className="schedule-list-time">
         <h1>{day}</h1>
         <h2>{getEnglishWeekdays(props.data.startDate)}</h2>

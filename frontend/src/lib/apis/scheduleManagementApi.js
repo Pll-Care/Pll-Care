@@ -1,6 +1,4 @@
-import { useMutation, useQueryClient } from "react-query";
 import { customAxios } from "./customAxios";
-import { toast } from "react-toastify";
 
 // query key : overviewSchedule
 // 오버뷰 일정 가져오는 api 함수
@@ -111,32 +109,6 @@ export const updateDoneSchedule = async (data) => {
   } catch (err) {
     return err;
   }
-};
-
-// 일정 삭제
-//export const deleteSchedule = async (deleteBody) => {
-//  try {
-//    const res = await customAxios.delete(
-//      `/auth/schedule/${deleteBody.scheduleId}`,
-//      {
-//        data: { projectId: deleteBody.projectId },
-//      }
-//    );
-//    return res;
-//  } catch (err) {
-//    return err;
-//  }
-//};
-
-export const useDeleteScheduleMutation = () => {
-  const queryClient = useQueryClient();
-  return useMutation(deleteSchedule, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("calendarSchedule");
-      queryClient.invalidateQueries("filterSchedule");
-      toast.success("일정이 삭제되었습니다");
-    },
-  });
 };
 
 // 일정 완료

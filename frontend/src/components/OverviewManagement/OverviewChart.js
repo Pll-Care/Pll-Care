@@ -45,7 +45,7 @@ const OverviewChart = () => {
     ? Math.max(...data?.schedules.map((schedule) => schedule.order))
     : null;
 
-  const month = data && new Date(data.startDate).getMonth() + minOrder;
+  const month = data && new Date(data.startDate).getMonth() - 1 + minOrder;
 
   // order 값에 해당하는 배열 생성
   const orderGroups = [];

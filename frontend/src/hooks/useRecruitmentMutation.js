@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import {
   addLikeRecruitmentPost,
   addRecruitmentPost,
+  applyRecruitmentPost,
   deleteRecruitmentPost,
   modifyRecruitmentPost,
 } from "../lib/apis/memberRecruitmentApi";
@@ -55,6 +56,18 @@ export const useDeleteRecruitmentPostMutation = () => {
     onSuccess: () => {
       toast.success("모집글이 삭제되었습니다.");
       queryClient.invalidateQueries("allRecruitmentPosts");
+    },
+  });
+};
+
+// 모집글 지원
+export const useApplyRecruitmentPostMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(applyRecruitmentPost, {
+    onSuccess: () => {
+      toast.success("모집글 지원하였습니다.");
+      queryClient.invalidateQueries("recruitmentDetail");
     },
   });
 };

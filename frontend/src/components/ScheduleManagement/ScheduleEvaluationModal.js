@@ -9,9 +9,10 @@ import { Tooltip } from "@mui/material";
 import { addEvaluation } from "../../redux/evaluationManagementSlice";
 import Button from "../common/Button";
 import ModalContainer from "../common/ModalContainer";
+import AlertModal from "./AlertModal";
+
 import { getDateTimeDuration } from "../../utils/date";
 import { makeNewMidEvaluation } from "../../lib/apis/evaluationManagementApi";
-import AlertModal from "./AlertModal";
 
 const ScheduleEvaluationModal = (props) => {
   const dispatch = useDispatch();

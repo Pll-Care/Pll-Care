@@ -74,3 +74,16 @@ export const deleteRecruitmentPost = async (postId) => {
     return err;
   }
 };
+
+// 모집글 지원
+export const applyRecruitmentPost = async (body) => {
+  const { postId, position } = body;
+  try {
+    const res = await customAxios.post(`/auth/post/${postId}/apply`, {
+      postion: position,
+    });
+    return res;
+  } catch (err) {
+    return err;
+  }
+};

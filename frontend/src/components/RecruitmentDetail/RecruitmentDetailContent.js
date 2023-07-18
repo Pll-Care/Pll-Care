@@ -5,188 +5,151 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { Avatar } from "@mui/material";
+import Tooltip from "@mui/material/Tooltip";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShareIcon from "@mui/icons-material/Share";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 import Button from "../common/Button";
+import AlertCheckModal from "../common/AlertCheckModal";
+
+import { getStringDate } from "../../utils/date";
+import { location } from "../../utils/recruitment";
 import { getRecruitmentPostDetail } from "../../lib/apis/memberRecruitmentApi";
 import {
   useAddLikeRecruitmentMutation,
+  useApplyRecruitmentPostMutation,
   useDeleteRecruitmentPostMutation,
   useModifyRecruitmentPostMutation,
 } from "../../hooks/useRecruitmentMutation";
-import { getStringDate } from "../../utils/date";
-
-import { backendStacks, location } from "../../utils/recruitment";
-import AlertCheckModal from "../common/AlertCheckModal";
-
-const data = {
-  postId: 0,
-  projectName: "프로젝트 이름",
-  projectImageUrl:
-    "https://cdn.pixabay.com/photo/2015/01/08/18/25/desk-593327_640.jpg",
-  author: "작성자",
-  authorImageUrl:
-    "https://cdn.pixabay.com/photo/2023/07/11/00/01/coffee-8119278_640.jpg",
-  title: "제목",
-  description: "설명",
-  recruitStartDate: "2023-07-14",
-  recruitEndDate: "2023-07-15",
-  reference: "레퍼런스",
-  contact: "연락",
-  region: "광주",
-  techStackImageUrls: [
-    "https://letspl.s3.ap-northeast-2.amazonaws.com/icons/react/react-original.svg",
-    "https://letspl.s3.ap-northeast-2.amazonaws.com/icons/figma/figma-original.svg",
-    "https://letspl.s3.ap-northeast-2.amazonaws.com/icons/github/github-original.svg",
-    "https://letspl.s3.ap-northeast-2.amazonaws.com/icons/javascript/javascript-original.svg",
-    "https://letspl.s3.ap-northeast-2.amazonaws.com/icons/spring/spring-original.svg",
-    "https://letspl.s3.ap-northeast-2.amazonaws.com/icons/nextjs/nextjs-original.svg",
-    "https://letspl.s3.ap-northeast-2.amazonaws.com/icons/typescript/typescript-original.svg",
-    "https://letspl.s3.ap-northeast-2.amazonaws.com/icons/kotlin/kotlin-original.svg",
-  ],
-  techStack: ["react", "react-query", "typescript", "redux", "java", "spring"],
-  recruitInfoList: [
-    {
-      position: "BACKEND",
-      currentCnt: 0,
-      totalCnt: 3,
-    },
-    {
-      position: "FRONTEND",
-      currentCnt: 0,
-      totalCnt: 3,
-    },
-    {
-      position: "MANAGER",
-      currentCnt: 0,
-      totalCnt: 1,
-    },
-    {
-      position: "DESIGN",
-      currentCnt: 0,
-      totalCnt: 1,
-    },
-  ],
-  createdDate: "2023-07-14T03:53:07.115Z",
-  modifiedDate: "2023-07-14T03:53:07.115Z",
-  liked: true,
-};
 
 const RecruitmentDetailContent = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  // 수정 상태
   const [isEdit, setIsEdit] = useState(false);
+  // 삭제 상태
   const [deleteIsModalVisible, setDeleteIsModalVisible] = useState(false);
 
-  //const [formValues, setFormValues] = useState({
-  //  title: "",
-  //  description: "",
-  //  recruitStartDate: "",
-  //  recruitEndDate: "",
-  //  reference: "",
-  //  contact: "",
-  //  region: "",
-  //  backendCnt: 0,
-  //  frontendCnt: 0,
-  //  designCnt: 0,
-  //  managerCnt: 0,
-  //});
+  // 지원 상태
+  // 백엔드
+  const [backendApply, setBackendApply] = useState(false);
+  const backendBody = {
+    postId: id,
+    position: "BACKEND",
+  };
+  // 프론트
+  const [frontendApply, setFrontendApply] = useState(false);
+  const frontendBody = {
+    postId: id,
+    position: "FRONTEND",
+  };
+  // 기획
+  const [managerApply, setManagerApply] = useState(false);
+  const managerBody = {
+    postId: id,
+    position: "MANAGER",
+  };
+  // 디자인
+  const [designApply, setDesignApply] = useState(false);
+  const designBody = {
+    postId: id,
+    position: "DESIGN",
+  };
 
   const [formValues, setFormValues] = useState({
-    title: data?.title,
-    description: data?.description,
-    recruitStartDate: data?.recruitStartDate,
-    recruitEndDate: data?.recruitEndDate,
-    reference: data?.reference,
-    contact: data?.contact,
-    region: data?.region,
-    backendCnt: data?.recruitInfoList.filter(
-      (stack) => stack.position === "BACKEND"
-    )[0].totalCnt,
-    frontendCnt: data?.recruitInfoList.filter(
-      (stack) => stack.position === "FRONTEND"
-    )[0].totalCnt,
-    designCnt: data?.recruitInfoList.filter(
-      (stack) => stack.position === "DESIGN"
-    )[0].totalCnt,
-    managerCnt: data?.recruitInfoList.filter(
-      (stack) => stack.position === "MANAGER"
-    )[0].totalCnt,
+    title: "",
+    description: "",
+    recruitStartDate: "",
+    recruitEndDate: "",
+    reference: "",
+    contact: "",
+    region: "",
+    backendCnt: 0,
+    frontendCnt: 0,
+    designCnt: 0,
+    managerCnt: 0,
   });
 
   // 모집글 디테일 페이지 조회
-  //const { data } = useQuery(
-  //  ["recruitmentDetail"],
-  //  () => getRecruitmentPostDetail(id),
-  //  {
-  //    onSuccess: (data) =>
-  //      setFormValues({
-  //        title: data?.title,
-  //        description: data?.description,
-  //        recruitStartDate: data?.recruitStartDate,
-  //        recruitEndDate: data?.recruitEndDate,
-  //        reference: data?.reference,
-  //        contact: data?.contact,
-  //        region: data?.region,
-  //        backendCnt: data?.recruitInfoList.filter(
-  //          (stack) => stack.position === "BACKEND"
-  //        )[0].totalCnt,
-  //        frontendCnt: data?.recruitInfoList.filter(
-  //          (stack) => stack.position === "FRONTEND"
-  //        )[0].totalCnt,
-  //        designCnt: data?.recruitInfoList.filter(
-  //          (stack) => stack.position === "DESIGN"
-  //        )[0].totalCnt,
-  //        managerCnt: data?.recruitInfoList.filter(
-  //          (stack) => stack.position === "MANAGER"
-  //        )[0].totalCnt,
-  //      }),
-  //  }
-  //);
-  //console.log(data);
-  //console.log(formValues);
+  const { data } = useQuery(
+    ["recruitmentDetail"],
+    () => getRecruitmentPostDetail(id),
+    {
+      onSuccess: (data) =>
+        setFormValues({
+          title: data?.title,
+          description: data?.description,
+          recruitStartDate: data?.recruitStartDate,
+          recruitEndDate: data?.recruitEndDate,
+          reference: data?.reference,
+          contact: data?.contact,
+          region: data?.region,
+          backendCnt: data?.recruitInfoList.filter(
+            (stack) => stack.position === "BACKEND"
+          )[0].totalCnt,
+          frontendCnt: data?.recruitInfoList.filter(
+            (stack) => stack.position === "FRONTEND"
+          )[0].totalCnt,
+          designCnt: data?.recruitInfoList.filter(
+            (stack) => stack.position === "DESIGN"
+          )[0].totalCnt,
+          managerCnt: data?.recruitInfoList.filter(
+            (stack) => stack.position === "MANAGER"
+          )[0].totalCnt,
+        }),
+    }
+  );
 
   // 모집글 수정
-  //const { mutate: modifyPostMutate } =
-  //  useModifyRecruitmentPostMutation(formValues);
+  const { mutate: modifyPostMutate } =
+    useModifyRecruitmentPostMutation(formValues);
 
   // 모집글 삭제
   const { mutate: deletePostMutate } = useDeleteRecruitmentPostMutation(id);
 
-  // 기술 스택들 태그들
-  const [stacks, setStacks] = useState(data?.techStack);
-
-  // 입력받은 스택
-  const [stackInput, setStackInput] = useState("");
-
-  // 입력한 값이 포함한 stack 보여주기
-  const filteredStacks = backendStacks.filter((stack) =>
-    stack.includes(stackInput.toLowerCase())
-  );
-
-  // 입력 스택
-  const handleStackInputChange = (e) => {
-    setStackInput(e.target.value);
+  // 모집글 지원
+  const applyBody = {
+    postId: id,
+    position: "BACKEND",
   };
+  const { mutate: applyPostMutate } =
+    useApplyRecruitmentPostMutation(applyBody);
 
-  // 스택 추가하기
-  const stackPlusClickHandler = (event) => {
-    if (event.key === "Enter") {
-      if (stacks.includes(stackInput)) {
-        return;
-      }
-      setStacks((prevState) => [...prevState, stackInput]);
-      setStackInput("");
-    }
-  };
+  // 모집글 좋아요
+  const { mutate } = useAddLikeRecruitmentMutation(id);
+  //// 기술 스택들 태그들
+  //const [stacks, setStacks] = useState(data?.techStack);
 
-  // 스택 빼기
-  const stackMinusClickHandler = (project) => {
-    setStacks((prevState) => prevState.filter((stack) => stack !== project));
-  };
+  //// 입력받은 스택
+  //const [stackInput, setStackInput] = useState("");
+
+  //// 입력한 값이 포함한 stack 보여주기
+  //const filteredStacks = backendStacks.filter((stack) =>
+  //  stack.includes(stackInput.toLowerCase())
+  //);
+
+  //// 입력 스택
+  //const handleStackInputChange = (e) => {
+  //  setStackInput(e.target.value);
+  //};
+
+  //// 스택 추가하기
+  //const stackPlusClickHandler = (event) => {
+  //  if (event.key === "Enter") {
+  //    if (stacks.includes(stackInput)) {
+  //      return;
+  //    }
+  //    setStacks((prevState) => [...prevState, stackInput]);
+  //    setStackInput("");
+  //  }
+  //};
+
+  //// 스택 빼기
+  //const stackMinusClickHandler = (project) => {
+  //  setStacks((prevState) => prevState.filter((stack) => stack !== project));
+  //};
 
   const {
     title,
@@ -214,14 +177,17 @@ const RecruitmentDetailContent = () => {
 
   const time = data ? getStringDate(new Date(data.createdDate)) : "";
 
-  const { mutate } = useAddLikeRecruitmentMutation(id);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues((prevState) => ({
       ...prevState,
       [name]: value,
     }));
+  };
+
+  // 지원하기 버튼 눌렀을 때
+  const handleApplyRecruitment = (type) => {
+    applyPostMutate({ postId: id, position: type });
   };
 
   // 수정 버튼 눌렀을 때
@@ -283,12 +249,12 @@ const RecruitmentDetailContent = () => {
     const body = {
       ...allData,
       recruitInfo: recruitCnt,
-      techStack: stacks,
+      techStack: ["Firebase"],
       postId: id,
     };
 
     console.log("수정후", body);
-    //modifyPostMutate(body);
+    modifyPostMutate(body);
     setIsEdit((prevState) => !prevState);
   };
 
@@ -333,6 +299,32 @@ const RecruitmentDetailContent = () => {
         text="인원 모집글 삭제하시겠습니까?"
         clickHandler={deleteRecruitmentPost}
       />
+      {/* 지원 */}
+      <AlertCheckModal
+        open={backendApply}
+        onClose={() => setBackendApply(false)}
+        text="해당 모집글 백엔드에 지원하시겠습니까?"
+        clickHandler={() => applyPostMutate(backendBody)}
+      />
+      <AlertCheckModal
+        open={frontendApply}
+        onClose={() => setFrontendApply(false)}
+        text="해당 모집글 프론트에 지원하시겠습니까?"
+        clickHandler={() => applyPostMutate(frontendBody)}
+      />
+      <AlertCheckModal
+        open={managerApply}
+        onClose={() => setManagerApply(false)}
+        text="해당 모집글 기획에 지원하시겠습니까?"
+        clickHandler={() => applyPostMutate(managerBody)}
+      />
+      <AlertCheckModal
+        open={designApply}
+        onClose={() => setDesignApply(false)}
+        text="해당 모집글 디자인에 지원하시겠습니까?"
+        clickHandler={() => applyPostMutate(designBody)}
+      />
+
       <div className="detail-title">
         <div className="detail-title-content">
           <Link to="/recruitment" className="mui-arrow">
@@ -362,16 +354,20 @@ const RecruitmentDetailContent = () => {
             />
           ) : (
             <>
-              <Button
-                type="underlined"
-                text="수정"
-                onClick={() => setIsEdit((prevState) => !prevState)}
-              />
-              <Button
-                type="underlined"
-                text="삭제"
-                onClick={() => setDeleteIsModalVisible(true)}
-              />
+              {data?.editable && (
+                <Button
+                  type="underlined"
+                  text="수정"
+                  onClick={() => setIsEdit((prevState) => !prevState)}
+                />
+              )}
+              {data?.deletable && (
+                <Button
+                  type="underlined"
+                  text="삭제"
+                  onClick={() => setDeleteIsModalVisible(true)}
+                />
+              )}
             </>
           )}
         </div>
@@ -380,6 +376,7 @@ const RecruitmentDetailContent = () => {
       <div className="recruitment-detail">
         <div className="recruitment-detail-content">
           <h4>모집 작성자</h4>
+
           <div className="recruitment-detail-content-name">
             <Avatar src={data?.authorImageUrl} />
             <h5>{data?.author}</h5>
@@ -503,10 +500,26 @@ const RecruitmentDetailContent = () => {
           </div>
           {!isEdit && (
             <div className="recruitment-detail-container-button">
-              <Button size="small" text="지원" />
-              <Button size="small" text="지원" />
-              <Button size="small" text="지원" />
-              <Button size="small" text="지원" />
+              <Button
+                size="small"
+                text="지원"
+                onClick={() => setBackendApply((prevState) => !prevState)}
+              />
+              <Button
+                size="small"
+                text="지원"
+                onClick={() => setFrontendApply((prevState) => !prevState)}
+              />
+              <Button
+                size="small"
+                text="지원"
+                onClick={() => setManagerApply((prevState) => !prevState)}
+              />
+              <Button
+                size="small"
+                text="지원"
+                onClick={() => setDesignApply((prevState) => !prevState)}
+              />
             </div>
           )}
         </div>
@@ -515,7 +528,7 @@ const RecruitmentDetailContent = () => {
           <h4>요구하는 스택</h4>
           {isEdit ? (
             <>
-              <div className="member-stack">
+              {/*<div className="member-stack">
                 <div className="member-stack-input">
                   <input
                     placeholder="기술 스택을 추가하세요"
@@ -537,23 +550,30 @@ const RecruitmentDetailContent = () => {
                 )}
               </div>
               <div className="member-stack-button">
-                {stacks.length > 0 &&
+                {stacks?.length > 0 &&
                   stacks.map((stack) => (
                     <Button
                       text={stack}
                       size="small"
-                      onClick={() => stackMinusClickHandler(stack)}
+                      onClick={stackMinusClickHandler(stack)}
                     />
                   ))}
                 {stacks.length === 0 && (
                   <h6>프로젝트에서 사용할 스택을 추가해보세요</h6>
                 )}
-              </div>
+              </div>*/}
             </>
           ) : (
             <div className="recruitment-detail-description-stacks">
-              {data?.techStackImageUrls.map((img, index) => (
-                <img key={index} src={img} alt="" />
+              {data?.techStackDtoList.map((stack, index) => (
+                <Tooltip key={index} title={stack.name}>
+                  {/*<img key={index} src={stack.imageUrl} alt="" />*/}
+                  <img
+                    key={index}
+                    src="https://letspl.s3.ap-northeast-2.amazonaws.com/icons/react/react-original.svg"
+                    alt=""
+                  />
+                </Tooltip>
               ))}
             </div>
           )}

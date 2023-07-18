@@ -1,13 +1,13 @@
 import { useQuery } from "react-query";
 import { useLocation } from "react-router";
-import { useMemo, useState } from "react";
+import { useState } from "react";
+
+import { Pagination } from "@mui/material";
 
 import Card from "../common/Card";
 import { getFilterSchedule } from "../../lib/apis/scheduleManagementApi";
-import { getPastScheduleData } from "../../utils/schedule";
 import ScheduleItem from "./ScheduleItem";
 import { getProjectId } from "../../utils/getProjectId";
-import { Pagination } from "@mui/material";
 
 const ScheduleList = ({ nameId, option }) => {
   const projectId = getProjectId(useLocation());

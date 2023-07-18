@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useParams } from "react-router";
 
 import CalendarItem from "./CalendarItem";
 import ScheduleModal from "./ScheduleModal";
@@ -21,9 +20,6 @@ const CalendarList = ({ data }) => {
 
   // 오늘 날짜 가져오기
   const calendar = getTodayDateEnglish();
-
-  // 모든 일정 가져오기
-  const { id } = useParams();
 
   // 오늘 이후의 meeting 가져오기
   const filteredMeetings = data?.meetings

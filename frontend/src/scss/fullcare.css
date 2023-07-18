@@ -2751,6 +2751,7 @@ input {
   margin: 15px;
   display: flex;
   flex-direction: column;
+  height: 470px;
 }
 .recruitment-post:hover {
   transform: scale(1.011);
