@@ -7,7 +7,7 @@ import { useLayoutEffect } from "react";
 import Button from "../common/Button";
 import { getProjectId } from "../../utils/getProjectId";
 import { useLocation } from "react-router-dom";
-import { isCompleteProject } from "../../utils/isCompleteProject";
+import { getCompleteProjectData } from "../../lib/apis/managementApi";
 
 const MeetingRecord = ({ state }) => {
   const selectedMeetingRecordId = useSelector(
@@ -22,10 +22,7 @@ const MeetingRecord = ({ state }) => {
 
   const projectId = getProjectId(useLocation());
 
-  const completedProjectId = useSelector(
-    (state) => state.projectManagement.completedProjectId
-  );
-  const isComplete = isCompleteProject(completedProjectId, projectId);
+  const { data: completeData } = useQuery(['completeProjectData', projectId], () => getCompleteProjectData(projectId));
 
   const { deleteMutate, createBookMarkMutate } =
     useMeetingRecordManagementMutation();
@@ -100,14 +97,16 @@ const MeetingRecord = ({ state }) => {
         <div className="meeting-record-container">
           <div className="meeting-record-author">{selectedData.author}</div>
           <div className="meeting-record-button-wrapper">
-            {isComplete === "ONGOING" && (
+            {!completeData && (
               <>
-                <Button
-                  size={"small"}
-                  type={"underlined"}
-                  text={"삭제하기"}
-                  onClick={handleDeleteMeetingRecord}
-                />
+                {selectedData.deletable && (
+                  <Button
+                    size={"small"}
+                    type={"underlined"}
+                    text={"삭제하기"}
+                    onClick={handleDeleteMeetingRecord}
+                  />
+                )}
                 <Button
                   size={"small"}
                   type={"underlined"}
@@ -116,7 +115,7 @@ const MeetingRecord = ({ state }) => {
                 />
               </>
             )}
-            {isComplete === "ONGOING" ? (
+            {!completeData ? (
               selectedData.bookmarked ? (
                 <Button
                   size={"small"}
@@ -152,12 +151,14 @@ const MeetingRecord = ({ state }) => {
           <div className="meeting-record-container">
             <div className="meeting-record-author">{createdData.author}</div>
             <div className="meeting-record-button-wrapper">
-              <Button
-                size={"small"}
-                type={"underlined"}
-                text={"삭제하기"}
-                onClick={handleDeleteMeetingRecord}
-              />
+              {createdData.deletable && (
+                <Button
+                  size={"small"}
+                  type={"underlined"}
+                  text={"삭제하기"}
+                  onClick={handleDeleteMeetingRecord}
+                />
+              )}
               <Button
                 size={"small"}
                 type={"underlined"}

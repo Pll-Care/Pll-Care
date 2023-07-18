@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 import Button from "../common/Button";
 import NewMeetingRecord from "./NewMeetingRecord";
@@ -10,8 +11,8 @@ import useMeetingRecordManagementMutation from "../../hooks/useMeetingRecordMana
 
 import { toast } from "react-toastify";
 import { getProjectId } from "../../utils/getProjectId";
-import { isCompleteProject } from "../../utils/isCompleteProject";
-import { useEffect } from "react";
+import { useQuery } from "react-query";
+import { getCompleteProjectData } from "../../lib/apis/managementApi";
 
 const MeetingRecordEditor = () => {
   const content = useSelector((state) => state.meetingRecordManagement.content);
@@ -19,10 +20,7 @@ const MeetingRecordEditor = () => {
 
   const projectId = getProjectId(useLocation());
 
-  const completedProjectId = useSelector(
-    (state) => state.projectManagement.completedProjectId
-  );
-  const isComplete = isCompleteProject(completedProjectId, projectId);
+  const { data: isCompleted } = useQuery(['completeProjectData', projectId], () => getCompleteProjectData(projectId));
 
   const isCreatedMeetingRecordVisible = useSelector(
     (state) => state.meetingRecordManagement.isCreatedMeetingRecordVisible
@@ -89,14 +87,14 @@ const MeetingRecordEditor = () => {
     <div className="meeting-record-new-meeting-record-editor">
       {initialState ? (
         <div className="meeting-record-initial-state">
-          {isComplete === "COMPLETE" ? (
+          {isCompleted ? (
             <h1 className="meeting-record-heading">
               작성된 회의록을 확인해보세요!
             </h1>
           ) : (
             <h1 className="meeting-record-heading">회의록을 작성해보세요!</h1>
           )}
-          {isComplete === "ONGOING" && (
+          {!isCompleted && (
             <Button text={"작성하기"} onClick={handleInitialState} />
           )}
         </div>
