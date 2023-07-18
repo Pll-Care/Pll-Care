@@ -1,41 +1,44 @@
 import { useState } from "react";
 import { useLocation } from "react-router";
-import { useSelector } from "react-redux";
 
 import { Avatar } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 
 import Button from "../common/Button";
 import ScheduleEvaluationModal from "./ScheduleEvaluationModal";
+import AlertModal from "./AlertModal";
+import ScheduleDetailModal from "./ScheduleDetailModal";
+
 import {
   getDateTimeDuration,
   getEnglishWeekdays,
   getRemainDate,
   getStringDate,
 } from "../../utils/date";
-import AlertModal from "./AlertModal";
-import { useDeleteScheduleMutation } from "../../lib/apis/scheduleManagementApi";
-import ScheduleModal from "./ScheduleModal";
 import { getProjectId } from "../../utils/getProjectId";
-import { isCompleteProject } from "../../utils/isCompleteProject";
+import { useCompleteScheduleMutation } from "../../hooks/useScheduleManagementMutation";
 
 const ScheduleItem = (props) => {
   const projectId = getProjectId(useLocation());
-  // 완료 처리했을 때
-  const completedProjectId = useSelector(
-    (state) => state.projectManagement.completedProjectId
-  );
-  const isComplete = isCompleteProject(completedProjectId, projectId);
 
+  // 평가 모달
   const [modalVisible, setModalVisible] = useState(false);
-  const [modifyModalVisible, setModifyModalVisible] = useState(false);
-  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
-  const deleteBody = {
-    scheduleId: props.data.scheduleId,
-    projectId: parseInt(projectId, 10),
-  };
-  const { mutate: deleteSchedule } = useDeleteScheduleMutation(deleteBody);
+  // 완료 모달
+  const [completeModalVisible, setCompleteModalVisible] = useState(false);
+  // 디테일 모달
+  const [detailModalVisible, setDetailModalVisible] = useState(false);
 
+  const completeBody = {
+    scheduleId: props.data.scheduleId,
+    projectId: projectId,
+    state: "COMPLETE",
+  };
+
+  // 완료 처리하는 react query 문
+  const { mutate: compeleteSchedule } =
+    useCompleteScheduleMutation(completeBody);
+
+  // 중간 평가 모달
   const openModalHandler = () => {
     setModalVisible(true);
   };
@@ -43,18 +46,20 @@ const ScheduleItem = (props) => {
     setModalVisible(false);
   };
 
-  const openModifyModalHandler = () => {
-    setModifyModalVisible(true);
+  // 완료 모달
+  const openCompleteModalHandler = () => {
+    setCompleteModalVisible(true);
   };
-  const hideModifyModalHandler = () => {
-    setModifyModalVisible(false);
+  const hideCompleteModalHandler = () => {
+    setCompleteModalVisible(false);
   };
 
-  const openDeleteModalHandler = () => {
-    setDeleteModalVisible(true);
+  // 디테일 모달
+  const openDetailModalHandler = () => {
+    setDetailModalVisible((prevState) => !prevState);
   };
-  const hideDeleteModalHandler = () => {
-    setDeleteModalVisible(false);
+  const hideDetailModalHandler = () => {
+    setDetailModalVisible((prevState) => !prevState);
   };
 
   const time = getDateTimeDuration(
@@ -63,7 +68,7 @@ const ScheduleItem = (props) => {
     props.data.scheduleCategory
   );
   const modifyDate = getStringDate(new Date(props.data.modifyDate));
-  const remainDate = getRemainDate(props.data.endDate);
+  const remainDate = getRemainDate(props.data.startDate);
   const day = new Date(props.data.startDate).getDate();
 
   return (
@@ -78,40 +83,46 @@ const ScheduleItem = (props) => {
         members={props.data.members}
         type={props.data.scheduleCategory}
       />
-      <ScheduleModal
-        open={modifyModalVisible}
-        onClose={hideModifyModalHandler}
-        isEdit={true}
-        editScheduleId={props.data.scheduleId}
-        scheduleState={props.data.state}
-      />
 
       <AlertModal
-        open={deleteModalVisible}
-        onClose={hideDeleteModalHandler}
-        width="30%"
-        text="정말 일정 삭제하시겠습니까?"
-        clickHandler={() => deleteSchedule(deleteBody)}
+        open={completeModalVisible}
+        onClose={hideCompleteModalHandler}
+        text="일정이 완료되었습니까?"
+        clickHandler={() => compeleteSchedule(completeBody)}
+      />
+
+      <ScheduleDetailModal
+        open={detailModalVisible}
+        onClose={hideDetailModalHandler}
+        scheduleId={props.data.scheduleId}
+        projectId={projectId}
+        scheduleState={props.data.state}
       />
       <div className="schedule-list-time">
         <h1>{day}</h1>
         <h2>{getEnglishWeekdays(props.data.startDate)}</h2>
 
-        {props.data.state === "ONGOING" && isComplete === "ONGOING" && (
+        {props.data.state === "COMPLETE" && (
           <Button
             text={"✍평가 작성"}
             size="small"
             onClick={openModalHandler}
           />
         )}
-        {props.data.state === "COMPLETE" && isComplete === "ONGOING" && (
-          <Button text={"🙂완료됨"} size="small" />
+        {props.data.state === "ONGOING" && (
+          <Button
+            text={"🙂완료시키기"}
+            size="small"
+            onClick={openCompleteModalHandler}
+          />
         )}
       </div>
+
       <div
         className={`schedule-list-content ${
           remainDate === "past" ? "schedule-list-content-past" : ""
         }`}
+        onClick={() => openDetailModalHandler()}
       >
         <div>
           <h5>{time}</h5>
@@ -130,20 +141,6 @@ const ScheduleItem = (props) => {
 
         <div className="schedule-list-content-time">
           {remainDate !== "past" && <h1>{remainDate}</h1>}
-          {isComplete === "ONGOING" && (
-            <Button
-              text="수정하기"
-              size="small"
-              onClick={openModifyModalHandler}
-            />
-          )}
-          {isComplete === "ONGOING" && (
-            <Button
-              text="삭제하기"
-              size="small"
-              onClick={openDeleteModalHandler}
-            />
-          )}
         </div>
       </div>
     </div>

@@ -931,6 +931,10 @@ input {
   margin-bottom: 20px;
 }
 
+.schedule-lists-pagination {
+  display: flex;
+  justify-content: center;
+}
 .schedule-lists .empty-schedule {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
@@ -991,6 +995,7 @@ input {
   border-radius: 35px;
   width: 85%;
   padding: 1.5rem;
+  cursor: pointer;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -1150,6 +1155,69 @@ input {
 }
 .confirm-modal-button Button {
   margin: 0px 5px;
+}
+
+.schedule-detail-modal {
+  border: 2px solid #01e89e;
+  border-radius: 10px;
+  width: 100%;
+  padding: 1rem;
+  color: #7a7a7a;
+  font-family: "IBM Plex Sans KR", sans-serif;
+}
+.schedule-detail-modal input {
+  border-radius: 20px;
+  height: 30px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  color: #7a7a7a;
+}
+.schedule-detail-modal h1 {
+  font-size: 25px;
+  margin: 15px;
+}
+.schedule-detail-modal-title {
+  display: flex;
+  align-items: center;
+}
+.schedule-detail-modal-title .mui-icon {
+  cursor: pointer;
+  margin-right: 10px;
+}
+.schedule-detail-modal-content {
+  display: flex;
+  margin: 40px 20px;
+  align-items: center;
+}
+.schedule-detail-modal-content h5 {
+  margin-right: 20px;
+}
+.schedule-detail-modal-content-time {
+  display: flex;
+}
+.schedule-detail-modal-member {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+@media (max-width: 767px) {
+  .schedule-detail-modal-member {
+    flex-direction: column;
+  }
+}
+.schedule-detail-modal-member h5 {
+  width: 15%;
+  margin-left: 20px;
+  display: inline-block;
+  line-height: normal;
+  vertical-align: middle;
+}
+.schedule-detail-modal-member-buttons {
+  width: 90%;
+}
+.schedule-detail-modal-button {
+  justify-content: flex-end;
+  display: flex;
+  margin-top: 30px;
 }
 
 /* MEETING RECORD MANAGEMENT */
