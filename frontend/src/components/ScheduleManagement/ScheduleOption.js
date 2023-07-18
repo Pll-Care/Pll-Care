@@ -12,11 +12,12 @@ const ScheduleOption = () => {
   const { data: names, isLoading } = useQuery(["members", id], () =>
     getTeamMember(id)
   );
+  console.log(names);
   const options = [
     { name: "ALL", type: "all" },
-    { name: "Plan", type: "MILESTONE" },
-    { name: "Meeting", type: "MEETING" },
-    { name: "지난 일정", type: "pastAll" },
+    { name: "PLAN", type: "MILESTONE" },
+    { name: "MEETING", type: "MEETING" },
+    { name: "PREVIOUS", type: "pastAll" },
   ];
 
   const [optionVisible, setOptionVisible] = useState(options[0].type);

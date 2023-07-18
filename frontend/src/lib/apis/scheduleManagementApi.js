@@ -36,12 +36,18 @@ export const createNewSchedule = async (data) => {
 
 // query key : filterSchedule
 // 일정 필터 리스트 조회
-export const getFilterSchedule = async (projectId, memberId, type) => {
+export const getFilterSchedule = async (projectId, memberId, type, page) => {
   try {
+    if (type === "all" || type === "pastAll") {
+      const res = await customAxios.get(
+        `/auth/schedule/search?page=${page}&size=5&projectId=${projectId}&memberId=${memberId}`
+      );
+      return res.data;
+    }
     const res = await customAxios.get(
-      `/auth/schedule/search?page=1&direction=ASC&sortingProperty=date&projectId=${projectId}&memberId=${memberId}`
+      `/auth/schedule/search?page=${page}&size=5&projectId=${projectId}&memberId=${memberId}&scheduleCategory=${type}`
     );
-    return res.data.content;
+    return res.data;
   } catch (err) {
     return err;
   }

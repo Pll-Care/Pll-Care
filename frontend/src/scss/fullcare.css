@@ -931,6 +931,10 @@ input {
   margin-bottom: 20px;
 }
 
+.schedule-lists-pagination {
+  display: flex;
+  justify-content: center;
+}
 .schedule-lists .empty-schedule {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;

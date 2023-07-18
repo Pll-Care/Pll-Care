@@ -75,7 +75,7 @@ const ScheduleModal = ({
     });
   };
 
-  // 일정 생성 또는 수정하기
+  // 일정 생성
   const submitNewPlan = () => {
     if (title.length < 2) {
       toast.error("일정 제목을 더 작성해주세요.");
@@ -109,10 +109,7 @@ const ScheduleModal = ({
       inputRefs.content.current.focus();
       return;
     }
-    console.log(formValues);
-
     // 일정 생성하기
-
     const { state, scheduleId, ...formData } = formValues;
     addSchedule(formData);
 
