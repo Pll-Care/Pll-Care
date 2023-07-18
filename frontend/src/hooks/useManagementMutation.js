@@ -42,6 +42,7 @@ const useManagementMutation = () => {
     onSuccess: (data) => {
       queryClient.invalidateQueries(["managementOngoingProjectList"]);
       queryClient.invalidateQueries(["managementAllProjectList"]);
+      queryClient.invalidateQueries(["completeProjectData"]);
 
       dispatch(projectManagementActions.addCompletedProjectId(data.projectId));
 
