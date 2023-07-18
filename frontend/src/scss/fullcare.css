@@ -2239,9 +2239,6 @@ input {
 }
 .project-management {
   height: 300px;
-  display: grid;
-  grid-template-columns: repeat(3, 30%);
-  justify-content: space-between;
 }
 .project-management .project-button-wrapper {
   display: flex;
@@ -2262,6 +2259,25 @@ input {
   color: #003b28;
   font-size: 18px;
   font-family: "Noto Sans KR", sans-serif;
+}
+.project-management .completed-project {
+  display: grid;
+  grid-template-columns: repeat(3, 30%);
+  justify-content: space-between;
+}
+.project-management .completed-project .project-button-wrapper figure {
+  border-radius: 50%;
+  width: 230px;
+  height: 230px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  pointer-events: none;
+}
+.project-management .ongoing-project {
+  display: grid;
+  grid-template-columns: repeat(3, 30%);
+  justify-content: space-between;
 }
 
 .home {
