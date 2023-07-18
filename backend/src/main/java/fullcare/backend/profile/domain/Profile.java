@@ -11,6 +11,7 @@ import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //import javax.json.JsonMergePatch;
@@ -40,7 +41,7 @@ public class Profile {
     @Column(name = "tech_stack")
     private String techStack;
     @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY, cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<ProjectExperience> projectExperiences;
+    private List<ProjectExperience> projectExperiences = new ArrayList<>();
 
     public Profile(String bio) {
         this.bio = bio;

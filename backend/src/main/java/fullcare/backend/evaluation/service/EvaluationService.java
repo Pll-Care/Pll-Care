@@ -185,15 +185,16 @@ public class EvaluationService {
         List<BadgeDao> midtermBadgeList = midtermEvaluationRepository.findList(projectId, members);
         List<MidTermRankProjectionInterface> rank = midtermEvaluationRepository.findRank(projectId);
 
-        List<ChartDto> midTermEvalChartDto = members.stream().map(m -> ChartDto.builder()
+        List<MidChartDto> midTermEvalChartDto = members.stream().map(m -> MidChartDto.builder()
                 .memberId(m.getId())
                 .name(m.getName())
                 .build()
         ).collect(Collectors.toList());
         for (BadgeDao badgeDao : midtermBadgeList) {
-            for (ChartDto chart : midTermEvalChartDto) {
+            for (MidChartDto chart : midTermEvalChartDto) {
                 if (badgeDao.getMemberId() == chart.getMemberId()) {
-                    chart.addEvaluation(new BadgeDto(badgeDao.getEvaluationBadge(), badgeDao.getQuantity()));
+//                    chart.addEvaluation(new BadgeDto(badgeDao.getEvaluationBadge(), badgeDao.getQuantity()));//!
+                    chart.getEvaluation().put(badgeDao.getEvaluationBadge(), badgeDao.getQuantity());
                 }
             }
         }
@@ -210,9 +211,13 @@ public class EvaluationService {
             );
         }
 
-        for (ChartDto chartDto : midTermEvalChartDto) {
+        for (MidChartDto chartDto : midTermEvalChartDto) {
+            chartDto.getEvaluation().putIfAbsent(EvaluationBadge.아이디어_뱅크, 0l);
+            chartDto.getEvaluation().putIfAbsent(EvaluationBadge.최고의_서포터, 0l);
+            chartDto.getEvaluation().putIfAbsent(EvaluationBadge.탁월한_리더, 0l);
+            chartDto.getEvaluation().putIfAbsent(EvaluationBadge.열정적인_참여자, 0l);
 //            System.out.println("m.getBadges() = " + chartDto.getBadges());
-            setBadge(chartDto.getEvaluation());
+//            setBadge(chartDto.getEvaluation());
         }
         EverythingEvalResponse everythingEvalResponse = new EverythingEvalResponse(midTermEvalChartDto, rankingDtos);
         return everythingEvalResponse;
@@ -223,13 +228,13 @@ public class EvaluationService {
         List<Member> members = project.getProjectMembers().stream().map(pm -> pm.getMember()).collect(Collectors.toList());
         List<ScoreDao> scoreDaos = finalEvaluationRepository.findList(projectId, members);
 
-        List<ChartDto> finalTermEvalChartDto = members.stream().map(m -> ChartDto.builder()
+        List<FinalCharDto> finalTermEvalFinalCharDto = members.stream().map(m -> FinalCharDto.builder()
                 .memberId(m.getId())
                 .name(m.getName())
                 .build()
         ).collect(Collectors.toList());
         for (ScoreDao s : scoreDaos) {
-            for (ChartDto chart : finalTermEvalChartDto) {
+            for (FinalCharDto chart : finalTermEvalFinalCharDto) {
                 if (s.getId() == chart.getMemberId()) {
                     chart.addEvaluation(ScoreDto.builder()
                             .jobPerformance(s.getJobPerformance())
@@ -239,10 +244,10 @@ public class EvaluationService {
                 }
             }
         }
-        finalTermEvalChartDto.stream().filter(fe -> fe.getEvaluation().size() == 0).forEach(fe -> fe.addEvaluation(new ScoreDto()));
+        finalTermEvalFinalCharDto.stream().filter(fe -> fe.getEvaluation().size() == 0).forEach(fe -> fe.addEvaluation(new ScoreDto()));
 
         // * 랭킹 부분
-        List<FinalTermRankingDto> rankingDtos = finalTermEvalChartDto.stream().map(fe -> FinalTermRankingDto.builder()
+        List<FinalTermRankingDto> rankingDtos = finalTermEvalFinalCharDto.stream().map(fe -> FinalTermRankingDto.builder()
                 .memberId(fe.getMemberId())
                 .name(fe.getName())
                 .score(Score.avg((ScoreDto) fe.getEvaluation().get(0)))
@@ -260,7 +265,7 @@ public class EvaluationService {
             exRank.setRank(rank);
         }
 
-        EverythingEvalResponse everythingEvalResponse = new EverythingEvalResponse(finalTermEvalChartDto, ranks);
+        EverythingEvalResponse everythingEvalResponse = new EverythingEvalResponse(finalTermEvalFinalCharDto, ranks);
         return everythingEvalResponse;
     }
 
@@ -305,11 +310,11 @@ public class EvaluationService {
                     participantResponse.addBadge(badgeDto);
                 }
             }
-//            for (FinalTermEvaluation fe : finalEvalList) { // * 로그인한 사용자가 다른사람 최종평가를 작성한적이 있으면 최종평가 ID 추가 없으면 null
-//                if(project.getState().equals(State.COMPLETE) && fe.getEvaluated() == member){
-//                    participantResponse.setFinalEvalId(fe.getId());
-//                }
-//            }
+            for (FinalTermEvaluation fe : finalEvalList) { // * 로그인한 사용자가 다른사람 최종평가를 작성한적이 있으면 최종평가 ID 추가 없으면 null
+                if(project.getState().equals(State.COMPLETE) && fe.getEvaluated() == member){
+                    participantResponse.setFinalEvalId(fe.getId());
+                }
+            }
             setBadge(participantResponse.getBadgeDtos());// * 개수가 0인 뱃지 설정
             response.add(participantResponse);
         }

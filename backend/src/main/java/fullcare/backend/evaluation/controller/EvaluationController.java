@@ -90,8 +90,8 @@ public class EvaluationController {
             @ApiResponse(description = "중간 평가 차트, 랭킹 조회 성공", responseCode = "200", useReturnTypeSchema = true)
     })
     @GetMapping("/midtermlist") // 디자인에서 뱃지 개수 차트 부분
-    public ResponseEntity<EverythingEvalResponse<ChartDto<BadgeDto>, MidTermRankingDto>> midtermEvalList(@RequestParam("project_id") Long projectId,
-                                                                                                         @CurrentLoginMember Member member) {
+    public ResponseEntity<EverythingEvalResponse<FinalCharDto<BadgeDto>, MidTermRankingDto>> midtermEvalList(@RequestParam("project_id") Long projectId,
+                                                                                                             @CurrentLoginMember Member member) {
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
             throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
         }
@@ -162,8 +162,8 @@ public class EvaluationController {
             @ApiResponse(description = "최종 평가 차트, 랭킹 조회 성공", responseCode = "200", useReturnTypeSchema = true)
     })
     @GetMapping("/finallist") // 최종평가 차트 api
-    public ResponseEntity<EverythingEvalResponse<ChartDto<ScoreDto>, FinalTermRankingDto>> finalEvalList(@RequestParam("project_id") Long projectId,
-                                                                                                         @CurrentLoginMember Member member) {
+    public ResponseEntity<EverythingEvalResponse<FinalCharDto<ScoreDto>, FinalTermRankingDto>> finalEvalList(@RequestParam("project_id") Long projectId,
+                                                                                                             @CurrentLoginMember Member member) {
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
             throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
         }

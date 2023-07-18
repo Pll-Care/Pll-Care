@@ -21,9 +21,16 @@ import fullcare.backend.post.domain.RecruitPosition;
 import fullcare.backend.post.dto.request.PostCreateRequest;
 import fullcare.backend.post.dto.request.RecruitInfo;
 import fullcare.backend.post.service.PostService;
+import fullcare.backend.profile.domain.Contact;
 import fullcare.backend.profile.domain.Profile;
+import fullcare.backend.profile.domain.ProjectExperience;
+import fullcare.backend.profile.dto.ProjectExperienceRequestDto;
+import fullcare.backend.profile.dto.ProjectExperienceResponseDto;
+import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
+import fullcare.backend.profile.service.ProfileService;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.dto.request.ProjectCreateRequest;
+import fullcare.backend.project.dto.request.ProjectUpdateRequest;
 import fullcare.backend.project.service.ProjectService;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
@@ -34,6 +41,7 @@ import fullcare.backend.schedule.repository.ScheduleRepository;
 import fullcare.backend.schedule.service.MeetingService;
 import fullcare.backend.schedule.service.MilestoneService;
 import fullcare.backend.schedule.service.ScheduleService;
+import fullcare.backend.util.dto.TechStack;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -62,6 +70,7 @@ public class TestDataInit {
     private final FinalEvaluationRepository finalEvaluationRepository;
     private final ScheduleService scheduleService;
     private final ScheduleRepository scheduleRepository;
+    private final ProfileService profileService;
 
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
@@ -71,8 +80,26 @@ public class TestDataInit {
         createSchedule();
         createMidEvaluation();
         createFinalEvaluation();
+        createProfile();
 //        createMemoAndBookMark();
 //        createPostAndLikes();
+
+    }
+
+    private void createProfile() {
+        Member member = memberRepository.findById(1l).get();
+        Contact contact = new Contact("email@naver.com","git@naver.com","url.com");
+        List<TechStack> techStacks = new ArrayList<>();
+        techStacks.add(TechStack.Svelte);
+        techStacks.add(TechStack.React);
+        List<ProjectExperienceRequestDto> projectExperiences = new ArrayList<>();
+        projectExperiences.add(ProjectExperienceRequestDto.builder().title("title").description("설명").startDate(LocalDate.now()).endDate(LocalDate.now().plusWeeks(1l)).techStack(techStacks).build());
+        List<TechStack> techStacks2 = new ArrayList<>();
+        techStacks2.add(TechStack.Firebase);
+        techStacks2.add(TechStack.Django);
+        projectExperiences.add(ProjectExperienceRequestDto.builder().title("title1").description("설명2222").startDate(LocalDate.now()).endDate(LocalDate.now().plusWeeks(5l)).techStack(techStacks2).build());
+        profileService.updateProfile(member, new ProfileUpdateRequest(contact, RecruitPosition.BACKEND, techStacks, 0l, projectExperiences, false));
+
 
     }
 

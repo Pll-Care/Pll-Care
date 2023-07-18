@@ -34,7 +34,7 @@ public class Member {
     @Column(name = "oauth2_id")
     private String oAuth2Id;
 
-    @Column(name = "nickname", unique = true) // ! 닉네임 unique 처리에 대한 고민이 필요함
+    @Column(name = "nickname")
     private String nickname;
 
     @Column(name = "name")

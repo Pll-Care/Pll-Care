@@ -16,7 +16,7 @@ public class ParticipantResponse {
     private String imageUrl;
     private boolean isMe;
     private List<BadgeDto> badgeDtos = new ArrayList<>();
-//    private Long finalEvalId;
+    private Long finalEvalId;
     @Builder
     public ParticipantResponse(Long id, String name, String imageUrl, boolean isMe) {
         this.id = id;
