@@ -1,4 +1,4 @@
-const StackItem = ({ imageUrl, name, onClick }) => {
+const StackItem = ({ imageUrl, name, onClick, type = "basic" }) => {
   return (
     <li className="stackItem">
       <div className="stackItem_image">
@@ -8,9 +8,11 @@ const StackItem = ({ imageUrl, name, onClick }) => {
         <span>{name}</span>
       </div>
       <div>
-        <button className="stackItem_button" name={name} onClick={onClick}>
-          x
-        </button>
+        {type === "change" ? (
+          <button className="stackItem_button" name={name} onClick={onClick}>
+            x
+          </button>
+        ) : null}
       </div>
     </li>
   );

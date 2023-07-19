@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { searchTechAPI } from "../lib/apis/profileApi";
-import getSearchKeywordWithCach from "../utils/getSearchKeyWordWithCatche";
+import getSearchKeywordWithCach from "../utils/searchStack/getSearchKeyWordWithCatche";
 
 const useSearchList = (keyword) => {
   const [searchList, sestSearchList] = useState([]);

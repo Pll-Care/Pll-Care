@@ -2,9 +2,12 @@ import { useState } from "react";
 import useSearchList from "../../../../hooks/useSearchList";
 import useSearch from "../../../../hooks/useSearch";
 import StackItem from "../../../common/StackItem";
+import {
+  filterSelectStack,
+  isStackinList,
+} from "../../../../utils/searchStack/handleStackList";
 
 const SearchStack = ({ stackList, changeStack, deleteStack }) => {
-  console.log(stackList);
   const [stacks, setStacks] = useState([...stackList]);
 
   const {
@@ -27,7 +30,7 @@ const SearchStack = ({ stackList, changeStack, deleteStack }) => {
     if (KeyEvent[key]) {
       if (key === "Enter") {
         const response = KeyEvent[key](searchList);
-        if (response) {
+        if (response && !isStackinList(stacks, response.name)) {
           setStacks((prev) => [...prev, response]);
           changeStack(response);
         }
@@ -41,15 +44,16 @@ const SearchStack = ({ stackList, changeStack, deleteStack }) => {
 
   const delectSelectStack = (event) => {
     const select = event.target.name;
-    setStacks((prev) => [...prev].filter((item) => item.name !== select));
-    deleteStack([...stackList].filter((item) => item.name !== select));
+    const result = filterSelectStack(stacks, select);
+    setStacks([...result]);
+    deleteStack(select);
   };
 
   const clickSelectStack = (event) => {
     const select = event.target.innerText;
 
     const response = clickStack(select, searchList);
-    if (response) {
+    if (response && !isStackinList(stacks, select)) {
       setStacks((prev) => [...prev, response]);
       changeStack(response);
     }
@@ -119,53 +123,16 @@ const StackItems = ({ stacks, delectSelectStack }) => {
   return (
     <div className="profile_body_introduce_positionBox_stack_select">
       <ul className="profile_body_introduce_positionBox_stack_bc_items">
-        {stacks.map((skill) => (
+        {stacks.map((skill, idx) => (
           <StackItem
-            key={skill.name}
+            key={skill.name + idx}
             imageUrl={skill.imageUrl}
             name={skill.name}
             onClick={delectSelectStack}
+            type="change"
           />
         ))}
       </ul>
     </div>
   );
 };
-
-const dummyData = [
-  {
-    name: "Spring",
-    imageUrl:
-      "https://fullcared.s3.ap-northeast-2.amazonaws.com/techstack/Spring.svg",
-  },
-
-  {
-    name: "SpringBoot",
-    imageUrl:
-      "https://fullcared.s3.ap-northeast-2.amazonaws.com/techstack/SpringBoot.png",
-  },
-
-  {
-    name: "Slack",
-    imageUrl:
-      "https://fullcared.s3.ap-northeast-2.amazonaws.com/techstack/Slack.svg",
-  },
-
-  {
-    name: "StyledComponent",
-    imageUrl:
-      "https://fullcared.s3.ap-northeast-2.amazonaws.com/techstack/StyledComponent.png",
-  },
-
-  {
-    name: "Svelte",
-    imageUrl:
-      "https://fullcared.s3.ap-northeast-2.amazonaws.com/techstack/Svelte.svg",
-  },
-
-  {
-    name: "Swift",
-    imageUrl:
-      "https://fullcared.s3.ap-northeast-2.amazonaws.com/techstack/Swift.svg",
-  },
-];
