@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import Select from "../../../../components/common/Select";
 import { positionSelect } from "../../../../utils/optionData";
 import StackItem from "../../../common/StackItem";
+import { filterSelectStack } from "../../../../utils/searchStack/handleStackList";
 
 const PositionBox = () => {
   const [isModify, setIsModify] = useState(false);
@@ -16,15 +17,6 @@ const PositionBox = () => {
     stack: [],
   });
   const { isMyProfile, memberId } = useProfile();
-
-  /*
-  FIXME: 
-  positionAndStack state은 수정 완료 시 전송할 데이터(ui에 뿌릴 데이터가 아니다)
-  화면이 마운트 됬을 때 데이터를 fetch
-  positionAndStack state에 넣어주기
-  자식 컴포넌트에서 입력값이 변경될 때마다 state 변경시키기
-  완료버튼 누르면 데이터 전송
-  */
 
   useEffect(() => {
     const getPosition = async () => {
@@ -40,8 +32,6 @@ const PositionBox = () => {
     if (!isModify) getPosition();
   }, [memberId, isModify]);
 
-  //TODO: 직무와 스텍 데이터 여기서 받기
-
   const submitModify = async () => {
     const submitStack = positionAndStack.stack.map((stack) => stack.name);
 
@@ -49,7 +39,6 @@ const PositionBox = () => {
       recruitPosition: positionAndStack.position,
       techStack: submitStack,
     };
-    console.log(reqBody);
 
     if (!reqBody.recruitPosition || !reqBody.techStack) {
       toast.error("개발 직무와 기술 스택을 반드시 선택해야합니다.");
@@ -71,10 +60,11 @@ const PositionBox = () => {
     }));
   };
 
-  const deleteStack = (stacks) => {
+  const deleteStack = (stack) => {
+    const result = filterSelectStack(positionAndStack.stack, stack);
     setPositionAndStack((prev) => ({
       ...prev,
-      stack: [...prev.stack, ...stacks],
+      stack: [...result],
     }));
   };
   return (
@@ -149,23 +139,3 @@ const PositionBox = () => {
   );
 };
 export default PositionBox;
-
-// TODO: 직무도 검색할 수 있는 API가 필요
-
-const stackList = [
-  "Pathon",
-  "C++",
-  "JavaScript",
-  "Java",
-  "React-Query",
-  "Styled-Component",
-  "Tailwind CSS",
-];
-
-const POSITION_DATA = "FrontEnd";
-
-// const SkillItem = ({ name, imageUrl }) => {
-//   return (
-
-//   );
-// };
