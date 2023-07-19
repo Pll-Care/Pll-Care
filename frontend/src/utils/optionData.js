@@ -9,8 +9,9 @@ export const sortSelect = [
 ];
 
 export const positionSelect = [
-  { value: "FrontEnd", title: "프론트엔드" },
-  { value: "BackEnd", title: "백엔드" },
-  { value: "Designer", title: "디자이너" },
-  { value: "ProductManager", title: "PM" },
+  { value: "", title: "직무를 선택해주세요." },
+  { value: "FRONTEND", title: "프론트엔드" },
+  { value: "BACKEND", title: "백엔드" },
+  { value: "DESIGN", title: "디자이너" },
+  { value: "MANAGER", title: "매니저" },
 ];

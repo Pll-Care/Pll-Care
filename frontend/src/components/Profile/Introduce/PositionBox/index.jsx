@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 import Button from "../../../common/Button";
 import SearchStack from "./SearchStack";
-import SearchPosition from "./SearchPosition";
 import { useProfile } from "../../../../context/ProfileContext";
-import { getPositionAPI } from "../../../../lib/apis/profileApi";
+import { getPositionAPI, patchProfile } from "../../../../lib/apis/profileApi";
+import { toast } from "react-toastify";
 
 import Select from "../../../../components/common/Select";
 import { positionSelect } from "../../../../utils/optionData";
+import StackItem from "../../../common/StackItem";
 
 const PositionBox = () => {
   const [isModify, setIsModify] = useState(false);
   const [positionAndStack, setPositionAndStack] = useState({
-    position: POSITION_DATA,
-    stack: [...stackList],
+    position: "",
+    stack: [],
   });
   const { isMyProfile, memberId } = useProfile();
 
@@ -28,17 +29,35 @@ const PositionBox = () => {
   useEffect(() => {
     const getPosition = async () => {
       const response = await getPositionAPI(memberId);
-      console.log("Position API", response);
+      if (response)
+        setPositionAndStack((prev) => ({
+          ...prev,
+          position: response.recruitPosition,
+          stack: response.techStack,
+        }));
     };
 
-    getPosition();
-  }, [memberId]);
+    if (!isModify) getPosition();
+  }, [memberId, isModify]);
 
   //TODO: 직무와 스텍 데이터 여기서 받기
 
-  const submitModify = () => {
-    console.log(positionAndStack);
-    setIsModify(false);
+  const submitModify = async () => {
+    const submitStack = positionAndStack.stack.map((stack) => stack.name);
+
+    const reqBody = {
+      recruitPosition: positionAndStack.position,
+      techStack: submitStack,
+    };
+    console.log(reqBody);
+
+    if (!reqBody.recruitPosition || !reqBody.techStack) {
+      toast.error("개발 직무와 기술 스택을 반드시 선택해야합니다.");
+    } else {
+      await patchProfile(memberId, reqBody);
+      setIsModify(false);
+      toast.success("수정되었습니다.");
+    }
   };
 
   const changePosition = (event) => {
@@ -46,7 +65,17 @@ const PositionBox = () => {
   };
 
   const changeStack = (stack) => {
-    setPositionAndStack((prev) => ({ ...prev, stack }));
+    setPositionAndStack((prev) => ({
+      ...prev,
+      stack: [...prev.stack, stack],
+    }));
+  };
+
+  const deleteStack = (stacks) => {
+    setPositionAndStack((prev) => ({
+      ...prev,
+      stack: [...prev.stack, ...stacks],
+    }));
   };
   return (
     <div className="profile_body_introduce_Box">
@@ -86,7 +115,7 @@ const PositionBox = () => {
         />
       ) : (
         <div className="profile_body_introduce_positionBox_position">
-          <span>{POSITION_DATA}</span>
+          <span>{positionAndStack.position}</span>
         </div>
       )}
 
@@ -96,17 +125,24 @@ const PositionBox = () => {
 
       {isModify ? (
         <SearchStack
-          //FIXME: 기술스택 데이터 fetch 받아서 내려주기
-          stackList={stackList}
+          stackList={positionAndStack.stack}
           changeStack={changeStack}
           memberId={memberId}
+          deleteStack={deleteStack}
         />
       ) : (
-        //FIXME: fetch 받은 데이터로 map 돌리기
         <ul className="profile_body_introduce_positionBox_stack_bc_items">
-          {stackList.map((skill) => (
-            <SkillItem skill={skill} key={skill} />
-          ))}
+          {positionAndStack.stack.length > 0 ? (
+            positionAndStack.stack.map((stack, idx) => (
+              <StackItem
+                name={stack.name}
+                imageUrl={stack.imageUrl}
+                key={idx}
+              />
+            ))
+          ) : (
+            <div>기술 스택을 작성해주세요.</div>
+          )}
         </ul>
       )}
     </div>
@@ -128,10 +164,8 @@ const stackList = [
 
 const POSITION_DATA = "FrontEnd";
 
-const SkillItem = ({ skill }) => {
-  return (
-    <li className="profile_body_introduce_positionBox_stack_bc_item">
-      <span>{skill}</span>
-    </li>
-  );
-};
+// const SkillItem = ({ name, imageUrl }) => {
+//   return (
+
+//   );
+// };

@@ -5,19 +5,19 @@
  * 한줄 소개 조회 - end
  * 한줄 소개 수정 - end
 
- * 연락처 조회 
+ * 연락처 조회  - end
+ * 연락처 수정  - end
 
  * 직무 기술스택 조회
  * 기술 스택 검색
+ * 직무 기술스택 수정
+ * 
  
  * 프로젝트 경험 조회
 
  # 개인 프로필 생성 수정 삭제
 
 
-   const response = await customAxios.get(
-    `/auth/memo/list?project_id=${projectId}&page=${pageNum}&size=3&direction=${direction}`
-  );
  */
 
 import { customAxios } from "./customAxios";
@@ -73,6 +73,38 @@ export const getContact = async (memberId) => {
 export const patchProfile = async (memberId, userInfo) => {
   try {
     await customAxios.patch(`/auth/profile/${memberId}`, userInfo);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getPositionAPI = async (memberId) => {
+  try {
+    const response = await customAxios.get(
+      `/auth/profile/${memberId}/roletechstack`
+    );
+
+    if (response.status === 200) return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const searchTechAPI = async (tech) => {
+  try {
+    const response = await customAxios.get(`/auth/util/techstack?tech=${tech}`);
+    if (response) return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getProjectExperienceAPI = async (memberId) => {
+  try {
+    const response = await customAxios.get(
+      `/auth/profile/${memberId}/experience`
+    );
+    console.log(response);
   } catch (error) {
     console.log(error);
   }
