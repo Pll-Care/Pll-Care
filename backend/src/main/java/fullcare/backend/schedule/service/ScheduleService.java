@@ -221,8 +221,7 @@ public class ScheduleService {
         Member findMember = memberRepository.findById(member.getId()).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
         List<Schedule> scheduleList = scheduleRepositoryCustom.search(scheduleCondition, scheduleCondition.getProjectId());//? 모든 일정을 가져와서 검증
 
-        List<ScheduleSearchResponse> ScheduleSearchResponse = new ArrayList<>();
-        List<ScheduleSearchResponse> content = createPageResponse(scheduleList, ScheduleSearchResponse, findMember, pageable);// 미팅, 마일스톤에 맞게 일정 생성 후 응답에 넣기
+        List<ScheduleSearchResponse> content = createPageResponse(scheduleList, findMember, scheduleCondition.isPrevious());// 미팅, 마일스톤에 맞게 일정 생성 후 응답에 넣기
         List<ScheduleSearchResponse> response = pageResponse(pageable, content);
         return new CustomPageImpl<>(response, pageable, content.size());
     }
@@ -429,7 +428,8 @@ public class ScheduleService {
         }
     }
 
-    private List<ScheduleSearchResponse> createPageResponse(List<Schedule> scheduleList, List<ScheduleSearchResponse> scheduleSearchResponse, Member member, Pageable pageable) {
+    private List<ScheduleSearchResponse> createPageResponse(List<Schedule> scheduleList, Member member, boolean previous) {
+        List<ScheduleSearchResponse> scheduleSearchResponse = new ArrayList<>();
         LocalDateTime now = LocalDateTime.now();
 
         for (Schedule schedule : scheduleList) {
@@ -459,27 +459,36 @@ public class ScheduleService {
                 scheduleResponse.setScheduleCategory(ScheduleCategory.MILESTONE);
             }
 
-
-            boolean eval = midtermEvaluationRepository.existsByScheduleIdAndVoterId(schedule.getId(), member.getId());
-            if (!eval && schedule.getState().equals(State.COMPLETE)) { //? 평가한 적이 없는 완료된 일정을 고름
-                if (schedule.getScheduleMembers().stream().anyMatch(sm -> sm.getMember().getId() == member.getId())) {//? 사용자가 일정에 들어갔는지 확인
-                    scheduleResponse.setEvaluationRequired(true);
+            boolean eval = schedule.getMidtermEvaluations().stream().anyMatch(me -> me.getVoter().getId() == member.getId());//? 해당 일정에 투표한 적이 있는지 확인
+//            boolean eval = midtermEvaluationRepository.existsByScheduleIdAndVoterId(schedule.getId(), member.getId());
+            if(previous) {
+                if(eval && schedule.getState().equals(State.COMPLETE)){
+                    scheduleSearchResponse.add(scheduleResponse);
                 }
+            }else {
+                if (!eval && schedule.getState().equals(State.COMPLETE)) { //? 평가한 적이 없는 완료된 일정을 고름
+                    if (schedule.getScheduleMembers().stream().anyMatch(sm -> sm.getMember().getId() == member.getId())) {//? 사용자가 일정에 들어갔는지 확인
+                        scheduleResponse.setEvaluationRequired(true);
+                    }
+                }
+                if (!(scheduleResponse.getEndDate().isBefore(LocalDateTime.now()) && !scheduleResponse.getEvaluationRequired())) {//? 현재 이후 날짜이거나 내가 평가할 필요가 있는 일정일 경우
+//                newResponse.add(response);
+                }
+                if(scheduleResponse.getEvaluationRequired() || scheduleResponse.getState().equals(State.TBD) || scheduleResponse.getState().equals(State.ONGOING))
+                    scheduleSearchResponse.add(scheduleResponse);
+
+
             }
 
 
-            scheduleSearchResponse.add(scheduleResponse);
-
         }
-        List<ScheduleSearchResponse> newResponse = new ArrayList<>();
-        for (ScheduleSearchResponse response : scheduleSearchResponse) {
-            if (!(response.getEndDate().isBefore(LocalDateTime.now()) && !response.getEvaluationRequired())) {//? 현재 이후 날짜이거나 내가 평가할 필요가 있는 일정일 경우
-                newResponse.add(response);
-            }
-        }
+//        List<ScheduleSearchResponse> newResponse = new ArrayList<>();
+//        for (ScheduleSearchResponse response : scheduleSearchResponse) {
+//
+//        }
 
 
-        return newResponse;
+        return scheduleSearchResponse;
     }
 
     private void checkModify(Member member, Schedule schedule, ScheduleSearchResponse scheduleResponse) {

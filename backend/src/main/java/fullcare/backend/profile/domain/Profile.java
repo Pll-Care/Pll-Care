@@ -53,7 +53,9 @@ public class Profile {
 
         this.contact = profileUpdateRequest.getContact();
         this.recruitPosition = profileUpdateRequest.getRecruitPosition();
-        this.techStack = TechStackUtil.listToString(profileUpdateRequest.getTechStack());
+        if (profileUpdateRequest.getTechStack() != null){
+            this.techStack = TechStackUtil.listToString(profileUpdateRequest.getTechStack());
+        }
         if (profileUpdateRequest.getProjectId() != null && profileUpdateRequest.isDelete()){
             ProjectExperience projectExperience = this.projectExperiences.stream().filter(pe -> pe.getId() == profileUpdateRequest.getProjectId())
                     .findFirst().orElseThrow(() -> new EntityNotFoundException("프로젝트 경험이 없습니다."));
