@@ -1,127 +1,64 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
+import useSearchList from "../../../../hooks/useSearchList";
+import useSearch from "../../../../hooks/useSearch";
+import StackItem from "../../../common/StackItem";
 
-const SearchStack = ({ stackList, changeStack }) => {
-  const [stack, setStack] = useState([...stackList]);
-  const [searchList, setSearchList] = useState([...searchData]);
-  const [searchKeyword, setSearchKeyword] = useState("");
-  const [autoSearchKeyword, setAutoSearchKeyword] = useState("");
-  const [focusIndex, setFocusIndex] = useState(-1);
+const SearchStack = ({ stackList, changeStack, deleteStack }) => {
+  console.log(stackList);
+  const [stacks, setStacks] = useState([...stackList]);
 
-  const inputRef = useRef(null);
-  const listRef = useRef(null);
-  let isSelectVisible = false;
-  if (searchKeyword.length > 0) isSelectVisible = true;
-  if (searchKeyword.length < 0) isSelectVisible = false;
+  const {
+    searchKeyword,
+    autoSearchKeyword,
+    selectIndex,
+    isSelectVisible,
+    KeyEvent,
+    changeSearchKeyword,
+    handleMouseEnter,
+    handleBlur,
+    clickStack,
+    inputRef,
+  } = useSearch();
 
-  const KeyEvent = {
-    Enter: (select) => {
-      if (searchKeyword === "" || autoSearchKeyword === "") return;
-      if (!stack.includes(select)) {
-        changeStack([...stack, select]);
-        setStack((prev) => [...prev, select]);
-        inputRef.current.value = "";
-        setSearchKeyword("");
-        setAutoSearchKeyword("");
-        setFocusIndex(-1);
-      }
-    },
-    ArrowDown: () => {
-      if (searchList.length === 0) {
-        return;
-      }
-      if (listRef.current.childElementCount === focusIndex + 1) {
-        setFocusIndex(() => 0);
-        return;
-      }
-      if (focusIndex === -1) {
-        isSelectVisible = true;
-      }
-      setFocusIndex((index) => index + 1);
-      setAutoSearchKeyword(searchList[focusIndex + 1]);
-    },
-    ArrowUp: () => {
-      if (focusIndex === -1) {
-        return;
-      }
-      if (focusIndex === 0) {
-        setAutoSearchKeyword("");
-        setFocusIndex((index) => index - 1);
-        isSelectVisible = false;
-        return;
-      }
+  const { searchList } = useSearchList(searchKeyword);
 
-      setFocusIndex((index) => index - 1);
-      setAutoSearchKeyword(searchList[focusIndex - 1]);
-    },
-    Escape: () => {
-      setAutoSearchKeyword("");
-      setFocusIndex(-1);
-      isSelectVisible = false;
-    },
-  };
-
-  const changeKeyword = (e) => {
-    //TODO: 여기서 서버 요청
-    if (isSelectVisible) {
-      setFocusIndex(-1);
-    }
-    setSearchKeyword(e.target.value);
-  };
-
-  const handleKeyUp = (e) => {
-    if (KeyEvent[e.key]) {
-      e.key === "Enter"
-        ? KeyEvent[e.key](autoSearchKeyword)
-        : KeyEvent[e.key]();
+  const handleKeyUp = (event) => {
+    const key = event.key;
+    if (KeyEvent[key]) {
+      if (key === "Enter") {
+        const response = KeyEvent[key](searchList);
+        if (response) {
+          setStacks((prev) => [...prev, response]);
+          changeStack(response);
+        }
+      } else if (key === "ArrowDown" || "ArrowUp") {
+        KeyEvent[key](searchList);
+      } else {
+        KeyEvent[key]();
+      }
     }
   };
 
-  const handleMouseEnter = (e) => {
-    setFocusIndex(Number(e.target.id));
+  const delectSelectStack = (event) => {
+    const select = event.target.name;
+    setStacks((prev) => [...prev].filter((item) => item.name !== select));
+    deleteStack([...stackList].filter((item) => item.name !== select));
   };
 
-  const handleBlur = () => {
-    setFocusIndex(() => -1);
-    setAutoSearchKeyword("");
-  };
+  const clickSelectStack = (event) => {
+    const select = event.target.innerText;
 
-  const clickStack = (e) => {
-    const select = e.target.innerText;
-
-    if (!stack.includes(select)) {
-      changeStack([...stack, select]);
-      setStack((prev) => [...prev, select]);
-      inputRef.current.value = "";
-      setSearchKeyword("");
-      setAutoSearchKeyword("");
-      setFocusIndex(() => -1);
+    const response = clickStack(select, searchList);
+    if (response) {
+      setStacks((prev) => [...prev, response]);
+      changeStack(response);
     }
-  };
-
-  const delectSelectStack = (e) => {
-    const select = e.target.name;
-    setStack((prev) => [...prev].filter((st) => st !== select));
-    changeStack([...stack].filter((st) => st !== select));
   };
 
   return (
     <div>
-      {stack.length > 0 ? (
-        <div className="profile_body_introduce_positionBox_stack_select">
-          <ul className="profile_body_introduce_positionBox_stack_bc_items">
-            {stack.map((skill) => (
-              <li
-                key={skill}
-                className="profile_body_introduce_positionBox_stack_ch_item"
-              >
-                <span>{skill}</span>
-                <button name={skill} onClick={delectSelectStack}>
-                  x
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
+      {stacks.length > 0 ? (
+        <StackItems stacks={stacks} delectSelectStack={delectSelectStack} />
       ) : null}
       <div className="search">
         <div className="search_select">
@@ -132,7 +69,8 @@ const SearchStack = ({ stackList, changeStack }) => {
                 type="search"
                 placeholder="기술 이름을 입력해주세요."
                 name="검색"
-                onChange={changeKeyword}
+                value={autoSearchKeyword ? autoSearchKeyword : searchKeyword}
+                onChange={changeSearchKeyword}
                 onKeyUp={handleKeyUp}
                 onBlur={handleBlur}
                 ref={inputRef}
@@ -141,21 +79,24 @@ const SearchStack = ({ stackList, changeStack }) => {
           </ul>
           {isSelectVisible ? (
             <div className="search_wrap">
-              <ul className="search_list" ref={listRef}>
+              <ul className="search_list">
                 {searchList.length > 0 ? (
                   searchList.map((skill, listIndex) => (
                     <li
                       key={listIndex}
                       id={listIndex}
-                      onClick={clickStack}
+                      onClick={clickSelectStack}
                       className={
-                        listIndex === focusIndex
+                        listIndex === selectIndex
                           ? "search_item highlighted"
                           : "search_item"
                       }
                       onMouseEnter={handleMouseEnter}
                     >
-                      {skill}
+                      <div className="search_item_image">
+                        <img src={skill.imageUrl} alt="기술 스택 이미지" />
+                      </div>
+                      <div className="search_item_name">{skill.name}</div>
                     </li>
                   ))
                 ) : (
@@ -174,14 +115,57 @@ const SearchStack = ({ stackList, changeStack }) => {
 
 export default SearchStack;
 
-const searchData = [
-  "CSS",
-  "Tailwind CSS",
-  "Styled-Component",
-  "Java",
-  "JavaScript",
-  "HTML",
-  "React",
-  "TypeScript",
-  "View",
+const StackItems = ({ stacks, delectSelectStack }) => {
+  return (
+    <div className="profile_body_introduce_positionBox_stack_select">
+      <ul className="profile_body_introduce_positionBox_stack_bc_items">
+        {stacks.map((skill) => (
+          <StackItem
+            key={skill.name}
+            imageUrl={skill.imageUrl}
+            name={skill.name}
+            onClick={delectSelectStack}
+          />
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+const dummyData = [
+  {
+    name: "Spring",
+    imageUrl:
+      "https://fullcared.s3.ap-northeast-2.amazonaws.com/techstack/Spring.svg",
+  },
+
+  {
+    name: "SpringBoot",
+    imageUrl:
+      "https://fullcared.s3.ap-northeast-2.amazonaws.com/techstack/SpringBoot.png",
+  },
+
+  {
+    name: "Slack",
+    imageUrl:
+      "https://fullcared.s3.ap-northeast-2.amazonaws.com/techstack/Slack.svg",
+  },
+
+  {
+    name: "StyledComponent",
+    imageUrl:
+      "https://fullcared.s3.ap-northeast-2.amazonaws.com/techstack/StyledComponent.png",
+  },
+
+  {
+    name: "Svelte",
+    imageUrl:
+      "https://fullcared.s3.ap-northeast-2.amazonaws.com/techstack/Svelte.svg",
+  },
+
+  {
+    name: "Swift",
+    imageUrl:
+      "https://fullcared.s3.ap-northeast-2.amazonaws.com/techstack/Swift.svg",
+  },
 ];
