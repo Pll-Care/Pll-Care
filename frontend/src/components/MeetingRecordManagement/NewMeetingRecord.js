@@ -39,7 +39,7 @@ const NewMeetingRecord = ({
           formData.append("file", file);
 
           const imgUrl = await uploadImage({
-            dir: "meetingRecord",
+            dir: "memo",
             formData: formData.get("file"),
           });
 
