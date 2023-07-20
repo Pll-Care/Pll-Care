@@ -7,6 +7,7 @@ import fullcare.backend.post.dto.response.PostDetailResponse;
 import fullcare.backend.post.dto.response.PostListResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,9 +21,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "join p.project pj")
     Page<PostListResponse> findList(@Param("memberId") Long memberId, Pageable pageable);
 
-    @Override
-    @Query("select p from Post p join fetch p.author a join fetch p.project pj where p.id = :postId")
-    Optional<Post> findById(@Param("postId") Long postId);
+    @EntityGraph(attributePaths = {"author", "project"})
+    Optional<Post> findPostWithAuthorAndProjectById(Long postId);
 
     @Query("select new fullcare.backend.post.dto.response.PostDetailResponse(p.id, pj.title,pj.imageUrl, a.nickname,a.imageUrl, p.title, p.description,p.recruitStartDate, p.recruitEndDate, p.reference, p.contact, p.region, p.techStack, case when l.id is null then false else true end, case when a.id = :memberId then true else false end , case when a.id = :memberId then true else false end ,p.createdDate, p.modifiedDate)" +
             "from Post p left join Likes l on l.post.id = p.id and l.member.id = :memberId " +

@@ -5,8 +5,8 @@ import lombok.Getter;
 
 @Getter
 public class ProjectCompleteResponse {
-    private boolean isCompleted;
 
+    private boolean isCompleted;
 
     @Builder
     public ProjectCompleteResponse(boolean isCompleted) {

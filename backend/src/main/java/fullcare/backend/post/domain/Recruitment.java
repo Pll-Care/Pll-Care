@@ -11,7 +11,7 @@ public class Recruitment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "recruiement_id")
+    @Column(name = "recruitment_id")
     private Long id;
 
 

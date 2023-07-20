@@ -8,7 +8,6 @@ import fullcare.backend.global.entity.BaseEntity;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.memo.domain.Memo;
 import fullcare.backend.post.domain.Post;
-import fullcare.backend.project.dto.request.ProjectUpdateRequest;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
 import fullcare.backend.schedule.domain.Schedule;
@@ -70,7 +69,7 @@ public class Project extends BaseEntity {
 
 
     @Builder(builderMethodName = "createNewProject")
-    public Project(State state, String title, String description, LocalDate startDate, LocalDate endDate, String imageUrl) {
+    public Project(String title, String description, State state, LocalDate startDate, LocalDate endDate, String imageUrl) {
         this.title = title;
         this.description = description;
         this.state = state;
@@ -96,15 +95,17 @@ public class Project extends BaseEntity {
         projectMembers.add(pm);
     }
 
-    public void update(ProjectUpdateRequest projectUpdateRequest) {
-        this.title = projectUpdateRequest.getTitle();
-        this.description = projectUpdateRequest.getDescription();
-        this.startDate = projectUpdateRequest.getStartDate();
-        this.endDate = projectUpdateRequest.getEndDate();
-        this.state = projectUpdateRequest.getState();
-        this.imageUrl = projectUpdateRequest.getImageUrl();
+    public void updateAll(String title, String description, State state, LocalDate startDate, LocalDate endDate, String imageUrl) {
+        this.title = title;
+        this.description = description;
+        this.state = state;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.imageUrl = imageUrl;
     }
-    public boolean isCompleted(){
+
+
+    public boolean isCompleted() {
         return this.state.equals(State.COMPLETE) ? true : false;
     }
 }

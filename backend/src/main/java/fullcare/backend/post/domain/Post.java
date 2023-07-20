@@ -92,8 +92,7 @@ public class Post extends BaseEntity {
         this.techStack = techStack;
         this.state = state;
     }
-
-
+    
     public void updateAll(String title, String description, LocalDate recruitStartDate, LocalDate recruitEndDate, String reference, String contact, String region, String techStack, List<Recruitment> recruitments) {
         this.title = title;
         this.description = description;

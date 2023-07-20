@@ -32,7 +32,7 @@ public class BookmarkMemoListResponse {
         return BookmarkMemoListResponse.builder()
                 .memoId(memo.getId())
                 .title(memo.getTitle())
-                .author(memo.getAuthor().getNickname())
+                .author(memo.getAuthor().getName())
                 .createdDate(memo.getCreatedDate())
                 .modifiedDate(memo.getModifiedDate())
                 .build();

@@ -9,13 +9,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
+
 public interface MemoRepository extends JpaRepository<Memo, Long> {
 
     @EntityGraph(attributePaths = {"author"})
     Page<Memo> findMemoListByProjectId(Long projectId, Pageable pageable);
 
-    @Query("select new fullcare.backend.memo.dto.response.MemoDetailResponse(m.id, m.author.nickname, m.title, m.content, case when bmm.id is null then false else true end, m.createdDate, m.modifiedDate) " +
+    @Query("select new fullcare.backend.memo.dto.response.MemoDetailResponse(m.id, m.author.name, m.author.id ,m.title, m.content, case when bmm.id is null then false else true end, m.createdDate, m.modifiedDate) " +
             "from Memo m left outer join BookmarkMemo bmm on m.id = bmm.memo.id and bmm.member.id = :memberId where m.id = :memoId")
-    MemoDetailResponse findMemoDetailDto(@Param("memberId") Long memberId, @Param("memoId") Long memoId);
+    Optional<MemoDetailResponse> findMemoDetailDto(@Param("memberId") Long memberId, @Param("memoId") Long memoId);
 
 }

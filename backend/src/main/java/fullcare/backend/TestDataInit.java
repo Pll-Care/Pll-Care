@@ -7,19 +7,12 @@ import fullcare.backend.evaluation.domain.MidtermEvaluation;
 import fullcare.backend.evaluation.domain.Score;
 import fullcare.backend.evaluation.repository.FinalEvaluationRepository;
 import fullcare.backend.evaluation.repository.MidtermEvaluationRepository;
-import fullcare.backend.evaluation.service.EvaluationService;
 import fullcare.backend.global.State;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.domain.MemberRole;
 import fullcare.backend.member.repository.MemberRepository;
-import fullcare.backend.memo.domain.Memo;
-import fullcare.backend.memo.dto.request.MemoCreateRequest;
 import fullcare.backend.memo.service.BookmarkMemoService;
 import fullcare.backend.memo.service.MemoService;
-import fullcare.backend.post.domain.Post;
-import fullcare.backend.post.domain.RecruitPosition;
-import fullcare.backend.post.dto.request.PostCreateRequest;
-import fullcare.backend.post.dto.request.RecruitInfo;
 import fullcare.backend.post.service.PostService;
 import fullcare.backend.profile.domain.Profile;
 import fullcare.backend.project.domain.Project;
@@ -80,8 +73,8 @@ public class TestDataInit {
         Random rand = new Random();
         Project project = projectService.findProject(1l);
         for (long i = 1l; i <= 30; i++) {
-            long evaluator = rand.nextLong(1,10);
-            long evaluated = rand.nextLong(1,10);
+            long evaluator = rand.nextLong(1, 10);
+            long evaluated = rand.nextLong(1, 10);
             FinalTermEvaluation finalTermEvaluation = FinalTermEvaluation.createNewFinalEval()
                     .content("내용")
                     .score(new Score(rand.nextInt(5), rand.nextInt(5), rand.nextInt(5), rand.nextInt(5)))
@@ -97,16 +90,16 @@ public class TestDataInit {
         Random rand = new Random();
         Project project = projectService.findProject(1l);
         for (long i = 1l; i <= 30; i++) {
-            long voterId = rand.nextLong(1,10);
-            long votedId = rand.nextLong(1,10);
+            long voterId = rand.nextLong(1, 10);
+            long votedId = rand.nextLong(1, 10);
             EvaluationBadge badge = null;
-            if(i%4==0) {
+            if (i % 4 == 0) {
                 badge = EvaluationBadge.아이디어_뱅크;
-            }else if(i%4==1){
+            } else if (i % 4 == 1) {
                 badge = EvaluationBadge.최고의_서포터;
-            }else if(i%4==2){
+            } else if (i % 4 == 2) {
                 badge = EvaluationBadge.탁월한_리더;
-            }else{
+            } else {
                 badge = EvaluationBadge.열정적인_참여자;
             }
             Schedule schedule = scheduleRepository.findById(1l).orElseThrow();

@@ -2,22 +2,23 @@ package fullcare.backend.post.controller;
 
 
 import fullcare.backend.global.dto.ErrorResponse;
-import fullcare.backend.global.dto.SuccessResponse;
 import fullcare.backend.global.errorcode.PostErrorCode;
 import fullcare.backend.global.errorcode.ProjectErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.DuplicateProjectMemberException;
+import fullcare.backend.global.exceptionhandling.exception.EntityNotFoundException;
 import fullcare.backend.global.exceptionhandling.exception.InvalidAccessException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.post.domain.Post;
 import fullcare.backend.post.dto.request.PostCreateRequest;
+import fullcare.backend.post.dto.request.PostDeleteRequest;
 import fullcare.backend.post.dto.request.PostUpdateRequest;
 import fullcare.backend.post.dto.response.PostDetailResponse;
 import fullcare.backend.post.dto.response.PostListResponse;
 import fullcare.backend.post.service.PostService;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.dto.request.ProjectApplyRequest;
-import fullcare.backend.project.dto.response.ProjectSimpleListResponse;
 import fullcare.backend.project.service.ProjectService;
+import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.projectmember.service.ProjectMemberService;
@@ -37,8 +38,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -62,11 +61,9 @@ public class PostController {
     public ResponseEntity create(@RequestBody PostCreateRequest postCreateRequest,
                                  @CurrentLoginMember Member member) {
 
-        if (!(projectMemberService.validateProjectMember(postCreateRequest.getProjectId(), member.getId()))) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
-        }
+        ProjectMember findProjectMember = projectService.isProjectAvailable(postCreateRequest.getProjectId(), member.getId(), false);
 
-        postService.createPost(postCreateRequest, member);
+        postService.createPost(postCreateRequest, findProjectMember);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
@@ -81,13 +78,10 @@ public class PostController {
                                  @RequestBody PostUpdateRequest postUpdateRequest,
                                  @CurrentLoginMember Member member) {
 
-        Post post = postService.findPost(postId);
-        Project findProject = post.getProject();  // * 프로젝트 정보
-        Member author = post.getAuthor(); // * 작성자 정보
+        ProjectMember findProjectMember = projectService.isProjectAvailable(postUpdateRequest.getProjectId(), member.getId(), false);
+        Post findPost = postService.findPost(postId);
 
-        if (!(projectMemberService.validateProjectMember(findProject.getId(), member.getId()))) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
-        } else if (!author.getId().equals(member.getId()) || !(projectMemberService.findProjectMember(findProject.getId(), member.getId()).isLeader())) {
+        if (findPost.getAuthor().getId() != findProjectMember.getMember().getId() && !findProjectMember.isLeader()) {
             throw new InvalidAccessException(PostErrorCode.INVALID_MODIFY);
         }
 
@@ -104,16 +98,14 @@ public class PostController {
     })
     @DeleteMapping("/{postId}")
     public ResponseEntity delete(@PathVariable Long postId,
+                                 @RequestBody PostDeleteRequest postDeleteRequest,
                                  @CurrentLoginMember Member member) {
 
-        Post post = postService.findPost(postId);
-        Project findProject = post.getProject();  // * 프로젝트 정보
-        Member author = post.getAuthor(); // * 작성자 정보
+        ProjectMember findProjectMember = projectService.isProjectAvailable(postDeleteRequest.getProjectId(), member.getId(), false);
+        Post findPost = postService.findPost(postId);
 
-        if (!(projectMemberService.validateProjectMember(findProject.getId(), member.getId()))) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
-        } else if (!author.getId().equals(member.getId()) || !(projectMemberService.findProjectMember(findProject.getId(), member.getId()).isLeader())) {
-            throw new InvalidAccessException(PostErrorCode.INVALID_DELETE);
+        if (findPost.getAuthor().getId() != findProjectMember.getMember().getId() && !findProjectMember.isLeader()) {
+            throw new InvalidAccessException(PostErrorCode.INVALID_MODIFY);
         }
 
         postService.deletePost(postId);
@@ -175,9 +167,9 @@ public class PostController {
     })
     @PostMapping("/{postId}/like")
     public ResponseEntity like(@PathVariable Long postId, @CurrentLoginMember Member member) {
-        Post post = postService.findPost(postId);
+        Post findPost = postService.findPost(postId);
 
-        postService.likePost(post, member);
+        postService.likePost(findPost, member);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -189,30 +181,53 @@ public class PostController {
     })
     @PostMapping("/{postId}/apply")
     public ResponseEntity apply(@PathVariable Long postId, @RequestBody ProjectApplyRequest projectApplyRequest, @CurrentLoginMember Member member) {
-        Post post = postService.findPost(postId);
-        Project findProject = post.getProject();  // * 프로젝트 정보
 
-        // ! 이미 프로젝트에 소속된 사람이라면 처리할 필요 없음
-        if (projectMemberService.validateProjectMember(findProject.getId(), member.getId())) {
-            throw new DuplicateProjectMemberException(ProjectErrorCode.DUPLICATE_PROJECT_MEMBER);
+        Post findPost = postService.findPost(postId);
+        Project findProject = findPost.getProject();  // * 프로젝트 정보
+
+        try {
+            ProjectMember findProjectMember = projectMemberService.findProjectMember(findProject.getId(), member.getId());
+
+            if (findProjectMember.getProjectMemberRole().getRole() == ProjectMemberRoleType.리더 || findProjectMember.getProjectMemberRole().getRole() == ProjectMemberRoleType.팀원) {
+                throw new DuplicateProjectMemberException(ProjectErrorCode.DUPLICATE_PROJECT_MEMBER); // todo 이미 프로젝트에 소속된 사용자입니다.
+
+            } else if (findProjectMember.getProjectMemberRole().getRole() == ProjectMemberRoleType.미정) {
+                throw new DuplicateProjectMemberException(ProjectErrorCode.DUPLICATE_PROJECT_MEMBER); // todo 이미 프로젝트에 지원한 사용자입니다.
+            }
+
+        } catch (EntityNotFoundException e) {
+            projectMemberService.addProjectMember(findProject.getId(), member, new ProjectMemberRole(ProjectMemberRoleType.미정, projectApplyRequest.getPosition()));
         }
 
-        projectMemberService.addProjectMember(findProject.getId(), member, new ProjectMemberRole(ProjectMemberRoleType.미정, projectApplyRequest.getPosition()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // * 사용자가 속한 프로젝트 목록
-    @Operation(method = "get", summary = "사용자 프로젝트 리스트 조회")
+    // * 특정 게시글을 통해 지원한 프로젝트 지원 취소
+    @Operation(method = "post", summary = "프로젝트 지원 취소")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "사용자 프로젝트 리스트 조회 성공", useReturnTypeSchema = true),
-            @ApiResponse(responseCode = "400", description = "사용자 프로젝트 리스트 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse(responseCode = "200", description = "프로젝트 지원 취소 성공", content = @Content),
+            @ApiResponse(responseCode = "400", description = "프로젝트 지원 취소 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @GetMapping("/projectlist")
-    public ResponseEntity<SuccessResponse<List<ProjectSimpleListResponse>>> projectlist(@CurrentLoginMember Member member) {
-        List<ProjectSimpleListResponse> result = projectService.findSimpleProjectList(member.getId());
-        SuccessResponse<List<ProjectSimpleListResponse>> responses = new SuccessResponse<>(result);
+    @PostMapping("/{postId}/applycancel")
+    public ResponseEntity applyCancel(@PathVariable Long postId, @RequestBody ProjectApplyRequest projectApplyRequest, @CurrentLoginMember Member member) {
 
-        return new ResponseEntity<>(responses, HttpStatus.OK);
+        Post findPost = postService.findPost(postId);
+        Project findProject = findPost.getProject();  // * 프로젝트 정보
+
+        try {
+            ProjectMember findProjectMember = projectMemberService.findProjectMember(findProject.getId(), member.getId());
+
+            if (findProjectMember.getProjectMemberRole().getRole() == ProjectMemberRoleType.리더 || findProjectMember.getProjectMemberRole().getRole() == ProjectMemberRoleType.팀원) {
+                throw new DuplicateProjectMemberException(ProjectErrorCode.DUPLICATE_PROJECT_MEMBER); // todo 이미 프로젝트에 소속된 사용자입니다.
+
+            } else if (findProjectMember.getProjectMemberRole().getRole() == ProjectMemberRoleType.미정) {
+                throw new DuplicateProjectMemberException(ProjectErrorCode.DUPLICATE_PROJECT_MEMBER); // todo 이미 프로젝트에 지원한 사용자입니다.
+            }
+
+        } catch (EntityNotFoundException e) {
+            projectMemberService.addProjectMember(findProject.getId(), member, new ProjectMemberRole(ProjectMemberRoleType.미정, projectApplyRequest.getPosition()));
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }

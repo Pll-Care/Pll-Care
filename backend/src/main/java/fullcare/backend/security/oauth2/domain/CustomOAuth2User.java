@@ -17,6 +17,7 @@ public class CustomOAuth2User implements OAuth2User, UserDetails {
     private final String nickname;
     private final Collection<? extends GrantedAuthority> authorities;
     private Map<String, Object> attributes;
+
     public CustomOAuth2User(Long id, String nickname, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.nickname = nickname;
@@ -27,16 +28,20 @@ public class CustomOAuth2User implements OAuth2User, UserDetails {
         List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(member.getRole().getValue()));
         return new CustomOAuth2User(member.getId(), member.getNickname(), authorities);
     }
+
     public static CustomOAuth2User create(Member loginMember, Map<String, Object> attributes) {
         CustomOAuth2User oAuth2User = CustomOAuth2User.create(loginMember);
         oAuth2User.setAttributes(attributes);
         return oAuth2User;
     }
-    private void setAttributes(Map<String, Object> attributes) { this.attributes = attributes; }
 
     @Override
     public Map<String, Object> getAttributes() {
         return attributes;
+    }
+
+    private void setAttributes(Map<String, Object> attributes) {
+        this.attributes = attributes;
     }
 
     @Override

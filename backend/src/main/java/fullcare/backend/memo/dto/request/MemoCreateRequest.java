@@ -4,11 +4,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 @Getter
-@NoArgsConstructor
 public class MemoCreateRequest {
 
     @NotNull

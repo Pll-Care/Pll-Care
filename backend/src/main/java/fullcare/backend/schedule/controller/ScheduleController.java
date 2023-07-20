@@ -70,9 +70,11 @@ public class ScheduleController {
     })
     @GetMapping("/{scheduleId}")
     public ResponseEntity<ScheduleDetailResponse> find(@PathVariable Long scheduleId, @Valid @RequestParam(name = "project_id") Long projectId, @CurrentLoginMember Member member) {
+        
         if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
             throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
         }
+
         ScheduleDetailResponse response = scheduleService.findSchedule(projectId, scheduleId, member.getId());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -110,6 +112,7 @@ public class ScheduleController {
     }
 
 
+    // ?
     @Operation(method = "get", summary = "전체 일정 리스트 조회")
     @ApiResponses(value = {
             @ApiResponse(description = "전체 일정 리스트 조회 성공", responseCode = "200", useReturnTypeSchema = true)

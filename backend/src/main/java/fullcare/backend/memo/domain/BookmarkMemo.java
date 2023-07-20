@@ -26,8 +26,7 @@ public class BookmarkMemo extends BaseEntity {
     @JoinColumn(name = "memo_id")
     private Memo memo;
 
-    // ? bookmarkedDate를 따로 만들어서 쓸 것이냐, 아니면 그냥 BaseEntity의 createdDate로 사용할 것이냐?
-
+    
     @Builder(builderMethodName = "createNewBookmarkMemo")
     public BookmarkMemo(Member member, Memo memo) {
         this.member = member;

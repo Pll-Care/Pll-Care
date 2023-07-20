@@ -2,11 +2,12 @@ package fullcare.backend.memo.controller;
 
 import fullcare.backend.global.dto.ErrorResponse;
 import fullcare.backend.global.errorcode.MemoErrorCode;
-import fullcare.backend.global.errorcode.ProjectErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.InvalidAccessException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.memo.domain.Memo;
+import fullcare.backend.memo.dto.request.MemoBookmarkRequest;
 import fullcare.backend.memo.dto.request.MemoCreateRequest;
+import fullcare.backend.memo.dto.request.MemoDeleteRequest;
 import fullcare.backend.memo.dto.request.MemoUpdateRequest;
 import fullcare.backend.memo.dto.response.BookmarkMemoListResponse;
 import fullcare.backend.memo.dto.response.MemoDetailResponse;
@@ -14,9 +15,8 @@ import fullcare.backend.memo.dto.response.MemoIdResponse;
 import fullcare.backend.memo.dto.response.MemoListResponse;
 import fullcare.backend.memo.service.BookmarkMemoService;
 import fullcare.backend.memo.service.MemoService;
+import fullcare.backend.project.service.ProjectService;
 import fullcare.backend.projectmember.domain.ProjectMember;
-import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
-import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.security.jwt.CurrentLoginMember;
 import fullcare.backend.util.CustomPageImpl;
 import fullcare.backend.util.CustomPageRequest;
@@ -35,8 +35,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 
 @Slf4j
 @RequiredArgsConstructor
@@ -46,8 +44,16 @@ import java.util.Optional;
 public class MemoController {
 
     private final MemoService memoService;
-    private final ProjectMemberService projectMemberService;
     private final BookmarkMemoService bookmarkMemoService;
+    private final ProjectService projectService;
+
+    // * 1. 프로젝트가 존재하는지 검증
+    // * 2. 프로젝트 멤버인지 검증(프로젝트에 접근권한이 있는가)
+    // * 3.  프로젝트가 완료되었는지 검증
+
+    // ! 두 개 중에 뭐가 먼저?
+    // * 3. 찾고자 하는 데이터가 존재하는지 검증)일정 or 회의록 or 평가)
+    // * 4. API 동작에 대한 권한이 있는가(생성 수정 삭제 등)
 
     // * 새로운 회의록 생성
     @Operation(method = "post", summary = "회의록 생성")
@@ -59,11 +65,9 @@ public class MemoController {
     public ResponseEntity create(@RequestBody MemoCreateRequest memoCreateRequest,
                                  @CurrentLoginMember Member member) {
 
-        if (!(projectMemberService.validateProjectMember(memoCreateRequest.getProjectId(), member.getId()))) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
-        }
+        ProjectMember findProjectMember = projectService.isProjectAvailable(memoCreateRequest.getProjectId(), member.getId(), false);
+        Memo newMemo = memoService.createMemo(memoCreateRequest, findProjectMember);
 
-        Memo newMemo = memoService.createMemo(memoCreateRequest, member);
         return new ResponseEntity(new MemoIdResponse(newMemo.getId()), HttpStatus.CREATED);
     }
 
@@ -78,15 +82,9 @@ public class MemoController {
                                  @RequestBody MemoUpdateRequest memoUpdateRequest,
                                  @CurrentLoginMember Member member) {
 
-        Memo memo = memoService.findMemo(memoId);
-        Long projectId = memo.getProject().getId();
-
-        if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
-        }
-
+        projectService.isProjectAvailable(memoUpdateRequest.getProjectId(), member.getId(), false);
         memoService.updateMemo(memoId, memoUpdateRequest);
-        return new ResponseEntity(new MemoIdResponse(memo.getId()), HttpStatus.OK);
+        return new ResponseEntity(new MemoIdResponse(memoId), HttpStatus.OK);
     }
 
     // * 특정 회의록 삭제
@@ -97,24 +95,17 @@ public class MemoController {
     })
     @DeleteMapping("/{memoId}")
     public ResponseEntity delete(@PathVariable Long memoId,
+                                 MemoDeleteRequest memoDeleteRequest,
                                  @CurrentLoginMember Member member) {
 
-        Memo memo = memoService.findMemo(memoId);
-        Long projectId = memo.getProject().getId();
+        ProjectMember findProjectMember = projectService.isProjectAvailable(memoDeleteRequest.getProjectId(), member.getId(), false);
+        Memo findMemo = memoService.findMemo(memoId);
 
-        if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
-        } else if (memo.getAuthor().getId() != member.getId() || projectMemberService.findProjectMember(projectId, member.getId()).getProjectMemberRole().getRole() != ProjectMemberRoleType.리더) {
+        if (findMemo.getAuthor().getId() != findProjectMember.getMember().getId() && !findProjectMember.isLeader()) {
             throw new InvalidAccessException(MemoErrorCode.INVALID_DELETE);
         }
 
-        // ? 회의록 있는지 없는지 확인 -> 프로젝트 소속 확인 : 이 순서대로 해야한다는게 이상함
-
-        // ! 프로젝트 소속 확인 -> 회의록 있는지 없는지 확인
-
-        // ! 프로젝트 소속 확인 -> 일정 있는지 없는지 확인
-
-        memoService.deleteMemo(memoId);
+        memoService.deleteMemo(findMemo);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -127,27 +118,21 @@ public class MemoController {
     })
     @GetMapping("/{memoId}")
     public ResponseEntity<?> details(@PathVariable Long memoId,
+                                     @RequestParam("project_id") Long projectId,
                                      @CurrentLoginMember Member member) {
 
-        Memo memo = memoService.findMemo(memoId);
-        Long projectId = memo.getProject().getId();
+        ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, member.getId(), true);
+        MemoDetailResponse findMemoDetailResponse = memoService.findMemoDetailResponse(findProjectMember.getMember().getId(), memoId);
 
-        Optional<ProjectMember> projectMember = projectMemberService.findProjectMemberOptional(projectId, member.getId());
-
-        if (!projectMember.isPresent()) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
-        }
-
-        MemoDetailResponse memoDetailResponse = memoService.findMemoDetailResponse(member.getId(), memoId);
-        memoDetailResponse.setEditable(true);
-
-        if (memo.getAuthor().getId() == member.getId() || projectMember.get().isLeader()) {
-            memoDetailResponse.setDeletable(true);
+        if (findMemoDetailResponse.getAuthorId() == findProjectMember.getMember().getId() || findProjectMember.isLeader()) {
+            findMemoDetailResponse.setDeletable(true);
         } else {
-            memoDetailResponse.setDeletable(false);
+            findMemoDetailResponse.setDeletable(false);
         }
 
-        return new ResponseEntity<>(memoDetailResponse, HttpStatus.OK);
+        findMemoDetailResponse.setEditable(true);
+
+        return new ResponseEntity<>(findMemoDetailResponse, HttpStatus.OK);
     }
 
     // * 회의록 목록 조회
@@ -161,12 +146,10 @@ public class MemoController {
                                                                  @ModelAttribute CustomPageRequest pageRequest,
                                                                  @CurrentLoginMember Member member) {
 
-        if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
-        }
+        projectService.isProjectAvailable(projectId, member.getId(), true);
 
         PageRequest of = pageRequest.of();
-        Pageable pageable = (Pageable) of;
+        Pageable pageable = (Pageable) of; // ?
         CustomPageImpl<MemoListResponse> responses = memoService.findMemoList(projectId, pageable);
 
         return new ResponseEntity<>(responses, HttpStatus.OK);
@@ -183,13 +166,11 @@ public class MemoController {
                                                                                  @ModelAttribute CustomPageRequest pageRequest,
                                                                                  @CurrentLoginMember Member member) {
 
-        if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
-        }
+        ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, member.getId(), true);
 
         PageRequest of = pageRequest.of();
         Pageable pageable = (Pageable) of;
-        CustomPageImpl<BookmarkMemoListResponse> responses = bookmarkMemoService.findBookmarkMemoList(pageable, projectId, member.getId());
+        CustomPageImpl<BookmarkMemoListResponse> responses = bookmarkMemoService.findBookmarkMemoList(pageable, findProjectMember.getProject().getId(), findProjectMember.getMember().getId());
 
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
@@ -202,15 +183,14 @@ public class MemoController {
             @ApiResponse(responseCode = "400", description = "회의록 북마킹 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping("/{memoId}/bookmark")
-    public ResponseEntity bookmark(@PathVariable Long memoId, @CurrentLoginMember Member member) {
-        Memo memo = memoService.findMemo(memoId);
-        Long projectId = memo.getProject().getId();
+    public ResponseEntity bookmark(@PathVariable Long memoId,
+                                   @RequestBody MemoBookmarkRequest memoBookmarkRequest,
+                                   @CurrentLoginMember Member member) {
 
-        if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
-        }
+        ProjectMember findProjectMember = projectService.isProjectAvailable(memoBookmarkRequest.getProjectId(), member.getId(), false);
+        Memo findMemo = memoService.findMemo(memoId);
 
-        bookmarkMemoService.bookmarkMemo(memo, member);
+        bookmarkMemoService.bookmarkMemo(findMemo, findProjectMember.getMember());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

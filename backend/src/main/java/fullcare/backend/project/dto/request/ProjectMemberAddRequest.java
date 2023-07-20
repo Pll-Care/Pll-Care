@@ -6,9 +6,8 @@ import lombok.Getter;
 
 @Getter
 public class ProjectMemberAddRequest {
-    
+
     @NotNull
     private Long memberId;
-
     private ProjectMemberRoleType position;
 }
