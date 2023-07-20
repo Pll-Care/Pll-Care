@@ -10,4 +10,5 @@ import java.util.List;
 public class EverythingEvalResponse<T, S> {
     private List<T> charts = new ArrayList<>();
     private List<S> ranks = new ArrayList<>();
+    private boolean evaluation;
 }

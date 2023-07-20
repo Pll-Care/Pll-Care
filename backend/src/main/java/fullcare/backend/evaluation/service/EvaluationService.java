@@ -219,7 +219,7 @@ public class EvaluationService {
 //            System.out.println("m.getBadges() = " + chartDto.getBadges());
 //            setBadge(chartDto.getEvaluation());
         }
-        EverythingEvalResponse everythingEvalResponse = new EverythingEvalResponse(midTermEvalChartDto, rankingDtos);
+        EverythingEvalResponse everythingEvalResponse = new EverythingEvalResponse(midTermEvalChartDto, rankingDtos, rankingDtos.size() != 0 ? true : false );
         return everythingEvalResponse;
     }
 
@@ -265,7 +265,7 @@ public class EvaluationService {
             exRank.setRank(rank);
         }
 
-        EverythingEvalResponse everythingEvalResponse = new EverythingEvalResponse(finalTermEvalFinalCharDto, ranks);
+        EverythingEvalResponse everythingEvalResponse = new EverythingEvalResponse(finalTermEvalFinalCharDto, ranks, ranks.size() != 0 ? true : false);
         return everythingEvalResponse;
     }
 
