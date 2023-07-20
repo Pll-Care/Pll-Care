@@ -13,6 +13,7 @@ import fullcare.backend.member.domain.MemberRole;
 import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.memo.service.BookmarkMemoService;
 import fullcare.backend.memo.service.MemoService;
+import fullcare.backend.post.domain.RecruitPosition;
 import fullcare.backend.post.service.PostService;
 import fullcare.backend.profile.domain.Contact;
 import fullcare.backend.profile.domain.Profile;

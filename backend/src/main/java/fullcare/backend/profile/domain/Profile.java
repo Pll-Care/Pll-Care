@@ -59,31 +59,31 @@ public class Profile {
         this.recruitPosition = profileUpdateRequest.getRecruitPosition();
         this.techStack = TechStackUtil.listToString(profileUpdateRequest.getTechStack());
         if (profileUpdateRequest.getProjectId() != null && profileUpdateRequest.isDelete()) {
-        if (profileUpdateRequest.getTechStack() != null){
-            this.techStack = TechStackUtil.listToString(profileUpdateRequest.getTechStack());
-        }
-        if (profileUpdateRequest.getProjectId() != null && profileUpdateRequest.isDelete()){
-            ProjectExperience projectExperience = this.projectExperiences.stream().filter(pe -> pe.getId() == profileUpdateRequest.getProjectId())
-                    .findFirst().orElseThrow(() -> new EntityNotFoundException("프로젝트 경험이 없습니다."));
-            projectExperiences.remove(projectExperience);
-        } else {
-            if (profileUpdateRequest.getProjectExperiences() != null) {
-                List<ProjectExperienceRequestDto> peList = profileUpdateRequest.getProjectExperiences();
-                for (ProjectExperienceRequestDto peDto : peList) {
+            if (profileUpdateRequest.getTechStack() != null) {
+                this.techStack = TechStackUtil.listToString(profileUpdateRequest.getTechStack());
+            }
+            if (profileUpdateRequest.getProjectId() != null && profileUpdateRequest.isDelete()) {
+                ProjectExperience projectExperience = this.projectExperiences.stream().filter(pe -> pe.getId() == profileUpdateRequest.getProjectId())
+                        .findFirst().orElseThrow(() -> new EntityNotFoundException("프로젝트 경험이 없습니다."));
+                projectExperiences.remove(projectExperience);
+            } else {
+                if (profileUpdateRequest.getProjectExperiences() != null) {
+                    List<ProjectExperienceRequestDto> peList = profileUpdateRequest.getProjectExperiences();
+                    for (ProjectExperienceRequestDto peDto : peList) {
 
-                    ProjectExperience projectExperience = ProjectExperience.builder()
-                            .title(peDto.getTitle())
-                            .description(peDto.getDescription())
-                            .startDate(peDto.getStartDate())
-                            .endDate(peDto.getEndDate())
-                            .techStack(TechStackUtil.listToString(peDto.getTechStack()))
-                            .profile(this)
-                            .build();
-                    this.projectExperiences.add(projectExperience);
+                        ProjectExperience projectExperience = ProjectExperience.builder()
+                                .title(peDto.getTitle())
+                                .description(peDto.getDescription())
+                                .startDate(peDto.getStartDate())
+                                .endDate(peDto.getEndDate())
+                                .techStack(TechStackUtil.listToString(peDto.getTechStack()))
+                                .profile(this)
+                                .build();
+                        this.projectExperiences.add(projectExperience);
+                    }
                 }
             }
         }
     }
-
 
 }
