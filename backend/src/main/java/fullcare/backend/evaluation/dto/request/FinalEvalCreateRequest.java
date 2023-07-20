@@ -22,8 +22,8 @@ public class FinalEvalCreateRequest {
     @NotNull
     private String content;
 
-    // ?
-    @NotNull
-    private State state;
+//    // ?
+//    @NotNull
+//    private State state;
 
 }

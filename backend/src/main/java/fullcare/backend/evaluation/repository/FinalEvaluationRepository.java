@@ -18,12 +18,12 @@ public interface FinalEvaluationRepository extends JpaRepository<FinalTermEvalua
     List<ScoreDao> findMyAvgScore(Long memberId);
 
     boolean existsByIdAndEvaluatorId(Long id, Long evaluatorId);
-    boolean existsByIdAndState(Long id, State state);
+    boolean existsById(Long id);
     boolean existsByEvaluatedIdAndEvaluatorIdAndProjectId(Long evaluatedId, Long evaluatorId,Long projectId);
 
-    List<FinalTermEvaluation> findByProjectIdAndEvaluatedIdAndState(Long projectId, Long evaluatedId, State state);
+    List<FinalTermEvaluation> findByProjectIdAndEvaluatedId(Long projectId, Long evaluatedId);
     List<FinalTermEvaluation> findByProjectIdAndEvaluatorId(Long projectId, Long evaluatorId);
 
-    @Query("select fe from FinalTermEvaluation fe where fe.project.id in :projectIds and fe.evaluated.id = :evaluatedId and fe.state = :state")
-    List<FinalTermEvaluation> findByProjectIdsAndEvaluatedIdAndState(List<Long> projectIds, Long evaluatedId, State state);
+    @Query("select fe from FinalTermEvaluation fe where fe.project.id in :projectIds and fe.evaluated.id = :evaluatedId")
+    List<FinalTermEvaluation> findByProjectIdsAndEvaluatedIdAndState(List<Long> projectIds, Long evaluatedId);
 }

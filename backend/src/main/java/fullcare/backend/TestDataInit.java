@@ -115,7 +115,8 @@ public class TestDataInit {
                     .evaluator(memberRepository.findById(evaluator).get())
                     .evaluated(memberRepository.findById(evaluated).get())
                     .project(project)
-                    .state(State.COMPLETE).build();
+//                    .state(State.COMPLETE)
+                    .build();
             finalEvaluationRepository.save(finalTermEvaluation);
         }
     }

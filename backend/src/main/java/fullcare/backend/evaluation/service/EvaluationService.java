@@ -140,7 +140,7 @@ public class EvaluationService {
                 .score(finalEvalCreateRequest.getScore())
                 .evaluator(evaluator)
                 .evaluated(evaluated)
-                .state(finalEvalCreateRequest.getState())
+//                .state(finalEvalCreateRequest.getState())
                 .build();
         FinalTermEvaluation finalEval = finalEvaluationRepository.save(newFinalTermEvaluation);
         return finalEval.getId();
@@ -148,7 +148,7 @@ public class EvaluationService {
 
     @Transactional //* 임시 저장한 평가를 수정 또는 완료할 때 사용
     public void updateFinalEvaluation(Long evaluationId, FinalEvalUpdateRequest finalEvalUpdateRequest) {
-        if (finalEvaluationRepository.existsByIdAndState(evaluationId, State.COMPLETE)) {
+        if (finalEvaluationRepository.existsById(evaluationId)) {
             throw new CompletedProjectException(ProjectErrorCode.PROJECT_COMPLETED);
         }
         if (!Score.valid(finalEvalUpdateRequest.getScore())) {
@@ -166,7 +166,7 @@ public class EvaluationService {
 
     @Transactional
     public void deleteFinalEvaluation(Long evaluationId, Long projectId) {
-        if (finalEvaluationRepository.existsByIdAndState(evaluationId, State.COMPLETE)) {
+        if (finalEvaluationRepository.existsById(evaluationId)) {
             throw new CompletedProjectException(ProjectErrorCode.PROJECT_COMPLETED);
         }
         FinalTermEvaluation finalTermEvaluation = finalEvaluationRepository.findById(evaluationId).orElseThrow(() -> new EntityNotFoundException(EvaluationErrorCode.EVALUATION_NOT_FOUND));
@@ -329,7 +329,7 @@ public class EvaluationService {
         List<MyEvalListResponse> myEvalListResponseList = new ArrayList<>();
         List<Long> projectIds = pmList.stream().map(pm -> pm.getProject().getId()).collect(Collectors.toList());
 
-        List<FinalTermEvaluation> myFinalEvalList = finalEvaluationRepository.findByProjectIdsAndEvaluatedIdAndState(projectIds, memberId, State.COMPLETE);
+        List<FinalTermEvaluation> myFinalEvalList = finalEvaluationRepository.findByProjectIdsAndEvaluatedIdAndState(projectIds, memberId);
         int feCnt = 0;
         for (ProjectMember pm : pmList) {
             feCnt = 0;
@@ -372,7 +372,7 @@ public class EvaluationService {
 
     public MyEvalDetailResponse findMyEval(Long projectId, Long memberId) {
         List<BadgeDto> badgeList = midtermEvaluationRepository.findAllByMemberId(projectId, memberId);
-        List<FinalTermEvaluation> myFinalEvalList = finalEvaluationRepository.findByProjectIdAndEvaluatedIdAndState(projectId, memberId, State.COMPLETE); // * 최종평가가 완료된 것만 조회, 임시저장 X
+        List<FinalTermEvaluation> myFinalEvalList = finalEvaluationRepository.findByProjectIdAndEvaluatedId(projectId, memberId); // * 최종평가가 완료된 것만 조회, 임시저장 X
         List<FinalEvalDto> finalEvalDtoList = new ArrayList<>();
         ScoreDto scoreDto = new ScoreDto();
         for (FinalTermEvaluation fe : myFinalEvalList) {

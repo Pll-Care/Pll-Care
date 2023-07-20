@@ -19,7 +19,7 @@ public class FinalEvalUpdateRequest {
     @NotNull
     private String content;
 
-    // ?
-    @NotNull
-    private State state;
+//    // ?
+//    @NotNull
+//    private State state;
 }
