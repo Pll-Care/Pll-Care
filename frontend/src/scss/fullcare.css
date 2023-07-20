@@ -1404,7 +1404,7 @@ input {
   justify-content: space-between;
   align-items: center;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .selected-meeting-record-content {
+.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .selected-meeting-record-content, .meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-content {
   height: 85%;
   line-height: 1.5;
   padding: 10px;

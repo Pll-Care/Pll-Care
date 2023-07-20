@@ -189,7 +189,7 @@
         @include displayFlex(row, space-between);
       }
 
-      .selected-meeting-record-content {
+      .selected-meeting-record-content, .meeting-record-content {
         height: 85%;
         line-height: 1.5;
         padding: 10px;

@@ -4,6 +4,9 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Quill from "quill";
 import ImageResize from "quill-image-resize";
+import { useEffect, useRef } from "react";
+
+import { uploadImage } from "../../lib/apis/managementApi";
 
 Quill.register("modules/ImageResize", ImageResize);
 
@@ -14,6 +17,47 @@ const NewMeetingRecord = ({
   handleSubmit,
   handleChangeContent,
 }) => {
+  const quillRef = useRef(null);
+
+  useEffect(() => {
+    const handleImage = () => {
+      const input = document.createElement("input");
+      input.setAttribute("type", "file");
+      input.setAttribute("accept", "image/*");
+      input.click();
+
+      input.onchange = async () => {
+        const file = input.files[0];
+
+        const range = quillRef.current.getEditor().getSelection(true);
+
+        const reader = new FileReader();
+
+        reader.readAsDataURL(file);
+        reader.onloadend = async () => {
+          const formData = new FormData();
+          formData.append("file", file);
+
+          const imgUrl = await uploadImage({
+            dir: "meetingRecord",
+            formData: formData.get("file"),
+          });
+
+          quillRef.current
+            .getEditor()
+            .insertEmbed(range.index, "image", imgUrl);
+
+          quillRef.current.getEditor().setSelection(range.index + 1);
+        };
+      };
+    };
+
+    if (quillRef.current) {
+      const toolbar = quillRef.current.getEditor().getModule("toolbar");
+      toolbar.addHandler("image", handleImage);
+    }
+  }, []);
+
   return (
     <div className="meeting-record-editor">
       <div className="meeting-record-title">
@@ -31,6 +75,7 @@ const NewMeetingRecord = ({
       </div>
       <ReactQuill
         className="react-quill"
+        ref={quillRef}
         value={content}
         onChange={handleChangeContent}
         modules={{
@@ -44,6 +89,7 @@ const NewMeetingRecord = ({
           ],
           ImageResize: {
             parchment: Quill.import("parchment"),
+            modules: ["Resize", "DisplaySize", "Toolbar"],
           },
         }}
       />
