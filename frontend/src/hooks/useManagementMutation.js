@@ -1,4 +1,8 @@
-import { useMutation, useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
+import { useQueryClient, useMutation } from "react-query";
+
+import { toast } from "react-toastify";
+
 import {
   completeProject,
   createProject,
@@ -6,15 +10,10 @@ import {
   editProject,
   leaveProject,
 } from "../lib/apis/managementApi";
-import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-
-import { projectManagementActions } from "../redux/projectManagementSlice";
 
 const useManagementMutation = () => {
   const queryClient = useQueryClient();
-
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { mutate: createMutate } = useMutation(createProject, {
     onSuccess: () => {
@@ -31,6 +30,8 @@ const useManagementMutation = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(["managementOngoingProjectList"]);
       queryClient.invalidateQueries(["managementAllProjectList"]);
+
+      navigate("/management");
       toast.success("삭제되었습니다!");
     },
     onError: () => {
@@ -39,13 +40,12 @@ const useManagementMutation = () => {
   });
 
   const { mutate: completeMutate } = useMutation(completeProject, {
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(["managementOngoingProjectList"]);
       queryClient.invalidateQueries(["managementAllProjectList"]);
       queryClient.invalidateQueries(["completeProjectData"]);
 
-      dispatch(projectManagementActions.addCompletedProjectId(data.projectId));
-
+      navigate("/management");
       toast.success("완료 처리되었습니다!");
     },
     onError: () => {
@@ -57,6 +57,8 @@ const useManagementMutation = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(["managementOngoingProjectList"]);
       queryClient.invalidateQueries(["managementAllProjectList"]);
+
+      navigate("/management");
       toast.success("수정되었습니다!");
     },
     onError: () => {
