@@ -3,7 +3,7 @@ const EvaluationRanking = ({ rankingData, isCompleted }) => {
     .filter((dataItem) => dataItem.rank < 4)
     .sort((a, b) => a.rank - b.rank);
 
-  return isCompleted === "COMPLETE" ? (
+  return isCompleted ? (
     <div className="evaluation-management-evaluation-ranking">
       <h1 className="evaluation-management-evaluation-ranking-header">
         최종 평가 랭킹
@@ -16,7 +16,7 @@ const EvaluationRanking = ({ rankingData, isCompleted }) => {
                 `evaluation-management-evaluation-ranking-item`,
                 `evaluation-management-evaluation-ranking-item_${item.rank}`,
               ].join(" ")}
-              key={item.rank}
+              key={item.memberId}
             >
               <div className="evaluation-management-left-col">
                 <figure />
@@ -24,7 +24,7 @@ const EvaluationRanking = ({ rankingData, isCompleted }) => {
               </div>
               <div className="evaluation-management-right-col">
                 <div className="name">{item.name}</div>
-                <div className="score">평균 점수: {item.quantity}점</div>
+                <div className="score">평균 점수: {item.score.toFixed(2)}점</div>
               </div>
             </div>
           );
@@ -44,7 +44,7 @@ const EvaluationRanking = ({ rankingData, isCompleted }) => {
                 `evaluation-management-evaluation-ranking-item`,
                 `evaluation-management-evaluation-ranking-item_${item.rank}`,
               ].join(" ")}
-              key={item.rank}
+              key={item.memberId}
             >
               <div className="evaluation-management-left-col">
                 <figure />
