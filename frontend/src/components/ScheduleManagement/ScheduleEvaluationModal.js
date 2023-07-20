@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { useMutation } from "react-query";
 import { toast } from "react-toastify";
 
 import { Tooltip } from "@mui/material";
 
-import { addEvaluation } from "../../redux/evaluationManagementSlice";
 import Button from "../common/Button";
 import ModalContainer from "../common/ModalContainer";
 import { getDateTimeDuration } from "../../utils/date";
@@ -19,6 +18,8 @@ const ScheduleEvaluationModal = (props) => {
 
   const projectId = parseInt(id, 10);
   const scheduleId = parseInt(props.id, 10);
+
+  const isMidEvaluated = useSelector((state) => state.evaluationManagement.isMidEvaluated);
 
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const [name, setName] = useState(props.members[0].id);
@@ -43,7 +44,7 @@ const ScheduleEvaluationModal = (props) => {
         isEvaluation: true,
       };
       console.log("newevaluation", newEvaluation);
-      dispatch(addEvaluation(evaluation));
+      
       props.onClose();
     },
     onError: () => {
