@@ -10,17 +10,11 @@ import fullcare.backend.profile.dto.ProjectExperienceDto;
 import fullcare.backend.profile.dto.ProjectExperienceResponseDto;
 import fullcare.backend.profile.dto.request.ProfileBioUpdateRequest;
 import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
-import fullcare.backend.profile.dto.response.ProfileBioResponse;
-import fullcare.backend.profile.dto.response.ProfileContactResponse;
-import fullcare.backend.profile.dto.response.ProfileImageResponse;
-import fullcare.backend.profile.dto.response.ProfileProjectExperienceResponse;
-import fullcare.backend.profile.dto.response.ProfileTechStackResponse;
-import fullcare.backend.s3.S3Service;
 import fullcare.backend.profile.dto.response.*;
+import fullcare.backend.s3.S3Service;
 import fullcare.backend.util.TechStackUtil;
 import fullcare.backend.util.dto.TechStack;
 import fullcare.backend.util.dto.TechStackDto;
-import fullcare.backend.util.dto.TechStack;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,8 +59,8 @@ public class ProfileService {
         Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
         Profile p = findMember.getProfile();
         List<TechStackDto> techStackDtos = new ArrayList<>();
-        if(p.getTechStack() != null && !p.getTechStack().isEmpty()) {
-            List<TechStack>  techStacks = TechStackUtil.stringToList(p.getTechStack());
+        if (p.getTechStack() != null && !p.getTechStack().isEmpty()) {
+            List<TechStack> techStacks = TechStackUtil.stringToList(p.getTechStack());
             for (TechStack t : techStacks) {
                 techStackDtos.add(new TechStackDto(t.getValue(), s3Service.find(t.getValue(), t.getContentType())));
             }
@@ -84,7 +78,7 @@ public class ProfileService {
         for (ProjectExperience pro : p.getProjectExperiences()) {
             String techStack = pro.getTechStack();
             List<TechStackDto> techStackDtos = new ArrayList<>();
-            if(pro.getTechStack() != null && !pro.getTechStack().isEmpty()) {
+            if (pro.getTechStack() != null && !pro.getTechStack().isEmpty()) {
                 List<TechStack> techStacks = TechStackUtil.stringToList(techStack);
                 for (TechStack t : techStacks) {
                     techStackDtos.add(new TechStackDto(t.getValue(), s3Service.find(t.getValue(), t.getContentType())));

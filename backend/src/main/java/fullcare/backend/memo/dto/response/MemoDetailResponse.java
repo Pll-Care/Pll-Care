@@ -1,6 +1,6 @@
 package fullcare.backend.memo.dto.response;
 
-import fullcare.backend.memo.domain.Memo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -11,6 +11,10 @@ public class MemoDetailResponse {
 
     private Long memoId;
     private String author;
+
+    @JsonIgnore
+    private Long authorId;
+
     private String title;
     private String content;
     private boolean isBookmarked;
@@ -20,10 +24,11 @@ public class MemoDetailResponse {
     private LocalDateTime modifiedDate;
 
     @Builder
-    public MemoDetailResponse(Long memoId, String author, String title, String content,
+    public MemoDetailResponse(Long memoId, String author, Long authorId, String title, String content,
                               boolean isBookmarked, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.memoId = memoId;
         this.author = author;
+        this.authorId = authorId;
         this.title = title;
         this.content = content;
         this.isBookmarked = isBookmarked;
@@ -31,23 +36,11 @@ public class MemoDetailResponse {
         this.modifiedDate = modifiedDate;
     }
 
-    public static MemoDetailResponse entityToDto(Memo memo, boolean isBookmarked) {
-        return MemoDetailResponse.builder()
-                .memoId(memo.getId())
-                .author(memo.getAuthor().getNickname())
-                .title(memo.getTitle())
-                .content(memo.getContent())
-                .isBookmarked(isBookmarked)
-                .createdDate(memo.getCreatedDate())
-                .modifiedDate(memo.getModifiedDate())
-                .build();
+    public void setEditable(boolean isEditable) {
+        this.isEditable = isEditable;
     }
 
-    public void setEditable(boolean editable) {
-        isEditable = editable;
-    }
-
-    public void setDeletable(boolean deletable) {
-        isDeletable = deletable;
+    public void setDeletable(boolean isDeletable) {
+        this.isDeletable = isDeletable;
     }
 }

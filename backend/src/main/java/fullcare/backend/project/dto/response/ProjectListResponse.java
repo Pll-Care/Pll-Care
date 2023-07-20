@@ -2,12 +2,13 @@ package fullcare.backend.project.dto.response;
 
 import fullcare.backend.global.State;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
 import java.time.LocalDate;
 
-@Data
+@Getter
 public class ProjectListResponse {
+
     private Long projectId;
     private String title;
     private String description;

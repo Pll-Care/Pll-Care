@@ -2,7 +2,6 @@ package fullcare.backend.projectmember.repository;
 
 import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
-import jakarta.persistence.QueryHint;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -18,6 +17,8 @@ public interface ProjectMemberRepository extends JpaRepository<ProjectMember, Lo
     boolean existsByProjectIdAndMemberId(Long projectId, Long memberId);
 
     @EntityGraph(attributePaths = {"project"})
+    Optional<ProjectMember> findPMWithProjectByProjectIdAndMemberId(Long projectId, Long memberId);
+
     Optional<ProjectMember> findByProjectIdAndMemberId(Long projectId, Long memberId);
 
     @EntityGraph(attributePaths = {"project"})
@@ -28,6 +29,9 @@ public interface ProjectMemberRepository extends JpaRepository<ProjectMember, Lo
     @Query("select pm from project_member pm where pm.project.id = :projectId and pm.projectMemberRole.role != :projectMemberRoleType")
     List<ProjectMember> findByProjectIdAndProjectMemberRole(@Param("projectId") Long projectId, @Param("projectMemberRoleType") ProjectMemberRoleType projectMemberRoleType);
 
-    @Query("select pm from project_member pm where pm.project.id = :projectId and pm.projectMemberRole.role = :projectMemberRoleType")
-    List<ProjectMember> findApplyListByProjectIdAndProjectMemberRole(@Param("projectId") Long projectId, @Param("projectMemberRoleType") ProjectMemberRoleType projectMemberRoleType);
+
+    @EntityGraph(attributePaths = {"member"})
+    @Query("select pm from project_member pm where pm.project.id = :projectId and pm.projectMemberRole.role in :projectMemberRoleTypes")
+    List<ProjectMember> findProjectMemberWithMemberByProjectIdAndProjectMemberRole(@Param("projectId") Long projectId, @Param("projectMemberRoleTypes") List<ProjectMemberRoleType> projectMemberRoleTypes);
+
 }

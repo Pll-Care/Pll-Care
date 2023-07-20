@@ -15,12 +15,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 @Service
 public class ProjectMemberService {
 
@@ -29,31 +29,33 @@ public class ProjectMemberService {
 
 
     public boolean validateProjectMember(Long projectId, Long memberId) {
-        return projectMemberRepository.existsByProjectIdAndMemberId(projectId, memberId);
+        projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND)); // ! 프로젝트가 존재하는지 검증
+        return projectMemberRepository.existsByProjectIdAndMemberId(projectId, memberId); // ! 프로젝트에 소속된 사용자인지 검증
     }
 
-    public Optional<ProjectMember> findProjectMemberOptional(Long projectId, Long memberId) {
-        return projectMemberRepository.findByProjectIdAndMemberId(projectId, memberId);
-    }
 
     public ProjectMember findProjectMember(Long projectId, Long memberId) {
         return projectMemberRepository.findByProjectIdAndMemberId(projectId, memberId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
     }
 
+    @Transactional
     public void addProjectMember(Long projectId, Member member, ProjectMemberRole role) {
-        Project project = projectRepository.findJoinPMJoinMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
         project.addMember(member, role);
     }
 
+    @Transactional
     public void updateProjectMemberRole(Long projectId, Long memberId, ProjectMemberRole projectMemberRole) {
         ProjectMember projectMember = projectMemberRepository.findByProjectIdAndMemberId(projectId, memberId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
         projectMember.updateRole(projectMemberRole);
     }
 
+    @Transactional
     public void deleteProjectMember(Long projectId, Long memberId) {
         projectMemberRepository.deleteByProjectIdAndMemberId(projectId, memberId);
     }
 
+    @Transactional
     public void changeProjectLeader(Long projectId, Long newLeaderId, Long oldLeaderId) {
         ProjectMember oldLeader = projectMemberRepository.findByProjectIdAndMemberId(projectId, oldLeaderId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
         ProjectMember newLeader = projectMemberRepository.findByProjectIdAndMemberId(projectId, newLeaderId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
@@ -63,9 +65,12 @@ public class ProjectMemberService {
     }
 
     public List<ProjectMemberListResponse> findProjectMembers(Long projectId) {
-        List<ProjectMember> pmList = projectMemberRepository.findByProjectIdAndProjectMemberRole(projectId, ProjectMemberRoleType.미정);
+        List<ProjectMemberRoleType> projectMemberRoleTypes = new ArrayList<>();
+        projectMemberRoleTypes.add(ProjectMemberRoleType.리더);
+        projectMemberRoleTypes.add(ProjectMemberRoleType.팀원);
 
-        List<ProjectMemberListResponse> response = pmList.stream().map(pm -> ProjectMemberListResponse.builder()
+        List<ProjectMember> projectMemberList = projectMemberRepository.findProjectMemberWithMemberByProjectIdAndProjectMemberRole(projectId, projectMemberRoleTypes);
+        List<ProjectMemberListResponse> response = projectMemberList.stream().map(pm -> ProjectMemberListResponse.builder()
                 .id(pm.getMember().getId())
                 .name(pm.getMember().getNickname())
                 .imageUrl(pm.getMember().getImageUrl())
@@ -74,20 +79,22 @@ public class ProjectMemberService {
                 .build()).collect(Collectors.toList());
 
         return response;
-
     }
 
     public List<ProjectMemberListResponse> findApplyList(Long projectId) {
-        List<ProjectMember> pmList = projectMemberRepository.findApplyListByProjectIdAndProjectMemberRole(projectId, ProjectMemberRoleType.미정);
-        List<ProjectMemberListResponse> response = pmList.stream().map(pms -> ProjectMemberListResponse.builder()
-                .id(pms.getMember().getId())
-                .name(pms.getMember().getName())
-                .imageUrl(pms.getMember().getImageUrl())
-                .position(pms.getProjectMemberRole().getPosition())
+        List<ProjectMemberRoleType> projectMemberRoleTypes = new ArrayList<>();
+        projectMemberRoleTypes.add(ProjectMemberRoleType.미정);
+
+        List<ProjectMember> projectMemberList = projectMemberRepository.findProjectMemberWithMemberByProjectIdAndProjectMemberRole(projectId, projectMemberRoleTypes);
+
+        List<ProjectMemberListResponse> response = projectMemberList.stream().map(pm -> ProjectMemberListResponse.builder()
+                .id(pm.getMember().getId())
+                .name(pm.getMember().getName())
+                .imageUrl(pm.getMember().getImageUrl())
+                .position(pm.getProjectMemberRole().getPosition())
                 .isLeader(false)
                 .build()).collect(Collectors.toList());
+
         return response;
     }
-
-
 }

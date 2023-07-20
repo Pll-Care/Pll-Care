@@ -88,7 +88,7 @@ public class ScheduleService {
     }
 
     public boolean validateAuthor(Long projectId, Long scheduleId, Long authorId) {
-        ProjectMember projectMember = projectMemberRepository.findByProjectIdAndMemberId(projectId, authorId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
+        ProjectMember projectMember = projectMemberRepository.findPMWithProjectByProjectIdAndMemberId(projectId, authorId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
         if (schedule.getMember().getId() == projectMember.getMember().getId()) {
             return true;
@@ -515,7 +515,7 @@ public class ScheduleService {
 
     @Transactional
     public ScheduleDetailResponse findSchedule(Long projectId, Long scheduleId, Long memberId) {
-        Project project = projectRepository.findJoinPMJoinMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
+        Project project = projectRepository.findProjectWithPMAndMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
         Schedule schedule = scheduleRepository.findJoinSMById(scheduleId).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
         List<ProjectMember> projectMembers = project.getProjectMembers();
         List<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();

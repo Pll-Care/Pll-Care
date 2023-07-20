@@ -1,6 +1,7 @@
 package fullcare.backend.post.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import fullcare.backend.post.domain.RecruitInfo;
 import fullcare.backend.util.dto.TechStack;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;

@@ -2,12 +2,14 @@ package fullcare.backend.profile.domain;
 
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.post.domain.RecruitPosition;
-import fullcare.backend.util.TechStackUtil;
-import fullcare.backend.util.dto.TechStack;
 import fullcare.backend.profile.dto.ProjectExperienceRequestDto;
 import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
+import fullcare.backend.util.TechStackUtil;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Length;
 
@@ -46,13 +48,17 @@ public class Profile {
     public Profile(String bio) {
         this.bio = bio;
     }
-    public void updateBio(String bio){
+
+    public void updateBio(String bio) {
         this.bio = bio;
     }
-    public void updateProfile(ProfileUpdateRequest profileUpdateRequest){
+
+    public void updateProfile(ProfileUpdateRequest profileUpdateRequest) {
 
         this.contact = profileUpdateRequest.getContact();
         this.recruitPosition = profileUpdateRequest.getRecruitPosition();
+        this.techStack = TechStackUtil.listToString(profileUpdateRequest.getTechStack());
+        if (profileUpdateRequest.getProjectId() != null && profileUpdateRequest.isDelete()) {
         if (profileUpdateRequest.getTechStack() != null){
             this.techStack = TechStackUtil.listToString(profileUpdateRequest.getTechStack());
         }
@@ -60,8 +66,8 @@ public class Profile {
             ProjectExperience projectExperience = this.projectExperiences.stream().filter(pe -> pe.getId() == profileUpdateRequest.getProjectId())
                     .findFirst().orElseThrow(() -> new EntityNotFoundException("프로젝트 경험이 없습니다."));
             projectExperiences.remove(projectExperience);
-        }else{
-            if(profileUpdateRequest.getProjectExperiences() != null) {
+        } else {
+            if (profileUpdateRequest.getProjectExperiences() != null) {
                 List<ProjectExperienceRequestDto> peList = profileUpdateRequest.getProjectExperiences();
                 for (ProjectExperienceRequestDto peDto : peList) {
 

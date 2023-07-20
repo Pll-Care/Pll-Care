@@ -1,17 +1,14 @@
 package fullcare.backend.memo.service;
 
 import fullcare.backend.global.errorcode.MemoErrorCode;
-import fullcare.backend.global.errorcode.ProjectErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.EntityNotFoundException;
-import fullcare.backend.member.domain.Member;
 import fullcare.backend.memo.domain.Memo;
 import fullcare.backend.memo.dto.request.MemoCreateRequest;
 import fullcare.backend.memo.dto.request.MemoUpdateRequest;
 import fullcare.backend.memo.dto.response.MemoDetailResponse;
 import fullcare.backend.memo.dto.response.MemoListResponse;
 import fullcare.backend.memo.repository.MemoRepository;
-import fullcare.backend.project.domain.Project;
-import fullcare.backend.project.repository.ProjectRepository;
+import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.util.CustomPageImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,17 +27,14 @@ import java.util.stream.Collectors;
 public class MemoService {
 
     private final MemoRepository memoRepository;
-    private final ProjectRepository projectRepository;
 
     @Transactional
-    public Memo createMemo(MemoCreateRequest request, Member author) {
-        Project project = projectRepository.findById(request.getProjectId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
-
+    public Memo createMemo(MemoCreateRequest request, ProjectMember projectMember) {
         Memo newMemo = Memo.createNewMemo()
-                .project(project)
+                .project(projectMember.getProject())
                 .title(request.getTitle())
                 .content(request.getContent())
-                .author(author)
+                .author(projectMember.getMember())
                 .build();
 
         return memoRepository.save(newMemo);
@@ -53,9 +47,8 @@ public class MemoService {
     }
 
     @Transactional
-    public void deleteMemo(Long memoId) {
-        // TODO check 필요. 엔티티가 발견되지 않을 시, 예외 던지지 않음 (삭제가 실패되었음을 알려줄 필요는 없나?)
-        memoRepository.deleteById(memoId);
+    public void deleteMemo(Memo memo) {
+        memoRepository.delete(memo);
     }
 
     public Memo findMemo(Long memoId) {
@@ -63,8 +56,7 @@ public class MemoService {
     }
 
     public MemoDetailResponse findMemoDetailResponse(Long memberId, Long memoId) {
-        MemoDetailResponse result = memoRepository.findMemoDetailDto(memberId, memoId);
-        return result;
+        return memoRepository.findMemoDetailDto(memberId, memoId).orElseThrow(() -> new EntityNotFoundException(MemoErrorCode.MEMO_NOT_FOUND));
     }
 
 

@@ -7,5 +7,5 @@ import lombok.Getter;
 public class ProjectLeaderChangeRequest {
 
     @NotNull
-    private Long memberId;
+    private Long memberId; // * 새로운 리더의 memberId
 }

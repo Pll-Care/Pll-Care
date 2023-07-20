@@ -1,7 +1,6 @@
 package fullcare.backend.profile.dto.response;
 
 import fullcare.backend.post.domain.RecruitPosition;
-import fullcare.backend.util.dto.TechStack;
 import fullcare.backend.util.dto.TechStackDto;
 import lombok.Data;
 

@@ -119,7 +119,7 @@ public class EvaluationService {
         Member evaluated = memberRepository.findById(finalEvalCreateRequest.getEvaluatedId()).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
         Project project = projectRepository.findById(finalEvalCreateRequest.getProjectId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
 
-        projectMemberRepository.findByProjectIdAndMemberId(project.getId(), finalEvalCreateRequest.getEvaluatedId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
+        projectMemberRepository.findPMWithProjectByProjectIdAndMemberId(project.getId(), finalEvalCreateRequest.getEvaluatedId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
 
         //? 점수 5점 이상일 경우 에러처리
         if (!Score.valid(finalEvalCreateRequest.getScore())) {
@@ -180,7 +180,7 @@ public class EvaluationService {
     }
 
     public EverythingEvalResponse findMidtermEvaluationList(Long projectId) {
-        Project project = projectRepository.findJoinPMJoinMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
+        Project project = projectRepository.findProjectWithPMAndMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
         List<Member> members = project.getProjectMembers().stream().map(pm -> pm.getMember()).collect(Collectors.toList());
         List<BadgeDao> midtermBadgeList = midtermEvaluationRepository.findList(projectId, members);
         List<MidTermRankProjectionInterface> rank = midtermEvaluationRepository.findRank(projectId);
@@ -224,7 +224,7 @@ public class EvaluationService {
     }
 
     public EverythingEvalResponse findFinalEvaluationList(Long projectId) {
-        Project project = projectRepository.findJoinPMJoinMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
+        Project project = projectRepository.findProjectWithPMAndMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
         List<Member> members = project.getProjectMembers().stream().map(pm -> pm.getMember()).collect(Collectors.toList());
         List<ScoreDao> scoreDaos = finalEvaluationRepository.findList(projectId, members);
 
@@ -289,7 +289,7 @@ public class EvaluationService {
     }
 
     public List<ParticipantResponse> findParticipantList(Long projectId, Long memberId) {
-        Project project = projectRepository.findJoinPMJoinMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
+        Project project = projectRepository.findProjectWithPMAndMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
         List<Member> members = project.getProjectMembers().stream().map(pm -> pm.getMember()).collect(Collectors.toList());
         List<BadgeDao> midtermBadgeList = midtermEvaluationRepository.findList(projectId, members);
         List<FinalTermEvaluation> finalEvalList = new ArrayList<>();
