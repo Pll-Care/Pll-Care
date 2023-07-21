@@ -1,4 +1,11 @@
-const Button = ({ text, type, size = "big", onClick, isProfile = false }) => {
+const Button = ({
+  text,
+  type,
+  size = "big",
+  onClick,
+  isProfile = false,
+  buttonType = "button",
+}) => {
   const btnSize = size === "big" ? "button_big" : "button_small";
   const btnType = [
     "positive",
@@ -17,6 +24,7 @@ const Button = ({ text, type, size = "big", onClick, isProfile = false }) => {
           : `button ${btnSize} button_${btnType}`
       }
       onClick={onClick}
+      type={buttonType}
     >
       {text}
     </button>
