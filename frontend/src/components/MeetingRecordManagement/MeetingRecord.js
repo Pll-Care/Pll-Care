@@ -136,7 +136,7 @@ const MeetingRecord = ({ state }) => {
         </div>
       </div>
       <div
-        className="meeting-record-content"
+        className="created-meeting-record-content"
         dangerouslySetInnerHTML={{ __html: selectedData.content }}
       />
     </div>

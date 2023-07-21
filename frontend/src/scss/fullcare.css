@@ -1367,10 +1367,10 @@ input {
   align-self: center;
 }
 .meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-title input::-moz-placeholder {
-  color: #D9D9D9;
+  color: #d9d9d9;
 }
 .meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-title input::placeholder {
-  color: #D9D9D9;
+  color: #d9d9d9;
 }
 .meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-title button {
   align-self: flex-end;
@@ -1404,10 +1404,15 @@ input {
   justify-content: space-between;
   align-items: center;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .selected-meeting-record-content, .meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-content {
+.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .selected-meeting-record-content,
+.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .created-meeting-record-content {
   height: 85%;
   line-height: 1.5;
   padding: 10px;
+}
+.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .selected-meeting-record-content img,
+.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .created-meeting-record-content img {
+  max-width: 100%;
 }
 .meeting-record-management-wrapper .meeting-record-item {
   background-color: white;

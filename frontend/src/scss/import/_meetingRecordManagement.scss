@@ -134,7 +134,7 @@
 
       .meeting-record-editor .meeting-record-title {
         height: 15%;
-        border-bottom: 2px solid #d9d9d9; 
+        border-bottom: 2px solid #d9d9d9;
         display: flex;
         justify-content: space-between;
       }
@@ -151,7 +151,7 @@
       }
 
       .meeting-record-title input::placeholder {
-        color: #D9D9D9;
+        color: #d9d9d9;
       }
 
       .meeting-record-title button {
@@ -189,10 +189,16 @@
         @include displayFlex(row, space-between);
       }
 
-      .selected-meeting-record-content, .meeting-record-content {
+      .selected-meeting-record-content,
+      .created-meeting-record-content {
         height: 85%;
         line-height: 1.5;
         padding: 10px;
+      }
+
+      .selected-meeting-record-content img,
+      .created-meeting-record-content img {
+        max-width: 100%;
       }
 
       @include displayFlex;
