@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { useMutation } from "react-query";
 import { toast } from "react-toastify";
@@ -13,13 +12,10 @@ import { makeNewMidEvaluation } from "../../lib/apis/evaluationManagementApi";
 import AlertModal from "./AlertModal";
 
 const ScheduleEvaluationModal = (props) => {
-  const dispatch = useDispatch();
   const { id } = useParams();
 
   const projectId = parseInt(id, 10);
   const scheduleId = parseInt(props.id, 10);
-
-  const isMidEvaluated = useSelector((state) => state.evaluationManagement.isMidEvaluated);
 
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const [name, setName] = useState(props.members[0].id);
