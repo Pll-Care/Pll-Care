@@ -71,6 +71,7 @@ export const getContact = async (memberId) => {
 };
 
 export const patchProfile = async (memberId, userInfo) => {
+  console.log(userInfo);
   try {
     await customAxios.patch(`/auth/profile/${memberId}`, userInfo);
   } catch (error) {

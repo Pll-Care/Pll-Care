@@ -37,10 +37,17 @@ const ProjectBox = () => {
           {isModify ? (
             <>
               <Button
+                type="submit"
+                text="프로젝트 추가"
+                size="small"
+                onClick={submitModify}
+              />
+              <Button
                 text="취소"
                 size="small"
                 onClick={() => setIsModify(false)}
               />
+
               <Button
                 type="submit"
                 text="완료"
