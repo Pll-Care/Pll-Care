@@ -1,16 +1,8 @@
 .evaluation-management {
   width: 100%;
 
-  &-non-evaluated {
-    width: 100%;
-    background-color: #FCFCFC;
-    filter: opacity(30%) blur(4px);
-    pointer-events: none;
-
-    @include putCenter;
-  }
-
-  &-ranking-wrapper {
+  &-ranking-wrapper,
+  &-ranking-wrapper-non-evaluated {
     height: 500px;
     padding-bottom: 30px;
     border-bottom: 2px solid #d9d9d9;
@@ -156,6 +148,42 @@
     }
 
     @include displayFlex;
+  }
+
+  .evaluation-management-ranking-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .evaluation-management-ranking-wrapper-non-evaluated,
+  .final-evaluation-management-ranking-wrapper-non-evaluated {
+    position: relative;
+    width: 100%;
+    background-color: #fcfcfc;
+    filter: opacity(35%) blur(1px);
+    pointer-events: none;
+  }
+
+  .evaluation-management-ranking-wrapper-non-evaluated::before,
+  .final-evaluation-management-ranking-wrapper-non-evaluated::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    background: {
+      size: 100% 100%;
+    }
+  }
+
+  .evaluation-management-ranking-wrapper-non-evaluated::before {
+    background: url("../assets/evaluation-error-text.png") no-repeat center;
+  }
+
+  .final-evaluation-management-ranking-wrapper-non-evaluated::before {
+    background: url("../assets/final-evaluation-error-text.png") no-repeat center;
   }
 
   &-participant-wrapper {
