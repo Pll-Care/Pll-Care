@@ -4,17 +4,28 @@ import { useQuery } from "react-query";
 import FinalEvaluation from "./FinalEvaluation";
 import ParticipantItem from "./ParticipantItem";
 
-import { getEvaluationMember } from "../../lib/apis/evaluationManagementApi";
+import {
+  getEvaluationMember,
+  getFinalEvaluation,
+} from "../../lib/apis/evaluationManagementApi";
 
 const AllParticipants = ({ projectId, isCompleted }) => {
   const [isFinalEvaluationVisible, setIsFinalEvaluationVisible] = useState("");
+  const [finalEvaluationType, setFinalEvaluationType] = useState("");
+  const [finalEvalData, setFinalEvalData] = useState("");
 
   const [badgeQuantity, setBadgeQuantity] = useState();
 
   const [participantId, setParticipantId] = useState();
 
-  const handleFinalEvaluationModal = (name) => {
+  const handleFinalEvaluationModal = async (type, name, finalEvalId) => {
+    if (finalEvalId !== -1) {
+      const evaluation = await getFinalEvaluation(finalEvalId);
+      setFinalEvalData(evaluation);
+    }
+
     setIsFinalEvaluationVisible(name);
+    setFinalEvaluationType(type);
   };
 
   const handleClickParticipant = (badgeQuantity, participantId) => {
@@ -41,15 +52,18 @@ const AllParticipants = ({ projectId, isCompleted }) => {
             }
             isCompleted={isCompleted}
             isSelf={member.me}
+            finalEvalId={member.finalEvalId}
           />
         ))}
       </div>
       {isFinalEvaluationVisible && (
         <FinalEvaluation
+          type={finalEvaluationType}
           badgeQuantity={badgeQuantity}
           participantId={participantId}
           member={isFinalEvaluationVisible}
           setIsFinalEvaluationVisible={setIsFinalEvaluationVisible}
+          data={finalEvalData}
         />
       )}
     </div>
