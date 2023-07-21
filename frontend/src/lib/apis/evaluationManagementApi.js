@@ -33,6 +33,12 @@ export const createFinalEvaluation = async (finalEvaluationObj) => {
   return response;
 };
 
+export const getFinalEvaluation = async (finalEvalId) => {
+  const response = await customAxios.get(`/auth/evaluation/final/${finalEvalId}`);
+
+  return response.data;
+}
+
 // 중간 평가 생성
 export const makeNewMidEvaluation = async (data) => {
   try {

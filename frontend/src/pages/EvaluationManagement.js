@@ -1,8 +1,5 @@
 import { useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
-import { useEffect, useState } from "react";
-
-import { toast } from "react-toastify";
 
 import AllParticipants from "../components/EvaluationManagement/AllParticipants";
 import EvaluationRanking from "../components/EvaluationManagement/EvaluationRanking";
@@ -14,44 +11,42 @@ import {
 } from "../lib/apis/evaluationManagementApi";
 
 import { getProjectId } from "../utils/getProjectId";
-import { useSelector } from "react-redux";
-import { isCompleteProject } from "../utils/isCompleteProject";
+import { getCompleteProjectData } from "../lib/apis/managementApi";
 
 const EvaluationManagement = () => {
-  // 전역 상태로 변경 필요
-  const [isEvaluated, setIsEvaluated] = useState(true);
-
   const projectId = getProjectId(useLocation());
 
-  const completedProjectIdList = useSelector(
-    (state) => state.projectManagement.completedProjectId
+  const { data: isCompleted } = useQuery(
+    ["completeProjectData", projectId],
+    () => getCompleteProjectData(projectId)
   );
-
-  const isCompleted = isCompleteProject(completedProjectIdList, projectId);
 
   const { data = { charts: [], ranks: [] } } = useQuery(
     isCompleted
-      ? ["managementFinalEvaluationChartAndRanking"]
-      : ["managementMidEvaluationChartAndRanking"],
+      ? ["managementFinalEvaluationChartAndRanking", projectId]
+      : ["managementMidEvaluationChartAndRanking", projectId],
     () =>
       isCompleted
         ? getFinalEvaluationChartAndRanking(projectId)
         : getMidEvaluationChartAndRanking(projectId)
   );
 
-  useEffect(() => {
-    !isEvaluated && toast.error("평가 페이지는 중간 평가 이후에 공개됩니다.");
-  }, [isEvaluated]);
-
   return data.charts.length ? (
-    <div
-      className={
-        isEvaluated
-          ? "evaluation-management"
-          : "evaluation-management-non-evaluated"
-      }
-    >
-      <div className="evaluation-management-ranking-wrapper">
+    <div className="evaluation-management">
+      <div
+        className={
+          !isCompleted
+            ? data.ranks.length
+              ? "evaluation-management-ranking-wrapper"
+              : "evaluation-management-ranking-wrapper-non-evaluated"
+            : data.ranks.length
+            ? "evaluation-management-ranking-wrapper"
+            : [
+                `evaluation-management-ranking-wrapper-non-evaluated`,
+                `final-evaluation-management-ranking-wrapper-non-evaluated`,
+              ].join(" ")
+        }
+      >
         <ShowEvaluationChart
           chartData={data.charts}
           isCompleted={isCompleted}
