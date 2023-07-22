@@ -2,10 +2,10 @@ import { useRef, useState } from "react";
 import Button from "../../components/common/Button";
 import { getProjectId } from "../../utils/getProjectId";
 import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { isCompleteProject } from "../../utils/isCompleteProject";
 import useEvaluationManagementMutation from "../../hooks/useEvaluationManagementMutation";
 import { toast } from "react-toastify";
+import { useQuery } from "react-query";
+import { getCompleteProjectData } from "../../lib/apis/managementApi";
 
 const evaluationCriterion = [
   {
@@ -86,17 +86,16 @@ const FinalEvaluation = ({
     },
   ]);
 
+  const projectId = getProjectId(useLocation());
+
+  const { data: isCompleted } = useQuery(
+    ["completeProjectData", projectId],
+    () => getCompleteProjectData(projectId)
+  );
+
   const [content, setContent] = useState("");
 
   const modalOutside = useRef();
-
-  const projectId = getProjectId(useLocation());
-
-  const completedProjectIdList = useSelector(
-    (state) => state.projectManagement.completedProjectId
-  );
-
-  const isCompleted = isCompleteProject(completedProjectIdList, projectId);
 
   const { finalEvaluationMutate } = useEvaluationManagementMutation();
 
