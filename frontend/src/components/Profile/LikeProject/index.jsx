@@ -2,19 +2,20 @@ import { useState } from "react";
 import Select from "../../common/Select";
 import { recruitSelect, sortSelect } from "../../../utils/optionData";
 import ProjectItem from "../myproject/ProjectItem";
+import PaginationButton from "../../common/PaginationButton";
 
 const LikeProject = () => {
-  const [selecValue, setSelectValue] = useState({
-    recruit: "ONGOING",
-    sort: "NEWEST",
-  });
+  const [selecValue, setSelectValue] = useState("ONGOING");
+
+  const [currentPageNumber, setCurrentPageNumber] = useState(1);
 
   const changeRecruit = (event) => {
-    setSelectValue((prev) => ({ ...prev, recruit: event.target.value }));
+    setSelectValue(event.target.value);
+    setCurrentPageNumber(1);
   };
 
-  const changeSort = (event) => {
-    setSelectValue((prev) => ({ ...prev, sort: event.target.value }));
+  const changePageNumber = (pageNumber) => {
+    setCurrentPageNumber(pageNumber);
   };
   return (
     <div>
@@ -28,7 +29,6 @@ const LikeProject = () => {
             onChange={changeRecruit}
             type={"small"}
           />
-          <Select options={sortSelect} onChange={changeSort} type="small" />
         </div>
         <div className="myProject_project">
           <ul>
@@ -42,6 +42,11 @@ const LikeProject = () => {
             ))}
           </ul>
         </div>
+        <PaginationButton
+          changePageNumber={changePageNumber}
+          totalPageNumber={111}
+          currentPageNumber={currentPageNumber}
+        />
       </div>
     </div>
   );
