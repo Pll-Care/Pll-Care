@@ -2855,4 +2855,48 @@ a {
   cursor: pointer;
   font-size: 14px;
   font-weight: bold;
+}
+
+.pagination {
+  width: 100%;
+  margin-top: 30px;
+}
+
+.pageButtons {
+  width: 60%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+}
+.pageButtons > li {
+  cursor: pointer;
+}
+
+.disabled {
+  pointer-events: none;
+  color: #999;
+}
+
+.first_last {
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+}
+
+.pageButton {
+  text-align: center;
+  line-height: 30px;
+  width: 30px;
+  height: 30px;
+}
+
+.current {
+  border: 3px solid #01e89e;
+  border-radius: 100%;
+}
+
+.pageNumber {
+  text-align: center;
+  line-height: 30px;
 }/*# sourceMappingURL=fullcare.css.map */
