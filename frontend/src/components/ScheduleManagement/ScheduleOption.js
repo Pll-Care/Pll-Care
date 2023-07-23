@@ -12,7 +12,6 @@ const ScheduleOption = () => {
   const { data: names, isLoading } = useQuery(["members", id], () =>
     getTeamMember(id)
   );
-  console.log(names);
   const options = [
     { name: "ALL", type: "all" },
     { name: "PLAN", type: "MILESTONE" },

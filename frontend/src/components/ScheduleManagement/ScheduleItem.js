@@ -103,7 +103,10 @@ const ScheduleItem = (props) => {
         <h1>{day}</h1>
         <h2>{getEnglishWeekdays(props.data.startDate)}</h2>
 
-        {props.data.state === "COMPLETE" && (
+        {props.option === "pastAll" && (
+          <Button text={"일정 완료"} size="small" />
+        )}
+        {props.option !== "pastAll" && props.data.state === "COMPLETE" && (
           <Button
             text={"✍평가 작성"}
             size="small"

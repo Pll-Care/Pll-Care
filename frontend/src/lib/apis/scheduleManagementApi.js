@@ -39,9 +39,15 @@ export const createNewSchedule = async (data) => {
 // 일정 필터 리스트 조회
 export const getFilterSchedule = async (projectId, memberId, type, page) => {
   try {
-    if (type === "all" || type === "pastAll") {
+    if (type === "all") {
       const res = await customAxios.get(
         `/auth/schedule/search?page=${page}&size=5&projectId=${projectId}&memberId=${memberId}`
+      );
+      return res.data;
+    }
+    if (type === "pastAll") {
+      const res = await customAxios.get(
+        `/auth/schedule/search?page=${page}&size=5&projectId=${projectId}&memberId=${memberId}&previous=true`
       );
       return res.data;
     }

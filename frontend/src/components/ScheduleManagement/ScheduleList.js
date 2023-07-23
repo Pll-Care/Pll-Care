@@ -35,7 +35,7 @@ const ScheduleList = ({ nameId, option }) => {
     pageCount = Math.ceil(itemCount / itemsPerPage);
   }
 
-  console.log(option, "에 따른", schedules);
+  //console.log(option, "에 따른", schedules);
   return (
     <Card className="schedule-lists">
       {isLoading && <h1 className="check-schedule-gray">⏳ 로딩 중...</h1>}
@@ -49,7 +49,7 @@ const ScheduleList = ({ nameId, option }) => {
         !isLoading &&
         schedules?.content?.length > 0 &&
         schedules?.content?.map((schedule, index) => (
-          <ScheduleItem key={index} data={schedule} />
+          <ScheduleItem key={index} data={schedule} option={option} />
         ))}
       <div className="schedule-lists-pagination">
         {pageCount > 0 && (

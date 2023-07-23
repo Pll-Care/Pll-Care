@@ -175,7 +175,6 @@ const ScheduleDetailModal = ({
     }
 
     const body = { ...formData, memberIds: memberData };
-    console.log("수정후", body);
 
     modifySchedule(body);
 
