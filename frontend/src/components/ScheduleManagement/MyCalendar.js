@@ -62,7 +62,7 @@ const MyCalendar = () => {
           dayCellContent={dayCellContent}
         />
       </div>
-      <CalendarList data={data} />
+      <CalendarList />
     </div>
   );
 };

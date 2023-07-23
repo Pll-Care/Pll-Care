@@ -60,6 +60,19 @@ export const getFilterSchedule = async (projectId, memberId, type, page) => {
   }
 };
 
+// todayAfterSchedule
+// 오늘 이후 일정
+export const getTodayAfterSchedule = async (page, projectId, year, month) => {
+  try {
+    const res = await customAxios.get(
+      `/auth/schedule/monthlist?page=${page}&size=4&project_id=${projectId}&year=${year}&month=${month}`
+    );
+    return res.data;
+  } catch (err) {
+    return err;
+  }
+};
+
 // query key: detailSchedule
 // 일정 상세 조회
 export const getDetailSchedule = async (projectId, scheduleId) => {

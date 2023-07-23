@@ -22,6 +22,10 @@
     display: flex;
     justify-content: flex-end;
   }
+  &-pagination {
+    justify-content: center;
+    margin-bottom: 20px;
+  }
   &-time {
     color: white;
     h5 {
