@@ -37,7 +37,6 @@ const Login = ({ closeModal }) => {
             onClick={() => {
               window.open(
                 googleAuthUrl,
-                "_blank",
                 `width=450, height=500, top=55px, left=${left}`
               );
             }}
@@ -47,7 +46,6 @@ const Login = ({ closeModal }) => {
             onClick={() => {
               window.open(
                 kakaoAuthUrl,
-                "_blank",
                 `width=450, height=500, top=55px, left=${left}`
               );
             }}
@@ -57,7 +55,6 @@ const Login = ({ closeModal }) => {
             onClick={() => {
               window.open(
                 naverAuthUrl,
-                "_blank",
                 `width=450, height=500, top=55px, left=${left}`
               );
             }}

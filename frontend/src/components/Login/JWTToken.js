@@ -25,7 +25,7 @@ const JWTToken = () => {
     }
   }, []);
 
-  return <div></div>;
+  return <div className="jwt-token"></div>;
 };
 
 export default JWTToken;
