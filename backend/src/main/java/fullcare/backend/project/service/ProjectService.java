@@ -108,7 +108,7 @@ public class ProjectService {
     // ! todo readonly 옵션으로 데이터 읽기 용도로만 호출할 경우 프로젝트가 완료되어도 검증 통과
     public ProjectMember isProjectAvailable(Long projectId, Long memberId, boolean readOnly) {
         // * 프로젝트가 존재하는 검증
-        Project findProject = projectRepository.findProjectWithPMById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
+        Project findProject = projectRepository.findProjectWithPMAndMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
 
         // * 프로젝트에 소속된 사람인지 검증
         // ! 사용자가 프로젝트에 소속되어있다면, 해당 프로젝트 멤버 엔티티를 반환한다.

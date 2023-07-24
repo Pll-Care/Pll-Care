@@ -1,6 +1,5 @@
 package fullcare.backend.schedule.controller;
 
-import fullcare.backend.global.errorcode.ProjectErrorCode;
 import fullcare.backend.global.errorcode.ScheduleErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.InvalidAccessException;
 import fullcare.backend.global.exceptionhandling.exception.NotFoundCategoryException;
@@ -34,6 +33,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/api/auth/schedule")
 @RestController
@@ -129,23 +130,14 @@ public class ScheduleController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @Operation(method = "get", summary = "월별 리스트 조회")
+    @Operation(method = "get", summary = "오늘 일정 리스트 조회")
     @ApiResponses(value = {
-            @ApiResponse(description = "월별 리스트 조회 성공", responseCode = "200", useReturnTypeSchema = true)
+            @ApiResponse(description = "오늘 일정 리스트 조회 성공", responseCode = "200", useReturnTypeSchema = true)
     })
-    @GetMapping("/monthlist")
-    public ResponseEntity<CustomPageImpl<ScheduleMonthResponse>> calenderList(CustomPageRequest pageRequest,
-                                                                              @Valid @RequestParam("project_id") Long projectId,
-                                                                              @Valid @RequestParam int year,
-                                                                              @Valid @RequestParam int month,
-//                                                                        @Valid @RequestParam(required = false, defaultValue = "TBD,ONGOING") List<State> state  ,
-                                                                              @CurrentLoginMember Member member) {
-//        List<State> states = new ArrayList<>();
-//        if (state.equals(State.TBD)||state.equals(State.ONGOING)){ states.add(state); states.add(State.ONGOING);}else{states.add(State.COMPLETE);}
-        PageRequest of = pageRequest.of("startDate");
-        Pageable pageable = (Pageable) of;
+    @GetMapping("/daily")
+    public ResponseEntity<List<ScheduleMonthResponse>> dailyList(@Valid @RequestParam("project_id") Long projectId, @CurrentLoginMember Member member) {
         projectService.isProjectAvailable(projectId, member.getId(), true);
-        CustomPageImpl<ScheduleMonthResponse> response = scheduleService.findScheduleMonthList(pageable, year, month);
+        List<ScheduleMonthResponse> response = scheduleService.findDailySchedule(projectId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -157,8 +149,6 @@ public class ScheduleController {
     public ResponseEntity<CustomPageImpl<ScheduleSearchResponse>> searchList(CustomPageRequest pageRequest,
                                                                              ScheduleCondition scheduleCondition,
                                                                              @CurrentLoginMember Member member) {
-//        List<State> states = new ArrayList<>();
-//        if (state.equals(State.TBD)||state.equals(State.ONGOING)){ states.add(state); states.add(State.ONGOING);}else{states.add(State.COMPLETE);}
         PageRequest of = pageRequest.of("startDate");
         Pageable pageable = (Pageable) of;
         projectService.isProjectAvailable(scheduleCondition.getProjectId(), member.getId(), false);

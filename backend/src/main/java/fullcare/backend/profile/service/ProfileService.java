@@ -124,6 +124,8 @@ public class ProfileService {
     public void updateBio(Member member, ProfileBioUpdateRequest profileBioUpdateRequest) {
         Member findMember = memberRepository.findById(member.getId()).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
         findMember.getProfile().updateBio(profileBioUpdateRequest.getBio());
+        findMember.updateNickname(profileBioUpdateRequest.getNickname());
+        findMember.updateImageUrl(profileBioUpdateRequest.getImageUrl());
     }
 
 

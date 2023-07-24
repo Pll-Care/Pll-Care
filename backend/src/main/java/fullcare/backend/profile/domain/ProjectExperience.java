@@ -35,5 +35,8 @@ public class ProjectExperience {
         this.techStack = techStack;
         this.profile = profile;
     }
+    public void updateTechStack(String techStack){
+        this.techStack = techStack;
+    }
 
 }

@@ -5,10 +5,8 @@ import fullcare.backend.schedule.domain.Schedule;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.parameters.P;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,8 +18,11 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     @Query("select s from schedule s where s.project.id = :projectId and type(s) in (Milestone) order by s.startDate")
     List<Schedule> findMileStoneByProjectId(@Param("projectId") Long projectId);
 
-    @Query(value = "select s from schedule s join fetch s.scheduleMembers sm join fetch sm.member where s.startDate between :startCheckStartDate and :startCheckEndDate or s.endDate between :endCheckStartDate and :endCheckEndDate")
-    List<Schedule> findByStartDateBetweenOrEndDateBetween(LocalDateTime startCheckStartDate, LocalDateTime startCheckEndDate, LocalDateTime endCheckStartDate, LocalDateTime endCheckEndDate);
+    @Query(value = "select s from schedule s join fetch s.scheduleMembers sm join fetch sm.member " +
+            "where s.project.id = :projectId " +
+            "and ((s.startDate between :startCheckStartDate and :startCheckEndDate and s.endDate between :startCheckStartDate and :startCheckEndDate) or (:startCheckStartDate between s.startDate and s.endDate))" +
+            "order by s.startDate")
+    List<Schedule> findDaily(@Param("projectId") Long projectId, LocalDateTime startCheckStartDate, LocalDateTime startCheckEndDate);
     @Query("select s from schedule s where type(s) in (Milestone)  and (s.startDate between :startDate and :endDate or s.endDate between :startDate and :endDate)")
     List<Schedule> findMeetingCalender(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
     @Query(value = "select s from schedule s join fetch s.scheduleMembers sm where (s.startDate between :startCheckStartDate and :startCheckEndDate or s.endDate between :endCheckStartDate and :endCheckEndDate)"

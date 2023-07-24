@@ -104,6 +104,9 @@ public class Member {
     public void updateName(String name) {
         this.name = name;
     }
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
     public void updateEmail(String email) {
         this.email = email;
