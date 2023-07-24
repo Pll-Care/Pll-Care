@@ -161,9 +161,7 @@ public class ScheduleController {
 //        if (state.equals(State.TBD)||state.equals(State.ONGOING)){ states.add(state); states.add(State.ONGOING);}else{states.add(State.COMPLETE);}
         PageRequest of = pageRequest.of("startDate");
         Pageable pageable = (Pageable) of;
-        if (!(projectMemberService.validateProjectMember(scheduleCondition.getProjectId(), member.getId()))) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
-        }
+        projectService.isProjectAvailable(scheduleCondition.getProjectId(), member.getId(), false);
 
         CustomPageImpl<ScheduleSearchResponse> response = scheduleService.searchScheduleList(pageable, member, scheduleCondition);
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -175,9 +173,7 @@ public class ScheduleController {
     })
     @PostMapping("/{scheduleId}/state")
     public ResponseEntity updateState(@PathVariable Long scheduleId, @Valid @RequestBody ScheduleStateUpdateRequest scheduleStateUpdateRequest, @CurrentLoginMember Member member) {
-        if (!(projectMemberService.validateProjectMember(scheduleStateUpdateRequest.getProjectId(), member.getId()))) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
-        }
+        projectService.isProjectAvailable(scheduleStateUpdateRequest.getProjectId(), member.getId(), false);
         scheduleService.updateState(scheduleStateUpdateRequest, scheduleId);
         return new ResponseEntity(HttpStatus.OK);
     }

@@ -179,8 +179,9 @@ public class EvaluationService {
         return FinalEvaluationResponse.entityToDto(findFinalTermEvaluation);
     }
 
-    public EverythingEvalResponse findMidtermEvaluationList(Long projectId) {
-        Project project = projectRepository.findProjectWithPMAndMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
+    public EverythingEvalResponse findMidtermEvaluationList(ProjectMember projectMember) {
+        Long projectId = projectMember.getProject().getId();
+        Project project = projectMember.getProject();
         List<Member> members = project.getProjectMembers().stream().map(pm -> pm.getMember()).collect(Collectors.toList());
         List<BadgeDao> midtermBadgeList = midtermEvaluationRepository.findList(projectId, members);
         List<MidTermRankProjectionInterface> rank = midtermEvaluationRepository.findRank(projectId);
@@ -223,10 +224,10 @@ public class EvaluationService {
         return everythingEvalResponse;
     }
 
-    public EverythingEvalResponse findFinalEvaluationList(Long projectId) {
-        Project project = projectRepository.findProjectWithPMAndMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
+    public EverythingEvalResponse findFinalEvaluationList(ProjectMember projectMember) {
+        Project project = projectMember.getProject();// projectRepository.findProjectWithPMAndMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
         List<Member> members = project.getProjectMembers().stream().map(pm -> pm.getMember()).collect(Collectors.toList());
-        List<ScoreDao> scoreDaos = finalEvaluationRepository.findList(projectId, members);
+        List<ScoreDao> scoreDaos = finalEvaluationRepository.findList(project.getId(), members);
 
         List<FinalCharDto> finalTermEvalFinalCharDto = members.stream().map(m -> FinalCharDto.builder()
                 .memberId(m.getId())
@@ -288,13 +289,14 @@ public class EvaluationService {
         return midTermEvalModalResponse;
     }
 
-    public List<ParticipantResponse> findParticipantList(Long projectId, Long memberId) {
-        Project project = projectRepository.findProjectWithPMAndMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
+    public List<ParticipantResponse> findParticipantList(ProjectMember projectMember) {
+        Project project = projectMember.getProject();//projectRepository.findProjectWithPMAndMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
+        Long memberId = projectMember.getMember().getId();
         List<Member> members = project.getProjectMembers().stream().map(pm -> pm.getMember()).collect(Collectors.toList());
-        List<BadgeDao> midtermBadgeList = midtermEvaluationRepository.findList(projectId, members);
+        List<BadgeDao> midtermBadgeList = midtermEvaluationRepository.findList(project.getId(), members);
         List<FinalTermEvaluation> finalEvalList = new ArrayList<>();
         if (project.getState().equals(State.COMPLETE)) {
-            finalEvalList = finalEvaluationRepository.findByProjectIdAndEvaluatorId(projectId, memberId);
+            finalEvalList = finalEvaluationRepository.findByProjectIdAndEvaluatorId(project.getId(), memberId);
         }
         List<ParticipantResponse> response = new ArrayList<>();
         for (Member member : members) {

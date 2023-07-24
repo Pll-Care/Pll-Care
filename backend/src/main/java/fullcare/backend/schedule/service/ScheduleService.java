@@ -235,10 +235,6 @@ public class ScheduleService {
 //    }
     public void updateState(ScheduleStateUpdateRequest scheduleStateUpdateRequest, Long scheduleId) { // 상태 바꿀 때도 schedulemember recentview 바꿔야함
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
-        Project project = projectRepository.findById(scheduleStateUpdateRequest.getProjectId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
-        if (project.isCompleted()) {
-            throw new CompletedProjectException(ScheduleErrorCode.PC_SCHEDULE_NOT_PATCH);
-        }
         LocalDateTime now = LocalDateTime.now();
         schedule.updateState(now, scheduleStateUpdateRequest.getState());
         scheduleMemberRepository.updateRecentView(now, schedule.getId());

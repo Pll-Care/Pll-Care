@@ -14,6 +14,7 @@ import fullcare.backend.profile.dto.request.ProfileBioUpdateRequest;
 import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
 import fullcare.backend.profile.dto.response.*;
 import fullcare.backend.profile.service.ProfileService;
+import fullcare.backend.project.service.ProjectService;
 import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.security.jwt.CurrentLoginMember;
 import fullcare.backend.util.CustomPageImpl;
@@ -43,7 +44,7 @@ public class ProfileController {
     private final ProfileService profileService;
     private final PostService postService;
     private final EvaluationService evaluationService;
-    private final ProjectMemberService projectMemberService;
+    private final ProjectService projectService;
 
     // * 개인 프로필 api 조회
     @Operation(method = "get", summary = "한 줄 소개 조회")
@@ -185,9 +186,7 @@ public class ProfileController {
     })
     @GetMapping("/evaluation/{projectId}")
     public ResponseEntity<MyEvalDetailResponse> findMyEvalDetail(@PathVariable Long memberId, @PathVariable Long projectId, @CurrentLoginMember Member member) {
-//        if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-//            throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
-//        }
+        projectService.isProjectAvailable(projectId, memberId, true);
         MyEvalDetailResponse response = evaluationService.findMyEval(projectId, memberId);
 
         return new ResponseEntity(response, HttpStatus.OK);

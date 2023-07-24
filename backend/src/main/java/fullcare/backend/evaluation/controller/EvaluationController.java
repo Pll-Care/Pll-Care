@@ -11,6 +11,8 @@ import fullcare.backend.global.errorcode.EvaluationErrorCode;
 import fullcare.backend.global.errorcode.ProjectErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.InvalidAccessException;
 import fullcare.backend.member.domain.Member;
+import fullcare.backend.project.service.ProjectService;
+import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.schedulemember.service.ScheduleMemberService;
 import fullcare.backend.security.jwt.CurrentLoginMember;
@@ -39,7 +41,7 @@ public class EvaluationController {
     private final EvaluationService evaluationService;
     private final ProjectMemberService projectMemberService;
     private final ScheduleMemberService scheduleMemberService;
-
+    private final ProjectService projectService;
 
     // * 중간평가 관련
     @Operation(method = "get", summary = "중간 평가 모달창 조회")
@@ -64,12 +66,8 @@ public class EvaluationController {
     @PostMapping("/midterm")
     public ResponseEntity midtermEvalCreate(@RequestBody MidTermEvalCreateRequest midTermEvalCreateRequest,
                                             @CurrentLoginMember Member member) {
-        if (!(projectMemberService.validateProjectMember(midTermEvalCreateRequest.getProjectId(), member.getId()))) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
-        }
-
+        projectService.isProjectAvailable(midTermEvalCreateRequest.getProjectId(), member.getId(), false);
         evaluationService.createMidtermEvaluation(midTermEvalCreateRequest, member);
-
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -80,6 +78,7 @@ public class EvaluationController {
     @GetMapping("/midterm/detail")
     public ResponseEntity<List<BadgeDto>> findMidterm(@RequestParam("project_id") Long projectId,
                                                       @CurrentLoginMember Member member) {
+        projectService.isProjectAvailable(projectId, member.getId(), true);
         List<BadgeDto> response = evaluationService.findMidtermEvaluationDetailResponse(projectId, member.getId());
 
         return new ResponseEntity(response, HttpStatus.OK);
@@ -92,10 +91,8 @@ public class EvaluationController {
     @GetMapping("/midtermlist") // 디자인에서 뱃지 개수 차트 부분
     public ResponseEntity<EverythingEvalResponse<FinalCharDto<BadgeDto>, MidTermRankingDto>> midtermEvalList(@RequestParam("project_id") Long projectId,
                                                                                                              @CurrentLoginMember Member member) {
-        if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
-        }
-        EverythingEvalResponse response = evaluationService.findMidtermEvaluationList(projectId);
+        ProjectMember projectMember = projectService.isProjectAvailable(projectId, member.getId(), true);
+        EverythingEvalResponse response = evaluationService.findMidtermEvaluationList(projectMember);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
@@ -108,9 +105,8 @@ public class EvaluationController {
     @PostMapping("/final")
     public ResponseEntity<FinalEvaluationCreateResponse> finalEvalCreate(@RequestBody FinalEvalCreateRequest finalEvalCreateRequest,
                                                                          @CurrentLoginMember Member member) {
-        if (!(projectMemberService.validateProjectMember(finalEvalCreateRequest.getProjectId(), member.getId()))) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
-        }
+        projectService.isProjectAvailable(finalEvalCreateRequest.getProjectId(), member.getId(), false);
+
         Long finalEvalId = evaluationService.createFinalEvaluation(finalEvalCreateRequest, member);
         return new ResponseEntity(new FinalEvaluationCreateResponse(finalEvalId), HttpStatus.OK);
     }
@@ -151,8 +147,9 @@ public class EvaluationController {
             @ApiResponse(description = "최종 평가 조회 성공", responseCode = "200", useReturnTypeSchema = true)
     })
     @GetMapping("/final/{evaluationId}")
-    public ResponseEntity<FinalEvaluationResponse> finalEvalDetails(@PathVariable Long evaluationId,
+    public ResponseEntity<FinalEvaluationResponse> finalEvalDetails(@PathVariable Long evaluationId, @RequestParam("project_id") Long projectId,
                                                                     @CurrentLoginMember Member member) {// ? 평가된 사람 id, 평가 id 조건 검색 해서 일치하면 접근 허용 필요
+        projectService.isProjectAvailable(projectId, member.getId(), true);
         FinalEvaluationResponse response = evaluationService.findFinalEvaluationDetailResponse(evaluationId);
         return new ResponseEntity(response, HttpStatus.OK);
     }
@@ -164,12 +161,8 @@ public class EvaluationController {
     @GetMapping("/finallist") // 최종평가 차트 api
     public ResponseEntity<EverythingEvalResponse<FinalCharDto<ScoreDto>, FinalTermRankingDto>> finalEvalList(@RequestParam("project_id") Long projectId,
                                                                                                              @CurrentLoginMember Member member) {
-        if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
-        }
-
-        EverythingEvalResponse response = evaluationService.findFinalEvaluationList(projectId);
-
+        ProjectMember projectMember = projectService.isProjectAvailable(projectId, member.getId(), true);
+        EverythingEvalResponse response = evaluationService.findFinalEvaluationList(projectMember);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
@@ -180,10 +173,8 @@ public class EvaluationController {
     @GetMapping("/participant")
     public ResponseEntity<List<ParticipantResponse>> findParticipantList(@RequestParam("project_id") Long projectId,
                                                                          @CurrentLoginMember Member member) {
-        if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
-        }
-        List<ParticipantResponse> response = evaluationService.findParticipantList(projectId, member.getId());
+        ProjectMember projectMember = projectService.isProjectAvailable(projectId, member.getId(), true);
+        List<ParticipantResponse> response = evaluationService.findParticipantList(projectMember);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
