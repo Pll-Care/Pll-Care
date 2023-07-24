@@ -46,28 +46,11 @@ public class Memo extends BaseEntity {
         this.title = title;
         this.content = content;
         this.author = author;
-
-        project.getMemos().add(this); // todo ! 반영되는지 확인 필요 (무조건 확인해야함)
     }
-
-//    public static Memo createNewMemo(Project project, String title, String content) {
-//        Memo newMemo = Memo.
-//                .title(title)
-//                .content(content)
-//                .build();
-//
-//        newMemo.belongTo(project);
-//        return newMemo;
-//    }
 
     public void updateAll(String title, String content) {
         this.title = title;
         this.content = content;
     }
-
-//    private void belongTo(Project project) {
-//        this.project = project;
-//        project.getMemos().add(this);
-//    }
 
 }

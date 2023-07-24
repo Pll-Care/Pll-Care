@@ -1,8 +1,8 @@
 package fullcare.backend.project.dto.response;
 
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class ProjectUpdateResponse {
     private String imageUrl;
 

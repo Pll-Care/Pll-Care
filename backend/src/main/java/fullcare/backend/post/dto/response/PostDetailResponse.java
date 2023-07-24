@@ -1,21 +1,16 @@
 package fullcare.backend.post.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import fullcare.backend.post.domain.Post;
-import fullcare.backend.post.dto.request.RecruitInfo;
-import fullcare.backend.util.TechStackUtil;
+import fullcare.backend.post.domain.RecruitInfo;
 import fullcare.backend.util.dto.TechStackDto;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-@ToString
 @Getter
 public class PostDetailResponse {
 
@@ -36,8 +31,7 @@ public class PostDetailResponse {
     private String contact;
     private String region;
 
-    private List<TechStackDto> techStackDtoList = new ArrayList<>();
-
+    private List<TechStackDto> techStackList = new ArrayList<>();
     @JsonIgnore
     private String techStack;
 
@@ -69,7 +63,7 @@ public class PostDetailResponse {
         this.reference = reference;
         this.contact = contact;
         this.region = region;
-        this.techStackDtoList = TechStackUtil.stringToList(techStack).stream().map(t -> new TechStackDto(t.getValue(), null)).collect(Collectors.toList());
+        this.techStack = techStack;
         this.isLiked = isLiked;
         this.isEditable = isEditable;
         this.isDeletable = isDeletable;
@@ -77,33 +71,12 @@ public class PostDetailResponse {
         this.modifiedDate = modifiedDate;
     }
 
-    public static PostDetailResponse entityToDto(Post post) {
-        return PostDetailResponse.builder()
-                .postId(post.getId())
-                .projectName(post.getProject().getTitle())
-                .projectImageUrl(post.getProject().getImageUrl())
-                .author(post.getAuthor().getNickname())
-                .authorImageUrl(post.getAuthor().getImageUrl())
-                .title(post.getTitle())
-                .description(post.getDescription())
-                .reference(post.getReference())
-                .contact(post.getContact())
-                .region(post.getRegion())
-                .techStack(post.getTechStack())
-                .createdDate(post.getCreatedDate())
-                .modifiedDate(post.getModifiedDate())
-                .build();
+    public void setRecruitInfoList(List<RecruitInfo> recruitInfoList) {
+        this.recruitInfoList = recruitInfoList;
     }
 
-    public void setRecruitInfoList(List<RecruitInfo> list) {
-        this.recruitInfoList = list;
+    public void setTechStackList(List<TechStackDto> techStackList) {
+        this.techStackList = techStackList;
     }
 
-    public void setEditable(boolean editable) {
-        isEditable = editable;
-    }
-
-    public void setDeletable(boolean deletable) {
-        isDeletable = deletable;
-    }
 }

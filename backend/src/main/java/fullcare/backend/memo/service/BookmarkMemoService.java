@@ -23,7 +23,6 @@ public class BookmarkMemoService {
 
     private final BookmarkMemoRepository bookmarkMemoRepository;
 
-
     public CustomPageImpl<BookmarkMemoListResponse> findBookmarkMemoList(Pageable pageable, Long projectId, Long memberId) {
         Page<BookmarkMemo> result = bookmarkMemoRepository.findList(pageable, projectId, memberId);
         List<BookmarkMemoListResponse> content = result.stream().map(BookmarkMemoListResponse::entityToDto).collect(Collectors.toList());
@@ -35,7 +34,7 @@ public class BookmarkMemoService {
     public void bookmarkMemo(Memo memo, Member member) {
         Optional<BookmarkMemo> findBookmarkMemo = bookmarkMemoRepository.findByMemoAndMember(memo, member);
 
-        if (!(findBookmarkMemo.isPresent())) {
+        if (!findBookmarkMemo.isPresent()) {
             BookmarkMemo newBookmarkMemo = BookmarkMemo.createNewBookmarkMemo()
                     .member(member)
                     .memo(memo)
@@ -43,8 +42,7 @@ public class BookmarkMemoService {
 
             bookmarkMemoRepository.save(newBookmarkMemo);
         } else {
-            BookmarkMemo bookmarkMemo = findBookmarkMemo.get();
-            bookmarkMemoRepository.delete(bookmarkMemo);
+            bookmarkMemoRepository.delete(findBookmarkMemo.get());
         }
     }
 }

@@ -32,7 +32,10 @@ public class JwtTokenService {
     private final long accessTokenValidationMilliseconds;
     private final long refreshTokenValidationMilliseconds;
     private final MemberRepository memberRepository;
+
+
     private Key key;
+
     @Value(("${jwt.access.header}"))
     private String accessHeader;
 

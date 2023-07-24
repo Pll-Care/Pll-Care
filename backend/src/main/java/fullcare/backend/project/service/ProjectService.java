@@ -1,9 +1,10 @@
 package fullcare.backend.project.service;
 
-import fullcare.backend.evaluation.domain.FinalTermEvaluation;
 import fullcare.backend.global.State;
 import fullcare.backend.global.errorcode.ProjectErrorCode;
+import fullcare.backend.global.exceptionhandling.exception.CompletedProjectException;
 import fullcare.backend.global.exceptionhandling.exception.EntityNotFoundException;
+import fullcare.backend.global.exceptionhandling.exception.InvalidAccessException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.dto.request.ProjectCreateRequest;
@@ -11,6 +12,7 @@ import fullcare.backend.project.dto.request.ProjectUpdateRequest;
 import fullcare.backend.project.dto.response.ProjectListResponse;
 import fullcare.backend.project.dto.response.ProjectSimpleListResponse;
 import fullcare.backend.project.repository.ProjectRepository;
+import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.s3.S3Service;
@@ -48,15 +50,15 @@ public class ProjectService {
         return projectRepository.save(newProject);
     }
 
-    public void updateProject(Long projectId, ProjectUpdateRequest projectUpdateRequest) {
-        Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
-        String imageUrl = project.getImageUrl();
-        project.update(projectUpdateRequest);
-        s3Service.delete(imageUrl);
+    public void updateProject(Long projectId, ProjectUpdateRequest request) {
+        Project findProject = findSimpleProject(projectId);
+        s3Service.delete(findProject.getImageUrl());
+        findProject.updateAll(request.getTitle(), request.getDescription(), request.getState(),
+                request.getStartDate(), request.getEndDate(), request.getImageUrl());
     }
 
     public Project findProject(Long projectId) {
-        return projectRepository.findJoinPMJoinMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
+        return projectRepository.findProjectWithPMAndMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
     }
 
     public Project findSimpleProject(Long projectId) {
@@ -66,18 +68,11 @@ public class ProjectService {
     public void deleteProject(Long projectId) {
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
 
-
-        // ? 무슨 용도의 코드인가
-        List<FinalTermEvaluation> finalTermEvaluations = project.getFinalTermEvaluations();
-        for (FinalTermEvaluation fe : finalTermEvaluations) {
-            fe.setProjectNull();
-        }
-
-
-        projectRepository.deleteById(projectId);
         if (project.getImageUrl() != null) {
             s3Service.delete(project.getImageUrl());
         }
+
+        projectRepository.deleteById(projectId);
     }
 
     public void completeProject(Long projectId) {
@@ -107,5 +102,26 @@ public class ProjectService {
         List<ProjectSimpleListResponse> simpleProjectList = projectRepository.findSimpleProjectList(memberId);
 
         return simpleProjectList;
+    }
+
+
+    // ! todo readonly 옵션으로 데이터 읽기 용도로만 호출할 경우 프로젝트가 완료되어도 검증 통과
+    public ProjectMember isProjectAvailable(Long projectId, Long memberId, boolean readOnly) {
+        // * 프로젝트가 존재하는 검증
+        Project findProject = projectRepository.findProjectWithPMById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
+
+        // * 프로젝트에 소속된 사람인지 검증
+        // ! 사용자가 프로젝트에 소속되어있다면, 해당 프로젝트 멤버 엔티티를 반환한다.
+        // ! 사용자가 프로젝트에 소속되어있지 않다면, 예외를 던진다.
+        ProjectMember findProjectMember = findProject.getProjectMembers().stream()
+                .filter(pmm -> pmm.getMember().getId().equals(memberId)).findAny()
+                .orElseThrow(() -> new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS));
+
+        // * 프로젝트가 완료되었는지 검증
+        if (findProject.isCompleted() && !readOnly) {
+            throw new CompletedProjectException(ProjectErrorCode.PROJECT_COMPLETED);
+        }
+
+        return findProjectMember;
     }
 }

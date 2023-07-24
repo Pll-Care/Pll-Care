@@ -49,7 +49,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         String accessToken = jwtTokenService.createAccessToken(oAuth2User);
         String refreshToken = jwtTokenService.createRefreshToken(oAuth2User);
 
-        Member member = memberRepository.findById(Long.valueOf(oAuth2User.getName())).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND)); // * OSIV 켜있으면 LAZY 로딩 적용 안됌
+        Member member = memberRepository.findById(Long.valueOf(oAuth2User.getName())).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
         member.updateRefreshToken(refreshToken);
 
         // 프론트렌드로 토큰을 돌려줄 URL 경로
@@ -57,7 +57,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                 .queryParam("access_token", accessToken)
                 .queryParam("refresh_token", refreshToken)
                 .build().toUriString();
-        
+
         getRedirectStrategy().sendRedirect(request, response, successUrl);
     }
 }

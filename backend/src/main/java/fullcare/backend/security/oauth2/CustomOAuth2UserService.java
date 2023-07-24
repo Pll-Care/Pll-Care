@@ -18,9 +18,6 @@ import java.util.Map;
 import java.util.Optional;
 
 
-/**
- * The type Custom o auth 2 user service.
- */
 @Slf4j
 @RequiredArgsConstructor
 @Service

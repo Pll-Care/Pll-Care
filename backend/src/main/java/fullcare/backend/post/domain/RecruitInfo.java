@@ -1,13 +1,10 @@
-package fullcare.backend.post.dto.request;
+package fullcare.backend.post.domain;
 
-import fullcare.backend.post.domain.RecruitPosition;
-import fullcare.backend.post.domain.Recruitment;
 import lombok.Getter;
-import lombok.ToString;
 
-@ToString
 @Getter
 public class RecruitInfo {
+
     private RecruitPosition position;
     private long currentCnt;
     private long totalCnt;

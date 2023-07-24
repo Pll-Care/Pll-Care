@@ -2,15 +2,17 @@ package fullcare.backend.project.dto.response;
 
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class ProjectMemberListResponse {
+    
     private Long id;
     private String name;
     private String imageUrl;
     private ProjectMemberRoleType position;
     private boolean isLeader;
+
     @Builder
     public ProjectMemberListResponse(Long id, String name, String imageUrl, ProjectMemberRoleType position, boolean isLeader) {
         this.id = id;

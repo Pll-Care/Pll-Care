@@ -2,15 +2,11 @@ package fullcare.backend.projectmember.domain;
 
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
-import fullcare.backend.schedule.domain.Schedule;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -32,8 +28,6 @@ public class ProjectMember {
     private Project project;
 
     //    @OneToMany(mappedBy = "projectMember", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Post> posts = new ArrayList<>();
-//    @OneToMany(mappedBy = "projectMember", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<Schedule> schedules = new ArrayList<>();
     @Embedded
     private ProjectMemberRole projectMemberRole; // 포지션 + 역할
