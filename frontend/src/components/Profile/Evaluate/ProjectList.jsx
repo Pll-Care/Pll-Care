@@ -1,11 +1,25 @@
 import project_default from "../../../assets/project-default-img.jpg";
+import { useRouter } from "../../../hooks/useRouter";
 
 const ProjectList = () => {
+  const { routeTo, currentPath, haveDataTo } = useRouter();
+
+  //title: string
+  // projectId: number
+  const clickProjectItem = (title, projectId) => {
+    const data = { title, projectId };
+    haveDataTo(currentPath + "/" + title, data);
+  };
+
   return (
     <div className="evaluate_project">
       <ul className="evaluate_project_list">
-        {dummy_project.map((item) => (
-          <li className="evaluate_project_item">
+        {dummy_project.map((item, idx) => (
+          <li
+            key={idx}
+            className="evaluate_project_item"
+            onClick={() => clickProjectItem(item.projectTitle, item.projectId)}
+          >
             <div className="evaluate_project_item_user">
               <div className="evaluate_project_item_img">
                 <img src={project_default} alt="프로젝트 이미지" />

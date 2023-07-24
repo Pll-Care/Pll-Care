@@ -2728,6 +2728,7 @@ a {
   justify-content: center;
   gap: 15px;
   margin-top: 24px;
+  cursor: pointer;
 }
 .evaluate_project_item {
   border: 1px solid #01e89e;
@@ -2792,6 +2793,145 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.projectEvaluate {
+  width: 80%;
+  margin: 0 auto;
+  padding: 30px 0;
+}
+.projectEvaluate_title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #00aa72;
+}
+
+.badgeBox {
+  border: 2px solid #01e89e;
+  border-radius: 25px;
+  padding: 21px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.badges {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 26px;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.badgeImage {
+  width: 28px;
+  height: 28px;
+  background-color: #cccccc;
+  border-radius: 100%;
+}
+
+.badge_divide {
+  width: 5px;
+  height: 5px;
+  background-color: #7a7a7a;
+  border-radius: 100%;
+}
+
+.badge_quantity {
+  font-size: 18px;
+  color: #7a7a7a;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+}
+.badge_quantity_score {
+  padding-top: 3px;
+}
+
+.finalEvaluate {
+  margin-top: 30px;
+  border: 2px solid #01e89e;
+  border-radius: 25px;
+  padding: 21px;
+}
+.finalEvaluate_users {
+  padding-top: 18px;
+}
+.finalEvaluate_user {
+  display: flex;
+  margin-bottom: 16px;
+}
+.finalEvaluate_userImageWrap {
+  padding: 5px;
+}
+.finalEvaluate_userImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+}
+.finalEvaluate_userEval {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px 47px 15px 18px;
+}
+.finalEvaluate_userName {
+  font-size: 18px;
+  font-weight: bold;
+  color: #7a7a7a;
+}
+.finalEvaluate_userScores {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 14px;
+}
+.finalEvaluate_userScore {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.finalEvaluate_userScore_part {
+  display: flex;
+  justify-content: space-between;
+}
+.finalEvaluate_userScore_partTitle {
+  color: #7a7a7a;
+}
+.finalEvaluate_userScore_partScore {
+  width: 26px;
+  height: 26px;
+  border: 2px solid #01e89e;
+  padding: 3px;
+  border-radius: 100%;
+  color: #01e89e;
+  font-weight: 700;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.finalEvaluate_userContent {
+  font-size: 14px;
+  color: #7a7a7a;
+  font-weight: 600;
+  padding: 0 14px;
+}
+.finalEvaluate_userContent > p {
+  line-height: 200%;
+}
+
+.image_bg {
+  background-color: #01e89e;
+  padding: 3px;
 }
 
 .select_small {
