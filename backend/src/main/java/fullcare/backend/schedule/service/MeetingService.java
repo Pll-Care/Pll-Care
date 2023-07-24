@@ -33,16 +33,13 @@ public class MeetingService {
     private final MeetingRepository meetingRepository;
     private final ProjectMemberRepository projectMemberRepository;
 
-    public void createMeeting(ScheduleCreateRequest scheduleCreateRequest, Member author) {
+    public void createMeeting(ScheduleCreateRequest scheduleCreateRequest, ProjectMember projectMember) {
         LocalDateTime now = LocalDateTime.now();
-        Project project = projectRepository.findById(scheduleCreateRequest.getProjectId()).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트가 존재하지 않습니다."));
-        ProjectMember projectMember = projectMemberRepository.findPMWithProjectByProjectIdAndMemberId(scheduleCreateRequest.getProjectId(), author.getId()).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트 멤버가 존재하지 않습니다."));
+        Project project = projectMember.getProject();
+        Member author = projectMember.getMember();
         LocalDateTime startDate = project.getStartDate().atStartOfDay();
         LocalDateTime endDate = project.getEndDate().atStartOfDay();
         Schedule.validDate(startDate, endDate, scheduleCreateRequest.getStartDate(), scheduleCreateRequest.getEndDate());
-        if (project.isCompleted()) {
-            throw new CompletedProjectException(ProjectErrorCode.PROJECT_COMPLETED); // todo "완료된 프로젝트는 일정을 생성하지 못합니다."
-        }
         List<Long> memberIds = scheduleCreateRequest.getMemberIds();
         List<Member> memberList = new ArrayList<>();
         memberIds.forEach(m -> {

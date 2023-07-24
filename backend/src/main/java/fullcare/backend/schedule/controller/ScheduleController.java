@@ -5,6 +5,7 @@ import fullcare.backend.global.errorcode.ScheduleErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.InvalidAccessException;
 import fullcare.backend.global.exceptionhandling.exception.NotFoundCategoryException;
 import fullcare.backend.member.domain.Member;
+import fullcare.backend.project.service.ProjectService;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.schedule.ScheduleCategory;
@@ -42,6 +43,7 @@ public class ScheduleController {
     private final MeetingService meetingService;
     private final MilestoneService milestoneService;
     private final ScheduleService scheduleService;
+    private final ProjectService projectService;
     private final ProjectMemberService projectMemberService;
 
     @Operation(method = "post", summary = "일정 생성")
@@ -50,14 +52,12 @@ public class ScheduleController {
     })
     @PostMapping// 나중에 프로젝트 시작, 종료일정 밖에 있는 일정 생성을 못하게 해야함. 테스트 데이터 생성을 활용할 때는 사용 x
     public ResponseEntity create(@Valid @RequestBody ScheduleCreateRequest scheduleCreateRequest, @CurrentLoginMember Member member) {
-        if (!(projectMemberService.validateProjectMember(scheduleCreateRequest.getProjectId(), member.getId()))) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
-        }
+        ProjectMember projectMember = projectService.isProjectAvailable(scheduleCreateRequest.getProjectId(), member.getId(), false);
 
         if (scheduleCreateRequest.getCategory().equals(ScheduleCategory.MILESTONE)) {
-            milestoneService.createMilestone(scheduleCreateRequest, member);
+            milestoneService.createMilestone(scheduleCreateRequest, projectMember);
         } else if (scheduleCreateRequest.getCategory().equals(ScheduleCategory.MEETING)) {
-            meetingService.createMeeting(scheduleCreateRequest, member);
+            meetingService.createMeeting(scheduleCreateRequest, projectMember);
         } else {
             throw new NotFoundCategoryException(ScheduleErrorCode.CATEGORY_NOT_FOUND);
         }
@@ -70,12 +70,9 @@ public class ScheduleController {
     })
     @GetMapping("/{scheduleId}")
     public ResponseEntity<ScheduleDetailResponse> find(@PathVariable Long scheduleId, @Valid @RequestParam(name = "project_id") Long projectId, @CurrentLoginMember Member member) {
-        
-        if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
-        }
+        ProjectMember projectMember = projectService.isProjectAvailable(projectId, member.getId(), true);
 
-        ScheduleDetailResponse response = scheduleService.findSchedule(projectId, scheduleId, member.getId());
+        ScheduleDetailResponse response = scheduleService.findSchedule(scheduleId, projectMember);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -85,9 +82,7 @@ public class ScheduleController {
     })
     @PutMapping("/{scheduleId}")
     public ResponseEntity update(@PathVariable Long scheduleId, @Valid @RequestBody ScheduleUpdateRequest scheduleUpdateRequest, @CurrentLoginMember Member member) {
-        if (!(projectMemberService.validateProjectMember(scheduleUpdateRequest.getProjectId(), member.getId()))) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
-        }
+        projectService.isProjectAvailable(scheduleUpdateRequest.getProjectId(), member.getId(), false);
         if (!scheduleService.updateSchedule(scheduleUpdateRequest, scheduleId)) {
             throw new InvalidAccessException(ScheduleErrorCode.INVALID_MODIFY);
         }
@@ -100,14 +95,13 @@ public class ScheduleController {
     })
     @DeleteMapping("/{scheduleId}")
     public ResponseEntity delete(@PathVariable Long scheduleId, @Valid @RequestBody ScheduleDeleteRequest scheduleDeleteRequest, @CurrentLoginMember Member member) {
-        ProjectMember projectMember = projectMemberService.findProjectMember(scheduleDeleteRequest.getProjectId(), member.getId());
-
+        ProjectMember projectMember = projectService.isProjectAvailable(scheduleDeleteRequest.getProjectId(), member.getId(), false);
         //? 작성자 또는 팀 리더만 삭제 가능
         if (!scheduleService.validateDelete(scheduleId, scheduleDeleteRequest.getProjectId(), member.getId(), projectMember)) {
             throw new InvalidAccessException(ScheduleErrorCode.INVALID_DELETE);
         }
 
-        scheduleService.deleteSchedule(scheduleId, scheduleDeleteRequest.getProjectId());
+        scheduleService.deleteSchedule(scheduleId);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -118,8 +112,9 @@ public class ScheduleController {
             @ApiResponse(description = "전체 일정 리스트 조회 성공", responseCode = "200", useReturnTypeSchema = true)
     })
     @GetMapping("/list")
-    public ResponseEntity<CustomResponseDto> list(@RequestParam(name = "project_id") Long projectId) {
-        CustomResponseDto response = scheduleService.findScheduleList(projectId);
+    public ResponseEntity<CustomResponseDto> list(@RequestParam(name = "project_id") Long projectId, @CurrentLoginMember Member member) {
+        ProjectMember projectMember = projectService.isProjectAvailable(projectId, member.getId(), true);
+        CustomResponseDto response = scheduleService.findScheduleList(projectMember);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -129,9 +124,7 @@ public class ScheduleController {
     })
     @GetMapping("/calenderlist")
     public ResponseEntity<ScheduleCalenderMonthResponse> calenderViewList(@Valid @RequestParam("project_id") Long projectId, @CurrentLoginMember Member member) {
-        if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
-        }
+        projectService.isProjectAvailable(projectId, member.getId(), true);
         ScheduleCalenderMonthResponse response = scheduleService.findScheduleCalenderList(projectId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -151,9 +144,7 @@ public class ScheduleController {
 //        if (state.equals(State.TBD)||state.equals(State.ONGOING)){ states.add(state); states.add(State.ONGOING);}else{states.add(State.COMPLETE);}
         PageRequest of = pageRequest.of("startDate");
         Pageable pageable = (Pageable) of;
-        if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS);
-        }
+        projectService.isProjectAvailable(projectId, member.getId(), true);
         CustomPageImpl<ScheduleMonthResponse> response = scheduleService.findScheduleMonthList(pageable, year, month);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

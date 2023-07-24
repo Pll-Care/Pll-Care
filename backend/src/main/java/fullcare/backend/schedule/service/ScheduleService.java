@@ -112,9 +112,6 @@ public class ScheduleService {
         LocalDateTime startDate = project.getStartDate().atStartOfDay();
         LocalDateTime endDate = project.getEndDate().atStartOfDay();
         Schedule.validDate(startDate, endDate, scheduleUpdateRequest.getStartDate(), scheduleUpdateRequest.getEndDate());
-        if (project.isCompleted()) {
-            throw new CompletedProjectException(ScheduleErrorCode.PC_SCHEDULE_NOT_PATCH);
-        }
         List<ProjectMember> pmList = projectMemberRepository.findByProjectIdAndProjectMemberRole(scheduleUpdateRequest.getProjectId(), ProjectMemberRoleType.미정);
 
         List<Member> members = pmList.stream().map(pm -> pm.getMember()).collect(Collectors.toList());// 프로젝트에 있는 멤버 리스트
@@ -146,18 +143,19 @@ public class ScheduleService {
         return true;
     }
 
-    public void deleteSchedule(Long scheduleId, Long projectId) {
+    public void deleteSchedule(Long scheduleId) {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
-        Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
-        if (project.isCompleted()) {
-            throw new CompletedProjectException(ScheduleErrorCode.PC_SCHEDULE_NOT_PATCH);
-        }
+//        Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
+//        if (project.isCompleted()) {
+//            throw new CompletedProjectException(ScheduleErrorCode.PC_SCHEDULE_NOT_PATCH);
+//        }
         scheduleRepository.delete(schedule);
     }
 
     @Transactional(readOnly = true)
-    public CustomResponseDto findScheduleList(Long projectId) {
-        Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
+    public CustomResponseDto findScheduleList(ProjectMember projectMember) {
+        Project project = projectMember.getProject();
+        Long projectId = project.getId();
         LocalDate startDate = project.getStartDate();
         LocalDate endDate = project.getEndDate();
         long diff = ChronoUnit.WEEKS.between(startDate, endDate);
@@ -505,8 +503,9 @@ public class ScheduleService {
     }
 
     @Transactional
-    public ScheduleDetailResponse findSchedule(Long projectId, Long scheduleId, Long memberId) {
-        Project project = projectRepository.findProjectWithPMAndMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
+    public ScheduleDetailResponse findSchedule(Long scheduleId, ProjectMember Pm) {
+        Project project = Pm.getProject();
+        Long memberId = Pm.getMember().getId();
         Schedule schedule = scheduleRepository.findJoinSMById(scheduleId).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
         List<ProjectMember> projectMembers = project.getProjectMembers();
         List<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();
@@ -514,12 +513,12 @@ public class ScheduleService {
         ProjectMember pmMe = projectMembers.stream().filter(pm -> pm.getMember().getId() == memberId).findFirst().get();
 
         ScheduleDetailResponse scheduleDetailResponse = ScheduleDetailResponse.builder()
-                .projectId(projectId)
+                .projectId(project.getId())
                 .title(schedule.getTitle())
                 .content(schedule.getContent())
                 .startDate(schedule.getStartDate())
                 .endDate(schedule.getEndDate())
-                .deleteAuthorization(validateDelete(scheduleId, projectId, memberId, pmMe))
+                .deleteAuthorization(validateDelete(scheduleId, project.getId(), memberId, pmMe))
                 .build();
 
         for (ProjectMember projectMember : projectMembers) {

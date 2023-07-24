@@ -13,6 +13,7 @@ import fullcare.backend.member.domain.MemberRole;
 import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.memo.service.BookmarkMemoService;
 import fullcare.backend.memo.service.MemoService;
+import fullcare.backend.post.domain.RecruitPosition;
 import fullcare.backend.post.service.PostService;
 import fullcare.backend.profile.domain.Contact;
 import fullcare.backend.profile.domain.Profile;
@@ -25,6 +26,7 @@ import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.dto.request.ProjectCreateRequest;
 import fullcare.backend.project.dto.request.ProjectUpdateRequest;
 import fullcare.backend.project.service.ProjectService;
+import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberRole;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.schedule.ScheduleCategory;
@@ -208,14 +210,17 @@ public class TestDataInit {
 
             if (i < 16) {
                 LocalDateTime endDate = LocalDateTime.of(2023, month, randDay, 16, 0);
-                meetingService.createMeeting(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MEETING, memberIds, "제목" + i, "내용" + i, "address" + i), memberRepository.findById(authorId).get());
+                ProjectMember projectMember = projectService.isProjectAvailable(1l, 1l, false);
+                meetingService.createMeeting(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MEETING, memberIds, "제목" + i, "내용" + i, "address" + i), projectMember);
             } else {
                 try {
                     LocalDateTime endDate = LocalDateTime.of(2023, month, randDay + plusDay, 16, 0);
-                    milestoneService.createMilestone(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MILESTONE, memberIds, "제목" + i, "내용" + i, null), memberRepository.findById(authorId).get());
+                    ProjectMember projectMember = projectService.isProjectAvailable(1l, 1l, false);
+                    milestoneService.createMilestone(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MILESTONE, memberIds, "제목" + i, "내용" + i, null), projectMember);
                 } catch (DateTimeException e) { // 다음달로 넘어가는 경우
                     LocalDateTime endDate = LocalDateTime.of(2023, month, randDay, 16, 0).plusWeeks(1);
-                    milestoneService.createMilestone(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MILESTONE, memberIds, "제목" + i, "내용" + i, null), memberRepository.findById(authorId).get());
+                    ProjectMember projectMember = projectService.isProjectAvailable(1l, 1l, false);
+                    milestoneService.createMilestone(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MILESTONE, memberIds, "제목" + i, "내용" + i, null), projectMember);
                 }
             }
         }
