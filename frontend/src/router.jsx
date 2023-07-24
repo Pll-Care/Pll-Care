@@ -16,6 +16,7 @@ import Introduce from "./components/Profile/Introduce";
 import Evaluate from "./components/Profile/Evaluate";
 import MyProject from "./components/Profile/myproject";
 import LikeProject from "./components/Profile/LikeProject";
+import ProjectEvaluate from "./components/Profile/ProjectEvaluate";
 
 const routerData = [
   {
@@ -45,6 +46,11 @@ const routerData = [
         path: "evaluate",
         withLogin: true,
         element: <Evaluate />,
+      },
+      {
+        path: "evaluate/:projectTitle",
+        withLogin: true,
+        element: <ProjectEvaluate />,
       },
       {
         path: "my",

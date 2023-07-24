@@ -587,6 +587,7 @@
       justify-content: center;
       gap: 15px;
       margin-top: 24px;
+      cursor: pointer;
     }
     &_item {
       border: 1px solid #01e89e;
@@ -661,4 +662,162 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+///
+///
+///
+///
+.projectEvaluate {
+  width: 80%;
+  margin: 0 auto;
+  padding: 30px 0;
+  &_title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #00aa72;
+  }
+}
+
+.badgeBox {
+  border: 2px solid #01e89e;
+  border-radius: 25px;
+  padding: 21px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.badges {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 26px;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.badgeImage {
+  width: 28px;
+  height: 28px;
+  background-color: #cccccc;
+  border-radius: 100%;
+}
+
+.badge_divide {
+  width: 5px;
+  height: 5px;
+  background-color: #7a7a7a;
+  border-radius: 100%;
+}
+
+.badge_quantity {
+  font-size: 18px;
+  color: #7a7a7a;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+
+  &_score {
+    padding-top: 3px;
+  }
+}
+
+.finalEvaluate {
+  margin-top: 30px;
+  border: 2px solid #01e89e;
+  border-radius: 25px;
+  padding: 21px;
+
+  &_users {
+    padding-top: 18px;
+  }
+
+  &_user {
+    display: flex;
+    margin-bottom: 16px;
+  }
+
+  &_userImageWrap {
+    padding: 5px;
+  }
+
+  &_userImage {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+  }
+
+  &_userEval {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px 47px 15px 18px;
+  }
+
+  &_userName {
+    font-size: 18px;
+    font-weight: bold;
+    color: #7a7a7a;
+  }
+
+  &_userScores {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 14px;
+  }
+
+  &_userScore {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    &_part {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &_partTitle {
+      color: #7a7a7a;
+    }
+
+    &_partScore {
+      width: 26px;
+      height: 26px;
+      border: 2px solid #01e89e;
+      padding: 3px;
+      border-radius: 100%;
+      color: #01e89e;
+      font-weight: 700;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  &_userContent {
+    font-size: 14px;
+    color: #7a7a7a;
+    font-weight: 600;
+    padding: 0 14px;
+
+    & > p {
+      line-height: 200%;
+    }
+  }
+}
+
+.image_bg {
+  background-color: #01e89e;
+  padding: 3px;
 }
