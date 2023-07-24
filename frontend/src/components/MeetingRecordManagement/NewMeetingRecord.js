@@ -6,7 +6,7 @@ import Quill from "quill";
 import ImageResize from "quill-image-resize";
 import { useEffect, useRef } from "react";
 
-import { uploadImage } from "../../lib/apis/managementApi";
+import { useImageUploader } from "../../hooks/useEditorImageHandler";
 
 Quill.register("modules/ImageResize", ImageResize);
 
@@ -18,43 +18,22 @@ const NewMeetingRecord = ({
   handleChangeContent,
 }) => {
   const quillRef = useRef(null);
+  const handleImage = useImageUploader();
 
   useEffect(() => {
-    const handleImage = () => {
-      const input = document.createElement("input");
-      input.setAttribute("type", "file");
-      input.setAttribute("accept", "image/*");
-      input.click();
-
-      input.onchange = async () => {
-        const file = input.files[0];
-
-        const range = quillRef.current.getEditor().getSelection(true);
-
-        const reader = new FileReader();
-
-        reader.readAsDataURL(file);
-        reader.onloadend = async () => {
-          const formData = new FormData();
-          formData.append("file", file);
-
-          const imgUrl = await uploadImage({
-            dir: "memo",
-            formData: formData.get("file"),
-          });
-
-          quillRef.current
-            .getEditor()
-            .insertEmbed(range.index, "image", imgUrl);
-
-          quillRef.current.getEditor().setSelection(range.index + 1);
-        };
-      };
-    };
-
     if (quillRef.current) {
       const toolbar = quillRef.current.getEditor().getModule("toolbar");
-      toolbar.addHandler("image", handleImage);
+      toolbar.addHandler("image", () => {
+        const input = document.createElement("input");
+        input.setAttribute("type", "file");
+        input.setAttribute("accept", "image/*");
+        input.click();
+
+        input.onchange = () => {
+          const file = input.files[0];
+          handleImage(file, quillRef);
+        };
+      });
     }
   }, []);
 
