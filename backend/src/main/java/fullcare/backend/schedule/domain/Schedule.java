@@ -1,6 +1,7 @@
 package fullcare.backend.schedule.domain;
 
 
+import fullcare.backend.evaluation.domain.MidtermEvaluation;
 import fullcare.backend.global.State;
 import fullcare.backend.global.errorcode.ScheduleErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.ScheduleOutOfRangeException;
@@ -61,6 +62,9 @@ public abstract class Schedule {
 
     @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ScheduleMember> scheduleMembers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MidtermEvaluation> midtermEvaluations = new ArrayList<>();
 
     @Column(name = "create_dt", nullable = false, updatable = false)
     private LocalDateTime createdDate;

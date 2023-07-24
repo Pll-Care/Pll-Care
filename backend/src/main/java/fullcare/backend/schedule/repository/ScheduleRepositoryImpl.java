@@ -5,6 +5,7 @@ import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import fullcare.backend.evaluation.domain.QMidtermEvaluation;
 import fullcare.backend.schedule.ScheduleCategory;
 import fullcare.backend.schedule.ScheduleCondition;
 import fullcare.backend.schedule.domain.QSchedule;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static fullcare.backend.evaluation.domain.QMidtermEvaluation.midtermEvaluation;
 import static fullcare.backend.project.domain.QProject.project;
 import static fullcare.backend.schedule.domain.QSchedule.schedule;
 import static fullcare.backend.schedulemember.domain.QScheduleMember.scheduleMember;
@@ -37,8 +39,9 @@ public class ScheduleRepositoryImpl implements ScheduleRepositoryCustom {
     @Override
     public List<Schedule> search(ScheduleCondition scheduleCondition,Long projectId) {
         List<Schedule> content = jpaQueryFactory.selectFrom(schedule)
-                .join(schedule.project, project)
-                .join(schedule.scheduleMembers, scheduleMember)
+                .leftJoin(schedule.project, project)
+                .leftJoin(schedule.scheduleMembers, scheduleMember)
+                .leftJoin(schedule.midtermEvaluations, midtermEvaluation)
                 .where(schedule.project.id.eq(projectId),
                         memberIdEq(scheduleCondition.getMemberId()),
                         scheduleCategoryEq(scheduleCondition.getScheduleCategory()))
