@@ -38,6 +38,26 @@ spring:
       max-file-size: 10MB # 요청한 파일 한 개의 크기
       max-request-size: 10MB # 요청한 파일 전체의 크기
 
+# Logging
+logging:
+  level:
+    root: info
+    com:
+      amazonaws:
+        util:
+          EC2MetadataUtils: ERROR
+
+#springdoc swagger
+springdoc:
+  api-docs:
+    path: /api/docs # 접속 path 설정
+
+  swagger-ui:
+    path: /api/swagger-ui # 접속 path 설정
+    display-request-duration: true  # try it out 을 했을 때 request duration 을 추가로 찍어줌
+
+  cache:
+    disabled: true # swagger cache 설정
 
 # OAuth2
 #spring.security.oauth2.client:
@@ -96,14 +116,7 @@ spring:
 #    token-validity-in-seconds: 86400
 #
 #
-## Logging
-#logging:
-#  level:
-#    root: info
-#    com:
-#      amazonaws:
-#        util:
-#          EC2MetadataUtils: ERROR
+
 #
 #
 ## AWS S3
@@ -119,15 +132,3 @@ spring:
 #      auto: false
 #    stack:
 #      auto: false
-
-#springdoc swagger
-springdoc:
-  api-docs:
-    path: /api/docs # 접속 path 설정
-
-  swagger-ui:
-    path: /api/swagger-ui # 접속 path 설정
-    display-request-duration: true  # try it out 을 했을 때 request duration 을 추가로 찍어줌
-
-  cache:
-    disabled: true # swagger cache 설정
