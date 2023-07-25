@@ -53,7 +53,7 @@ public class S3Service {
                     throw new RuntimeException("파일을 찾지 못했습니다.");
                 }
             } catch (Exception e) {
-                throw new RuntimeException("파일 삭제를 실패했습니다.");
+                throw new RuntimeException(e.getMessage());
             }
         }
     }

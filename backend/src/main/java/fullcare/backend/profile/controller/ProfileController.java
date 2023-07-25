@@ -123,7 +123,7 @@ public class ProfileController {
 //            @ApiResponse(responseCode = "400", description = "개인 프로필 한 줄 소개 수정 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @PutMapping
-    public ResponseEntity<ProfileProjectExperienceResponse> updateBio(@PathVariable Long memberId, @CurrentLoginMember Member member, @Valid @RequestBody ProfileBioUpdateRequest profileBioUpdateRequest) {
+    public ResponseEntity updateBio(@PathVariable Long memberId, @CurrentLoginMember Member member, @Valid @RequestBody ProfileBioUpdateRequest profileBioUpdateRequest) {
         if (memberId != member.getId()) {
             throw new InvalidAccessException(MemberErrorCode.MEMBER_PROFILE_INVALID_ACCESS);
         }
