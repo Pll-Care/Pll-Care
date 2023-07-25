@@ -4,9 +4,9 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Quill from "quill";
 import ImageResize from "quill-image-resize";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
-import { useImageUploader } from "../../hooks/useEditorImageHandler";
+import { useEditorImageUploader } from "../../hooks/useEditorImageHandler";
 
 Quill.register("modules/ImageResize", ImageResize);
 
@@ -18,24 +18,7 @@ const NewMeetingRecord = ({
   handleChangeContent,
 }) => {
   const quillRef = useRef(null);
-  const handleImage = useImageUploader();
-
-  useEffect(() => {
-    if (quillRef.current) {
-      const toolbar = quillRef.current.getEditor().getModule("toolbar");
-      toolbar.addHandler("image", () => {
-        const input = document.createElement("input");
-        input.setAttribute("type", "file");
-        input.setAttribute("accept", "image/*");
-        input.click();
-
-        input.onchange = () => {
-          const file = input.files[0];
-          handleImage(file, quillRef);
-        };
-      });
-    }
-  }, []);
+  useEditorImageUploader(quillRef.current);
 
   return (
     <div className="meeting-record-editor">

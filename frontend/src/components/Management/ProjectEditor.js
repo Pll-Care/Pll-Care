@@ -4,12 +4,13 @@ import { getStringDate } from "../../utils/date";
 
 import projectDefaultImg from "../../assets/project-default-img.jpg";
 
-import { deleteImage, uploadImage } from "../../lib/apis/managementApi";
+import { deleteImage } from "../../lib/apis/managementApi";
 import ModalContainer from "../common/ModalContainer";
 import useManagementMutation from "../../hooks/useManagementMutation";
 
 import { toast } from "react-toastify";
 import Button from "../common/Button";
+import { handleImageUploader } from "../../utils/handleImageUploader";
 
 const ProjectEditor = ({
   isModalVisible,
@@ -50,6 +51,13 @@ const ProjectEditor = ({
     setDescription(e.target.value);
   };
 
+  const handleChangeImage = async (e) => {
+    const imgUrl = await handleImageUploader(e.target.files);
+
+    setImgUrl(imgUrl);
+    setResponseImgUrl(imgUrl);
+  };
+
   const handleSubmitNewProject = async () => {
     if (title.length < 2) {
       toast.error("프로젝트 이름은 두 글자 이상 작성해주세요.");
@@ -88,29 +96,6 @@ const ProjectEditor = ({
     }
 
     setIsModalVisible(false);
-  };
-
-  const handleUploadImage = (e) => {
-    if (!e.target.files) {
-      toast.error("잘못된 접근입니다. 다시 이미지를 업로드해주세요.");
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onloadend = async () => {
-      setImgUrl(reader.result);
-
-      const formData = new FormData();
-      formData.append("file", e.target.files[0]);
-
-      const imgUrl = await uploadImage({
-        dir: "project",
-        formData: formData.get("file"),
-      });
-
-      setResponseImgUrl(imgUrl);
-    };
   };
 
   const handleUploadImageClick = () => {
@@ -172,7 +157,7 @@ const ProjectEditor = ({
                 type="file"
                 accept="image/*"
                 ref={inputRef}
-                onChange={handleUploadImage}
+                onChange={handleChangeImage}
               />
               <Button
                 onClick={handleUploadImageClick}
