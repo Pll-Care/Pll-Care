@@ -1,42 +1,42 @@
-spring:
-
-  #Database
+#spring:
+#
+#  #Database
 #  datasource:
-#    url: jdbc:h2:tcp://localhost/~/userdb
-#    username: sa
-#    password:
-#    driver-class-name: org.h2.Driver
-
-  #    driver-class-name: com.mysql.cj.jdbc.Driver
-  #    url: jdbc:mysql://localhost:3306/fullcare?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
-  #    username: root
-  #    password: 1234
-
-  #  #  ## AWS RDS 설정
+##    url: jdbc:h2:tcp://localhost/~/userdb
+##    username: sa
+##    password:
+##    driver-class-name: org.h2.Driver
+#
+#  #    driver-class-name: com.mysql.cj.jdbc.Driver
+#  #    url: jdbc:mysql://localhost:3306/fullcare?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+#  #    username: root
+#  #    password: 1234
+#
+#  #  #  ## AWS RDS 설정
 #    driver-class-name: com.mysql.cj.jdbc.Driver
 #    url: jdbc:mysql://fullcare.ctyerwfyq4ca.ap-northeast-2.rds.amazonaws.com:3306/fullcare
 #    username: root
 #    password: fullcare1234
-
-  # JPA
-  jpa:
-    hibernate:
-      ddl-auto: create
-    show-sql: false
-    properties:
-      hibernate:
-        format_sql: true
-        default_batch_fetch_size: 100
-    open-in-view: false
-
-  # Multipart 설정
-  servlet:
-    multipart:
-      max-file-size: 10MB # 요청한 파일 한 개의 크기
-      max-request-size: 10MB # 요청한 파일 전체의 크기
-
-
-# OAuth2
+#
+#  # JPA
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
+#    show-sql: false
+#    properties:
+#      hibernate:
+#        format_sql: true
+#        default_batch_fetch_size: 100
+#    open-in-view: false
+#
+#  # Multipart 설정
+#  servlet:
+#    multipart:
+#      max-file-size: 10MB # 요청한 파일 한 개의 크기
+#      max-request-size: 10MB # 요청한 파일 전체의 크기
+#
+#
+## OAuth2
 #spring.security.oauth2.client:
 #  registration:
 #    google:
@@ -78,9 +78,9 @@ spring:
 #      token-uri: https://kauth.kakao.com/oauth/token
 #      user-info-uri: https://kapi.kakao.com/v2/user/me
 #      user-name-attribute: id
-
-
-# JWT
+#
+#
+## JWT
 #jwt:
 #  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
 #
@@ -91,19 +91,19 @@ spring:
 #  refresh:
 #    header: Authorization-refresh
 #    token-validity-in-seconds: 86400
-
-
-# Logging
-logging:
-  level:
-    root: info
-    com:
-      amazonaws:
-        util:
-          EC2MetadataUtils: ERROR
-
-
-# AWS S3
+#
+#
+## Logging
+#logging:
+#  level:
+#    root: info
+#    com:
+#      amazonaws:
+#        util:
+#          EC2MetadataUtils: ERROR
+#
+#
+## AWS S3
 #cloud:
 #  aws:
 #    s3:
