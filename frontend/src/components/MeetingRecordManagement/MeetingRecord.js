@@ -22,7 +22,10 @@ const MeetingRecord = ({ state }) => {
 
   const projectId = getProjectId(useLocation());
 
-  const { data: completeData } = useQuery(['completeProjectData', projectId], () => getCompleteProjectData(projectId));
+  const { data: completeData } = useQuery(
+    ["completeProjectData", projectId],
+    () => getCompleteProjectData(projectId)
+  );
 
   const { deleteMutate, createBookMarkMutate } =
     useMeetingRecordManagementMutation();
@@ -30,7 +33,7 @@ const MeetingRecord = ({ state }) => {
   const fallback = {};
   const { data: createdData = fallback } = useQuery(
     ["managementCreatedMeetingRecordList", createdMeetingRecordId],
-    () => getMeetingRecord(createdMeetingRecordId),
+    () => getMeetingRecord(createdMeetingRecordId, projectId),
     {
       enabled: state === "createdMeetingRecord",
     }
@@ -38,7 +41,7 @@ const MeetingRecord = ({ state }) => {
 
   const { data: selectedData = fallback } = useQuery(
     ["managementSelectedMeetingRecordList", selectedMeetingRecordId],
-    () => getMeetingRecord(selectedMeetingRecordId),
+    () => getMeetingRecord(selectedMeetingRecordId, projectId),
     {
       enabled: state === "selectedMeetingRecord",
     }
@@ -58,15 +61,21 @@ const MeetingRecord = ({ state }) => {
 
   const handleDeleteMeetingRecord = () => {
     state === "selectedMeetingRecord"
-      ? deleteMutate(selectedData.memoId)
-      : deleteMutate(createdData.memoId);
+      ? deleteMutate({ meetingRecordId: selectedData.memoId, projectId })
+      : deleteMutate({ meetingRecordId: createdData.memoId, projectId });
     dispatch(meetingRecordManagementActions.setInitialState(true));
   };
 
   const handleBookMarkMeetingRecord = () => {
     state === "selectedMeetingRecord"
-      ? createBookMarkMutate(selectedData.memoId)
-      : createBookMarkMutate(createdData.memoId);
+      ? createBookMarkMutate({
+          meetingRecordId: selectedData.memoId,
+          projectId,
+        })
+      : createBookMarkMutate({
+          meetingRecordId: createdData.memoId,
+          projectId,
+        });
     dispatch(meetingRecordManagementActions.setInitialState(true));
   };
 

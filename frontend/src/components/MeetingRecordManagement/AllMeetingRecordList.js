@@ -53,6 +53,7 @@ const AllMeetingRecordList = () => {
   const handleCreateMeetingRecord = () => {
     dispatch(meetingRecordManagementActions.setTitle(""));
     dispatch(meetingRecordManagementActions.setContent(""));
+    dispatch(meetingRecordManagementActions.setIsEditState(false));
     dispatch(meetingRecordManagementActions.setInitialState(false));
     dispatch(
       meetingRecordManagementActions.setSelectedMeetingRecordState(false)
