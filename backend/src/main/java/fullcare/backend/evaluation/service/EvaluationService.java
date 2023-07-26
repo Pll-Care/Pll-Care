@@ -116,8 +116,13 @@ public class EvaluationService {
 
     @Transactional
     public Long createFinalEvaluation(FinalEvalCreateRequest finalEvalCreateRequest, Member evaluator) {
-        Member evaluated = memberRepository.findById(finalEvalCreateRequest.getEvaluatedId()).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
         Project project = projectRepository.findById(finalEvalCreateRequest.getProjectId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
+        project.getProjectMembers().stream()
+                .filter(pmm -> pmm.getMember().getId().equals(evaluator.getId())).findAny()
+                .orElseThrow(() -> new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS));
+
+
+        Member evaluated = memberRepository.findById(finalEvalCreateRequest.getEvaluatedId()).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
 
         projectMemberRepository.findPMWithProjectByProjectIdAndMemberId(project.getId(), finalEvalCreateRequest.getEvaluatedId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
 

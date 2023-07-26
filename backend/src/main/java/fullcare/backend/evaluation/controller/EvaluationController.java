@@ -105,8 +105,6 @@ public class EvaluationController {
     @PostMapping("/final")
     public ResponseEntity<FinalEvaluationCreateResponse> finalEvalCreate(@RequestBody FinalEvalCreateRequest finalEvalCreateRequest,
                                                                          @CurrentLoginMember Member member) {
-        projectService.isProjectAvailable(finalEvalCreateRequest.getProjectId(), member.getId(), false);
-
         Long finalEvalId = evaluationService.createFinalEvaluation(finalEvalCreateRequest, member);
         return new ResponseEntity(new FinalEvaluationCreateResponse(finalEvalId), HttpStatus.OK);
     }

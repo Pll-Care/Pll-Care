@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
     // * 모든 REST API 예외 발생 처리
     @ExceptionHandler(RestApiException.class)
     public ResponseEntity<?> handleRestApiException(RestApiException e, HttpServletRequest request) {
-        ErrorResponse errorResponse = ErrorResponse.getResponse(e.getErrorCode(), e, request);
+        ErrorResponse errorResponse = ErrorResponse.getResponse(e.getErrorCode(), request);
         return new ResponseEntity<>(errorResponse, e.getErrorCode().getStatus());
     }
 
