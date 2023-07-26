@@ -1,9 +1,6 @@
 package fullcare.backend.schedulemember.domain;
 
-import fullcare.backend.global.entity.BaseEntity;
 import fullcare.backend.member.domain.Member;
-import fullcare.backend.project.domain.Project;
-import fullcare.backend.projectmember.domain.ProjectMemberRole;
 import fullcare.backend.schedule.domain.Schedule;
 import jakarta.persistence.*;
 import lombok.AccessLevel;

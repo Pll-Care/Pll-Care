@@ -27,4 +27,7 @@ public class ParticipantResponse {
     public void addBadge(BadgeDto badgeDto){
         this.badgeDtos.add(badgeDto);
     }
+    public void updateFinalEvalId(Long finalEvalId){
+        this.finalEvalId = finalEvalId;
+    }
 }

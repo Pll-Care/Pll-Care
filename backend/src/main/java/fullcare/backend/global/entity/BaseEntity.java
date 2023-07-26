@@ -1,9 +1,7 @@
 package fullcare.backend.global.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -23,4 +21,15 @@ public abstract class BaseEntity {
     @LastModifiedDate
     @Column(name = "modified_dt", nullable = false)
     private LocalDateTime modifiedDate;
+
+//    @PrePersist
+//    public void prePersist(){
+//        this.createdDate = LocalDateTime.now();
+//        this.modifiedDate = LocalDateTime.now();
+//    }
+//
+//    @PreUpdate
+//    public void preUpdate(){
+//        this.modifiedDate = LocalDateTime.now();
+//    }
 }

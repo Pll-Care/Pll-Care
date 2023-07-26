@@ -295,7 +295,7 @@ public class EvaluationService {
     }
 
     public List<ParticipantResponse> findParticipantList(ProjectMember projectMember) {
-        Project project = projectMember.getProject();//projectRepository.findProjectWithPMAndMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
+        Project project = projectMember.getProject();// projectRepository.findProjectWithPMAndMemberById(projectMember.getProject().getId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
         Long memberId = projectMember.getMember().getId();
         List<Member> members = project.getProjectMembers().stream().map(pm -> pm.getMember()).collect(Collectors.toList());
         List<BadgeDao> midtermBadgeList = midtermEvaluationRepository.findList(project.getId(), members);
@@ -318,8 +318,8 @@ public class EvaluationService {
                 }
             }
             for (FinalTermEvaluation fe : finalEvalList) { // * 로그인한 사용자가 다른사람 최종평가를 작성한적이 있으면 최종평가 ID 추가 없으면 null
-                if(project.getState().equals(State.COMPLETE) && fe.getEvaluated() == member){
-                    participantResponse.setFinalEvalId(fe.getId());
+                if(project.getState().equals(State.COMPLETE) && fe.getEvaluated().getId() == member.getId()){
+                    participantResponse.updateFinalEvalId(fe.getId());
                 }
             }
             setBadge(participantResponse.getBadgeDtos());// * 개수가 0인 뱃지 설정
