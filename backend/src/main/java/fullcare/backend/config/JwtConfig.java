@@ -44,9 +44,8 @@ public class JwtConfig {
 
         // ! HTTP 경로 관련 설정
         http
-                .securityMatcher("/api/**")
+                .securityMatcher("/api/auth/**")
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET, "/api/login/oauth2/**", "/api/oauth2/authorization/**").hasAnyRole("ANONYMOUS")
                         .requestMatchers(HttpMethod.GET, "/api/auth/post/list", "/api/auth/post/{postId:[\\d+]}").hasAnyRole("USER", "ANONYMOUS")
                         .requestMatchers(HttpMethod.GET, "api/auth/util/techstack").hasAnyRole("USER", "ANONYMOUS")
                         .requestMatchers(HttpMethod.GET, "/api/auth/profile/{memberId:[\\d+]}/rolestack",
