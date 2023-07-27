@@ -20,7 +20,7 @@ const AllParticipants = ({ projectId, isCompleted }) => {
 
   const handleFinalEvaluationModal = async (type, name, finalEvalId) => {
     if (finalEvalId !== -1) {
-      const evaluation = await getFinalEvaluation(finalEvalId);
+      const evaluation = await getFinalEvaluation(finalEvalId, projectId);
       setFinalEvalData(evaluation);
     }
 

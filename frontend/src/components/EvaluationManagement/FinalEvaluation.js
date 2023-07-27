@@ -69,7 +69,7 @@ const FinalEvaluation = ({
 }) => {
   const [evaluationScore, setEvaluationScore] = useState([
     {
-      name: "diligence",
+      name: "sincerity",
       value: 0,
     },
     {
@@ -77,7 +77,7 @@ const FinalEvaluation = ({
       value: 0,
     },
     {
-      name: "performance",
+      name: "jobPerformance",
       value: 0,
     },
     {
@@ -87,12 +87,7 @@ const FinalEvaluation = ({
   ]);
 
   const projectId = getProjectId(useLocation());
-
-  const { data: isCompleted } = useQuery(
-    ["completeProjectData", projectId],
-    () => getCompleteProjectData(projectId)
-  );
-
+  
   const [content, setContent] = useState("");
 
   const modalOutside = useRef();
@@ -128,12 +123,11 @@ const FinalEvaluation = ({
       evaluatedId: participantId,
       score: {
         sincerity: evaluationScore[0].value,
-        jobPerformance: evaluationScore[1].value,
-        punctuality: evaluationScore[2].value,
+        punctuality: evaluationScore[1].value,
+        jobPerformance: evaluationScore[2].value,
         communication: evaluationScore[3].value,
       },
       content: content,
-      state: isCompleted,
     });
 
     setIsFinalEvaluationVisible(false);

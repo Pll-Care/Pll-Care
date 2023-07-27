@@ -33,8 +33,8 @@ export const createFinalEvaluation = async (finalEvaluationObj) => {
   return response;
 };
 
-export const getFinalEvaluation = async (finalEvalId) => {
-  const response = await customAxios.get(`/auth/evaluation/final/${finalEvalId}`);
+export const getFinalEvaluation = async (finalEvalId, projectId) => {
+  const response = await customAxios.get(`/auth/evaluation/final/${finalEvalId}?project_id=${projectId}`);
 
   return response.data;
 }
