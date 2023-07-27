@@ -13,11 +13,13 @@ import java.util.TimeZone;
 @SpringBootApplication
 @EnableWebSecurity(debug = true)
 @EnableJpaAuditing
-@OpenAPIDefinition(servers = {@Server(url = "https:fullcare.store", description = "Default Server URL")})
+@OpenAPIDefinition(servers = {@Server(url = "https://fullcare.store", description = "Default Server URL"),
+        @Server(url = "https://", description = "Default Server URL2")})
 public class BackendApplication {
     static {
         System.setProperty("com.amazonaws.sdk.disableEc2Metadata", "true");
     }
+
     @PostConstruct
     public void started() {
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
