@@ -9,7 +9,7 @@ import Button from "../../components/common/Button";
 import ControlMenu from "../common/ControlMenu";
 
 import { getProjectId } from "../../utils/getProjectId";
-
+import { useOutsideClick } from "../../hooks/useOutsideClick";
 
 const evaluationCriterion = [
   {
@@ -71,25 +71,6 @@ const FinalEvaluation = ({
   badgeQuantity,
   data,
 }) => {
-  const [evaluationScore, setEvaluationScore] = useState([
-    {
-      name: "sincerity",
-      value: 0,
-    },
-    {
-      name: "punctuality",
-      value: 0,
-    },
-    {
-      name: "jobPerformance",
-      value: 0,
-    },
-    {
-      name: "communication",
-      value: 0,
-    },
-  ]);
-
   const [sincerityScore, setSincerityScore] = useState(0);
   const [punctualityScore, setPunctualityScore] = useState(0);
   const [jobPerformanceScore, setJobPerformanceScore] = useState(0);
@@ -99,15 +80,11 @@ const FinalEvaluation = ({
 
   const [content, setContent] = useState("");
 
-  const modalOutside = useRef();
+  const modalOutsideRef = useRef();
+
+  useOutsideClick(modalOutsideRef, () => setIsFinalEvaluationVisible(""));
 
   const { finalEvaluationMutate } = useEvaluationManagementMutation();
-
-  const handleFinalEvaluationVisible = (e) => {
-    if (e.target === modalOutside.current) {
-      setIsFinalEvaluationVisible("");
-    }
-  };
 
   const handleChangeContent = (e) => {
     setContent(e.target.value);
@@ -165,11 +142,7 @@ const FinalEvaluation = ({
   };
 
   return (
-    <div
-      className="final-evaluation-wrapper"
-      ref={modalOutside}
-      onClick={handleFinalEvaluationVisible}
-    >
+    <div className="final-evaluation-wrapper" ref={modalOutsideRef}>
       {type === "evaluation" ? (
         <div className="evaluation-management-final-evaluation">
           <div className="final-evaluation-heading">

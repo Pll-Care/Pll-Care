@@ -2,24 +2,17 @@ import { Link } from "react-router-dom";
 
 import { googleAuthUrl, kakaoAuthUrl, naverAuthUrl } from "../../utils/auth";
 import { useRef } from "react";
+import { useOutsideClick } from "../../hooks/useOutsideClick";
 
 const Login = ({ closeModal }) => {
-  const modalOutside = useRef();
+  const modalOutsideRef = useRef(null);
 
   const left = (window.innerWidth - 472) / 2;
 
-  const handleModalClose = (e) => {
-    if (e.target === modalOutside.current) {
-      closeModal();
-    }
-  };
+  useOutsideClick(modalOutsideRef, () => closeModal());
 
   return (
-    <div
-      className="login-modal-wrapper"
-      ref={modalOutside}
-      onClick={handleModalClose}
-    >
+    <div className="login-modal-wrapper" ref={modalOutsideRef}>
       <div className="login-modal">
         <div className="login-logo-img"></div>
         <div className="login-heading">
