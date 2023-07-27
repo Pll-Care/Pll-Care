@@ -29,7 +29,7 @@ public class MemoService {
     private final MemoRepository memoRepository;
 
     @Transactional
-    public Memo createMemo(MemoCreateRequest request, ProjectMember projectMember) {
+    public Memo createMemo(ProjectMember projectMember, MemoCreateRequest request) {
         Memo newMemo = Memo.createNewMemo()
                 .project(projectMember.getProject())
                 .title(request.getTitle())

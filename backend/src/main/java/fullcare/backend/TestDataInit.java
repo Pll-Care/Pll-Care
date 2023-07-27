@@ -1,34 +1,31 @@
 package fullcare.backend;
 
 
+import fullcare.backend.bookmarkmemo.service.BookmarkMemoService;
 import fullcare.backend.evaluation.domain.EvaluationBadge;
 import fullcare.backend.evaluation.domain.FinalTermEvaluation;
 import fullcare.backend.evaluation.domain.MidtermEvaluation;
 import fullcare.backend.evaluation.domain.Score;
 import fullcare.backend.evaluation.repository.FinalEvaluationRepository;
 import fullcare.backend.evaluation.repository.MidtermEvaluationRepository;
-import fullcare.backend.global.State;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.domain.MemberRole;
 import fullcare.backend.member.repository.MemberRepository;
-import fullcare.backend.memo.service.BookmarkMemoService;
 import fullcare.backend.memo.service.MemoService;
 import fullcare.backend.post.domain.RecruitPosition;
 import fullcare.backend.post.service.PostService;
 import fullcare.backend.profile.domain.Contact;
 import fullcare.backend.profile.domain.Profile;
-import fullcare.backend.profile.domain.ProjectExperience;
 import fullcare.backend.profile.dto.ProjectExperienceRequestDto;
-import fullcare.backend.profile.dto.ProjectExperienceResponseDto;
 import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
 import fullcare.backend.profile.service.ProfileService;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.dto.request.ProjectCreateRequest;
-import fullcare.backend.project.dto.request.ProjectUpdateRequest;
 import fullcare.backend.project.service.ProjectService;
 import fullcare.backend.projectmember.domain.ProjectMember;
-import fullcare.backend.projectmember.domain.ProjectMemberRole;
+import fullcare.backend.projectmember.domain.ProjectMemberPositionType;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
+import fullcare.backend.projectmember.domain.ProjectMemberType;
 import fullcare.backend.schedule.ScheduleCategory;
 import fullcare.backend.schedule.domain.Schedule;
 import fullcare.backend.schedule.dto.request.ScheduleCreateRequest;
@@ -83,7 +80,7 @@ public class TestDataInit {
 
     private void createProfile() {
         Member member = memberRepository.findById(1l).get();
-        Contact contact = new Contact("email@naver.com","git@naver.com","url.com");
+        Contact contact = new Contact("email@naver.com", "git@naver.com", "url.com");
         List<TechStack> techStacks = new ArrayList<>();
         techStacks.add(TechStack.Svelte);
         techStacks.add(TechStack.React);
@@ -235,13 +232,13 @@ public class TestDataInit {
             Project project = projectService.createProject(member, new ProjectCreateRequest("제목" + i, "내용" + i, startDate.plusMonths(i), endDate, null));
             for (long j = 2l; j < 10l; j++) {
                 if (j < 4l) {
-                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberRole(ProjectMemberRoleType.팀원, ProjectMemberRoleType.백엔드));
+                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberType(ProjectMemberRoleType.팀원, ProjectMemberPositionType.백엔드));
                 } else if (j < 7l) {
-                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberRole(ProjectMemberRoleType.팀원, ProjectMemberRoleType.프론트엔드));
+                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberType(ProjectMemberRoleType.팀원, ProjectMemberPositionType.프론트엔드));
                 } else if (j < 9l) {
-                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberRole(ProjectMemberRoleType.팀원, ProjectMemberRoleType.디자인));
+                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberType(ProjectMemberRoleType.팀원, ProjectMemberPositionType.디자인));
                 } else {
-                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberRole(ProjectMemberRoleType.팀원, ProjectMemberRoleType.기획));
+                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberType(ProjectMemberRoleType.팀원, ProjectMemberPositionType.기획));
                 }
             }
         }

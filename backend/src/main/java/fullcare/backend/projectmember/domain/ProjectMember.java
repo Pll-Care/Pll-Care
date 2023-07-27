@@ -29,24 +29,28 @@ public class ProjectMember {
 
     //    @OneToMany(mappedBy = "projectMember", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<Schedule> schedules = new ArrayList<>();
+
     @Embedded
-    private ProjectMemberRole projectMemberRole; // 포지션 + 역할
+    private ProjectMemberType projectMemberType; // 포지션 + 역할
 
 
     @Builder(builderMethodName = "createNewProjectMember")
-    public ProjectMember(Member member, Project project, ProjectMemberRole projectMemberRole) {
+    public ProjectMember(Member member, Project project, ProjectMemberType projectMemberType) {
         this.member = member;
         this.project = project;
-        this.projectMemberRole = projectMemberRole;
+        this.projectMemberType = projectMemberType;
 
     }
 
     public boolean isLeader() {
-        return (this.projectMemberRole.getRole() == ProjectMemberRoleType.리더) ? true : false;
+        return (this.projectMemberType.getRole() == ProjectMemberRoleType.리더) ? true : false;
     }
 
-    public void updateRole(ProjectMemberRole projectMemberRole) {
-        this.projectMemberRole.updateRole(projectMemberRole.getRole());
-        this.projectMemberRole.updatePosition(projectMemberRole.getPosition());
+    public void updateRole(ProjectMemberRoleType projectMemberRoleType) {
+        this.projectMemberType.updateRole(projectMemberRoleType);
+    }
+
+    public void updatePosition(ProjectMemberPositionType projectMemberPositionType) {
+        this.projectMemberType.updatePosition(projectMemberPositionType);
     }
 }

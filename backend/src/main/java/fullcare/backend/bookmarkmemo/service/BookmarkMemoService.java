@@ -1,10 +1,10 @@
-package fullcare.backend.memo.service;
+package fullcare.backend.bookmarkmemo.service;
 
+import fullcare.backend.bookmarkmemo.domain.BookmarkMemo;
+import fullcare.backend.bookmarkmemo.repository.BookmarkMemoRepository;
 import fullcare.backend.member.domain.Member;
-import fullcare.backend.memo.domain.BookmarkMemo;
 import fullcare.backend.memo.domain.Memo;
 import fullcare.backend.memo.dto.response.BookmarkMemoListResponse;
-import fullcare.backend.memo.repository.BookmarkMemoRepository;
 import fullcare.backend.util.CustomPageImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

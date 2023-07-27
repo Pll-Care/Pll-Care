@@ -14,7 +14,8 @@ public enum PostErrorCode implements ErrorCode {
     INVALID_MODIFY("POST_003", HttpStatus.FORBIDDEN, "해당 회의록에 대한 수정 권한이 없습니다."), // -> InvalidAccessException
 
     // ! 404 NOT_FOUND
-    POST_NOT_FOUND("POST_004", HttpStatus.NOT_FOUND, "모집글을 찾을 수 없습니다.");
+    POST_NOT_FOUND("POST_004", HttpStatus.NOT_FOUND, "모집글을 찾을 수 없습니다."),
+    APPLY_NOT_FOUND("POST_005", HttpStatus.NOT_FOUND, "지원 정보를 찾을 수 없습니다.");
 
     private final String code;
     private final HttpStatus status;

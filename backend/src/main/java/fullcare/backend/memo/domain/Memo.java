@@ -1,5 +1,6 @@
 package fullcare.backend.memo.domain;
 
+import fullcare.backend.bookmarkmemo.domain.BookmarkMemo;
 import fullcare.backend.global.entity.BaseEntity;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;

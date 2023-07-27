@@ -14,7 +14,6 @@ import java.util.Optional;
 
 public interface ProjectMemberRepository extends JpaRepository<ProjectMember, Long> {
 
-    boolean existsByProjectIdAndMemberId(Long projectId, Long memberId);
 
     @EntityGraph(attributePaths = {"project"})
     Optional<ProjectMember> findPMWithProjectByProjectIdAndMemberId(Long projectId, Long memberId);
@@ -26,12 +25,12 @@ public interface ProjectMemberRepository extends JpaRepository<ProjectMember, Lo
 
     void deleteByProjectIdAndMemberId(Long projectId, Long memberId);
 
-    @Query("select pm from project_member pm where pm.project.id = :projectId and pm.projectMemberRole.role != :projectMemberRoleType")
+    @Query("select pm from project_member pm where pm.project.id = :projectId and pm.projectMemberType.role != :projectMemberRoleType")
     List<ProjectMember> findByProjectIdAndProjectMemberRole(@Param("projectId") Long projectId, @Param("projectMemberRoleType") ProjectMemberRoleType projectMemberRoleType);
 
 
     @EntityGraph(attributePaths = {"member"})
-    @Query("select pm from project_member pm where pm.project.id = :projectId and pm.projectMemberRole.role in :projectMemberRoleTypes")
+    @Query("select pm from project_member pm where pm.project.id = :projectId and pm.projectMemberType.role in :projectMemberRoleTypes")
     List<ProjectMember> findProjectMemberWithMemberByProjectIdAndProjectMemberRole(@Param("projectId") Long projectId, @Param("projectMemberRoleTypes") List<ProjectMemberRoleType> projectMemberRoleTypes);
 
 }

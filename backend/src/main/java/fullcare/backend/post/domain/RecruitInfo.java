@@ -1,15 +1,19 @@
 package fullcare.backend.post.domain;
 
+import fullcare.backend.projectmember.domain.ProjectMemberPositionType;
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 
 @Getter
 public class RecruitInfo {
 
-    private RecruitPosition position;
+    private ProjectMemberPositionType position;
     private long currentCnt;
+
+    @Min(value = 1)
     private long totalCnt;
 
-    public RecruitInfo(RecruitPosition position, long currentCnt, long totalCnt) {
+    public RecruitInfo(ProjectMemberPositionType position, long currentCnt, long totalCnt) {
         this.position = position;
         this.currentCnt = currentCnt;
         this.totalCnt = totalCnt;

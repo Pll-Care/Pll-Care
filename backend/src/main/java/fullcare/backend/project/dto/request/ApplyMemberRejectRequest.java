@@ -1,13 +1,14 @@
 package fullcare.backend.project.dto.request;
 
-import fullcare.backend.projectmember.domain.ProjectMemberRole;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 @Getter
-public class ProjectMemberRoleUpdateRequest {
+public class ApplyMemberRejectRequest {
+
+    @NotNull
+    private Long postId;
 
     @NotNull
     private Long memberId;
-    private ProjectMemberRole projectMemberRole;
 }

@@ -9,10 +9,11 @@ import fullcare.backend.member.domain.Member;
 import fullcare.backend.memo.domain.Memo;
 import fullcare.backend.post.domain.Post;
 import fullcare.backend.projectmember.domain.ProjectMember;
-import fullcare.backend.projectmember.domain.ProjectMemberRole;
+import fullcare.backend.projectmember.domain.ProjectMemberType;
 import fullcare.backend.schedule.domain.Schedule;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -55,6 +56,7 @@ public class Project extends BaseEntity {
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Memo> memos = new ArrayList<>();
 
+    @BatchSize(size = 50)
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts = new ArrayList<>();
 
@@ -86,11 +88,12 @@ public class Project extends BaseEntity {
         this.state = state;
     }
 
-    public void addMember(Member member, ProjectMemberRole role) {
+    public void addMember(Member member, ProjectMemberType projectMemberType) {
         ProjectMember pm = ProjectMember.createNewProjectMember()
                 .member(member)
                 .project(this)
-                .projectMemberRole(role).build();
+                .projectMemberType(projectMemberType)
+                .build();
 
         projectMembers.add(pm);
     }

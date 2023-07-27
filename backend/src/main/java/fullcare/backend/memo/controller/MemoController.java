@@ -1,5 +1,6 @@
 package fullcare.backend.memo.controller;
 
+import fullcare.backend.bookmarkmemo.service.BookmarkMemoService;
 import fullcare.backend.global.dto.ErrorResponse;
 import fullcare.backend.global.errorcode.MemoErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.InvalidAccessException;
@@ -13,7 +14,6 @@ import fullcare.backend.memo.dto.response.BookmarkMemoListResponse;
 import fullcare.backend.memo.dto.response.MemoDetailResponse;
 import fullcare.backend.memo.dto.response.MemoIdResponse;
 import fullcare.backend.memo.dto.response.MemoListResponse;
-import fullcare.backend.memo.service.BookmarkMemoService;
 import fullcare.backend.memo.service.MemoService;
 import fullcare.backend.project.service.ProjectService;
 import fullcare.backend.projectmember.domain.ProjectMember;
@@ -47,13 +47,6 @@ public class MemoController {
     private final BookmarkMemoService bookmarkMemoService;
     private final ProjectService projectService;
 
-    // * 1. 프로젝트가 존재하는지 검증
-    // * 2. 프로젝트 멤버인지 검증(프로젝트에 접근권한이 있는가)
-    // * 3.  프로젝트가 완료되었는지 검증
-
-    // ! 두 개 중에 뭐가 먼저?
-    // * 3. 찾고자 하는 데이터가 존재하는지 검증)일정 or 회의록 or 평가)
-    // * 4. API 동작에 대한 권한이 있는가(생성 수정 삭제 등)
 
     // * 새로운 회의록 생성
     @Operation(method = "post", summary = "회의록 생성")
@@ -66,7 +59,7 @@ public class MemoController {
                                  @CurrentLoginMember Member member) {
 
         ProjectMember findProjectMember = projectService.isProjectAvailable(memoCreateRequest.getProjectId(), member.getId(), false);
-        Memo newMemo = memoService.createMemo(memoCreateRequest, findProjectMember);
+        Memo newMemo = memoService.createMemo(findProjectMember, memoCreateRequest);
 
         return new ResponseEntity(new MemoIdResponse(newMemo.getId()), HttpStatus.CREATED);
     }
@@ -95,7 +88,7 @@ public class MemoController {
     })
     @DeleteMapping("/{memoId}")
     public ResponseEntity delete(@PathVariable Long memoId,
-                                 MemoDeleteRequest memoDeleteRequest,
+                                 @RequestBody MemoDeleteRequest memoDeleteRequest,
                                  @CurrentLoginMember Member member) {
 
         ProjectMember findProjectMember = projectService.isProjectAvailable(memoDeleteRequest.getProjectId(), member.getId(), false);
