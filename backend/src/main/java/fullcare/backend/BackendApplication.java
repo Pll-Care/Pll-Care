@@ -13,8 +13,7 @@ import java.util.TimeZone;
 @SpringBootApplication
 @EnableWebSecurity(debug = true)
 @EnableJpaAuditing
-@OpenAPIDefinition(servers = {@Server(url = "https://fullcare.store", description = "Default Server URL"),
-        @Server(url = "https://", description = "Default Server URL2")})
+@OpenAPIDefinition(servers = {@Server(url = "https://fullcare.store", description = "Default Server URL")})
 public class BackendApplication {
     static {
         System.setProperty("com.amazonaws.sdk.disableEc2Metadata", "true");
