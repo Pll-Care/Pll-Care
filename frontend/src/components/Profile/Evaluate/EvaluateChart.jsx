@@ -1,3 +1,8 @@
+import { useEffect, useState } from "react";
+import { useProfile } from "../../../context/ProfileContext";
+import { useQuery } from "react-query";
+import { getEvaluationChartAPI } from "../../../lib/apis/profileApi";
+
 const CHART_TITLE = {
   sincerity: "성실도",
   punctuality: "시간 엄수",
@@ -5,11 +10,25 @@ const CHART_TITLE = {
   communication: "의사 소통",
 };
 
+const QUERY_KEY = "evaluateChart";
+
 const EvaluateChart = () => {
+  const { memberId } = useProfile();
+
+  const [score, setScore] = useState([]);
+
+  useQuery([QUERY_KEY, memberId], () => getEvaluationChartAPI(memberId), {
+    onSuccess: (res) => {
+      const { data } = res;
+      const extractData = extractScore(data.score);
+      setScore([...extractData]);
+    },
+  });
+
   return (
     <div className="evaluate_chart-warp">
       <div className="evaluate_chart">
-        {dummyArr.map((item) => (
+        {score.map((item) => (
           <Bar key={item.title} title={item.title} score={item.score} />
         ))}
       </div>
@@ -34,14 +53,9 @@ const Bar = ({ title, score }) => {
   );
 };
 
-const dummy = {
-  sincerity: 25,
-  punctuality: 75,
-  jobPerformance: 90,
-  communication: 87,
+const extractScore = (data) => {
+  return Object.keys(data).map((key) => {
+    const title = CHART_TITLE[key];
+    return { title, score: data[key] };
+  });
 };
-
-const dummyArr = Object.keys(dummy).map((key) => {
-  const title = CHART_TITLE[key];
-  return { title, score: dummy[key] };
-});

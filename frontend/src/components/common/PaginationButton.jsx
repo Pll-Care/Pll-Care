@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-// totlaPage: number
-// currentPage: number
+// totalPageNumber: number
+// currentPageNumber: number
 // changePageNumber: (pageNumber: number) => void
 
 const PaginationButton = ({

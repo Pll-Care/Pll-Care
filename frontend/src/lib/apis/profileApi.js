@@ -51,11 +51,14 @@ export const getBio = async (memberId) => {
   }
 };
 
-export const putBio = async (memberId, bio) => {
+//bio: string
+//nickname: string
+//imageUrl: string
+
+export const putBioAPI = async (memberId, reqBody) => {
+  console.log(reqBody);
   try {
-    return await customAxios.put(`/auth/profile/${memberId}`, {
-      bio,
-    });
+    return await customAxios.put(`/auth/profile/${memberId}`, reqBody);
   } catch (error) {
     console.log(error);
   }
@@ -71,7 +74,6 @@ export const getContact = async (memberId) => {
 };
 
 export const patchProfile = async (memberId, userInfo) => {
-  console.log(userInfo);
   try {
     await customAxios.patch(`/auth/profile/${memberId}`, userInfo);
   } catch (error) {
@@ -109,4 +111,18 @@ export const getProjectExperienceAPI = async (memberId) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const getEvaluationChartAPI = (memberId) => {
+  return customAxios.get(`/auth/profile/${memberId}/evaluation/chart`);
+};
+
+// page: number
+export const getEvaluationProjectListAPI = (memberId, page) => {
+  return customAxios.get(`/auth/profile/${memberId}/evaluation?page=${page}`);
+};
+
+// projectId: number
+export const getEvaluationProjectDetailAPI = (memberId, projectId) => {
+  return customAxios.get(`/auth/profile/${memberId}/evaluation/${projectId}`);
 };

@@ -1,8 +1,36 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useQuery } from "react-query";
 import project_default from "../../../assets/project-default-img.jpg";
 import { useRouter } from "../../../hooks/useRouter";
+import { useProfile } from "../../../context/ProfileContext";
+import { getEvaluationProjectListAPI } from "../../../lib/apis/profileApi";
+import PaginationButton from "../../common/PaginationButton";
+import { useEffect, useState } from "react";
+
+const QUERY_KEY = "evaluate-projectList";
 
 const ProjectList = () => {
-  const { routeTo, currentPath, haveDataTo } = useRouter();
+  const { currentPath, haveDataTo } = useRouter();
+  const { memberId } = useProfile();
+
+  const [page, setPage] = useState({ totlaPages: 0, currentPage: 1 });
+  const [content, setContent] = useState([]);
+
+  const { refetch } = useQuery(
+    [QUERY_KEY, memberId],
+    () => getEvaluationProjectListAPI(memberId, page.currentPage),
+    {
+      onSuccess: (res) => {
+        const { data } = res;
+        setContent([...data.content]);
+        setPage((prev) => ({ ...prev, totlaPages: data.totalPages }));
+      },
+    }
+  );
+
+  useEffect(() => {
+    refetch();
+  }, [page.currentPage]);
 
   //title: string
   // projectId: number
@@ -11,10 +39,14 @@ const ProjectList = () => {
     haveDataTo(currentPath + "/" + title, data);
   };
 
+  const changePageNumber = (pageNumber) => {
+    setPage((prev) => ({ ...prev, currentPage: pageNumber }));
+  };
+
   return (
     <div className="evaluate_project">
       <ul className="evaluate_project_list">
-        {dummy_project.map((item, idx) => (
+        {content.map((item, idx) => (
           <li
             key={idx}
             className="evaluate_project_item"
@@ -57,9 +89,18 @@ const ProjectList = () => {
           </li>
         ))}
       </ul>
+      <PaginationButton
+        totalPageNumber={page.totlaPages}
+        currentPageNumber={page.currentPage}
+        changePageNumber={changePageNumber}
+      />
     </div>
   );
 };
+
+// totalPageNumber: number
+// currentPageNumber: number
+// changePageNumber: (pageNumber: number) => void
 
 const dummy_project = [
   {
