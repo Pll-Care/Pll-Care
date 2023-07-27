@@ -1,11 +1,15 @@
 import { useRef, useState } from "react";
-import Button from "../../components/common/Button";
-import { getProjectId } from "../../utils/getProjectId";
 import { useLocation } from "react-router-dom";
-import useEvaluationManagementMutation from "../../hooks/useEvaluationManagementMutation";
+
 import { toast } from "react-toastify";
-import { useQuery } from "react-query";
-import { getCompleteProjectData } from "../../lib/apis/managementApi";
+
+import useEvaluationManagementMutation from "../../hooks/useEvaluationManagementMutation";
+
+import Button from "../../components/common/Button";
+import ControlMenu from "../common/ControlMenu";
+
+import { getProjectId } from "../../utils/getProjectId";
+
 
 const evaluationCriterion = [
   {
@@ -86,8 +90,13 @@ const FinalEvaluation = ({
     },
   ]);
 
+  const [sincerityScore, setSincerityScore] = useState(0);
+  const [punctualityScore, setPunctualityScore] = useState(0);
+  const [jobPerformanceScore, setJobPerformanceScore] = useState(0);
+  const [communicationScore, setCommunicationScore] = useState(0);
+
   const projectId = getProjectId(useLocation());
-  
+
   const [content, setContent] = useState("");
 
   const modalOutside = useRef();
@@ -104,14 +113,6 @@ const FinalEvaluation = ({
     setContent(e.target.value);
   };
 
-  const handleChangeScore = (e, idx) => {
-    setEvaluationScore((prevScore) => {
-      return prevScore.map((score, index) =>
-        idx === index ? { ...score, value: parseInt(e.target.value) } : score
-      );
-    });
-  };
-
   const handleSubmitFinalEvaluation = () => {
     if (content.length < 1) {
       toast.error("최종 의견을 작성해주세요.");
@@ -122,15 +123,45 @@ const FinalEvaluation = ({
       projectId: projectId,
       evaluatedId: participantId,
       score: {
-        sincerity: evaluationScore[0].value,
-        punctuality: evaluationScore[1].value,
-        jobPerformance: evaluationScore[2].value,
-        communication: evaluationScore[3].value,
+        sincerity: sincerityScore,
+        punctuality: punctualityScore,
+        jobPerformance: jobPerformanceScore,
+        communication: communicationScore,
       },
       content: content,
     });
 
     setIsFinalEvaluationVisible(false);
+  };
+
+  const getValue = (idx) => {
+    switch (idx) {
+      case 0:
+        return sincerityScore;
+      case 1:
+        return punctualityScore;
+      case 2:
+        return jobPerformanceScore;
+      case 3:
+        return communicationScore;
+      default:
+        return 0;
+    }
+  };
+
+  const getOnChange = (idx) => {
+    switch (idx) {
+      case 0:
+        return setSincerityScore;
+      case 1:
+        return setPunctualityScore;
+      case 2:
+        return setJobPerformanceScore;
+      case 3:
+        return setCommunicationScore;
+      default:
+        return 0;
+    }
   };
 
   return (
@@ -151,18 +182,11 @@ const FinalEvaluation = ({
                 {evaluationCriterion.map((criterion, idx) => (
                   <div key={idx}>
                     {criterion.name}
-                    <select
-                      className="evaluation-score"
-                      onChange={(e) => handleChangeScore(e, idx)}
-                      value={evaluationScore[idx].value}
-                    >
-                      {evaluationOptionList.map((opt) => (
-                        <option key={opt.value} value={opt.value}>
-                          {opt.name}
-                          <figure />
-                        </option>
-                      ))}
-                    </select>
+                    <ControlMenu
+                      optionList={evaluationOptionList}
+                      value={getValue(idx)}
+                      onChange={getOnChange(idx)}
+                    />
                   </div>
                 ))}
               </div>
@@ -170,8 +194,8 @@ const FinalEvaluation = ({
             <div className="badges">
               <h1>누적 배지</h1>
               <div className="badges-body">
-                {badgeQuantity?.map((badge) => (
-                  <div className="badge">
+                {badgeQuantity?.map((badge, idx) => (
+                  <div className="badge" key={idx}>
                     <figure />
                     <div>{badge.evaluationBadge}</div>
                     <div>{badge.quantity} 개</div>
