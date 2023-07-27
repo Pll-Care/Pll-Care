@@ -4,21 +4,23 @@ import fullcare.backend.projectmember.domain.ProjectMemberPositionType;
 import lombok.Builder;
 import lombok.Getter;
 
-@Getter
-public class ProjectMemberListResponse {
 
-    private Long id;
+@Getter
+public class ApplyMemberListResponse {
+
+    private Long postId;
+    private Long memberId;
     private String name;
     private String imageUrl;
     private ProjectMemberPositionType position;
-    private boolean isLeader;
+
 
     @Builder
-    public ProjectMemberListResponse(Long id, String name, String imageUrl, ProjectMemberPositionType position, boolean isLeader) {
-        this.id = id;
+    public ApplyMemberListResponse(Long postId, Long memberId, String name, String imageUrl, ProjectMemberPositionType position) {
+        this.postId = postId;
+        this.memberId = memberId;
         this.name = name;
         this.imageUrl = imageUrl;
         this.position = position;
-        this.isLeader = isLeader;
     }
 }

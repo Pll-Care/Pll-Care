@@ -10,15 +10,15 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @NoArgsConstructor
 @Getter
-public class ProjectMemberRole {
+public class ProjectMemberType { // ! ProjectMemberType
 
     @Enumerated(EnumType.STRING)
     private ProjectMemberRoleType role; // * 리더 or 팀원
 
     @Enumerated(EnumType.STRING)
-    private ProjectMemberRoleType position; // * 직무 포지션
+    private ProjectMemberPositionType position; // * 직무 포지션
 
-    public ProjectMemberRole(ProjectMemberRoleType role, ProjectMemberRoleType position) {
+    public ProjectMemberType(ProjectMemberRoleType role, ProjectMemberPositionType position) {
         this.role = role;
         this.position = position;
     }
@@ -27,7 +27,7 @@ public class ProjectMemberRole {
         this.role = role;
     }
 
-    public void updatePosition(ProjectMemberRoleType position) {
+    public void updatePosition(ProjectMemberPositionType position) {
         this.position = position;
     }
 }

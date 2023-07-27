@@ -15,6 +15,10 @@ import java.util.List;
 public class PostDetailResponse {
 
     private Long postId;
+
+    @JsonIgnore
+    private Long projectId;
+
     private String projectName; // * 프로젝트 이름
     private String projectImageUrl;
 
@@ -39,19 +43,22 @@ public class PostDetailResponse {
     private boolean isEditable;
     private boolean isDeletable;
 
+    private boolean isAvailable;
 
     private List<RecruitInfo> recruitInfoList = new ArrayList<>();
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
     @Builder
-    public PostDetailResponse(Long postId, String projectName, String projectImageUrl, String author, String authorImageUrl,
+    public PostDetailResponse(Long postId, Long projectId, String projectName, String projectImageUrl,
+                              String author, String authorImageUrl,
                               String title, String description, LocalDate recruitStartDate, LocalDate recruitEndDate,
                               String reference, String contact, String region, String techStack,
                               boolean isLiked, boolean isEditable, boolean isDeletable,
                               LocalDateTime createdDate, LocalDateTime modifiedDate) {
 
         this.postId = postId;
+        this.projectId = projectId;
         this.projectName = projectName;
         this.projectImageUrl = projectImageUrl;
         this.author = author;
@@ -79,4 +86,7 @@ public class PostDetailResponse {
         this.techStackList = techStackList;
     }
 
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
 }

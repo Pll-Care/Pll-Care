@@ -13,8 +13,9 @@ import fullcare.backend.project.dto.response.ProjectListResponse;
 import fullcare.backend.project.dto.response.ProjectSimpleListResponse;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.projectmember.domain.ProjectMember;
-import fullcare.backend.projectmember.domain.ProjectMemberRole;
+import fullcare.backend.projectmember.domain.ProjectMemberPositionType;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
+import fullcare.backend.projectmember.domain.ProjectMemberType;
 import fullcare.backend.s3.S3Service;
 import fullcare.backend.util.CustomPageImpl;
 import lombok.RequiredArgsConstructor;
@@ -30,12 +31,13 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-@Transactional
+@Transactional(readOnly = true)
 public class ProjectService {
+
     private final ProjectRepository projectRepository;
     private final S3Service s3Service;
 
-
+    @Transactional
     public Project createProject(Member member, ProjectCreateRequest request) {
         Project newProject = Project.createNewProject()
                 .title(request.getTitle())
@@ -46,25 +48,20 @@ public class ProjectService {
                 .imageUrl(request.getImageUrl())
                 .build();
 
-        newProject.addMember(member, new ProjectMemberRole(ProjectMemberRoleType.리더, ProjectMemberRoleType.미정));
+        newProject.addMember(member, new ProjectMemberType(ProjectMemberRoleType.리더, ProjectMemberPositionType.미정));
         return projectRepository.save(newProject);
     }
 
+    @Transactional
     public void updateProject(Long projectId, ProjectUpdateRequest request) {
         Project findProject = findSimpleProject(projectId);
         s3Service.delete(findProject.getImageUrl());
+
         findProject.updateAll(request.getTitle(), request.getDescription(), request.getState(),
                 request.getStartDate(), request.getEndDate(), request.getImageUrl());
     }
 
-    public Project findProject(Long projectId) {
-        return projectRepository.findProjectWithPMAndMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
-    }
-
-    public Project findSimpleProject(Long projectId) {
-        return projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
-    }
-
+    @Transactional
     public void deleteProject(Long projectId) {
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
 
@@ -75,12 +72,20 @@ public class ProjectService {
         projectRepository.deleteById(projectId);
     }
 
+    @Transactional
     public void completeProject(Long projectId) {
-        Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
-        project.complete();
+        Project findProject = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
+        findProject.complete();
     }
 
-    @Transactional(readOnly = true)
+    public Project findProject(Long projectId) {
+        return projectRepository.findProjectWithPMAndMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
+    }
+
+    public Project findSimpleProject(Long projectId) {
+        return projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
+    }
+
     public CustomPageImpl<ProjectListResponse> findProjectList(Pageable pageable, Long memberId, List<State> states) {
         Page<Project> pageProject = projectRepository.findProjectList(pageable, memberId, states);
 
@@ -99,11 +104,8 @@ public class ProjectService {
     }
 
     public List<ProjectSimpleListResponse> findSimpleProjectList(Long memberId) {
-        List<ProjectSimpleListResponse> simpleProjectList = projectRepository.findSimpleProjectList(memberId);
-
-        return simpleProjectList;
+        return projectRepository.findSimpleProjectList(memberId);
     }
-
 
     // ! todo readonly 옵션으로 데이터 읽기 용도로만 호출할 경우 프로젝트가 완료되어도 검증 통과
     public ProjectMember isProjectAvailable(Long projectId, Long memberId, boolean readOnly) {

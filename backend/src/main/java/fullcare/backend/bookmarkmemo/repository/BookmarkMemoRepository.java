@@ -1,7 +1,7 @@
-package fullcare.backend.memo.repository;
+package fullcare.backend.bookmarkmemo.repository;
 
+import fullcare.backend.bookmarkmemo.domain.BookmarkMemo;
 import fullcare.backend.member.domain.Member;
-import fullcare.backend.memo.domain.BookmarkMemo;
 import fullcare.backend.memo.domain.Memo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

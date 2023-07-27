@@ -1,8 +1,14 @@
 package fullcare.backend.post.service;
 
+import fullcare.backend.apply.domain.Apply;
+import fullcare.backend.apply.repository.ApplyRepository;
 import fullcare.backend.global.State;
+import fullcare.backend.global.errorcode.GlobalErrorCode;
 import fullcare.backend.global.errorcode.PostErrorCode;
+import fullcare.backend.global.errorcode.ProjectErrorCode;
+import fullcare.backend.global.exceptionhandling.exception.DuplicateProjectMemberException;
 import fullcare.backend.global.exceptionhandling.exception.EntityNotFoundException;
+import fullcare.backend.global.exceptionhandling.exception.InvalidAccessException;
 import fullcare.backend.likes.domain.Likes;
 import fullcare.backend.likes.repository.LikesRepository;
 import fullcare.backend.member.domain.Member;
@@ -16,8 +22,8 @@ import fullcare.backend.post.dto.response.PostDetailResponse;
 import fullcare.backend.post.dto.response.PostListResponse;
 import fullcare.backend.post.repository.PostRepository;
 import fullcare.backend.post.repository.RecruitmentRepository;
-import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.projectmember.domain.ProjectMember;
+import fullcare.backend.projectmember.domain.ProjectMemberPositionType;
 import fullcare.backend.s3.S3Service;
 import fullcare.backend.util.CustomPageImpl;
 import fullcare.backend.util.TechStackUtil;
@@ -41,16 +47,13 @@ import java.util.stream.Collectors;
 public class PostService {
 
     private final PostRepository postRepository;
-
-    private final ProjectRepository projectRepository;
     private final LikesRepository likesRepository;
+    private final ApplyRepository applyRepository;
     private final RecruitmentRepository recruitmentRepository;
     private final S3Service s3Service;
 
     @Transactional
-    public Post createPost(PostCreateRequest request, ProjectMember projectMember) {
-        // Project project = projectRepository.findById(request.getProjectId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
-
+    public Post createPost(ProjectMember projectMember, PostCreateRequest request) {
         Post newPost = Post.createNewPost()
                 .project(projectMember.getProject())
                 .author(projectMember.getMember())
@@ -69,11 +72,11 @@ public class PostService {
         List<Recruitment> recruitments = recruitInfo.stream().map(r -> Recruitment.createNewRecruitment()
                 .post(newPost)
                 .recruitPosition(r.getPosition())
-                .currentAmount(r.getCurrentCnt())
+                .currentAmount(0)
                 .totalAmount(r.getTotalCnt())
                 .build()).toList();
 
-        newPost.updateRecruit(recruitments);
+        newPost.updateRecruitments(recruitments);
         return postRepository.save(newPost);
     }
 
@@ -102,6 +105,11 @@ public class PostService {
 
     public Post findPost(Long postId) {
         return postRepository.findById(postId).orElseThrow(() -> new EntityNotFoundException(PostErrorCode.POST_NOT_FOUND));
+    }
+
+    public Post findPostWithRecruitments(Long postId) {
+        return postRepository.findPostWithRecruitmentsById(postId).orElseThrow(() -> new EntityNotFoundException(PostErrorCode.POST_NOT_FOUND));
+
     }
 
     public PostDetailResponse findPostDetailResponse(Long memberId, Long postId) {
@@ -153,6 +161,40 @@ public class PostService {
             likesRepository.delete(likes);
         }
 
+    }
+
+    @Transactional
+    public void applyProjectByPost(Post post, Member member, ProjectMemberPositionType position) {
+        Optional<Apply> findApply = applyRepository.findByPostAndMember(post, member);
+
+        if (!(findApply.isPresent())) {
+
+            Recruitment findRecruitment = post.getRecruitments().stream()
+                    .filter(r -> r.getRecruitPosition() == position).findAny()
+                    .orElseThrow(() -> new EntityNotFoundException(GlobalErrorCode.INVALID_ACCESS));// todo 모집중인 포지션이 아닙니다.
+
+            if (findRecruitment.getCurrentAmount() < findRecruitment.getTotalAmount()) {
+                Apply newApply = Apply.createNewApply()
+                        .member(member)
+                        .post(post)
+                        .position(position)
+                        .build();
+
+                applyRepository.save(newApply);
+
+            } else {
+                throw new InvalidAccessException(GlobalErrorCode.INVALID_ACCESS); // todo 이미 모집이 완료된 포지션입니다. (총 모집인원을 넘어갈 수 없음)
+            }
+
+        } else {
+            throw new DuplicateProjectMemberException(ProjectErrorCode.DUPLICATE_PROJECT_MEMBER); // todo 이미 프로젝트에 지원한 사용자입니다.
+        }
+    }
+
+    @Transactional
+    public void cancelApply(Post post, Member member) {
+        Apply findApply = applyRepository.findByPostAndMember(post, member).orElseThrow(() -> new EntityNotFoundException(PostErrorCode.APPLY_NOT_FOUND));// todo 프로젝트 지원 정보가 없습니다.
+        applyRepository.delete(findApply);
     }
 
     public CustomPageImpl<MyPostResponse> findMyPost(Long memberId, State state, Pageable pageable) {

@@ -1,6 +1,6 @@
 package fullcare.backend.memo.dto.response;
 
-import fullcare.backend.memo.domain.BookmarkMemo;
+import fullcare.backend.bookmarkmemo.domain.BookmarkMemo;
 import fullcare.backend.memo.domain.Memo;
 import lombok.Builder;
 import lombok.Getter;

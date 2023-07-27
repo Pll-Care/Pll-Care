@@ -10,6 +10,7 @@ import java.util.List;
 public interface RecruitmentRepository extends JpaRepository<Recruitment, Long> {
     @Query("select r from Recruitment r where r.post.id in :postIds")
     List<Recruitment> findByPostIds(@Param("postIds") List<Long> postIds);
-
+    
     List<Recruitment> findByPostId(Long postId);
+
 }

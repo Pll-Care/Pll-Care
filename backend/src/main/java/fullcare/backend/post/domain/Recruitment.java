@@ -1,5 +1,6 @@
 package fullcare.backend.post.domain;
 
+import fullcare.backend.projectmember.domain.ProjectMemberPositionType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,7 +22,7 @@ public class Recruitment {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "postion")
-    private RecruitPosition recruitPosition;
+    private ProjectMemberPositionType recruitPosition;
 
     @Column
     private long currentAmount;
@@ -30,10 +31,16 @@ public class Recruitment {
     private long totalAmount;
 
     @Builder(builderMethodName = "createNewRecruitment")
-    public Recruitment(Post post, RecruitPosition recruitPosition, long currentAmount, long totalAmount) {
+    public Recruitment(Post post, ProjectMemberPositionType recruitPosition, long currentAmount, long totalAmount) {
         this.post = post;
         this.recruitPosition = recruitPosition;
         this.currentAmount = currentAmount;
         this.totalAmount = totalAmount;
+    }
+
+    public void updateRecruitment() {
+        if (this.currentAmount < this.totalAmount) {
+            this.currentAmount += 1;
+        }
     }
 }
