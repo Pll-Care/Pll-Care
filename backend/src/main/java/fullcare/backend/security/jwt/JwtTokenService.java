@@ -93,8 +93,10 @@ public class JwtTokenService {
     public String[] reIssueTokens(String refreshToken, Authentication authentication) {
 
         String[] tokens = new String[2];
-        CustomOAuth2User user = (CustomOAuth2User) authentication.getPrincipal();
-        Optional<Member> findMember = memberRepository.findById(Long.parseLong(user.getName()));
+        Member member = (Member) authentication.getPrincipal();
+        CustomOAuth2User user = CustomOAuth2User.create(member);
+        Optional<Member> findMember = memberRepository.findById(member.getId());
+
         if (findMember.isPresent()) {
             if (findMember.get().getRefreshToken().equals(refreshToken)) { // refreshToken이 동일할 경우
                 String newRefreshToken = createRefreshToken(user);
@@ -131,13 +133,15 @@ public class JwtTokenService {
     }
 
     public Authentication getAuthentication(String accessToken) {
+        log.info("AA");
+
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(accessToken)
                 .getBody();
-
         String memberId = claims.getSubject();
+        log.info("BB");
 
         Member member = memberRepository.findById(Long.valueOf(memberId)).orElseThrow(() -> new CustomJwtException(JwtErrorCode.NOT_FOUND_USER));
         List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(member.getRole().getValue()));
