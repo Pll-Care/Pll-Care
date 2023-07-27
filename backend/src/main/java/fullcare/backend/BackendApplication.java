@@ -1,5 +1,7 @@
 package fullcare.backend;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.servers.Server;
 import jakarta.annotation.PostConstruct;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,6 +13,7 @@ import java.util.TimeZone;
 @SpringBootApplication
 @EnableWebSecurity(debug = true)
 @EnableJpaAuditing
+@OpenAPIDefinition(servers = {@Server(url = "https:fullcare.store", description = "Default Server URL")})
 public class BackendApplication {
     static {
         System.setProperty("com.amazonaws.sdk.disableEc2Metadata", "true");
