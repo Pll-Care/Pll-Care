@@ -56,7 +56,6 @@ export const getBio = async (memberId) => {
 //imageUrl: string
 
 export const putBioAPI = async (memberId, reqBody) => {
-  console.log(reqBody);
   try {
     return await customAxios.put(`/auth/profile/${memberId}`, reqBody);
   } catch (error) {
