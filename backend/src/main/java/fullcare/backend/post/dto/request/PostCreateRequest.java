@@ -52,13 +52,16 @@ public class PostCreateRequest {
 
 
     // ? 테스트 데이터 세팅용으로 사용하는 생성자
-    public PostCreateRequest(Long projectId, String title, String description, String reference, String contact, String region, List<RecruitInfo> recruitInfo) {
+    public PostCreateRequest(Long projectId, String title, String description, LocalDate recruitStartDate, LocalDate recruitEndDate, String reference, String contact, String region, List<TechStack> techStack, List<RecruitInfo> recruitInfo) {
         this.projectId = projectId;
         this.title = title;
         this.description = description;
+        this.recruitStartDate = recruitStartDate;
+        this.recruitEndDate = recruitEndDate;
         this.reference = reference;
         this.contact = contact;
         this.region = region;
+        this.techStack = techStack;
         this.recruitInfo = recruitInfo;
     }
 }

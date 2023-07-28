@@ -11,8 +11,13 @@ import fullcare.backend.evaluation.repository.MidtermEvaluationRepository;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.domain.MemberRole;
 import fullcare.backend.member.repository.MemberRepository;
+import fullcare.backend.memo.domain.Memo;
+import fullcare.backend.memo.dto.request.MemoCreateRequest;
 import fullcare.backend.memo.service.MemoService;
+import fullcare.backend.post.domain.Post;
+import fullcare.backend.post.domain.RecruitInfo;
 import fullcare.backend.post.domain.RecruitPosition;
+import fullcare.backend.post.dto.request.PostCreateRequest;
 import fullcare.backend.post.service.PostService;
 import fullcare.backend.profile.domain.Contact;
 import fullcare.backend.profile.domain.Profile;
@@ -26,6 +31,7 @@ import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberPositionType;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.projectmember.domain.ProjectMemberType;
+import fullcare.backend.projectmember.repository.ProjectMemberRepository;
 import fullcare.backend.schedule.ScheduleCategory;
 import fullcare.backend.schedule.domain.Schedule;
 import fullcare.backend.schedule.dto.request.ScheduleCreateRequest;
@@ -63,7 +69,7 @@ public class TestDataInit {
     private final ScheduleService scheduleService;
     private final ScheduleRepository scheduleRepository;
     private final ProfileService profileService;
-
+    private final ProjectMemberRepository projectMemberRepository;
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
     public void initData() {
@@ -73,8 +79,8 @@ public class TestDataInit {
         createMidEvaluation();
         createFinalEvaluation();
         createProfile();
-//        createMemoAndBookMark();
-//        createPostAndLikes();
+        createMemoAndBookMark();
+        createPostAndLikes();
 
     }
 
@@ -140,41 +146,46 @@ public class TestDataInit {
         }
     }
 
-//    @Transactional
-//    private void createPostAndLikes() {
-//        Random rand = new Random();
-//        for (long i = 1l; i < 25; i++) {
-//            long findMemberId = rand.nextLong(1, 10);
-//
-//            RecruitInfo recruitInfo1 = new RecruitInfo(RecruitPosition.BACKEND, rand.nextInt(1, 5));
-//            RecruitInfo recruitInfo2 = new RecruitInfo(RecruitPosition.FRONTEND, rand.nextInt(1, 5));
-//            RecruitInfo recruitInfo3 = new RecruitInfo(RecruitPosition.MANAGER, rand.nextInt(1, 5));
-//            RecruitInfo recruitInfo4 = new RecruitInfo(RecruitPosition.DESIGN, rand.nextInt(1, 5));
-//
-//            ArrayList<RecruitInfo> recruitInfos = new ArrayList<>();
-//            recruitInfos.add(recruitInfo1);
-//            recruitInfos.add(recruitInfo2);
-//            recruitInfos.add(recruitInfo3);
-//            recruitInfos.add(recruitInfo4);
-//
-//            Post post = postService.createPost(new PostCreateRequest(rand.nextLong(1, 8), "모집글" + i, "내용" + i, "참조" + i, "연락" + i, "지역" + i, "기술스택" + i, recruitInfos), findMemberId);
-//            if (i % 3 == 0) {
-//                postService.likePost(post, memberRepository.findById(findMemberId).get());
-////                postService.likePost(post.getId(), memberRepository.findById(rand.nextLong(1, 10)).get());
-//            }
-//        }
-//    }
+    private void createPostAndLikes() {
+        Random rand = new Random();
+        for (long i = 1l; i < 25; i++) {
+            long findMemberId = rand.nextLong(1, 10);
 
-//    private void createMemoAndBookMark() {
-//        Random rand = new Random();
-//        for (long i = 1l; i < 25; i++) {
-//            long findMemberId = rand.nextLong(1, 10);
-//            Memo memo = memoService.createMemo(new MemoCreateRequest(1l, "제목" + i, "내용" + i), memberRepository.findById(findMemberId).get());
-//            if (i % 3 == 0) {
-//                bookmarkMemoService.bookmarkMemo(memo, memberRepository.findById(1l).get());
-//            }
-//        }
-//    }
+            RecruitInfo recruitInfo1 = new RecruitInfo(ProjectMemberPositionType.백엔드, rand.nextInt(1, 5),5);
+            RecruitInfo recruitInfo2 = new RecruitInfo(ProjectMemberPositionType.프론트엔드, rand.nextInt(1, 5),5);
+            RecruitInfo recruitInfo3 = new RecruitInfo(ProjectMemberPositionType.기획, rand.nextInt(1, 5),5);
+            RecruitInfo recruitInfo4 = new RecruitInfo(ProjectMemberPositionType.디자인, rand.nextInt(1, 5),5);
+
+            ArrayList<RecruitInfo> recruitInfos = new ArrayList<>();
+            recruitInfos.add(recruitInfo1);
+            recruitInfos.add(recruitInfo2);
+            recruitInfos.add(recruitInfo3);
+            recruitInfos.add(recruitInfo4);
+            ProjectMember projectMember = projectMemberRepository.findByProjectIdAndMemberId(1l, 1l).get();
+            List<TechStack> techStacks = new ArrayList<>();
+            techStacks.add(TechStack.Firebase);
+            techStacks.add(TechStack.Spring);
+            techStacks.add(TechStack.React);
+
+            Post post = postService.createPost(projectMember,new PostCreateRequest(rand.nextLong(1, 8), "모집글" + i, "내용" + i, LocalDate.now(), LocalDate.now().plusWeeks(findMemberId), "참조" + i, "연락" + i, "지역" + i, techStacks, recruitInfos));
+            if (i % 3 == 0) {
+                postService.likePost(post, memberRepository.findById(1l).get());
+//                postService.likePost(post.getId(), memberRepository.findById(rand.nextLong(1, 10)).get());
+            }
+        }
+    }
+
+    private void createMemoAndBookMark() {
+        Random rand = new Random();
+        for (long i = 1l; i < 25; i++) {
+            long findMemberId = rand.nextLong(1, 10);
+            ProjectMember projectMember = projectMemberRepository.findByProjectIdAndMemberId(1l, findMemberId).get();
+            Memo memo = memoService.createMemo(projectMember, new MemoCreateRequest(1l, "제목" + i, "내용" + i));
+            if (i % 3 == 0) {
+                bookmarkMemoService.bookmarkMemo(memo, memberRepository.findById(1l).get());
+            }
+        }
+    }
 
     private void createSchedule() {
         Random rand = new Random();
