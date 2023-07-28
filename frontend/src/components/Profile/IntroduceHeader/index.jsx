@@ -1,36 +1,25 @@
 import React, { useEffect, useState } from "react";
-import profile_isProfile from "../../../assets/ranking-img.png";
-import InfoMySelf from "./InfoMySelf";
+import profile_isProfile from "../../../assets/profile-default-img.png";
 import { useProfile } from "../../../context/ProfileContext";
-import { getBio, putBio } from "../../../lib/apis/profileApi";
+import { getBio } from "../../../lib/apis/profileApi";
 import Button from "../../common/Button";
 import ModifyUserProfile from "./ModifyUserProfile";
+import { useQuery } from "react-query";
+
+const QUERY_KEY = "Introduce";
 
 const Introduce = () => {
-  const [profile, setProfile] = useState({
-    name: "",
-    nickName: "",
-    imageUrl: "",
-    bio: "",
-  });
-
   const [isModify, setIsModify] = useState(false);
 
   const { isMyProfile, memberId } = useProfile();
 
-  useEffect(() => {
-    const getIntroduce = async () => {
-      const response = await getBio(memberId);
-      console.log(response);
-      if (response) setProfile(response);
-    };
-    getIntroduce();
-  }, [memberId]);
+  const { data: profile, refetch } = useQuery([QUERY_KEY, memberId], () =>
+    getBio(memberId)
+  );
 
-  const modifyBio = async (bio) => {
-    const response = await putBio(memberId, bio);
-    if (response) setProfile((prev) => ({ ...prev, bio }));
-  };
+  useEffect(() => {
+    refetch();
+  }, [isModify, refetch]);
 
   const changeModify = () => {
     setIsModify((prev) => !prev);
@@ -40,19 +29,19 @@ const Introduce = () => {
     <div className="profile_introduce">
       {isModify ? (
         <ModifyUserProfile
-          imageUrl={profile.imageUrl}
-          name={profile.name}
-          nickName={profile.nickName}
-          bio={profile.bio}
-          isMyProfile={isMyProfile}
+          memberId={memberId}
+          imageUrl={profile?.imageUrl}
+          name={profile?.name}
+          nickname={profile?.nickName}
+          bio={profile?.bio}
           changeModify={changeModify}
         />
       ) : (
         <UserProfile
-          imageUrl={profile.imageUrl}
-          name={profile.name}
-          nickName={profile.nickName}
-          bio={profile.bio}
+          imageUrl={profile?.imageUrl}
+          name={profile?.name}
+          nickName={profile?.nickName}
+          bio={profile?.bio}
           isMyProfile={isMyProfile}
           changeModify={changeModify}
         />
@@ -74,10 +63,7 @@ const UserProfile = ({
   return (
     <div className="profile_introduce_container">
       <div className="profile_introduce_image">
-        <img
-          src={imageUrl === "" ? profile_isProfile : imageUrl}
-          alt="유저 프로필"
-        />
+        <img src={imageUrl ? imageUrl : profile_isProfile} alt="유저 프로필" />
       </div>
       <div className="profile_introduce_info">
         <div className="profile_introduce_info_name">
