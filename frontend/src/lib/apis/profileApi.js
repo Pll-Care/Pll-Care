@@ -100,8 +100,16 @@ export const getEvaluationProjectListAPI = (memberId, page) => {
 };
 
 // projectId: number
-export const getEvaluationProjectDetailAPI = (memberId, projectId) => {
-  return customAxios.get(`/auth/profile/${memberId}/evaluation/${projectId}`);
+export const getEvaluationProjectDetailAPI = async (memberId, projectId) => {
+  try {
+    const response = await customAxios.get(
+      `/auth/profile/${memberId}/evaluation/${projectId}`
+    );
+
+    if (response.status === 200) return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 //state: string

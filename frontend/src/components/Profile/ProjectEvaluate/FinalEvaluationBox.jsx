@@ -1,21 +1,6 @@
 import profile_default from "../../../assets/profile-default-img.png";
 
-/*
-finalEvals: {
-  memberId: number
-  memberName: string
-  imageUrl: string
-  content: string
-  score: {
-        sincerity: number
-        jobPerformance: number
-        punctuality: number
-        communication: number
-    }
-}
-*/
-
-const FinalEvaluationBox = ({ finalEvals }) => {
+const FinalEvaluationBox = ({ finalEvals = [] }) => {
   return (
     <section className="finalEvaluate">
       <div>
@@ -43,8 +28,12 @@ const UserEvaluate = ({ memberName, imageUrl, content, score }) => {
     <div className="finalEvaluate_user">
       <div className="finalEvaluate_userImageWrap">
         <img
-          className={imageUrl === "" ? "finalEvaluate_userImage image_bg" : ""}
-          src={imageUrl === "" ? profile_default : imageUrl}
+          className={
+            !imageUrl
+              ? "finalEvaluate_userImage image_bg"
+              : "finalEvaluate_userImage"
+          }
+          src={!imageUrl ? profile_default : imageUrl}
           alt={memberName + "의 프로필 이미지"}
         />
       </div>
@@ -91,3 +80,18 @@ const UserEvaluate = ({ memberName, imageUrl, content, score }) => {
     </div>
   );
 };
+
+/*
+finalEvals: {
+  memberId: number
+  memberName: string
+  imageUrl: string
+  content: string
+  score: {
+        sincerity: number
+        jobPerformance: number
+        punctuality: number
+        communication: number
+    }
+}
+*/
