@@ -89,7 +89,7 @@ public class JwtTokenService {
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
     }
-
+    @Transactional
     public String[] reIssueTokens(String refreshToken, Authentication authentication) {
 
         String[] tokens = new String[2];
