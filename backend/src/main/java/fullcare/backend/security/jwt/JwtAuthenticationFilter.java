@@ -34,7 +34,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             String refreshToken = getRefreshToken(request);
             String accessToken = getAccessToken(request);
-
+            if(refreshToken == null)
+                throw new RuntimeException("AAAAAA");
             if (refreshToken != null && jwtTokenService.validateJwtToken(refreshToken)) {
                 Authentication authentication = jwtTokenService.getAuthentication(refreshToken);
 
