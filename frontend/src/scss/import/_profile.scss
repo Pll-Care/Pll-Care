@@ -193,7 +193,7 @@
 
   &_nav {
     width: 90px;
-    height: 100%;
+    height: 100vh;
     padding-top: 30px;
     border-top-left-radius: 24px;
 
@@ -222,7 +222,7 @@
     }
 
     &_image_active {
-      background-color: #01e89e;
+      background-color: #003b28;
       box-shadow: rgba(0, 0, 0, 0.4) 0px 22px 22px 0px;
     }
   }

@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import INTRODUCE from "../../assets/profile-default-img.png";
 import EVALUATAE from "../../assets/layers-img.png";
 import MY_PROJECT from "../../assets/star-img.png";
+import HEART from "../../assets/heart.png";
 import { useProfile } from "../../context/ProfileContext";
 
 const ProfileNavbar = () => {
@@ -55,7 +56,7 @@ const navData = [
   {
     title: "좋아하는 프로젝트",
     to: "like",
-    child: <img src={MY_PROJECT} alt="like_project" />,
+    child: <img src={HEART} alt="like_project" />,
     isAdmin: true,
   },
 ];
