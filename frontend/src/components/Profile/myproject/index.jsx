@@ -1,12 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProjectItem from "./ProjectItem";
 import Select from "../../common/Select";
-import { recruitSelect, sortSelect } from "../../../utils/optionData";
+import { recruitSelect } from "../../../utils/optionData";
 import PaginationButton from "../../common/PaginationButton";
+import { useQuery } from "react-query";
+import { useProfile } from "../../../context/ProfileContext";
+import { getPostProjectAPI } from "../../../lib/apis/profileApi";
+
+const QUERY_KEY = "myproject";
 
 const MyProject = () => {
   const [selecValue, setSelectValue] = useState("ONGOING");
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
+
+  const { memberId } = useProfile();
+
+  const { data, refetch } = useQuery(
+    [QUERY_KEY, memberId, currentPageNumber],
+    () => getPostProjectAPI(memberId, selecValue, currentPageNumber)
+  );
+
+  const totalPages = data?.totalPages || 0;
 
   const changeRecruit = (event) => {
     setSelectValue(event.target.value);
@@ -16,6 +30,10 @@ const MyProject = () => {
   const changePageNumber = (pageNumber) => {
     setCurrentPageNumber(pageNumber);
   };
+
+  useEffect(() => {
+    refetch();
+  }, [selecValue, currentPageNumber, refetch]);
 
   return (
     <div>
@@ -32,7 +50,7 @@ const MyProject = () => {
         </div>
         <div className="myProject_project">
           <ul>
-            {dummy.map((project) => (
+            {data?.content.map((project) => (
               <ProjectItem
                 key={project.postId}
                 projectId={project.projectId}
@@ -44,7 +62,7 @@ const MyProject = () => {
         </div>
         <PaginationButton
           changePageNumber={changePageNumber}
-          totalPageNumber={111}
+          totalPageNumber={totalPages}
           currentPageNumber={currentPageNumber}
         />
       </div>
@@ -53,31 +71,3 @@ const MyProject = () => {
 };
 
 export default MyProject;
-
-const dummy = [
-  {
-    postId: 0,
-    title: "신규 프로젝트",
-    description: "유구한 역사와 전통에 빛나는 우리 대한민국",
-  },
-  {
-    postId: 1,
-    title: "신규 프로젝트",
-    description: "유구한 역사와 전통에 빛나는 우리 대한민국",
-  },
-  {
-    postId: 2,
-    title: "신규 프로젝트",
-    description: "유구한 역사와 전통에 빛나는 우리 대한민국",
-  },
-  {
-    postId: 3,
-    title: "신규 프로젝트",
-    description: "유구한 역사와 전통에 빛나는 우리 대한민국",
-  },
-  {
-    postId: 4,
-    title: "신규 프로젝트",
-    description: "유구한 역사와 전통에 빛나는 우리 대한민국",
-  },
-];
