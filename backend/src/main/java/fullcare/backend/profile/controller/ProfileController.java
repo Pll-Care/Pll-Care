@@ -1,5 +1,6 @@
 package fullcare.backend.profile.controller;
 
+import fullcare.backend.apply.service.ApplyService;
 import fullcare.backend.evaluation.dto.response.MyEvalChartResponse;
 import fullcare.backend.evaluation.dto.response.MyEvalDetailResponse;
 import fullcare.backend.evaluation.dto.response.MyEvalListResponse;
@@ -45,6 +46,7 @@ public class ProfileController {
     private final PostService postService;
     private final EvaluationService evaluationService;
     private final ProjectService projectService;
+    private final ApplyService applyService;
 
     // * 개인 프로필 api 조회
     @Operation(method = "get", summary = "한 줄 소개 조회")
@@ -165,7 +167,21 @@ public class ProfileController {
         CustomPageImpl<MyPostResponse> response = postService.findMyLikePost(member.getId(), pageable);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
+    //* 지원 api
+    @Operation(method = "get", summary = "개인페이지 지원 리스트 조회")
+    @ApiResponses(value = {
+            @ApiResponse(description = "개인페이지 지원 리스트 조회 성공", responseCode = "200", useReturnTypeSchema = true)
+    })
+    @GetMapping("/apply")
+    public ResponseEntity<CustomPageImpl<MyApplyResponse>> findMyApply(@PathVariable Long memberId, CustomPageRequest pageRequest, @CurrentLoginMember Member member) {
+        if (memberId != member.getId()) {
+            throw new InvalidAccessException(MemberErrorCode.MEMBER_PROFILE_INVALID_ACCESS);
+        }
+        PageRequest of = pageRequest.of("id");
+        Pageable pageable = (Pageable) of;
+        CustomPageImpl<MyApplyResponse> response = applyService.findMyApply(memberId, pageable);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
 
     //* 평가 api
     @Operation(method = "get", summary = "개인페이지 프로젝트 평가 리스트 조회")
@@ -201,6 +217,7 @@ public class ProfileController {
         MyEvalChartResponse response = evaluationService.findMyEvalChart(memberId);
         return new ResponseEntity(response, HttpStatus.OK);
     }
+
 
 
 

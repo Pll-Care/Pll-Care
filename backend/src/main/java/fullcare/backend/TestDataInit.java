@@ -1,6 +1,8 @@
 package fullcare.backend;
 
 
+import fullcare.backend.apply.domain.Apply;
+import fullcare.backend.apply.repository.ApplyRepository;
 import fullcare.backend.bookmarkmemo.service.BookmarkMemoService;
 import fullcare.backend.evaluation.domain.EvaluationBadge;
 import fullcare.backend.evaluation.domain.FinalTermEvaluation;
@@ -70,6 +72,7 @@ public class TestDataInit {
     private final ScheduleRepository scheduleRepository;
     private final ProfileService profileService;
     private final ProjectMemberRepository projectMemberRepository;
+    private final ApplyRepository applyRepository;
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
     public void initData() {
@@ -170,6 +173,9 @@ public class TestDataInit {
             Post post = postService.createPost(projectMember,new PostCreateRequest(rand.nextLong(1, 8), "모집글" + i, "내용" + i, LocalDate.now(), LocalDate.now().plusWeeks(findMemberId), "참조" + i, "연락" + i, "지역" + i, techStacks, recruitInfos));
             if (i<16){
                 post.completed();
+            }else if(i<23){
+                Apply apply = Apply.createNewApply().member(projectMember.getMember()).post(post).position(ProjectMemberPositionType.백엔드).build();
+                applyRepository.save(apply);
             }
             if (i % 3 == 0) {
                 postService.likePost(post, memberRepository.findById(1l).get());
