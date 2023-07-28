@@ -47,7 +47,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         .build().toUriString();
                 System.out.println("successUrl = " + successUrl);
 
-                //response.sendRedirect(successUrl);
+                response.sendRedirect(successUrl);
                 return;
             } else if (accessToken != null && jwtTokenService.validateJwtToken(accessToken)) {
                 Authentication authentication = jwtTokenService.getAuthentication(accessToken);
