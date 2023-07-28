@@ -168,6 +168,9 @@ public class TestDataInit {
             techStacks.add(TechStack.React);
 
             Post post = postService.createPost(projectMember,new PostCreateRequest(rand.nextLong(1, 8), "모집글" + i, "내용" + i, LocalDate.now(), LocalDate.now().plusWeeks(findMemberId), "참조" + i, "연락" + i, "지역" + i, techStacks, recruitInfos));
+            if (i<16){
+                post.completed();
+            }
             if (i % 3 == 0) {
                 postService.likePost(post, memberRepository.findById(1l).get());
 //                postService.likePost(post.getId(), memberRepository.findById(rand.nextLong(1, 10)).get());

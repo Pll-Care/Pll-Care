@@ -111,4 +111,7 @@ public class Post extends BaseEntity {
         this.recruitments.addAll(recruitments);
     }
 
+    public void completed(){
+        this.state = State.COMPLETE;
+    }
 }
