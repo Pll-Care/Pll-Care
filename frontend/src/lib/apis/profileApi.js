@@ -1,25 +1,3 @@
-/**
- * 유저 아이디 조회 - end
- * 내 프폴필 검증 - end
- 
- * 한줄 소개 조회 - end
- * 한줄 소개 수정 - end
-
- * 연락처 조회  - end
- * 연락처 수정  - end
-
- * 직무 기술스택 조회
- * 기술 스택 검색
- * 직무 기술스택 수정
- * 
- 
- * 프로젝트 경험 조회
-
- # 개인 프로필 생성 수정 삭제
-
-
- */
-
 import { customAxios } from "./customAxios";
 
 export const getMemberId = async () => {
@@ -124,4 +102,29 @@ export const getEvaluationProjectListAPI = (memberId, page) => {
 // projectId: number
 export const getEvaluationProjectDetailAPI = (memberId, projectId) => {
   return customAxios.get(`/auth/profile/${memberId}/evaluation/${projectId}`);
+};
+
+//state: string
+//page:number
+export const getPostProjectAPI = async (memberId, state, page) => {
+  try {
+    const response = await customAxios.get(
+      `/auth/profile/${memberId}/post?state=${state}&page=${page}`
+    );
+    if (response.status === 200) return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getLikeProjectAPI = async (memberId, state, page) => {
+  try {
+    const response = await customAxios.get(
+      `/auth/profile/${memberId}/post/like?page=${page}`
+    );
+
+    if (response.status === 200) return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 };

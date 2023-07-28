@@ -1,38 +1,42 @@
-import { useState } from "react";
-import Select from "../../common/Select";
-import { recruitSelect, sortSelect } from "../../../utils/optionData";
+import { useEffect, useState } from "react";
 import ProjectItem from "../myproject/ProjectItem";
 import PaginationButton from "../../common/PaginationButton";
+import { useProfile } from "../../../context/ProfileContext";
+import { useQuery } from "react-query";
+import { getLikeProjectAPI } from "../../../lib/apis/profileApi";
+
+const QUERY_KEY = "likeproject";
 
 const LikeProject = () => {
-  const [selecValue, setSelectValue] = useState("ONGOING");
-
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
+  const { memberId } = useProfile();
+  const selecValue = "ONGOING";
 
-  const changeRecruit = (event) => {
-    setSelectValue(event.target.value);
-    setCurrentPageNumber(1);
-  };
+  const { data, refetch } = useQuery(
+    [QUERY_KEY, memberId, currentPageNumber],
+    () => getLikeProjectAPI(memberId, selecValue, currentPageNumber)
+  );
+
+  const totalPages = data?.totalPages || 0;
 
   const changePageNumber = (pageNumber) => {
     setCurrentPageNumber(pageNumber);
   };
+
+  useEffect(() => {
+    refetch();
+  }, [selecValue, currentPageNumber, refetch]);
+
   return (
     <div>
       <div className="profile_introduce_titleBox">
         <h1>'좋아요' 한 모집글</h1>
       </div>
       <div className="myProject">
-        <div className="myProject_selectContainer">
-          <Select
-            options={recruitSelect}
-            onChange={changeRecruit}
-            type={"small"}
-          />
-        </div>
+        <div className="myProject_selectContainer"></div>
         <div className="myProject_project">
           <ul>
-            {dummy.map((project) => (
+            {data?.content.map((project) => (
               <ProjectItem
                 key={project.postId}
                 projectId={project.projectId}
@@ -44,7 +48,7 @@ const LikeProject = () => {
         </div>
         <PaginationButton
           changePageNumber={changePageNumber}
-          totalPageNumber={111}
+          totalPageNumber={totalPages}
           currentPageNumber={currentPageNumber}
         />
       </div>
@@ -53,31 +57,3 @@ const LikeProject = () => {
 };
 
 export default LikeProject;
-
-const dummy = [
-  {
-    postId: 0,
-    title: "신규 프로젝트",
-    description: "유구한 역사와 전통에 빛나는 우리 대한민국",
-  },
-  {
-    postId: 1,
-    title: "신규 프로젝트",
-    description: "유구한 역사와 전통에 빛나는 우리 대한민국",
-  },
-  {
-    postId: 2,
-    title: "신규 프로젝트",
-    description: "유구한 역사와 전통에 빛나는 우리 대한민국",
-  },
-  {
-    postId: 3,
-    title: "신규 프로젝트",
-    description: "유구한 역사와 전통에 빛나는 우리 대한민국",
-  },
-  {
-    postId: 4,
-    title: "신규 프로젝트",
-    description: "유구한 역사와 전통에 빛나는 우리 대한민국",
-  },
-];
