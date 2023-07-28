@@ -133,15 +133,12 @@ public class JwtTokenService {
     }
 
     public Authentication getAuthentication(String accessToken) {
-        log.info("AA");
-
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(accessToken)
                 .getBody();
         String memberId = claims.getSubject();
-        log.info("BB");
 
         Member member = memberRepository.findById(Long.valueOf(memberId)).orElseThrow(() -> new CustomJwtException(JwtErrorCode.NOT_FOUND_USER));
         List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(member.getRole().getValue()));
