@@ -20,7 +20,7 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     public static final String ACCESS_TOKEN_AUTHORIZATION_HEADER = "Authorization";
-    public static final String REFRESH_TOKEN_AUTHORIZATION_HEADER = "Authorization_refresh";
+    public static final String REFRESH_TOKEN_AUTHORIZATION_HEADER = "Proxy-Authorization";
 
     private final JwtTokenService jwtTokenService;
 
