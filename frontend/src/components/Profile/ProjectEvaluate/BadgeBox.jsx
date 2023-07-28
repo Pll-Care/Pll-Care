@@ -1,6 +1,6 @@
 // badgeDtos : {evaluationBadge: string, quantity: number}[]
 
-const BadgeBox = ({ badgeDtos }) => {
+const BadgeBox = ({ badgeDtos = [] }) => {
   return (
     <section className="badgeBox">
       <div>
@@ -26,28 +26,3 @@ const BadgeBox = ({ badgeDtos }) => {
 };
 
 export default BadgeBox;
-
-/*
-{
-  "badgeDtos": [
-    {
-      "evaluationBadge": "열정적인_참여자",
-      "quantity": 0
-    }
-  ],
-  "finalEvals": [
-    {
-      "memberId": 0,
-      "memberName": "string",
-      "imageUrl": "string",
-      "content": "string",
-      "score": {
-        "sincerity": 0,
-        "jobPerformance": 0,
-        "punctuality": 0,
-        "communication": 0
-      }
-    }
-  ]
-}
-*/

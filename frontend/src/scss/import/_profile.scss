@@ -89,9 +89,10 @@
 
   &_body {
     background-color: #01e89e;
+
     &_container {
       height: 100%;
-      background-color: white;
+      background-color: #f9f9f9;
       border-top-left-radius: 24px;
       border-top-right-radius: 24px;
       display: flex;
@@ -100,6 +101,7 @@
     &_sec {
       padding: 30px 60px;
       width: 100%;
+      background-color: #fff;
     }
 
     &_introduce {
@@ -757,10 +759,11 @@
   }
 
   &_userEval {
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 15px;
-    padding: 15px 47px 15px 18px;
+    padding: 15px 47px 15px 24px;
   }
 
   &_userName {

@@ -2328,7 +2328,7 @@ a {
 }
 .profile_body_container {
   height: 100%;
-  background-color: white;
+  background-color: #f9f9f9;
   border-top-left-radius: 24px;
   border-top-right-radius: 24px;
   display: flex;
@@ -2336,6 +2336,7 @@ a {
 .profile_body_sec {
   padding: 30px 60px;
   width: 100%;
+  background-color: #fff;
 }
 .profile_body_introduce_Box {
   padding: 25px;
@@ -2878,10 +2879,11 @@ a {
   border-radius: 100%;
 }
 .finalEvaluate_userEval {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 15px;
-  padding: 15px 47px 15px 18px;
+  padding: 15px 47px 15px 24px;
 }
 .finalEvaluate_userName {
   font-size: 18px;
