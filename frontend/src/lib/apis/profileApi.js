@@ -125,7 +125,18 @@ export const getPostProjectAPI = async (memberId, state, page) => {
   }
 };
 
-export const getLikeProjectAPI = async (memberId, state, page) => {
+export const getApplyProjectAPI = async (memberId, state, page) => {
+  try {
+    const response = await customAxios.get(
+      `/auth/profile/${memberId}/apply?state=${state}&page=${page}`
+    );
+    if (response.status === 200) return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getLikeProjectAPI = async ({ memberId, page }) => {
   try {
     const response = await customAxios.get(
       `/auth/profile/${memberId}/post/like?page=${page}`

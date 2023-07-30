@@ -2607,8 +2607,16 @@ a {
   display: flex;
 }
 
+.project_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 50px;
+}
+
 .myProject {
-  width: 100%;
+  width: 85%;
+  margin: 0 auto;
 }
 .myProject_selectContainer {
   display: flex;
