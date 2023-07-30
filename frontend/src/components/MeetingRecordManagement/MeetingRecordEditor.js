@@ -49,6 +49,7 @@ const MeetingRecordEditor = () => {
     dispatch(
       meetingRecordManagementActions.setSelectedMeetingRecordState(false)
     );
+    dispatch(meetingRecordManagementActions.setIsEditState(false));
     dispatch(meetingRecordManagementActions.setTitle(""));
     dispatch(meetingRecordManagementActions.setContent(""));
   };
@@ -72,8 +73,9 @@ const MeetingRecordEditor = () => {
     if (isEdit) {
       editMutate({
         selectedMeetingRecordId,
-        title: title,
-        content: content,
+        projectId,
+        title,
+        content,
       });
     } else {
       createMutate({

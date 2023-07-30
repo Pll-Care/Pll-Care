@@ -4,6 +4,9 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Quill from "quill";
 import ImageResize from "quill-image-resize";
+import { useRef } from "react";
+
+import { useEditorImageUploader } from "../../hooks/useEditorImageHandler";
 
 Quill.register("modules/ImageResize", ImageResize);
 
@@ -14,6 +17,9 @@ const NewMeetingRecord = ({
   handleSubmit,
   handleChangeContent,
 }) => {
+  const quillRef = useRef(null);
+  useEditorImageUploader(quillRef.current);
+
   return (
     <div className="meeting-record-editor">
       <div className="meeting-record-title">
@@ -31,6 +37,7 @@ const NewMeetingRecord = ({
       </div>
       <ReactQuill
         className="react-quill"
+        ref={quillRef}
         value={content}
         onChange={handleChangeContent}
         modules={{
@@ -44,6 +51,7 @@ const NewMeetingRecord = ({
           ],
           ImageResize: {
             parchment: Quill.import("parchment"),
+            modules: ["Resize", "DisplaySize", "Toolbar"],
           },
         }}
       />

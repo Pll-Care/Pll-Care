@@ -37,7 +37,7 @@ export const addLikeRecruitmentPost = async (postId) => {
 // 모집글 작성할 프로젝트 조회
 export const getRecruitmentProject = async () => {
   try {
-    const res = await customAxios.get("/auth/post/projectlist");
+    const res = await customAxios.get("/auth/project/simplelist");
     return res.data.data;
   } catch (err) {
     return err;

@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { useMutation } from "react-query";
 import { toast } from "react-toastify";
 
 import { Tooltip } from "@mui/material";
 
-import { addEvaluation } from "../../redux/evaluationManagementSlice";
 import Button from "../common/Button";
 import ModalContainer from "../common/ModalContainer";
 import AlertModal from "./AlertModal";
@@ -15,7 +13,6 @@ import { getDateTimeDuration } from "../../utils/date";
 import { makeNewMidEvaluation } from "../../lib/apis/evaluationManagementApi";
 
 const ScheduleEvaluationModal = (props) => {
-  const dispatch = useDispatch();
   const { id } = useParams();
 
   const projectId = parseInt(id, 10);
@@ -44,7 +41,7 @@ const ScheduleEvaluationModal = (props) => {
         isEvaluation: true,
       };
       console.log("newevaluation", newEvaluation);
-      dispatch(addEvaluation(evaluation));
+      
       props.onClose();
     },
     onError: () => {

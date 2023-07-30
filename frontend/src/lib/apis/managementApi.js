@@ -87,3 +87,9 @@ export const getCompleteProjectData = async (projectId) => {
 
   return response.data.completed;
 }
+
+export const getIsLeaderData = async (projectId) => {
+  const response = await customAxios.get(`/auth/project/${projectId}/isleader`);
+
+  return response.data.leader;
+}

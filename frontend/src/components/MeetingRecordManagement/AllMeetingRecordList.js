@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import MeetingRecordData from "./MeetingRecordData";
 import Pagination from "../common/Pagination";
@@ -12,7 +12,7 @@ import { getAllMeetingRecordList } from "../../lib/apis/meetingRecordManagementA
 import { getProjectId } from "../../utils/getProjectId";
 import { useLocation } from "react-router-dom";
 import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
-import { isCompleteProject } from "../../utils/isCompleteProject";
+import { getCompleteProjectData } from "../../lib/apis/managementApi";
 
 const filterOptionList = [
   {
@@ -34,10 +34,10 @@ const AllMeetingRecordList = () => {
 
   const projectId = getProjectId(useLocation());
 
-  const completedProjectId = useSelector(
-    (state) => state.projectManagement.completedProjectId
+  const { data: isCompleted } = useQuery(
+    ["completeProjectData", projectId],
+    () => getCompleteProjectData(projectId)
   );
-  const isComplete = isCompleteProject(completedProjectId, projectId);
 
   const dispatch = useDispatch();
 
@@ -53,6 +53,7 @@ const AllMeetingRecordList = () => {
   const handleCreateMeetingRecord = () => {
     dispatch(meetingRecordManagementActions.setTitle(""));
     dispatch(meetingRecordManagementActions.setContent(""));
+    dispatch(meetingRecordManagementActions.setIsEditState(false));
     dispatch(meetingRecordManagementActions.setInitialState(false));
     dispatch(
       meetingRecordManagementActions.setSelectedMeetingRecordState(false)
@@ -87,7 +88,7 @@ const AllMeetingRecordList = () => {
           />
         </div>
         <div className="header-right-col">
-          {isComplete === "ONGOING" && <Button
+          {!isCompleted && <Button
             text={"새로운 회의록 작성하기"}
             onClick={handleCreateMeetingRecord}
           />}
