@@ -1,22 +1,28 @@
 import { useEffect, useState } from "react";
-import ProjectItem from "../myproject/ProjectItem";
+import ProjectItem from "./ProjectItem";
+import Select from "../../common/Select";
+import { recruitSelect } from "../../../utils/optionData";
 import PaginationButton from "../../common/PaginationButton";
-import { useProfile } from "../../../context/ProfileContext";
 import { useQuery } from "react-query";
-import { getLikeProjectAPI } from "../../../lib/apis/profileApi";
+import { getPostProjectAPI } from "../../../lib/apis/profileApi";
 
-const QUERY_KEY = "likeproject";
+const QUERY_KEY = "my-project-Recruitment";
 
-const LikeProject = () => {
+const RecruitmentProject = ({ memberId }) => {
+  const [selecValue, setSelectValue] = useState("ONGOING");
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
-  const { memberId } = useProfile();
 
   const { data, refetch } = useQuery(
     [QUERY_KEY, memberId, currentPageNumber],
-    () => getLikeProjectAPI({ memberId, page: currentPageNumber })
+    () => getPostProjectAPI(memberId, selecValue, currentPageNumber)
   );
 
   const totalPages = data?.totalPages || 0;
+
+  const changeRecruit = (event) => {
+    setSelectValue(event.target.value);
+    setCurrentPageNumber(1);
+  };
 
   const changePageNumber = (pageNumber) => {
     setCurrentPageNumber(pageNumber);
@@ -24,20 +30,25 @@ const LikeProject = () => {
 
   useEffect(() => {
     refetch();
-  }, [currentPageNumber, refetch]);
-
+  }, [selecValue, currentPageNumber, refetch]);
   return (
-    <div>
+    <section>
       <div className="profile_introduce_titleBox">
-        <h1>'좋아요' 한 모집글</h1>
+        <h1>내가 모집하는 프로젝트</h1>
       </div>
       <div className="myProject">
-        <div className="myProject_selectContainer"></div>
+        <div className="myProject_selectContainer">
+          <Select
+            options={recruitSelect}
+            onChange={changeRecruit}
+            type={"small"}
+          />
+        </div>
         <div className="myProject_project">
           <ul>
-            {data?.content.map((project) => (
+            {data?.content.map((project, idx) => (
               <ProjectItem
-                key={project.postId}
+                key={QUERY_KEY + "-" + idx}
                 projectId={project.projectId}
                 title={project.title}
                 description={project.description}
@@ -51,8 +62,8 @@ const LikeProject = () => {
           currentPageNumber={currentPageNumber}
         />
       </div>
-    </div>
+    </section>
   );
 };
 
-export default LikeProject;
+export default RecruitmentProject;
