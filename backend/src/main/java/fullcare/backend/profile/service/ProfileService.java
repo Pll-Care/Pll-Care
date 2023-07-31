@@ -12,6 +12,7 @@ import fullcare.backend.profile.dto.request.ProfileBioUpdateRequest;
 import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
 import fullcare.backend.profile.dto.response.*;
 import fullcare.backend.s3.S3Service;
+import fullcare.backend.schedule.dto.MilestoneDto;
 import fullcare.backend.util.TechStackUtil;
 import fullcare.backend.util.dto.TechStack;
 import fullcare.backend.util.dto.TechStackDto;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -108,6 +110,7 @@ public class ProfileService {
                         projectExperienceDtos));
             }
         }
+        data.sort(Comparator.comparing(ProjectExperienceResponseDto::getYear));
         Long id = member == null ? null : member.getId();
         return ProfileProjectExperienceResponse.builder()
                 .data(data)
