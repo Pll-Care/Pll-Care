@@ -50,12 +50,8 @@ export const getContact = async (memberId) => {
   }
 };
 
-export const patchProfile = async (memberId, userInfo) => {
-  try {
-    await customAxios.patch(`/auth/profile/${memberId}`, userInfo);
-  } catch (error) {
-    console.log(error);
-  }
+export const patchProfile = (memberId, userInfo) => {
+  return customAxios.patch(`/auth/profile/${memberId}`, userInfo);
 };
 
 export const getPositionAPI = async (memberId) => {
@@ -79,12 +75,12 @@ export const searchTechAPI = async (tech) => {
   }
 };
 
-export const getProjectExperienceAPI = async (memberId) => {
+export const getProjectExperienceAPI = async ({ memberId }) => {
   try {
     const response = await customAxios.get(
       `/auth/profile/${memberId}/experience`
     );
-    console.log(response);
+    if (response.status === 200) return response.data;
   } catch (error) {
     console.log(error);
   }

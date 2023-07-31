@@ -121,7 +121,7 @@ const PositionBox = () => {
           deleteStack={deleteStack}
         />
       ) : (
-        <ul className="profile_body_introduce_positionBox_stack_bc_items">
+        <ul className="profile_body_introduce_positionBox_stack_bc_items_five">
           {positionAndStack.stack.length > 0 ? (
             positionAndStack.stack.map((stack, idx) => (
               <StackItem

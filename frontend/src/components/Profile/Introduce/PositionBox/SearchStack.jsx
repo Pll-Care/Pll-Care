@@ -7,7 +7,12 @@ import {
   isStackinList,
 } from "../../../../utils/searchStack/handleStackList";
 
-const SearchStack = ({ stackList, changeStack, deleteStack }) => {
+const SearchStack = ({
+  stackList,
+  changeStack,
+  deleteStack,
+  type = "five",
+}) => {
   const [stacks, setStacks] = useState([...stackList]);
 
   const {
@@ -60,10 +65,7 @@ const SearchStack = ({ stackList, changeStack, deleteStack }) => {
   };
 
   return (
-    <div>
-      {stacks.length > 0 ? (
-        <StackItems stacks={stacks} delectSelectStack={delectSelectStack} />
-      ) : null}
+    <div className="w-f">
       <div className="search">
         <div className="search_select">
           <ul className="select_list w-f">
@@ -113,16 +115,27 @@ const SearchStack = ({ stackList, changeStack, deleteStack }) => {
           ) : null}
         </div>
       </div>
+      {stacks.length > 0 ? (
+        <StackItems
+          stacks={stacks}
+          delectSelectStack={delectSelectStack}
+          type={type}
+        />
+      ) : null}
     </div>
   );
 };
 
 export default SearchStack;
 
-const StackItems = ({ stacks, delectSelectStack }) => {
+const StackItems = ({ stacks, delectSelectStack, type }) => {
   return (
     <div className="profile_body_introduce_positionBox_stack_select">
-      <ul className="profile_body_introduce_positionBox_stack_bc_items">
+      <ul
+        className={`profile_body_introduce_positionBox_stack_bc_items${
+          type === "five" ? "_five" : `_${type}`
+        }`}
+      >
         {stacks.map((skill, idx) => (
           <StackItem
             key={skill.name + idx}
