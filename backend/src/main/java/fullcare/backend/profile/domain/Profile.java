@@ -62,7 +62,12 @@ public class Profile {
             ProjectExperience projectExperience = this.projectExperiences.stream().filter(pe -> pe.getId() == profileUpdateRequest.getProjectId())
                     .findFirst().orElseThrow(() -> new EntityNotFoundException("프로젝트 경험이 없습니다."));
             projectExperiences.remove(projectExperience);
-        } else {
+        }else if(profileUpdateRequest.getProjectId() != null && !profileUpdateRequest.isDelete() && profileUpdateRequest.getProjectExperiences() != null){
+            ProjectExperience projectExperience = this.projectExperiences.stream().filter(pe -> pe.getId() == profileUpdateRequest.getProjectId())
+                    .findFirst().orElseThrow(() -> new EntityNotFoundException("프로젝트 경험이 없습니다."));
+            projectExperience.update(profileUpdateRequest.getProjectExperiences().get(0));
+        }
+        else {
             if (profileUpdateRequest.getProjectExperiences() != null) {
                 List<ProjectExperienceRequestDto> peList = profileUpdateRequest.getProjectExperiences();
                 for (ProjectExperienceRequestDto peDto : peList) {

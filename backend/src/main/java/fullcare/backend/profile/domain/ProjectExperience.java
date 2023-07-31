@@ -1,5 +1,7 @@
 package fullcare.backend.profile.domain;
 
+import fullcare.backend.profile.dto.ProjectExperienceRequestDto;
+import fullcare.backend.util.TechStackUtil;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,6 +27,7 @@ public class ProjectExperience {
     @Column(name = "project_tech_stack")
     private String techStack;
     @ManyToOne
+    @JoinColumn(name="profile_id", nullable = false)
     private Profile profile;
     @Builder
     public ProjectExperience(String title, String description, LocalDate startDate, LocalDate endDate, String techStack, Profile profile) {
@@ -39,4 +42,13 @@ public class ProjectExperience {
         this.techStack = techStack;
     }
 
+    public void update(ProjectExperienceRequestDto projectExperienceRequestDto) {
+        this.title = projectExperienceRequestDto.getTitle();
+        this.description = projectExperienceRequestDto.getDescription();
+        this.startDate = projectExperienceRequestDto.getStartDate();
+        this.endDate = projectExperienceRequestDto.getEndDate();
+        if(projectExperienceRequestDto.getTechStack() != null){
+            this.techStack = TechStackUtil.listToString(projectExperienceRequestDto.getTechStack());
+        }
+    }
 }
