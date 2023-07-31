@@ -1,71 +1,48 @@
-/*
-컴포넌트가 마운트 되었을 때 프로젝트 경험 API 호출 -> 수정에 대한 상태값이 변경될 때마다 API가 호출 되어야 한다.
-API 데이터는 최신 프로트가 맨 앞으로 오도록 와야한다
-데이터 ex)
-
-{
-  "projectExperiences": [
-    {
-      "title": "string",
-      "description": "string",
-      "startDate": "2023-07-09",
-      "endDate": "2023-07-09",
-      "techStack": "string",
-      "projectId": 0
-    }
-  ],
-  "myProfile": true
-}
-
-
-
-*/
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../../common/Button";
 import ProjectList from "./ProjectList";
+import ModifyProject from "./ModifyProject";
+import { useProfile } from "../../../../context/ProfileContext";
+import { useQuery } from "react-query";
+import { getProjectExperienceAPI } from "../../../../lib/apis/profileApi";
+
+const QUERY_KEY = "experience-project";
 
 const ProjectBox = () => {
-  const [isModify, setIsModify] = useState(false);
+  const [newProject, setNewProject] = useState(false);
 
-  const submitModify = () => {};
+  const { memberId } = useProfile();
+
+  const { data: experienceData, refetch } = useQuery(
+    [QUERY_KEY, memberId],
+    () => getProjectExperienceAPI({ memberId })
+  );
+
+  useEffect(() => {
+    refetch();
+  }, [newProject, refetch]);
+
+  const editNewProject = (isEdit) => {
+    setNewProject(isEdit);
+  };
+
   return (
     <div className="profile_body_introduce_Box">
       <div className="profile_body_introduce_Box_title">
         <h2>프로젝트 경험</h2>
-        <div className="profile_body_introduce_Box_title_btnBox">
-          {isModify ? (
-            <>
-              <Button
-                type="submit"
-                text="프로젝트 추가"
-                size="small"
-                onClick={submitModify}
-              />
-              <Button
-                text="취소"
-                size="small"
-                onClick={() => setIsModify(false)}
-              />
-
-              <Button
-                type="submit"
-                text="완료"
-                size="small"
-                onClick={submitModify}
-              />
-            </>
-          ) : (
-            <Button
-              text="수정"
-              size="small"
-              onClick={() => setIsModify(true)}
-            />
-          )}
-        </div>
+        <Button
+          text="프로젝트 추가"
+          size="small"
+          onClick={() => setNewProject((prev) => !prev)}
+        />
       </div>
+      {newProject && (
+        <div className="project_list_item">
+          <ModifyProject changeModify={editNewProject} />
+        </div>
+      )}
       <div className="project">
-        <ProjectList />
+        <ProjectList experienceData={experienceData?.data} refetch={refetch} />
       </div>
     </div>
   );

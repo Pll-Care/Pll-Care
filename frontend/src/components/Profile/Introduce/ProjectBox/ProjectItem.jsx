@@ -1,3 +1,8 @@
+import { useEffect, useState } from "react";
+import Button from "../../../common/Button";
+import StackItem from "../../../common/StackItem";
+import ModifyProject from "./ModifyProject";
+
 const ProjectItem = ({
   title,
   description,
@@ -5,11 +10,59 @@ const ProjectItem = ({
   endDate,
   techStack,
   projectId,
+  refetch,
+}) => {
+  const [isModify, setIsmodify] = useState(false);
+
+  const changeModify = (modify) => {
+    setIsmodify(modify);
+  };
+
+  useEffect(() => {
+    refetch();
+  }, [isModify, refetch]);
+
+  return (
+    <div className="project_list_item">
+      {isModify ? (
+        <ModifyProject
+          title={title}
+          description={description}
+          startDate={startDate}
+          endDate={endDate}
+          techStack={techStack}
+          projectId={projectId}
+          changeModify={changeModify}
+        />
+      ) : (
+        <ShowProjectItem
+          title={title}
+          description={description}
+          startDate={startDate}
+          endDate={endDate}
+          techStack={techStack}
+          projectId={projectId}
+          changeModify={changeModify}
+        />
+      )}
+    </div>
+  );
+};
+
+export default ProjectItem;
+
+const ShowProjectItem = ({
+  title,
+  description,
+  startDate,
+  endDate,
+  techStack,
+  projectId,
+  changeModify,
 }) => {
   return (
-    <li className="project_list_item">
-      <div>{"2023"}</div>
-      <div>
+    <>
+      <div className="project_list_item_box">
         <div className="project_list_item_title-date">
           <div className="fl">
             <div className="project_item_name">
@@ -19,13 +72,12 @@ const ProjectItem = ({
               <span>{title}</span>
             </div>
           </div>
-          {/*  */}
           <div className="fl">
             <div className="project_item_name">
               <span>진행 기간</span>
             </div>
             <div className="project_list_item_year">
-              <span>{`${startDate}-${endDate}`}</span>
+              <span>{`${startDate} ~ ${endDate}`}</span>
             </div>
           </div>
         </div>
@@ -35,33 +87,28 @@ const ProjectItem = ({
           </div>
           <div className="project_list_item_stack-list">
             <ul>
-              {techStack &&
-                techStack.map((stack) => <li key={stack}>{stack}</li>)}
+              {techStack?.map((stack) => (
+                <StackItem
+                  key={`${projectId}-${stack.name}`}
+                  imageUrl={stack.imageUrl}
+                  name={stack.name}
+                />
+              ))}
             </ul>
           </div>
         </div>
         <div className="project_list_item_description">
           <div className="project_item_name">
-            <span>한 줄 설명</span>
+            <span>한 줄 소개</span>
           </div>
           <div>
             <span>{description}</span>
           </div>
         </div>
       </div>
-    </li>
+      <div className="project_list_button">
+        <Button text="수정" size="small" onClick={() => changeModify(true)} />
+      </div>
+    </>
   );
 };
-
-export default ProjectItem;
-/**
- * 
- *   {
-    title: "프로젝트 이름",
-    description: "프로젝트 이름을 작성한 프로젝트 입니다.",
-    startDate: "2023-07-10",
-    endDate: "2023-11-11",
-    techStack: ["HTML", "CSS", "React", "JavaScript", "TypeScirpt"],
-    projectId: 5,
-  },
- */

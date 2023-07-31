@@ -180,12 +180,17 @@
 
         &_stack {
           &_select {
-            margin-bottom: 1rem;
+            margin-top: 1rem;
           }
 
-          &_bc_items {
+          &_bc_items_five {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
+            grid-gap: 10px;
+          }
+          &_bc_items_three {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             grid-gap: 10px;
           }
         }
@@ -339,19 +344,37 @@
 }
 
 .project {
+  width: 100%;
+
+  &_devide-year {
+    display: flex;
+    gap: 15px;
+    padding: 10px;
+  }
+
+  &_year {
+    padding-top: 10px;
+    font-weight: bold;
+    color: #767676;
+  }
   &_list {
     width: 100%;
 
     &_item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      width: 100%;
       border: 2px solid #dee2e6;
       border-radius: 15px;
+
+      font-size: 14px;
+      color: #767676;
+      gap: 10px;
       margin-bottom: 15px;
       padding: 5px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
-      & > :last-child {
+      &_box {
         width: 100%;
       }
 
@@ -361,40 +384,40 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 46px;
+        gap: 30px;
         & > :first-child {
-          width: 60%;
+          width: 50%;
         }
         & > :last-child {
-          width: 40%;
+          width: 50%;
         }
       }
-      &_title {
-      }
-      &_year {
+
+      &_input {
+        border: none;
+        color: #7a7a7a;
+        outline: none;
       }
 
-      &_date {
+      &_year {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
       }
 
       &_stack {
+        width: 100%;
         display: flex;
         padding: 10px;
       }
 
       &_stack-list {
+        width: 90%;
+
         & > ul {
           display: grid;
           grid-template-columns: repeat(5, 1fr);
           grid-gap: 10px;
-
-          & > li {
-            border: 2px solid #01e89e;
-            padding: 5px 10px;
-            border-radius: 15px;
-            display: flex;
-            justify-content: center;
-          }
         }
       }
 
@@ -403,6 +426,11 @@
         padding: 10px;
       }
     }
+
+    &_button {
+      width: 60px;
+    }
+
     &_blank {
       min-height: 80px;
 
@@ -421,6 +449,7 @@
     margin-right: 15px;
     display: flex;
     align-items: center;
+    width: 85px;
 
     font-weight: 700;
   }
