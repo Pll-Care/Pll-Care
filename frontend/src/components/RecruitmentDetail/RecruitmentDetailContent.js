@@ -1,11 +1,6 @@
 import { useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router";
-import {
-  QueryClient,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -92,7 +87,10 @@ const RecruitmentDetailContent = () => {
       onSuccess: (data) => {
         setFormValues({
           title: data?.title,
-          description: data?.description,
+          //description: data?.description,
+          description: (
+            <div dangerouslySetInnerHTML={{ __html: data?.description }} />
+          ),
           recruitStartDate: data?.recruitStartDate,
           recruitEndDate: data?.recruitEndDate,
           reference: data?.reference,
@@ -596,14 +594,15 @@ const RecruitmentDetailContent = () => {
         <div className="recruitment-detail-description">
           <h4>설명</h4>
           {isEdit ? (
-            <textarea
-              onChange={handleChange}
-              value={description}
-              name="description"
-              ref={inputRefs.description}
-            />
+            //<textarea
+            //  onChange={handleChange}
+            //  value={description}
+            //  name="description"
+            //  ref={inputRefs.description}
+            ///>
+            <h5>수정</h5>
           ) : (
-            <h5>{data?.description}</h5>
+            <div>{description}</div>
           )}
         </div>
 
