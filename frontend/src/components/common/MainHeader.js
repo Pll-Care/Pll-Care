@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Login from "../Login/Login";
@@ -8,6 +8,9 @@ import ToggleMenuButton from "./ToggleMenuButton";
 
 import { authActions } from "../../redux/authSlice";
 import { useRouter } from "../../hooks/useRouter";
+import profile_default from "../../assets/profile-default-img.png";
+import profile_isProfile from "../../assets/ranking-img.png";
+import { getProfileImage } from "../../lib/apis/mainHeaderApi";
 
 export const headerMenu = [
   { id: 1, link: "/management", title: "프로젝트 관리" },
@@ -17,15 +20,32 @@ export const headerMenu = [
 const MainHeader = () => {
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
   const [isToggleMenuOpen, setIsToggleMenuOpen] = useState(false);
+  const [isProfilePage, setIsProfilePage] = useState(false);
+  const [profileImage, setProfileImage] = useState({ id: "", imageUrl: "" });
 
-  const { routeTo } = useRouter();
+  const { replaceTo, currentPath } = useRouter();
   const dispatch = useDispatch();
   const authState = useSelector((state) => state.auth.isLoggedIn);
+
+  useEffect(() => {
+    if (currentPath.includes("/profile")) setIsProfilePage(true);
+    const getProfile = async () => {
+      const response = await getProfileImage();
+      if (response) {
+        setProfileImage(response);
+      }
+    };
+    getProfile();
+    return () => {
+      setIsProfilePage(false);
+      setProfileImage({ id: "", imageUrl: "" });
+    };
+  }, [currentPath]);
 
   const handleLogout = () => {
     dispatch(authActions.logout());
     setIsLoginModalVisible(false);
-    routeTo("/");
+    replaceTo("/");
   };
 
   const handleLogin = () => {
@@ -45,7 +65,13 @@ const MainHeader = () => {
 
   return (
     <>
-      <header className="main-header">
+      <header
+        className={
+          isProfilePage
+            ? "main-header profile_header_background"
+            : "main-header"
+        }
+      >
         <div className="main-header-left-col">
           <figure
             className="main-header-logo-img"
@@ -60,22 +86,45 @@ const MainHeader = () => {
           <ul className="main-header-link">
             {headerMenu.map((menu) => (
               <li
-                className={menu.id === 1 ? "nav_item" : "nav_item nav_divide"}
+                className={
+                  isProfilePage
+                    ? "nav_item profile_header_menu_color"
+                    : "nav_item"
+                }
                 key={menu.id}
               >
-                {authState ? (
-                  <Link to={menu.link}>{menu.title}</Link>
-                ) : (
-                  <Link onClick={handleLogin}>{menu.title}</Link>
-                )}
+                <Link to={menu.link}>{menu.title}</Link>
               </li>
             ))}
           </ul>
         </div>
         {authState ? (
           <div className="main-header-right-col main-header-logout-col">
-            <Button text={"log out"} type={"positive"} onClick={handleLogout} />
-            <Link className="main-header-user-profile-img" to={"/profile"} />
+            <Button
+              text={"log out"}
+              type={"positive"}
+              onClick={handleLogout}
+              isProfile={true}
+            />
+            <Link
+              className={
+                isProfilePage
+                  ? "main-header-user-profile-img profile_header_image_background"
+                  : "main-header-user-profile-img "
+              }
+              to={`/profile/${profileImage.id}/introduce`}
+            >
+              <img
+                src={
+                  profileImage.imageUrl === ""
+                    ? isProfilePage
+                      ? profile_isProfile
+                      : profile_default
+                    : profileImage.imageUrl
+                }
+                alt="유저프로필"
+              />
+            </Link>
           </div>
         ) : (
           <div className="main-header-right-col main-header-login-col">
@@ -94,3 +143,5 @@ const MainHeader = () => {
 };
 
 export default MainHeader;
+
+//TODO: 로그인 시 나의 유저아이디를 발급 -> 발급 받은 아이디를 프로필로 이동 시 사용

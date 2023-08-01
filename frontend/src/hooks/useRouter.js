@@ -6,5 +6,7 @@ export const useRouter = () => {
   return {
     currentPath: window.location.pathname,
     routeTo: (path) => router(path),
+    replaceTo: (path) => router(path, { replace: true }),
+    haveDataTo: (path, data) => router(path, { state: data }),
   };
 };
