@@ -23,7 +23,7 @@ const MainHeader = () => {
   const [isProfilePage, setIsProfilePage] = useState(false);
   const [profileImage, setProfileImage] = useState({ id: "", imageUrl: "" });
 
-  const { replaceTo, currentPath } = useRouter();
+  const { replaceTo, currentPath, routeTo } = useRouter();
   const dispatch = useDispatch();
   const authState = useSelector((state) => state.auth.isLoggedIn);
 
