@@ -41,7 +41,7 @@ const ScheduleEvaluationModal = (props) => {
         isEvaluation: true,
       };
       console.log("newevaluation", newEvaluation);
-      
+
       props.onClose();
     },
     onError: () => {

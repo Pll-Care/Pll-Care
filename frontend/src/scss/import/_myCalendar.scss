@@ -7,25 +7,39 @@
 .calendar {
   @include displayFlex(row, center, center);
   &-schedule {
+<<<<<<< HEAD
     width: 50%;
   }
 }
 // calendarlist 컴포넌트
+=======
+    width: 40%;
+  }
+}
+>>>>>>> 87bdd395810bdd089464fdb381a040c6422725e0
 .calendar-list {
   background-color: $background-color;
   align-items: center;
   padding: 2rem;
+<<<<<<< HEAD
   height: 470px;
   width: 40%;
+=======
+  height: 500px;
+  width: 30%;
+>>>>>>> 87bdd395810bdd089464fdb381a040c6422725e0
   overflow-y: auto;
   .button-container {
     display: flex;
     justify-content: flex-end;
   }
+<<<<<<< HEAD
   &-pagination {
     justify-content: center;
     margin-bottom: 20px;
   }
+=======
+>>>>>>> 87bdd395810bdd089464fdb381a040c6422725e0
   &-time {
     color: white;
     h5 {
@@ -79,6 +93,7 @@
   }
 }
 
+<<<<<<< HEAD
 // ScheduleModal 컴포넌트
 .modal-container {
   font-family: $body-font;
@@ -86,24 +101,38 @@
   @include mobile {
     height: 100%;
   }
+=======
+// NewScheduleModal 컴포넌트
+.modal-container {
+  padding: 1rem;
+  font-family: $body-font;
+>>>>>>> 87bdd395810bdd089464fdb381a040c6422725e0
   .button-container {
     display: flex;
     justify-content: flex-end;
     margin-top: 15px;
+<<<<<<< HEAD
     Button {
       margin-left: 10px;
     }
   }
   input {
     width: 90%;
+=======
+  }
+  input {
+>>>>>>> 87bdd395810bdd089464fdb381a040c6422725e0
     border: none;
     border-radius: 10px;
     font-size: 35px;
     margin-bottom: 10px;
     font-family: $body-font;
+<<<<<<< HEAD
     @include mobile {
       font-size: 15px;
     }
+=======
+>>>>>>> 87bdd395810bdd089464fdb381a040c6422725e0
   }
   &-description {
     background-color: white;

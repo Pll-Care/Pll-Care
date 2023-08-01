@@ -24,7 +24,9 @@ const EvaluationRanking = ({ rankingData, isCompleted }) => {
               </div>
               <div className="evaluation-management-right-col">
                 <div className="name">{item.name}</div>
-                <div className="score">평균 점수: {item.score.toFixed(2)}점</div>
+                <div className="score">
+                  평균 점수: {item.score.toFixed(2)}점
+                </div>
               </div>
             </div>
           );

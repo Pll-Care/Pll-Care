@@ -88,10 +88,12 @@ const AllMeetingRecordList = () => {
           />
         </div>
         <div className="header-right-col">
-          {!isCompleted && <Button
-            text={"새로운 회의록 작성하기"}
-            onClick={handleCreateMeetingRecord}
-          />}
+          {!isCompleted && (
+            <Button
+              text={"새로운 회의록 작성하기"}
+              onClick={handleCreateMeetingRecord}
+            />
+          )}
         </div>
       </div>
       <div className="record-list-item-wrapper">

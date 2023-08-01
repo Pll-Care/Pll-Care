@@ -266,6 +266,7 @@ input {
     padding-top: 25%;
   }
 }
+
 .management-header {
   border: 2px solid #01e89e;
   border-radius: 30px;
@@ -275,6 +276,7 @@ input {
   margin-bottom: 25px;
   margin-left: auto;
   margin-right: auto;
+
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -312,11 +314,21 @@ input {
   grid-template-columns: 10% 70% 20%;
 }
 .main-header-left-col {
+
+  margin-left: 25px;
+}
+.main-header-left-col .main-header-logo-img {
+  border: 2px solid #01e89e;
+  width: 60px;
+  height: 60px;
+}
+.main-header-link {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
+
 .main-header-left-col .main-header-logo-img {
   border: 2px solid #01e89e;
   width: 60px;
@@ -332,13 +344,20 @@ input {
   justify-content: space-around;
   align-items: center;
 }
+
 .main-header .nav_item > a {
   font-size: 25px;
   font-family: "IBM Plex Sans KR", sans-serif;
   color: black;
   text-decoration: none;
 }
+.main-header .nav_divide {
+  padding-left: 25px;
+}
 .main-header-right-col {
+  width: 20%;
+  margin-right: 20px;
+
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -356,6 +375,7 @@ input {
   width: 40px;
   height: 40px;
   margin-right: 20px;
+
   background-image: url("../assets/profile-default-img.png");
   background-position: center;
   background-repeat: no-repeat;
@@ -365,6 +385,50 @@ input {
   margin-left: auto;
 }
 
+@media (min-width: 767px) and (max-width: 1024px) {
+  .main-header-link {
+    width: 45%;
+  }
+  .main-header-right-col {
+    width: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .main-header-right-col .main-header-user-profile-img {
+    margin-right: 15px;
+  }
+}
+@media (max-width: 767px) {
+  .main-header {
+    height: 70px;
+  }
+  .main-header-left-col {
+    margin-left: 63px;
+  }
+  .main-header-left-col .main-header-logo-img {
+    width: 45px;
+    height: 45px;
+  }
+  .main-header-link {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    margin-left: 0;
+  }
+  .main-header-right-col {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .main-header-right-col .main-header-user-profile-img {
+    width: 35px;
+    height: 35px;
+  }
+}
 .button {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
@@ -411,6 +475,7 @@ input {
     padding: 3px 13px;
   }
 }
+
 .control-menu {
   border-radius: 55px;
   border: none;
@@ -1224,6 +1289,7 @@ input {
   margin-top: 30px;
 }
 
+
 /* MEETING RECORD MANAGEMENT */
 .meeting-record-management-wrapper {
   padding-bottom: 30px;
@@ -1235,6 +1301,7 @@ input {
 }
 .meeting-record-management-wrapper .meeting-record-management {
   width: 100%;
+
   border: 2px solid #01e89e;
   display: flex;
   justify-content: space-between;
@@ -1375,6 +1442,7 @@ input {
 }
 .meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-title input::placeholder {
   color: #d9d9d9;
+
 }
 .meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-title button {
   align-self: flex-end;
@@ -1408,8 +1476,10 @@ input {
   justify-content: space-between;
   align-items: center;
 }
+
 .meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .selected-meeting-record-content,
 .meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .created-meeting-record-content {
+
   height: 85%;
   line-height: 1.5;
   padding: 10px;
@@ -1418,6 +1488,7 @@ input {
 .meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .created-meeting-record-content img {
   max-width: 100%;
 }
+
 .meeting-record-management-wrapper .meeting-record-item {
   background-color: white;
   margin-bottom: 10px;
@@ -1462,6 +1533,7 @@ input {
     font-size: 18px;
   }
 }
+
 .teamMember {
   width: 85%;
   margin: 0 auto;
@@ -1623,7 +1695,6 @@ input {
   margin-right: auto;
 }
 .evaluation-management-ranking-wrapper, .evaluation-management-ranking-wrapper-non-evaluated {
-  height: 500px;
   padding-bottom: 30px;
   border-bottom: 2px solid #d9d9d9;
   display: flex;
@@ -1631,17 +1702,21 @@ input {
   justify-content: center;
   align-items: center;
 }
+
 .evaluation-management-ranking-wrapper .evaluation-management-chart-wrapper, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-chart-wrapper {
   height: 470px;
   width: 65%;
 }
 .evaluation-management-ranking-wrapper .evaluation-management-chart-wrapper h1, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-chart-wrapper h1 {
+
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 25px;
   color: #01e89e;
   padding: 10px;
 }
+
 .evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart {
+
   border: 2px solid #01e89e;
   border-radius: 30px;
   margin-right: 10px;
@@ -1656,6 +1731,7 @@ input {
   align-items: center;
 }
 .evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart .slick-slider, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart .slick-slider {
+
   width: 96%;
   height: 83%;
   display: flex;
@@ -1663,6 +1739,7 @@ input {
   justify-content: flex-start;
   align-items: center;
 }
+
 .evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart .slick-slider .slick-list, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart .slick-slider .slick-list {
   width: 100%;
   height: 95%;
@@ -1671,6 +1748,7 @@ input {
   display: none;
 }
 .evaluation-management-ranking-wrapper .custom-tooltip, .evaluation-management-ranking-wrapper-non-evaluated .custom-tooltip {
+
   background-color: #d7d7d7;
   opacity: 0.9;
   border: none;
@@ -1682,19 +1760,24 @@ input {
   justify-content: center;
   align-items: center;
 }
+
 .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking {
+
   height: 470px;
   width: 35%;
   margin-left: 10px;
   overflow-y: hidden;
 }
+
 .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-header, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-header {
+
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 25px;
   color: #01e89e;
   padding: 10px;
 }
 .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body {
+
   height: calc(100% - 45px);
   background-color: #01e89e;
   border-radius: 25px;
@@ -1703,6 +1786,7 @@ input {
   overflow-y: scroll;
 }
 .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item {
+
   border-radius: 20px;
   padding: 10px;
   margin-bottom: 26px;
@@ -1713,13 +1797,17 @@ input {
   justify-content: center;
   align-items: center;
 }
+
 .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-left-col, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-left-col {
+
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
 }
+
 .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-left-col figure, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-left-col figure {
+
   width: 40px;
   height: 40px;
   margin-right: 5px;
@@ -1728,30 +1816,40 @@ input {
   background-repeat: no-repeat;
   background-size: 100%, 100%;
 }
+
 .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-left-col .ranking, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-left-col .ranking {
+
   color: #01e89e;
   font-size: 25px;
   font-family: "IBM Plex Sans KR", sans-serif;
 }
+
 .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col {
+
   width: 49%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
 }
+
 .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col .name, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col .name {
+
   font-size: 25px;
   font-family: "IBM Plex Sans KR", sans-serif;
   color: #01e89e;
   margin-bottom: 4px;
 }
+
 .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col .score, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col .score {
+
   font-size: 15px;
   font-family: "Noto Sans KR", sans-serif;
   color: #7a7a7a;
 }
+
 .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item_1 .evaluation-management-left-col figure, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item_1 .evaluation-management-left-col figure {
+
   background-image: url("../assets/ranking-1-img.png");
   background-position: center;
   background-repeat: no-repeat;

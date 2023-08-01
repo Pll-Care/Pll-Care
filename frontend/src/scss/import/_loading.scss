@@ -1,4 +1,5 @@
 .loading-indicator-container {
+<<<<<<< HEAD
   position: fixed;
   left: 50%;
   top: 50%;
@@ -9,3 +10,19 @@
     color: #01e89e;
   }
 }
+=======
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease-in-out;
+
+    &.active {
+        opacity: 1;
+    }
+
+    .loading-indicator {
+        color: #01e89e;
+    }
+}
+>>>>>>> 87bdd395810bdd089464fdb381a040c6422725e0

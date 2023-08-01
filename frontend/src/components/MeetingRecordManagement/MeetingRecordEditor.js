@@ -37,7 +37,6 @@ const MeetingRecordEditor = () => {
   const selectedMeetingRecordId = useSelector(
     (state) => state.meetingRecordManagement.selectedMeetingRecordId
   );
-
   const isEdit = useSelector((state) => state.meetingRecordManagement.isEdit);
 
   const { createMutate, editMutate } = useMeetingRecordManagementMutation();

@@ -1,15 +1,23 @@
 .main-header {
   border-bottom: $border;
   height: 90px;
+<<<<<<< HEAD
   display: grid;
   grid-template-rows: 100%;
   grid-template-columns: 10% 70% 20%;
 
   &-left-col {
+=======
+
+  &-left-col {
+    margin-left: 25px;
+
+>>>>>>> 87bdd395810bdd089464fdb381a040c6422725e0
     .main-header-logo-img {
       border: $border;
       width: 60px;
       height: 60px;
+<<<<<<< HEAD
       cursor: pointer;
     }
 
@@ -61,3 +69,107 @@
   }
 }
 
+=======
+    }
+  }
+
+  &-link {
+    @include displayFlex(row, space-between);
+  }
+
+  .nav_item {
+    & > a {
+      font-size: $link-font-size;
+      font-family: $link-font;
+      color: black;
+      text-decoration: none;
+    }
+  }
+
+  .nav_divide {
+    padding-left: 25px;
+  }
+
+  &-right-col {
+    width: 20%;
+    margin-right: 20px;
+
+    Button {
+      cursor: pointer;
+      margin-right: 15px;
+      margin-left: auto;
+    }
+
+    .main-header-user-profile-img {
+      border: $border;
+      border-radius: 35%;
+      background-color: #01e89e;
+      width: 40px;
+      height: 40px;
+
+      @include backgroundImage("../assets/profile-default-img.png");
+    }
+
+    @include displayFlex;
+  }
+
+  &-login-col {
+    Button {
+      margin-left: auto;
+    }
+  }
+
+  @include displayFlex(row, space-between, center);
+}
+
+@include tablet {
+  .main-header {
+    &-link {
+      width: 45%;
+    }
+
+    &-right-col {
+      width: 30%;
+
+      .main-header-user-profile-img {
+        margin-right: 15px;
+      }
+
+      @include displayFlex(row, flex-end);
+    }
+  }
+}
+
+@include mobile {
+  .main-header {
+    height: 70px;
+
+    &-left-col {
+      margin-left: 63px;
+
+      .main-header-logo-img {
+        width: 45px;
+        height: 45px;
+      }
+    }
+
+    &-link {
+      width: 0;
+      height: 0;
+      overflow: hidden;
+      margin-left: 0;
+    }
+
+    &-right-col {
+      width: 50%;
+
+      .main-header-user-profile-img {
+        width: 35px;
+        height: 35px;
+      }
+
+      @include displayFlex;
+    }
+  }
+}
+>>>>>>> 87bdd395810bdd089464fdb381a040c6422725e0

@@ -7,8 +7,8 @@ const meetingRecordManagementInitialState = {
   selectedMeetingRecordId: -1,
   createdMeetingRecordId: -1,
   isEdit: false,
-  title: '',
-  content: '',
+  title: "",
+  content: "",
 };
 
 const meetingRecordManagementSlice = createSlice({
@@ -38,7 +38,7 @@ const meetingRecordManagementSlice = createSlice({
     },
     setContent(state, action) {
       state.content = action.payload;
-    }
+    },
   },
 });
 

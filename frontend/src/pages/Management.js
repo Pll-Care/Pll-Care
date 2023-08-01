@@ -55,7 +55,7 @@ const Management = () => {
 
   useEffect(() => {
     const listenBackEvent = () => {
-        navigate("/management");
+      navigate("/management");
     };
 
     const historyEvent = history.listen(({ action }) => {
@@ -65,7 +65,6 @@ const Management = () => {
     });
 
     return historyEvent;
-    
   }, [navigate]);
 
   const handleClickAllProjectList = () => {

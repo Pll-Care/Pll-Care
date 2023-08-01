@@ -99,7 +99,6 @@ const RecruitmentDetailContent = () => {
         setFormValues({
           title: data?.title,
           description: data?.description,
-
           recruitStartDate: data?.recruitStartDate,
           recruitEndDate: data?.recruitEndDate,
           reference: data?.reference,

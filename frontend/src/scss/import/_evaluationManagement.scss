@@ -1,8 +1,23 @@
 .evaluation-management {
+<<<<<<< HEAD
   width: 100%;
 
   &-ranking-wrapper,
   &-ranking-wrapper-non-evaluated {
+=======
+  width: 85%;
+
+  &-non-evaluated {
+    width: 85%;
+    background-color: #FCFCFC;
+    filter: opacity(30%) blur(4px);
+    pointer-events: none;
+
+    @include putCenter;
+  }
+
+  &-ranking-wrapper {
+>>>>>>> 87bdd395810bdd089464fdb381a040c6422725e0
     height: 500px;
     padding-bottom: 30px;
     border-bottom: 2px solid #d9d9d9;
@@ -150,6 +165,7 @@
     @include displayFlex;
   }
 
+<<<<<<< HEAD
   .evaluation-management-ranking-wrapper {
     position: relative;
     width: 100%;
@@ -186,6 +202,8 @@
     background: url("../assets/final-evaluation-error-text.png") no-repeat center;
   }
 
+=======
+>>>>>>> 87bdd395810bdd089464fdb381a040c6422725e0
   &-participant-wrapper {
     margin-top: 15px;
     width: 100%;
@@ -218,6 +236,7 @@
           border: $border;
           width: 70px;
           height: 70px;
+<<<<<<< HEAD
           border-radius: 50%;
           margin-top: auto;
           margin-bottom: auto;
@@ -227,6 +246,13 @@
             repeat: no-repeat;
             size: 100% 100%;
           }
+=======
+          border-radius: 20px;
+          margin-top: auto;
+          margin-bottom: auto;
+
+          @include backgroundImage("../assets/ranking-img.png");
+>>>>>>> 87bdd395810bdd089464fdb381a040c6422725e0
         }
 
         &-right-col {
@@ -247,6 +273,10 @@
             width: 180px;
 
             .badge-quantity-container {
+<<<<<<< HEAD
+=======
+              width: 185px;
+>>>>>>> 87bdd395810bdd089464fdb381a040c6422725e0
               height: 35px;
               font-family: $button-font;
               font-size: $button-font-size;
@@ -264,7 +294,10 @@
 
             .badge-quantity {
               position: relative;
+<<<<<<< HEAD
               margin-right: 18px;
+=======
+>>>>>>> 87bdd395810bdd089464fdb381a040c6422725e0
 
               div {
                 position: absolute;
