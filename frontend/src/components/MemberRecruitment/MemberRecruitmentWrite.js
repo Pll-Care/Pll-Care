@@ -35,6 +35,9 @@ const MemberRecruitmentWrite = () => {
     designCnt: 0,
   });
 
+  // 프로젝트 이미지
+  const [imageUrl, setImageUrl] = useState();
+
   const { title, description, recruitStartDate, recruitEndDate } = formValues;
 
   const inputRefs = {
@@ -49,6 +52,7 @@ const MemberRecruitmentWrite = () => {
     backendCnt: useRef(),
   };
 
+  // 프로젝트 관리 리스트 react query
   const { data, isLoading } = useQuery(
     ["allProject"],
     async () => await getRecruitmentProject(),
@@ -58,13 +62,12 @@ const MemberRecruitmentWrite = () => {
           ...prevState,
           projectId: data[0]?.projectId || "",
         }));
+        data !== [] && setImageUrl(data[0].imageUrl);
       },
     }
   );
-  console.log("프로젝트", data);
 
   // 기본 프로젝트 이미지 => projectId에 따라 이미지 바뀔 수 있게 처리
-  let imageUrl = projectDefaultImg;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -72,6 +75,20 @@ const MemberRecruitmentWrite = () => {
       ...prevState,
       [name]: value,
     }));
+  };
+
+  // 프로젝트 선택함에 따라 이미지 반영하기
+  const handleChangeProject = (e) => {
+    const { name, value } = e.target;
+    setFormValues((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+
+    const selectedProject = data.find(
+      (project) => project.projectId === parseInt(value, 10)
+    );
+    selectedProject && setImageUrl(selectedProject.imageUrl);
   };
 
   // 기술 스택들 태그들
@@ -197,7 +214,12 @@ const MemberRecruitmentWrite = () => {
         <Link to="/recruitment">
           <ArrowBackIosNewIcon className="recruitment-direction" />
         </Link>
-        <img src={imageUrl} alt="" />
+        {imageUrl ? (
+          <img src={imageUrl} alt="" />
+        ) : (
+          <img src={projectDefaultImg} alt="" />
+        )}
+
         {!data && !isLoading && <h2>통신 오류</h2>}
         {data && data?.length !== 0 ? (
           <input
@@ -213,33 +235,29 @@ const MemberRecruitmentWrite = () => {
         )}
       </div>
 
-      {data && !isLoading && data?.length === 0 && (
-        <h1>
-          아직 프로젝트가 없습니다! 프로젝트 관리에서 프로젝트를 생성해보세요
-        </h1>
-      )}
-
       <>
         <Card className="member-write-card">
           <div className="member-content">
             <div className="member-content-project">
               <h3>프로젝트 선택</h3>
-              {data && !isLoading && data?.length > 0 && (
+              {data && !isLoading && data?.length > 0 ? (
                 <select
                   className="member-select1"
                   name="projectId"
-                  onChange={handleChange}
-                  value={formValues.projectId || ""}
+                  onChange={handleChangeProject}
+                  value={formValues.projectId}
                 >
-                  <option disabled hidden>
-                    선택하세요
-                  </option>
                   {data?.map((project, index) => (
                     <option key={index} value={project.projectId}>
                       {project.title}
                     </option>
                   ))}
                 </select>
+              ) : (
+                <h6 style={{ color: "black" }}>
+                  아직 프로젝트가 없습니다! 프로젝트 관리에서 프로젝트를
+                  생성해보세요
+                </h6>
               )}
             </div>
 
