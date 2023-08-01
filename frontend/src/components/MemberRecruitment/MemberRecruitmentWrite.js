@@ -19,6 +19,8 @@ import { getRecruitmentProject } from "../../lib/apis/memberRecruitmentApi";
 import { useAddRecruitmentPostMutation } from "../../hooks/useRecruitmentMutation";
 import { backendStacks, concepts, location } from "../../utils/recruitment";
 
+Quill.register("modules/ImageResize", ImageResize);
+
 const MemberRecruitmentWrite = () => {
   const navigate = useNavigate();
   const initialDate = new Date().toISOString().split("T")[0];
