@@ -1,6 +1,11 @@
 import { useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router";
-import { useQuery } from "react-query";
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "react-query";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -17,7 +22,10 @@ import AlertCheckModal from "../common/AlertCheckModal";
 
 import { getStringDate } from "../../utils/date";
 import { location } from "../../utils/recruitment";
-import { getRecruitmentPostDetail } from "../../lib/apis/memberRecruitmentApi";
+import {
+  applyRecruitmentPost,
+  getRecruitmentPostDetail,
+} from "../../lib/apis/memberRecruitmentApi";
 import {
   useAddLikeRecruitmentMutation,
   useApplyRecruitmentPostMutation,
@@ -32,31 +40,34 @@ const RecruitmentDetailContent = () => {
   const [isEdit, setIsEdit] = useState(false);
   // 삭제 상태
   const [deleteIsModalVisible, setDeleteIsModalVisible] = useState(false);
+  // 에러 창 모달
+  const [errorModal, setErrorModal] = useState(false);
+  const [errorText, setErrorText] = useState("");
 
   // 지원 상태
   // 백엔드
   const [backendApply, setBackendApply] = useState(false);
   const backendBody = {
     postId: id,
-    position: "BACKEND",
+    position: "백엔드",
   };
   // 프론트
   const [frontendApply, setFrontendApply] = useState(false);
   const frontendBody = {
     postId: id,
-    position: "FRONTEND",
+    position: "프론트엔드",
   };
   // 기획
   const [managerApply, setManagerApply] = useState(false);
   const managerBody = {
     postId: id,
-    position: "MANAGER",
+    position: "기획",
   };
   // 디자인
   const [designApply, setDesignApply] = useState(false);
   const designBody = {
     postId: id,
-    position: "DESIGN",
+    position: "디자인",
   };
 
   const [formValues, setFormValues] = useState({
@@ -74,11 +85,11 @@ const RecruitmentDetailContent = () => {
   });
 
   // 모집글 디테일 페이지 조회
-  const { data, isLoading } = useQuery(
+  const { data } = useQuery(
     ["recruitmentDetail"],
     () => getRecruitmentPostDetail(id),
     {
-      onSuccess: (data) =>
+      onSuccess: (data) => {
         setFormValues({
           title: data?.title,
           description: data?.description,
@@ -99,7 +110,8 @@ const RecruitmentDetailContent = () => {
           managerCnt: data?.recruitInfoList.filter(
             (stack) => stack.position === "기획"
           )[0].totalCnt,
-        }),
+        });
+      },
     }
   );
 
@@ -111,46 +123,20 @@ const RecruitmentDetailContent = () => {
   const { mutate: deletePostMutate } = useDeleteRecruitmentPostMutation(id);
 
   // 모집글 지원
-  const applyBody = {
-    postId: id,
-    position: "BACKEND",
-  };
-  const { mutate: applyPostMutate } =
-    useApplyRecruitmentPostMutation(applyBody);
+  const queryClient = useQueryClient();
+  const { mutate: applyPostMutate } = useMutation(applyRecruitmentPost, {
+    onSuccess: () => {
+      toast.success("모집글 지원하였습니다.");
+      queryClient.invalidateQueries("recruitmentDetail");
+    },
+    onError: (error) => {
+      setErrorText(error.response.data.message);
+      setErrorModal(true);
+    },
+  });
 
   // 모집글 좋아요
   const { mutate } = useAddLikeRecruitmentMutation(id);
-  //// 기술 스택들 태그들
-  //const [stacks, setStacks] = useState(data?.techStack);
-
-  //// 입력받은 스택
-  //const [stackInput, setStackInput] = useState("");
-
-  //// 입력한 값이 포함한 stack 보여주기
-  //const filteredStacks = backendStacks.filter((stack) =>
-  //  stack.includes(stackInput.toLowerCase())
-  //);
-
-  //// 입력 스택
-  //const handleStackInputChange = (e) => {
-  //  setStackInput(e.target.value);
-  //};
-
-  //// 스택 추가하기
-  //const stackPlusClickHandler = (event) => {
-  //  if (event.key === "Enter") {
-  //    if (stacks.includes(stackInput)) {
-  //      return;
-  //    }
-  //    setStacks((prevState) => [...prevState, stackInput]);
-  //    setStackInput("");
-  //  }
-  //};
-
-  //// 스택 빼기
-  //const stackMinusClickHandler = (project) => {
-  //  setStacks((prevState) => prevState.filter((stack) => stack !== project));
-  //};
 
   const {
     title,
@@ -184,11 +170,6 @@ const RecruitmentDetailContent = () => {
       ...prevState,
       [name]: value,
     }));
-  };
-
-  // 지원하기 버튼 눌렀을 때
-  const handleApplyRecruitment = (type) => {
-    applyPostMutate({ postId: id, position: type });
   };
 
   // 수정 버튼 눌렀을 때
@@ -227,23 +208,31 @@ const RecruitmentDetailContent = () => {
 
     const recruitCnt = [
       {
-        position: "BACKEND",
-        currentCnt: 0,
+        position: "백엔드",
+        currentCnt: data?.recruitInfoList.filter(
+          (stack) => stack.position === "백엔드"
+        )[0].currentCnt,
         totalCnt: parseInt(backendCnt, 10),
       },
       {
-        position: "FRONTEND",
-        currentCnt: 0,
+        position: "프론트엔드",
+        currentCnt: data?.recruitInfoList.filter(
+          (stack) => stack.position === "프론트엔드"
+        )[0].currentCnt,
         totalCnt: parseInt(frontendCnt, 10),
       },
       {
-        position: "MANAGER",
-        currentCnt: 0,
+        position: "기획",
+        currentCnt: data?.recruitInfoList.filter(
+          (stack) => stack.position === "기획"
+        )[0].currentCnt,
         totalCnt: parseInt(managerCnt, 10),
       },
       {
-        position: "DESIGN",
-        currentCnt: 0,
+        position: "디자인",
+        currentCnt: data?.recruitInfoList.filter(
+          (stack) => stack.position === "디자인"
+        )[0].currentCnt,
         totalCnt: parseInt(designCnt, 10),
       },
     ];
@@ -252,6 +241,7 @@ const RecruitmentDetailContent = () => {
       recruitInfo: recruitCnt,
       techStack: ["Firebase"],
       postId: id,
+      //projectId: 11,
     };
 
     console.log("수정후", body);
@@ -270,16 +260,16 @@ const RecruitmentDetailContent = () => {
       contact: data?.contact,
       region: data?.region,
       backendCnt: data?.recruitInfoList.filter(
-        (stack) => stack.position === "BACKEND"
+        (stack) => stack.position === "백엔드"
       )[0].totalCnt,
       frontendCnt: data?.recruitInfoList.filter(
-        (stack) => stack.position === "FRONTEND"
+        (stack) => stack.position === "프론트엔드"
       )[0].totalCnt,
       designCnt: data?.recruitInfoList.filter(
-        (stack) => stack.position === "DESIGN"
+        (stack) => stack.position === "디자인"
       )[0].totalCnt,
       managerCnt: data?.recruitInfoList.filter(
-        (stack) => stack.position === "MANAGER"
+        (stack) => stack.position === "기획"
       )[0].totalCnt,
     });
 
@@ -294,6 +284,18 @@ const RecruitmentDetailContent = () => {
 
   return (
     <>
+      <AlertCheckModal
+        open={errorModal}
+        onClose={() => {
+          setErrorText("");
+          setErrorModal(false);
+        }}
+        text={errorText}
+        clickHandler={() => {
+          setErrorText("");
+          setErrorModal(false);
+        }}
+      />
       <AlertCheckModal
         open={deleteIsModalVisible}
         onClose={() => setDeleteIsModalVisible(false)}
@@ -467,7 +469,7 @@ const RecruitmentDetailContent = () => {
               data?.recruitInfoList.map((info, index) => (
                 <div className="recruitment-detail-container-member-cnt">
                   <h5 key={index}>{info?.currentCnt} / </h5>
-                  {info.position === "BACKEND" && (
+                  {info.position === "백엔드" && (
                     <input
                       type="number"
                       min="0"
@@ -477,7 +479,7 @@ const RecruitmentDetailContent = () => {
                       onChange={handleChange}
                     />
                   )}
-                  {info.position === "FRONTEND" && (
+                  {info.position === "프론트엔드" && (
                     <input
                       type="number"
                       min="0"
@@ -487,7 +489,7 @@ const RecruitmentDetailContent = () => {
                       onChange={handleChange}
                     />
                   )}
-                  {info.position === "MANAGER" && (
+                  {info.position === "기획" && (
                     <input
                       type="number"
                       min="0"
@@ -497,7 +499,7 @@ const RecruitmentDetailContent = () => {
                       onChange={handleChange}
                     />
                   )}
-                  {info.position === "DESIGN" && (
+                  {info.position === "디자인" && (
                     <input
                       type="number"
                       min="0"
@@ -510,7 +512,7 @@ const RecruitmentDetailContent = () => {
                 </div>
               ))}
           </div>
-          {!isEdit && (
+          {!isEdit && !data?.editable && !data?.deletable && (
             <div className="recruitment-detail-container-button">
               <Button
                 size="small"
