@@ -304,6 +304,9 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      .react-quill {
+        width: 90%;
+      }
       h3 {
         align-self: flex-start;
         margin: 20px 40px;

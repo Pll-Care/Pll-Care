@@ -1,15 +1,20 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
+import { useQuery } from "react-query";
 import { toast } from "react-toastify";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import Quill from "quill";
+import ImageResize from "quill-image-resize";
 
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
+import { useEditorImageUploader } from "../../hooks/useEditorImageHandler";
 import projectDefaultImg from "../../assets/project-default-img.jpg";
 import Button from "../common/Button";
 import Card from "../common/Card";
 
-import { useQuery } from "react-query";
 import { getRecruitmentProject } from "../../lib/apis/memberRecruitmentApi";
 import { useAddRecruitmentPostMutation } from "../../hooks/useRecruitmentMutation";
 import { backendStacks, concepts, location } from "../../utils/recruitment";
@@ -17,6 +22,9 @@ import { backendStacks, concepts, location } from "../../utils/recruitment";
 const MemberRecruitmentWrite = () => {
   const navigate = useNavigate();
   const initialDate = new Date().toISOString().split("T")[0];
+
+  const quillRef = useRef(null);
+  useEditorImageUploader(quillRef.current);
 
   // 모집글 생성 입력값들
   const [formValues, setFormValues] = useState({
@@ -72,6 +80,14 @@ const MemberRecruitmentWrite = () => {
     setFormValues((prevState) => ({
       ...prevState,
       [name]: value,
+    }));
+  };
+
+  // 모집글 설명 작성
+  const handleChangeDescription = (content) => {
+    setFormValues((prevState) => ({
+      ...prevState,
+      description: content,
     }));
   };
 
@@ -183,7 +199,7 @@ const MemberRecruitmentWrite = () => {
       recruitInfo: recruitCnt,
       techStack: stacks,
     };
-
+    console.log(body);
     addPostMutate(body);
 
     setFormValues({
@@ -417,11 +433,26 @@ const MemberRecruitmentWrite = () => {
 
             <div className="member-content-description">
               <h3>설명</h3>
-              <textarea
-                onChange={handleChange}
-                value={formValues.description}
+              <ReactQuill
+                className="react-quill"
+                ref={quillRef}
                 name="description"
-                ref={inputRefs.description}
+                value={formValues.description}
+                onChange={handleChangeDescription}
+                modules={{
+                  toolbar: [
+                    [{ header: [1, 2, 3, false] }],
+                    [{ size: ["small", false, "large", "huge"] }],
+                    ["bold", "italic", "underline", "strike"],
+                    [{ align: [] }],
+                    [{ color: [] }, { background: [] }],
+                    ["link", "image"],
+                  ],
+                  ImageResize: {
+                    parchment: Quill.import("parchment"),
+                    modules: ["Resize", "DisplaySize", "Toolbar"],
+                  },
+                }}
               />
             </div>
 
