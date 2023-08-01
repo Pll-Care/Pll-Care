@@ -1,103 +1,40 @@
 import { useState } from "react";
+import { useLocation } from "react-router";
 import { useQuery } from "react-query";
-import { useParams } from "react-router";
+
+import { Pagination } from "@mui/material";
 
 import CalendarItem from "./CalendarItem";
-import NewScheduleModal from "./NewScheduleModal";
+import ScheduleModal from "./ScheduleModal";
 import Button from "../common/Button";
-import { getAllSchedule } from "../../lib/apis/scheduleManagementApi";
+import { getTodayDateEnglish } from "../../utils/date";
+import { getProjectId } from "../../utils/getProjectId";
 
-// 더미 데이터
-const datas = {
-  meetings: [
-    {
-      scheduleId: 0,
-      title: "string",
-      content: "string",
-      startDate: "2023-06-25T05:49:53.840Z",
-      endDate: "2023-06-25T10:49:53.840Z",
-      address: {
-        city: "string",
-        street: "string",
-      },
-      members: [
-        {
-          id: 0,
-          name: "string",
-          imageUrl: "string",
-        },
-      ],
-    },
-    {
-      scheduleId: 1,
-      title: "string1",
-      content: "string1",
-      startDate: "2023-06-29T05:49:53.840Z",
-      endDate: "2023-06-29T10:49:53.840Z",
-      address: {
-        city: "string",
-        street: "string",
-      },
-      members: [
-        {
-          id: 0,
-          name: "string",
-          imageUrl: "string",
-        },
-      ],
-    },
-    {
-      scheduleId: 1,
-      title: "string3",
-      content: "string1",
-      startDate: "2023-07-26T05:49:53.840Z",
-      endDate: "2023-07-26T09:49:53.840Z",
-      address: {
-        city: "string",
-        street: "string",
-      },
-      members: [
-        {
-          id: 0,
-          name: "string",
-          imageUrl: "string",
-        },
-      ],
-    },
-  ],
-  milestones: [
-    {
-      scheduleId: 0,
-      title: "string",
-      content: "string",
-      startDate: "2023-05-26T05:49:53.840Z",
-      endDate: "2023-05-29T05:49:53.840Z",
-      members: [
-        {
-          id: 0,
-          name: "string",
-          imageUrl: "string",
-        },
-      ],
-    },
-    {
-      scheduleId: 0,
-      title: "string",
-      content: "string",
-      startDate: "2023-07-26T05:49:53.840Z",
-      endDate: "2023-07-29T05:49:53.840Z",
-      members: [
-        {
-          id: 0,
-          name: "string",
-          imageUrl: "string",
-        },
-      ],
-    },
-  ],
-};
+import { getTodayAfterSchedule } from "../../lib/apis/scheduleManagementApi";
+
 const CalendarList = () => {
+  const projectId = getProjectId(useLocation());
   const [modalIsVisible, setModalIsVisible] = useState(false);
+  const [page, setPage] = useState(0);
+
+  // 총 게시글 개수
+  let itemCount = 0;
+  // 총 페이지 개수
+  let pageCount = 0;
+
+  const today = new Date();
+  const currentYear = today.getFullYear();
+  const currentMonth = today.getMonth() + 1;
+  const { data, isLoading } = useQuery(["todayAfterSchedule", page], () =>
+    getTodayAfterSchedule(page + 1, projectId, currentYear, currentMonth)
+  );
+
+  if (data && !isLoading) {
+    itemCount = data.totalElements;
+    pageCount = data.totalPages;
+  }
+  console.log(data, itemCount, pageCount);
+
   const modalOpen = () => {
     setModalIsVisible(true);
   };
@@ -106,53 +43,7 @@ const CalendarList = () => {
   };
 
   // 오늘 날짜 가져오기
-  const today = new Date();
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  const month = months[today.getMonth()];
-
-  const daysOfWeek = ["Sun", "Mon", "Tues", "Wednes", "Thurs", "Fri", "Satur"];
-  const dayOfWeek = daysOfWeek[today.getDay()];
-  const date = today.getDate();
-  // 오늘 날짜 요일, 일 표시
-  const calendar = `${month} ${date}, ${dayOfWeek}`;
-
-  // 모든 일정 가져오기
-  const { id } = useParams();
-
-  //const { isLoading, data } = useQuery("CalendarSchedule", () =>
-  //  getAllSchedule(id)
-  //);
-  const filteredMeetings = datas?.meetings?.filter((meeting) => {
-    const meetingStartDate = new Date(meeting.startDate);
-    return meetingStartDate >= today;
-  });
-
-  const filteredMilestones = datas?.milestones?.filter((milestone) => {
-    const milestoneStartDate = new Date(milestone.startDate);
-    return milestoneStartDate >= today;
-  });
-
-  const sortedEvents = [...filteredMeetings, ...filteredMilestones].sort(
-    (a, b) => {
-      const startDateA = new Date(a.startDate);
-      const startDateB = new Date(b.startDate);
-      return startDateA - startDateB;
-    }
-  );
-  console.log(sortedEvents);
+  const calendar = getTodayDateEnglish();
 
   return (
     <div className="calendar-list">
@@ -160,13 +51,33 @@ const CalendarList = () => {
         <h5>오늘</h5>
         <h1>{calendar}</h1>
       </div>
-      {sortedEvents.map((data, index) => (
+      {!data?.content && !isLoading && (
+        <h1 className="check-schedule">통신 오류났습니다.</h1>
+      )}
+      {isLoading && <h1 className="check-schedule">로딩 중</h1>}
+      {data?.content && data?.content.length === 0 && (
+        <h1 className="check-schedule">오늘 이후의 일정이 없습니다.</h1>
+      )}
+      {data?.content?.map((data, index) => (
         <CalendarItem key={index} data={data} />
       ))}
+      <div className="calendar-list-pagination">
+        {pageCount > 0 && (
+          <Pagination
+            className="pagination"
+            count={pageCount}
+            page={page + 1}
+            onChange={(event, page) => {
+              setPage(page - 1);
+            }}
+          />
+        )}
+      </div>
+
       <div className="button-container">
         <Button text="새 일정 생성" onClick={() => modalOpen()} />
       </div>
-      <NewScheduleModal open={modalIsVisible} onClose={modalClose} />
+      <ScheduleModal open={modalIsVisible} onClose={modalClose} />
     </div>
   );
 };

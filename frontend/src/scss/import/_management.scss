@@ -1,6 +1,9 @@
 .management {
+<<<<<<< HEAD
+=======
   height: 100vh;
 
+>>>>>>> 87bdd395810bdd089464fdb381a040c6422725e0
   &-main-header {
     background-color: $background-color;
     font-family: $heading-font;
@@ -30,13 +33,34 @@
     .project-list {
       margin-top: 30px;
 
+<<<<<<< HEAD
+      &-description {
+        font-family: $heading-font;
+        font-size: $sub-heading-font-size;
+        color: #7a7a7a;
+
+        p {
+          text-align: center;
+        }
+      }
+
+      .project-item {
+        border: $border;
+        width: 50%;
+=======
       .project-item {
         border: $border;
         width: 65%;
+>>>>>>> 87bdd395810bdd089464fdb381a040c6422725e0
         border-radius: 20px;
         margin-bottom: 30px;
         text-decoration: none;
         box-shadow: 0px 10px 30px 5px #b5b5b533;
+<<<<<<< HEAD
+        display: grid;
+        grid-template-columns: 20% 80%;
+=======
+>>>>>>> 87bdd395810bdd089464fdb381a040c6422725e0
         cursor: pointer;
 
         &-left-col {
@@ -53,11 +77,21 @@
 
         &-right-col {
           display: grid;
+<<<<<<< HEAD
+          grid-template-columns: 80% 20%;
+          grid-template-rows: 100%;
+          justify-content: flex-end;
+          color: #003b28;
+          font-size: $body-font-size;
+          font-family: $body-font;
+          height: 100%;
+=======
           grid-template-columns: 60% 40%;
           grid-template-rows: 100%;
           color: #003b28;
           font-size: $body-font-size;
           font-family: $body-font;
+>>>>>>> 87bdd395810bdd089464fdb381a040c6422725e0
 
           .project-item-heading {
             font-size: $sub-heading-font-size;
@@ -83,11 +117,35 @@
 
           .project-item-button-wrapper {
             width: 100%;
+<<<<<<< HEAD
+            height: 40%;
+            
+            @include displayFlex(column, space-around, center);
+          }
+
+          .leave-button-text {
+            font-family: $body-font;
+            font-size: $body-font-size;
+            color: #00AA72;
+          }
+
+          .project-item-button-wrapper figure {
+            background: {
+              position: center;
+              repeat: no-repeat;
+            }
+
+            border: $border;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+=======
             height: 100%;
             display: grid;
             grid-template-columns: 1 1;
             grid-template-rows: 50% 50%;
             justify-content: space-between;
+>>>>>>> 87bdd395810bdd089464fdb381a040c6422725e0
           }
         }
 
@@ -179,7 +237,11 @@
         width: 85%;
         font-family: $body-font;
         font-size: $body-font-size;
+<<<<<<< HEAD
+        color: #00aa72;
+=======
         color: #00AA72;
+>>>>>>> 87bdd395810bdd089464fdb381a040c6422725e0
 
         input[type="date"] {
           border: none;
@@ -219,11 +281,18 @@
   @include displayFlex;
 }
 
+<<<<<<< HEAD
+.MuiBox-root {
+  .delete-project {
+    height: 70%;
+
+=======
 
 .MuiBox-root {
   .delete-project {
     height: 70%;
     
+>>>>>>> 87bdd395810bdd089464fdb381a040c6422725e0
     &-heading {
       color: white;
       font-family: $heading-font;
@@ -254,18 +323,29 @@
 
       .project-item {
         width: 700px;
+<<<<<<< HEAD
+        height: 200px;
+        padding: 15px;
+=======
         height: 180px;
         padding: 20px;
+>>>>>>> 87bdd395810bdd089464fdb381a040c6422725e0
 
         figure {
           width: 70px;
           height: 70px;
+<<<<<<< HEAD
+        }
+
+        &-right-col {
+=======
           margin-right: 25px;
         }
 
         &-right-col {
           width: 100%;
 
+>>>>>>> 87bdd395810bdd089464fdb381a040c6422725e0
           @include displayFlex(row, space-between);
         }
 
@@ -274,6 +354,8 @@
           width: 400px;
         }
 
+<<<<<<< HEAD
+=======
         &-button-wrapper {
           width: 150px;
           height: 100px;
@@ -285,6 +367,7 @@
           @include displayFlex(column, space-between, flex-end);
         }
 
+>>>>>>> 87bdd395810bdd089464fdb381a040c6422725e0
         &-period {
           @include displayFlex(row, flex-start);
         }

@@ -1,0 +1,211 @@
+// RecruitmentDetailTitle 컴포넌트
+.detail-title {
+  margin: 0px 5%;
+  @include mobile {
+    margin: 0px 0px;
+  }
+  @include displayFlex(row, space-between, center);
+  @include mobile {
+    flex-direction: column;
+  }
+
+  font-family: $heading-font;
+  padding: 2.5rem;
+
+  &-content {
+    @include mobile {
+      float: left;
+      width: 100%;
+    }
+    .mui-arrow {
+      color: black;
+      margin-right: 20px;
+    }
+    img {
+      width: 80px;
+      height: 80px;
+      border-radius: 30px;
+    }
+    input {
+      font-family: $heading-font;
+      margin-left: 20px;
+      border-radius: 20px;
+      padding: 10px;
+    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    h1 {
+      font-size: $heading-font-size;
+      color: rgb(109, 109, 109);
+      margin-left: 20px;
+    }
+    h2 {
+      color: gray;
+      margin-left: 20px;
+    }
+  }
+  &-button {
+    display: flex;
+    align-items: center;
+  }
+}
+
+// RecruitmentDetailContent 컴포넌트
+.recruitment-detail {
+  border: $border;
+  border-radius: 20px;
+  padding: 2.5rem;
+  margin-left: 7%;
+  margin-right: 7%;
+  font-family: $body-font;
+  input,
+  textarea,
+  select {
+    font-family: $heading-font;
+    border-radius: 20px;
+  }
+  textarea {
+    padding: 10px;
+    margin: 10px 0px;
+  }
+
+  h4 {
+    color: $font-color;
+    font-size: $body-font-size;
+    margin-right: 20px;
+  }
+  &-content {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    h5 {
+      margin-left: 15px;
+    }
+
+    &-name {
+      display: flex;
+      align-items: center;
+      h5 {
+        margin-left: 10px;
+      }
+    }
+  }
+
+  &-content-last {
+    border-bottom: 1px solid rgb(204, 204, 204);
+
+    &-content {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      h5 {
+        margin-left: 15px;
+      }
+    }
+  }
+
+  // 포지션
+  &-container {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgb(204, 204, 204);
+    h4 {
+      white-space: nowrap;
+      margin: 0px, 50px;
+    }
+
+    &-select,
+    &-member,
+    &-button {
+      margin-left: 20px;
+      h5 {
+        margin: 30px 20px;
+      }
+    }
+    &-member {
+      margin-right: 20px;
+      &-cnt {
+        display: flex;
+        align-items: center;
+        input {
+          height: 25px;
+          width: 40px;
+        }
+      }
+    }
+    &-button {
+      display: flex;
+      flex-direction: column;
+      margin-top: 9px;
+      Button {
+        margin: 7px 40px;
+      }
+    }
+  }
+
+  &-description {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid rgb(204, 204, 204);
+    &-stacks {
+      display: flex;
+      img {
+        width: 50px;
+        height: 50px;
+        margin: 10px 5px;
+      }
+    }
+
+    h4 {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    h5 {
+      margin-bottom: 20px;
+    }
+
+    .member-stack-button {
+      border: 1px solid rgb(246, 246, 246);
+      border-radius: 20px;
+      margin: 10px 0px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      Button {
+        margin: 15px;
+      }
+    }
+
+    .member-stack {
+      position: relative;
+      .member-inputcontainer-box {
+        cursor: pointer;
+        z-index: 1;
+        position: absolute;
+        top: calc(100% + 5px);
+        background-color: white;
+        width: 180px;
+        h5 {
+          border-bottom: 1px solid rgb(234, 234, 234);
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+.recruitment-detail-icon {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 20px 7%;
+  .post-icon {
+    color: $background-color;
+    border: $border;
+    border-radius: 50px;
+    transform: scale(1.4);
+    padding: 1px;
+    margin-left: 35px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+}

@@ -1,61 +1,69 @@
+import { useQuery } from "react-query";
+import { useLocation } from "react-router";
+import { useState } from "react";
+
+import { Pagination } from "@mui/material";
+
 import Card from "../common/Card";
-import Schedule from "./Schedule";
+import { getFilterSchedule } from "../../lib/apis/scheduleManagementApi";
+import ScheduleItem from "./ScheduleItem";
+import { getProjectId } from "../../utils/getProjectId";
 
-const datas = [
-  {
-    id: 1,
-    day: 24,
-    week: "Fri",
-    time: "13:00 ~ 16:00",
-    title: "프로젝트 전체 개발 회의",
-  },
-  {
-    id: 2,
-    day: 26,
-    week: "Sat",
-    time: "13:00 ~ 16:00",
-    title: "디자인팀 중간 회의",
-  },
-  {
-    id: 3,
-    day: 26,
-    week: "Sat",
-    time: "13:00 ~ 16:00",
-    title: "디자인팀 중간 회의",
-  },
-  {
-    id: 4,
-    day: 26,
-    week: "Sat",
-    time: "13:00 ~ 16:00",
-    title: "디자인팀 중간 회의",
-  },
-  {
-    id: 5,
-    day: 26,
-    week: "Sat",
-    time: "13:00 ~ 16:00",
-    title: "디자인팀 중간 회의",
-  },
-  {
-    id: 6,
-    day: 26,
-    week: "Sat",
-    time: "13:00 ~ 16:00",
-    title: "디자인팀 중간 회의",
-  },
-];
-const ScheduleList = (props) => {
-  //console.log(props.name);
-  //console.log(props.option);
-  // 통신해서 리스트 가져오기
+const ScheduleList = ({ nameId, option }) => {
+  const projectId = getProjectId(useLocation());
 
+  // 현재 페이지
+  const [currentPage, setCurrentPage] = useState({
+    all: 0,
+    MILESTONE: 0,
+    MEETING: 0,
+    pastAll: 0,
+  });
+  // 한 페이지당 5개씩 보여주기
+  const itemsPerPage = 5;
+  // 총 게시글 개수
+  let itemCount = 0;
+  // 총 페이지 개수
+  let pageCount = 0;
+
+  const { isLoading, data: schedules } = useQuery(
+    ["filterSchedule", projectId, nameId, option, currentPage[option]],
+    () => getFilterSchedule(projectId, nameId, option, currentPage[option] + 1)
+  );
+  if (schedules && !isLoading) {
+    itemCount = schedules.totalElements;
+    pageCount = Math.ceil(itemCount / itemsPerPage);
+  }
+
+  //console.log(option, "에 따른", schedules);
   return (
-    <Card>
-      <div className="schedule">
-        {datas.map((data, index) => (
-          <Schedule key={index} data={data} />
+    <Card className="schedule-lists">
+      {isLoading && <h1 className="check-schedule-gray">⏳ 로딩 중...</h1>}
+      {!isLoading && schedules?.content && schedules?.content.length === 0 && (
+        <h1 className="check-schedule-gray">해당 일정이 없습니다</h1>
+      )}
+      {!schedules && !isLoading && (
+        <h1 className="check-schedule-gray">🥲 통신 오류났습니다.</h1>
+      )}
+      {schedules &&
+        !isLoading &&
+        schedules?.content?.length > 0 &&
+        schedules?.content?.map((schedule, index) => (
+          <ScheduleItem key={index} data={schedule} option={option} />
         ))}
+      <div className="schedule-lists-pagination">
+        {pageCount > 0 && (
+          <Pagination
+            count={pageCount}
+            page={currentPage[option] + 1}
+            onChange={(event, page) => {
+              setCurrentPage((prevCurrentPage) => ({
+                ...prevCurrentPage,
+                [option]: page - 1,
+              }));
+            }}
+          />
+        )}
       </div>
     </Card>
   );

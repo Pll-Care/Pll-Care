@@ -73,13 +73,16 @@ const MainHeader = () => {
         }
       >
         <div className="main-header-left-col">
-          <figure className="main-header-logo-img" />
+          <figure
+            className="main-header-logo-img"
+            onClick={() => routeTo("/")}
+          />
           <ToggleMenuButton
             isToggleMenuOpen={isToggleMenuOpen}
             setIsToggleMenuOpen={setIsToggleMenuOpen}
           />
         </div>
-        <div>
+        <div className="main-header-medium-col">
           <ul className="main-header-link">
             {headerMenu.map((menu) => (
               <li

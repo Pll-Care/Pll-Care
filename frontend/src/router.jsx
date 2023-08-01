@@ -12,11 +12,11 @@ import ScheduleManagement from "./pages/ScheduleManagement";
 import EvaluationManagement from "./pages/EvaluationManagement";
 import TeamMemberManagement from "./components/TeamMemberManagement/TeamMemberManagement";
 import GeneralLayout from "./layout/GeneralLayout";
-import Introduce from "./components/Profile/Introduce";
-import Evaluate from "./components/Profile/Evaluate";
-import MyProject from "./components/Profile/myproject";
-import LikeProject from "./components/Profile/LikeProject";
-import ProjectEvaluate from "./components/Profile/ProjectEvaluate";
+import Recruitment from "./pages/Recruitment";
+import RecruitmentDetailPage from "./pages/RecruitmentDetailPage";
+import RecruitmentWritePage from "./pages/RecruitmentWritePage";
+
+import ProjectManagement from "./components/ProjectManagement/ProjectManagement";
 
 const routerData = [
   {
@@ -33,37 +33,9 @@ const routerData = [
   },
   {
     id: 2,
-    path: "/profile/:id",
+    path: "/profile",
     element: <Profile />,
     withLogin: true,
-    children: [
-      {
-        path: "introduce",
-        withLogin: true,
-        element: <Introduce />,
-      },
-      {
-        path: "evaluate",
-        withLogin: true,
-        element: <Evaluate />,
-      },
-      {
-        path: "evaluate/:projectTitle",
-        withLogin: true,
-        element: <ProjectEvaluate />,
-      },
-      {
-        path: "my",
-        withLogin: true,
-        element: <MyProject />,
-      },
-
-      {
-        path: "like",
-        withLogin: true,
-        element: <LikeProject />,
-      },
-    ],
   },
   {
     id: 3,
@@ -71,20 +43,26 @@ const routerData = [
     element: <Management />,
     withLogin: true,
   },
-  //{
-  //  id: 4,
-  //  path: "/recruitment",
-  //  element: <Recruitment />,
-  //  withLogin: false,
-  //},
-  //{
-  //  id: 5,
-  //  path: "/recruitment/:id",
-  //  element: <RecruitmentDetailPage />,
-  //  withLogin: true,
-  //},
+  {
+    id: 4,
+    path: "/recruitment",
+    element: <Recruitment />,
+    withLogin: false,
+  },
+  {
+    id: 5,
+    path: "/recruitment/:id",
+    element: <RecruitmentDetailPage />,
+    withLogin: true,
+  },
   {
     id: 6,
+    path: "/recruitment/post",
+    element: <RecruitmentWritePage />,
+    withLoding: true,
+  },
+  {
+    id: 7,
     path: "/management/:id",
     element: <ProjectDetailPage />,
     withLogin: true,
@@ -112,6 +90,11 @@ const routerData = [
       {
         path: "teamMember",
         element: <TeamMemberManagement />,
+        withLogin: true,
+      },
+      {
+        path: "project",
+        element: <ProjectManagement />,
         withLogin: true,
       },
     ],

@@ -1,28 +1,12 @@
 import { Avatar } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 
-const CalendarItem = ({ data }) => {
-  const location = data.address
-    ? data.address.city + " " + data.address.street
-    : "";
+import { getDateTimeDuration } from "../../utils/date";
 
-  const time = data.address
-    ? data.startDate.slice(5, 7) +
-      "월 " +
-      data.startDate.slice(8, 10) +
-      "일 " +
-      data.startDate.slice(11, 16) +
-      " ~ " +
-      data.endDate.slice(11, 16)
-    : data.startDate.slice(5, 7) +
-      "월 " +
-      data.startDate.slice(8, 10) +
-      "일 " +
-      " ~ " +
-      data.endDate.slice(5, 7) +
-      "월 " +
-      data.endDate.slice(8, 10) +
-      "일 ";
+const CalendarItem = ({ data }) => {
+  const location = data.address ? data.address : "";
+  const type = location ? "MEETING" : "MILESTONE";
+  const time = getDateTimeDuration(data.startDate, data.endDate, type);
   return (
     <div className="calendar-list-item">
       {data.address ? (

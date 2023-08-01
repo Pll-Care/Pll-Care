@@ -15,6 +15,8 @@ const ModalContainer = ({ children, open, onClose, type, width, height }) => {
     bgcolor: color,
     borderRadius: "20px",
     p: 4,
+    // 스크롤 추가
+    overflow: "auto",
   };
   return (
     <Modal open={open} onClose={onClose}>

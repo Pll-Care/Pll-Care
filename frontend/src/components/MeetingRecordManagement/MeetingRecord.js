@@ -5,6 +5,9 @@ import useMeetingRecordManagementMutation from "../../hooks/useMeetingRecordMana
 import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
 import { useLayoutEffect } from "react";
 import Button from "../common/Button";
+import { getProjectId } from "../../utils/getProjectId";
+import { useLocation } from "react-router-dom";
+import { getCompleteProjectData } from "../../lib/apis/managementApi";
 
 const MeetingRecord = ({ state }) => {
   const selectedMeetingRecordId = useSelector(
@@ -17,13 +20,20 @@ const MeetingRecord = ({ state }) => {
 
   const dispatch = useDispatch();
 
+  const projectId = getProjectId(useLocation());
+
+  const { data: completeData } = useQuery(
+    ["completeProjectData", projectId],
+    () => getCompleteProjectData(projectId)
+  );
+
   const { deleteMutate, createBookMarkMutate } =
     useMeetingRecordManagementMutation();
 
   const fallback = {};
   const { data: createdData = fallback } = useQuery(
     ["managementCreatedMeetingRecordList", createdMeetingRecordId],
-    () => getMeetingRecord(createdMeetingRecordId),
+    () => getMeetingRecord(createdMeetingRecordId, projectId),
     {
       enabled: state === "createdMeetingRecord",
     }
@@ -31,34 +41,42 @@ const MeetingRecord = ({ state }) => {
 
   const { data: selectedData = fallback } = useQuery(
     ["managementSelectedMeetingRecordList", selectedMeetingRecordId],
-    () => getMeetingRecord(selectedMeetingRecordId),
+    () => getMeetingRecord(selectedMeetingRecordId, projectId),
     {
       enabled: state === "selectedMeetingRecord",
     }
   );
 
   const handleEditMeetingRecord = () => {
-    dispatch(meetingRecordManagementActions.onChangeIsEditState(true));
+    dispatch(meetingRecordManagementActions.setIsEditState(true));
     dispatch(
-      meetingRecordManagementActions.onEditSelectedMeetingRecordState(false)
+      meetingRecordManagementActions.setSelectedMeetingRecordState(false)
     );
     dispatch(
-      meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(false)
+      meetingRecordManagementActions.setIsCreatedMeetingRecordVisibleState(
+        false
+      )
     );
   };
 
   const handleDeleteMeetingRecord = () => {
     state === "selectedMeetingRecord"
-      ? deleteMutate(selectedData.memoId)
-      : deleteMutate(createdData.memoId);
-    dispatch(meetingRecordManagementActions.onEditInitialState(true));
+      ? deleteMutate({ meetingRecordId: selectedData.memoId, projectId })
+      : deleteMutate({ meetingRecordId: createdData.memoId, projectId });
+    dispatch(meetingRecordManagementActions.setInitialState(true));
   };
 
   const handleBookMarkMeetingRecord = () => {
     state === "selectedMeetingRecord"
-      ? createBookMarkMutate(selectedData.memoId)
-      : createBookMarkMutate(createdData.memoId);
-    dispatch(meetingRecordManagementActions.onEditInitialState(true));
+      ? createBookMarkMutate({
+          meetingRecordId: selectedData.memoId,
+          projectId,
+        })
+      : createBookMarkMutate({
+          meetingRecordId: createdData.memoId,
+          projectId,
+        });
+    dispatch(meetingRecordManagementActions.setInitialState(true));
   };
 
   useLayoutEffect(() => {
@@ -88,38 +106,46 @@ const MeetingRecord = ({ state }) => {
         <div className="meeting-record-container">
           <div className="meeting-record-author">{selectedData.author}</div>
           <div className="meeting-record-button-wrapper">
-            <Button
-              size={"small"}
-              type={"underlined"}
-              text={"삭제하기"}
-              onClick={handleDeleteMeetingRecord}
-            />
-            <Button
-              size={"small"}
-              type={"underlined"}
-              text={"수정하기"}
-              onClick={handleEditMeetingRecord}
-            />
-            {selectedData.bookmarked ? (
-              <Button
-                size={"small"}
-                type={"underlined"}
-                text={"북마크 취소하기"}
-                onClick={handleBookMarkMeetingRecord}
-              />
-            ) : (
-              <Button
-                size={"small"}
-                type={"underlined"}
-                text={"북마크하기"}
-                onClick={handleBookMarkMeetingRecord}
-              />
+            {!completeData && (
+              <>
+                {selectedData.deletable && (
+                  <Button
+                    size={"small"}
+                    type={"underlined"}
+                    text={"삭제하기"}
+                    onClick={handleDeleteMeetingRecord}
+                  />
+                )}
+                <Button
+                  size={"small"}
+                  type={"underlined"}
+                  text={"수정하기"}
+                  onClick={handleEditMeetingRecord}
+                />
+              </>
             )}
+            {!completeData ? (
+              selectedData.bookmarked ? (
+                <Button
+                  size={"small"}
+                  type={"underlined"}
+                  text={"북마크 취소하기"}
+                  onClick={handleBookMarkMeetingRecord}
+                />
+              ) : (
+                <Button
+                  size={"small"}
+                  type={"underlined"}
+                  text={"북마크하기"}
+                  onClick={handleBookMarkMeetingRecord}
+                />
+              )
+            ) : null}
           </div>
         </div>
       </div>
       <div
-        className="meeting-record-content"
+        className="created-meeting-record-content"
         dangerouslySetInnerHTML={{ __html: selectedData.content }}
       />
     </div>
@@ -134,12 +160,14 @@ const MeetingRecord = ({ state }) => {
           <div className="meeting-record-container">
             <div className="meeting-record-author">{createdData.author}</div>
             <div className="meeting-record-button-wrapper">
-              <Button
-                size={"small"}
-                type={"underlined"}
-                text={"삭제하기"}
-                onClick={handleDeleteMeetingRecord}
-              />
+              {createdData.deletable && (
+                <Button
+                  size={"small"}
+                  type={"underlined"}
+                  text={"삭제하기"}
+                  onClick={handleDeleteMeetingRecord}
+                />
+              )}
               <Button
                 size={"small"}
                 type={"underlined"}

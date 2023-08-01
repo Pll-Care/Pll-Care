@@ -1,0 +1,435 @@
+// MemberOption 컴포넌트
+.member-option {
+  background-color: $background-color;
+  padding: 2rem;
+  top: 0;
+
+  &-title {
+    display: flex;
+    align-items: center;
+    color: white;
+    margin-top: 80px;
+    font-family: $heading-font;
+    h2 {
+      font-size: $heading-font-size;
+    }
+    h3 {
+      font-size: $sub-heading-font-size;
+      margin-left: 10px;
+    }
+    @include mobile {
+      h2 {
+        font-size: 30px;
+      }
+      h3 {
+        font-size: 15px;
+      }
+    }
+  }
+}
+.member-filter {
+  display: flex;
+  justify-content: space-between;
+}
+.member-button {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  Button {
+    height: 40px;
+    margin: 10px;
+  }
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+// MemberFilterOption 컴포넌트
+.filter-options {
+  position: relative;
+  &-select {
+    width: 270px;
+    margin: 7px;
+    border: none;
+    border-bottom: 6px solid $background-color;
+    outline: none;
+    padding: 0.5rem;
+    color: $background-color;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  &-box {
+    background-color: rgb(250, 250, 250);
+    z-index: 1;
+    position: absolute;
+    top: calc(100% + 5px);
+    right: 0;
+    width: 350px;
+
+    border: $border;
+    padding: 10px;
+    border-radius: 20px;
+
+    font-family: $heading-font;
+
+    h5 {
+      color: $sub-heading-color;
+      font-size: $body-font-size;
+      margin: 20px 10px;
+    }
+  }
+  @include mobile {
+    &-box {
+      width: 90%;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+}
+
+// MemberRecuritmentWrite 컴포넌트
+.member-write {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: $background-color;
+  padding: 1rem;
+  & > Button {
+    margin-left: auto;
+    margin-right: 7%;
+  }
+
+  @include mobile {
+    padding: 0.3rem;
+  }
+  h1 {
+    color: white;
+    font-size: 25px;
+    font-family: $heading-font;
+    margin: 40px;
+  }
+  .member-title {
+    display: flex;
+    justify-content: flex-start;
+    font-family: $heading-font;
+    margin: 10px 7%;
+    margin-top: 30px;
+    align-items: center;
+
+    .recruitment-direction {
+      color: white;
+    }
+    input {
+      padding: 0.5rem;
+      border-radius: 20px;
+      margin-left: 20px;
+      width: 50%;
+      font-family: $heading-font;
+      color: gray;
+    }
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 20px;
+      margin-left: 20px;
+    }
+    h2 {
+      font-size: $heading-font-size;
+      margin-left: 15px;
+      color: white;
+    }
+  }
+
+  &-card {
+    margin: 20px 7%;
+  }
+
+  .member-content {
+    padding: 2rem 3rem;
+    @include mobile {
+      padding: 0.3rem;
+    }
+    &-project,
+    &-options,
+    &-position {
+      display: flex;
+      align-items: center;
+      font-family: $heading-font;
+      h3 {
+        margin: 30px 20px;
+        color: $sub-heading-color;
+        white-space: nowrap;
+      }
+      input,
+      select {
+        border-radius: 20px;
+        padding: 0.3rem;
+        font-family: $heading-font;
+        color: gray;
+      }
+
+      .member-select1 {
+        margin-left: 20px;
+      }
+      .member-select2 {
+        margin-left: 45px;
+      }
+      .member-select3 {
+        margin-left: 50px;
+      }
+      .member-select4 {
+        margin-left: 85px;
+      }
+    }
+    &-options {
+      border-bottom: 2px solid rgb(214, 214, 214);
+    }
+
+    &-position {
+      display: flex;
+      border-bottom: 2px solid rgb(214, 214, 214);
+      @include mobile {
+        flex-direction: column;
+      }
+      @include tablet {
+        flex-direction: column;
+      }
+
+      .options {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &-container,
+        &-count {
+          display: flex;
+          flex-direction: column;
+          margin-left: 100px;
+          @include mobile {
+            margin-left: 0px;
+          }
+          @include tablet {
+            margin-left: 0px;
+          }
+
+          h5 {
+            margin: 26px 0px;
+            white-space: nowrap;
+          }
+
+          .position-number {
+            width: 47px;
+            margin: 0px 40px;
+            border-radius: 50px;
+            margin: 18px 0px;
+          }
+        }
+      }
+
+      &-stack {
+        margin: 0px 6%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        h5 {
+          color: $sub-heading-color;
+          margin: 10px 0px;
+        }
+        .member-stack {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          @include mobile {
+            margin: 20px 0px;
+          }
+          @include tablet {
+            margin: 20px 0px;
+          }
+          width: 100%;
+
+          &-input {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            input {
+              width: 200px;
+            }
+          }
+
+          & > .member-inputcontainer-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            z-index: 1;
+            position: absolute;
+            width: 200px;
+            top: calc(100% + 5px);
+            left: 0;
+            padding: 0.1rem;
+
+            background-color: white;
+            h5 {
+              display: flex;
+              width: 90%;
+              justify-content: center;
+              border-bottom: 1px solid rgb(238, 238, 238);
+              text-align: center;
+              cursor: pointer;
+            }
+          }
+        }
+        .member-stack-button {
+          width: 100%;
+          padding: 0.5rem;
+          box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1);
+          margin: 10px 0px;
+          border-radius: 20px;
+          height: 180px;
+          text-align: center;
+          Button {
+            margin: 10px 10px;
+          }
+        }
+      }
+    }
+
+    &-description {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .react-quill {
+        width: 90%;
+      }
+      h3 {
+        align-self: flex-start;
+        margin: 20px 40px;
+        color: $sub-heading-color;
+        font-family: $heading-font;
+      }
+      textarea {
+        border-radius: 20px;
+        width: 90%;
+        box-shadow: 0px 10px 10px 5px rgba(40, 40, 40, 0.1);
+        border: none;
+        height: 200px;
+        padding: 0.5rem;
+      }
+      .member-file {
+        width: 200px;
+        height: 30px;
+        border-radius: 10px;
+        margin: 10px 5%;
+        align-self: flex-start;
+        @include mobile {
+          width: 100px;
+        }
+      }
+    }
+  }
+}
+
+// RecruitmentPostList 컴포넌트
+.recruitment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 10%;
+  h1 {
+    font-size: 27px;
+    font-family: $heading-font;
+    color: gray;
+    margin-left: 15px;
+    margin-top: 10px;
+  }
+  @include tablet {
+    margin: 5px 0px;
+  }
+  @include mobile {
+    margin: 5px 0px;
+  }
+}
+
+// RecruitmentPost 컴포넌트
+.recruitment-post-link {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+.recruitment-post {
+  &:hover {
+    transform: scale(1.011);
+    transition: transform 0.2s ease-in-out;
+  }
+  border: 1px solid rgb(249, 249, 249);
+  box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  height: 470px;
+
+  img {
+    border-radius: 20px;
+    width: 100%;
+    height: 200px;
+  }
+
+  &-stack {
+    margin-left: auto;
+    img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  &-project {
+    padding: 1rem;
+    font-family: $heading-font;
+    color: $body-font-color;
+    text-decoration: none;
+    h6 {
+      margin: 10px 0px;
+      font-size: 13px;
+    }
+    &-title {
+      display: flex;
+      justify-content: space-between;
+      h2 {
+        text-decoration: none;
+      }
+
+      .post-icon {
+        color: $font-color;
+        border: 1px solid $font-color;
+        border-radius: 50px;
+        padding: 3px;
+        transform: scale(1.2);
+      }
+      .post-bordericon {
+        transform: scale(1.2);
+        color: $font-color;
+        border: 1px solid $font-color;
+        border-radius: 50px;
+        padding: 3px;
+      }
+    }
+
+    h2 {
+      font-size: $sub-heading-font-size;
+      margin-bottom: 10px;
+    }
+    h3 {
+      margin-bottom: 10px;
+    }
+  }
+}

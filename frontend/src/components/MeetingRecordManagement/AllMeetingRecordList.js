@@ -12,6 +12,7 @@ import { getAllMeetingRecordList } from "../../lib/apis/meetingRecordManagementA
 import { getProjectId } from "../../utils/getProjectId";
 import { useLocation } from "react-router-dom";
 import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
+import { getCompleteProjectData } from "../../lib/apis/managementApi";
 
 const filterOptionList = [
   {
@@ -33,6 +34,11 @@ const AllMeetingRecordList = () => {
 
   const projectId = getProjectId(useLocation());
 
+  const { data: isCompleted } = useQuery(
+    ["completeProjectData", projectId],
+    () => getCompleteProjectData(projectId)
+  );
+
   const dispatch = useDispatch();
 
   const queryClient = useQueryClient();
@@ -47,12 +53,13 @@ const AllMeetingRecordList = () => {
   const handleCreateMeetingRecord = () => {
     dispatch(meetingRecordManagementActions.setTitle(""));
     dispatch(meetingRecordManagementActions.setContent(""));
-    dispatch(meetingRecordManagementActions.onEditInitialState(false));
+    dispatch(meetingRecordManagementActions.setIsEditState(false));
+    dispatch(meetingRecordManagementActions.setInitialState(false));
     dispatch(
-      meetingRecordManagementActions.onEditSelectedMeetingRecordState(false)
+      meetingRecordManagementActions.setSelectedMeetingRecordState(false)
     );
     dispatch(
-      meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(
+      meetingRecordManagementActions.setIsCreatedMeetingRecordVisibleState(
         false
       )
     );
@@ -81,10 +88,12 @@ const AllMeetingRecordList = () => {
           />
         </div>
         <div className="header-right-col">
-          <Button
-            text={"새로운 회의록 작성하기"}
-            onClick={handleCreateMeetingRecord}
-          />
+          {!isCompleted && (
+            <Button
+              text={"새로운 회의록 작성하기"}
+              onClick={handleCreateMeetingRecord}
+            />
+          )}
         </div>
       </div>
       <div className="record-list-item-wrapper">

@@ -1,29 +1,20 @@
 import { useRef, useState } from "react";
-import Button from "../../components/common/Button";
+import { useLocation } from "react-router-dom";
 
-const middleEvaluationBadges = [
-  {
-    name: "열정적인 참여자",
-    numOfBadges: 3,
-  },
-  {
-    name: "아이디어 뱅크",
-    numOfBadges: 2,
-  },
-  {
-    name: "탁월한 리더",
-    numOfBadges: 4,
-  },
-  {
-    name: "최고의 서포터",
-    numOfBadges: 1,
-  },
-];
+import { toast } from "react-toastify";
+
+import useEvaluationManagementMutation from "../../hooks/useEvaluationManagementMutation";
+
+import Button from "../../components/common/Button";
+import ControlMenu from "../common/ControlMenu";
+
+import { getProjectId } from "../../utils/getProjectId";
+import { useOutsideClick } from "../../hooks/useOutsideClick";
 
 const evaluationCriterion = [
   {
     name: "성실도",
-    value: "diligence",
+    value: "sincerity",
   },
   {
     name: "시간 엄수",
@@ -31,7 +22,7 @@ const evaluationCriterion = [
   },
   {
     name: "업무 수행 능력",
-    value: "performance",
+    value: "jobPerformance",
   },
   {
     name: "의사 소통",
@@ -40,6 +31,11 @@ const evaluationCriterion = [
 ];
 
 const evaluationOptionList = [
+  {
+    id: 0,
+    value: 0,
+    name: "0",
+  },
   {
     id: 1,
     value: 1,
@@ -67,107 +63,177 @@ const evaluationOptionList = [
   },
 ];
 
-const FinalEvaluation = ({ member, setIsFinalEvaluationVisible }) => {
-  const [evaluationScore, setEvaluationScore] = useState([
-    {
-      name: "diligence",
-      value: 1,
-    },
-    {
-      name: "punctuality",
-      value: 1,
-    },
-    {
-      name: "performance",
-      value: 1,
-    },
-    {
-      name: "communication",
-      value: 1,
-    },
-  ]);
+const FinalEvaluation = ({
+  type,
+  participantId,
+  member,
+  setIsFinalEvaluationVisible,
+  badgeQuantity,
+  data,
+}) => {
+  const [sincerityScore, setSincerityScore] = useState(0);
+  const [punctualityScore, setPunctualityScore] = useState(0);
+  const [jobPerformanceScore, setJobPerformanceScore] = useState(0);
+  const [communicationScore, setCommunicationScore] = useState(0);
+
+  const projectId = getProjectId(useLocation());
 
   const [content, setContent] = useState("");
 
-  const modalOutside = useRef();
+  const modalOutsideRef = useRef();
 
-  const handleFinalEvaluationVisible = (e) => {
-    if (e.target === modalOutside.current) {
-      setIsFinalEvaluationVisible("");
-    }
-  };
+  useOutsideClick(modalOutsideRef, () => setIsFinalEvaluationVisible(""));
+
+  const { finalEvaluationMutate } = useEvaluationManagementMutation();
 
   const handleChangeContent = (e) => {
     setContent(e.target.value);
   };
 
-  const handleChangeScore = (e, idx) => {
-    setEvaluationScore((prevScore) => {
-      return prevScore.map((score, index) =>
-        idx === index ? { ...score, value: parseInt(e.target.value) } : score
-      );
+  const handleSubmitFinalEvaluation = () => {
+    if (content.length < 1) {
+      toast.error("최종 의견을 작성해주세요.");
+      return;
+    }
+
+    finalEvaluationMutate({
+      projectId: projectId,
+      evaluatedId: participantId,
+      score: {
+        sincerity: sincerityScore,
+        punctuality: punctualityScore,
+        jobPerformance: jobPerformanceScore,
+        communication: communicationScore,
+      },
+      content: content,
     });
+
+    setIsFinalEvaluationVisible(false);
+  };
+
+  const getValue = (idx) => {
+    switch (idx) {
+      case 0:
+        return sincerityScore;
+      case 1:
+        return punctualityScore;
+      case 2:
+        return jobPerformanceScore;
+      case 3:
+        return communicationScore;
+      default:
+        return 0;
+    }
+  };
+
+  const getOnChange = (idx) => {
+    switch (idx) {
+      case 0:
+        return setSincerityScore;
+      case 1:
+        return setPunctualityScore;
+      case 2:
+        return setJobPerformanceScore;
+      case 3:
+        return setCommunicationScore;
+      default:
+        return 0;
+    }
   };
 
   return (
-    <div
-      className="final-evaluation-wrapper"
-      ref={modalOutside}
-      onClick={handleFinalEvaluationVisible}
-    >
-      <div className="evaluation-management-final-evaluation">
-        <div className="final-evaluation-heading">'{member}' 최종 평가하기</div>
-        <div className="final-evaluation-body">
-          <div className="evaluation">
-            <h1>평가하기</h1>
-            <div className="evaluation-criterion">
-              {evaluationCriterion.map((criterion, idx) => (
-                <div key={idx}>
-                  {criterion.name}
-                  <select
-                    className="evaluation-score"
-                    onChange={(e) => handleChangeScore(e, idx)}
-                    value={evaluationScore[idx].value}
-                  >
-                    {evaluationOptionList.map((opt) => (
-                      <option key={opt.value} value={opt.value}>
-                        {opt.name}
-                        <figure />
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              ))}
+    <div className="final-evaluation-wrapper" ref={modalOutsideRef}>
+      {type === "evaluation" ? (
+        <div className="evaluation-management-final-evaluation">
+          <div className="final-evaluation-heading">
+            '{member}' 최종 평가하기
+          </div>
+          <div className="final-evaluation-body">
+            <div className="evaluation">
+              <h1>평가하기</h1>
+              <div className="evaluation-criterion">
+                {evaluationCriterion.map((criterion, idx) => (
+                  <div key={idx}>
+                    {criterion.name}
+                    <ControlMenu
+                      optionList={evaluationOptionList}
+                      value={getValue(idx)}
+                      onChange={getOnChange(idx)}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="badges">
+              <h1>누적 배지</h1>
+              <div className="badges-body">
+                {badgeQuantity?.map((badge, idx) => (
+                  <div className="badge" key={idx}>
+                    <figure />
+                    <div>{badge.evaluationBadge}</div>
+                    <div>{badge.quantity} 개</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="content">
+              <h1>최종 의견 작성하기</h1>
+              <div>
+                <div>'{member}'에 대한 최종 의견입니다.</div>
+                <textarea
+                  value={content}
+                  onChange={handleChangeContent}
+                  placeholder={`${member}에 대한 최종 평가를 글로 써보세요!`}
+                />
+              </div>
             </div>
           </div>
-          <div className="badges">
-            <h1>누적 뱃지</h1>
-            <div className="badges-body">
-              {middleEvaluationBadges.map((item) => (
-                <div className="badge">
-                  <figure />
-                  <div>{item.name}</div>
-                  <div>{item.numOfBadges}개</div>
-                </div>
-              ))}
-            </div>
+          <div className="final-evaluation-button-wrapper">
+            <Button
+              text={"평가 완료하기"}
+              onClick={handleSubmitFinalEvaluation}
+            />
           </div>
-          <div className="content">
-            <h1>최종 의견 작성하기</h1>
-            <div>
-              <div>'{member}'에 대한 최종 의견입니다.</div>
-              <textarea
-                value={content}
-                onChange={handleChangeContent}
-                placeholder={`${member}에 대한 최종 평가를 글로 써보세요!`}
-              />
+        </div>
+      ) : (
+        <div className="evaluation-management-final-evaluation">
+          <div className="final-evaluation-heading">
+            '{member}' 최종 평가 보기
+          </div>
+          <div className="final-evaluation-body">
+            <div className="evaluation">
+              <h1>평가</h1>
+              <div className="evaluation-criterion">
+                {evaluationCriterion.map((criterion, idx) => (
+                  <div key={idx}>
+                    {criterion.name}
+                    <div>{data.score[criterion.value]} 점</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="badges">
+              <h1>누적 배지</h1>
+              <div className="badges-body">
+                {badgeQuantity?.map((badge) => (
+                  <div className="badge">
+                    <figure />
+                    <div>{badge.evaluationBadge}</div>
+                    <div>{badge.quantity} 개</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="content">
+              <h1>최종 의견</h1>
+              <div>
+                <div>'{member}'에 대한 최종 의견입니다.</div>
+                <textarea value={data.content} readOnly />
+              </div>
             </div>
           </div>
         </div>
-        <div className="final-evaluation-button-wrapper">
-          <Button text={"평가 완료하기"} />
-        </div>
-      </div>
+      )}
     </div>
   );
 };

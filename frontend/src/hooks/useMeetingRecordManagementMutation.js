@@ -18,20 +18,21 @@ const useMeetingRecordManagementMutation = () => {
   const { mutate: createMutate } = useMutation(createMeetingRecord, {
     onSuccess: (data) => {
       dispatch(
-        meetingRecordManagementActions.onEditSelectedMeetingRecordState(false)
+        meetingRecordManagementActions.setSelectedMeetingRecordState(false)
       );
       dispatch(
-        meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(
+        meetingRecordManagementActions.setIsCreatedMeetingRecordVisibleState(
           true
         )
       );
-      dispatch(
-        meetingRecordManagementActions.onEditCreatedMeetingRecordId(data)
-      );
-      dispatch(meetingRecordManagementActions.onChangeIsEditState(false));
+      dispatch(meetingRecordManagementActions.setCreatedMeetingRecordId(data));
+      dispatch(meetingRecordManagementActions.setIsEditState(false));
       queryClient.invalidateQueries(["managementAllMeetingRecordList"]);
       queryClient.invalidateQueries(["managementCreatedMeetingRecordList"]);
       toast.success("작성 완료되었습니다!");
+    },
+    onError: () => {
+      toast.error("생성 실패하였습니다. 잠시 후 다시 시도해주세요.");
     },
   });
 
@@ -41,26 +42,30 @@ const useMeetingRecordManagementMutation = () => {
       queryClient.invalidateQueries(["managementBookMarkMeetingRecordList"]);
       toast.success("삭제되었습니다!");
     },
+    onError: () => {
+      toast.error("삭제 실패하였습니다. 잠시 후 다시 시도해주세요.");
+    },
   });
 
   const { mutate: editMutate } = useMutation(editMeetingRecord, {
     onSuccess: (data) => {
       dispatch(
-        meetingRecordManagementActions.onEditSelectedMeetingRecordState(false)
+        meetingRecordManagementActions.setSelectedMeetingRecordState(false)
       );
       dispatch(
-        meetingRecordManagementActions.onEditIsCreatedMeetingRecordVisibleState(
+        meetingRecordManagementActions.setIsCreatedMeetingRecordVisibleState(
           true
         )
       );
-      dispatch(
-        meetingRecordManagementActions.onEditCreatedMeetingRecordId(data)
-      );
-      dispatch(meetingRecordManagementActions.onChangeIsEditState(false));
+      dispatch(meetingRecordManagementActions.setCreatedMeetingRecordId(data));
+      dispatch(meetingRecordManagementActions.setIsEditState(false));
       queryClient.invalidateQueries(["managementAllMeetingRecordList"]);
       queryClient.invalidateQueries(["managementBookMarkMeetingRecordList"]);
       queryClient.invalidateQueries(["managementCreatedMeetingRecordList"]);
       toast.success("수정되었습니다!");
+    },
+    onError: () => {
+      toast.error("수정 실패하였습니다. 잠시 후 다시 시도해주세요.");
     },
   });
 
@@ -70,6 +75,11 @@ const useMeetingRecordManagementMutation = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(["managementBookMarkMeetingRecordList"]);
         toast.success("북마크/북마크 취소되었습니다!");
+      },
+      onError: () => {
+        toast.error(
+          "북마크/북마크 취소 실패하였습니다. 잠시 후 다시 시도해주세요."
+        );
       },
     }
   );

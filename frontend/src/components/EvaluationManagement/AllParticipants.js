@@ -1,134 +1,69 @@
 import { useState } from "react";
-import Button from "../../components/common/Button";
+import { useQuery } from "react-query";
+
 import FinalEvaluation from "./FinalEvaluation";
+import ParticipantItem from "./ParticipantItem";
 
-const AllParticipants = () => {
-  const memberList = [
-    {
-      id: 11,
-      name: "홍서현",
-      imageUrl: "string",
-      badgeDtos: [
-        {
-          evaluationBadge: "탁월한_리더",
-          quantity: 2,
-        },
-        {
-          evaluationBadge: "열정적인_참여자",
-          quantity: 3,
-        },
-        {
-          evaluationBadge: "최고의_서포터",
-          quantity: 1,
-        },
-        {
-          evaluationBadge: "아이디어_뱅크",
-          quantity: 1,
-        },
-      ],
-      finalEvalId: 0,
-    },
-    {
-      id: 12,
-      name: "이연제",
-      imageUrl: "string",
-      badgeDtos: [
-        {
-          evaluationBadge: "탁월한_리더",
-          quantity: 15,
-        },
-        {
-          evaluationBadge: "열정적인_참여자",
-          quantity: 1,
-        },
-        {
-          evaluationBadge: "최고의_서포터",
-          quantity: 0,
-        },
-        {
-          evaluationBadge: "아이디어_뱅크",
-          quantity: 0,
-        },
-      ],
-      finalEvalId: 0,
-    },
-    {
-      id: 13,
-      name: "조상욱",
-      imageUrl: "string",
-      badgeDtos: [
-        {
-          evaluationBadge: "탁월한_리더",
-          quantity: 2,
-        },
-        {
-          evaluationBadge: "열정적인_참여자",
-          quantity: 6,
-        },
-        {
-          evaluationBadge: "최고의_서포터",
-          quantity: 1,
-        },
-        {
-          evaluationBadge: "아이디어_뱅크",
-          quantity: 0,
-        },
-      ],
-      finalEvalId: 0,
-    },
-  ];
+import {
+  getEvaluationMember,
+  getFinalEvaluation,
+} from "../../lib/apis/evaluationManagementApi";
 
-  // 백엔드 처리 필요
-  const [isCompleted, setIsCompleted] = useState(true);
-
+const AllParticipants = ({ projectId, isCompleted }) => {
   const [isFinalEvaluationVisible, setIsFinalEvaluationVisible] = useState("");
+  const [finalEvaluationType, setFinalEvaluationType] = useState("");
+  const [finalEvalData, setFinalEvalData] = useState("");
 
-  const handleFinalEvaluationModal = (name) => {
+  const [badgeQuantity, setBadgeQuantity] = useState();
+
+  const [participantId, setParticipantId] = useState();
+
+  const handleFinalEvaluationModal = async (type, name, finalEvalId) => {
+    if (finalEvalId !== -1) {
+      const evaluation = await getFinalEvaluation(finalEvalId, projectId);
+      setFinalEvalData(evaluation);
+    }
+
     setIsFinalEvaluationVisible(name);
+    setFinalEvaluationType(type);
   };
+
+  const handleClickParticipant = (badgeQuantity, participantId) => {
+    setParticipantId(participantId);
+    setBadgeQuantity(badgeQuantity);
+  };
+
+  const { data: memberList = [] } = useQuery(
+    ["managementEvaluationAllParticipants"],
+    () => getEvaluationMember(projectId)
+  );
 
   return (
     <div className="evaluation-management-all-participants">
       <h1>참여자 보기</h1>
       <div className="evaluation-management-participants">
-        {memberList.map((item) => (
-          <div className="evaluation-management-participant">
-            <div className="evaluation-management-participant-left-col">
-              <figure className="evaluation-management-user-profile" />
-            </div>
-            <div className="evaluation-management-participant-right-col">
-              <div className="name-badge-wrapper">
-                <div>{item.name}</div>
-                <div className="evaluation-management-badges">
-                  <div className="badge-quantity-container">
-                    {item.badgeDtos?.map((badge, idx) => (
-                      <div
-                        className={[
-                          `badge-quantity`,
-                          `badge-quantity_${idx}`,
-                        ].join(" ")}
-                      >
-                        <figure />
-                        <div>X{badge.quantity}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              {isCompleted && (
-                <Button
-                  text={"최종 평가하기"}
-                  onClick={() => handleFinalEvaluationModal(item.name)}
-                />
-              )}
-            </div>
-          </div>
+        {memberList.map((member) => (
+          <ParticipantItem
+            key={member.id}
+            member={member}
+            handleFinalEvaluationModal={handleFinalEvaluationModal}
+            handleClickParticipant={() =>
+              handleClickParticipant(member.badgeDtos, member.id)
+            }
+            isCompleted={isCompleted}
+            isSelf={member.me}
+            finalEvalId={member.finalEvalId}
+          />
         ))}
       </div>
       {isFinalEvaluationVisible && (
         <FinalEvaluation
+          type={finalEvaluationType}
+          badgeQuantity={badgeQuantity}
+          participantId={participantId}
           member={isFinalEvaluationVisible}
           setIsFinalEvaluationVisible={setIsFinalEvaluationVisible}
+          data={finalEvalData}
         />
       )}
     </div>

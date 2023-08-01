@@ -1,25 +1,27 @@
 import Button from "../components/common/Button";
-import ProjectList from "../components/ProjectManagement/ProjectList";
-import ProjectEditor from "../components/ProjectManagement/ProjectEditor";
+import ProjectList from "../components/Management/ProjectList";
 import NonAuthenticatedManagement from "./NonAuthenticatedManagement";
 import Pagination from "../components/common/Pagination";
+import NewProject from "../components/Management/NewProject";
 
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 
-import { useQuery, useQueryClient } from "react-query";
-import { getProjectList } from "../lib/apis/projectManagementApi";
-import NewProject from "../components/ProjectManagement/NewProject";
+import { history } from "../utils/history";
+
+import { getProjectList } from "../lib/apis/managementApi";
 
 const Management = () => {
-  const queryClient = useQueryClient();
-
   const [currentPage, setCurrentPage] = useState(1);
   const [ongoingCurrentPage, setOngoingCurrentPage] = useState(1);
   const [allProjectListVisible, setAllProjectListVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const authState = useSelector((state) => state.auth.isLoggedIn);
+
+  const navigate = useNavigate();
 
   const [recordDatasPerPage, setRecordDatasPerPage] = useState(4);
 
@@ -41,35 +43,29 @@ const Management = () => {
 
   const projectList = data.projectList;
 
-  const lastPageNum = data.totalPages;
+  const totalElements = data.totalElements;
 
   useEffect(() => {
     if (allProjectListVisible) {
-      const nextPage = currentPage + 1;
-
-      if (nextPage <= lastPageNum) {
-        queryClient.prefetchQuery(
-          ["managementAllProjectList", nextPage, allProjectListVisible],
-          () => getProjectList(nextPage, "ALL")
-        );
-      }
+      setCurrentPage(1);
     } else {
-      const nextPage = ongoingCurrentPage + 1;
-
-      if (nextPage <= lastPageNum) {
-        queryClient.prefetchQuery(
-          ["managementOngoingProjectList", nextPage, allProjectListVisible],
-          () => getProjectList(nextPage, "ONGOING")
-        );
-      }
+      setOngoingCurrentPage(1);
     }
-  }, [
-    allProjectListVisible,
-    currentPage,
-    lastPageNum,
-    ongoingCurrentPage,
-    queryClient,
-  ]);
+  }, [allProjectListVisible]);
+
+  useEffect(() => {
+    const listenBackEvent = () => {
+      navigate("/management");
+    };
+
+    const historyEvent = history.listen(({ action }) => {
+      if (action === "POP") {
+        listenBackEvent();
+      }
+    });
+
+    return historyEvent;
+  }, [navigate]);
 
   const handleClickAllProjectList = () => {
     setAllProjectListVisible((prevData) => true);
@@ -108,7 +104,11 @@ const Management = () => {
           </header>
           <main className="project-list-wrapper">
             <div>
-              <ProjectList projectList={projectList} />
+              <ProjectList
+                type={allProjectListVisible ? "all" : "ongoing"}
+                totalElements={totalElements}
+                projectList={projectList}
+              />
               <Pagination
                 currentPage={
                   allProjectListVisible ? currentPage : ongoingCurrentPage
