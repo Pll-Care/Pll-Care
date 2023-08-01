@@ -3,6 +3,10 @@ import { useNavigate, useParams } from "react-router";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import Quill from "quill";
+import ImageResize from "quill-image-resize";
 
 import { Avatar } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
@@ -11,6 +15,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShareIcon from "@mui/icons-material/Share";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
+import { useEditorImageUploader } from "../../hooks/useEditorImageHandler";
 import projectDefaultImg from "../../assets/project-default-img.jpg";
 import Button from "../common/Button";
 import AlertCheckModal from "../common/AlertCheckModal";
@@ -28,9 +33,15 @@ import {
   useModifyRecruitmentPostMutation,
 } from "../../hooks/useRecruitmentMutation";
 
+Quill.register("modules/ImageResize", ImageResize);
+
 const RecruitmentDetailContent = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const quillRef = useRef(null);
+  useEditorImageUploader(quillRef.current);
+
   // 수정 상태
   const [isEdit, setIsEdit] = useState(false);
   // 삭제 상태
@@ -87,10 +98,8 @@ const RecruitmentDetailContent = () => {
       onSuccess: (data) => {
         setFormValues({
           title: data?.title,
-          //description: data?.description,
-          description: (
-            <div dangerouslySetInnerHTML={{ __html: data?.description }} />
-          ),
+          description: data?.description,
+
           recruitStartDate: data?.recruitStartDate,
           recruitEndDate: data?.recruitEndDate,
           reference: data?.reference,
@@ -113,6 +122,7 @@ const RecruitmentDetailContent = () => {
     }
   );
 
+  console.log(formValues);
   // 모집글 수정
   const { mutate: modifyPostMutate } =
     useModifyRecruitmentPostMutation(formValues);
@@ -167,6 +177,14 @@ const RecruitmentDetailContent = () => {
     setFormValues((prevState) => ({
       ...prevState,
       [name]: value,
+    }));
+  };
+
+  // 모집글 설명 작성
+  const handleChangeDescription = (content) => {
+    setFormValues((prevState) => ({
+      ...prevState,
+      description: content,
     }));
   };
 
@@ -539,42 +557,13 @@ const RecruitmentDetailContent = () => {
         <div className="recruitment-detail-description">
           <h4>요구하는 스택</h4>
           {isEdit ? (
-            <>
-              {/*<div className="member-stack">
-                <div className="member-stack-input">
-                  <input
-                    placeholder="기술 스택을 추가하세요"
-                    type="text"
-                    value={stackInput}
-                    onChange={handleStackInputChange}
-                    ref={inputRefs.techStack}
-                    onKeyDown={stackPlusClickHandler}
-                  />
-                </div>
-                {stackInput && (
-                  <div className="member-inputcontainer-box">
-                    {filteredStacks.map((stack, index) => (
-                      <h5 key={index} onClick={() => setStackInput(stack)}>
-                        {stack}
-                      </h5>
-                    ))}
-                  </div>
-                )}
-              </div>
-              <div className="member-stack-button">
-                {stacks?.length > 0 &&
-                  stacks.map((stack) => (
-                    <Button
-                      text={stack}
-                      size="small"
-                      onClick={stackMinusClickHandler(stack)}
-                    />
-                  ))}
-                {stacks.length === 0 && (
-                  <h6>프로젝트에서 사용할 스택을 추가해보세요</h6>
-                )}
-              </div>*/}
-            </>
+            <div className="recruitment-detail-description-stacks">
+              {data?.techStackList?.map((stack, index) => (
+                <Tooltip key={index} title={stack.name}>
+                  <img key={index} src={stack.imageUrl} alt="" />
+                </Tooltip>
+              ))}
+            </div>
           ) : (
             <div className="recruitment-detail-description-stacks">
               {data?.techStackList?.map((stack, index) => (
@@ -594,15 +583,29 @@ const RecruitmentDetailContent = () => {
         <div className="recruitment-detail-description">
           <h4>설명</h4>
           {isEdit ? (
-            //<textarea
-            //  onChange={handleChange}
-            //  value={description}
-            //  name="description"
-            //  ref={inputRefs.description}
-            ///>
-            <h5>수정</h5>
+            <ReactQuill
+              className="react-quill"
+              ref={quillRef}
+              name="description"
+              value={formValues.description}
+              onChange={handleChangeDescription}
+              modules={{
+                toolbar: [
+                  [{ header: [1, 2, 3, false] }],
+                  [{ size: ["small", false, "large", "huge"] }],
+                  ["bold", "italic", "underline", "strike"],
+                  [{ align: [] }],
+                  [{ color: [] }, { background: [] }],
+                  ["link", "image"],
+                ],
+                ImageResize: {
+                  parchment: Quill.import("parchment"),
+                  modules: ["Resize", "DisplaySize", "Toolbar"],
+                },
+              }}
+            />
           ) : (
-            <div>{description}</div>
+            <div dangerouslySetInnerHTML={{ __html: data?.description }} />
           )}
         </div>
 
