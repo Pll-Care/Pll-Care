@@ -67,8 +67,6 @@ const MemberRecruitmentWrite = () => {
     }
   );
 
-  // 기본 프로젝트 이미지 => projectId에 따라 이미지 바뀔 수 있게 처리
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues((prevState) => ({
@@ -160,22 +158,22 @@ const MemberRecruitmentWrite = () => {
 
     const recruitCnt = [
       {
-        position: "BACKEND",
+        position: "백엔드",
         currentCnt: 0,
         totalCnt: parseInt(backendCnt, 10),
       },
       {
-        position: "FRONTEND",
+        position: "프론트엔드",
         currentCnt: 0,
         totalCnt: parseInt(frontendCnt, 10),
       },
       {
-        position: "MANAGER",
+        position: "기획",
         currentCnt: 0,
         totalCnt: parseInt(managerCnt, 10),
       },
       {
-        position: "DESIGN",
+        position: "디자인",
         currentCnt: 0,
         totalCnt: parseInt(designCnt, 10),
       },
@@ -185,7 +183,7 @@ const MemberRecruitmentWrite = () => {
       recruitInfo: recruitCnt,
       techStack: stacks,
     };
-    console.log(body);
+
     addPostMutate(body);
 
     setFormValues({

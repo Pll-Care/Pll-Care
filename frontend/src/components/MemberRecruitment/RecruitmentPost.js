@@ -3,12 +3,9 @@ import { Link } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
-import react from "./img/react.png";
-import firebase from "./img/firebase.png";
-import vue from "./img/vue.png";
+import projectDefaultImg from "../../assets/project-default-img.jpg";
 
 const RecruitmentPost = ({ data }) => {
-  console.log(data);
   const filteredPositions = data?.recruitInfoList
     .filter((recruitment) => recruitment.totalCnt - recruitment.currentCnt > 0)
     .map((recruitment) => recruitment.position);
@@ -16,14 +13,16 @@ const RecruitmentPost = ({ data }) => {
   return (
     <Link to={`/recruitment/${data?.postId}`} className="recruitment-post-link">
       <div className="recruitment-post">
-        <img
-          src="https://cdn.pixabay.com/photo/2015/01/08/18/25/desk-593327_640.jpg"
-          alt=""
-        />
+        {data?.projectImageUrl ? (
+          <img src={data?.projectImageUrl} alt="" />
+        ) : (
+          <img src={projectDefaultImg} alt="" />
+        )}
+
         <div className="recruitment-post-stack">
-          <img src={react} alt="" />
-          <img src={firebase} alt="" />
-          <img src={vue} alt="" />
+          {data?.techStackList.map((tech) => (
+            <img key={tech.name} src={tech.imageUrl} alt={tech.name} />
+          ))}
         </div>
 
         <div className="recruitment-post-project">
