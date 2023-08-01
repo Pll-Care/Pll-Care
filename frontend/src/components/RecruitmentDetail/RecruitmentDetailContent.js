@@ -11,6 +11,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShareIcon from "@mui/icons-material/Share";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
+import projectDefaultImg from "../../assets/project-default-img.jpg";
 import Button from "../common/Button";
 import AlertCheckModal from "../common/AlertCheckModal";
 
@@ -73,7 +74,7 @@ const RecruitmentDetailContent = () => {
   });
 
   // 모집글 디테일 페이지 조회
-  const { data } = useQuery(
+  const { data, isLoading } = useQuery(
     ["recruitmentDetail"],
     () => getRecruitmentPostDetail(id),
     {
@@ -87,16 +88,16 @@ const RecruitmentDetailContent = () => {
           contact: data?.contact,
           region: data?.region,
           backendCnt: data?.recruitInfoList.filter(
-            (stack) => stack.position === "BACKEND"
+            (stack) => stack.position === "백엔드"
           )[0].totalCnt,
           frontendCnt: data?.recruitInfoList.filter(
-            (stack) => stack.position === "FRONTEND"
+            (stack) => stack.position === "프론트엔드"
           )[0].totalCnt,
           designCnt: data?.recruitInfoList.filter(
-            (stack) => stack.position === "DESIGN"
+            (stack) => stack.position === "디자인"
           )[0].totalCnt,
           managerCnt: data?.recruitInfoList.filter(
-            (stack) => stack.position === "MANAGER"
+            (stack) => stack.position === "기획"
           )[0].totalCnt,
         }),
     }
@@ -330,7 +331,13 @@ const RecruitmentDetailContent = () => {
           <Link to="/recruitment" className="mui-arrow">
             <ArrowBackIosNewIcon />
           </Link>
-          <img src={data?.projectImageUrl} alt="" />
+
+          {data?.projectImageUrl ? (
+            <img src={data?.projectImageUrl} alt="" />
+          ) : (
+            <img src={projectDefaultImg} alt="" />
+          )}
+
           {isEdit ? (
             <input
               type="text"
@@ -378,7 +385,12 @@ const RecruitmentDetailContent = () => {
           <h4>모집 작성자</h4>
 
           <div className="recruitment-detail-content-name">
-            <Avatar src={data?.authorImageUrl} />
+            {data?.authorImageUrl ? (
+              <Avatar src={data?.authorImageUrl} />
+            ) : (
+              <Avatar />
+            )}
+
             <h5>{data?.author}</h5>
           </div>
         </div>
@@ -565,14 +577,9 @@ const RecruitmentDetailContent = () => {
             </>
           ) : (
             <div className="recruitment-detail-description-stacks">
-              {data?.techStackDtoList.map((stack, index) => (
+              {data?.techStackList?.map((stack, index) => (
                 <Tooltip key={index} title={stack.name}>
-                  {/*<img key={index} src={stack.imageUrl} alt="" />*/}
-                  <img
-                    key={index}
-                    src="https://letspl.s3.ap-northeast-2.amazonaws.com/icons/react/react-original.svg"
-                    alt=""
-                  />
+                  <img key={index} src={stack.imageUrl} alt="" />
                 </Tooltip>
               ))}
             </div>
