@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -23,9 +23,7 @@ const MainHeader = () => {
   const [isProfilePage, setIsProfilePage] = useState(false);
   const [profileImage, setProfileImage] = useState({ id: "", imageUrl: "" });
 
-  const navigate = useNavigate();
-
-  const { replaceTo, currentPath } = useRouter();
+  const { replaceTo, currentPath, routeTo } = useRouter();
   const dispatch = useDispatch();
   const authState = useSelector((state) => state.auth.isLoggedIn);
 
@@ -77,7 +75,7 @@ const MainHeader = () => {
         <div className="main-header-left-col">
           <figure
             className="main-header-logo-img"
-            onClick={() => navigate("/")}
+            onClick={() => routeTo("/")}
           />
           <ToggleMenuButton
             isToggleMenuOpen={isToggleMenuOpen}
