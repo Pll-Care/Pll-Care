@@ -1,4 +1,4 @@
-import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Outlet, useLocation, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 
@@ -8,12 +8,12 @@ import { isToken } from "../utils/localstroageHandler";
 import { getIsLeaderData } from "../lib/apis/managementApi";
 import { getProjectData } from "../lib/apis/projectManagementApi";
 
-import { toast } from "react-toastify";
+import { useRouter } from "../hooks/useRouter";
 
 const ProjectDetailPage = () => {
   const { id } = useParams();
 
-  const navigate = useNavigate();
+  const { replaceTo } = useRouter();
 
   const location = useLocation();
 
@@ -34,19 +34,19 @@ const ProjectDetailPage = () => {
   );
 
   useEffect(() => {
-    !isToken("access_token") && navigate("/", { replace: true });
+    !isToken("access_token") && replaceTo("/");
   }, []);
 
   useEffect(() => {
     const pathRegex = new RegExp(`/management/${id}$`);
 
     if (data && location.pathname.match(pathRegex)) {
-      navigate(`/management/${id}/overview`, { replace: true });
+      replaceTo(`/management/${id}/overview`);
     }
-  }, [id, navigate, location.pathname, data]);
+  }, [id, location.pathname, data, replaceTo]);
 
   if (!data) {
-    navigate(-1, { replace: true });
+    replaceTo(-1);
     return null;
   }
 

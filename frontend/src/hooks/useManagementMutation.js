@@ -1,7 +1,8 @@
-import { useNavigate } from "react-router-dom";
 import { useQueryClient, useMutation } from "react-query";
 
 import { toast } from "react-toastify";
+
+import { useRouter } from "./useRouter";
 
 import {
   completeProject,
@@ -13,7 +14,7 @@ import {
 
 const useManagementMutation = () => {
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
+  const { routeTo } = useRouter();
 
   const { mutate: createMutate } = useMutation(createProject, {
     onSuccess: () => {
@@ -31,7 +32,7 @@ const useManagementMutation = () => {
       queryClient.invalidateQueries(["managementOngoingProjectList"]);
       queryClient.invalidateQueries(["managementAllProjectList"]);
 
-      navigate("/management");
+      routeTo("/management");
       toast.success("삭제되었습니다!");
     },
     onError: () => {
@@ -45,7 +46,7 @@ const useManagementMutation = () => {
       queryClient.invalidateQueries(["managementAllProjectList"]);
       queryClient.invalidateQueries(["completeProjectData"]);
 
-      navigate("/management");
+      routeTo("/management");
       toast.success("완료 처리되었습니다!");
     },
     onError: () => {
@@ -58,7 +59,7 @@ const useManagementMutation = () => {
       queryClient.invalidateQueries(["managementOngoingProjectList"]);
       queryClient.invalidateQueries(["managementAllProjectList"]);
 
-      navigate("/management");
+      routeTo("/management");
       toast.success("수정되었습니다!");
     },
     onError: () => {
