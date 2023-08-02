@@ -8,9 +8,11 @@ import ToggleMenuButton from "./ToggleMenuButton";
 
 import { authActions } from "../../redux/authSlice";
 import { useRouter } from "../../hooks/useRouter";
+import { getProfileImage } from "../../lib/apis/mainHeaderApi";
+
 import profile_default from "../../assets/profile-default-img.png";
 import profile_isProfile from "../../assets/ranking-img.png";
-import { getProfileImage } from "../../lib/apis/mainHeaderApi";
+import logoImgUrl from "../../assets/logo-img.png";
 
 export const headerMenu = [
   { id: 1, link: "/management", title: "프로젝트 관리" },
@@ -74,6 +76,11 @@ const MainHeader = () => {
       >
         <div className="main-header-left-col">
           <figure
+            style={{
+              backgroundImage: `url(${
+                logoImgUrl
+              })`,
+            }}
             className="main-header-logo-img"
             onClick={() => routeTo("/")}
           />
