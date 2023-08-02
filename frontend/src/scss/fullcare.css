@@ -1885,11 +1885,12 @@ a {
   align-items: center;
 }
 .evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col .evaluation-management-badges figure {
-  border: 2px solid #cccccc;
   border-radius: 50%;
   width: 30px;
   height: 30px;
-  background-color: #cccccc;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 .evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col .evaluation-management-badges .badge-quantity {
   position: relative;
@@ -1898,7 +1899,7 @@ a {
 .evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col .evaluation-management-badges .badge-quantity div {
   position: absolute;
   top: 5px;
-  left: 9px;
+  left: 20px;
 }
 .evaluation-management .final-evaluation-wrapper {
   background: rgba(0, 0, 0, 0.8);
@@ -2004,10 +2005,12 @@ a {
   align-items: center;
 }
 .evaluation-management-final-evaluation .final-evaluation-body .badges-body .badge figure {
-  background-color: #cccccc;
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 .evaluation-management-final-evaluation .final-evaluation-body .content {
   display: flex;

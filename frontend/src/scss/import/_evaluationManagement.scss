@@ -255,11 +255,15 @@
             }
 
             figure {
-              border: 2px solid #cccccc;
               border-radius: 50%;
               width: 30px;
               height: 30px;
-              background-color: #cccccc;
+
+              background: {
+                position: center;
+                repeat: no-repeat;
+                size: 100%;
+              }
             }
 
             .badge-quantity {
@@ -269,7 +273,7 @@
               div {
                 position: absolute;
                 top: 5px;
-                left: 9px;
+                left: 20px;
               }
             }
 
@@ -400,10 +404,15 @@
             align-items: center;
 
             figure {
-              background-color: #cccccc;
               width: 40px;
               height: 40px;
               border-radius: 50%;
+
+              background: {
+                position: center;
+                repeat: no-repeat;
+                size: 100%;
+              }
             }
           }
         }

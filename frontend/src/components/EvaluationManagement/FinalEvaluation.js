@@ -11,6 +11,11 @@ import ControlMenu from "../common/ControlMenu";
 import { getProjectId } from "../../utils/getProjectId";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 
+import enthusiasticParticipantBadgeImgUrl from "../../assets/enthusiastic-participant-badge-img.png";
+import goodLeaderBadgeImgUrl from "../../assets/good-leader-badge-img.png";
+import ideaBankBadgeImgUrl from "../../assets/idea-bank-badge-img.png";
+import bestSupporterBadgeImgUrl from "../../assets/best-supporter-badge-img.png";
+
 const evaluationCriterion = [
   {
     name: "성실도",
@@ -141,6 +146,21 @@ const FinalEvaluation = ({
     }
   };
 
+  const getBadgeImgUrl = (idx) => {
+    switch (idx) {
+      case 0:
+        return goodLeaderBadgeImgUrl;
+      case 1:
+        return enthusiasticParticipantBadgeImgUrl;
+      case 2:
+        return bestSupporterBadgeImgUrl;
+      case 3:
+        return ideaBankBadgeImgUrl;
+      default:
+        return '';
+    }
+  }
+
   return (
     <div className="final-evaluation-wrapper" ref={modalOutsideRef}>
       {type === "evaluation" ? (
@@ -169,7 +189,13 @@ const FinalEvaluation = ({
               <div className="badges-body">
                 {badgeQuantity?.map((badge, idx) => (
                   <div className="badge" key={idx}>
-                    <figure />
+                    <figure
+                      style={{
+                        backgroundImage: `url(${
+                          getBadgeImgUrl(idx)
+                        })`,
+                      }}
+                    />
                     <div>{badge.evaluationBadge}</div>
                     <div>{badge.quantity} 개</div>
                   </div>

@@ -2,14 +2,34 @@ import defaultImgUrl from "../../assets/project-default-img.jpg";
 
 import Button from "../../components/common/Button";
 
+import enthusiasticParticipantBadgeImgUrl from "../../assets/enthusiastic-participant-badge-img.png";
+import goodLeaderBadgeImgUrl from "../../assets/good-leader-badge-img.png";
+import ideaBankBadgeImgUrl from "../../assets/idea-bank-badge-img.png";
+import bestSupporterBadgeImgUrl from "../../assets/best-supporter-badge-img.png";
+
 const ParticipantItem = ({
   member,
   handleFinalEvaluationModal,
   handleClickParticipant,
   isCompleted,
   isSelf,
-  finalEvalId
+  finalEvalId,
 }) => {
+  const getBadgeImgUrl = (idx) => {
+    switch (idx) {
+      case 0:
+        return bestSupporterBadgeImgUrl;
+      case 1:
+        return enthusiasticParticipantBadgeImgUrl;
+      case 2:
+        return goodLeaderBadgeImgUrl;
+      case 3:
+        return ideaBankBadgeImgUrl;
+      default:
+        return "";
+    }
+  };
+
   return (
     <div
       onClick={() => handleClickParticipant(member.badgeDtos, member.id)}
@@ -38,7 +58,11 @@ const ParticipantItem = ({
                       " "
                     )}
                   >
-                    <figure />
+                    <figure
+                      style={{
+                        backgroundImage: `url(${getBadgeImgUrl(idx)})`,
+                      }}
+                    />
                     <div>X{badge.quantity}</div>
                   </div>
                 ) : null
@@ -50,7 +74,9 @@ const ParticipantItem = ({
           <Button
             text={"최종 평가하기"}
             size={"small"}
-            onClick={() => handleFinalEvaluationModal("evaluation", member.name, -1)}
+            onClick={() =>
+              handleFinalEvaluationModal("evaluation", member.name, -1)
+            }
           />
         )}
         {isCompleted && !isSelf && finalEvalId && (
@@ -58,7 +84,13 @@ const ParticipantItem = ({
             text={"최종 평가보기"}
             size={"small"}
             type={"positive"}
-            onClick={() => handleFinalEvaluationModal("showEvaluation", member.name, finalEvalId)}
+            onClick={() =>
+              handleFinalEvaluationModal(
+                "showEvaluation",
+                member.name,
+                finalEvalId
+              )
+            }
           />
         )}
       </div>
