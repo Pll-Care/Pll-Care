@@ -3,14 +3,19 @@
   height: 90px;
   display: grid;
   grid-template-rows: 100%;
-  grid-template-columns: 10% 70% 20%;
+  grid-template-columns: 20% 60% 20%;
 
   &-left-col {
     .main-header-logo-img {
-      border: $border;
-      width: 60px;
+      width: 90%;
       height: 60px;
       cursor: pointer;
+
+      background: {
+        position: center;
+        repeat: no-repeat;
+        size: 100%;
+      }
     }
 
     @include displayFlex;
