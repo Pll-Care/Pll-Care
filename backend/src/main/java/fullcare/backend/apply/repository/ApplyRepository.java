@@ -18,7 +18,7 @@ public interface ApplyRepository extends JpaRepository<Apply, Long> {
 
     Optional<Apply> findByPostIdAndMemberId(Long postId, Long memberId);
 
-    @Query("select a from Apply a join a.post p join p.project pro where pro.id =: projectId")
+    @Query("select a from Apply a join a.post p where p.project.id = :projectId")
     @EntityGraph(attributePaths = {"member"})
     List<Apply> findByProjectId(@Param("projectId") Long projectId);
 
