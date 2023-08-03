@@ -71,9 +71,7 @@ public class ScheduleController {
     })
     @GetMapping("/{scheduleId}")
     public ResponseEntity<ScheduleDetailResponse> find(@PathVariable Long scheduleId, @Valid @RequestParam(name = "project_id") Long projectId, @CurrentLoginMember Member member) {
-        ProjectMember projectMember = projectService.isProjectAvailable(projectId, member.getId(), true);
-
-        ScheduleDetailResponse response = scheduleService.findSchedule(scheduleId, projectMember);
+        ScheduleDetailResponse response = scheduleService.findSchedule(scheduleId, projectId, member.getId());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -83,8 +81,7 @@ public class ScheduleController {
     })
     @PutMapping("/{scheduleId}")
     public ResponseEntity update(@PathVariable Long scheduleId, @Valid @RequestBody ScheduleUpdateRequest scheduleUpdateRequest, @CurrentLoginMember Member member) {
-        projectService.isProjectAvailable(scheduleUpdateRequest.getProjectId(), member.getId(), false);
-        if (!scheduleService.updateSchedule(scheduleUpdateRequest, scheduleId)) {
+        if (!scheduleService.updateSchedule(scheduleUpdateRequest, scheduleId, member.getId())) {
             throw new UnauthorizedAccessException(ScheduleErrorCode.INVALID_MODIFY);
         }
         return new ResponseEntity(HttpStatus.OK);
@@ -96,12 +93,10 @@ public class ScheduleController {
     })
     @DeleteMapping("/{scheduleId}")
     public ResponseEntity delete(@PathVariable Long scheduleId, @Valid @RequestBody ScheduleDeleteRequest scheduleDeleteRequest, @CurrentLoginMember Member member) {
-        ProjectMember projectMember = projectService.isProjectAvailable(scheduleDeleteRequest.getProjectId(), member.getId(), false);
         //? 작성자 또는 팀 리더만 삭제 가능
-        if (!scheduleService.validateDelete(scheduleId, scheduleDeleteRequest.getProjectId(), member.getId(), projectMember)) {
+        if (!scheduleService.validateDelete(scheduleId, scheduleDeleteRequest.getProjectId(), member.getId())) {
             throw new UnauthorizedAccessException(ScheduleErrorCode.INVALID_DELETE);
         }
-
         scheduleService.deleteSchedule(scheduleId);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -114,8 +109,7 @@ public class ScheduleController {
     })
     @GetMapping("/list")
     public ResponseEntity<CustomResponseDto> list(@RequestParam(name = "project_id") Long projectId, @CurrentLoginMember Member member) {
-        ProjectMember projectMember = projectService.isProjectAvailable(projectId, member.getId(), true);
-        CustomResponseDto response = scheduleService.findScheduleList(projectMember);
+        CustomResponseDto response = scheduleService.findScheduleList(projectId, member.getId());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -125,8 +119,7 @@ public class ScheduleController {
     })
     @GetMapping("/calenderlist")
     public ResponseEntity<ScheduleCalenderMonthResponse> calenderViewList(@Valid @RequestParam("project_id") Long projectId, @CurrentLoginMember Member member) {
-        projectService.isProjectAvailable(projectId, member.getId(), true);
-        ScheduleCalenderMonthResponse response = scheduleService.findScheduleCalenderList(projectId);
+        ScheduleCalenderMonthResponse response = scheduleService.findScheduleCalenderList(projectId, member.getId());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -136,8 +129,7 @@ public class ScheduleController {
     })
     @GetMapping("/daily")
     public ResponseEntity<List<ScheduleMonthResponse>> dailyList(@Valid @RequestParam("project_id") Long projectId, @CurrentLoginMember Member member) {
-        projectService.isProjectAvailable(projectId, member.getId(), true);
-        List<ScheduleMonthResponse> response = scheduleService.findDailySchedule(projectId);
+        List<ScheduleMonthResponse> response = scheduleService.findDailySchedule(projectId, member.getId());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -151,8 +143,6 @@ public class ScheduleController {
                                                                              @CurrentLoginMember Member member) {
         PageRequest of = pageRequest.of("startDate");
         Pageable pageable = (Pageable) of;
-        projectService.isProjectAvailable(scheduleCondition.getProjectId(), member.getId(), false);
-
         CustomPageImpl<ScheduleSearchResponse> response = scheduleService.searchScheduleList(pageable, member, scheduleCondition);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -163,8 +153,7 @@ public class ScheduleController {
     })
     @PostMapping("/{scheduleId}/state")
     public ResponseEntity updateState(@PathVariable Long scheduleId, @Valid @RequestBody ScheduleStateUpdateRequest scheduleStateUpdateRequest, @CurrentLoginMember Member member) {
-        projectService.isProjectAvailable(scheduleStateUpdateRequest.getProjectId(), member.getId(), false);
-        scheduleService.updateState(scheduleStateUpdateRequest, scheduleId);
+        scheduleService.updateState(scheduleStateUpdateRequest, scheduleId, member.getId());
         return new ResponseEntity(HttpStatus.OK);
     }
 

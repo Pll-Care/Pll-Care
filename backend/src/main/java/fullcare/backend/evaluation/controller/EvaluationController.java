@@ -65,7 +65,6 @@ public class EvaluationController {
     @PostMapping("/midterm")
     public ResponseEntity midtermEvalCreate(@RequestBody MidTermEvalCreateRequest midTermEvalCreateRequest,
                                             @CurrentLoginMember Member member) {
-        projectService.isProjectAvailable(midTermEvalCreateRequest.getProjectId(), member.getId(), false);
         evaluationService.createMidtermEvaluation(midTermEvalCreateRequest, member);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -77,9 +76,7 @@ public class EvaluationController {
     @GetMapping("/midterm/detail")
     public ResponseEntity<List<BadgeDto>> findMidterm(@RequestParam("project_id") Long projectId,
                                                       @CurrentLoginMember Member member) {
-        projectService.isProjectAvailable(projectId, member.getId(), true);
         List<BadgeDto> response = evaluationService.findMidtermEvaluationDetailResponse(projectId, member.getId());
-
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
@@ -90,8 +87,7 @@ public class EvaluationController {
     @GetMapping("/midtermlist") // 디자인에서 뱃지 개수 차트 부분
     public ResponseEntity<EverythingEvalResponse<FinalCharDto<BadgeDto>, MidTermRankingDto>> midtermEvalList(@RequestParam("project_id") Long projectId,
                                                                                                              @CurrentLoginMember Member member) {
-        ProjectMember projectMember = projectService.isProjectAvailable(projectId, member.getId(), true);
-        EverythingEvalResponse response = evaluationService.findMidtermEvaluationList(projectMember);
+        EverythingEvalResponse response = evaluationService.findMidtermEvaluationList(projectId, member.getId());
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
@@ -146,8 +142,7 @@ public class EvaluationController {
     @GetMapping("/final/{evaluationId}")
     public ResponseEntity<FinalEvaluationResponse> finalEvalDetails(@PathVariable Long evaluationId, @RequestParam("project_id") Long projectId,
                                                                     @CurrentLoginMember Member member) {// ? 평가된 사람 id, 평가 id 조건 검색 해서 일치하면 접근 허용 필요
-        projectService.isProjectAvailable(projectId, member.getId(), true);
-        FinalEvaluationResponse response = evaluationService.findFinalEvaluationDetailResponse(evaluationId);
+        FinalEvaluationResponse response = evaluationService.findFinalEvaluationDetailResponse(projectId, member.getId(), evaluationId);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
@@ -158,8 +153,7 @@ public class EvaluationController {
     @GetMapping("/finallist") // 최종평가 차트 api
     public ResponseEntity<EverythingEvalResponse<FinalCharDto<ScoreDto>, FinalTermRankingDto>> finalEvalList(@RequestParam("project_id") Long projectId,
                                                                                                              @CurrentLoginMember Member member) {
-        ProjectMember projectMember = projectService.isProjectAvailable(projectId, member.getId(), true);
-        EverythingEvalResponse response = evaluationService.findFinalEvaluationList(projectMember);
+        EverythingEvalResponse response = evaluationService.findFinalEvaluationList(projectId, member.getId());
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
@@ -170,8 +164,7 @@ public class EvaluationController {
     @GetMapping("/participant")
     public ResponseEntity<List<ParticipantResponse>> findParticipantList(@RequestParam("project_id") Long projectId,
                                                                          @CurrentLoginMember Member member) {
-        ProjectMember projectMember = projectService.isProjectAvailable(projectId, member.getId(), true);
-        List<ParticipantResponse> response = evaluationService.findParticipantList(projectMember);
+        List<ParticipantResponse> response = evaluationService.findParticipantList(projectId, member.getId());
         return new ResponseEntity(response, HttpStatus.OK);
     }
 

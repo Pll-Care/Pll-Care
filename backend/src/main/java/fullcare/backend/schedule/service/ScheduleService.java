@@ -10,6 +10,7 @@ import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.repository.ProjectRepository;
+import fullcare.backend.project.service.ProjectService;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.projectmember.repository.ProjectMemberRepository;
@@ -54,6 +55,7 @@ public class ScheduleService {
     private final MemberRepository memberRepository;
     private final ScheduleMemberRepository scheduleMemberRepository;
     private final ScheduleRepositoryCustom scheduleRepositoryCustom;
+    private final ProjectService projectService;
 
 
     private static List<ScheduleSearchResponse> pageResponse(Pageable pageable, List<ScheduleSearchResponse> newResponse) {
@@ -81,11 +83,13 @@ public class ScheduleService {
         return false;
     }
 
-    public boolean validateDelete(Long scheduleId, Long projectId, Long memberId, ProjectMember projectMember) {
+    public boolean validateDelete(Long scheduleId, Long projectId, Long memberId) {
+        ProjectMember projectMember = projectService.isProjectAvailable(projectId, memberId, false);
         return !(!validateAuthor(projectId, scheduleId, memberId) && !projectMember.isLeader());
     }
 
-    public boolean updateSchedule(ScheduleUpdateRequest scheduleUpdateRequest, Long scheduleId) {// 멤버 로그인 사용자 검증 수정
+    public boolean updateSchedule(ScheduleUpdateRequest scheduleUpdateRequest, Long scheduleId, Long memberId) {// 멤버 로그인 사용자 검증 수정
+        projectService.isProjectAvailable(scheduleUpdateRequest.getProjectId(), memberId, false);
         Schedule schedule = scheduleRepository.findJoinSMById(scheduleId).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
         if ((schedule instanceof Meeting && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.MILESTONE)) || (schedule instanceof Milestone && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.MEETING))) {
             throw new ScheduleCategoryMisMatchException(ScheduleErrorCode.CATEGORY_NOT_MODIFY);
@@ -138,9 +142,8 @@ public class ScheduleService {
     }
 
     @Transactional(readOnly = true)
-    public CustomResponseDto findScheduleList(ProjectMember projectMember) {
-        Project project = projectMember.getProject();
-        Long projectId = project.getId();
+    public CustomResponseDto findScheduleList(Long projectId, Long memberId) {
+        Project project = projectService.isProjectAvailable(projectId, memberId, true).getProject();
         LocalDate startDate = project.getStartDate();
         LocalDate endDate = project.getEndDate();
         long diff = ChronoUnit.WEEKS.between(startDate, endDate);
@@ -159,7 +162,8 @@ public class ScheduleService {
     }
 
     @Transactional(readOnly = true)
-    public ScheduleCalenderMonthResponse findScheduleCalenderList(Long projectId) { // 1일부터 31일까지 일정
+    public ScheduleCalenderMonthResponse findScheduleCalenderList(Long projectId, Long memberId) { // 1일부터 31일까지 일정
+        projectService.isProjectAvailable(projectId, memberId, true);
         List<Schedule> scheduleList = scheduleRepository.findByProjectId(projectId);
         ScheduleCalenderMonthResponse scheduleMonthResponse = toScheduleMonthResponse(scheduleList);
         scheduleMonthResponse.getMeetings().sort(Comparator.comparing(MeetingDto::getStartDate));// 날짜 기준 내림차순 정렬
@@ -168,7 +172,8 @@ public class ScheduleService {
     }
 
     @Transactional
-    public List<ScheduleMonthResponse> findDailySchedule(Long projectId) {
+    public List<ScheduleMonthResponse> findDailySchedule(Long projectId, Long memberId) {
+        projectService.isProjectAvailable(projectId, memberId, true);
         LocalDateTime startDate = LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDateTime.now().getDayOfMonth(), 0, 0, 0);
         LocalDateTime endDate = LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDateTime.now().getDayOfMonth(), 23, 59, 59);
         List<Schedule> scheduleList = scheduleRepository.findDaily(projectId, startDate, endDate);
@@ -179,6 +184,7 @@ public class ScheduleService {
 
     @Transactional
     public CustomPageImpl<ScheduleSearchResponse> searchScheduleList(Pageable pageable, Member member, ScheduleCondition scheduleCondition) { // 1일부터 31일까지 일정
+        projectService.isProjectAvailable(scheduleCondition.getProjectId(), member.getId(), false);
         Member findMember = memberRepository.findById(member.getId()).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
         List<Schedule> scheduleList = scheduleRepositoryCustom.search(scheduleCondition, scheduleCondition.getProjectId());//? 모든 일정을 가져와서 검증
 
@@ -188,7 +194,8 @@ public class ScheduleService {
     }
 
 
-    public void updateState(ScheduleStateUpdateRequest scheduleStateUpdateRequest, Long scheduleId) { // 상태 바꿀 때도 schedulemember recentview 바꿔야함
+    public void updateState(ScheduleStateUpdateRequest scheduleStateUpdateRequest, Long scheduleId, Long memberId) { // 상태 바꿀 때도 schedulemember recentview 바꿔야함
+        projectService.isProjectAvailable(scheduleStateUpdateRequest.getProjectId(), memberId, false);
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
         LocalDateTime now = LocalDateTime.now();
         schedule.updateState(now, scheduleStateUpdateRequest.getState());
@@ -445,9 +452,8 @@ public class ScheduleService {
     }
 
     @Transactional
-    public ScheduleDetailResponse findSchedule(Long scheduleId, ProjectMember Pm) {
-        Project project = Pm.getProject();
-        Long memberId = Pm.getMember().getId();
+    public ScheduleDetailResponse findSchedule(Long scheduleId, Long projectId, Long memberId) {
+        Project project = projectService.isProjectAvailable(projectId, memberId, true).getProject();
         Schedule schedule = scheduleRepository.findJoinSMById(scheduleId).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
         List<ProjectMember> projectMembers = project.getProjectMembers();
         List<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();
@@ -460,7 +466,7 @@ public class ScheduleService {
                 .content(schedule.getContent())
                 .startDate(schedule.getStartDate())
                 .endDate(schedule.getEndDate())
-                .deleteAuthorization(validateDelete(scheduleId, project.getId(), memberId, pmMe))
+                .deleteAuthorization(validateDelete(scheduleId, project.getId(), memberId))
                 .build();
 
         for (ProjectMember projectMember : projectMembers) {
