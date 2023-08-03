@@ -81,7 +81,7 @@ public class TestDataInit {
         createProfile();
         createMemoAndBookMark();
         createPostAndLikes();
-        createApply();
+//        createApply();
 
     }
 
@@ -127,8 +127,9 @@ public class TestDataInit {
             techStacks.add(TechStack.Git);
             techStacks.add(TechStack.Spring);
             techStacks.add(TechStack.SpringBoot);
-
-            Long postId = postService.createPost(randomMemberId, new PostCreateRequest(rand.nextLong(1, 8), "모집글" + i, "내용" + i, startDate.plusMonths(i), endDate, "참조" + i, "연락" + i, "지역" + i, techStacks, recruitInfos));
+            long projectId = rand.nextLong(1, 8);
+            Project project = projectService.findProject(projectId);
+            Long postId = postService.createPost(randomMemberId, new PostCreateRequest(projectId, "모집글" + i, "내용" + i, project.getStartDate().plusMonths(1l), project.getEndDate().minusWeeks(1l), "참조" + i, "연락" + i, "지역" + i, techStacks, recruitInfos));
 
             if (i % 3 == 0) {
                 postService.likePost(randomMemberId, postId);
@@ -158,7 +159,7 @@ public class TestDataInit {
         techStacks2.add(TechStack.Firebase);
         techStacks2.add(TechStack.Django);
         projectExperiences.add(ProjectExperienceRequestDto.builder().title("title1").description("설명2222").startDate(LocalDate.now()).endDate(LocalDate.now().plusWeeks(5l)).techStack(techStacks2).build());
-        profileService.updateProfile(member, new ProfileUpdateRequest(contact, RecruitPosition.BACKEND, techStacks, 0l, projectExperiences, false));
+        profileService.updateProfile(member, new ProfileUpdateRequest(contact, RecruitPosition.BACKEND, techStacks, null, projectExperiences, false));
 
 
     }

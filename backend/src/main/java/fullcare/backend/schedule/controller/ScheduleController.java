@@ -1,7 +1,7 @@
 package fullcare.backend.schedule.controller;
 
 import fullcare.backend.global.errorcode.ScheduleErrorCode;
-import fullcare.backend.global.exceptionhandling.exception.InvalidAccessException;
+import fullcare.backend.global.exceptionhandling.exception.UnauthorizedAccessException;
 import fullcare.backend.global.exceptionhandling.exception.NotFoundCategoryException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.service.ProjectService;
@@ -85,7 +85,7 @@ public class ScheduleController {
     public ResponseEntity update(@PathVariable Long scheduleId, @Valid @RequestBody ScheduleUpdateRequest scheduleUpdateRequest, @CurrentLoginMember Member member) {
         projectService.isProjectAvailable(scheduleUpdateRequest.getProjectId(), member.getId(), false);
         if (!scheduleService.updateSchedule(scheduleUpdateRequest, scheduleId)) {
-            throw new InvalidAccessException(ScheduleErrorCode.INVALID_MODIFY);
+            throw new UnauthorizedAccessException(ScheduleErrorCode.INVALID_MODIFY);
         }
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -99,7 +99,7 @@ public class ScheduleController {
         ProjectMember projectMember = projectService.isProjectAvailable(scheduleDeleteRequest.getProjectId(), member.getId(), false);
         //? 작성자 또는 팀 리더만 삭제 가능
         if (!scheduleService.validateDelete(scheduleId, scheduleDeleteRequest.getProjectId(), member.getId(), projectMember)) {
-            throw new InvalidAccessException(ScheduleErrorCode.INVALID_DELETE);
+            throw new UnauthorizedAccessException(ScheduleErrorCode.INVALID_DELETE);
         }
 
         scheduleService.deleteSchedule(scheduleId);
