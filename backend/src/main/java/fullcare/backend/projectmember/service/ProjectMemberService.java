@@ -11,7 +11,6 @@ import fullcare.backend.global.exceptionhandling.exception.EntityNotFoundExcepti
 import fullcare.backend.global.exceptionhandling.exception.UnauthorizedAccessException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.post.domain.Post;
-import fullcare.backend.post.domain.Recruitment;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.dto.request.*;
 import fullcare.backend.project.dto.response.ApplyMemberListResponse;
@@ -23,6 +22,7 @@ import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.projectmember.domain.ProjectMemberType;
 import fullcare.backend.projectmember.repository.ProjectMemberRepository;
+import fullcare.backend.recruitment.domain.Recruitment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,7 +68,7 @@ public class ProjectMemberService {
 
         try {
             ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, memberId, false);
-            
+
             List<Apply> applyList = applyRepository.findByProjectId(findProjectMember.getProject().getId());
             List<ApplyMemberListResponse> response = applyList.stream().map(a -> ApplyMemberListResponse.builder()
                     .postId(a.getPost().getId())

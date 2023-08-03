@@ -1,5 +1,6 @@
-package fullcare.backend.post.domain;
+package fullcare.backend.recruitment.domain;
 
+import fullcare.backend.post.domain.Post;
 import fullcare.backend.projectmember.domain.ProjectMemberPositionType;
 import jakarta.persistence.*;
 import lombok.*;

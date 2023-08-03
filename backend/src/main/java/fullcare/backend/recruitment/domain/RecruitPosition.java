@@ -1,4 +1,4 @@
-package fullcare.backend.post.domain;
+package fullcare.backend.recruitment.domain;
 
 public enum RecruitPosition {
     BACKEND,

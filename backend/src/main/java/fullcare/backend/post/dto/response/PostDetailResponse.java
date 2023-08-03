@@ -1,7 +1,7 @@
 package fullcare.backend.post.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import fullcare.backend.post.domain.RecruitInfo;
+import fullcare.backend.recruitment.domain.RecruitInfo;
 import fullcare.backend.util.dto.TechStackDto;
 import lombok.Builder;
 import lombok.Getter;

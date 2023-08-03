@@ -1,12 +1,15 @@
 package fullcare.backend.profile.domain;
 
 import fullcare.backend.member.domain.Member;
-import fullcare.backend.post.domain.RecruitPosition;
 import fullcare.backend.profile.dto.ProjectExperienceRequestDto;
 import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
+import fullcare.backend.recruitment.domain.RecruitPosition;
 import fullcare.backend.util.TechStackUtil;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Length;
 
@@ -39,7 +42,7 @@ public class Profile {
     @Lob
     @Column(name = "tech_stack")
     private String techStack;
-    @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY, cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProjectExperience> projectExperiences = new ArrayList<>();
 
     public Profile(String bio) {
@@ -62,12 +65,11 @@ public class Profile {
             ProjectExperience projectExperience = this.projectExperiences.stream().filter(pe -> pe.getId() == profileUpdateRequest.getProjectId())
                     .findFirst().orElseThrow(() -> new EntityNotFoundException("프로젝트 경험이 없습니다."));
             projectExperiences.remove(projectExperience);
-        }else if(profileUpdateRequest.getProjectId() != null && !profileUpdateRequest.isDelete() && profileUpdateRequest.getProjectExperiences() != null){
+        } else if (profileUpdateRequest.getProjectId() != null && !profileUpdateRequest.isDelete() && profileUpdateRequest.getProjectExperiences() != null) {
             ProjectExperience projectExperience = this.projectExperiences.stream().filter(pe -> pe.getId() == profileUpdateRequest.getProjectId())
                     .findFirst().orElseThrow(() -> new EntityNotFoundException("프로젝트 경험이 없습니다."));
             projectExperience.update(profileUpdateRequest.getProjectExperiences().get(0));
-        }
-        else {
+        } else {
             if (profileUpdateRequest.getProjectExperiences() != null) {
                 List<ProjectExperienceRequestDto> peList = profileUpdateRequest.getProjectExperiences();
                 for (ProjectExperienceRequestDto peDto : peList) {
@@ -78,7 +80,7 @@ public class Profile {
                             .endDate(peDto.getEndDate())
                             .profile(this)
                             .build();
-                    if (peDto.getTechStack() != null){
+                    if (peDto.getTechStack() != null) {
                         projectExperience.updateTechStack(TechStackUtil.listToString(peDto.getTechStack()));
                     }
                     this.projectExperiences.add(projectExperience);

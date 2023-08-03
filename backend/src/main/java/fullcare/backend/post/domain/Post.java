@@ -7,6 +7,7 @@ import fullcare.backend.global.exceptionhandling.exception.InvalidDateRangeExcep
 import fullcare.backend.likes.domain.Likes;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
+import fullcare.backend.recruitment.domain.Recruitment;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -119,7 +120,7 @@ public class Post extends BaseEntity {
         this.recruitments.addAll(recruitments);
     }
 
-    public void completed(){
+    public void completed() {
         this.state = State.COMPLETE;
     }
 }
