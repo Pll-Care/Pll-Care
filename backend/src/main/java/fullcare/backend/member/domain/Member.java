@@ -1,11 +1,13 @@
 package fullcare.backend.member.domain;
 
+import fullcare.backend.apply.domain.Apply;
 import fullcare.backend.evaluation.domain.FinalTermEvaluation;
 import fullcare.backend.evaluation.domain.MidtermEvaluation;
 import fullcare.backend.likes.domain.Likes;
 import fullcare.backend.post.domain.Post;
 import fullcare.backend.profile.domain.Profile;
 import fullcare.backend.projectmember.domain.ProjectMember;
+import fullcare.backend.projectmember.domain.ProjectMemberPositionType;
 import fullcare.backend.schedule.domain.Schedule;
 import jakarta.persistence.*;
 import lombok.*;
@@ -118,5 +120,25 @@ public class Member {
 
     public void updateRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    public Likes like(Post post) {
+        Likes likes = Likes.createNewLikes()
+                .member(this)
+                .post(post)
+                .build();
+
+        return likes;
+    }
+
+
+    public Apply apply(Post post, ProjectMemberPositionType position) {
+        Apply apply = Apply.createNewApply()
+                .member(this)
+                .post(post)
+                .position(position)
+                .build();
+
+        return apply;
     }
 }

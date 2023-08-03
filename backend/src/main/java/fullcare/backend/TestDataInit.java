@@ -1,9 +1,6 @@
 package fullcare.backend;
 
 
-import fullcare.backend.apply.domain.Apply;
-import fullcare.backend.apply.repository.ApplyRepository;
-import fullcare.backend.bookmarkmemo.service.BookmarkMemoService;
 import fullcare.backend.evaluation.domain.EvaluationBadge;
 import fullcare.backend.evaluation.domain.FinalTermEvaluation;
 import fullcare.backend.evaluation.domain.MidtermEvaluation;
@@ -13,10 +10,9 @@ import fullcare.backend.evaluation.repository.MidtermEvaluationRepository;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.domain.MemberRole;
 import fullcare.backend.member.repository.MemberRepository;
-import fullcare.backend.memo.domain.Memo;
+import fullcare.backend.memo.dto.request.MemoBookmarkRequest;
 import fullcare.backend.memo.dto.request.MemoCreateRequest;
 import fullcare.backend.memo.service.MemoService;
-import fullcare.backend.post.domain.Post;
 import fullcare.backend.post.domain.RecruitInfo;
 import fullcare.backend.post.domain.RecruitPosition;
 import fullcare.backend.post.dto.request.PostCreateRequest;
@@ -27,13 +23,14 @@ import fullcare.backend.profile.dto.ProjectExperienceRequestDto;
 import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
 import fullcare.backend.profile.service.ProfileService;
 import fullcare.backend.project.domain.Project;
+import fullcare.backend.project.dto.request.ProjectApplyRequest;
 import fullcare.backend.project.dto.request.ProjectCreateRequest;
 import fullcare.backend.project.service.ProjectService;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberPositionType;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.projectmember.domain.ProjectMemberType;
-import fullcare.backend.projectmember.repository.ProjectMemberRepository;
+import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.schedule.ScheduleCategory;
 import fullcare.backend.schedule.domain.Schedule;
 import fullcare.backend.schedule.dto.request.ScheduleCreateRequest;
@@ -64,15 +61,15 @@ public class TestDataInit {
     private final MeetingService meetingService;
     private final MilestoneService milestoneService;
     private final MemoService memoService;
-    private final BookmarkMemoService bookmarkMemoService;
+
     private final PostService postService;
     private final MidtermEvaluationRepository midtermEvaluationRepository;
     private final FinalEvaluationRepository finalEvaluationRepository;
     private final ScheduleService scheduleService;
     private final ScheduleRepository scheduleRepository;
     private final ProfileService profileService;
-    private final ProjectMemberRepository projectMemberRepository;
-    private final ApplyRepository applyRepository;
+    private final ProjectMemberService projectMemberService;
+
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
     public void initData() {
@@ -84,7 +81,69 @@ public class TestDataInit {
         createProfile();
         createMemoAndBookMark();
         createPostAndLikes();
+        createApply();
 
+    }
+
+
+    private void createMemoAndBookMark() {
+        Random rand = new Random();
+        for (long i = 1l; i < 31l; i++) {
+            long randomMemberId = rand.nextLong(1, 10);
+            long randomProjectId = rand.nextLong(1, 10);
+
+            Long memoId = memoService.createMemo(projectMemberService.findProjectMember(randomProjectId, randomMemberId).getMember().getId(), new MemoCreateRequest(1l, "제목" + i, "내용" + i));
+            if (i % 3 == 0) {
+                memoService.bookmarkMemo(randomMemberId, memoId, new MemoBookmarkRequest(randomProjectId));
+            }
+        }
+    }
+
+    private void createPostAndLikes() {
+        Random rand = new Random();
+        for (long i = 1l; i < 25; i++) {
+            LocalDate startDate = LocalDate.of(2023, 1, 1);
+            LocalDate endDate = LocalDate.of(2023, 12, 31);
+
+            long randomMemberId = rand.nextLong(1, 10);
+            long randomProjectId = rand.nextLong(1, 10);
+
+            RecruitInfo recruitInfo1 = new RecruitInfo(ProjectMemberPositionType.백엔드, 0, rand.nextInt(1, 5));
+            RecruitInfo recruitInfo2 = new RecruitInfo(ProjectMemberPositionType.프론트엔드, 0, rand.nextInt(1, 5));
+            RecruitInfo recruitInfo3 = new RecruitInfo(ProjectMemberPositionType.디자인, 0, rand.nextInt(1, 5));
+            RecruitInfo recruitInfo4 = new RecruitInfo(ProjectMemberPositionType.기획, 0, rand.nextInt(1, 5));
+
+            ArrayList<RecruitInfo> recruitInfos = new ArrayList<>();
+            recruitInfos.add(recruitInfo1);
+            recruitInfos.add(recruitInfo2);
+            recruitInfos.add(recruitInfo3);
+            recruitInfos.add(recruitInfo4);
+
+            List<TechStack> techStacks = new ArrayList<>();
+            techStacks.add(TechStack.Svelte);
+            techStacks.add(TechStack.React);
+            techStacks.add(TechStack.Firebase);
+            techStacks.add(TechStack.Django);
+            techStacks.add(TechStack.Git);
+            techStacks.add(TechStack.Spring);
+            techStacks.add(TechStack.SpringBoot);
+
+            Long postId = postService.createPost(randomMemberId, new PostCreateRequest(rand.nextLong(1, 8), "모집글" + i, "내용" + i, startDate.plusMonths(i), endDate, "참조" + i, "연락" + i, "지역" + i, techStacks, recruitInfos));
+
+            if (i % 3 == 0) {
+                postService.likePost(randomMemberId, postId);
+            }
+        }
+    }
+
+    private void createApply() {
+        for (long i = 1l; i < 25; i++) {
+
+            postService.applyProjectByPost((((i * 4) - 3) % 10) + 10, i, new ProjectApplyRequest(ProjectMemberPositionType.백엔드));
+            postService.applyProjectByPost((((i * 4) - 2) % 10) + 10, i, new ProjectApplyRequest(ProjectMemberPositionType.프론트엔드));
+            postService.applyProjectByPost((((i * 4) - 1) % 10) + 10, i, new ProjectApplyRequest(ProjectMemberPositionType.디자인));
+            postService.applyProjectByPost((((i * 4)) % 10) + 10, i, new ProjectApplyRequest(ProjectMemberPositionType.기획));
+        }
     }
 
     private void createProfile() {
@@ -99,7 +158,7 @@ public class TestDataInit {
         techStacks2.add(TechStack.Firebase);
         techStacks2.add(TechStack.Django);
         projectExperiences.add(ProjectExperienceRequestDto.builder().title("title1").description("설명2222").startDate(LocalDate.now()).endDate(LocalDate.now().plusWeeks(5l)).techStack(techStacks2).build());
-        profileService.updateProfile(member, new ProfileUpdateRequest(contact, RecruitPosition.BACKEND, techStacks, null, projectExperiences, false));
+        profileService.updateProfile(member, new ProfileUpdateRequest(contact, RecruitPosition.BACKEND, techStacks, 0l, projectExperiences, false));
 
 
     }
@@ -149,52 +208,6 @@ public class TestDataInit {
         }
     }
 
-    private void createPostAndLikes() {
-        Random rand = new Random();
-        for (long i = 1l; i < 25; i++) {
-            long findMemberId = rand.nextLong(1, 10);
-
-            RecruitInfo recruitInfo1 = new RecruitInfo(ProjectMemberPositionType.백엔드, rand.nextInt(1, 5),5);
-            RecruitInfo recruitInfo2 = new RecruitInfo(ProjectMemberPositionType.프론트엔드, rand.nextInt(1, 5),5);
-            RecruitInfo recruitInfo3 = new RecruitInfo(ProjectMemberPositionType.기획, rand.nextInt(1, 5),5);
-            RecruitInfo recruitInfo4 = new RecruitInfo(ProjectMemberPositionType.디자인, rand.nextInt(1, 5),5);
-
-            ArrayList<RecruitInfo> recruitInfos = new ArrayList<>();
-            recruitInfos.add(recruitInfo1);
-            recruitInfos.add(recruitInfo2);
-            recruitInfos.add(recruitInfo3);
-            recruitInfos.add(recruitInfo4);
-            ProjectMember projectMember = projectMemberRepository.findByProjectIdAndMemberId(1l, 1l).get();
-            List<TechStack> techStacks = new ArrayList<>();
-            techStacks.add(TechStack.Firebase);
-            techStacks.add(TechStack.Spring);
-            techStacks.add(TechStack.React);
-
-            Post post = postService.createPost(projectMember,new PostCreateRequest(rand.nextLong(1, 8), "모집글" + i, "내용" + i, LocalDate.now(), LocalDate.now().plusWeeks(findMemberId), "참조" + i, "연락" + i, "지역" + i, techStacks, recruitInfos));
-            if (i<16){
-                post.completed();
-            }else if(i<23){
-                Apply apply = Apply.createNewApply().member(projectMember.getMember()).post(post).position(ProjectMemberPositionType.백엔드).build();
-                applyRepository.save(apply);
-            }
-            if (i % 3 == 0) {
-                postService.likePost(post, memberRepository.findById(1l).get());
-//                postService.likePost(post.getId(), memberRepository.findById(rand.nextLong(1, 10)).get());
-            }
-        }
-    }
-
-    private void createMemoAndBookMark() {
-        Random rand = new Random();
-        for (long i = 1l; i < 25; i++) {
-            long findMemberId = rand.nextLong(1, 10);
-            ProjectMember projectMember = projectMemberRepository.findByProjectIdAndMemberId(1l, findMemberId).get();
-            Memo memo = memoService.createMemo(projectMember, new MemoCreateRequest(1l, "제목" + i, "내용" + i));
-            if (i % 3 == 0) {
-                bookmarkMemoService.bookmarkMemo(memo, memberRepository.findById(1l).get());
-            }
-        }
-    }
 
     private void createSchedule() {
         Random rand = new Random();
@@ -249,17 +262,18 @@ public class TestDataInit {
         LocalDate endDate = LocalDate.of(2023, 12, 31);
         Member member = memberRepository.findById(1l).orElseThrow();
         for (long i = 1l; i < 10l; i++) {
-            Project project = projectService.createProject(member, new ProjectCreateRequest("제목" + i, "내용" + i, startDate.plusMonths(i), endDate, null));
+            Project project = projectService.createProject(1l, new ProjectCreateRequest("제목" + i, "내용" + i, startDate.plusMonths(i), endDate, null));
             for (long j = 2l; j < 10l; j++) {
                 if (j < 4l) {
-                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberType(ProjectMemberRoleType.팀원, ProjectMemberPositionType.백엔드));
+                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberType(ProjectMemberRoleType.팀원, ProjectMemberPositionType.백엔드)); // 2~3
                 } else if (j < 7l) {
-                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberType(ProjectMemberRoleType.팀원, ProjectMemberPositionType.프론트엔드));
+                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberType(ProjectMemberRoleType.팀원, ProjectMemberPositionType.프론트엔드)); // 4~6
                 } else if (j < 9l) {
-                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberType(ProjectMemberRoleType.팀원, ProjectMemberPositionType.디자인));
+                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberType(ProjectMemberRoleType.팀원, ProjectMemberPositionType.디자인)); // 7~8
                 } else {
-                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberType(ProjectMemberRoleType.팀원, ProjectMemberPositionType.기획));
+                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberType(ProjectMemberRoleType.팀원, ProjectMemberPositionType.기획)); // 9
                 }
+                // 10 ~ 19 까지는 어디에도 소속되지 않은 사용자
             }
         }
     }
@@ -267,7 +281,7 @@ public class TestDataInit {
     private void createMember() {
         Member member = new Member("google_101581376839285371456", "nick", "name", "fullcaredummy@gmail.com", MemberRole.USER, LocalDateTime.now(), "refresh", new Profile("한 줄 소개 입니다."));
         memberRepository.save(member);
-        for (int i = 1; i < 10; i++) {
+        for (int i = 1; i < 20; i++) {
             member = new Member("id" + i, "nick" + i, "name" + i, "email" + i, MemberRole.USER, LocalDateTime.now(), "refresh" + i, new Profile("한 줄 소개 입니다."));
             memberRepository.save(member);
         }

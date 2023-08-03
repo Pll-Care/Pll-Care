@@ -7,7 +7,7 @@ import fullcare.backend.evaluation.dto.response.MyEvalListResponse;
 import fullcare.backend.evaluation.service.EvaluationService;
 import fullcare.backend.global.State;
 import fullcare.backend.global.errorcode.MemberErrorCode;
-import fullcare.backend.global.exceptionhandling.exception.InvalidAccessException;
+import fullcare.backend.global.exceptionhandling.exception.UnauthorizedAccessException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.post.dto.response.MyPostResponse;
 import fullcare.backend.post.service.PostService;
@@ -16,7 +16,6 @@ import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
 import fullcare.backend.profile.dto.response.*;
 import fullcare.backend.profile.service.ProfileService;
 import fullcare.backend.project.service.ProjectService;
-import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.security.jwt.CurrentLoginMember;
 import fullcare.backend.util.CustomPageImpl;
 import fullcare.backend.util.CustomPageRequest;
@@ -113,7 +112,7 @@ public class ProfileController {
     @PatchMapping
     public ResponseEntity updateProfile(@PathVariable Long memberId, @CurrentLoginMember Member member, @Valid @RequestBody ProfileUpdateRequest profileUpdateRequest) {
         if (memberId != member.getId()) {
-            throw new InvalidAccessException(MemberErrorCode.MEMBER_PROFILE_INVALID_ACCESS);
+            throw new UnauthorizedAccessException(MemberErrorCode.MEMBER_PROFILE_INVALID_ACCESS);
         }
         profileService.updateProfile(member, profileUpdateRequest);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -127,7 +126,7 @@ public class ProfileController {
     @PutMapping
     public ResponseEntity updateBio(@PathVariable Long memberId, @CurrentLoginMember Member member, @Valid @RequestBody ProfileBioUpdateRequest profileBioUpdateRequest) {
         if (memberId != member.getId()) {
-            throw new InvalidAccessException(MemberErrorCode.MEMBER_PROFILE_INVALID_ACCESS);
+            throw new UnauthorizedAccessException(MemberErrorCode.MEMBER_PROFILE_INVALID_ACCESS);
         }
         profileService.updateBio(member, profileBioUpdateRequest);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -143,7 +142,7 @@ public class ProfileController {
     @GetMapping("/post")
     public ResponseEntity<CustomPageImpl<MyPostResponse>> findMyPost(@PathVariable Long memberId, @RequestParam(value = "state", defaultValue = "TBD") State state, CustomPageRequest pageRequest, @CurrentLoginMember Member member) {
         if (memberId != member.getId()) {
-            throw new InvalidAccessException(MemberErrorCode.MEMBER_PROFILE_INVALID_ACCESS);
+            throw new UnauthorizedAccessException(MemberErrorCode.MEMBER_PROFILE_INVALID_ACCESS);
         }
         PageRequest of = pageRequest.of();
         Pageable pageable = (Pageable) of;
@@ -160,7 +159,7 @@ public class ProfileController {
     @GetMapping("/post/like")
     public ResponseEntity<CustomPageImpl<MyPostResponse>> findMyLikePost(@PathVariable Long memberId, CustomPageRequest pageRequest, @CurrentLoginMember Member member) {
         if (memberId != member.getId()) {
-            throw new InvalidAccessException(MemberErrorCode.MEMBER_PROFILE_INVALID_ACCESS);
+            throw new UnauthorizedAccessException(MemberErrorCode.MEMBER_PROFILE_INVALID_ACCESS);
         }
         PageRequest of = pageRequest.of();
         Pageable pageable = (Pageable) of;
@@ -217,7 +216,6 @@ public class ProfileController {
         MyEvalChartResponse response = evaluationService.findMyEvalChart(memberId);
         return new ResponseEntity(response, HttpStatus.OK);
     }
-
 
 
 

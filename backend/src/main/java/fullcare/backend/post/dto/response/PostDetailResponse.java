@@ -16,9 +16,8 @@ public class PostDetailResponse {
 
     private Long postId;
 
-    @JsonIgnore
-    private Long projectId;
 
+    private Long projectId;
     private String projectName; // * 프로젝트 이름
     private String projectImageUrl;
 

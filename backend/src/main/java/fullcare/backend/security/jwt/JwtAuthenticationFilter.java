@@ -36,9 +36,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String accessToken = getAccessToken(request);
 
             if (refreshToken != null && jwtTokenService.validateJwtToken(refreshToken)) {
-                Authentication authentication = jwtTokenService.getAuthentication(refreshToken);
-
-                String[] newTokens = jwtTokenService.reIssueTokens(refreshToken, authentication); // * 리프레쉬 토큰이 DB와 일치 시 access, refresh 재발급
+                
+                String[] newTokens = jwtTokenService.reIssueTokens(refreshToken); // * 리프레쉬 토큰이 DB와 일치 시 access, refresh 재발급
                 String requestURI = request.getRequestURI();
                 String successUrl = UriComponentsBuilder.fromUriString("https://fullcare.store/token")
                         .queryParam("access_token", newTokens[0])
@@ -47,7 +46,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         .build().toUriString();
                 System.out.println("successUrl = " + successUrl);
 
+
+//                response.setHeader(ACCESS_TOKEN_AUTHORIZATION_HEADER, newTokens[0]);
+//                response.setHeader(REFRESH_TOKEN_AUTHORIZATION_HEADER, newTokens[1]);
+//                response.setStatus(200);
+
+
                 response.sendRedirect(successUrl);
+
                 return;
             } else if (accessToken != null && jwtTokenService.validateJwtToken(accessToken)) {
                 Authentication authentication = jwtTokenService.getAuthentication(accessToken);

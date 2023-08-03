@@ -2,6 +2,8 @@ package fullcare.backend.post.domain;
 
 import fullcare.backend.global.State;
 import fullcare.backend.global.entity.BaseEntity;
+import fullcare.backend.global.errorcode.PostErrorCode;
+import fullcare.backend.global.exceptionhandling.exception.InvalidDateRangeException;
 import fullcare.backend.likes.domain.Likes;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
@@ -69,6 +71,7 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Recruitment> recruitments = new ArrayList<>();
 
+    @BatchSize(size = 50)
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Likes> likes = new HashSet<>();  // * 좋아요 갯수는 likes set의 size를 이용
 
@@ -84,6 +87,11 @@ public class Post extends BaseEntity {
         this.author = author;
         this.title = title;
         this.description = description;
+
+        if (recruitStartDate.isAfter(recruitEndDate)) {
+            throw new InvalidDateRangeException(PostErrorCode.INVALID_DATE_RANGE); // todo 모집 날짜 자체에 대한 검증 (프로젝트 일정에 포함되는 기간인지 검증 X)
+        }
+
         this.recruitStartDate = recruitStartDate;
         this.recruitEndDate = recruitEndDate;
         this.reference = reference;

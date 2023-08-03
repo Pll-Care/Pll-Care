@@ -5,6 +5,8 @@ import fullcare.backend.evaluation.domain.FinalTermEvaluation;
 import fullcare.backend.evaluation.domain.MidtermEvaluation;
 import fullcare.backend.global.State;
 import fullcare.backend.global.entity.BaseEntity;
+import fullcare.backend.global.errorcode.ProjectErrorCode;
+import fullcare.backend.global.exceptionhandling.exception.InvalidDateRangeException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.memo.domain.Memo;
 import fullcare.backend.post.domain.Post;
@@ -75,6 +77,11 @@ public class Project extends BaseEntity {
         this.title = title;
         this.description = description;
         this.state = state;
+
+        if (!startDate.isBefore(endDate)) {
+            throw new InvalidDateRangeException(ProjectErrorCode.INVALID_DATE_RANGE);
+        }
+
         this.startDate = startDate;
         this.endDate = endDate;
         this.imageUrl = imageUrl;
@@ -94,7 +101,7 @@ public class Project extends BaseEntity {
                 .project(this)
                 .projectMemberType(projectMemberType)
                 .build();
-
+        
         projectMembers.add(pm);
     }
 

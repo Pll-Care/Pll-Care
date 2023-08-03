@@ -101,7 +101,7 @@ public class EvaluationService {
         }
         scheduleMemberRepository.findByScheduleIdAndMemberId(midTermEvalCreateRequest.getScheduleId(), voter.getId()).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_MEMBER_NOT_FOUND));
         scheduleMemberRepository.findByScheduleIdAndMemberId(midTermEvalCreateRequest.getScheduleId(), voted.getId()).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_MEMBER_NOT_FOUND));
-        Schedule schedule = scheduleRepository.findByIdAndState(midTermEvalCreateRequest.getScheduleId(), State.COMPLETE).orElseThrow(() -> new InvalidAccessException(EvaluationErrorCode.MID_EVAL_NOT_CREATE));
+        Schedule schedule = scheduleRepository.findByIdAndState(midTermEvalCreateRequest.getScheduleId(), State.COMPLETE).orElseThrow(() -> new UnauthorizedAccessException(EvaluationErrorCode.MID_EVAL_NOT_CREATE));
         Project project = projectRepository.findById(midTermEvalCreateRequest.getProjectId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
         MidtermEvaluation newMidtermEvaluation = MidtermEvaluation.createNewMidtermEval()
                 .evaluationBadge(midTermEvalCreateRequest.getEvaluationBadge())
@@ -116,13 +116,8 @@ public class EvaluationService {
 
     @Transactional
     public Long createFinalEvaluation(FinalEvalCreateRequest finalEvalCreateRequest, Member evaluator) {
-        Project project = projectRepository.findById(finalEvalCreateRequest.getProjectId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
-        project.getProjectMembers().stream()
-                .filter(pmm -> pmm.getMember().getId().equals(evaluator.getId())).findAny()
-                .orElseThrow(() -> new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS));
-
-
         Member evaluated = memberRepository.findById(finalEvalCreateRequest.getEvaluatedId()).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
+        Project project = projectRepository.findById(finalEvalCreateRequest.getProjectId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
 
         projectMemberRepository.findPMWithProjectByProjectIdAndMemberId(project.getId(), finalEvalCreateRequest.getEvaluatedId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
 
@@ -207,7 +202,7 @@ public class EvaluationService {
 
         List<MidTermRankingDto> rankingDtos = new ArrayList<>();// 랭킹 부분
         for (MidTermRankProjectionInterface r : rank) {
-            String name = members.stream().filter(m -> m.getId() == r.getId()).map(m -> m.getName()).findFirst().get();
+            String name = members.stream().filter(m -> m.getId() == r.getQuantity()).map(m -> m.getName()).findFirst().get();
             rankingDtos.add(MidTermRankingDto.builder()
                     .rank(r.getRanking())
                     .memberId(r.getId())
@@ -225,7 +220,7 @@ public class EvaluationService {
 //            System.out.println("m.getBadges() = " + chartDto.getBadges());
 //            setBadge(chartDto.getEvaluation());
         }
-        EverythingEvalResponse everythingEvalResponse = new EverythingEvalResponse(midTermEvalChartDto, rankingDtos, rankingDtos.size() != 0 ? true : false );
+        EverythingEvalResponse everythingEvalResponse = new EverythingEvalResponse(midTermEvalChartDto, rankingDtos, rankingDtos.size() != 0 ? true : false);
         return everythingEvalResponse;
     }
 
@@ -295,7 +290,7 @@ public class EvaluationService {
     }
 
     public List<ParticipantResponse> findParticipantList(ProjectMember projectMember) {
-        Project project = projectMember.getProject();// projectRepository.findProjectWithPMAndMemberById(projectMember.getProject().getId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
+        Project project = projectMember.getProject();//projectRepository.findProjectWithPMAndMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
         Long memberId = projectMember.getMember().getId();
         List<Member> members = project.getProjectMembers().stream().map(pm -> pm.getMember()).collect(Collectors.toList());
         List<BadgeDao> midtermBadgeList = midtermEvaluationRepository.findList(project.getId(), members);
@@ -318,8 +313,8 @@ public class EvaluationService {
                 }
             }
             for (FinalTermEvaluation fe : finalEvalList) { // * 로그인한 사용자가 다른사람 최종평가를 작성한적이 있으면 최종평가 ID 추가 없으면 null
-                if(project.getState().equals(State.COMPLETE) && fe.getEvaluated().getId() == member.getId()){
-                    participantResponse.updateFinalEvalId(fe.getId());
+                if (project.getState().equals(State.COMPLETE) && fe.getEvaluated() == member) {
+                    participantResponse.setFinalEvalId(fe.getId());
                 }
             }
             setBadge(participantResponse.getBadgeDtos());// * 개수가 0인 뱃지 설정

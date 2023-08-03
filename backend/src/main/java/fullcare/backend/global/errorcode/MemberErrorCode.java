@@ -8,13 +8,12 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum MemberErrorCode implements ErrorCode {
 
-    // ! 403 Forbidden
-    MEMBER_PROFILE_INVALID_ACCESS("MEMBER_001", HttpStatus.FORBIDDEN, "해당 사용자 프로필에 접근 권한이 없습니다."), // -> InvalidAccessException
-    MEMBER_PROFILE_INVALID_DELETE("MEMBER_002", HttpStatus.FORBIDDEN, "해당 사용자 프로필에 대한 삭제 권한이 없습니다."), // -> InvalidAccessException
-    MEMBER_PROFILE_INVALID_MODIFY("MEMBER_003", HttpStatus.FORBIDDEN, "해당 사용자 프로필에 대한 수정 권한이 없습니다."), // -> InvalidAccessException
+    MEMBER_NOT_FOUND("MEMBER_001", HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다."),
 
-    // ! 404 NOT_FOUND
-    MEMBER_NOT_FOUND("MEMBER_004", HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다."); // -> EntityNotFoundException
+    MEMBER_PROFILE_INVALID_ACCESS("MEMBER_002", HttpStatus.FORBIDDEN, "해당 사용자 프로필에 접근 권한이 없습니다."),
+    MEMBER_PROFILE_INVALID_DELETE("MEMBER_003", HttpStatus.FORBIDDEN, "해당 사용자 프로필에 대한 삭제 권한이 없습니다."), // ? unused
+    MEMBER_PROFILE_INVALID_MODIFY("MEMBER_004", HttpStatus.FORBIDDEN, "해당 사용자 프로필에 대한 수정 권한이 없습니다."); // ? unused
+
 
     private final String code;
     private final HttpStatus status;

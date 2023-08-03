@@ -7,4 +7,10 @@ import lombok.Getter;
 public class ProjectApplyRequest {
 
     private ProjectMemberPositionType position;
+
+
+    // ! 테스트 데이터용 생성자
+    public ProjectApplyRequest(ProjectMemberPositionType position) {
+        this.position = position;
+    }
 }

@@ -8,8 +8,7 @@ import fullcare.backend.evaluation.dto.request.MidTermEvalCreateRequest;
 import fullcare.backend.evaluation.dto.response.*;
 import fullcare.backend.evaluation.service.EvaluationService;
 import fullcare.backend.global.errorcode.EvaluationErrorCode;
-import fullcare.backend.global.errorcode.ProjectErrorCode;
-import fullcare.backend.global.exceptionhandling.exception.InvalidAccessException;
+import fullcare.backend.global.exceptionhandling.exception.UnauthorizedAccessException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.service.ProjectService;
 import fullcare.backend.projectmember.domain.ProjectMember;
@@ -52,7 +51,7 @@ public class EvaluationController {
     public ResponseEntity<MidTermEvalModalResponse> midtermEvalModal(@RequestParam Long scheduleId,
                                                                      @CurrentLoginMember Member member) {
         if (!(scheduleMemberService.validateScheduleMember(scheduleId, member.getId()))) {
-            throw new InvalidAccessException(EvaluationErrorCode.INVALID_ACCESS);
+            throw new UnauthorizedAccessException(EvaluationErrorCode.UNAUTHORIZED_ACCESS);
         }
         MidTermEvalModalResponse response = evaluationService.modal(scheduleId, member.getId());
 
@@ -118,7 +117,7 @@ public class EvaluationController {
                                           @CurrentLoginMember Member member) {
         // ? 작성자가 맞는지 검증
         if (!evaluationService.validateAuthor(evaluationId, member.getId())) {
-            throw new InvalidAccessException(EvaluationErrorCode.INVALID_ACCESS);
+            throw new UnauthorizedAccessException(EvaluationErrorCode.UNAUTHORIZED_ACCESS);
         }
         evaluationService.updateFinalEvaluation(evaluationId, finalEvalUpdateRequest);
         return new ResponseEntity(HttpStatus.OK);
@@ -133,7 +132,7 @@ public class EvaluationController {
                                           @CurrentLoginMember Member member) {
         // ? 작성자가 맞는지 검증
         if (!evaluationService.validateAuthor(evaluationId, member.getId())) {
-            throw new InvalidAccessException(EvaluationErrorCode.INVALID_ACCESS);
+            throw new UnauthorizedAccessException(EvaluationErrorCode.UNAUTHORIZED_ACCESS);
         }
         evaluationService.deleteFinalEvaluation(evaluationId, projectId);
 

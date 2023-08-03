@@ -9,3 +9,33 @@ public interface ErrorCode {
 
     String getMessage();
 }
+
+
+// * error code 순서
+
+// * 1. Not Found
+// * 2. Bad Request
+// * 3. Forbidden
+
+
+// * ACCESS -> CREATE -> MODIFY -> DELETE
+
+
+// * error code 순서
+
+// * 1. Not Found
+// * 2. Bad Request
+// * 3. Forbidden
+
+
+// * ACCESS -> CREATE -> MODIFY -> DELETE
+
+
+// * error code 순서
+
+// * 1. Not Found
+// * 2. Bad Request
+// * 3. Forbidden
+
+
+// * ACCESS -> CREATE -> MODIFY -> DELETE

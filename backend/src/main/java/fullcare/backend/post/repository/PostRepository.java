@@ -21,11 +21,11 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "join p.project pj")
     Page<PostListResponse> findList(@Param("memberId") Long memberId, Pageable pageable);
 
-    @EntityGraph(attributePaths = {"author", "project"})
-    Optional<Post> findPostWithAuthorAndProjectById(Long postId);
+    @EntityGraph(attributePaths = {"project"})
+    Optional<Post> findPostWithProjectById(Long postId);
 
-    @EntityGraph(attributePaths = {"recruitments"})
-    Optional<Post> findPostWithRecruitmentsById(Long postId);
+    @EntityGraph(attributePaths = {"recruitments", "project"})
+    Optional<Post> findPostWithRecruitmentsAndProjectById(Long postId);
 
 
     @Query("select new fullcare.backend.post.dto.response.PostDetailResponse(p.id, pj.id, pj.title,pj.imageUrl, a.nickname,a.imageUrl, p.title, p.description,p.recruitStartDate, p.recruitEndDate, p.reference, p.contact, p.region, p.techStack, case when l.id is null then false else true end, case when a.id = :memberId then true else false end , case when a.id = :memberId then true else false end ,p.createdDate, p.modifiedDate)" +

@@ -21,7 +21,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Key;
-import java.util.*;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 @Transactional(readOnly = true)
 @Service
@@ -89,24 +92,26 @@ public class JwtTokenService {
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
     }
+
+
     @Transactional
-    public String[] reIssueTokens(String refreshToken, Authentication authentication) {
+    public String[] reIssueTokens(String refreshToken) {
+        Authentication authentication = getAuthentication(refreshToken);
+        Member findMember = (Member) authentication.getPrincipal();
 
         String[] tokens = new String[2];
-        Member member = (Member) authentication.getPrincipal();
-        CustomOAuth2User user = CustomOAuth2User.create(member);
-        Optional<Member> findMember = memberRepository.findById(member.getId());
 
-        if (findMember.isPresent()) {
-            if (findMember.get().getRefreshToken().equals(refreshToken)) { // refreshToken이 동일할 경우
-                String newRefreshToken = createRefreshToken(user);
-                String newAccessToken = createAccessToken(user);
-                tokens[0] = newAccessToken;
-                tokens[1] = newRefreshToken;
-                findMember.get().updateRefreshToken(newRefreshToken);
-                return tokens;
-            }
+        if (findMember.getRefreshToken().equals(refreshToken)) {
+            CustomOAuth2User findUser = CustomOAuth2User.create(findMember);
+            String newRefreshToken = createRefreshToken(findUser);
+            String newAccessToken = createAccessToken(findUser);
+            tokens[0] = newAccessToken;
+            tokens[1] = newRefreshToken;
+            findMember.updateRefreshToken(newRefreshToken);
+            return tokens;
         }
+        
+        // ? 여긴 뭔지 고민해볼 필요가 있음
         log.info("등록되지 않은 사용자입니다.");
         throw new CustomJwtException(JwtErrorCode.NOT_FOUND_USER);
     }
@@ -132,12 +137,13 @@ public class JwtTokenService {
         }
     }
 
-    public Authentication getAuthentication(String accessToken) {
+    public Authentication getAuthentication(String jwtToken) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
-                .parseClaimsJws(accessToken)
+                .parseClaimsJws(jwtToken)
                 .getBody();
+
         String memberId = claims.getSubject();
 
         Member member = memberRepository.findById(Long.valueOf(memberId)).orElseThrow(() -> new CustomJwtException(JwtErrorCode.NOT_FOUND_USER));

@@ -1,11 +1,7 @@
 package fullcare.backend.memo.controller;
 
-import fullcare.backend.bookmarkmemo.service.BookmarkMemoService;
 import fullcare.backend.global.dto.ErrorResponse;
-import fullcare.backend.global.errorcode.MemoErrorCode;
-import fullcare.backend.global.exceptionhandling.exception.InvalidAccessException;
 import fullcare.backend.member.domain.Member;
-import fullcare.backend.memo.domain.Memo;
 import fullcare.backend.memo.dto.request.MemoBookmarkRequest;
 import fullcare.backend.memo.dto.request.MemoCreateRequest;
 import fullcare.backend.memo.dto.request.MemoDeleteRequest;
@@ -15,8 +11,6 @@ import fullcare.backend.memo.dto.response.MemoDetailResponse;
 import fullcare.backend.memo.dto.response.MemoIdResponse;
 import fullcare.backend.memo.dto.response.MemoListResponse;
 import fullcare.backend.memo.service.MemoService;
-import fullcare.backend.project.service.ProjectService;
-import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.security.jwt.CurrentLoginMember;
 import fullcare.backend.util.CustomPageImpl;
 import fullcare.backend.util.CustomPageRequest;
@@ -44,9 +38,6 @@ import org.springframework.web.bind.annotation.*;
 public class MemoController {
 
     private final MemoService memoService;
-    private final BookmarkMemoService bookmarkMemoService;
-    private final ProjectService projectService;
-
 
     // * 새로운 회의록 생성
     @Operation(method = "post", summary = "회의록 생성")
@@ -58,10 +49,8 @@ public class MemoController {
     public ResponseEntity create(@RequestBody MemoCreateRequest memoCreateRequest,
                                  @CurrentLoginMember Member member) {
 
-        ProjectMember findProjectMember = projectService.isProjectAvailable(memoCreateRequest.getProjectId(), member.getId(), false);
-        Memo newMemo = memoService.createMemo(findProjectMember, memoCreateRequest);
-
-        return new ResponseEntity(new MemoIdResponse(newMemo.getId()), HttpStatus.CREATED);
+        Long newMemoId = memoService.createMemo(member.getId(), memoCreateRequest);
+        return new ResponseEntity(new MemoIdResponse(newMemoId), HttpStatus.CREATED);
     }
 
     // * 특정 회의록 수정
@@ -75,9 +64,8 @@ public class MemoController {
                                  @RequestBody MemoUpdateRequest memoUpdateRequest,
                                  @CurrentLoginMember Member member) {
 
-        projectService.isProjectAvailable(memoUpdateRequest.getProjectId(), member.getId(), false);
-        memoService.updateMemo(memoId, memoUpdateRequest);
-        return new ResponseEntity(new MemoIdResponse(memoId), HttpStatus.OK);
+        Long updateMemoId = memoService.updateMemo(member.getId(), memoId, memoUpdateRequest);
+        return new ResponseEntity(new MemoIdResponse(updateMemoId), HttpStatus.OK);
     }
 
     // * 특정 회의록 삭제
@@ -91,14 +79,7 @@ public class MemoController {
                                  @RequestBody MemoDeleteRequest memoDeleteRequest,
                                  @CurrentLoginMember Member member) {
 
-        ProjectMember findProjectMember = projectService.isProjectAvailable(memoDeleteRequest.getProjectId(), member.getId(), false);
-        Memo findMemo = memoService.findMemo(memoId);
-
-        if (findMemo.getAuthor().getId() != findProjectMember.getMember().getId() && !findProjectMember.isLeader()) {
-            throw new InvalidAccessException(MemoErrorCode.INVALID_DELETE);
-        }
-
-        memoService.deleteMemo(findMemo);
+        memoService.deleteMemo(member.getId(), memoId, memoDeleteRequest);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -114,17 +95,8 @@ public class MemoController {
                                      @RequestParam("project_id") Long projectId,
                                      @CurrentLoginMember Member member) {
 
-        ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, member.getId(), true);
-        MemoDetailResponse findMemoDetailResponse = memoService.findMemoDetailResponse(findProjectMember.getMember().getId(), memoId);
 
-        if (findMemoDetailResponse.getAuthorId() == findProjectMember.getMember().getId() || findProjectMember.isLeader()) {
-            findMemoDetailResponse.setDeletable(true);
-        } else {
-            findMemoDetailResponse.setDeletable(false);
-        }
-
-        findMemoDetailResponse.setEditable(true);
-
+        MemoDetailResponse findMemoDetailResponse = memoService.findMemoDetailResponse(projectId, member.getId(), memoId);
         return new ResponseEntity<>(findMemoDetailResponse, HttpStatus.OK);
     }
 
@@ -139,11 +111,9 @@ public class MemoController {
                                                                  @ModelAttribute CustomPageRequest pageRequest,
                                                                  @CurrentLoginMember Member member) {
 
-        projectService.isProjectAvailable(projectId, member.getId(), true);
-
         PageRequest of = pageRequest.of();
-        Pageable pageable = (Pageable) of; // ?
-        CustomPageImpl<MemoListResponse> responses = memoService.findMemoList(projectId, pageable);
+        Pageable pageable = (Pageable) of;
+        CustomPageImpl<MemoListResponse> responses = memoService.findMemoList(projectId, member.getId(), pageable);
 
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
@@ -159,11 +129,9 @@ public class MemoController {
                                                                                  @ModelAttribute CustomPageRequest pageRequest,
                                                                                  @CurrentLoginMember Member member) {
 
-        ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, member.getId(), true);
-
         PageRequest of = pageRequest.of();
         Pageable pageable = (Pageable) of;
-        CustomPageImpl<BookmarkMemoListResponse> responses = bookmarkMemoService.findBookmarkMemoList(pageable, findProjectMember.getProject().getId(), findProjectMember.getMember().getId());
+        CustomPageImpl<BookmarkMemoListResponse> responses = memoService.findBookmarkMemoList(projectId, member.getId(), pageable);
 
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
@@ -180,11 +148,9 @@ public class MemoController {
                                    @RequestBody MemoBookmarkRequest memoBookmarkRequest,
                                    @CurrentLoginMember Member member) {
 
-        ProjectMember findProjectMember = projectService.isProjectAvailable(memoBookmarkRequest.getProjectId(), member.getId(), false);
-        Memo findMemo = memoService.findMemo(memoId);
-
-        bookmarkMemoService.bookmarkMemo(findMemo, findProjectMember.getMember());
+        memoService.bookmarkMemo(member.getId(), memoId, memoBookmarkRequest);
         return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
 }

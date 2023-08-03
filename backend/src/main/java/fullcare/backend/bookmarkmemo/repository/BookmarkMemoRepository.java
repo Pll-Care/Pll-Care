@@ -16,6 +16,6 @@ public interface BookmarkMemoRepository extends JpaRepository<BookmarkMemo, Long
 
     @Query(value = "select bmm from BookmarkMemo bmm join fetch bmm.memo mm join fetch mm.author where bmm.member.id = :memberId and mm.project.id = :projectId",
             countQuery = "select count(bmm) from BookmarkMemo bmm join bmm.memo mm where bmm.member.id = :memberId and mm.project.id = :projectId")
-    Page<BookmarkMemo> findList(Pageable pageable, @Param("projectId") Long projectId, @Param("memberId") Long memberId);
+    Page<BookmarkMemo> findList(@Param("projectId") Long projectId, @Param("memberId") Long memberId, Pageable pageable);
 
 }

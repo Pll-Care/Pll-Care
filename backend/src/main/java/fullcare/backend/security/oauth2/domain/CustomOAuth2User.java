@@ -13,20 +13,18 @@ import java.util.Map;
 
 public class CustomOAuth2User implements OAuth2User, UserDetails {
 
-    private final Long id;
-    private final String nickname;
+    private final Member member;
     private final Collection<? extends GrantedAuthority> authorities;
     private Map<String, Object> attributes;
 
-    public CustomOAuth2User(Long id, String nickname, Collection<? extends GrantedAuthority> authorities) {
-        this.id = id;
-        this.nickname = nickname;
+    public CustomOAuth2User(Member member, Collection<? extends GrantedAuthority> authorities) {
+        this.member = member;
         this.authorities = authorities;
     }
 
     public static CustomOAuth2User create(Member member) {
         List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(member.getRole().getValue()));
-        return new CustomOAuth2User(member.getId(), member.getNickname(), authorities);
+        return new CustomOAuth2User(member, authorities);
     }
 
     public static CustomOAuth2User create(Member loginMember, Map<String, Object> attributes) {
@@ -51,7 +49,7 @@ public class CustomOAuth2User implements OAuth2User, UserDetails {
 
     @Override
     public String getName() {
-        return String.valueOf(id);
+        return String.valueOf(this.member.getId());
     }
 
     @Override
@@ -61,7 +59,7 @@ public class CustomOAuth2User implements OAuth2User, UserDetails {
 
     @Override
     public String getUsername() {
-        return nickname;
+        return this.member.getName();
     }
 
     @Override

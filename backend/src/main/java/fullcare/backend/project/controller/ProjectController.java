@@ -3,14 +3,10 @@ package fullcare.backend.project.controller;
 import fullcare.backend.global.State;
 import fullcare.backend.global.dto.ErrorResponse;
 import fullcare.backend.global.dto.SuccessResponse;
-import fullcare.backend.global.errorcode.ProjectErrorCode;
-import fullcare.backend.global.exceptionhandling.exception.InvalidAccessException;
 import fullcare.backend.member.domain.Member;
-import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.dto.request.*;
 import fullcare.backend.project.dto.response.*;
 import fullcare.backend.project.service.ProjectService;
-import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.security.jwt.CurrentLoginMember;
 import fullcare.backend.util.CustomPageImpl;
@@ -40,10 +36,7 @@ public class ProjectController {
 
     private final ProjectService projectService;
     private final ProjectMemberService projectMemberService;
-
-    // ! API 요청시에 필수적으로 필요한 값이라면 PathVariable, 필수가 아니거나 값이 많으면 RequestParam
-    // TODO POST? PUT? PATCH?
-
+    
     // * 새로운 프로젝트 생성
     @Operation(method = "post", summary = "프로젝트 생성")
     @ApiResponses(value = {
@@ -52,8 +45,8 @@ public class ProjectController {
     })
     @PostMapping
     public ResponseEntity create(@Valid @RequestBody ProjectCreateRequest projectCreateRequest, @CurrentLoginMember Member member) {
-        projectService.createProject(member, projectCreateRequest);
 
+        projectService.createProject(member.getId(), projectCreateRequest);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
@@ -66,15 +59,8 @@ public class ProjectController {
     @PutMapping("/{projectId}")
     public ResponseEntity update(@PathVariable Long projectId, @Valid @RequestBody ProjectUpdateRequest projectUpdateRequest, @CurrentLoginMember Member member) {
 
-        ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, member.getId(), false);
 
-        // ! 프로젝트에 소속되어있지만 리더가 아니라서 수정 권한이 없음 -> 403 Forbidden
-        if (!(findProjectMember.isLeader())) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_MODIFY);
-        }
-
-        // ? project 엔티티를 직접 넘겨주는 건 문제가 없을까? -> 생성 삭제 수정 등 많은 service 단 함수에 적용되는 고민거리(추가 쿼리가 1번 더 나감)
-        projectService.updateProject(findProjectMember.getProject().getId(), projectUpdateRequest);
+        projectService.updateProject(projectId, member.getId(), projectUpdateRequest);
         return new ResponseEntity(new ProjectUpdateResponse(projectUpdateRequest.getImageUrl()), HttpStatus.OK);
     }
 
@@ -87,15 +73,9 @@ public class ProjectController {
     @DeleteMapping("/{projectId}")
     public ResponseEntity delete(@PathVariable Long projectId, @CurrentLoginMember Member member) {
 
-        ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, member.getId(), false);
-
-        // ! 프로젝트에 소속되어있지만 리더가 아니라서 삭제 권한이 없음 -> 403 Forbidden
-        if (!(findProjectMember.isLeader())) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_DELETE);
-        }
-
-        projectService.deleteProject(findProjectMember.getProject().getId()); // todo id 넘겨주기 or 엔티티 넘겨주기
+        projectService.deleteProject(projectId, member.getId()); // todo id 넘겨주기 or 엔티티 넘겨주기
         return new ResponseEntity(HttpStatus.OK);
+
     }
 
     // * 특정 프로젝트 완료 처리
@@ -107,15 +87,7 @@ public class ProjectController {
     @PostMapping("/{projectId}/complete")
     public ResponseEntity complete(@PathVariable Long projectId, @CurrentLoginMember Member member) {
 
-        // ! try cat 문을 통해서 ErrorCode를 변환해줘야할 수도 있음
-        ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, member.getId(), false);
-
-        // ! 프로젝트에 소속되어있지만 리더가 아니라서 상태 수정 권한이 없음 -> 403 Forbidden
-        if (!findProjectMember.isLeader()) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS); // todo "프로젝트에 대한 완료 권한이 없습니다.(리더가 아님)"
-        }
-
-        projectService.completeProject(findProjectMember.getProject().getId());
+        projectService.completeProject(projectId, member.getId());
         return new ResponseEntity(new ProjectUpdateStateResponse(projectId), HttpStatus.OK);
     }
 
@@ -129,18 +101,7 @@ public class ProjectController {
     public ResponseEntity<?> details(@PathVariable Long projectId,
                                      @CurrentLoginMember Member member) {
 
-        ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, member.getId(), true);
-        Project findProject = findProjectMember.getProject();
-
-        ProjectDetailResponse projectDetailResponse = ProjectDetailResponse.builder()
-                .title(findProject.getTitle())
-                .description(findProject.getDescription())
-                .startDate(findProject.getStartDate())
-                .endDate(findProject.getEndDate())
-                .imageUrl(findProject.getImageUrl())
-                .state(findProject.getState())
-                .build();
-
+        ProjectDetailResponse projectDetailResponse = projectService.findProjectDetail(projectId, member.getId());
         return new ResponseEntity<>(projectDetailResponse, HttpStatus.OK);
     }
 
@@ -184,15 +145,8 @@ public class ProjectController {
     })
     @PutMapping("/{projectId}/positionchange")
     public ResponseEntity updateProjectMemberPosition(@PathVariable Long projectId, @RequestBody ProjectMemberPositionUpdateRequest projectMemberPositionUpdateRequest, @CurrentLoginMember Member member) {
-        ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, member.getId(), false);
 
-        // ! 프로젝트에 소속되어있지만 리더가 아니라서 멤버 역할 수정 권한이 없음 -> 403 Forbidden
-        if (!(findProjectMember.isLeader())) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS); // todo "프로젝트 멤버 역할 수정 권한이 없습니다.(리더가 아님)"
-        }
-
-        projectMemberService.updateProjectMemberPosition(findProjectMember.getProject().getId(), projectMemberPositionUpdateRequest.getMemberId(), projectMemberPositionUpdateRequest.getPosition());
-
+        projectMemberService.updateProjectMemberPosition(projectId, member.getId(), projectMemberPositionUpdateRequest);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -204,16 +158,8 @@ public class ProjectController {
     })
     @PutMapping("/{projectId}/leaderchange")
     public ResponseEntity changeProjectLeader(@PathVariable Long projectId, @RequestBody ProjectLeaderChangeRequest projectLeaderChangeRequest, @CurrentLoginMember Member member) {
-        // todo 리더는 팀에서 한 명만 존재해야한다.
-        ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, member.getId(), false);
 
-        // ! 프로젝트에 소속되어있지만 리더가 아니라서 리더 위임 권한이 없음 -> 403 Forbidden
-        if (!(findProjectMember.isLeader())) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS); // todo "프로젝트 리더 위임 권한이 없습니다.(리더가 아님)"
-        }
-
-        projectMemberService.changeProjectLeader(findProjectMember.getProject().getId(), projectLeaderChangeRequest.getMemberId(), findProjectMember.getMember().getId());
-
+        projectMemberService.changeProjectLeader(projectId, member.getId(), projectLeaderChangeRequest);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -225,15 +171,9 @@ public class ProjectController {
             @ApiResponse(responseCode = "400", description = "프로젝트 멤버 탈퇴 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @DeleteMapping("/{projectId}/selfout")
-    public ResponseEntity selfOutProjectMember(@PathVariable Long projectId, @CurrentLoginMember Member member) {
-        ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, member.getId(), false);
+    public ResponseEntity selfOut(@PathVariable Long projectId, @CurrentLoginMember Member member) {
 
-        // ! 리더는 스스로 탈퇴가 불가능함. 누군가에게 리더를 위임해야한다.
-        if (findProjectMember.isLeader()) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS); // todo "프로젝트 리더는 스스로 탈퇴할 수 없습니다."
-        }
-
-        projectMemberService.deleteProjectMember(findProjectMember.getProject().getId(), findProjectMember.getMember().getId());
+        projectMemberService.selfOutProjectMember(projectId, member.getId());
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -245,20 +185,9 @@ public class ProjectController {
             @ApiResponse(responseCode = "400", description = "프로젝트 멤버 강퇴 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @DeleteMapping("/{projectId}/kickout")
-    public ResponseEntity kickOutProjectMember(@PathVariable Long projectId, @RequestBody ProjectMemberDeleteRequest projectMemberDeleteRequest, @CurrentLoginMember Member member) {
+    public ResponseEntity kickOut(@PathVariable Long projectId, @RequestBody ProjectMemberDeleteRequest projectMemberDeleteRequest, @CurrentLoginMember Member member) {
 
-        ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, member.getId(), false);
-
-        // ! 프로젝트에 소속되어있지만 리더가 아니라서 강퇴 권한이 없음 -> 403 Forbidden
-        if (!(findProjectMember.isLeader())) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS); // todo "프로젝트 멤버 강퇴 권한이 없습니다.(리더가 아님)"
-        } else {
-            if (findProjectMember.getMember().getId() == projectMemberDeleteRequest.getMemberId()) {
-                throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS); // todo "프로젝트 리더는 자신을 강퇴할 수 없습니다."
-            }
-        }
-
-        projectMemberService.deleteProjectMember(findProjectMember.getProject().getId(), projectMemberDeleteRequest.getMemberId());
+        projectMemberService.kickOutProjectMember(projectId, member.getId(), projectMemberDeleteRequest);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -272,14 +201,7 @@ public class ProjectController {
     @PostMapping("/{projectId}/applyaccept")
     public ResponseEntity acceptApply(@PathVariable Long projectId, @RequestBody ApplyMemberAcceptRequest applyMemberAcceptRequest, @CurrentLoginMember Member member) {
 
-        ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, member.getId(), false);
-
-        // ! 프로젝트에 소속되어있지만 리더가 아니라서 지원자 수락 권한이 없음 -> 403 Forbidden
-        if (!(findProjectMember.isLeader())) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS); // todo "프로젝트 멤버 추가 권한이 없습니다.(리더가 아님)"
-        }
-
-        projectMemberService.acceptApplyMember(applyMemberAcceptRequest.getPostId(), applyMemberAcceptRequest.getMemberId());
+        projectMemberService.acceptApplyMember(projectId, member.getId(), applyMemberAcceptRequest);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -292,14 +214,7 @@ public class ProjectController {
     @PostMapping("/{projectId}/applyreject")
     public ResponseEntity rejectApply(@PathVariable Long projectId, @RequestBody ApplyMemberRejectRequest applyMemberRejectRequest, @CurrentLoginMember Member member) {
 
-        ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, member.getId(), false);
-
-        // ! 프로젝트에 소속되어있지만 리더가 아니라서 지원자 거절 권한이 없음 -> 403 Forbidden
-        if (!(findProjectMember.isLeader())) {
-            throw new InvalidAccessException(ProjectErrorCode.INVALID_ACCESS); // todo "프로젝트 멤버 추가 권한이 없습니다.(리더가 아님)"
-        }
-
-        projectMemberService.rejectApplyMember(applyMemberRejectRequest.getPostId(), applyMemberRejectRequest.getMemberId());
+        projectMemberService.rejectApplyMember(projectId, member.getId(), applyMemberRejectRequest);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -312,9 +227,7 @@ public class ProjectController {
     @GetMapping("/{projectId}/memberlist")
     public ResponseEntity<List<ProjectMemberListResponse>> projectMemberList(@PathVariable Long projectId, @CurrentLoginMember Member member) {
 
-        ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, member.getId(), true);
-
-        List<ProjectMemberListResponse> response = projectMemberService.findProjectMembers(findProjectMember.getProject().getId());
+        List<ProjectMemberListResponse> response = projectMemberService.findProjectMembers(projectId, member.getId());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -327,9 +240,7 @@ public class ProjectController {
     @GetMapping("/{projectId}/applylist")
     public ResponseEntity<List<ApplyMemberListResponse>> applyMemberList(@PathVariable Long projectId, @CurrentLoginMember Member member) {
 
-        ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, member.getId(), true);
-
-        List<ApplyMemberListResponse> response = projectMemberService.findApplyMembers(findProjectMember.getProject().getId());
+        List<ApplyMemberListResponse> response = projectMemberService.findApplyMembers(projectId, member.getId());
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
@@ -342,14 +253,9 @@ public class ProjectController {
     })
     @GetMapping("/{projectId}/iscompleted")
     public ResponseEntity<ProjectCompleteResponse> isProjectCompleted(@PathVariable Long projectId, @CurrentLoginMember Member member) {
-        ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, member.getId(), true);
-        Project findProject = findProjectMember.getProject();
 
-        ProjectCompleteResponse response = ProjectCompleteResponse.builder()
-                .isCompleted(findProject.getState() == State.COMPLETE)
-                .build();
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        ProjectCompleteResponse projectCompleteResponse = projectMemberService.checkProjectComplete(projectId, member.getId());
+        return new ResponseEntity<>(projectCompleteResponse, HttpStatus.OK);
     }
 
     // * 특정 프로젝트의 리더 여부
@@ -360,13 +266,9 @@ public class ProjectController {
     })
     @GetMapping("/{projectId}/isleader")
     public ResponseEntity<ProjectLeaderResponse> isProjectLeader(@PathVariable Long projectId, @CurrentLoginMember Member member) {
-        ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, member.getId(), true);
 
-        ProjectLeaderResponse response = ProjectLeaderResponse.builder()
-                .isLeader(findProjectMember.isLeader())
-                .build();
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        ProjectLeaderResponse projectLeaderResponse = projectMemberService.checkProjectLeader(projectId, member.getId());
+        return new ResponseEntity<>(projectLeaderResponse, HttpStatus.OK);
     }
 
 }

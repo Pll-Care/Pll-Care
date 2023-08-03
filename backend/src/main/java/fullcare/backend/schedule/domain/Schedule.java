@@ -4,7 +4,7 @@ package fullcare.backend.schedule.domain;
 import fullcare.backend.evaluation.domain.MidtermEvaluation;
 import fullcare.backend.global.State;
 import fullcare.backend.global.errorcode.ScheduleErrorCode;
-import fullcare.backend.global.exceptionhandling.exception.ScheduleOutOfRangeException;
+import fullcare.backend.global.exceptionhandling.exception.InvalidDateRangeException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.schedulemember.domain.ScheduleMember;
@@ -89,10 +89,10 @@ public abstract class Schedule {
         if (pStartDate.isAfter(sStartDate) || pStartDate.isAfter(sEndDate) ||
                 pEndDate.isBefore(sStartDate) || pEndDate.isBefore(sEndDate)
         ) {
-            throw new ScheduleOutOfRangeException(ScheduleErrorCode.PS_OUT_OF_RANGE);
+            throw new InvalidDateRangeException(ScheduleErrorCode.INVALID_SCHEDULE_DATE_RANGE);
         }
         if (sStartDate.isAfter(sEndDate) || sEndDate.isBefore(sStartDate)) {
-            throw new ScheduleOutOfRangeException(ScheduleErrorCode.SCHEDULE_OUT_OF_RANGE);
+            throw new InvalidDateRangeException(ScheduleErrorCode.INVALID_DATE_RANGE);
         }
     }
 
