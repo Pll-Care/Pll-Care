@@ -53,14 +53,4 @@ public class Memo extends BaseEntity {
         this.title = title;
         this.content = content;
     }
-
-    public BookmarkMemo bookmark(Member member) {
-        BookmarkMemo bookmarkMemo = BookmarkMemo.createNewBookmarkMemo()
-                .member(member)
-                .memo(this)
-                .build();
-
-        return bookmarkMemo;
-    }
-
 }

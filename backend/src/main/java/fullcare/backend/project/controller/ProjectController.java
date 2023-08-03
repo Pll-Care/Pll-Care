@@ -36,7 +36,7 @@ public class ProjectController {
 
     private final ProjectService projectService;
     private final ProjectMemberService projectMemberService;
-    
+
     // * 새로운 프로젝트 생성
     @Operation(method = "post", summary = "프로젝트 생성")
     @ApiResponses(value = {
@@ -73,7 +73,7 @@ public class ProjectController {
     @DeleteMapping("/{projectId}")
     public ResponseEntity delete(@PathVariable Long projectId, @CurrentLoginMember Member member) {
 
-        projectService.deleteProject(projectId, member.getId()); // todo id 넘겨주기 or 엔티티 넘겨주기
+        projectService.deleteProject(projectId, member.getId());
         return new ResponseEntity(HttpStatus.OK);
 
     }

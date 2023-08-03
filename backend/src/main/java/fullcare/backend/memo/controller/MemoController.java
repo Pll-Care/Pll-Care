@@ -95,7 +95,6 @@ public class MemoController {
                                      @RequestParam("project_id") Long projectId,
                                      @CurrentLoginMember Member member) {
 
-
         MemoDetailResponse findMemoDetailResponse = memoService.findMemoDetailResponse(projectId, member.getId(), memoId);
         return new ResponseEntity<>(findMemoDetailResponse, HttpStatus.OK);
     }

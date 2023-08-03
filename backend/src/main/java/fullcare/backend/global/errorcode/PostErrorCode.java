@@ -8,9 +8,6 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum PostErrorCode implements ErrorCode {
 
-
-    // POST ERROR CODE
-
     POST_NOT_FOUND("POST_001", HttpStatus.NOT_FOUND, "모집글을 찾을 수 없습니다."),
 
     INVALID_DATE_RANGE("POST_002", HttpStatus.BAD_REQUEST, "시작일자와 종료일자가 올바르지 않습니다."),

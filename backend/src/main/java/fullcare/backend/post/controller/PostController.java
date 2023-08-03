@@ -9,8 +9,6 @@ import fullcare.backend.post.dto.response.PostDetailResponse;
 import fullcare.backend.post.dto.response.PostListResponse;
 import fullcare.backend.post.service.PostService;
 import fullcare.backend.project.dto.request.ProjectApplyRequest;
-import fullcare.backend.project.service.ProjectService;
-import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.security.jwt.CurrentLoginMember;
 import fullcare.backend.util.CustomPageImpl;
 import fullcare.backend.util.CustomPageRequest;
@@ -36,9 +34,6 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
 
     private final PostService postService;
-    private final ProjectMemberService projectMemberService;
-    private final ProjectService projectService;
-
 
     // * 새로운 모집글 생성
     @Operation(method = "post", summary = "모집글 생성")

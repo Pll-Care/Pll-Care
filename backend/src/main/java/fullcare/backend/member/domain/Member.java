@@ -1,9 +1,11 @@
 package fullcare.backend.member.domain;
 
 import fullcare.backend.apply.domain.Apply;
+import fullcare.backend.bookmarkmemo.domain.BookmarkMemo;
 import fullcare.backend.evaluation.domain.FinalTermEvaluation;
 import fullcare.backend.evaluation.domain.MidtermEvaluation;
 import fullcare.backend.likes.domain.Likes;
+import fullcare.backend.memo.domain.Memo;
 import fullcare.backend.post.domain.Post;
 import fullcare.backend.profile.domain.Profile;
 import fullcare.backend.projectmember.domain.ProjectMember;
@@ -106,6 +108,7 @@ public class Member {
     public void updateName(String name) {
         this.name = name;
     }
+
     public void updateNickname(String nickname) {
         this.nickname = nickname;
     }
@@ -141,4 +144,14 @@ public class Member {
 
         return apply;
     }
+
+    public BookmarkMemo bookmark(Memo memo) {
+        BookmarkMemo bookmarkMemo = BookmarkMemo.createNewBookmarkMemo()
+                .member(this)
+                .memo(memo)
+                .build();
+
+        return bookmarkMemo;
+    }
+
 }

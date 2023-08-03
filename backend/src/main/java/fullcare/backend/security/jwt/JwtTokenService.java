@@ -110,8 +110,7 @@ public class JwtTokenService {
             findMember.updateRefreshToken(newRefreshToken);
             return tokens;
         }
-        
-        // ? 여긴 뭔지 고민해볼 필요가 있음
+
         log.info("등록되지 않은 사용자입니다.");
         throw new CustomJwtException(JwtErrorCode.NOT_FOUND_USER);
     }

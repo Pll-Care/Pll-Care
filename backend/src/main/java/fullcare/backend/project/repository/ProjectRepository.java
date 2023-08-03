@@ -5,7 +5,6 @@ import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.dto.response.ProjectSimpleListResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,10 +22,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     @Query("select p from project p join fetch p.projectMembers pm join fetch pm.member where p.id = :projectId")
     Optional<Project> findProjectWithPMAndMemberById(@Param("projectId") Long projectId);
-
-    @EntityGraph(attributePaths = {"projectMembers"})
-    Optional<Project> findProjectWithPMById(Long projectId);
-
 
     // project만 갖고오기 -> findById
     // project + projectMember 갖고오기 -> findProjectWithPMById

@@ -149,7 +149,7 @@ public class MemoService {
             Optional<BookmarkMemo> findBookmarkMemo = bookmarkMemoRepository.findByMemoAndMember(findMemo, findProjectMember.getMember());
 
             if (!findBookmarkMemo.isPresent()) {
-                BookmarkMemo newBookmarkMemo = findMemo.bookmark(findProjectMember.getMember());
+                BookmarkMemo newBookmarkMemo = findProjectMember.getMember().bookmark(findMemo);
                 bookmarkMemoRepository.save(newBookmarkMemo);
             } else {
                 bookmarkMemoRepository.delete(findBookmarkMemo.get());

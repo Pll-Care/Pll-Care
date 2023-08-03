@@ -25,10 +25,6 @@ public interface ProjectMemberRepository extends JpaRepository<ProjectMember, Lo
 
     void deleteByProjectIdAndMemberId(Long projectId, Long memberId);
 
-    @Query("select pm from project_member pm where pm.project.id = :projectId and pm.projectMemberType.role != :projectMemberRoleType")
-    List<ProjectMember> findByProjectIdAndProjectMemberRole(@Param("projectId") Long projectId, @Param("projectMemberRoleType") ProjectMemberRoleType projectMemberRoleType);
-
-
     @EntityGraph(attributePaths = {"member"})
     @Query("select pm from project_member pm where pm.project.id = :projectId and pm.projectMemberType.role in :projectMemberRoleTypes")
     List<ProjectMember> findProjectMemberWithMemberByProjectIdAndProjectMemberRole(@Param("projectId") Long projectId, @Param("projectMemberRoleTypes") List<ProjectMemberRoleType> projectMemberRoleTypes);
