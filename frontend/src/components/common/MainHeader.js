@@ -1,14 +1,15 @@
 import { Link } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "../../hooks/useRouter";
 
 import Login from "../Login/Login";
 import Button from "./Button";
 import ToggleMenuButton from "./ToggleMenuButton";
 
 import { authActions } from "../../redux/authSlice";
-import { useRouter } from "../../hooks/useRouter";
 import { getProfileImage } from "../../lib/apis/mainHeaderApi";
+import { isToken } from "../../utils/localstroageHandler";
 
 import profile_default from "../../assets/profile-default-img.png";
 import profile_isProfile from "../../assets/ranking-img.png";
@@ -30,6 +31,13 @@ const MainHeader = () => {
   const authState = useSelector((state) => state.auth.isLoggedIn);
 
   useEffect(() => {
+    if (isToken("access_token") && isToken("refresh_token")) {
+      dispatch(authActions.login());
+      setIsLoginModalVisible(false);
+    }
+  }, [authState, dispatch]);
+
+  useEffect(() => {
     if (currentPath.includes("/profile")) setIsProfilePage(true);
     const getProfile = async () => {
       const response = await getProfileImage();
@@ -43,6 +51,16 @@ const MainHeader = () => {
       setProfileImage({ id: "", imageUrl: "" });
     };
   }, [currentPath]);
+
+  const handleClickLinkMenu = useCallback((link) => {
+    if (link === "/recruitment") {
+      routeTo(link);
+    } else if (!isToken("access_token")) {
+      setIsLoginModalVisible(true);
+    } else if (authState) {
+      routeTo(link);
+    }
+  }, []);
 
   const handleLogout = () => {
     dispatch(authActions.logout());
@@ -98,7 +116,9 @@ const MainHeader = () => {
                 }
                 key={menu.id}
               >
-                <Link to={menu.link}>{menu.title}</Link>
+                <Link onClick={() => handleClickLinkMenu(menu.link)}>
+                  {menu.title}
+                </Link>
               </li>
             ))}
           </ul>
