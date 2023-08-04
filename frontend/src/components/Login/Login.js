@@ -10,8 +10,6 @@ import logo from "../../assets/logo.png";
 const Login = ({ closeModal }) => {
   const modalOutsideRef = useRef(null);
 
-  const left = (window.innerWidth - 472) / 2;
-
   useOutsideClick(modalOutsideRef, () => closeModal());
 
   return (
@@ -38,31 +36,19 @@ const Login = ({ closeModal }) => {
           <Link
             className="login-button login-button-google"
             onClick={() => {
-              window.open(
-                googleAuthUrl,
-                "_blank",
-                `width=450, height=500, top=55px, left=${left}`
-              );
+              window.open(googleAuthUrl);
             }}
           />
           <Link
             className="login-button login-button-kakao"
             onClick={() => {
-              window.open(
-                kakaoAuthUrl,
-                "_blank",
-                `width=450, height=500, top=55px, left=${left}`
-              );
+              window.open(kakaoAuthUrl);
             }}
           />
           <Link
             className="login-button login-button-naver"
             onClick={() => {
-              window.open(
-                naverAuthUrl,
-                "_blank",
-                `width=450, height=500, top=55px, left=${left}`
-              );
+              window.open(naverAuthUrl);
             }}
           />
         </div>
