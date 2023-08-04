@@ -4,6 +4,7 @@ const authInitialState = {
   accessToken: "",
   refreshToken: "",
   isLoggedIn: false,
+  isLoginModalVisible: false,
 };
 
 const authSlice = createSlice({
@@ -14,23 +15,21 @@ const authSlice = createSlice({
       const accessToken = localStorage.getItem("access_token");
       const refreshToken = localStorage.getItem("refresh_token");
 
-      return {
-        ...state,
-        accessToken,
-        refreshToken,
-        isLoggedIn: true,
-      };
+      state.accessToken = accessToken;
+      state.refreshToken = refreshToken;
+      state.isLoginModalVisible = false;
+      state.isLoggedIn = true;
     },
     logout(state) {
       localStorage.clear();
 
-      return {
-        ...state,
-        accessToken: "",
-        refreshToken: "",
-        isLoggedIn: false,
-      };
+      state.accessToken = "";
+      state.refreshToken = "";
+      state.isLoggedIn = false;
     },
+    setIsLoginModalVisible(state, action) {
+      state.isLoginModalVisible = action.payload;
+    }
   },
 });
 

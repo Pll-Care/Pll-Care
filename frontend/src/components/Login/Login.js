@@ -1,16 +1,21 @@
 import { Link } from "react-router-dom";
 import { useRef } from "react";
 
+import { useDispatch } from "react-redux";
+import { authActions } from "../../redux/authSlice";
+
 import { googleAuthUrl, kakaoAuthUrl, naverAuthUrl } from "../../utils/auth";
 
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 
 import logo from "../../assets/logo.png";
 
-const Login = ({ closeModal }) => {
+const Login = () => {
   const modalOutsideRef = useRef(null);
 
-  useOutsideClick(modalOutsideRef, () => closeModal());
+  const dispatch = useDispatch();
+
+  useOutsideClick(modalOutsideRef, () => dispatch(authActions.setIsLoginModalVisible(false)));
 
   return (
     <div className="login-modal-wrapper" ref={modalOutsideRef}>

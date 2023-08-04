@@ -6,12 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../redux/authSlice";
 import { useRouter } from "../hooks/useRouter";
 import { customAxios } from "../lib/apis/customAxios";
+import Login from "../components/Login/Login";
 
 const GeneralLayout = ({ children }) => {
   const dispatch = useDispatch();
-  const { currentPath, replaceTo } = useRouter();
+  const { currentPath } = useRouter();
 
   const isLogin = useSelector((state) => state.auth.isLoggedIn);
+  const isLoginModalVisible = useSelector(
+    (state) => state.auth.isLoginModalVisible
+  );
 
   useEffect(() => {
     const accessToken = getToken("access_token");
@@ -21,19 +25,21 @@ const GeneralLayout = ({ children }) => {
   }, [isLogin]);
 
   useEffect(() => {
-    if (currentPath !== "/recruitment" && !isToken("access_token")) {
-      replaceTo("/");
-    }
-
     if (isToken("access_token") && isToken("refresh_token")) {
       dispatch(authActions.login());
+      dispatch(authActions.setIsLoginModalVisible(false));
     }
   }, [currentPath]);
+
+  useEffect(() => {
+    console.log(isLoginModalVisible);
+  }, [isLoginModalVisible])
 
   return (
     <>
       <MainHeader />
       <main>{children}</main>
+      {isLoginModalVisible && <Login />}
     </>
   );
 };

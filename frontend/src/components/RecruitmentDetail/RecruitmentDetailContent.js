@@ -1,8 +1,9 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { isToken } from "../../utils/localstroageHandler";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Quill from "quill";
@@ -32,6 +33,8 @@ import {
   useDeleteRecruitmentPostMutation,
   useModifyRecruitmentPostMutation,
 } from "../../hooks/useRecruitmentMutation";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../../redux/authSlice";
 
 Quill.register("modules/ImageResize", ImageResize);
 
@@ -121,7 +124,16 @@ const RecruitmentDetailContent = () => {
     }
   );
 
-  console.log(formValues);
+  const dispatch = useDispatch();
+
+  const authState = useSelector((state) => state.auth.isLoggedIn);
+
+  useEffect(() => {
+    if (isToken("access_token") && isToken("refresh_token")) {
+      dispatch(authActions.login());
+    }
+  }, [authState, dispatch]);
+
   // 모집글 수정
   const { mutate: modifyPostMutate } =
     useModifyRecruitmentPostMutation(formValues);
@@ -295,6 +307,15 @@ const RecruitmentDetailContent = () => {
   const deleteRecruitmentPost = () => {
     deletePostMutate(id);
     navigate("/recruitment");
+  };
+
+  // 좋아요 버튼을 눌렀을 때
+  const handleClickFavoriteIcon = () => {
+    if (!isToken("access_token")) {
+      dispatch(authActions.setIsLoginModalVisible(true));
+    } else {
+      mutate(id);
+    }
   };
 
   return (
@@ -646,7 +667,7 @@ const RecruitmentDetailContent = () => {
             ) : (
               <FavoriteBorderIcon
                 className="post-icon"
-                onClick={() => mutate(id)}
+                onClick={handleClickFavoriteIcon}
               />
             )}
             <ShareIcon className="post-icon" />

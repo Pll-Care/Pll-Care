@@ -1,9 +1,33 @@
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useCallback, useEffect } from "react";
+import { authActions } from "../../redux/authSlice";
 
 import Button from "../common/Button";
 import MemberFilterOption from "./MemberFilterOption";
 
+import { useRouter } from "../../hooks/useRouter";
+import { isToken } from "../../utils/localstroageHandler";
+
 const MemberOption = () => {
+  const { routeTo } = useRouter();
+  const dispatch = useDispatch();
+  const authState = useSelector((state) => state.auth.isLoggedIn);
+
+  const handleClickLinkMenu = useCallback(() => {
+    if (!isToken("access_token")) {
+      dispatch(authActions.setIsLoginModalVisible(true));
+    } else {
+      routeTo("/recruitment/post");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isToken("access_token") && isToken("refresh_token")) {
+      dispatch(authActions.login());
+    }
+  }, [authState, dispatch]);
+  
   return (
     <>
       <div className="member-option">
@@ -13,7 +37,7 @@ const MemberOption = () => {
         </div>
       </div>
       <div className="member-button">
-        <Link to="/recruitment/post">
+        <Link onClick={handleClickLinkMenu}>
           <Button text="작성하기" type="positive" />
         </Link>
         <MemberFilterOption />
