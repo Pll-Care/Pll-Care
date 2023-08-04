@@ -1,165 +1,191 @@
 .login-modal-wrapper {
-    background:rgba(0,0,0,0.8); 
-    backdrop-filter: blur(5px);
-    opacity: 90%;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  opacity: 90%;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 
-    .login-modal {
-        border-radius: 20px;
-        text-align: center;
-        width: 30%;
-        height: 0%;
-        padding-top: 33%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: white;
-    
-        .login-logo-img {
-            border: $border;
-            width: 80px;
-            height: 80px;
-            position: absolute;
-            top: 8%;
-            
-            @include putCenter;
-        }
-    
-        .login-heading {
-            position: absolute;
-            top: 29%;
-            padding: 12px;
+  .login-modal {
+    border-radius: 20px;
+    text-align: center;
+    width: 30%;
+    height: 0%;
+    padding-top: 33%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
 
-            font: {
-                family: $heading-font;
-                size: $heading-font-size;
-            }
-        }
-    
-        .login-text {
-            color: #9AAD84;
-            line-height: $line-height;
-            position: absolute;
-            top: 42%;
-            padding: 12px;
-            margin-bottom: 30px;
+    .login-logo-img {
+      position: absolute;
+      top: 8%;
 
-            font: {
-                family: $body-font;
-                size: $body-font-size;
-            }
-        }
-    
-        .login-button-wrapper {
-            width: 298px;
-            padding: 10px;
-            position: absolute;
-            top: 67%;
-    
-            .login-button {
-                width: 70px;
-                height: 70px;
-                cursor: pointer;
-                border-radius: 10px;
-                border: none;
-                box-shadow: 2px 2px 9px rgb(189, 186, 186);
-            
-                &-google {
-                    @include backgroundImage('../assets/google-login-button-img.png', center, no-repeat, 100%, 100%);
-                }
-            
-                &-kakao {  
-                    @include backgroundImage('../assets/kakao-login-button-img.png', center, no-repeat, 100%, 100%); 
-                }
-            
-                &-naver {
-                    @include backgroundImage('../assets/naver-login-button-img.png', center, no-repeat, 100%, 100%);
-                }
-            }
+      figure {
+        width: 68px;
+        height: 68px;
 
-            @include displayFlex(row, space-around);
+        background: {
+          position: center;
+          repeat: no-repeat;
+          size: 100%;
         }
-        
-        @include putCenter;
-        @include displayFlex(column);
+      }
+
+      @include putCenter;
     }
+
+    .login-heading {
+      position: absolute;
+      top: 29%;
+      padding: 12px;
+
+      font: {
+        family: $heading-font;
+        size: $heading-font-size;
+      }
+    }
+
+    .login-text {
+      color: #9aad84;
+      line-height: $line-height;
+      position: absolute;
+      top: 42%;
+      padding: 12px;
+      margin-bottom: 30px;
+
+      font: {
+        family: $body-font;
+        size: $body-font-size;
+      }
+    }
+
+    .login-button-wrapper {
+      width: 298px;
+      padding: 10px;
+      position: absolute;
+      top: 67%;
+
+      .login-button {
+        width: 70px;
+        height: 70px;
+        cursor: pointer;
+        border-radius: 10px;
+        border: none;
+        box-shadow: 2px 2px 9px rgb(189, 186, 186);
+
+        &-google {
+          @include backgroundImage(
+            "../assets/google-login-button-img.png",
+            center,
+            no-repeat,
+            100%,
+            100%
+          );
+        }
+
+        &-kakao {
+          @include backgroundImage(
+            "../assets/kakao-login-button-img.png",
+            center,
+            no-repeat,
+            100%,
+            100%
+          );
+        }
+
+        &-naver {
+          @include backgroundImage(
+            "../assets/naver-login-button-img.png",
+            center,
+            no-repeat,
+            100%,
+            100%
+          );
+        }
+      }
+
+      @include displayFlex(row, space-around);
+    }
+
+    @include putCenter;
+    @include displayFlex(column);
+  }
 }
 
 @include tablet {
-    .login-modal-wrapper {
-        .login-modal {
-            width: 40%;
-            padding-top: 42%;
+  .login-modal-wrapper {
+    .login-modal {
+      width: 40%;
+      padding-top: 42%;
 
-            .login-logo-img {
-                width: 68px;
-                height: 68px;
-                top: 9%;
-            }
+      .login-logo-img {
+        width: 68px;
+        height: 68px;
+        top: 9%;
+      }
 
-            .login-heading {
-                font-size: $heading-font-size-medium;
-            }
+      .login-heading {
+        font-size: $heading-font-size-medium;
+      }
 
-            .login-text {
-                font-size: $body-font-size-medium;
-            }
+      .login-text {
+        font-size: $body-font-size-medium;
+      }
 
-            .login-button-wrapper {
-                width: 82%;
+      .login-button-wrapper {
+        width: 82%;
 
-                .login-button {
-                    width: 28%;
-                    height: 0%;
-                    padding-top: 28%;
-                }
-
-                @include displayFlex(row, space-between);
-            }
+        .login-button {
+          width: 28%;
+          height: 0%;
+          padding-top: 28%;
         }
+
+        @include displayFlex(row, space-between);
+      }
     }
+  }
 }
 
 @include mobile {
-    .login-modal-wrapper {
-        .login-modal {
-            width: 70%;
-            padding-top: 76%;
+  .login-modal-wrapper {
+    .login-modal {
+      width: 70%;
+      padding-top: 76%;
 
-            .login-logo-img {
-                width: 20%;
-                height: 0;
-                padding-bottom: 20%;
-                top: 8%;
-            }
+      .login-logo-img {
+        width: 20%;
+        height: 0;
+        padding-bottom: 20%;
+        top: 8%;
+      }
 
-            .login-heading {
-                font-size: $heading-font-size-small;
-                top: 26%;
-            }
+      .login-heading {
+        font-size: $heading-font-size-small;
+        top: 26%;
+      }
 
-            .login-text {
-                font-size: $body-font-size-small;
-                top: 43%;
-            }
+      .login-text {
+        font-size: $body-font-size-small;
+        top: 43%;
+      }
 
-            .login-button-wrapper {
-                width: 90%;
-                top: 71%;
+      .login-button-wrapper {
+        width: 90%;
+        top: 71%;
 
-                .login-button {
-                    width: 25%;
-                    height: 0%;
-                    padding-top: 25%;
-                }
-
-                @include displayFlex(row, space-around);
-            }
+        .login-button {
+          width: 25%;
+          height: 0%;
+          padding-top: 25%;
         }
+
+        @include displayFlex(row, space-around);
+      }
     }
+  }
 }

@@ -12,7 +12,7 @@ import { getProfileImage } from "../../lib/apis/mainHeaderApi";
 
 import profile_default from "../../assets/profile-default-img.png";
 import profile_isProfile from "../../assets/ranking-img.png";
-import logoImgUrl from "../../assets/logo-img.png";
+import logo from "../../assets/logo-with-text.png";
 
 export const headerMenu = [
   { id: 1, link: "/management", title: "프로젝트 관리" },
@@ -77,9 +77,7 @@ const MainHeader = () => {
         <div className="main-header-left-col">
           <figure
             style={{
-              backgroundImage: `url(${
-                logoImgUrl
-              })`,
+              backgroundImage: `url(${logo})`,
             }}
             className="main-header-logo-img"
             onClick={() => routeTo("/")}

@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
+import { useRef } from "react";
 
 import { googleAuthUrl, kakaoAuthUrl, naverAuthUrl } from "../../utils/auth";
-import { useRef } from "react";
+
 import { useOutsideClick } from "../../hooks/useOutsideClick";
+
+import logo from "../../assets/logo.png";
 
 const Login = ({ closeModal }) => {
   const modalOutsideRef = useRef(null);
@@ -14,7 +17,14 @@ const Login = ({ closeModal }) => {
   return (
     <div className="login-modal-wrapper" ref={modalOutsideRef}>
       <div className="login-modal">
-        <div className="login-logo-img"></div>
+        <div className="login-logo-img">
+          <figure
+            style={{
+              backgroundImage: `url(${logo})`,
+            }}
+            alt={"로고"}
+          />
+        </div>
         <div className="login-heading">
           <h1>Log in</h1>
         </div>
