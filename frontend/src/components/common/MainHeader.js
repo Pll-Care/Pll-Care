@@ -3,7 +3,6 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "../../hooks/useRouter";
 
-import Login from "../Login/Login";
 import Button from "./Button";
 import ToggleMenuButton from "./ToggleMenuButton";
 
@@ -21,7 +20,6 @@ export const headerMenu = [
 ];
 
 const MainHeader = () => {
-  const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
   const [isToggleMenuOpen, setIsToggleMenuOpen] = useState(false);
   const [isProfilePage, setIsProfilePage] = useState(false);
   const [profileImage, setProfileImage] = useState({ id: "", imageUrl: "" });
@@ -33,7 +31,6 @@ const MainHeader = () => {
   useEffect(() => {
     if (isToken("access_token") && isToken("refresh_token")) {
       dispatch(authActions.login());
-      setIsLoginModalVisible(false);
     }
   }, [authState, dispatch]);
 
@@ -56,32 +53,26 @@ const MainHeader = () => {
     if (link === "/recruitment") {
       routeTo(link);
     } else if (!isToken("access_token")) {
-      setIsLoginModalVisible(true);
-    } else if (authState) {
+      dispatch(authActions.setIsLoginModalVisible(true));
+    } else {
       routeTo(link);
     }
   }, []);
 
   const handleLogout = () => {
     dispatch(authActions.logout());
-    setIsLoginModalVisible(false);
     replaceTo("/");
   };
-
+  
   const handleLogin = () => {
-    setIsLoginModalVisible(true);
+    dispatch(authActions.setIsLoginModalVisible(true));
 
     window.addEventListener("message", (event) => {
       if (event.data === "login") {
         dispatch(authActions.login());
-        setIsLoginModalVisible(false);
       }
     });
   };
-
-  const closeModal = useCallback(() => {
-    setIsLoginModalVisible(false);
-  }, []);
 
   return (
     <>
@@ -157,12 +148,6 @@ const MainHeader = () => {
           </div>
         )}
       </header>
-      {isLoginModalVisible && (
-        <Login
-          isLoginModalVisible={isLoginModalVisible}
-          closeModal={closeModal}
-        />
-      )}
     </>
   );
 };
