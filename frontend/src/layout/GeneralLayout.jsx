@@ -21,7 +21,7 @@ const GeneralLayout = ({ children }) => {
   }, [isLogin]);
 
   useEffect(() => {
-    if (currentPath !== "/" && !isToken("access_token")) {
+    if (currentPath !== "/recruitment" && !isToken("access_token")) {
       replaceTo("/");
     }
 

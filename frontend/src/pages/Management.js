@@ -1,6 +1,5 @@
 import Button from "../components/common/Button";
 import ProjectList from "../components/Management/ProjectList";
-import NonAuthenticatedManagement from "./NonAuthenticatedManagement";
 import Pagination from "../components/common/Pagination";
 import NewProject from "../components/Management/NewProject";
 
@@ -81,56 +80,52 @@ const Management = () => {
 
   return (
     <div>
-      {authState ? (
-        <div className="management">
-          <header className="management-main-header">
-            <div className="management-main-header-left-col">
-              <h1>참여 프로젝트</h1>
-              <Button onClick={handleModalVisible} text={"프로젝트 생성"} />
-            </div>
-            <div className="management-main-header-right-col">
-              <Button
-                className="all-projects-button"
-                text={"전체"}
-                type={allProjectListVisible && "positive_dark"}
-                onClick={handleClickAllProjectList}
-              />
-              <Button
-                text={"진행중"}
-                type={!allProjectListVisible && "positive_dark"}
-                onClick={handleClickOngoingProjectList}
-              />
-            </div>
-          </header>
-          <main className="project-list-wrapper">
-            <div>
-              <ProjectList
-                type={allProjectListVisible ? "all" : "ongoing"}
-                totalElements={totalElements}
-                projectList={projectList}
-              />
-              <Pagination
-                currentPage={
-                  allProjectListVisible ? currentPage : ongoingCurrentPage
-                }
-                setCurrentPage={
-                  allProjectListVisible ? setCurrentPage : setOngoingCurrentPage
-                }
-                recordDatasPerPage={recordDatasPerPage}
-                totalData={data.totalElements}
-              />
-            </div>
-            {isModalVisible ? (
-              <NewProject
-                isModalVisible={isModalVisible}
-                setIsModalVisible={setIsModalVisible}
-              />
-            ) : null}
-          </main>
-        </div>
-      ) : (
-        <NonAuthenticatedManagement />
-      )}
+      <div className="management">
+        <header className="management-main-header">
+          <div className="management-main-header-left-col">
+            <h1>참여 프로젝트</h1>
+            <Button onClick={handleModalVisible} text={"프로젝트 생성"} />
+          </div>
+          <div className="management-main-header-right-col">
+            <Button
+              className="all-projects-button"
+              text={"전체"}
+              type={allProjectListVisible && "positive_dark"}
+              onClick={handleClickAllProjectList}
+            />
+            <Button
+              text={"진행중"}
+              type={!allProjectListVisible && "positive_dark"}
+              onClick={handleClickOngoingProjectList}
+            />
+          </div>
+        </header>
+        <main className="project-list-wrapper">
+          <div>
+            <ProjectList
+              type={allProjectListVisible ? "all" : "ongoing"}
+              totalElements={totalElements}
+              projectList={projectList}
+            />
+            <Pagination
+              currentPage={
+                allProjectListVisible ? currentPage : ongoingCurrentPage
+              }
+              setCurrentPage={
+                allProjectListVisible ? setCurrentPage : setOngoingCurrentPage
+              }
+              recordDatasPerPage={recordDatasPerPage}
+              totalData={data.totalElements}
+            />
+          </div>
+          {isModalVisible ? (
+            <NewProject
+              isModalVisible={isModalVisible}
+              setIsModalVisible={setIsModalVisible}
+            />
+          ) : null}
+        </main>
+      </div>
     </div>
   );
 };
