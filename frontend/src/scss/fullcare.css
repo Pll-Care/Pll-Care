@@ -147,13 +147,17 @@ a {
   align-items: center;
 }
 .login-modal-wrapper .login-modal .login-logo-img {
-  border: 2px solid #01e89e;
-  width: 80px;
-  height: 80px;
   position: absolute;
   top: 8%;
   margin-left: auto;
   margin-right: auto;
+}
+.login-modal-wrapper .login-modal .login-logo-img figure {
+  width: 68px;
+  height: 68px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 .login-modal-wrapper .login-modal .login-heading {
   position: absolute;
@@ -163,7 +167,7 @@ a {
   font-size: 40px;
 }
 .login-modal-wrapper .login-modal .login-text {
-  color: #9AAD84;
+  color: #9aad84;
   line-height: 1.7;
   position: absolute;
   top: 42%;
