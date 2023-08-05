@@ -27,12 +27,6 @@ const GeneralLayout = ({ children }) => {
     ] = `Bearer ${accessToken}`;
   }, [isLogin]);
 
-  useEffect(() => {
-    if (isToken("access_token") && isToken("refresh_token")) {
-      dispatch(authActions.login());
-    }
-  }, [currentPath, authState]);
-
   return (
     <>
       <MainHeader />
