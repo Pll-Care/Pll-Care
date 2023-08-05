@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useCallback, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useCallback } from "react";
 import { authActions } from "../../redux/authSlice";
 
 import Button from "../common/Button";
@@ -12,7 +12,6 @@ import { isToken } from "../../utils/localstroageHandler";
 const MemberOption = () => {
   const { routeTo } = useRouter();
   const dispatch = useDispatch();
-  const authState = useSelector((state) => state.auth.isLoggedIn);
 
   const handleClickLinkMenu = useCallback(() => {
     if (!isToken("access_token")) {
@@ -21,12 +20,6 @@ const MemberOption = () => {
       routeTo("/recruitment/post");
     }
   }, []);
-
-  useEffect(() => {
-    if (isToken("access_token") && isToken("refresh_token")) {
-      dispatch(authActions.login());
-    }
-  }, [authState, dispatch]);
   
   return (
     <>
