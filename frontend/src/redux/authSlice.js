@@ -15,6 +15,7 @@ const authSlice = createSlice({
       const accessToken = localStorage.getItem("access_token");
       const refreshToken = localStorage.getItem("refresh_token");
 
+
       state.isLoggedIn = true;
       state.isLoginModalVisible = false;
       state.accessToken = accessToken;
