@@ -2401,13 +2401,16 @@ a {
   border: 2px solid blue;
 }
 .home .banner-wrapper {
-  border: 2px solid red;
-  height: 450px;
+  margin-top: 30px;
+  width: 80%;
+  aspect-ratio: 12.8/7.4;
   margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .home .banner {
   border: 2px solid black;
-  height: 400px;
+  height: 90%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -2466,6 +2469,28 @@ a {
   border-radius: 10px;
   width: 300px;
   height: 230px;
+}
+.home .footer {
+  height: 180px;
+  padding: 20px;
+  color: var(--gray-500, #7a7a7a);
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.home .footer figure {
+  width: 300px;
+  height: 70px;
+  margin-bottom: 10px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+.home .footer div {
+  margin-bottom: 10px;
 }
 
 .member-option {
