@@ -17,8 +17,8 @@ const authSlice = createSlice({
 
       state.accessToken = accessToken;
       state.refreshToken = refreshToken;
-      state.isLoginModalVisible = false;
       state.isLoggedIn = true;
+      state.isLoginModalVisible = false;
     },
     logout(state) {
       localStorage.clear();

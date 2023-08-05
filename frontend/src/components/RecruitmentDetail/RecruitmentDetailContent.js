@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
@@ -33,7 +33,7 @@ import {
   useDeleteRecruitmentPostMutation,
   useModifyRecruitmentPostMutation,
 } from "../../hooks/useRecruitmentMutation";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { authActions } from "../../redux/authSlice";
 
 Quill.register("modules/ImageResize", ImageResize);
@@ -125,14 +125,6 @@ const RecruitmentDetailContent = () => {
   );
 
   const dispatch = useDispatch();
-
-  const authState = useSelector((state) => state.auth.isLoggedIn);
-
-  useEffect(() => {
-    if (isToken("access_token") && isToken("refresh_token")) {
-      dispatch(authActions.login());
-    }
-  }, [authState, dispatch]);
 
   // 모집글 수정
   const { mutate: modifyPostMutate } =
@@ -317,6 +309,42 @@ const RecruitmentDetailContent = () => {
       mutate(id);
     }
   };
+
+  // 백엔드 지원하기 버튼을 눌렀을 때
+  const handleBackendApply = () => {
+    if (!isToken("access_token")) {
+      dispatch(authActions.setIsLoginModalVisible(true));
+    } else {
+      setBackendApply((prevState) => !prevState);
+    }
+  };
+
+  // 프론트엔드 지원하기 버튼을 눌렀을 때
+  const handleFrontendApply = () => {
+    if (!isToken("access_token")) {
+      dispatch(authActions.setIsLoginModalVisible(true));
+    } else {
+      setFrontendApply((prevState) => !prevState);
+    }
+  };
+
+  // 기획 지원하기 버튼을 눌렀을 때
+  const handleManagerApply = () => {
+    if (!isToken("access_token")) {
+      dispatch(authActions.setIsLoginModalVisible(true));
+    } else {
+      setFrontendApply((prevState) => !prevState);
+    }
+  };
+
+  // 디자인 지원하기 버튼을 눌렀을 때
+  const handleDesignApply = () => {
+    if (!isToken("access_token")) {
+      dispatch(authActions.setIsLoginModalVisible(true));
+    } else {
+      setDesignApply((prevState) => !prevState);
+    }
+  }
 
   return (
     <>
@@ -550,26 +578,10 @@ const RecruitmentDetailContent = () => {
           </div>
           {!isEdit && !data?.editable && !data?.deletable && (
             <div className="recruitment-detail-container-button">
-              <Button
-                size="small"
-                text="지원"
-                onClick={() => setBackendApply((prevState) => !prevState)}
-              />
-              <Button
-                size="small"
-                text="지원"
-                onClick={() => setFrontendApply((prevState) => !prevState)}
-              />
-              <Button
-                size="small"
-                text="지원"
-                onClick={() => setManagerApply((prevState) => !prevState)}
-              />
-              <Button
-                size="small"
-                text="지원"
-                onClick={() => setDesignApply((prevState) => !prevState)}
-              />
+              <Button size="small" text="지원" onClick={handleBackendApply} />
+              <Button size="small" text="지원" onClick={handleFrontendApply} />
+              <Button size="small" text="지원" onClick={handleManagerApply} />
+              <Button size="small" text="지원" onClick={handleDesignApply} />
             </div>
           )}
         </div>

@@ -29,12 +29,6 @@ const MainHeader = () => {
   const authState = useSelector((state) => state.auth.isLoggedIn);
 
   useEffect(() => {
-    if (isToken("access_token") && isToken("refresh_token")) {
-      dispatch(authActions.login());
-    }
-  }, [authState, dispatch]);
-
-  useEffect(() => {
     if (currentPath.includes("/profile")) setIsProfilePage(true);
     const getProfile = async () => {
       const response = await getProfileImage();
