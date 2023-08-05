@@ -43,6 +43,14 @@ const MainHeader = () => {
     };
   }, [currentPath]);
 
+  useEffect(() => {
+    window.addEventListener("message", (event) => {
+      if (event.data === "login") {
+        dispatch(authActions.login());
+      }
+    });
+  }, [currentPath, authState, dispatch]);
+
   const handleClickLinkMenu = useCallback((link) => {
     if (link === "/recruitment") {
       routeTo(link);
@@ -57,7 +65,7 @@ const MainHeader = () => {
     dispatch(authActions.logout());
     replaceTo("/");
   };
-  
+
   const handleLogin = () => {
     dispatch(authActions.setIsLoginModalVisible(true));
 
