@@ -68,11 +68,11 @@ public class Post extends BaseEntity {
     private String techStack;
 
 
-    @BatchSize(size = 50)
+    @BatchSize(size = 10)
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Recruitment> recruitments = new ArrayList<>();
 
-    @BatchSize(size = 50)
+    @BatchSize(size = 100)
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Likes> likes = new HashSet<>();  // * 좋아요 갯수는 likes set의 size를 이용
 

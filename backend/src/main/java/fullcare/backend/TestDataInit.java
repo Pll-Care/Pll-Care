@@ -81,32 +81,37 @@ public class TestDataInit {
         createProfile();
         createMemoAndBookMark();
         createPostAndLikes();
-//        createApply();
+        createApply();
 
     }
 
 
     private void createMemoAndBookMark() {
         Random rand = new Random();
-        for (long i = 1l; i < 31l; i++) {
-            long randomMemberId = rand.nextLong(1, 10);
-            long randomProjectId = rand.nextLong(1, 10);
+        for (long i = 1l; i < 11l; i++) {
+            for (long j = 1l; j < 10l; j++) {
 
-            Long memoId = memoService.createMemo(projectMemberService.findProjectMember(randomProjectId, randomMemberId).getMember().getId(), new MemoCreateRequest(1l, "제목" + i, "내용" + i));
-            if (i % 3 == 0) {
-                memoService.bookmarkMemo(randomMemberId, memoId, new MemoBookmarkRequest(randomProjectId));
+                Long memoId = memoService.createMemo(i, new MemoCreateRequest(j, "제목" + i, "내용" + i));
+
+                if (i % 4 == 0 || j % 3 == 0) {
+                    long randomMemberId = rand.nextLong(1, 11);
+                    long randomProjectId = rand.nextLong(1, 10);
+
+                    memoService.bookmarkMemo(randomMemberId, memoId, new MemoBookmarkRequest(randomProjectId));
+                }
+
             }
+
+
         }
     }
 
     private void createPostAndLikes() {
         Random rand = new Random();
         for (long i = 1l; i < 25; i++) {
-            LocalDate startDate = LocalDate.of(2023, 1, 1);
-            LocalDate endDate = LocalDate.of(2023, 12, 31);
+//            LocalDate startDate = LocalDate.of(2023, 1, 1);
+//            LocalDate endDate = LocalDate.of(2023, 12, 31);
 
-            long randomMemberId = rand.nextLong(1, 10);
-            long randomProjectId = rand.nextLong(1, 10);
 
             RecruitInfo recruitInfo1 = new RecruitInfo(ProjectMemberPositionType.백엔드, 0, rand.nextInt(1, 5));
             RecruitInfo recruitInfo2 = new RecruitInfo(ProjectMemberPositionType.프론트엔드, 0, rand.nextInt(1, 5));
@@ -127,9 +132,21 @@ public class TestDataInit {
             techStacks.add(TechStack.Git);
             techStacks.add(TechStack.Spring);
             techStacks.add(TechStack.SpringBoot);
-            long projectId = rand.nextLong(1, 8);
-            Project project = projectService.findProject(projectId);
-            Long postId = postService.createPost(randomMemberId, new PostCreateRequest(projectId, "모집글" + i, "내용" + i, project.getStartDate().plusMonths(1l), project.getEndDate().minusWeeks(1l), "참조" + i, "연락" + i, "지역" + i, techStacks, recruitInfos));
+
+            long randomMemberId = rand.nextLong(1, 11);
+            long randomProjectId = rand.nextLong(1, 10);
+
+
+            if (i < 10) {
+                Project project1 = projectService.findProject(i);
+                Long postId = postService.createPost(randomMemberId, new PostCreateRequest(i, "모집글" + i, "내용" + i, project1.getStartDate().plusMonths(1l), project1.getEndDate().minusWeeks(1l), "참조" + i, "연락" + i, "지역" + i, techStacks, recruitInfos));
+
+                postService.likePost(rand.nextLong(1, 11), postId);
+            }
+
+
+            Project project2 = projectService.findProject(randomProjectId);
+            Long postId = postService.createPost(randomMemberId, new PostCreateRequest(randomProjectId, "모집글" + i, "내용" + i, project2.getStartDate().plusMonths(1l), project2.getEndDate().minusWeeks(1l), "참조" + i, "연락" + i, "지역" + i, techStacks, recruitInfos));
 
             if (i % 3 == 0) {
                 postService.likePost(randomMemberId, postId);
@@ -138,12 +155,14 @@ public class TestDataInit {
     }
 
     private void createApply() {
-        for (long i = 1l; i < 25; i++) {
+        for (long i = 11l; i < 21; i++) {
+            Random rand = new Random();
+            long randomPostId = rand.nextLong(1, 34);
 
-            postService.applyProjectByPost((((i * 4) - 3) % 10) + 10, i, new ProjectApplyRequest(ProjectMemberPositionType.백엔드));
-            postService.applyProjectByPost((((i * 4) - 2) % 10) + 10, i, new ProjectApplyRequest(ProjectMemberPositionType.프론트엔드));
-            postService.applyProjectByPost((((i * 4) - 1) % 10) + 10, i, new ProjectApplyRequest(ProjectMemberPositionType.디자인));
-            postService.applyProjectByPost((((i * 4)) % 10) + 10, i, new ProjectApplyRequest(ProjectMemberPositionType.기획));
+            postService.applyProjectByPost(i, randomPostId, new ProjectApplyRequest(ProjectMemberPositionType.백엔드));
+//            postService.applyProjectByPost(i, randomPostId, new ProjectApplyRequest(ProjectMemberPositionType.프론트엔드));
+//            postService.applyProjectByPost(i, randomPostId, new ProjectApplyRequest(ProjectMemberPositionType.디자인));
+//            postService.applyProjectByPost(i, randomPostId, new ProjectApplyRequest(ProjectMemberPositionType.기획));
         }
     }
 
@@ -261,10 +280,9 @@ public class TestDataInit {
     private void createProject() {
         LocalDate startDate = LocalDate.of(2023, 1, 1);
         LocalDate endDate = LocalDate.of(2023, 12, 31);
-        Member member = memberRepository.findById(1l).orElseThrow();
         for (long i = 1l; i < 10l; i++) {
             Project project = projectService.createProject(1l, new ProjectCreateRequest("제목" + i, "내용" + i, startDate.plusMonths(i), endDate, null));
-            for (long j = 2l; j < 10l; j++) {
+            for (long j = 2l; j < 11l; j++) {
                 if (j < 4l) {
                     project.addMember(memberRepository.findById(j).get(), new ProjectMemberType(ProjectMemberRoleType.팀원, ProjectMemberPositionType.백엔드)); // 2~3
                 } else if (j < 7l) {
@@ -272,9 +290,9 @@ public class TestDataInit {
                 } else if (j < 9l) {
                     project.addMember(memberRepository.findById(j).get(), new ProjectMemberType(ProjectMemberRoleType.팀원, ProjectMemberPositionType.디자인)); // 7~8
                 } else {
-                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberType(ProjectMemberRoleType.팀원, ProjectMemberPositionType.기획)); // 9
+                    project.addMember(memberRepository.findById(j).get(), new ProjectMemberType(ProjectMemberRoleType.팀원, ProjectMemberPositionType.기획)); // 9~10
                 }
-                // 10 ~ 19 까지는 어디에도 소속되지 않은 사용자
+                // 11 ~ 20 까지는 어디에도 소속되지 않은 사용자
             }
         }
     }

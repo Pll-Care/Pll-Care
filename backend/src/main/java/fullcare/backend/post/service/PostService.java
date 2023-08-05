@@ -22,7 +22,7 @@ import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.dto.request.ProjectApplyRequest;
 import fullcare.backend.project.service.ProjectService;
 import fullcare.backend.projectmember.domain.ProjectMember;
-import fullcare.backend.projectmember.service.ProjectMemberService;
+import fullcare.backend.projectmember.repository.ProjectMemberRepository;
 import fullcare.backend.recruitment.domain.RecruitInfo;
 import fullcare.backend.recruitment.domain.Recruitment;
 import fullcare.backend.recruitment.repository.RecruitmentRepository;
@@ -53,9 +53,9 @@ public class PostService {
     private final ApplyRepository applyRepository;
     private final RecruitmentRepository recruitmentRepository;
     private final MemberRepository memberRepository;
+    private final ProjectMemberRepository projectMemberRepository;
 
     private final ProjectService projectService;
-    private final ProjectMemberService projectMemberService;
     private final S3Service s3Service;
 
     @Transactional
@@ -178,7 +178,7 @@ public class PostService {
         findPostDetailResponse.setRecruitInfoList(recruitments.stream().map(r -> new RecruitInfo(r)).toList());
 
         // ! sql에 null값이 전달되었을 때 문제가 없는가?
-        Optional<Apply> findApply = applyRepository.findByPostIdAndMemberId(postId, memberId);
+        Optional<Apply> findApply = applyRepository.findByPostIdAndMemberId(findPostDetailResponse.getPostId(), memberId);
         findPostDetailResponse.setAvailable(findApply.isEmpty());
 
         return findPostDetailResponse;
@@ -223,18 +223,17 @@ public class PostService {
     public void applyProjectByPost(Long memberId, Long postId, ProjectApplyRequest request) {
         Post findPost = findPostWithRecruitmentsAndProject(postId);
 
-        try {
-            // ! V1
+        // ! V1
 //            Project project = projectService.findProject(findPost.getProject().getId());
 //            project.getProjectMembers().stream().filter(pm -> pm.getMember().getId() == memberId).findAny().orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
 
-            // ! V2
-            projectMemberService.findProjectMember(findPost.getProject().getId(), memberId);
+        // ! V2
+        Optional<ProjectMember> findProjectMember = projectMemberRepository.findByProjectIdAndMemberId(findPost.getProject().getId(), memberId);
 
-            // * 위의 코드에서 EntityNotFound를 던지지 않으면 이미 프로젝트에 소속된 인원이므로 지원할 수 없음
+        if (findProjectMember.isPresent()) {
             throw new DuplicateProjectMemberException(ProjectErrorCode.DUPLICATE_PROJECT_MEMBER); // todo 이미 프로젝트에 소속된 사용자입니다.
+        } else {
 
-        } catch (EntityNotFoundException e) {
             Optional<Apply> findApply = applyRepository.findByPostIdAndMemberId(findPost.getId(), memberId);
 
             if (!(findApply.isPresent())) {
@@ -255,29 +254,23 @@ public class PostService {
             } else {
                 throw new UnauthorizedAccessException(PostErrorCode.DUPLICATE_APPLY);
             }
-
         }
-
-
     }
 
     @Transactional
     public void cancelApply(Long memberId, Long postId) {
         Post findPost = findPost(postId);
 
-
-        try {
-            // ! V1
+        // ! V1
 //            Project project = projectService.findProject(findPost.getProject().getId());
 //            project.getProjectMembers().stream().filter(pm -> pm.getMember().getId() == memberId).findAny().orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
 
-            // ! V2
-            projectMemberService.findProjectMember(findPost.getProject().getId(), memberId);
+        // ! V2
+        Optional<ProjectMember> findProjectMember = projectMemberRepository.findByProjectIdAndMemberId(findPost.getProject().getId(), memberId);
 
-            // * 위의 코드에서 EntityNotFound를 던지지 않으면 이미 프로젝트에 소속된 인원이므로 지원취소 시 정상 처리할 수 없음
+        if (findProjectMember.isPresent()) {
             throw new UnauthorizedAccessException(ProjectErrorCode.DUPLICATE_PROJECT_MEMBER); // todo 비정상적인 API 호출 -> 이미 프로젝트에 소속된 사용자입니다. 소속된 사용자는 탈퇴 혹은 강퇴에 의해 프로젝트에서 나갈 수 있음.
-
-        } catch (EntityNotFoundException e) {
+        } else {
             Apply findApply = applyRepository.findByPostIdAndMemberId(findPost.getId(), memberId).orElseThrow(() -> new EntityNotFoundException(PostErrorCode.APPLY_NOT_FOUND));// todo 프로젝트 지원 정보가 없습니다.
             applyRepository.delete(findApply);
         }

@@ -41,10 +41,6 @@ public class ProjectMemberService {
 
     private final ProjectService projectService;
 
-    public ProjectMember findProjectMember(Long projectId, Long memberId) {
-        return projectMemberRepository.findByProjectIdAndMemberId(projectId, memberId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
-    }
-
     public List<ProjectMemberListResponse> findProjectMembers(Long projectId, Long memberId) {
         ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, memberId, true);
 
@@ -180,8 +176,8 @@ public class ProjectMemberService {
             }
 
             // 쿼리1
-            Apply findApply = applyRepository.findByPostIdAndMemberId(request.getPostId(), memberId).orElseThrow(() -> new EntityNotFoundException(PostErrorCode.APPLY_NOT_FOUND)); // todo 지원자 정보가 없습니다.
-
+            Apply findApply = applyRepository.findByPostIdAndMemberId(request.getPostId(), request.getMemberId()).orElseThrow(() -> new EntityNotFoundException(PostErrorCode.APPLY_NOT_FOUND)); // todo 지원자 정보가 없습니다.
+            
             // 쿼리2
             Member findMember = findApply.getMember();
 
@@ -195,7 +191,7 @@ public class ProjectMemberService {
             List<Recruitment> recruitments = findPost.getRecruitments();
 
             // 쿼리6
-            Recruitment recruitment = recruitments.stream().filter(r -> r.getRecruitPosition() == findApply.getPosition()).findAny().orElseThrow();
+            Recruitment recruitment = recruitments.stream().filter(r -> r.getRecruitPosition() == findApply.getPosition()).findAny().orElseThrow(() -> new EntityNotFoundException(PostErrorCode.RECRUITMENT_NOT_FOUND));
             recruitment.updateRecruitment(); // -> o
 
             // 쿼리7 -> o

@@ -15,8 +15,7 @@ import java.util.List;
 public class PostDetailResponse {
 
     private Long postId;
-
-
+    
     private Long projectId;
     private String projectName; // * 프로젝트 이름
     private String projectImageUrl;

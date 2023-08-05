@@ -58,10 +58,11 @@ public class Project extends BaseEntity {
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Memo> memos = new ArrayList<>();
 
-    @BatchSize(size = 50)
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts = new ArrayList<>();
 
+
+    @BatchSize(size = 16)
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProjectMember> projectMembers = new ArrayList<>();
 
@@ -101,7 +102,7 @@ public class Project extends BaseEntity {
                 .project(this)
                 .projectMemberType(projectMemberType)
                 .build();
-        
+
         projectMembers.add(pm);
     }
 

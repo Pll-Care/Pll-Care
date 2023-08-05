@@ -1,5 +1,7 @@
 package fullcare.backend.recruitment.domain;
 
+import fullcare.backend.global.errorcode.PostErrorCode;
+import fullcare.backend.global.exceptionhandling.exception.UnauthorizedAccessException;
 import fullcare.backend.post.domain.Post;
 import fullcare.backend.projectmember.domain.ProjectMemberPositionType;
 import jakarta.persistence.*;
@@ -42,6 +44,8 @@ public class Recruitment {
     public void updateRecruitment() {
         if (this.currentAmount < this.totalAmount) {
             this.currentAmount += 1;
+        } else {
+            throw new UnauthorizedAccessException(PostErrorCode.RECRUITMENT_COMPLETED);
         }
     }
 }
