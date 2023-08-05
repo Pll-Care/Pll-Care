@@ -15,10 +15,11 @@ const authSlice = createSlice({
       const accessToken = localStorage.getItem("access_token");
       const refreshToken = localStorage.getItem("refresh_token");
 
-      state.accessToken = accessToken;
-      state.refreshToken = refreshToken;
+
       state.isLoggedIn = true;
       state.isLoginModalVisible = false;
+      state.accessToken = accessToken;
+      state.refreshToken = refreshToken;
     },
     logout(state) {
       localStorage.clear();
