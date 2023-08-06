@@ -71,7 +71,7 @@ const MainHeader = () => {
     dispatch(authActions.logout());
     replaceTo("/");
   };
-
+  
   const handleLogin = () => {
     dispatch(authActions.setIsLoginModalVisible(true));
 
