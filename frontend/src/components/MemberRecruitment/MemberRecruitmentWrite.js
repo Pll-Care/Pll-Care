@@ -8,7 +8,6 @@ import Quill from "quill";
 import ImageResize from "quill-image-resize";
 
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 import { useEditorImageUploader } from "../../hooks/useEditorImageHandler";
 import projectDefaultImg from "../../assets/project-default-img.jpg";
@@ -17,7 +16,7 @@ import Card from "../common/Card";
 
 import { getRecruitmentProject } from "../../lib/apis/memberRecruitmentApi";
 import { useAddRecruitmentPostMutation } from "../../hooks/useRecruitmentMutation";
-import { backendStacks, concepts, location } from "../../utils/recruitment";
+import { concepts, location } from "../../utils/recruitment";
 
 Quill.register("modules/ImageResize", ImageResize);
 
@@ -68,11 +67,13 @@ const MemberRecruitmentWrite = () => {
     async () => await getRecruitmentProject(),
     {
       onSuccess: (data) => {
-        setFormValues((prevState) => ({
-          ...prevState,
-          projectId: data[0]?.projectId || "",
-        }));
-        data !== [] && setImageUrl(data[0].imageUrl);
+        if (data && data.length > 0) {
+          setFormValues((prevState) => ({
+            ...prevState,
+            projectId: data[0].projectId || "",
+          }));
+          setImageUrl(data[0].imageUrl);
+        }
       },
     }
   );
@@ -105,36 +106,6 @@ const MemberRecruitmentWrite = () => {
       (project) => project.projectId === parseInt(value, 10)
     );
     selectedProject && setImageUrl(selectedProject.imageUrl);
-  };
-
-  // 기술 스택들 태그들
-  const [stacks, setStacks] = useState([]);
-
-  // 입력받은 스택
-  const [stackInput, setStackInput] = useState("");
-
-  // 입력한 값이 포함한 stack 보여주기
-  const filteredStacks = backendStacks.filter((stack) =>
-    stack.includes(stackInput.toLowerCase())
-  );
-
-  // 입력 스택
-  const handleStackInputChange = (e) => {
-    setStackInput(e.target.value);
-  };
-
-  // 스택 추가하기
-  const stackPlusClickHandler = () => {
-    if (stacks.includes(stackInput)) {
-      return;
-    }
-    setStacks((prevState) => [...prevState, stackInput]);
-    setStackInput("");
-  };
-
-  // 스택 빼기
-  const stackMinusClickHandler = (project) => {
-    setStacks((prevState) => prevState.filter((stack) => stack !== project));
   };
 
   // 모집글 생성 react query문
@@ -199,7 +170,6 @@ const MemberRecruitmentWrite = () => {
     const body = {
       ...allData,
       recruitInfo: recruitCnt,
-      techStack: stacks,
     };
     console.log(body);
     addPostMutate(body);
@@ -393,43 +363,7 @@ const MemberRecruitmentWrite = () => {
 
               <div className="member-content-position-stack">
                 <h5>기술 스택</h5>
-                <div className="member-stack">
-                  <div className="member-stack-input">
-                    <input
-                      placeholder="기술 스택을 추가하세요"
-                      type="text"
-                      value={stackInput}
-                      onChange={handleStackInputChange}
-                      ref={inputRefs.techStack}
-                    />
-                    <AddCircleIcon
-                      className="mui-icon"
-                      onClick={stackPlusClickHandler}
-                    />
-                  </div>
-                  {stackInput && (
-                    <div className="member-inputcontainer-box">
-                      {filteredStacks.map((stack, index) => (
-                        <h5 key={index} onClick={() => setStackInput(stack)}>
-                          {stack}
-                        </h5>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <div className="member-stack-button">
-                  {stacks.length > 0 &&
-                    stacks.map((stack) => (
-                      <Button
-                        text={stack}
-                        size="small"
-                        onClick={() => stackMinusClickHandler(stack)}
-                      />
-                    ))}
-                  {stacks.length === 0 && (
-                    <h6>프로젝트에서 사용할 스택을 추가해보세요</h6>
-                  )}
-                </div>
+                {/*기술 스택 입력 컴포넌트*/}
               </div>
             </div>
 
