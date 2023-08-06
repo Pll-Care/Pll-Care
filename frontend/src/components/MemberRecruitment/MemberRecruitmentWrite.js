@@ -9,14 +9,14 @@ import ImageResize from "quill-image-resize";
 
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
-import { useEditorImageUploader } from "../../hooks/useEditorImageHandler";
-import projectDefaultImg from "../../assets/project-default-img.jpg";
 import Button from "../common/Button";
 import Card from "../common/Card";
 
-import { getRecruitmentProject } from "../../lib/apis/memberRecruitmentApi";
+import { useEditorImageUploader } from "../../hooks/useEditorImageHandler";
 import { useAddRecruitmentPostMutation } from "../../hooks/useRecruitmentMutation";
+import { getRecruitmentProject } from "../../lib/apis/memberRecruitmentApi";
 import { concepts, location } from "../../utils/recruitment";
+import projectDefaultImg from "../../assets/project-default-img.jpg";
 
 Quill.register("modules/ImageResize", ImageResize);
 
@@ -78,6 +78,7 @@ const MemberRecruitmentWrite = () => {
     }
   );
 
+  // 입력하는 모든 상태값 update
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues((prevState) => ({
@@ -194,6 +195,8 @@ const MemberRecruitmentWrite = () => {
     navigate("/recruitment");
   };
 
+  // => 통신오류
+  //data && data?.length !== 0  => 아직 관리에서 생성안함
   return (
     <div className="member-write">
       <div className="member-title">
@@ -206,215 +209,208 @@ const MemberRecruitmentWrite = () => {
           <img src={projectDefaultImg} alt="" />
         )}
 
-        {!data && !isLoading && <h2>통신 오류</h2>}
-        {data && data?.length !== 0 ? (
-          <input
-            type="text"
-            name="title"
-            ref={inputRefs.title}
-            value={formValues.title}
-            onChange={handleChange}
-            placeholder="모집글 제목을 작성해보세요"
-          />
-        ) : (
-          <h2>모집글을 작성하세요 </h2>
-        )}
+        <input
+          type="text"
+          name="title"
+          ref={inputRefs.title}
+          value={formValues.title}
+          onChange={handleChange}
+          placeholder="모집글 제목을 작성해보세요"
+        />
       </div>
 
-      <>
-        <Card className="member-write-card">
-          <div className="member-content">
-            <div className="member-content-project">
-              <h3>프로젝트 선택</h3>
-              {data && !isLoading && data?.length > 0 ? (
-                <select
-                  className="member-select1"
-                  name="projectId"
-                  onChange={handleChangeProject}
-                  value={formValues.projectId}
-                >
-                  {data?.map((project, index) => (
-                    <option key={index} value={project.projectId}>
-                      {project.title}
-                    </option>
-                  ))}
-                </select>
-              ) : (
-                <h6 style={{ color: "black" }}>
-                  아직 프로젝트가 없습니다! 프로젝트 관리에서 프로젝트를
-                  생성해보세요
-                </h6>
-              )}
-            </div>
-
-            <div className="member-content-project">
-              <h3>주제/분야</h3>
+      <Card className="member-write-card">
+        <div className="member-content">
+          <div className="member-content-project">
+            <h3>프로젝트 선택</h3>
+            {data && !isLoading && data?.length > 0 ? (
               <select
-                className="member-select2"
-                onChange={handleChange}
-                value={formValues.concept || ""}
-                name="concept"
+                className="member-select1"
+                name="projectId"
+                onChange={handleChangeProject}
+                value={formValues.projectId}
               >
-                <option disabled hidden>
-                  선택하세요
-                </option>
-                {concepts.map((concept, index) => (
-                  <option key={index} value={concept}>
-                    {concept}
+                {data?.map((project, index) => (
+                  <option key={index} value={project.projectId}>
+                    {project.title}
                   </option>
                 ))}
               </select>
-            </div>
+            ) : (
+              <h6 style={{ color: "black" }}>
+                아직 프로젝트가 없습니다! 프로젝트 관리에서 프로젝트를
+                생성해보세요
+              </h6>
+            )}
+          </div>
 
-            <div className="member-content-project">
-              <h3>모집 기간</h3>
-              <input
-                className="member-select3"
-                type="date"
-                required
-                name="recruitStartDate"
-                value={formValues.recruitStartDate}
-                onChange={handleChange}
-                data-placeholder="시작 일자"
-                ref={inputRefs.startDate}
-              />
-              ~
-              <input
-                type="date"
-                required
-                name="recruitEndDate"
-                value={formValues.recruitEndDate}
-                onChange={handleChange}
-                data-placeholder="종료 일자"
-                ref={inputRefs.endDate}
-              />
-            </div>
-
-            <div className="member-content-options">
-              <h3>지역</h3>
-              <select
-                className="member-select4"
-                onChange={handleChange}
-                name="region"
-                value={formValues.region || ""}
-                ref={inputRefs.region}
-              >
-                <option disabled hidden>
-                  선택하세요
+          <div className="member-content-project">
+            <h3>주제/분야</h3>
+            <select
+              className="member-select2"
+              onChange={handleChange}
+              value={formValues.concept || ""}
+              name="concept"
+            >
+              <option disabled hidden>
+                선택하세요
+              </option>
+              {concepts.map((concept, index) => (
+                <option key={index} value={concept}>
+                  {concept}
                 </option>
-                {location.map((place, index) => (
-                  <option key={index} value={place}>
-                    {place}
-                  </option>
-                ))}
-              </select>
-            </div>
+              ))}
+            </select>
+          </div>
 
-            <div className="member-content-position">
-              <h3>포지션</h3>
-              <div className="options">
-                <div className="options-container">
-                  <h5>백엔드</h5>
-                  <h5>프론트엔드</h5>
-                  <h5>기획</h5>
-                  <h5>디자인</h5>
-                </div>
+          <div className="member-content-project">
+            <h3>모집 기간</h3>
+            <input
+              className="member-select3"
+              type="date"
+              required
+              name="recruitStartDate"
+              value={formValues.recruitStartDate}
+              onChange={handleChange}
+              data-placeholder="시작 일자"
+              ref={inputRefs.startDate}
+            />
+            ~
+            <input
+              type="date"
+              required
+              name="recruitEndDate"
+              value={formValues.recruitEndDate}
+              onChange={handleChange}
+              data-placeholder="종료 일자"
+              ref={inputRefs.endDate}
+            />
+          </div>
 
-                <div className="options-count">
-                  <input
-                    className="position-number"
-                    type="number"
-                    min="0"
-                    placeholder="0"
-                    value={formValues.backendCnt}
-                    name="backendCnt"
-                    onChange={handleChange}
-                    ref={inputRefs.backendCnt}
-                  />
-                  <input
-                    className="position-number"
-                    type="number"
-                    min="0"
-                    placeholder="0"
-                    value={formValues.frontendCnt}
-                    name="frontendCnt"
-                    onChange={handleChange}
-                  />
-                  <input
-                    className="position-number"
-                    type="number"
-                    min="0"
-                    placeholder="0"
-                    value={formValues.managerCnt}
-                    name="managerCnt"
-                    onChange={handleChange}
-                  />
-                  <input
-                    className="position-number"
-                    type="number"
-                    min="0"
-                    placeholder="0"
-                    value={formValues.designCnt}
-                    name="designCnt"
-                    onChange={handleChange}
-                  />
-                </div>
+          <div className="member-content-options">
+            <h3>지역</h3>
+            <select
+              className="member-select4"
+              onChange={handleChange}
+              name="region"
+              value={formValues.region || ""}
+              ref={inputRefs.region}
+            >
+              <option disabled hidden>
+                선택하세요
+              </option>
+              {location.map((place, index) => (
+                <option key={index} value={place}>
+                  {place}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="member-content-position">
+            <h3>포지션</h3>
+            <div className="options">
+              <div className="options-container">
+                <h5>백엔드</h5>
+                <h5>프론트엔드</h5>
+                <h5>기획</h5>
+                <h5>디자인</h5>
               </div>
 
-              <div className="member-content-position-stack">
-                <h5>기술 스택</h5>
-                {/*기술 스택 입력 컴포넌트*/}
+              <div className="options-count">
+                <input
+                  className="position-number"
+                  type="number"
+                  min="0"
+                  placeholder="0"
+                  value={formValues.backendCnt}
+                  name="backendCnt"
+                  onChange={handleChange}
+                  ref={inputRefs.backendCnt}
+                />
+                <input
+                  className="position-number"
+                  type="number"
+                  min="0"
+                  placeholder="0"
+                  value={formValues.frontendCnt}
+                  name="frontendCnt"
+                  onChange={handleChange}
+                />
+                <input
+                  className="position-number"
+                  type="number"
+                  min="0"
+                  placeholder="0"
+                  value={formValues.managerCnt}
+                  name="managerCnt"
+                  onChange={handleChange}
+                />
+                <input
+                  className="position-number"
+                  type="number"
+                  min="0"
+                  placeholder="0"
+                  value={formValues.designCnt}
+                  name="designCnt"
+                  onChange={handleChange}
+                />
               </div>
             </div>
 
-            <div className="member-content-description">
-              <h3>설명</h3>
-              <ReactQuill
-                className="react-quill"
-                ref={quillRef}
-                name="description"
-                value={formValues.description}
-                onChange={handleChangeDescription}
-                modules={{
-                  toolbar: [
-                    [{ header: [1, 2, 3, false] }],
-                    [{ size: ["small", false, "large", "huge"] }],
-                    ["bold", "italic", "underline", "strike"],
-                    [{ align: [] }],
-                    [{ color: [] }, { background: [] }],
-                    ["link", "image"],
-                  ],
-                  ImageResize: {
-                    parchment: Quill.import("parchment"),
-                    modules: ["Resize", "DisplaySize", "Toolbar"],
-                  },
-                }}
-              />
-            </div>
-
-            <div className="member-content-description">
-              <h3>레퍼런스</h3>
-              <textarea
-                onChange={handleChange}
-                value={formValues.reference}
-                name="reference"
-                ref={inputRefs.reference}
-              />
-            </div>
-
-            <div className="member-content-description">
-              <h3>컨택</h3>
-              <textarea
-                onChange={handleChange}
-                value={formValues.contact}
-                name="contact"
-                ref={inputRefs.contact}
-              />
+            <div className="member-content-position-stack">
+              <h5>기술 스택</h5>
+              {/*기술 스택 입력 컴포넌트*/}
             </div>
           </div>
-        </Card>
-        <Button text="생성 완료" onClick={handleAddRecruitmetPost} />
-      </>
+
+          <div className="member-content-description">
+            <h3>설명</h3>
+            <ReactQuill
+              className="react-quill"
+              ref={quillRef}
+              name="description"
+              value={formValues.description}
+              onChange={handleChangeDescription}
+              modules={{
+                toolbar: [
+                  [{ header: [1, 2, 3, false] }],
+                  [{ size: ["small", false, "large", "huge"] }],
+                  ["bold", "italic", "underline", "strike"],
+                  [{ align: [] }],
+                  [{ color: [] }, { background: [] }],
+                  ["link", "image"],
+                ],
+                ImageResize: {
+                  parchment: Quill.import("parchment"),
+                  modules: ["Resize", "DisplaySize", "Toolbar"],
+                },
+              }}
+            />
+          </div>
+
+          <div className="member-content-description">
+            <h3>레퍼런스</h3>
+            <textarea
+              onChange={handleChange}
+              value={formValues.reference}
+              name="reference"
+              ref={inputRefs.reference}
+            />
+          </div>
+
+          <div className="member-content-description">
+            <h3>컨택</h3>
+            <textarea
+              onChange={handleChange}
+              value={formValues.contact}
+              name="contact"
+              ref={inputRefs.contact}
+            />
+          </div>
+        </div>
+      </Card>
+      <Button text="생성 완료" onClick={handleAddRecruitmetPost} />
     </div>
   );
 };
