@@ -5,18 +5,20 @@ const MeetingRecordData = ({ sortedMeetingRecordList }) => {
   const dispatch = useDispatch();
 
   const handleClickMeetingRecord = (e) => {
-    dispatch(
-      meetingRecordManagementActions.setSelectedMeetingRecordId(e.target.id)
-    );
-    dispatch(meetingRecordManagementActions.setInitialState(false));
-    dispatch(
-      meetingRecordManagementActions.setIsCreatedMeetingRecordVisibleState(
-        false
-      )
-    );
-    dispatch(
-      meetingRecordManagementActions.setSelectedMeetingRecordState(true)
-    );
+    if (e.target.id) {
+      dispatch(
+        meetingRecordManagementActions.setSelectedMeetingRecordId(e.target.id)
+      );
+      dispatch(meetingRecordManagementActions.setInitialState(false));
+      dispatch(
+        meetingRecordManagementActions.setIsCreatedMeetingRecordVisibleState(
+          false
+        )
+      );
+      dispatch(
+        meetingRecordManagementActions.setSelectedMeetingRecordState(true)
+      );
+    }
   };
 
   return (
@@ -29,11 +31,15 @@ const MeetingRecordData = ({ sortedMeetingRecordList }) => {
             onClick={handleClickMeetingRecord}
             id={record.memoId}
           >
-            <div className="meeting-record-item-date">
+            <div className="meeting-record-item-date" id={record.memoId}>
               {new Date(record.createdDate).toLocaleDateString()}
             </div>
-            <div className="meeting-record-item-title">{record.title}</div>
-            <div className="meeting-record-item-writer">{record.author}</div>
+            <div className="meeting-record-item-title" id={record.memoId}>
+              {record.title}
+            </div>
+            <div className="meeting-record-item-writer" id={record.memoId}>
+              {record.author}
+            </div>
           </div>
         ))}
     </div>
