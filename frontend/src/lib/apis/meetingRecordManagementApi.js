@@ -48,7 +48,7 @@ export const deleteMeetingRecord = async (newMeetingRecordObj) => {
   const response = await customAxios.delete(
     `/auth/memo/${newMeetingRecordObj.meetingRecordId}`,
     {
-      projectId: newMeetingRecordObj.projectId,
+      data: { projectId: newMeetingRecordObj.projectId },
     }
   );
 
