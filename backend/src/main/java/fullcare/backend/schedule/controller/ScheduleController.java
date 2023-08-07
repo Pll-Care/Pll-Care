@@ -53,12 +53,11 @@ public class ScheduleController {
     })
     @PostMapping// 나중에 프로젝트 시작, 종료일정 밖에 있는 일정 생성을 못하게 해야함. 테스트 데이터 생성을 활용할 때는 사용 x
     public ResponseEntity create(@Valid @RequestBody ScheduleCreateRequest scheduleCreateRequest, @CurrentLoginMember Member member) {
-        ProjectMember projectMember = projectService.isProjectAvailable(scheduleCreateRequest.getProjectId(), member.getId(), false);
 
         if (scheduleCreateRequest.getCategory().equals(ScheduleCategory.MILESTONE)) {
-            milestoneService.createMilestone(scheduleCreateRequest, projectMember);
+            milestoneService.createMilestone(scheduleCreateRequest, member.getId());
         } else if (scheduleCreateRequest.getCategory().equals(ScheduleCategory.MEETING)) {
-            meetingService.createMeeting(scheduleCreateRequest, projectMember);
+            meetingService.createMeeting(scheduleCreateRequest, member.getId());
         } else {
             throw new NotFoundCategoryException(ScheduleErrorCode.CATEGORY_NOT_FOUND);
         }
@@ -82,7 +81,7 @@ public class ScheduleController {
     @PutMapping("/{scheduleId}")
     public ResponseEntity update(@PathVariable Long scheduleId, @Valid @RequestBody ScheduleUpdateRequest scheduleUpdateRequest, @CurrentLoginMember Member member) {
         if (!scheduleService.updateSchedule(scheduleUpdateRequest, scheduleId, member.getId())) {
-            throw new UnauthorizedAccessException(ScheduleErrorCode.INVALID_MODIFY);
+            throw new UnauthorizedAccessException(ScheduleErrorCode.UNAUTHORIZED_MODIFY);
         }
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -95,7 +94,7 @@ public class ScheduleController {
     public ResponseEntity delete(@PathVariable Long scheduleId, @Valid @RequestBody ScheduleDeleteRequest scheduleDeleteRequest, @CurrentLoginMember Member member) {
         //? 작성자 또는 팀 리더만 삭제 가능
         if (!scheduleService.validateDelete(scheduleId, scheduleDeleteRequest.getProjectId(), member.getId())) {
-            throw new UnauthorizedAccessException(ScheduleErrorCode.INVALID_DELETE);
+            throw new UnauthorizedAccessException(ScheduleErrorCode.UNAUTHORIZED_DELETE);
         }
         scheduleService.deleteSchedule(scheduleId);
         return new ResponseEntity(HttpStatus.OK);

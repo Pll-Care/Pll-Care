@@ -262,16 +262,16 @@ public class TestDataInit {
             if (i < 16) {
                 LocalDateTime endDate = LocalDateTime.of(2023, month, randDay, 16, 0);
                 ProjectMember projectMember = projectService.isProjectAvailable(1l, 1l, false);
-                meetingService.createMeeting(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MEETING, memberIds, "제목" + i, "내용" + i, "address" + i), projectMember);
+                meetingService.createMeeting(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MEETING, memberIds, "제목" + i, "내용" + i, "address" + i), projectMember.getMember().getId());
             } else {
                 try {
                     LocalDateTime endDate = LocalDateTime.of(2023, month, randDay + plusDay, 16, 0);
                     ProjectMember projectMember = projectService.isProjectAvailable(1l, 1l, false);
-                    milestoneService.createMilestone(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MILESTONE, memberIds, "제목" + i, "내용" + i, null), projectMember);
+                    milestoneService.createMilestone(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MILESTONE, memberIds, "제목" + i, "내용" + i, null), projectMember.getMember().getId());
                 } catch (DateTimeException e) { // 다음달로 넘어가는 경우
                     LocalDateTime endDate = LocalDateTime.of(2023, month, randDay, 16, 0).plusWeeks(1);
                     ProjectMember projectMember = projectService.isProjectAvailable(1l, 1l, false);
-                    milestoneService.createMilestone(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MILESTONE, memberIds, "제목" + i, "내용" + i, null), projectMember);
+                    milestoneService.createMilestone(new ScheduleCreateRequest(1l, startDate, endDate, ScheduleCategory.MILESTONE, memberIds, "제목" + i, "내용" + i, null), projectMember.getMember().getId());
                 }
             }
         }

@@ -4,6 +4,7 @@ import fullcare.backend.global.State;
 import fullcare.backend.global.errorcode.MemberErrorCode;
 import fullcare.backend.global.errorcode.ProjectErrorCode;
 import fullcare.backend.global.errorcode.ScheduleErrorCode;
+import fullcare.backend.global.exceptionhandling.exception.CompletedProjectException;
 import fullcare.backend.global.exceptionhandling.exception.EntityNotFoundException;
 import fullcare.backend.global.exceptionhandling.exception.ScheduleCategoryMisMatchException;
 import fullcare.backend.member.domain.Member;
@@ -43,6 +44,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static fullcare.backend.global.errorcode.ScheduleErrorCode.INVALID_DELETE;
+import static fullcare.backend.global.errorcode.ScheduleErrorCode.INVALID_MODIFY;
 
 @Slf4j
 @Service
@@ -84,12 +88,20 @@ public class ScheduleService {
     }
 
     public boolean validateDelete(Long scheduleId, Long projectId, Long memberId) {
-        ProjectMember projectMember = projectService.isProjectAvailable(projectId, memberId, false);
-        return !(!validateAuthor(projectId, scheduleId, memberId) && !projectMember.isLeader());
+        try {
+            ProjectMember projectMember = projectService.isProjectAvailable(projectId, memberId, false);
+            return !(!validateAuthor(projectId, scheduleId, memberId) && !projectMember.isLeader());
+        } catch(CompletedProjectException completedProjectException){
+            throw new CompletedProjectException(INVALID_DELETE);
+        }
     }
 
     public boolean updateSchedule(ScheduleUpdateRequest scheduleUpdateRequest, Long scheduleId, Long memberId) {// 멤버 로그인 사용자 검증 수정
-        projectService.isProjectAvailable(scheduleUpdateRequest.getProjectId(), memberId, false);
+        try {
+            projectService.isProjectAvailable(scheduleUpdateRequest.getProjectId(), memberId, false);
+        } catch(CompletedProjectException completedProjectException){
+            throw new CompletedProjectException(INVALID_MODIFY);
+        }
         Schedule schedule = scheduleRepository.findJoinSMById(scheduleId).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
         if ((schedule instanceof Meeting && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.MILESTONE)) || (schedule instanceof Milestone && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.MEETING))) {
             throw new ScheduleCategoryMisMatchException(ScheduleErrorCode.CATEGORY_NOT_MODIFY);
