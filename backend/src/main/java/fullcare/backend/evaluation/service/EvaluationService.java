@@ -205,7 +205,7 @@ public class EvaluationService {
 
         List<MidTermRankingDto> rankingDtos = new ArrayList<>();// 랭킹 부분
         for (MidTermRankProjectionInterface r : rank) {
-            String name = members.stream().filter(m -> m.getId() == r.getQuantity()).map(m -> m.getName()).findFirst().get();
+            String name = members.stream().filter(m -> m.getId() == r.getId()).map(m -> m.getName()).findFirst().get();
             rankingDtos.add(MidTermRankingDto.builder()
                     .rank(r.getRanking())
                     .memberId(r.getId())
