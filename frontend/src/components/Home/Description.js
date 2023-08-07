@@ -1,9 +1,17 @@
 const Description = () => {
-    return (
-        <div className="description">
-
-        </div>
-    )
-}
+  return (
+    <div className="description">
+      <h1>프로젝트 관리 서비스, 풀케어</h1>
+      <p>
+        프로젝트 성공을 위한 완벽한 동반자, 풀케어 서비스입니다. <br />
+        프로젝트 모집으로 최적의 팀원을 모아주며, 회의록 작성과 일정 관리를
+        철저히 지원하여 팀의 생산성을 높입니다. <br />
+        팀원 관리와 팀 관리를 통해 조직의 협업을 강화하며, 전체 일정 오버뷰로
+        프로젝트 진행 상태를 실시간으로 파악할 수 있습니다. <br />
+        프로젝트를 성공으로 이끄는 풀케어 서비스와 함께하세요.
+      </p>
+    </div>
+  );
+};
 
 export default Description;
