@@ -1,8 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@600&family=Open+Sans:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Open+Sans:wght@300&display=swap");
 
-// 아래는 수정 예정 
-// 임시 폰트 및 색상
+// 수정 예정
 $heading-font: "IBM Plex Sans KR", sans-serif;
 $heading-font-size: 40px;
 
@@ -58,6 +57,18 @@ $link-font-size-small: 13px;
 
 $button-font-size-small: 14px;
 
-// 아래는 확정된 색상 및 타이포
 // 컬러 팔레트
+// green
+$green-200: #01e89e;
+$green-300: #00aa72;
+$green-400: #0f6341;
+$green-500: #003b28;
 
+// gray
+$gray-100: #fcfcfc;
+$gray-400: #b4bcbd;
+$gray-500: #7a7a7a;
+
+// tomato
+$tomato-100: #fee7e7;
+$tomato-500: #c9000c;
