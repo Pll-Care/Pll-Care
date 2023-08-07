@@ -43,6 +43,20 @@ const MainHeader = () => {
     };
   }, [currentPath]);
 
+  useEffect(() => {
+    window.addEventListener("message", (event) => {
+      if (event.data === "login") {
+        dispatch(authActions.login());
+      }
+    });
+  }, [currentPath, authState, dispatch]);
+
+  useEffect(() => {
+    if (isToken("access_token") && isToken("refresh_token")) {
+      dispatch(authActions.login());
+    }
+  }, [authState, dispatch]);
+
   const handleClickLinkMenu = useCallback((link) => {
     if (link === "/recruitment") {
       routeTo(link);
@@ -132,7 +146,6 @@ const MainHeader = () => {
                       : profile_default
                     : profileImage.imageUrl
                 }
-                alt="유저프로필"
               />
             </Link>
           </div>
