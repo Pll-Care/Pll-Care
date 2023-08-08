@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 
 import Button from "../../../common/Button";
 import { getContact, patchProfile } from "../../../../lib/apis/profileApi";
@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 import ProfileInput from "../../../common/ProfileInput";
 
 const QUERY_KEY = "profile-contact";
-// const QUERY_FN : (memberId) => getContact(memberId);
 
 const ContactBox = () => {
   const [isModify, setIsModify] = useState(false);
@@ -26,14 +25,16 @@ const ContactBox = () => {
     () => getContact(memberId),
     {
       onSuccess: (res) => {
-        const [emailStart, emailEnd] = res.contact.email.split("@");
-        const info = {
-          emailStart,
-          emailEnd,
-          github: res.contact.github,
-          websiteUrl: res.contact.websiteUrl,
-        };
-        setUserInfo((_) => info);
+        if (!!res.contact) {
+          const [emailStart, emailEnd] = res.contact.email.split("@");
+          const info = {
+            emailStart,
+            emailEnd,
+            github: res.contact.github,
+            websiteUrl: res.contact.websiteUrl,
+          };
+          setUserInfo((_) => info);
+        }
       },
     }
   );
@@ -127,9 +128,9 @@ const ContactBox = () => {
             chageWebsite: chageWebsite,
           })
         : Default_UI({
-            email: data?.contact.email,
-            github: data?.contact.github,
-            websiteUrl: data?.contact.websiteUrl,
+            email: data?.contact?.email,
+            github: data?.contact?.github,
+            websiteUrl: data?.contact?.websiteUrl,
           })}
     </div>
   );
