@@ -240,7 +240,7 @@ public class PostService {
                 Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
 
                 Recruitment findRecruitment = findPost.getRecruitments().stream()
-                        .filter(r -> r.getRecruitPosition() == request.getPosition()).findAny()
+                        .filter(r -> r.getRecruitPosition().equals(request.getPosition())).findAny()
                         .orElseThrow(() -> new EntityNotFoundException(PostErrorCode.RECRUITMENT_NOT_FOUND));
 
                 if (findRecruitment.getCurrentAmount() < findRecruitment.getTotalAmount()) {
