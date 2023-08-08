@@ -58,6 +58,7 @@ const AllParticipants = ({ projectId, isCompleted }) => {
       </div>
       {isFinalEvaluationVisible && (
         <FinalEvaluation
+          isFinalEvaluationVisible={isFinalEvaluationVisible}
           type={finalEvaluationType}
           badgeQuantity={badgeQuantity}
           participantId={participantId}
