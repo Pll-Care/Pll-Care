@@ -117,28 +117,12 @@ a {
   color: black;
 }
 
-.login-modal-wrapper {
-  background: rgba(0, 0, 0, 0.8);
-  -webkit-backdrop-filter: blur(5px);
-          backdrop-filter: blur(5px);
-  opacity: 90%;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-.login-modal-wrapper .login-modal {
+.login-modal {
   border-radius: 20px;
   text-align: center;
-  width: 30%;
-  height: 0%;
-  padding-top: 33%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
+  width: 100%;
+  height: 100%;
+  padding: 0;
   margin-left: auto;
   margin-right: auto;
   display: flex;
@@ -146,27 +130,27 @@ a {
   justify-content: center;
   align-items: center;
 }
-.login-modal-wrapper .login-modal .login-logo-img {
+.login-modal .login-logo-img {
   position: absolute;
   top: 8%;
   margin-left: auto;
   margin-right: auto;
 }
-.login-modal-wrapper .login-modal .login-logo-img figure {
+.login-modal .login-logo-img figure {
   width: 68px;
   height: 68px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
 }
-.login-modal-wrapper .login-modal .login-heading {
+.login-modal .login-heading {
   position: absolute;
   top: 29%;
   padding: 12px;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 40px;
 }
-.login-modal-wrapper .login-modal .login-text {
+.login-modal .login-text {
   color: #9aad84;
   line-height: 1.7;
   position: absolute;
@@ -176,7 +160,7 @@ a {
   font-family: "Noto Sans KR", sans-serif;
   font-size: 18px;
 }
-.login-modal-wrapper .login-modal .login-button-wrapper {
+.login-modal .login-button-wrapper {
   width: 298px;
   padding: 10px;
   position: absolute;
@@ -186,7 +170,7 @@ a {
   justify-content: space-around;
   align-items: center;
 }
-.login-modal-wrapper .login-modal .login-button-wrapper .login-button {
+.login-modal .login-button-wrapper .login-button {
   width: 70px;
   height: 70px;
   cursor: pointer;
@@ -194,87 +178,25 @@ a {
   border: none;
   box-shadow: 2px 2px 9px rgb(189, 186, 186);
 }
-.login-modal-wrapper .login-modal .login-button-wrapper .login-button-google {
+.login-modal .login-button-wrapper .login-button-google {
   background-image: url("../assets/google-login-button-img.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%, 100%;
 }
-.login-modal-wrapper .login-modal .login-button-wrapper .login-button-kakao {
+.login-modal .login-button-wrapper .login-button-kakao {
   background-image: url("../assets/kakao-login-button-img.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%, 100%;
 }
-.login-modal-wrapper .login-modal .login-button-wrapper .login-button-naver {
+.login-modal .login-button-wrapper .login-button-naver {
   background-image: url("../assets/naver-login-button-img.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%, 100%;
 }
 
-@media (min-width: 767px) and (max-width: 1024px) {
-  .login-modal-wrapper .login-modal {
-    width: 40%;
-    padding-top: 42%;
-  }
-  .login-modal-wrapper .login-modal .login-logo-img {
-    width: 68px;
-    height: 68px;
-    top: 9%;
-  }
-  .login-modal-wrapper .login-modal .login-heading {
-    font-size: 38px;
-  }
-  .login-modal-wrapper .login-modal .login-text {
-    font-size: 17px;
-  }
-  .login-modal-wrapper .login-modal .login-button-wrapper {
-    width: 82%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .login-modal-wrapper .login-modal .login-button-wrapper .login-button {
-    width: 28%;
-    height: 0%;
-    padding-top: 28%;
-  }
-}
-@media (max-width: 767px) {
-  .login-modal-wrapper .login-modal {
-    width: 70%;
-    padding-top: 76%;
-  }
-  .login-modal-wrapper .login-modal .login-logo-img {
-    width: 20%;
-    height: 0;
-    padding-bottom: 20%;
-    top: 8%;
-  }
-  .login-modal-wrapper .login-modal .login-heading {
-    font-size: 33px;
-    top: 26%;
-  }
-  .login-modal-wrapper .login-modal .login-text {
-    font-size: 12px;
-    top: 43%;
-  }
-  .login-modal-wrapper .login-modal .login-button-wrapper {
-    width: 90%;
-    top: 71%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-  }
-  .login-modal-wrapper .login-modal .login-button-wrapper .login-button {
-    width: 25%;
-    height: 0%;
-    padding-top: 25%;
-  }
-}
 .management-header {
   border: 2px solid #01e89e;
   border-radius: 30px;
