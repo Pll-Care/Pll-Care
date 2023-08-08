@@ -3398,30 +3398,28 @@ a {
   gap: 24px;
 }
 .profile_body_introduce_contactBox_items_item {
+  width: 100%;
   min-height: 30px;
   display: flex;
-}
-.profile_body_introduce_contactBox_items_item > span {
-  display: inline-block;
-  min-width: 60px;
-  font-weight: bold;
-  font-size: 16px;
+  align-items: center;
 }
 .profile_body_introduce_contactBox_items_item > a,
-.profile_body_introduce_contactBox_items_item input,
 .profile_body_introduce_contactBox_items_item p {
   margin-left: 30px;
   border: none;
+  color: #767676;
 }
-.profile_body_introduce_contactBox_items_item > input {
-  padding: 5px 15px;
-  min-width: 300px;
+.profile_body_introduce_contactBox_items_title {
+  display: inline-block;
+  min-width: 69px;
+  font-weight: bold;
   font-size: 16px;
-  border-bottom: 2px solid #cccccc;
 }
-.profile_body_introduce_contactBox_items_item > input:focus {
-  outline: none;
-  border-bottom: 2px solid #01e89e;
+.profile_body_introduce_contactBox_items_email {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .profile_body_introduce_positionBox_position > span {
   color: #767676;
@@ -4113,4 +4111,23 @@ a {
 .pageNumber {
   text-align: center;
   line-height: 30px;
+}
+
+.profileInput {
+  text-align: center;
+  border: none;
+  background-color: #fcfcfc;
+  border-radius: 5px;
+  box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.08);
+  padding: 4px 0;
+  font-size: 12px;
+}
+.profileInput:focus {
+  outline: none;
+}
+.profileInput_width100 {
+  width: 100%;
+}
+.profileInput_width45 {
+  width: 45%;
 }/*# sourceMappingURL=fullcare.css.map */

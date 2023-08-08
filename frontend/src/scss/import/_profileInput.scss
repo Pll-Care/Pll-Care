@@ -1,0 +1,23 @@
+.profileInput {
+  text-align: center;
+
+  border: none;
+  background-color: $gray-100;
+  border-radius: 5px;
+  box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.08);
+
+  padding: 4px 0;
+  font-size: 12px;
+
+  &:focus {
+    outline: none;
+  }
+
+  &_width100 {
+    width: 100%;
+  }
+
+  &_width45 {
+    width: 45%;
+  }
+}

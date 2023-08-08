@@ -140,32 +140,31 @@
           gap: 24px;
 
           &_item {
+            width: 100%;
             min-height: 30px;
             display: flex;
-            & > span {
-              display: inline-block;
-              min-width: 60px;
-              font-weight: bold;
-              font-size: 16px;
-            }
+            align-items: center;
+
             & > a,
-            input,
             p {
               margin-left: 30px;
               border: none;
+              color: $gray-600;
             }
+          }
 
-            & > input {
-              padding: 5px 15px;
-              min-width: 300px;
-              font-size: 16px;
-              border-bottom: 2px solid #cccccc;
-            }
+          &_title {
+            display: inline-block;
+            min-width: 69px;
+            font-weight: bold;
+            font-size: 16px;
+          }
 
-            & > input:focus {
-              outline: none;
-              border-bottom: 2px solid #01e89e;
-            }
+          &_email {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
           }
         }
       }
