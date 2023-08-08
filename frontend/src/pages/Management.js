@@ -6,9 +6,6 @@ import NewProject from "../components/Management/NewProject";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { useNavigate } from "react-router-dom";
-
-import { history } from "../utils/history";
 
 import { getProjectList } from "../lib/apis/managementApi";
 
@@ -19,8 +16,6 @@ const Management = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const authState = useSelector((state) => state.auth.isLoggedIn);
-
-  const navigate = useNavigate();
 
   const [recordDatasPerPage, setRecordDatasPerPage] = useState(4);
 
@@ -52,19 +47,19 @@ const Management = () => {
     }
   }, [allProjectListVisible]);
 
-  useEffect(() => {
-    const listenBackEvent = () => {
-      navigate("/management");
-    };
+  // useEffect(() => {
+  //   const listenBackEvent = () => {
+  //     navigate("/management");
+  //   };
 
-    const historyEvent = history.listen(({ action }) => {
-      if (action === "POP") {
-        listenBackEvent();
-      }
-    });
+  //   const historyEvent = history.listen(({ action }) => {
+  //     if (action === "POP") {
+  //       listenBackEvent();
+  //     }
+  //   });
 
-    return historyEvent;
-  }, [navigate]);
+  //   return historyEvent;
+  // }, [navigate]);
 
   const handleClickAllProjectList = () => {
     setAllProjectListVisible((prevData) => true);

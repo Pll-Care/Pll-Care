@@ -17,6 +17,11 @@ import RecruitmentDetailPage from "./pages/RecruitmentDetailPage";
 import RecruitmentWritePage from "./pages/RecruitmentWritePage";
 
 import ProjectManagement from "./components/ProjectManagement/ProjectManagement";
+import Introduce from "./components/Profile/Introduce";
+import Evaluate from "./components/Profile/Evaluate";
+import MyProject from "./components/Profile/myproject";
+import LikeProject from "./components/Profile/LikeProject";
+import ProjectEvaluate from "./components/Profile/ProjectEvaluate";
 
 const routerData = [
   {
@@ -33,9 +38,37 @@ const routerData = [
   },
   {
     id: 2,
-    path: "/profile",
+    path: "/profile/:id",
     element: <Profile />,
     withLogin: true,
+    children: [
+      {
+        path: "introduce",
+        withLogin: true,
+        element: <Introduce />,
+      },
+      {
+        path: "evaluate",
+        withLogin: true,
+        element: <Evaluate />,
+      },
+      {
+        path: "evaluate/:projectTitle",
+        withLogin: true,
+        element: <ProjectEvaluate />,
+      },
+      {
+        path: "my",
+        withLogin: true,
+        element: <MyProject />,
+      },
+
+      {
+        path: "like",
+        withLogin: true,
+        element: <LikeProject />,
+      },
+    ],
   },
   {
     id: 3,

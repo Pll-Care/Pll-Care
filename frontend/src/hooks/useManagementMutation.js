@@ -14,7 +14,7 @@ import {
 
 const useManagementMutation = () => {
   const queryClient = useQueryClient();
-  const { routeTo } = useRouter();
+  const { routeTo, routeOptionTo } = useRouter();
 
   const { mutate: createMutate } = useMutation(createProject, {
     onSuccess: () => {
@@ -32,7 +32,8 @@ const useManagementMutation = () => {
       queryClient.invalidateQueries(["managementOngoingProjectList"]);
       queryClient.invalidateQueries(["managementAllProjectList"]);
 
-      routeTo("/management");
+      // TODO: 삭제한 프로젝트 접근 했을 때 '존재하지 않는 프로젝트입니다' 처리하기
+      routeOptionTo("/management", { replace: true });
       toast.success("삭제되었습니다!");
     },
     onError: () => {
