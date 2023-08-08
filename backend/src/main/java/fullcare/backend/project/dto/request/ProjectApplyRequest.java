@@ -1,6 +1,7 @@
 package fullcare.backend.project.dto.request;
 
 import fullcare.backend.projectmember.domain.ProjectMemberPositionType;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ProjectApplyRequest {
-
+    @NotNull
     private ProjectMemberPositionType position;
     
     // ! 테스트 데이터용 생성자
