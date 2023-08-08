@@ -7,6 +7,7 @@ import useEvaluationManagementMutation from "../../hooks/useEvaluationManagement
 
 import Button from "../../components/common/Button";
 import ControlMenu from "../common/ControlMenu";
+import ModalContainer from "../common/ModalContainer";
 
 import { getProjectId } from "../../utils/getProjectId";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
@@ -73,6 +74,7 @@ const FinalEvaluation = ({
   participantId,
   member,
   setIsFinalEvaluationVisible,
+  isFinalEvaluationVisible,
   badgeQuantity,
   data,
 }) => {
@@ -85,9 +87,7 @@ const FinalEvaluation = ({
 
   const [content, setContent] = useState("");
 
-  const modalOutsideRef = useRef();
-
-  useOutsideClick(modalOutsideRef, () => setIsFinalEvaluationVisible(""));
+  const handleModalClose = () => setIsFinalEvaluationVisible(false);
 
   const { finalEvaluationMutate } = useEvaluationManagementMutation();
 
@@ -157,12 +157,18 @@ const FinalEvaluation = ({
       case 3:
         return ideaBankBadgeImgUrl;
       default:
-        return '';
+        return "";
     }
-  }
+  };
 
   return (
-    <div className="final-evaluation-wrapper" ref={modalOutsideRef}>
+    <ModalContainer
+      open={isFinalEvaluationVisible}
+      onClose={handleModalClose}
+      type={"dark"}
+      width={"80%"}
+      height={"90%"}
+    >
       {type === "evaluation" ? (
         <div className="evaluation-management-final-evaluation">
           <div className="final-evaluation-heading">
@@ -191,9 +197,7 @@ const FinalEvaluation = ({
                   <div className="badge" key={idx}>
                     <figure
                       style={{
-                        backgroundImage: `url(${
-                          getBadgeImgUrl(idx)
-                        })`,
+                        backgroundImage: `url(${getBadgeImgUrl(idx)})`,
                       }}
                     />
                     <div>{badge.evaluationBadge}</div>
@@ -260,7 +264,7 @@ const FinalEvaluation = ({
           </div>
         </div>
       )}
-    </div>
+    </ModalContainer>
   );
 };
 
