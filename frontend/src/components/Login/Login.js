@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { authActions } from "../../redux/authSlice";
 
@@ -11,6 +11,8 @@ import ModalContainer from "../common/ModalContainer";
 const Login = () => {
   const dispatch = useDispatch();
 
+  const isLoginModalVisible = useSelector((state) => state.auth.isLoginModalVisible);
+
   const handleModalVisible = (visible) => {
     dispatch(authActions.setIsLoginModalVisible(visible));
   };
@@ -19,7 +21,7 @@ const Login = () => {
     <ModalContainer
       width={380}
       height={400}
-      open={() => handleModalVisible(true)}
+      open={isLoginModalVisible}
       onClose={() => handleModalVisible(false)}
     >
       <div className="login-modal">
