@@ -26,7 +26,7 @@ public class ProjectUpdateRequest {
     private State state;
 
     // TODO startDate(이전) < endDate(이후) + NotBlank인가 NotEmpty인가?
-    @FutureOrPresent
+//    @FutureOrPresent
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate startDate;
 
