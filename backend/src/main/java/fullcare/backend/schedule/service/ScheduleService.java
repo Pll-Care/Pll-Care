@@ -104,7 +104,7 @@ public class ScheduleService {
         }
         Schedule schedule = scheduleRepository.findJoinSMById(scheduleId).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
         if ((schedule instanceof Meeting && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.MILESTONE)) || (schedule instanceof Milestone && scheduleUpdateRequest.getCategory().equals(ScheduleCategory.MEETING))) {
-            throw new ScheduleCategoryMisMatchException(ScheduleErrorCode.CATEGORY_NOT_MODIFY);
+            throw new ScheduleCategoryMisMatchException(ScheduleErrorCode.INVALID_CATEGORY_MODIFY);
         }
         if (schedule.getState().equals(State.COMPLETE)) {
             throw new ScheduleCategoryMisMatchException(ScheduleErrorCode.SCHEDULE_COMPLETED);
@@ -425,11 +425,11 @@ public class ScheduleService {
 
             boolean eval = schedule.getMidtermEvaluations().stream().anyMatch(me -> me.getVoter().getId() == member.getId());//? 해당 일정에 투표한 적이 있는지 확인
 //            boolean eval = midtermEvaluationRepository.existsByScheduleIdAndVoterId(schedule.getId(), member.getId());
-            if(previous) {
-                if(eval && schedule.getState().equals(State.COMPLETE)){
+            if (previous) {
+                if (eval && schedule.getState().equals(State.COMPLETE)) {
                     scheduleSearchResponse.add(scheduleResponse);
                 }
-            }else {
+            } else {
                 if (!eval && schedule.getState().equals(State.COMPLETE)) { //? 평가한 적이 없는 완료된 일정을 고름
                     if (schedule.getScheduleMembers().stream().anyMatch(sm -> sm.getMember().getId() == member.getId())) {//? 사용자가 일정에 들어갔는지 확인
                         scheduleResponse.setEvaluationRequired(true);
@@ -438,7 +438,7 @@ public class ScheduleService {
                 if (!(scheduleResponse.getEndDate().isBefore(LocalDateTime.now()) && !scheduleResponse.getEvaluationRequired())) {//? 현재 이후 날짜이거나 내가 평가할 필요가 있는 일정일 경우
 //                newResponse.add(response);
                 }
-                if(scheduleResponse.getEvaluationRequired() || scheduleResponse.getState().equals(State.TBD) || scheduleResponse.getState().equals(State.ONGOING))
+                if (scheduleResponse.getEvaluationRequired() || scheduleResponse.getState().equals(State.TBD) || scheduleResponse.getState().equals(State.ONGOING))
                     scheduleSearchResponse.add(scheduleResponse);
 
 

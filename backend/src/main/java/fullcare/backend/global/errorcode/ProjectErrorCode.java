@@ -13,7 +13,7 @@ public enum ProjectErrorCode implements ErrorCode {
 
     INVALID_DATE_RANGE("PROJECT_003", HttpStatus.BAD_REQUEST, "시작일자와 종료일자가 올바르지 않습니다."),
 
-    UNAUTHORIZED_ACCESS("PROJECT_004", HttpStatus.FORBIDDEN, "해당 프로젝트에 접근 권한이 없습니다."),
+    UNAUTHORIZED_ACCESS("PROJECT_004", HttpStatus.FORBIDDEN, "해당 프로젝트에 대한 접근 권한이 없습니다."),
     UNAUTHORIZED_MODIFY("PROJECT_005", HttpStatus.FORBIDDEN, "해당 프로젝트에 대한 수정 권한이 없습니다."),
     UNAUTHORIZED_DELETE("PROJECT_006", HttpStatus.FORBIDDEN, "해당 프로젝트에 대한 삭제 권한이 없습니다."),
     UNAUTHORIZED_COMPLETE("PROJECT_007", HttpStatus.FORBIDDEN, "해당 프로젝트에 대한 완료 권한이 없습니다."),

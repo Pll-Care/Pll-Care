@@ -78,6 +78,7 @@ public class GlobalExceptionHandler {
     // * 그 외의 예상하지 못한 예외 처리
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception e, HttpServletRequest request) {
+//        e.printStackTrace();
         ErrorResponse errorResponse = ErrorResponse.getResponse(GlobalErrorCode.INTERNAL_SERVER_ERROR, e, request);
         return new ResponseEntity(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }

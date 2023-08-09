@@ -12,6 +12,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
@@ -41,4 +43,14 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = "select p from Post p join fetch p.likes l where l.member.id =:memberId",
             countQuery = "select p from Post p join fetch p.likes l where l.member.id =:memberId")
     Page<Post> findLikePageByMemberId(@Param("memberId") Long memberId, Pageable pageable);
+
+    @EntityGraph(attributePaths = {"project"})
+    List<Post> findTop5ByRecruitEndDateAfterOrderByLikeCountDescRecruitEndDateAsc(LocalDate baseDate);
+
+    @EntityGraph(attributePaths = {"project"})
+    List<Post> findTop5ByRecruitEndDateAfterOrderByRecruitEndDateAsc(LocalDate baseDate);
+
+    @EntityGraph(attributePaths = {"project"})
+    List<Post> findTop5ByCreatedDateAfterOrderByCreatedDateAscRecruitEndDateAsc(LocalDate baseDate);
+
 }

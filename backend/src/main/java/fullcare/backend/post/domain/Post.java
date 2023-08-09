@@ -1,5 +1,6 @@
 package fullcare.backend.post.domain;
 
+import fullcare.backend.apply.domain.Apply;
 import fullcare.backend.global.State;
 import fullcare.backend.global.entity.BaseEntity;
 import fullcare.backend.global.errorcode.PostErrorCode;
@@ -9,11 +10,9 @@ import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.recruitment.domain.Recruitment;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Formula;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,6 +20,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@ToString(of = {"id", "title"})
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -67,18 +67,24 @@ public class Post extends BaseEntity {
     @Column(name = "tech_stack", nullable = false)
     private String techStack;
 
-
     @BatchSize(size = 10)
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Recruitment> recruitments = new ArrayList<>();
 
     @BatchSize(size = 100)
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Likes> likes = new HashSet<>();  // * 좋아요 갯수는 likes set의 size를 이용
+    private Set<Likes> likes = new HashSet<>();
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Apply> applies = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false)
     private State state;
+
+    // ! 좋아요 갯수
+    @Formula("(SELECT count(1) FROM LIKES l WHERE l.post_id = post_id)")
+    private int likeCount;
 
     @Builder(builderMethodName = "createNewPost")
     public Post(Project project, Member author, String title, String description,
