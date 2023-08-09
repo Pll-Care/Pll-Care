@@ -42,6 +42,7 @@ const MemberRecruitmentWrite = () => {
     frontendCnt: 0,
     managerCnt: 0,
     designCnt: 0,
+    techStack: [],
   });
 
   // 프로젝트 이미지

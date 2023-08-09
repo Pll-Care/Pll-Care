@@ -1,39 +1,146 @@
-@mixin displayFlex($flex-direction: row, $justify-content: center, $align-items: center) {
-    display: flex;
-    flex-direction: $flex-direction;
-    justify-content: $justify-content;
-    align-items: $align-items;
+@mixin displayFlex(
+  $flex-direction: row,
+  $justify-content: center,
+  $align-items: center
+) {
+  display: flex;
+  flex-direction: $flex-direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
 }
 
 @mixin putCenter {
-    margin-left: auto;
-    margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-@mixin backgroundImage($url, $position: center, $repeat: no-repeat, $sizeX: 100%, $sizeY: 100%) {
-    background: {
-        image: url($url);
-        position: $position;
-        repeat: $repeat;
-        size: $sizeX, $sizeY;
-    }
+@mixin backgroundImage(
+  $url,
+  $position: center,
+  $repeat: no-repeat,
+  $sizeX: 100%,
+  $sizeY: 100%
+) {
+  background: {
+    image: url($url);
+    position: $position;
+    repeat: $repeat;
+    size: $sizeX, $sizeY;
+  }
 }
 
 // media query
 @mixin mobile {
-    @media (max-width: 767px) {
-        @content;
-    }
+  @media (max-width: 767px) {
+    @content;
+  }
 }
 
 @mixin tablet {
-    @media (min-width: 767px) and (max-width: 1024px) {
-        @content;
-    }
+  @media (min-width: 767px) and (max-width: 1024px) {
+    @content;
+  }
 }
 
 @mixin desktop {
-    @media (min-width: 1024px) {
-        @content;
-    }
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+
+// 타이포
+@mixin heading_01 {
+  font: {
+    family: "IBM Plex Sans KR", sans-serif;
+    size: 38;
+    weight: 700;
+  }
+}
+
+@mixin heading_02 {
+  font: {
+    family: "IBM Plex Sans KR", sans-serif;
+    size: 32;
+    weight: 700;
+  }
+}
+
+@mixin heading_03 {
+  font: {
+    family: "IBM Plex Sans KR", sans-serif;
+    size: 24;
+    weight: 700;
+  }
+}
+
+@mixin heading_04 {
+  font: {
+    family: "IBM Plex Sans KR", sans-serif;
+    size: 20;
+    weight: 600;
+  }
+}
+
+@mixin heading_05 {
+  font: {
+    family: "IBM Plex Sans KR", sans-serif;
+    size: 18;
+    weight: 600;
+  }
+}
+
+@mixin heading_06 {
+  font: {
+    family: "Noto Sans KR", sans-serif;
+    size: 16;
+    weight: 500;
+  }
+}
+
+@mixin body_01 {
+  font: {
+    family: "Noto Sans KR", sans-serif;
+    size: 14;
+    weight: 500;
+  }
+}
+
+@mixin body_02 {
+  font: {
+    family: "Noto Sans KR", sans-serif;
+    size: 12;
+    weight: 500;
+  }
+}
+
+@mixin body_03 {
+  font: {
+    family: "Noto Sans KR", sans-serif;
+    size: 10;
+    weight: 500;
+  }
+}
+
+@mixin button_01 {
+  font: {
+    family: "IBM Plex Sans KR", sans-serif;
+    size: 20;
+    weight: 600;
+  }
+}
+
+@mixin button_02 {
+  font: {
+    family: "IBM Plex Sans KR", sans-serif;
+    size: 14;
+    weight: 600;
+  }
+}
+
+@mixin button_03 {
+  font: {
+    family: "IBM Plex Sans KR", sans-serif;
+    size: 12;
+    weight: 600;
+  }
 }

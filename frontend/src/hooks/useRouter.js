@@ -8,5 +8,6 @@ export const useRouter = () => {
     routeTo: (path) => router(path),
     replaceTo: (path) => router(path, { replace: true }),
     haveDataTo: (path, data) => router(path, { state: data }),
+    routeOptionTo: (path, option) => router(path, option),
   };
 };
