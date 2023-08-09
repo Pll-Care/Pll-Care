@@ -1,9 +1,10 @@
 package fullcare.backend.main.dto;
 
 import lombok.Builder;
+import lombok.Getter;
 
 import java.time.LocalDate;
-
+@Getter
 public class CloseDeadlinePostResponse {
 
     private Long postId;
