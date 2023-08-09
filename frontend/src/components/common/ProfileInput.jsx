@@ -4,6 +4,7 @@ const ProfileInput = ({
   placeholder,
   readOnly = false,
   width = "100",
+  onClick,
 }) => {
   return (
     <input
@@ -13,6 +14,7 @@ const ProfileInput = ({
       onChange={(event) => onChange(event.target.value)}
       readOnly={readOnly}
       className={`profileInput profileInput_width${width}`}
+      onClick={!!onClick ? onClick : null}
     />
   );
 };

@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Button from "../../../common/Button";
 import SearchStack from "../PositionBox/SearchStack";
 import { filterSelectStack } from "../../../../utils/searchStack/handleStackList";
 import { patchProfile } from "../../../../lib/apis/profileApi";
 import { useProfile } from "../../../../context/ProfileContext";
 import { toast } from "react-toastify";
+import ProfileInput from "../../../common/ProfileInput";
+import Calendar from "../../../common/Calendar";
 
 const ModifyProject = ({
   title = "",
@@ -39,7 +41,22 @@ const ModifyProject = ({
       techStack: [...result],
     }));
   };
-  const clickButton = async () => {
+
+  const changeStartDate = useCallback((date) => {
+    setSubmitData((prev) => ({
+      ...prev,
+      startDate: `${date.year}-${date.month}-${date.day}`,
+    }));
+  }, []);
+
+  const changeEndDate = useCallback((date) => {
+    setSubmitData((prev) => ({
+      ...prev,
+      endDate: `${date.year}-${date.month}-${date.day}`,
+    }));
+  }, []);
+
+  const clickCompleteButton = async () => {
     const submitStack = submitData.techStack.map((stack) => stack.name);
     const reqestData = projectId
       ? {
@@ -73,6 +90,14 @@ const ModifyProject = ({
       return;
     }
 
+    const start = new Date(reqestData.projectExperiences[0].startDate);
+    const end = new Date(!reqestData.projectExperiences[0].endDate);
+
+    if (Number(start) > Number(end)) {
+      toast.error("시작 날짜와 종료 날짜를 다시 한번 확인해주세요. ");
+      return;
+    }
+
     const response = await patchProfile(memberId, reqestData);
     if (response.status === 200) {
       toast.success("수정되었습니다.");
@@ -89,16 +114,15 @@ const ModifyProject = ({
               <span>프로젝트 명</span>
             </div>
             <div className="w-f">
-              <input
-                className="project_list_item_input w-f"
-                defaultValue={title}
-                placeholder="프로젝트 이름을 적어주세요"
-                onChange={(event) =>
+              <ProfileInput
+                value={submitData.title}
+                onChange={(value) =>
                   setSubmitData((prev) => ({
                     ...prev,
-                    title: event.target.value,
+                    title: value,
                   }))
                 }
+                placeholder="프로젝트 이름을 입력해주세요."
               />
             </div>
           </div>
@@ -107,28 +131,16 @@ const ModifyProject = ({
               <span>진행 기간</span>
             </div>
             <div className="project_list_item_year">
-              <input
-                type="date"
-                className="project_list_item_input"
-                defaultValue={startDate}
-                onChange={(event) =>
-                  setSubmitData((prev) => ({
-                    ...prev,
-                    startDate: event.target.value,
-                  }))
-                }
+              <Calendar
+                date={startDate}
+                modifyDate={submitData.startDate}
+                onChangeDate={changeStartDate}
               />
               <span>~</span>
-              <input
-                type="date"
-                className="project_list_item_input"
-                defaultValue={endDate}
-                onChange={(event) =>
-                  setSubmitData((prev) => ({
-                    ...prev,
-                    endDate: event.target.value,
-                  }))
-                }
+              <Calendar
+                date={endDate}
+                modifyDate={submitData.endDate}
+                onChangeDate={changeEndDate}
               />
             </div>
           </div>
@@ -149,17 +161,15 @@ const ModifyProject = ({
             <span>한 줄 소개</span>
           </div>
           <div className="w-f">
-            <input
-              type="text"
-              placeholder="프로젝트를 소개해주세요."
-              className="project_list_item_input"
-              defaultValue={description}
-              onChange={(event) =>
+            <ProfileInput
+              value={submitData.description}
+              onChange={(value) =>
                 setSubmitData((prev) => ({
                   ...prev,
-                  description: event.target.value,
+                  description: value,
                 }))
               }
+              placeholder="프로젝트롤 소개해주세요."
             />
           </div>
         </div>
@@ -169,7 +179,7 @@ const ModifyProject = ({
           buttonType="submit"
           text="완료"
           size="small"
-          onClick={clickButton}
+          onClick={clickCompleteButton}
         />
       </div>
     </>

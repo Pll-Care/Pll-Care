@@ -394,6 +394,8 @@
         width: 100%;
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        gap: 8px;
       }
 
       &_stack {
@@ -420,6 +422,9 @@
 
     &_button {
       width: 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
     &_blank {
@@ -440,7 +445,7 @@
     margin-right: 15px;
     display: flex;
     align-items: center;
-    width: 85px;
+    min-width: 85px;
 
     font-weight: 700;
   }

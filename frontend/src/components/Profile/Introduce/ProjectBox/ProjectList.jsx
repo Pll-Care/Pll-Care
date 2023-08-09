@@ -1,10 +1,10 @@
 import ProjectItem from "./ProjectItem";
 
 const QUERY_KEY = "experience-project";
-const ProjectList = ({ experienceData, refetch }) => {
+const ProjectList = ({ experienceData = [], refetch }) => {
   return (
     <ul className="project">
-      {experienceData?.length > 0 ? (
+      {experienceData.length > 0 ? (
         experienceData.map((projects) => (
           <li key={projects.year} className="project_devide-year">
             <div className="project_year">{projects.year}</div>

@@ -58,6 +58,8 @@ $link-font-size-small: 13px;
 $button-font-size-small: 14px;
 
 // 컬러 팔레트
+$white-100: #ffffff;
+
 // green
 $green-200: #01e89e;
 $green-300: #00aa72;
@@ -69,7 +71,19 @@ $gray-100: #fcfcfc;
 $gray-400: #b4bcbd;
 $gray-500: #7a7a7a;
 $gray-600: #767676;
+$gray-800: #333333;
+
+$gray-light-100: #fbfbfb;
+$gray-light-200: #f0f2f3;
+$gray-light-300: #f6f7f8;
+$gray-light-400: #e0e4e8;
+$gray-light-500: #dedede;
+$gray-light-600: #bebebe;
 
 // tomato
 $tomato-100: #fee7e7;
 $tomato-500: #c9000c;
+
+//blue
+$blue-default: #024eee;
+$blue-light-100: #dbe1fd;

@@ -3611,6 +3611,8 @@ a {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 8px;
 }
 .project_list_item_stack {
   width: 100%;
@@ -3631,6 +3633,9 @@ a {
 }
 .project_list_button {
   width: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .project_list_blank {
   min-height: 80px;
@@ -3646,7 +3651,7 @@ a {
   margin-right: 15px;
   display: flex;
   align-items: center;
-  width: 85px;
+  min-width: 85px;
   font-weight: 700;
 }
 
@@ -4125,4 +4130,153 @@ a {
 }
 .profileInput_width45 {
   width: 45%;
+}
+
+.calendar {
+  border: 1px solid #f0f2f3;
+  border-radius: 5px;
+  background-color: #ffffff;
+  padding: 16px 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
+  position: absolute;
+  z-index: 1000;
+  margin-top: 5px;
+}
+
+.year-month {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.year-month-button {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.selectors {
+  display: flex;
+  gap: 4px;
+}
+
+.year {
+  color: #333333;
+  padding: 5px 12px;
+}
+
+/*셀렉터*/
+.selector-year {
+  border: 1px solid #dedede;
+  padding: 5px 12px;
+  border-radius: 5px;
+  color: #333333;
+  width: 100px;
+  cursor: pointer;
+  position: relative;
+}
+
+.selector-month {
+  border: 1px solid #dedede;
+  padding: 5px 12px;
+  border-radius: 5px;
+  color: #333333;
+  width: 72px;
+  cursor: pointer;
+  position: relative;
+}
+
+.selector-focus {
+  border: 1px solid #024eee;
+  outline: 3px solid #dbe1fd;
+}
+
+.selector:hover {
+  border: 1px solid #bebebe;
+  background-color: #f6f7f8;
+}
+
+.selector-in {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.selector-in-title {
+  width: 100%;
+  text-align: center;
+}
+
+.options {
+  position: absolute;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+  color: #333333;
+  padding: 8px 0;
+  height: 164px;
+  overflow-y: scroll;
+  background-color: #ffffff;
+}
+
+.option-year {
+  width: 100px;
+  height: 37px;
+  padding: 8px 0 9px 12px;
+  display: flex;
+  align-items: center;
+}
+
+.option-month {
+  width: 72px;
+  height: 37px;
+  padding: 8px 0 9px 12px;
+  display: flex;
+  align-items: center;
+}
+
+.option-year:hover,
+.option-month:hover {
+  background-color: #f6f7f8;
+}
+
+/*날짜*/
+.days {
+  margin-top: 15px;
+}
+
+.day-week {
+  color: #b4bcbd;
+}
+
+.week {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.day {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.not-this-month {
+  color: #dedede;
+}
+
+.this-month {
+  color: #333333;
+}
+
+.this-day {
+  background-color: #024eee;
+  color: #ffffff;
+  border-radius: 16px;
+}
+
+.this-month:hover {
+  background-color: #dbe1fd;
+  border-radius: 16px;
 }/*# sourceMappingURL=fullcare.css.map */
