@@ -9,6 +9,7 @@ import ProfileInput from "../../../common/ProfileInput";
 import Calendar from "../../../common/Calendar";
 
 const ModifyProject = ({
+  type = "",
   title = "",
   description = "",
   startDate = "",
@@ -91,7 +92,7 @@ const ModifyProject = ({
     }
 
     const start = new Date(reqestData.projectExperiences[0].startDate);
-    const end = new Date(!reqestData.projectExperiences[0].endDate);
+    const end = new Date(reqestData.projectExperiences[0].endDate);
 
     if (Number(start) > Number(end)) {
       toast.error("시작 날짜와 종료 날짜를 다시 한번 확인해주세요. ");
@@ -100,7 +101,7 @@ const ModifyProject = ({
 
     const response = await patchProfile(memberId, reqestData);
     if (response.status === 200) {
-      toast.success("수정되었습니다.");
+      toast.success(`${type}되었습니다.`);
       changeModify(false);
     }
   };

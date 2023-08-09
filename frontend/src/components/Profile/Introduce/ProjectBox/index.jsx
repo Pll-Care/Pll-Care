@@ -41,7 +41,7 @@ const ProjectBox = () => {
       </div>
       {newProject && (
         <div className="project_list_item">
-          <ModifyProject changeModify={editNewProject} />
+          <ModifyProject changeModify={editNewProject} type="추가" />
         </div>
       )}
       <div className="project">

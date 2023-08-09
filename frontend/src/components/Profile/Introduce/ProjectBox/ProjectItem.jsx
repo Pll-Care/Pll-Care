@@ -38,6 +38,7 @@ const ProjectItem = ({
     <div className="project_list_item">
       {isModify ? (
         <ModifyProject
+          type="수정"
           title={title}
           description={description}
           startDate={startDate}
