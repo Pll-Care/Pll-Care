@@ -380,8 +380,8 @@ public class EvaluationService {
         List<BadgeDto> badgeList = midtermEvaluationRepository.findAllByMemberId(projectId, memberId);
         List<FinalTermEvaluation> myFinalEvalList = finalEvaluationRepository.findByProjectIdAndEvaluatedId(projectId, memberId); // * 최종평가가 완료된 것만 조회, 임시저장 X
         List<FinalEvalDto> finalEvalDtoList = new ArrayList<>();
-        ScoreDto scoreDto = new ScoreDto();
         for (FinalTermEvaluation fe : myFinalEvalList) {
+            ScoreDto scoreDto = new ScoreDto();
             scoreDto.setCommunication(fe.getScore().getCommunication());
             scoreDto.setPunctuality(fe.getScore().getPunctuality());
             scoreDto.setSincerity(fe.getScore().getSincerity());
