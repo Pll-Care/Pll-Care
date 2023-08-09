@@ -1,39 +1,45 @@
 .control-menu {
-    border-radius: 55px;
-    border: none;
-    font-family: $button-font;
-    color: #01E89E;
-    text-align: center;
-    cursor: pointer;
-    -webkit-appearance:none;  /* for chrome */
-    -moz-appearance:none;  /*for firefox*/
-    appearance:none;
+  border-radius: 55px;
+  border: none;
+  font-family: $button-font;
+  color: #01e89e;
+  text-align: center;
+  cursor: pointer;
+  -webkit-appearance: none; /* for chrome */
+  -moz-appearance: none; /*for firefox*/
+  appearance: none;
 
-    &::-ms-expand {
-        display: none;  /*for IE10,11*/
-    }
-    
-    @include backgroundImage('../assets/select-arrow-img.png', 88%, no-repeat, 10%, 10%);
+  &::-ms-expand {
+    display: none; /*for IE10,11*/
+  }
+
+  @include backgroundImage(
+    "../assets/select-arrow-img.png",
+    88%,
+    no-repeat,
+    10%,
+    10%
+  );
 }
 
 @include desktop {
-    .control-menu {
-        font-size: $button-font-size;
-        width: 135px;
-        height: 40px;
-    }
+  .control-menu {
+    font-size: $button-font-size;
+    width: 135px;
+    height: 40px;
+  }
 }
 
 @include tablet {
-    .control-menu {
-        font-size: $button-font-size-medium;
-        padding: 5px 25px;
-    }
+  .control-menu {
+    font-size: $button-font-size-medium;
+    padding: 5px 25px;
+  }
 }
 
 @include mobile {
-    .control-menu {
-        font-size: $button-font-size-small;
-        padding: 3px 13px;
-      }
+  .control-menu {
+    font-size: $button-font-size-small;
+    padding: 3px 13px;
+  }
 }

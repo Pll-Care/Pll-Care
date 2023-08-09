@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 
 import { concepts, location } from "../../utils/recruitment";
+import ControlMenu from "../common/ControlMenu";
 
 const RecruitmentProjectWrite = ({
   setFormValues,
@@ -23,43 +24,40 @@ const RecruitmentProjectWrite = ({
     );
     selectedProject && setImageUrl(selectedProject.imageUrl);
   };
+
   return (
     <Fragment>
       <div className="member-content-project">
         <h3>프로젝트 선택</h3>
+
         {projectData?.length > 0 && (
-          <select
-            className="member-select1"
-            name="projectId"
-            onChange={handleChangeProject}
+          <ControlMenu
+            optionList={projectData?.map((project, index) => ({
+              id: index,
+              value: project.projectId,
+              name: project.title,
+            }))}
+            onChange={(value) =>
+              handleChangeProject({ target: { name: "projectId", value } })
+            }
             value={formValues.projectId}
-          >
-            {projectData?.map((project, index) => (
-              <option key={index} value={project.projectId}>
-                {project.title}
-              </option>
-            ))}
-          </select>
+          />
         )}
       </div>
 
       <div className="member-content-project">
         <h3>주제/분야</h3>
-        <select
-          className="member-select2"
-          onChange={handleChange}
+        <ControlMenu
+          optionList={concepts.map((concept, index) => ({
+            id: index,
+            value: concept,
+            name: concept,
+          }))}
+          onChange={(value) =>
+            handleChange({ target: { name: "concept", value } })
+          }
           value={formValues.concept || ""}
-          name="concept"
-        >
-          <option disabled hidden>
-            선택하세요
-          </option>
-          {concepts.map((concept, index) => (
-            <option key={index} value={concept}>
-              {concept}
-            </option>
-          ))}
-        </select>
+        />
       </div>
 
       <div className="member-content-project">
@@ -86,24 +84,19 @@ const RecruitmentProjectWrite = ({
         />
       </div>
 
-      <div className="member-content-options">
+      <div className="member-content-project">
         <h3>지역</h3>
-        <select
-          className="member-select4"
-          onChange={handleChange}
-          name="region"
+        <ControlMenu
+          optionList={location.map((place, index) => ({
+            id: index,
+            value: place,
+            name: place,
+          }))}
+          onChange={(value) =>
+            handleChange({ target: { name: "region", value } })
+          }
           value={formValues.region || ""}
-          ref={inputRefs.region}
-        >
-          <option disabled hidden>
-            선택하세요
-          </option>
-          {location.map((place, index) => (
-            <option key={index} value={place}>
-              {place}
-            </option>
-          ))}
-        </select>
+        />
       </div>
     </Fragment>
   );

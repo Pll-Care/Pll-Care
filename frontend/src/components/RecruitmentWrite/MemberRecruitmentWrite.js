@@ -160,7 +160,7 @@ const MemberRecruitmentWrite = () => {
       recruitInfo: recruitCnt,
     };
     console.log(body);
-    addPostMutate(body);
+    //addPostMutate(body);
 
     setFormValues({
       projectId: "",
