@@ -1,31 +1,21 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useRef, useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import Quill from "quill";
-import ImageResize from "quill-image-resize";
-
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 import Button from "../common/Button";
 import Card from "../common/Card";
 import RecruitmentProjectWrite from "./RecruitmentProjectWrite";
+import RecruitmentTitleWrite from "./RecruitmentTitleWrite";
+import RecruitmentPostionWrite from "./RecruitmentPositionWrite";
+import RecruitmentContentWrite from "./RecruitmentContentWrite";
 
-import { useEditorImageUploader } from "../../hooks/useEditorImageHandler";
 import { useAddRecruitmentPostMutation } from "../../hooks/useRecruitmentMutation";
 import { getRecruitmentProject } from "../../lib/apis/memberRecruitmentApi";
-import projectDefaultImg from "../../assets/project-default-img.jpg";
-
-Quill.register("modules/ImageResize", ImageResize);
 
 const MemberRecruitmentWrite = () => {
   const navigate = useNavigate();
   const initialDate = new Date().toISOString().split("T")[0];
-
-  const quillRef = useRef(null);
-  useEditorImageUploader(quillRef.current);
 
   // 모집글 생성 입력값들
   const [formValues, setFormValues] = useState({
@@ -80,21 +70,13 @@ const MemberRecruitmentWrite = () => {
   );
 
   // 입력하는 모든 상태값 update
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target;
     setFormValues((prevState) => ({
       ...prevState,
       [name]: value,
     }));
-  };
-
-  // 모집글 설명 작성
-  const handleChangeDescription = (content) => {
-    setFormValues((prevState) => ({
-      ...prevState,
-      description: content,
-    }));
-  };
+  }, []);
 
   // 모집글 생성 react query문
   const { mutate: addPostMutate } = useAddRecruitmentPostMutation(formValues);
@@ -179,33 +161,22 @@ const MemberRecruitmentWrite = () => {
       designCnt: 0,
     });
 
-    navigate("/recruitment");
+    //navigate("/recruitment");
   };
 
   return (
     <div className="member-write">
-      <div className="member-title">
-        <Link to="/recruitment">
-          <ArrowBackIosNewIcon className="recruitment-direction" />
-        </Link>
-        {imageUrl ? (
-          <img src={imageUrl} alt="" />
-        ) : (
-          <img src={projectDefaultImg} alt="" />
-        )}
-
-        <input
-          type="text"
-          name="title"
-          ref={inputRefs.title}
-          value={formValues.title}
-          onChange={handleChange}
-          placeholder="모집글 제목을 작성해보세요"
-        />
-      </div>
+      {/*모집글 제목 입력*/}
+      <RecruitmentTitleWrite
+        imageUrl={imageUrl}
+        handleChange={handleChange}
+        formValues={formValues}
+        inputRefs={inputRefs}
+      />
 
       <Card className="member-write-card">
         <div className="member-content">
+          {/*모집글 프로젝트 선택*/}
           {data && !isLoading && (
             <RecruitmentProjectWrite
               formValues={formValues}
@@ -219,54 +190,12 @@ const MemberRecruitmentWrite = () => {
 
           <div className="member-content-position">
             <h3>포지션</h3>
-            <div className="options">
-              <div className="options-container">
-                <h5>백엔드</h5>
-                <h5>프론트엔드</h5>
-                <h5>기획</h5>
-                <h5>디자인</h5>
-              </div>
-
-              <div className="options-count">
-                <input
-                  className="position-number"
-                  type="number"
-                  min="0"
-                  placeholder="0"
-                  value={formValues.backendCnt}
-                  name="backendCnt"
-                  onChange={handleChange}
-                  ref={inputRefs.backendCnt}
-                />
-                <input
-                  className="position-number"
-                  type="number"
-                  min="0"
-                  placeholder="0"
-                  value={formValues.frontendCnt}
-                  name="frontendCnt"
-                  onChange={handleChange}
-                />
-                <input
-                  className="position-number"
-                  type="number"
-                  min="0"
-                  placeholder="0"
-                  value={formValues.managerCnt}
-                  name="managerCnt"
-                  onChange={handleChange}
-                />
-                <input
-                  className="position-number"
-                  type="number"
-                  min="0"
-                  placeholder="0"
-                  value={formValues.designCnt}
-                  name="designCnt"
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
+            {/*모집글 포지션 인원 수 선택*/}
+            <RecruitmentPostionWrite
+              formValues={formValues}
+              handleChange={handleChange}
+              inputRefs={inputRefs}
+            />
 
             <div className="member-content-position-stack">
               <h5>기술 스택</h5>
@@ -274,50 +203,13 @@ const MemberRecruitmentWrite = () => {
             </div>
           </div>
 
-          <div className="member-content-description">
-            <h3>설명</h3>
-            <ReactQuill
-              className="react-quill"
-              ref={quillRef}
-              name="description"
-              value={formValues.description}
-              onChange={handleChangeDescription}
-              modules={{
-                toolbar: [
-                  [{ header: [1, 2, 3, false] }],
-                  [{ size: ["small", false, "large", "huge"] }],
-                  ["bold", "italic", "underline", "strike"],
-                  [{ align: [] }],
-                  [{ color: [] }, { background: [] }],
-                  ["link", "image"],
-                ],
-                ImageResize: {
-                  parchment: Quill.import("parchment"),
-                  modules: ["Resize", "DisplaySize", "Toolbar"],
-                },
-              }}
-            />
-          </div>
-
-          <div className="member-content-description">
-            <h3>레퍼런스</h3>
-            <textarea
-              onChange={handleChange}
-              value={formValues.reference}
-              name="reference"
-              ref={inputRefs.reference}
-            />
-          </div>
-
-          <div className="member-content-description">
-            <h3>컨택</h3>
-            <textarea
-              onChange={handleChange}
-              value={formValues.contact}
-              name="contact"
-              ref={inputRefs.contact}
-            />
-          </div>
+          {/*모집글 컨탠츠 입력*/}
+          <RecruitmentContentWrite
+            formValues={formValues}
+            handleChange={handleChange}
+            inputRefs={inputRefs}
+            setFormValues={setFormValues}
+          />
         </div>
       </Card>
       <Button text="생성 완료" onClick={handleAddRecruitmetPost} />

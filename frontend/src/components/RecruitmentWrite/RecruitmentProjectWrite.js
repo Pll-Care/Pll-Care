@@ -18,7 +18,7 @@ const RecruitmentProjectWrite = ({
       ...prevState,
       [name]: value,
     }));
-
+    console.log(formValues);
     const selectedProject = projectData.find(
       (project) => project.projectId === parseInt(value, 10)
     );
@@ -38,7 +38,9 @@ const RecruitmentProjectWrite = ({
               name: project.title,
             }))}
             onChange={(value) =>
-              handleChangeProject({ target: { name: "projectId", value } })
+              handleChangeProject({
+                target: { name: "projectId", value },
+              })
             }
             value={formValues.projectId}
           />
