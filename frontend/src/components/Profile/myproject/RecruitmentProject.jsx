@@ -49,7 +49,7 @@ const RecruitmentProject = ({ memberId }) => {
             {data?.content.map((project, idx) => (
               <ProjectItem
                 key={QUERY_KEY + "-" + idx}
-                projectId={project.projectId}
+                postId={project.postId}
                 title={project.title}
                 description={project.description}
               />
