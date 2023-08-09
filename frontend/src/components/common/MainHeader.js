@@ -71,7 +71,7 @@ const MainHeader = () => {
     dispatch(authActions.logout());
     replaceTo("/");
   };
-  
+
   const handleLogin = () => {
     dispatch(authActions.setIsLoginModalVisible(true));
 
@@ -139,6 +139,7 @@ const MainHeader = () => {
               to={`/profile/${profileImage.id}/introduce`}
             >
               <img
+                className="main-header_img"
                 src={
                   profileImage.imageUrl === ""
                     ? isProfilePage
@@ -146,6 +147,7 @@ const MainHeader = () => {
                       : profile_default
                     : profileImage.imageUrl
                 }
+                alt="유저 프로필 사진"
               />
             </Link>
           </div>
