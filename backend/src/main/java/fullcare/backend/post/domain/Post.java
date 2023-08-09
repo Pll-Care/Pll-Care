@@ -83,7 +83,7 @@ public class Post extends BaseEntity {
     private State state;
 
     // ! 좋아요 갯수
-    @Formula("(SELECT count(1) FROM LIKES l WHERE l.post_id = post_id)")
+    @Formula("(SELECT count(1) FROM likes l WHERE l.post_id = post_id)")
     private int likeCount;
 
     @Builder(builderMethodName = "createNewPost")
