@@ -11,11 +11,11 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 import Button from "../common/Button";
 import Card from "../common/Card";
+import RecruitmentProjectWrite from "./RecruitmentProjectWrite";
 
 import { useEditorImageUploader } from "../../hooks/useEditorImageHandler";
 import { useAddRecruitmentPostMutation } from "../../hooks/useRecruitmentMutation";
 import { getRecruitmentProject } from "../../lib/apis/memberRecruitmentApi";
-import { concepts, location } from "../../utils/recruitment";
 import projectDefaultImg from "../../assets/project-default-img.jpg";
 
 Quill.register("modules/ImageResize", ImageResize);
@@ -94,20 +94,6 @@ const MemberRecruitmentWrite = () => {
       ...prevState,
       description: content,
     }));
-  };
-
-  // 프로젝트 선택함에 따라 이미지 반영하기
-  const handleChangeProject = (e) => {
-    const { name, value } = e.target;
-    setFormValues((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-
-    const selectedProject = data.find(
-      (project) => project.projectId === parseInt(value, 10)
-    );
-    selectedProject && setImageUrl(selectedProject.imageUrl);
   };
 
   // 모집글 생성 react query문
@@ -196,8 +182,6 @@ const MemberRecruitmentWrite = () => {
     navigate("/recruitment");
   };
 
-  // => 통신오류
-  //data && data?.length !== 0  => 아직 관리에서 생성안함
   return (
     <div className="member-write">
       <div className="member-title">
@@ -222,91 +206,16 @@ const MemberRecruitmentWrite = () => {
 
       <Card className="member-write-card">
         <div className="member-content">
-          <div className="member-content-project">
-            <h3>프로젝트 선택</h3>
-            {data && !isLoading && data?.length > 0 ? (
-              <select
-                className="member-select1"
-                name="projectId"
-                onChange={handleChangeProject}
-                value={formValues.projectId}
-              >
-                {data?.map((project, index) => (
-                  <option key={index} value={project.projectId}>
-                    {project.title}
-                  </option>
-                ))}
-              </select>
-            ) : (
-              <h6 style={{ color: "black" }}>
-                아직 프로젝트가 없습니다! 프로젝트 관리에서 프로젝트를
-                생성해보세요
-              </h6>
-            )}
-          </div>
-
-          <div className="member-content-project">
-            <h3>주제/분야</h3>
-            <select
-              className="member-select2"
-              onChange={handleChange}
-              value={formValues.concept || ""}
-              name="concept"
-            >
-              <option disabled hidden>
-                선택하세요
-              </option>
-              {concepts.map((concept, index) => (
-                <option key={index} value={concept}>
-                  {concept}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="member-content-project">
-            <h3>모집 기간</h3>
-            <input
-              className="member-select3"
-              type="date"
-              required
-              name="recruitStartDate"
-              value={formValues.recruitStartDate}
-              onChange={handleChange}
-              data-placeholder="시작 일자"
-              ref={inputRefs.startDate}
+          {data && !isLoading && (
+            <RecruitmentProjectWrite
+              formValues={formValues}
+              setFormValues={setFormValues}
+              setImageUrl={setImageUrl}
+              projectData={data}
+              handleChange={handleChange}
+              inputRefs={inputRefs}
             />
-            ~
-            <input
-              type="date"
-              required
-              name="recruitEndDate"
-              value={formValues.recruitEndDate}
-              onChange={handleChange}
-              data-placeholder="종료 일자"
-              ref={inputRefs.endDate}
-            />
-          </div>
-
-          <div className="member-content-options">
-            <h3>지역</h3>
-            <select
-              className="member-select4"
-              onChange={handleChange}
-              name="region"
-              value={formValues.region || ""}
-              ref={inputRefs.region}
-            >
-              <option disabled hidden>
-                선택하세요
-              </option>
-              {location.map((place, index) => (
-                <option key={index} value={place}>
-                  {place}
-                </option>
-              ))}
-            </select>
-          </div>
+          )}
 
           <div className="member-content-position">
             <h3>포지션</h3>
