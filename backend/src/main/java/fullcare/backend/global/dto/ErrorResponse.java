@@ -28,7 +28,7 @@ public class ErrorResponse {
     public static ErrorResponse getResponse(ErrorCode errorCode, Exception e, HttpServletRequest request) {
         return new ErrorResponse(errorCode,
                 LocalDateTime.now(),
-                e.getMessage(),
+                e.getMessage() + " " + e.getCause(),
                 request.getServletPath());
     }
 

@@ -15,9 +15,9 @@ import java.util.List;
 public class PostDetailResponse {
 
     private Long postId;
-    
+
     private Long projectId;
-    private String projectName; // * 프로젝트 이름
+    private String projectTitle; // * 프로젝트 이름
     private String projectImageUrl;
 
     private String author; // * 작성자 이름
@@ -48,7 +48,7 @@ public class PostDetailResponse {
     private LocalDateTime modifiedDate;
 
     @Builder
-    public PostDetailResponse(Long postId, Long projectId, String projectName, String projectImageUrl,
+    public PostDetailResponse(Long postId, Long projectId, String projectTitle, String projectImageUrl,
                               String author, String authorImageUrl,
                               String title, String description, LocalDate recruitStartDate, LocalDate recruitEndDate,
                               String reference, String contact, String region, String techStack,
@@ -57,7 +57,7 @@ public class PostDetailResponse {
 
         this.postId = postId;
         this.projectId = projectId;
-        this.projectName = projectName;
+        this.projectTitle = projectTitle;
         this.projectImageUrl = projectImageUrl;
         this.author = author;
         this.authorImageUrl = authorImageUrl;

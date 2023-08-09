@@ -9,6 +9,9 @@ import fullcare.backend.global.errorcode.ProjectErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.*;
 import fullcare.backend.likes.domain.Likes;
 import fullcare.backend.likes.repository.LikesRepository;
+import fullcare.backend.main.dto.CloseDeadlinePostResponse;
+import fullcare.backend.main.dto.MostLikedPostResponse;
+import fullcare.backend.main.dto.UpToDatePostResponse;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.post.domain.Post;
@@ -37,6 +40,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -302,5 +306,54 @@ public class PostService {
         ).collect(Collectors.toList());
 
         return new CustomPageImpl<>(content, pageable, posts.getTotalElements());
+    }
+
+    public List<MostLikedPostResponse> findMostLikedPost() {
+        List<Post> mostLikedPostList = postRepository.findTop5ByRecruitEndDateAfterOrderByLikeCountDescRecruitEndDateAsc(LocalDate.now());
+
+        List<MostLikedPostResponse> content = mostLikedPostList.stream().map(p -> MostLikedPostResponse.builder()
+                .postId(p.getId())
+                .projectId(p.getProject().getId())
+                .projectTitle(p.getProject().getTitle())
+                .projectImageUrl(p.getProject().getImageUrl())
+                .recruitEndDate(p.getRecruitEndDate())
+                .likeCount(p.getLikeCount())
+                .title(p.getTitle())
+                .description(p.getDescription())
+                .build()).collect(Collectors.toList());
+
+        return content;
+    }
+
+    public List<CloseDeadlinePostResponse> findCloseDeadlinePost() {
+        List<Post> closeDeadlinePostList = postRepository.findTop5ByRecruitEndDateAfterOrderByRecruitEndDateAsc(LocalDate.now());
+
+        List<CloseDeadlinePostResponse> content = closeDeadlinePostList.stream().map(p -> CloseDeadlinePostResponse.builder()
+                .postId(p.getId())
+                .projectId(p.getProject().getId())
+                .projectTitle(p.getProject().getTitle())
+                .projectImageUrl(p.getProject().getImageUrl())
+                .recruitEndDate(p.getRecruitEndDate())
+                .title(p.getTitle())
+                .description(p.getDescription())
+                .build()).collect(Collectors.toList());
+
+        return content;
+    }
+
+    public List<UpToDatePostResponse> findUpToDateProject() {
+        List<Post> upToDatePostList = postRepository.findTop5ByCreatedDateAfterOrderByCreatedDateAscRecruitEndDateAsc(LocalDate.now());
+
+        List<UpToDatePostResponse> content = upToDatePostList.stream().map(p -> UpToDatePostResponse.builder()
+                .postId(p.getId())
+                .projectId(p.getProject().getId())
+                .projectTitle(p.getProject().getTitle())
+                .projectImageUrl(p.getProject().getImageUrl())
+                .recruitEndDate(p.getRecruitEndDate())
+                .title(p.getTitle())
+                .description(p.getDescription())
+                .build()).collect(Collectors.toList());
+
+        return content;
     }
 }
