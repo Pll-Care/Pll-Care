@@ -196,7 +196,7 @@ public class ScheduleService {
 
     @Transactional
     public CustomPageImpl<ScheduleSearchResponse> searchScheduleList(Pageable pageable, Member member, ScheduleCondition scheduleCondition) { // 1일부터 31일까지 일정
-        projectService.isProjectAvailable(scheduleCondition.getProjectId(), member.getId(), false);
+        projectService.isProjectAvailable(scheduleCondition.getProjectId(), member.getId(), true);
         Member findMember = memberRepository.findById(member.getId()).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
         List<Schedule> scheduleList = scheduleRepositoryCustom.search(scheduleCondition, scheduleCondition.getProjectId());//? 모든 일정을 가져와서 검증
 
