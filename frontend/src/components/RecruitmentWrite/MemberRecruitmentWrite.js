@@ -9,6 +9,7 @@ import RecruitmentProjectWrite from "./RecruitmentProjectWrite";
 import RecruitmentTitleWrite from "./RecruitmentTitleWrite";
 import RecruitmentPostionWrite from "./RecruitmentPositionWrite";
 import RecruitmentContentWrite from "./RecruitmentContentWrite";
+import SearchStack from "../Profile/Introduce/PositionBox/SearchStack";
 
 import { useAddRecruitmentPostMutation } from "../../hooks/useRecruitmentMutation";
 import { getRecruitmentProject } from "../../lib/apis/memberRecruitmentApi";
@@ -142,7 +143,7 @@ const MemberRecruitmentWrite = () => {
       recruitInfo: recruitCnt,
     };
     console.log(body);
-    //addPostMutate(body);
+    addPostMutate(body);
 
     setFormValues({
       projectId: "",
@@ -154,14 +155,29 @@ const MemberRecruitmentWrite = () => {
       reference: "",
       contact: "",
       region: "서울",
-      techStack: "",
       backendCnt: 0,
       frontendCnt: 0,
       managerCnt: 0,
       designCnt: 0,
+      techStack: [],
     });
 
-    //navigate("/recruitment");
+    navigate("/recruitment");
+  };
+
+  const changeStack = (response) => {
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      techStack: [...prevValues.techStack, response.name],
+    }));
+  };
+
+  // techStack 삭제 함수
+  const deleteStack = (stackName) => {
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      techStack: prevValues.techStack.filter((stack) => stack !== stackName),
+    }));
   };
 
   return (
@@ -199,7 +215,11 @@ const MemberRecruitmentWrite = () => {
 
             <div className="member-content-position-stack">
               <h5>기술 스택</h5>
-              {/*기술 스택 입력 컴포넌트*/}
+              <SearchStack
+                stackList={formValues.techStack}
+                changeStack={changeStack}
+                deleteStack={deleteStack}
+              />
             </div>
           </div>
 
