@@ -93,7 +93,7 @@ public class ScheduleController {
     @DeleteMapping("/{scheduleId}")
     public ResponseEntity delete(@PathVariable Long scheduleId, @Valid @RequestBody ScheduleDeleteRequest scheduleDeleteRequest, @CurrentLoginMember Member member) {
         //? 작성자 또는 팀 리더만 삭제 가능
-        if (!scheduleService.validateDelete(scheduleId, scheduleDeleteRequest.getProjectId(), member.getId())) {
+        if (!scheduleService.validateDelete(scheduleId, scheduleDeleteRequest.getProjectId(), member.getId(), false)) {
             throw new UnauthorizedAccessException(ScheduleErrorCode.UNAUTHORIZED_DELETE);
         }
         scheduleService.deleteSchedule(scheduleId);

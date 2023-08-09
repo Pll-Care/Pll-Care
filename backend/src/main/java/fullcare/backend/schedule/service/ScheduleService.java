@@ -87,9 +87,9 @@ public class ScheduleService {
         return false;
     }
 
-    public boolean validateDelete(Long scheduleId, Long projectId, Long memberId) {
+    public boolean validateDelete(Long scheduleId, Long projectId, Long memberId, boolean readOnly) {
         try {
-            ProjectMember projectMember = projectService.isProjectAvailable(projectId, memberId, false);
+            ProjectMember projectMember = projectService.isProjectAvailable(projectId, memberId, readOnly);
             return !(!validateAuthor(projectId, scheduleId, memberId) && !projectMember.isLeader());
         } catch(CompletedProjectException completedProjectException){
             throw new CompletedProjectException(INVALID_DELETE);
@@ -478,7 +478,7 @@ public class ScheduleService {
                 .content(schedule.getContent())
                 .startDate(schedule.getStartDate())
                 .endDate(schedule.getEndDate())
-                .deleteAuthorization(validateDelete(scheduleId, project.getId(), memberId))
+                .deleteAuthorization(validateDelete(scheduleId, project.getId(), memberId, true))
                 .build();
 
         for (ProjectMember projectMember : projectMembers) {
