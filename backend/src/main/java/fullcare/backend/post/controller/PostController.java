@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -144,7 +145,7 @@ public class PostController {
             @ApiResponse(responseCode = "400", description = "프로젝트 지원 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping("/{postId}/apply")
-    public ResponseEntity apply(@PathVariable Long postId, @RequestBody ProjectApplyRequest projectApplyRequest, @CurrentLoginMember Member member) {
+    public ResponseEntity apply(@PathVariable Long postId, @Valid @RequestBody ProjectApplyRequest projectApplyRequest, @CurrentLoginMember Member member) {
 
         postService.applyProjectByPost(member.getId(), postId, projectApplyRequest);
         return new ResponseEntity<>(HttpStatus.OK);
