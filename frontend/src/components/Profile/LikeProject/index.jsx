@@ -38,7 +38,7 @@ const LikeProject = () => {
             {data?.content.map((project) => (
               <ProjectItem
                 key={project.postId}
-                projectId={project.projectId}
+                postId={project.postId}
                 title={project.title}
                 description={project.description}
               />

@@ -3,7 +3,6 @@ import profile_isProfile from "../../../assets/profile-default-img.png";
 import Button from "../../common/Button";
 import { putBioAPI } from "../../../lib/apis/profileApi";
 import { uploadImage } from "../../../lib/apis/projectManagementApi";
-import { toast } from "react-toastify";
 
 const ModifyUserProfile = ({
   memberId,
@@ -33,7 +32,7 @@ const ModifyUserProfile = ({
     event.preventDefault();
     const formData = new FormData(event.target);
 
-    if (!imageUrl && image.imageFile) {
+    if (image.imageFile) {
       const imageReqBody = {
         dir: "profile",
         formData: image.imageFile,
@@ -48,15 +47,6 @@ const ModifyUserProfile = ({
       bio: formData.get("bio") || bio,
       imageUrl: !reqImageUrl.url ? imageUrl ?? "" : reqImageUrl.url,
     };
-
-    if (
-      reqBody.nickname === nickname &&
-      reqBody.bio === bio &&
-      reqBody.imageUrl === imageUrl
-    ) {
-      toast.error("프로필을 변경해야합니다.");
-      return;
-    }
 
     const responsePutBioAPI = await putBioAPI(memberId, reqBody);
 

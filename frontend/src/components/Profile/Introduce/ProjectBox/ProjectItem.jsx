@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import Button from "../../../common/Button";
 import StackItem from "../../../common/StackItem";
 import ModifyProject from "./ModifyProject";
+import { patchProfile } from "../../../../lib/apis/profileApi";
+import { useProfile } from "../../../../context/ProfileContext";
 
 const ProjectItem = ({
   title,
@@ -13,9 +15,19 @@ const ProjectItem = ({
   refetch,
 }) => {
   const [isModify, setIsmodify] = useState(false);
+  const { memberId } = useProfile();
 
   const changeModify = (modify) => {
     setIsmodify(modify);
+  };
+
+  const deleProject = async () => {
+    const reqBody = {
+      projectId: projectId,
+      delete: true,
+    };
+    const response = await patchProfile(memberId, reqBody);
+    if (response.status === 200) refetch();
   };
 
   useEffect(() => {
@@ -26,6 +38,7 @@ const ProjectItem = ({
     <div className="project_list_item">
       {isModify ? (
         <ModifyProject
+          type="수정"
           title={title}
           description={description}
           startDate={startDate}
@@ -43,6 +56,7 @@ const ProjectItem = ({
           techStack={techStack}
           projectId={projectId}
           changeModify={changeModify}
+          deleProject={deleProject}
         />
       )}
     </div>
@@ -59,7 +73,12 @@ const ShowProjectItem = ({
   techStack,
   projectId,
   changeModify,
+  deleProject,
 }) => {
+  const { isMyProfile } = useProfile();
+
+  const start = startDate.replaceAll("-", ".");
+  const end = endDate.replaceAll("-", ".");
   return (
     <>
       <div className="project_list_item_box">
@@ -77,7 +96,7 @@ const ShowProjectItem = ({
               <span>진행 기간</span>
             </div>
             <div className="project_list_item_year">
-              <span>{`${startDate} ~ ${endDate}`}</span>
+              <span>{`${start} ~ ${end}`}</span>
             </div>
           </div>
         </div>
@@ -107,7 +126,17 @@ const ShowProjectItem = ({
         </div>
       </div>
       <div className="project_list_button">
-        <Button text="수정" size="small" onClick={() => changeModify(true)} />
+        {isMyProfile ? (
+          <>
+            {" "}
+            <Button
+              text="수정"
+              size="small"
+              onClick={() => changeModify(true)}
+            />
+            <Button text="삭제" size="small" onClick={() => deleProject()} />
+          </>
+        ) : null}
       </div>
     </>
   );

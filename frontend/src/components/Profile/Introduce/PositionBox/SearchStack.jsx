@@ -68,10 +68,10 @@ const SearchStack = ({
     <div className="w-f">
       <div className="search">
         <div className="search_select">
-          <ul className="select_list w-f">
+          <ul className="w-f">
             <li className="list_input">
               <input
-                className="w-f"
+                className="w-f profileInput"
                 type="search"
                 placeholder="기술 이름을 입력해주세요."
                 name="검색"

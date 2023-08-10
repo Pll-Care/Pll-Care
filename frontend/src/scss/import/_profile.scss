@@ -1,6 +1,6 @@
 .profile {
   &_introduce {
-    background-color: #01e89e;
+    background-color: $green-200;
 
     &_titleBox {
       display: flex;
@@ -47,7 +47,7 @@
         justify-content: center;
 
         font-size: 18px;
-        color: #fff;
+        color: $white-100;
         font-weight: 700;
       }
     }
@@ -88,7 +88,7 @@
   }
 
   &_body {
-    background-color: #01e89e;
+    background-color: $green-200;
 
     &_container {
       height: 100%;
@@ -101,13 +101,13 @@
     &_sec {
       padding: 30px 60px;
       width: 100%;
-      background-color: #fff;
+      background-color: $white-100;
     }
 
     &_introduce {
       &_Box {
         padding: 25px;
-        border: 2px solid #01e89e;
+        border: 2px solid $green-200;
         border-radius: 10px;
         margin-top: 18px;
         min-height: 200px;
@@ -117,7 +117,7 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding-bottom: 24px;
+          padding-bottom: 8px;
           & > h2 {
             font-size: 18px;
             font-weight: bold;
@@ -140,32 +140,31 @@
           gap: 24px;
 
           &_item {
+            width: 100%;
             min-height: 30px;
             display: flex;
-            & > span {
-              display: inline-block;
-              min-width: 60px;
-              font-weight: bold;
-              font-size: 16px;
-            }
+            align-items: center;
+
             & > a,
-            input,
             p {
               margin-left: 30px;
               border: none;
+              color: $gray-600;
             }
+          }
 
-            & > input {
-              padding: 5px 15px;
-              min-width: 300px;
-              font-size: 16px;
-              border-bottom: 2px solid #cccccc;
-            }
+          &_title {
+            display: inline-block;
+            min-width: 69px;
+            font-weight: bold;
+            font-size: 16px;
+          }
 
-            & > input:focus {
-              outline: none;
-              border-bottom: 2px solid #01e89e;
-            }
+          &_email {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
           }
         }
       }
@@ -173,7 +172,7 @@
       &_positionBox {
         &_position {
           & > span {
-            color: #767676;
+            color: $gray-600;
             font-weight: bold;
           }
         }
@@ -218,7 +217,7 @@
 
       width: 48px;
       height: 48px;
-      background-color: #00aa72;
+      background-color: $green-300;
       border-radius: 15px;
 
       & > img {
@@ -229,7 +228,7 @@
     }
 
     &_image_active {
-      background-color: #003b28;
+      background-color: $green-500;
       box-shadow: rgba(0, 0, 0, 0.4) 0px 22px 22px 0px;
     }
   }
@@ -245,9 +244,9 @@
     padding: 8px 16px 3px 16px;
     outline: none;
 
-    background-color: #01e89e;
+    background-color: $green-200;
     color: white;
-    border-bottom: 2px solid #fff;
+    border-bottom: 2px solid $white-100;
     font-weight: 700;
 
     &::placeholder {
@@ -270,14 +269,8 @@
   width: 350px;
 }
 
-.select_list {
-  border: 1px solid #d7e2eb;
-  padding: 5px 15px;
-  border-radius: 8px;
-}
-
 .select_list:hover {
-  outline: 2px solid #01e89e;
+  outline: 2px solid $green-200;
 }
 
 .list_input {
@@ -286,8 +279,6 @@
   & > input {
     width: 100%;
     height: 30px;
-    border: none;
-    font-size: 18px;
   }
   & > input:focus {
     outline: none;
@@ -307,7 +298,7 @@
   &_list {
     width: 100%;
     height: 100%;
-    background-color: #fff;
+    background-color: $white-100;
     padding-top: 5px;
 
     display: flex;
@@ -322,7 +313,7 @@
     align-items: center;
 
     padding: 8px 16px;
-    border-bottom: 1px solid #dee2e6;
+    border-bottom: 1px solid $gray-light-400;
     cursor: pointer;
 
     &_name {
@@ -340,7 +331,7 @@
 }
 
 .highlighted {
-  background-color: #01e89e;
+  background-color: $green-200;
 }
 
 .project {
@@ -355,7 +346,7 @@
   &_year {
     padding-top: 10px;
     font-weight: bold;
-    color: #767676;
+    color: $gray-600;
   }
   &_list {
     width: 100%;
@@ -366,7 +357,7 @@
       border-radius: 15px;
 
       font-size: 14px;
-      color: #767676;
+      color: $gray-600;
       gap: 10px;
       margin-bottom: 15px;
       padding: 5px 10px;
@@ -395,7 +386,7 @@
 
       &_input {
         border: none;
-        color: #7a7a7a;
+        color: $gray-500;
         outline: none;
       }
 
@@ -403,6 +394,8 @@
         width: 100%;
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        gap: 8px;
       }
 
       &_stack {
@@ -429,6 +422,9 @@
 
     &_button {
       width: 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
     &_blank {
@@ -449,7 +445,7 @@
     margin-right: 15px;
     display: flex;
     align-items: center;
-    width: 85px;
+    min-width: 85px;
 
     font-weight: 700;
   }
@@ -501,7 +497,7 @@
   }
 
   &_item {
-    border: 2px solid #01e89e;
+    border: 2px solid $green-200;
     border-radius: 20px;
     width: 100%;
     padding: 18px;
@@ -532,7 +528,7 @@
       }
 
       &_description {
-        color: #7a7a7a;
+        color: $gray-500;
 
         & > :first-child {
           font-weight: bold;
@@ -558,7 +554,7 @@
     &_title {
       font-size: 20px;
       font-weight: bold;
-      color: #7a7a7a;
+      color: $gray-500;
     }
   }
   &_chart-warp {
@@ -567,7 +563,7 @@
     margin: 0 auto;
     // border: 1px solid black;
     padding: 24px 45px;
-    border: 2px solid #01e89e;
+    border: 2px solid $green-200;
     border-radius: 15px;
   }
 
@@ -597,14 +593,14 @@
       &_title {
         font-weight: bold;
         padding-top: 15px;
-        color: #7a7a7a;
+        color: $gray-500;
       }
 
       &_score {
         --custom-value: initial;
         height: var(--custom-value);
         width: 100%;
-        background-color: #01e89e;
+        background-color: $green-200;
       }
 
       &_bar {
@@ -630,7 +626,7 @@
       cursor: pointer;
     }
     &_item {
-      border: 1px solid #01e89e;
+      border: 1px solid $green-200;
       border-radius: 15px;
       display: flex;
       align-items: center;
@@ -664,7 +660,7 @@
         justify-content: space-between;
 
         & > :first-child {
-          color: #7a7a7a;
+          color: $gray-500;
           font-size: 14px;
           font-weight: 500;
         }
@@ -683,16 +679,16 @@
       &_title {
         font-size: 20px;
         font-weight: bold;
-        color: #003b28;
+        color: $green-500;
       }
     }
   }
 }
 
 .score-border {
-  border: 2px solid #01e89e;
+  border: 2px solid $green-200;
   border-radius: 100%;
-  color: #01e89e;
+  color: $green-200;
   font-size: 12px;
   font-weight: 900;
 
@@ -715,12 +711,12 @@
   &_title {
     font-size: 20px;
     font-weight: 700;
-    color: #00aa72;
+    color: $green-300;
   }
 }
 
 .badgeBox {
-  border: 2px solid #01e89e;
+  border: 2px solid $green-200;
   border-radius: 25px;
   padding: 21px;
   display: flex;
@@ -752,13 +748,13 @@
 .badge_divide {
   width: 5px;
   height: 5px;
-  background-color: #7a7a7a;
+  background-color: $gray-500;
   border-radius: 100%;
 }
 
 .badge_quantity {
   font-size: 18px;
-  color: #7a7a7a;
+  color: $gray-500;
   font-weight: 600;
 
   display: flex;
@@ -773,7 +769,7 @@
 
 .finalEvaluate {
   margin-top: 30px;
-  border: 2px solid #01e89e;
+  border: 2px solid $green-200;
   border-radius: 25px;
   padding: 21px;
 
@@ -807,7 +803,7 @@
   &_userName {
     font-size: 18px;
     font-weight: bold;
-    color: #7a7a7a;
+    color: $gray-500;
   }
 
   &_userScores {
@@ -828,16 +824,16 @@
     }
 
     &_partTitle {
-      color: #7a7a7a;
+      color: $gray-500;
     }
 
     &_partScore {
       width: 26px;
       height: 26px;
-      border: 2px solid #01e89e;
+      border: 2px solid $green-200;
       padding: 3px;
       border-radius: 100%;
-      color: #01e89e;
+      color: $green-200;
       font-weight: 700;
       font-size: 12px;
       display: flex;
@@ -848,7 +844,7 @@
 
   &_userContent {
     font-size: 14px;
-    color: #7a7a7a;
+    color: $gray-500;
     font-weight: 600;
     padding: 0 14px;
 
@@ -859,6 +855,6 @@
 }
 
 .image_bg {
-  background-color: #01e89e;
+  background-color: $green-200;
   padding: 3px;
 }
