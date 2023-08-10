@@ -8,6 +8,7 @@ import {
   getEvaluationMember,
   getFinalEvaluation,
 } from "../../lib/apis/evaluationManagementApi";
+import { useRouter } from "../../hooks/useRouter";
 
 const AllParticipants = ({ projectId, isCompleted }) => {
   const [isFinalEvaluationVisible, setIsFinalEvaluationVisible] = useState("");
@@ -17,6 +18,8 @@ const AllParticipants = ({ projectId, isCompleted }) => {
   const [badgeQuantity, setBadgeQuantity] = useState();
 
   const [participantId, setParticipantId] = useState();
+
+  const { routeTo } = useRouter();
 
   const handleFinalEvaluationModal = async (type, name, finalEvalId) => {
     if (finalEvalId !== -1) {
@@ -31,6 +34,7 @@ const AllParticipants = ({ projectId, isCompleted }) => {
   const handleClickParticipant = (badgeQuantity, participantId) => {
     setParticipantId(participantId);
     setBadgeQuantity(badgeQuantity);
+    routeTo(`/profile/${participantId}/introduce`);
   };
 
   const { data: memberList = [] } = useQuery(
