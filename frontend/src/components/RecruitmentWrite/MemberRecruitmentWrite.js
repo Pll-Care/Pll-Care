@@ -114,11 +114,6 @@ const MemberRecruitmentWrite = () => {
       inputRefs.startDate.current.focus();
       return;
     }
-    if (formValues.description.length < 2) {
-      toast.error("모집글 설명을 입력해주세요");
-      inputRefs.description.current.focus();
-      return;
-    }
     if (
       parseInt(backendCnt, 10) +
         parseInt(frontendCnt, 10) +
@@ -128,6 +123,39 @@ const MemberRecruitmentWrite = () => {
     ) {
       toast.error("포지션 인원 1명 이상이어야 합니다");
       inputRefs.backendCnt.current.focus();
+      return;
+    }
+    if (formValues.techStack.length === 0) {
+      toast.error("해당 프로젝트의 필요한 기술스택을 추가해주세요");
+      inputRefs.techStack.current.focus();
+      return;
+    }
+    if (formValues.description.length < 2) {
+      toast.error("모집글 설명을 입력해주세요");
+      return;
+    }
+    if (formValues.description.length > 1000) {
+      toast.error("모집글 설명 글자수가 초과되었습니다. 다시 입력해주세요");
+      return;
+    }
+    if (formValues.reference.length < 5) {
+      toast.error("모집글 레퍼런스를 입력해주세요");
+      inputRefs.reference.current.focus();
+      return;
+    }
+    if (formValues.reference.length > 500) {
+      toast.error("모집글 레퍼런스 글자수가 초과되었습니다. 다시 입력해주세요");
+      inputRefs.reference.current.focus();
+      return;
+    }
+    if (formValues.contact.length < 2) {
+      toast.error("모집글 컨택을 입력해주세요");
+      inputRefs.contact.current.focus();
+      return;
+    }
+    if (formValues.contact.length > 100) {
+      toast.error("모집글 컨택 글자수가 초과되었습니다. 다시 입력해주세요");
+      inputRefs.contact.current.focus();
       return;
     }
 
@@ -229,7 +257,10 @@ const MemberRecruitmentWrite = () => {
               inputRefs={inputRefs}
             />
 
-            <div className="member-grid-position-stack">
+            <div
+              className="member-grid-position-stack"
+              ref={inputRefs.techStack}
+            >
               <h5>기술 스택</h5>
               <SearchStack
                 className="search-stack"
