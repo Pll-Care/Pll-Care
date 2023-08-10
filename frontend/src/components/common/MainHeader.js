@@ -133,8 +133,8 @@ const MainHeader = () => {
             <Link
               className={
                 isProfilePage
-                  ? "main-header-user-profile-img profile_header_image_background"
-                  : "main-header-user-profile-img "
+                  ? "main-header-user-profile-img profile-header-image-background"
+                  : "main-header-user-profile-img"
               }
               to={`/profile/${profileImage.id}/introduce`}
             >
@@ -146,6 +146,7 @@ const MainHeader = () => {
                       : profile_default
                     : profileImage.imageUrl
                 }
+                alt={"유저 프로필"}
               />
             </Link>
           </div>

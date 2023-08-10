@@ -245,9 +245,13 @@ const FinalEvaluation = ({
             <div className="badges">
               <h1>누적 배지</h1>
               <div className="badges-body">
-                {badgeQuantity?.map((badge) => (
-                  <div className="badge">
-                    <figure />
+                {badgeQuantity?.map((badge, idx) => (
+                  <div className="badge" key={idx}>
+                    <figure
+                      style={{
+                        backgroundImage: `url(${getBadgeImgUrl(idx)})`,
+                      }}
+                    />
                     <div>{badge.evaluationBadge}</div>
                     <div>{badge.quantity} 개</div>
                   </div>

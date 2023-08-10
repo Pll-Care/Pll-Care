@@ -302,6 +302,10 @@
     font-family: $heading-font;
     font-size: $sub-heading-font-size;
 
+    h1 {
+      color: $font-color;
+    }
+
     .final-evaluation-heading {
       margin-bottom: 25px;
     }
@@ -369,6 +373,7 @@
 
       .badges {
         &-body {
+          width: 100%;
           display: grid;
           grid-template-columns: 42% 42%;
           grid-template-rows: 50% 50%;
@@ -399,13 +404,11 @@
             }
           }
         }
+
+        @include displayFlex(column, center, flex-start);
       }
 
       .content {
-        h1 {
-          flex-grow: 0;
-        }
-
         div {
           color: #7a7a7a;
           font-family: $heading-font;
