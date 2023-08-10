@@ -31,9 +31,7 @@ const AllParticipants = ({ projectId, isCompleted }) => {
     setFinalEvaluationType(type);
   };
 
-  const handleClickParticipant = (badgeQuantity, participantId) => {
-    setParticipantId(participantId);
-    setBadgeQuantity(badgeQuantity);
+  const handleClickParticipant = (participantId) => {
     routeTo(`/profile/${participantId}/introduce`);
   };
 
@@ -50,10 +48,10 @@ const AllParticipants = ({ projectId, isCompleted }) => {
           <ParticipantItem
             key={member.id}
             member={member}
+            setBadgeQuantity={setBadgeQuantity}
+            setParticipantId={setParticipantId}
             handleFinalEvaluationModal={handleFinalEvaluationModal}
-            handleClickParticipant={() =>
-              handleClickParticipant(member.badgeDtos, member.id)
-            }
+            handleClickParticipant={handleClickParticipant}
             isCompleted={isCompleted}
             isSelf={member.me}
             finalEvalId={member.finalEvalId}

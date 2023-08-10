@@ -1846,6 +1846,9 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 25px;
 }
+.evaluation-management-final-evaluation h1 {
+  color: #01e89e;
+}
 .evaluation-management-final-evaluation .final-evaluation-heading {
   margin-bottom: 25px;
 }
@@ -1903,7 +1906,14 @@ a {
   justify-content: space-between;
   align-items: center;
 }
+.evaluation-management-final-evaluation .final-evaluation-body .badges {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
 .evaluation-management-final-evaluation .final-evaluation-body .badges-body {
+  width: 100%;
   display: grid;
   grid-template-columns: 42% 42%;
   grid-template-rows: 50% 50%;
@@ -1935,9 +1945,6 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-}
-.evaluation-management-final-evaluation .final-evaluation-body .content h1 {
-  flex-grow: 0;
 }
 .evaluation-management-final-evaluation .final-evaluation-body .content div {
   color: #7a7a7a;
