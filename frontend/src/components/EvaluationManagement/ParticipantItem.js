@@ -11,6 +11,8 @@ const ParticipantItem = ({
   member,
   handleFinalEvaluationModal,
   handleClickParticipant,
+  setBadgeQuantity,
+  setParticipantId,
   isCompleted,
   isSelf,
   finalEvalId,
@@ -32,7 +34,7 @@ const ParticipantItem = ({
 
   return (
     <div
-      onClick={() => handleClickParticipant(member.badgeDtos, member.id)}
+      onClick={() => handleClickParticipant(member.id)}
       className="evaluation-management-participant"
     >
       <div className="evaluation-management-participant-left-col">
@@ -74,9 +76,12 @@ const ParticipantItem = ({
           <Button
             text={"최종 평가하기"}
             size={"small"}
-            onClick={() =>
-              handleFinalEvaluationModal("evaluation", member.name, -1)
-            }
+            onClick={(e) => {
+              e.stopPropagation();
+              setBadgeQuantity(member.badgeDtos);
+              setParticipantId(member.id);
+              handleFinalEvaluationModal("evaluation", member.name, -1);
+            }}
           />
         )}
         {isCompleted && !isSelf && finalEvalId && (
@@ -84,13 +89,16 @@ const ParticipantItem = ({
             text={"최종 평가보기"}
             size={"small"}
             type={"positive"}
-            onClick={() =>
+            onClick={(e) => {
+              e.stopPropagation();
+              setBadgeQuantity(member.badgeDtos);
+              setParticipantId(member.id);
               handleFinalEvaluationModal(
                 "showEvaluation",
                 member.name,
                 finalEvalId
-              )
-            }
+              );
+            }}
           />
         )}
       </div>
