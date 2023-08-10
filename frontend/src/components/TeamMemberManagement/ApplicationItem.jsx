@@ -1,25 +1,95 @@
-import React from "react";
+import React, { useState } from "react";
 import profile_default from "../../assets/profile-default-img.png";
 import Button from "../common/Button";
+import { Link } from "react-router-dom";
+import useModalIsOpen from "../../hooks/useModalIsOpen";
+import AlertCheckModal from "../common/AlertCheckModal";
+import {
+  postApplyAcceptAPI,
+  postApplyRejectAPI,
+} from "../../lib/apis/teamMemberManagementApi";
 
-const ApplicationItem = ({ name, userId, position, imageUrl }) => {
-  const addMember = () => {};
+const ApplicationItem = ({
+  name,
+  memberId,
+  position,
+  imageUrl,
+  postId,
+  projectId,
+  refetch,
+}) => {
+  const [message, setMessage] = useState("");
+  const { isOpen, chageModalOpen } = useModalIsOpen();
+
+  const openAcceptModal = () => {
+    setMessage("수락");
+    chageModalOpen(true);
+  };
+  const openRejectModal = () => {
+    setMessage("거절");
+    chageModalOpen(true);
+  };
+
+  const applyAccept = async () => {
+    try {
+      const response = await postApplyAcceptAPI(projectId, memberId, postId);
+      if (response.status === 200) refetch();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const applyReject = async () => {
+    try {
+      const response = await postApplyRejectAPI(projectId, memberId, postId);
+      if (response.status === 200) refetch();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <li className="application_item">
-      <div className="application_item_imgbox">
-        <img
-          src={imageUrl ? imageUrl : profile_default}
-          alt={`${name}의 프로필`}
-        />
-      </div>
-      <div className="application_item_infobox">
-        <p className="application_item_infobox_name">{name}</p>
-        <p className="application_item_infobox_job">{position}</p>
-      </div>
-      <div className="application_item_btnbox">
-        <Button text="팀원 추가" size="small" onClick={addMember} />
-      </div>
-    </li>
+    <>
+      <AlertCheckModal
+        open={isOpen}
+        onClose={() => {
+          chageModalOpen(false);
+          setMessage("");
+        }}
+        text={`${name}님의 지원을 ${message}하시겠습니까?`}
+        clickHandler={message === "수락" ? applyAccept : applyReject}
+      />
+      <li className="w-f application_item">
+        <Link
+          to={`/profile/${memberId}/introduce`}
+          className="application_item_link"
+        >
+          <div className="application_item_imgbox">
+            <img
+              src={!!imageUrl ? imageUrl : profile_default}
+              alt={`${name}의 프로필`}
+            />
+          </div>
+          <div className="application_item_infobox">
+            <p className="application_item_infobox_name">{name}</p>
+            <p className="application_item_infobox_job">{position}</p>
+          </div>
+        </Link>
+        <div className="application_item_btnbox">
+          <Button
+            text="수락"
+            type="positive"
+            size="small"
+            onClick={openAcceptModal}
+          />
+          <Button
+            text="거절"
+            type="positive"
+            size="small"
+            onClick={openRejectModal}
+          />
+        </div>
+      </li>
+    </>
   );
 };
 
