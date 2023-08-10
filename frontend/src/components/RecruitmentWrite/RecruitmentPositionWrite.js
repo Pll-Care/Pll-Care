@@ -1,6 +1,6 @@
 const RecruitmentPostionWrite = ({ formValues, handleChange, inputRefs }) => {
   return (
-    <div className="options">
+    <div className="recruitment-positions">
       <h5>백엔드</h5>
       <input
         className="position-number"

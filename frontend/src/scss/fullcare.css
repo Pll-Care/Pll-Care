@@ -2603,8 +2603,10 @@ a {
   width: 90%;
 }
 .member-content .member-grid-position {
+  display: flex;
   display: grid;
-  grid-template-columns: repeat(3, 0.25fr);
+  grid-template-columns: repeat(3, 0.2fr);
+  grid-gap: 27px;
   margin-top: 40px;
   border-bottom: 2px solid #b4bcbd;
   padding-bottom: 40px;
@@ -2615,14 +2617,15 @@ a {
 @media (max-width: 767px) {
   .member-content .member-grid-position h5 {
     font-size: 12px;
+    color: yello;
   }
 }
-.member-content .member-grid-position .options {
+.member-content .member-grid-position .recruitment-positions {
   display: grid;
   grid-template-columns: repeat(2, 0.5fr);
   align-items: center;
 }
-.member-content .member-grid-position .options input {
+.member-content .member-grid-position .recruitment-positions input {
   width: 40px;
   height: 30px;
 }
