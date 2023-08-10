@@ -3328,7 +3328,7 @@ a {
   display: flex;
   justify-content: center;
   font-size: 18px;
-  color: #fff;
+  color: #ffffff;
   font-weight: 700;
 }
 .profile_introduce_info {
@@ -3372,7 +3372,7 @@ a {
 .profile_body_sec {
   padding: 30px 60px;
   width: 100%;
-  background-color: #fff;
+  background-color: #ffffff;
 }
 .profile_body_introduce_Box {
   padding: 25px;
@@ -3483,7 +3483,7 @@ a {
   outline: none;
   background-color: #01e89e;
   color: white;
-  border-bottom: 2px solid #fff;
+  border-bottom: 2px solid #ffffff;
   font-weight: 700;
 }
 .profile_input::-moz-placeholder {
@@ -3533,7 +3533,7 @@ a {
 .search_list {
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: #ffffff;
   padding-top: 5px;
   display: flex;
   flex-direction: column;
@@ -3544,7 +3544,7 @@ a {
   display: flex;
   align-items: center;
   padding: 8px 16px;
-  border-bottom: 1px solid #dee2e6;
+  border-bottom: 1px solid #e0e4e8;
   cursor: pointer;
 }
 .search_item_name {
