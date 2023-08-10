@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";
@@ -39,8 +39,6 @@ const MemberRecruitmentWrite = () => {
   // 프로젝트 이미지
   const [imageUrl, setImageUrl] = useState();
 
-  const { title, description, recruitStartDate, recruitEndDate } = formValues;
-
   const inputRefs = {
     title: useRef(),
     description: useRef(),
@@ -62,13 +60,24 @@ const MemberRecruitmentWrite = () => {
         if (data && data.length > 0) {
           setFormValues((prevState) => ({
             ...prevState,
-            projectId: data[0].projectId || "",
+            projectId: data[0].projectId,
           }));
           setImageUrl(data[0].imageUrl);
         }
       },
+      staleTime: 1000 * 60 * 20,
     }
   );
+
+  useEffect(() => {
+    if (data) {
+      setImageUrl(data[0].imageUrl);
+      setFormValues((prevState) => ({
+        ...prevState,
+        projectId: data[0].projectId,
+      }));
+    }
+  }, []);
 
   // 입력하는 모든 상태값 update
   const handleChange = useCallback((e) => {
@@ -84,22 +93,28 @@ const MemberRecruitmentWrite = () => {
 
   // 생성하기
   const handleAddRecruitmetPost = () => {
-    const { backendCnt, frontendCnt, designCnt, managerCnt, ...allData } =
-      formValues;
+    const {
+      projectId,
+      backendCnt,
+      frontendCnt,
+      designCnt,
+      managerCnt,
+      ...allData
+    } = formValues;
 
-    if (title.length < 2) {
+    if (formValues.title.length < 2) {
       toast.error("모집글 제목을 입력해주세요");
       inputRefs.title.current.focus();
       return;
     }
-    const start = new Date(recruitStartDate);
-    const end = new Date(recruitEndDate);
+    const start = new Date(formValues.recruitStartDate);
+    const end = new Date(formValues.recruitEndDate);
     if (start > end) {
       toast.error("모집 기간 수정해주세요");
       inputRefs.startDate.current.focus();
       return;
     }
-    if (description.length < 2) {
+    if (formValues.description.length < 2) {
       toast.error("모집글 설명을 입력해주세요");
       inputRefs.description.current.focus();
       return;
@@ -139,10 +154,10 @@ const MemberRecruitmentWrite = () => {
       },
     ];
     const body = {
+      projectId: parseInt(projectId, 10),
       ...allData,
       recruitInfo: recruitCnt,
     };
-    console.log(body);
     addPostMutate(body);
 
     setFormValues({
@@ -165,6 +180,7 @@ const MemberRecruitmentWrite = () => {
     navigate("/recruitment");
   };
 
+  // techStack 업데이트하는 함수
   const changeStack = (response) => {
     setFormValues((prevValues) => ({
       ...prevValues,
@@ -204,7 +220,7 @@ const MemberRecruitmentWrite = () => {
             />
           )}
 
-          <div className="member-content-position">
+          <div className="member-grid-position">
             <h3>포지션</h3>
             {/*모집글 포지션 인원 수 선택*/}
             <RecruitmentPostionWrite
@@ -213,9 +229,10 @@ const MemberRecruitmentWrite = () => {
               inputRefs={inputRefs}
             />
 
-            <div className="member-content-position-stack">
+            <div className="member-grid-position-stack">
               <h5>기술 스택</h5>
               <SearchStack
+                className="search-stack"
                 stackList={formValues.techStack}
                 changeStack={changeStack}
                 deleteStack={deleteStack}

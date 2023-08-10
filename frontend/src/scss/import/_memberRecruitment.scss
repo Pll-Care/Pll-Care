@@ -93,174 +93,165 @@
 // MemberRecuritmentWrite 컴포넌트
 .member-write {
   width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  background-color: $background-color;
-  padding: 1rem;
+  background-color: $green-200;
+  padding: 10px;
+
   & > Button {
-    margin-left: auto;
-    margin-right: 7%;
-  }
-
-  @include mobile {
-    padding: 0.3rem;
-  }
-  h1 {
-    color: white;
-    font-size: 25px;
-    font-family: $heading-font;
-    margin: 40px;
-  }
-  .member-title {
     display: flex;
-    justify-content: flex-start;
-    font-family: $heading-font;
-    margin: 10px 7%;
-    margin-top: 30px;
-    align-items: center;
+    justify-content: flex-end;
+    margin-left: auto;
+    margin-right: 20px;
+  }
 
-    .recruitment-direction {
-      color: white;
+  h3 {
+    color: $green-400;
+    white-space: nowrap;
+    font-size: $body-font-size;
+    @include mobile {
+      font-size: $body-font-size-small;
     }
-    input {
-      padding: 0.5rem;
-      border-radius: 20px;
-      margin-left: 20px;
-      width: 50%;
-      font-family: $heading-font;
-      color: gray;
+  }
+  input {
+    padding: 5px;
+    border-radius: 20px;
+    border: none;
+    border: 2px solid $gray-400;
+    font-family: $heading-font;
+    color: $gray-400;
+
+    &:hover,
+    &:focus {
+      border-color: $green-200;
     }
-    img {
-      width: 50px;
-      height: 50px;
-      border-radius: 20px;
-      margin-left: 20px;
-    }
-    h2 {
-      font-size: $heading-font-size;
-      margin-left: 15px;
-      color: white;
+
+    @include mobile {
+      font-size: $body-font-size-small;
+      padding: 3px;
     }
   }
 
   &-card {
-    margin: 20px 7%;
+    margin: 20px 30px;
+    border-radius: 10px;
+    padding: 30px;
+    @include mobile {
+      margin: 8px;
+    }
+  }
+  // RecruitmentTitleWrite 컴포넌튼
+  .member-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 10px 15px;
+    .recruitment-direction {
+      color: white;
+      transform: scale(0.8);
+    }
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 40px;
+      margin: 0px 10px;
+    }
+  }
+}
+
+.member-content {
+  font-family: $heading-font;
+  // RecruitmentProjectWrite 컴포넌트
+  .member-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 0.2fr);
+    grid-gap: 27px;
+    align-items: center;
+    border-bottom: 2px solid $gray-400;
+    padding-bottom: 20px;
+
+    .control-menu {
+      color: $gray-400;
+      border: 2px solid $gray-400;
+      height: 90%;
+      font-size: $body-font-size;
+      padding: 5px 0px;
+
+      @include mobile {
+        font-size: $body-font-size-small;
+        padding: 0px 3px;
+        width: 100px;
+      }
+    }
+
+    &-time {
+      display: flex;
+      width: 90%;
+    }
   }
 
-  .member-content {
-    padding: 2rem 3rem;
-    @include mobile {
-      padding: 0.3rem;
-    }
-    &-project,
-    &-options,
-    &-position {
-      display: flex;
-      align-items: center;
-      font-family: $heading-font;
-      h3 {
-        margin: 30px 20px;
-        color: $sub-heading-color;
-        white-space: nowrap;
-      }
-      input,
-      select {
-        border-radius: 20px;
-        padding: 0.3rem;
-        font-family: $heading-font;
-        color: gray;
-      }
+  .member-grid-position {
+    display: grid;
+    grid-template-columns: repeat(3, 0.25fr);
+    margin-top: 40px;
+    border-bottom: 2px solid $gray-400;
+    padding-bottom: 40px;
 
-      .member-select1 {
-        margin-left: 20px;
-      }
-      .member-select2 {
-        margin-left: 45px;
-      }
-      .member-select3 {
-        margin-left: 50px;
-      }
-      .member-select4 {
-        margin-left: 85px;
-      }
-    }
-    &-options {
-      border-bottom: 2px solid rgb(214, 214, 214);
-    }
-
-    &-position {
-      display: flex;
-      border-bottom: 2px solid rgb(214, 214, 214);
+    h5 {
+      white-space: nowrap;
       @include mobile {
-        flex-direction: column;
-      }
-      @include tablet {
-        flex-direction: column;
-      }
-
-      .options {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        &-container,
-        &-count {
-          display: flex;
-          flex-direction: column;
-          margin-left: 100px;
-          @include mobile {
-            margin-left: 0px;
-          }
-          @include tablet {
-            margin-left: 0px;
-          }
-
-          h5 {
-            margin: 26px 0px;
-            white-space: nowrap;
-          }
-
-          .position-number {
-            width: 47px;
-            margin: 0px 40px;
-            border-radius: 50px;
-            margin: 18px 0px;
-          }
-        }
+        font-size: $body-font-size-small;
       }
     }
-
-    &-description {
-      display: flex;
-      flex-direction: column;
+    .options {
+      display: grid;
+      grid-template-columns: repeat(2, 0.5fr);
       align-items: center;
-      .react-quill {
-        width: 90%;
-      }
-      h3 {
-        align-self: flex-start;
-        margin: 20px 40px;
-        color: $sub-heading-color;
-        font-family: $heading-font;
-      }
-      textarea {
-        border-radius: 20px;
-        width: 90%;
-        box-shadow: 0px 10px 10px 5px rgba(40, 40, 40, 0.1);
-        border: none;
-        height: 200px;
-        padding: 0.5rem;
-      }
-      .member-file {
-        width: 200px;
+
+      input {
+        width: 40px;
         height: 30px;
-        border-radius: 10px;
-        margin: 10px 5%;
-        align-self: flex-start;
-        @include mobile {
-          width: 100px;
-        }
       }
+    }
+    &-stack {
+      h5 {
+        margin: 10px;
+      }
+    }
+  }
+
+  textarea {
+    border-radius: 20px;
+    width: 100%;
+    box-shadow: 0px 10px 10px 5px rgba(40, 40, 40, 0.1);
+    border: none;
+    height: 200px;
+    padding: 0.5rem;
+    &:hover,
+    &:focus {
+      border: 2px solid $green-200;
+    }
+  }
+
+  // RecruitmentContentWrite 컴포넌트
+  &-description {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0px;
+    border-bottom: 2px solid $gray-400;
+    padding-bottom: 40px;
+    h3 {
+      margin: 20px 0px;
+    }
+    .react-quill {
+      height: 100%;
+      &:hover,
+      &:focus {
+        border: 2px solid $green-200;
+      }
+    }
+  }
+  &-contact {
+    h3 {
+      margin: 20px 0px;
     }
   }
 }

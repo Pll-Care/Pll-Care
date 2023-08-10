@@ -49,9 +49,7 @@ const RecruitmentContentWrite = ({
             },
           }}
         />
-      </div>
 
-      <div className="member-content-description">
         <h3>레퍼런스</h3>
         <textarea
           onChange={handleChange}
@@ -61,7 +59,7 @@ const RecruitmentContentWrite = ({
         />
       </div>
 
-      <div className="member-content-description">
+      <div className="member-content-contact">
         <h3>컨택</h3>
         <textarea
           onChange={handleChange}

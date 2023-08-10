@@ -2488,179 +2488,154 @@ a {
 
 .member-write {
   width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
   background-color: #01e89e;
-  padding: 1rem;
+  padding: 10px;
 }
 .member-write > Button {
+  display: flex;
+  justify-content: flex-end;
   margin-left: auto;
-  margin-right: 7%;
+  margin-right: 20px;
+}
+.member-write h3 {
+  color: #0f6341;
+  white-space: nowrap;
+  font-size: 18px;
 }
 @media (max-width: 767px) {
-  .member-write {
-    padding: 0.3rem;
+  .member-write h3 {
+    font-size: 12px;
   }
 }
-.member-write h1 {
-  color: white;
-  font-size: 25px;
+.member-write input {
+  padding: 5px;
+  border-radius: 20px;
+  border: none;
+  border: 2px solid #b4bcbd;
   font-family: "IBM Plex Sans KR", sans-serif;
-  margin: 40px;
+  color: #b4bcbd;
+}
+.member-write input:hover, .member-write input:focus {
+  border-color: #01e89e;
+}
+@media (max-width: 767px) {
+  .member-write input {
+    font-size: 12px;
+    padding: 3px;
+  }
+}
+.member-write-card {
+  margin: 20px 30px;
+  border-radius: 10px;
+  padding: 30px;
+}
+@media (max-width: 767px) {
+  .member-write-card {
+    margin: 8px;
+  }
 }
 .member-write .member-title {
   display: flex;
   justify-content: flex-start;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  margin: 10px 7%;
-  margin-top: 30px;
   align-items: center;
+  margin: 10px 15px;
 }
 .member-write .member-title .recruitment-direction {
   color: white;
-}
-.member-write .member-title input {
-  padding: 0.5rem;
-  border-radius: 20px;
-  margin-left: 20px;
-  width: 50%;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  color: gray;
+  transform: scale(0.8);
 }
 .member-write .member-title img {
   width: 50px;
   height: 50px;
-  border-radius: 20px;
-  margin-left: 20px;
+  border-radius: 40px;
+  margin: 0px 10px;
 }
-.member-write .member-title h2 {
-  font-size: 40px;
-  margin-left: 15px;
-  color: white;
-}
-.member-write-card {
-  margin: 20px 7%;
-}
-.member-write .member-content {
-  padding: 2rem 3rem;
-}
-@media (max-width: 767px) {
-  .member-write .member-content {
-    padding: 0.3rem;
-  }
-}
-.member-write .member-content-project, .member-write .member-content-options, .member-write .member-content-position {
-  display: flex;
-  align-items: center;
+
+.member-content {
   font-family: "IBM Plex Sans KR", sans-serif;
 }
-.member-write .member-content-project h3, .member-write .member-content-options h3, .member-write .member-content-position h3 {
-  margin: 30px 20px;
-  color: #00aa72;
-  white-space: nowrap;
+.member-content .member-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 0.2fr);
+  grid-gap: 27px;
+  align-items: center;
+  border-bottom: 2px solid #b4bcbd;
+  padding-bottom: 20px;
 }
-.member-write .member-content-project input,
-.member-write .member-content-project select, .member-write .member-content-options input,
-.member-write .member-content-options select, .member-write .member-content-position input,
-.member-write .member-content-position select {
-  border-radius: 20px;
-  padding: 0.3rem;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  color: gray;
-}
-.member-write .member-content-project .member-select1, .member-write .member-content-options .member-select1, .member-write .member-content-position .member-select1 {
-  margin-left: 20px;
-}
-.member-write .member-content-project .member-select2, .member-write .member-content-options .member-select2, .member-write .member-content-position .member-select2 {
-  margin-left: 45px;
-}
-.member-write .member-content-project .member-select3, .member-write .member-content-options .member-select3, .member-write .member-content-position .member-select3 {
-  margin-left: 50px;
-}
-.member-write .member-content-project .member-select4, .member-write .member-content-options .member-select4, .member-write .member-content-position .member-select4 {
-  margin-left: 85px;
-}
-.member-write .member-content-options {
-  border-bottom: 2px solid rgb(214, 214, 214);
-}
-.member-write .member-content-position {
-  display: flex;
-  border-bottom: 2px solid rgb(214, 214, 214);
+.member-content .member-grid .control-menu {
+  color: #b4bcbd;
+  border: 2px solid #b4bcbd;
+  height: 90%;
+  font-size: 18px;
+  padding: 5px 0px;
 }
 @media (max-width: 767px) {
-  .member-write .member-content-position {
-    flex-direction: column;
+  .member-content .member-grid .control-menu {
+    font-size: 12px;
+    padding: 0px 3px;
+    width: 100px;
   }
 }
-@media (min-width: 767px) and (max-width: 1024px) {
-  .member-write .member-content-position {
-    flex-direction: column;
-  }
-}
-.member-write .member-content-position .options {
+.member-content .member-grid-time {
   display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.member-write .member-content-position .options-container, .member-write .member-content-position .options-count {
-  display: flex;
-  flex-direction: column;
-  margin-left: 100px;
-}
-@media (max-width: 767px) {
-  .member-write .member-content-position .options-container, .member-write .member-content-position .options-count {
-    margin-left: 0px;
-  }
-}
-@media (min-width: 767px) and (max-width: 1024px) {
-  .member-write .member-content-position .options-container, .member-write .member-content-position .options-count {
-    margin-left: 0px;
-  }
-}
-.member-write .member-content-position .options-container h5, .member-write .member-content-position .options-count h5 {
-  margin: 26px 0px;
-  white-space: nowrap;
-}
-.member-write .member-content-position .options-container .position-number, .member-write .member-content-position .options-count .position-number {
-  width: 47px;
-  margin: 0px 40px;
-  border-radius: 50px;
-  margin: 18px 0px;
-}
-.member-write .member-content-description {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.member-write .member-content-description .react-quill {
   width: 90%;
 }
-.member-write .member-content-description h3 {
-  align-self: flex-start;
-  margin: 20px 40px;
-  color: #00aa72;
-  font-family: "IBM Plex Sans KR", sans-serif;
+.member-content .member-grid-position {
+  display: grid;
+  grid-template-columns: repeat(3, 0.25fr);
+  margin-top: 40px;
+  border-bottom: 2px solid #b4bcbd;
+  padding-bottom: 40px;
 }
-.member-write .member-content-description textarea {
+.member-content .member-grid-position h5 {
+  white-space: nowrap;
+}
+@media (max-width: 767px) {
+  .member-content .member-grid-position h5 {
+    font-size: 12px;
+  }
+}
+.member-content .member-grid-position .options {
+  display: grid;
+  grid-template-columns: repeat(2, 0.5fr);
+  align-items: center;
+}
+.member-content .member-grid-position .options input {
+  width: 40px;
+  height: 30px;
+}
+.member-content .member-grid-position-stack h5 {
+  margin: 10px;
+}
+.member-content textarea {
   border-radius: 20px;
-  width: 90%;
+  width: 100%;
   box-shadow: 0px 10px 10px 5px rgba(40, 40, 40, 0.1);
   border: none;
   height: 200px;
   padding: 0.5rem;
 }
-.member-write .member-content-description .member-file {
-  width: 200px;
-  height: 30px;
-  border-radius: 10px;
-  margin: 10px 5%;
-  align-self: flex-start;
+.member-content textarea:hover, .member-content textarea:focus {
+  border: 2px solid #01e89e;
 }
-@media (max-width: 767px) {
-  .member-write .member-content-description .member-file {
-    width: 100px;
-  }
+.member-content-description {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0px;
+  border-bottom: 2px solid #b4bcbd;
+  padding-bottom: 40px;
+}
+.member-content-description h3 {
+  margin: 20px 0px;
+}
+.member-content-description .react-quill {
+  height: 100%;
+}
+.member-content-description .react-quill:hover, .member-content-description .react-quill:focus {
+  border: 2px solid #01e89e;
+}
+.member-content-contact h3 {
+  margin: 20px 0px;
 }
 
 .recruitment {
