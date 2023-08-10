@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { isToken } from "../../utils/localstroageHandler";
+
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Quill from "quill";
@@ -23,6 +23,7 @@ import AlertCheckModal from "../common/AlertCheckModal";
 
 import { getStringDate } from "../../utils/date";
 import { location } from "../../utils/recruitment";
+import { isToken } from "../../utils/localstroageHandler";
 import {
   applyRecruitmentPost,
   getRecruitmentPostDetail,
@@ -344,7 +345,7 @@ const RecruitmentDetailContent = () => {
     } else {
       setDesignApply((prevState) => !prevState);
     }
-  }
+  };
 
   return (
     <>
