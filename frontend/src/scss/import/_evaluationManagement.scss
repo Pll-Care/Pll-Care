@@ -183,7 +183,8 @@
   }
 
   .final-evaluation-management-ranking-wrapper-non-evaluated::before {
-    background: url("../assets/final-evaluation-error-text.png") no-repeat center;
+    background: url("../assets/final-evaluation-error-text.png") no-repeat
+      center;
   }
 
   &-participant-wrapper {
@@ -292,32 +293,18 @@
     @include putCenter;
   }
 
-  .final-evaluation-wrapper {
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(5px);
-    opacity: 95%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-
   &-final-evaluation {
-    background-color: $background-color;
-    padding: 40px;
-    position: fixed;
-    top: 50%;
-    left: 50%;
     overflow: auto;
-    transform: translate(-50%, -50%);
-    width: 80%;
+    padding: 40px;
+    width: 100%;
     height: 90vh;
-    box-shadow: 0px 5px 30px 3px rgba(0, 0, 0, 0.1);
-    border-radius: 30px;
     color: white;
     font-family: $heading-font;
     font-size: $sub-heading-font-size;
+
+    h1 {
+      color: $font-color;
+    }
 
     .final-evaluation-heading {
       margin-bottom: 25px;
@@ -386,6 +373,7 @@
 
       .badges {
         &-body {
+          width: 100%;
           display: grid;
           grid-template-columns: 42% 42%;
           grid-template-rows: 50% 50%;
@@ -416,13 +404,11 @@
             }
           }
         }
+
+        @include displayFlex(column, center, flex-start);
       }
 
       .content {
-        h1 {
-          flex-grow: 0;
-        }
-
         div {
           color: #7a7a7a;
           font-family: $heading-font;

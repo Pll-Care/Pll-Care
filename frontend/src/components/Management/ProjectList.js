@@ -1,13 +1,17 @@
 import { useState } from "react";
 
-import ProjectButtonModal from "./ProjectButtonModal";
 import ProjectItem from "./ProjectItem";
+import AlertCheckModal from "../common/AlertCheckModal";
+import { getAlertText } from "../../utils/getAlertText";
+import useManagementMutation from "../../hooks/useManagementMutation";
 
 const ProjectList = ({ type, projectList, totalElements }) => {
   const [leaveModalVisible, setLeaveModalVisible] = useState(false);
   const [leaveProjectId, setLeaveProjectId] = useState();
 
-  const handleLeaveProjectClick = (e, projectId) => {
+  const { leaveMutate } = useManagementMutation();
+
+  const handleLeaveButtonClick = (e, projectId) => {
     e.preventDefault();
 
     setLeaveProjectId(projectId);
@@ -27,15 +31,18 @@ const ProjectList = ({ type, projectList, totalElements }) => {
             <ProjectItem
               key={project.projectId}
               project={project}
-              handleLeaveProjectClick={handleLeaveProjectClick}
+              handleLeaveProjectClick={(e) =>
+                handleLeaveButtonClick(e, project.projectId)
+              }
             />
           ))}
           {leaveModalVisible && (
-            <ProjectButtonModal
-              type={"팀 탈퇴"}
-              projectId={leaveProjectId}
-              modalVisible={leaveModalVisible}
-              setModalVisible={setLeaveModalVisible}
+            <AlertCheckModal
+              text={getAlertText("팀 탈퇴")}
+              onClose={() => setLeaveModalVisible(false)}
+              open={() => setLeaveModalVisible(true)}
+              clickHandler={() => leaveMutate(leaveProjectId)}
+              width={500}
             />
           )}
         </>

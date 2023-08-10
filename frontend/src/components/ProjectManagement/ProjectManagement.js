@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useQuery } from "react-query";
 
 import { getStringDate } from "../../utils/date";
 import { getProjectId } from "../../utils/getProjectId";
@@ -7,12 +8,13 @@ import { getProjectId } from "../../utils/getProjectId";
 import projectButtonImgUrl from "../../assets/project-management-img.png";
 import completedProjectButtonImgUrl from "../../assets/completed-project-management-img.png";
 
-import ProjectButtonModal from "../Management/ProjectButtonModal";
 import ProjectEditor from "../Management/ProjectEditor";
+import AlertCheckModal from "../common/AlertCheckModal";
 
-import { useQuery } from "react-query";
 import { getProjectData } from "../../lib/apis/projectManagementApi";
 import { getCompleteProjectData } from "../../lib/apis/managementApi";
+import useManagementMutation from "../../hooks/useManagementMutation";
+import { getAlertText } from "../../utils/getAlertText";
 
 const ProjectManagement = () => {
   const projectId = getProjectId(useLocation());
@@ -73,6 +75,8 @@ const ProjectManagement = () => {
     });
   };
 
+  const { deleteMutate, completeMutate } = useManagementMutation();
+
   return (
     <div className="project-management">
       {isCompleted ? (
@@ -105,19 +109,25 @@ const ProjectManagement = () => {
             <h1>프로젝트 수정</h1>
           </div>
           {completeModalVisible && (
-            <ProjectButtonModal
-              type={"완료"}
-              projectId={completeProjectId}
-              modalVisible={completeModalVisible}
-              setModalVisible={setCompleteModalVisible}
+            <AlertCheckModal
+              text={getAlertText("완료")}
+              onClose={() => setCompleteModalVisible(false)}
+              open={() => setCompleteModalVisible(true)}
+              clickHandler={() => {
+                completeMutate(completeProjectId);
+              }}
+              width={500}
             />
           )}
           {deleteModalVisible && (
-            <ProjectButtonModal
-              type={"삭제"}
-              projectId={deleteProjectId}
-              modalVisible={deleteModalVisible}
-              setModalVisible={setDeleteModalVisible}
+            <AlertCheckModal
+              text={getAlertText("삭제")}
+              onClose={() => setDeleteModalVisible(false)}
+              open={() => setDeleteModalVisible(true)}
+              clickHandler={() => {
+                deleteMutate(deleteProjectId);
+              }}
+              width={500}
             />
           )}
           {editModalVisible && (
@@ -159,19 +169,25 @@ const ProjectManagement = () => {
             <h1>프로젝트 수정</h1>
           </div>
           {completeModalVisible && (
-            <ProjectButtonModal
-              type={"완료"}
-              projectId={completeProjectId}
-              modalVisible={completeModalVisible}
-              setModalVisible={setCompleteModalVisible}
+            <AlertCheckModal
+              text={getAlertText("완료")}
+              onClose={() => setCompleteModalVisible(false)}
+              open={() => setCompleteModalVisible(true)}
+              clickHandler={() => {
+                completeMutate(completeProjectId);
+              }}
+              width={500}
             />
           )}
           {deleteModalVisible && (
-            <ProjectButtonModal
-              type={"삭제"}
-              projectId={deleteProjectId}
-              modalVisible={deleteModalVisible}
-              setModalVisible={setDeleteModalVisible}
+            <AlertCheckModal
+              text={getAlertText("삭제")}
+              onClose={() => setDeleteModalVisible(false)}
+              open={() => setDeleteModalVisible(true)}
+              clickHandler={() => {
+                deleteMutate(deleteProjectId);
+              }}
+              width={500}
             />
           )}
           {editModalVisible && (

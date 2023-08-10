@@ -1,24 +1,29 @@
 import { Link } from "react-router-dom";
-import { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { useDispatch } from "react-redux";
 import { authActions } from "../../redux/authSlice";
 
 import { googleAuthUrl, kakaoAuthUrl, naverAuthUrl } from "../../utils/auth";
 
-import { useOutsideClick } from "../../hooks/useOutsideClick";
-
 import logo from "../../assets/logo.png";
+import ModalContainer from "../common/ModalContainer";
 
 const Login = () => {
-  const modalOutsideRef = useRef(null);
-
   const dispatch = useDispatch();
 
-  useOutsideClick(modalOutsideRef, () => dispatch(authActions.setIsLoginModalVisible(false)));
+  const isLoginModalVisible = useSelector((state) => state.auth.isLoginModalVisible);
+
+  const handleModalVisible = (visible) => {
+    dispatch(authActions.setIsLoginModalVisible(visible));
+  };
 
   return (
-    <div className="login-modal-wrapper" ref={modalOutsideRef}>
+    <ModalContainer
+      width={380}
+      height={400}
+      open={isLoginModalVisible}
+      onClose={() => handleModalVisible(false)}
+    >
       <div className="login-modal">
         <div className="login-logo-img">
           <figure
@@ -58,7 +63,7 @@ const Login = () => {
           />
         </div>
       </div>
-    </div>
+    </ModalContainer>
   );
 };
 

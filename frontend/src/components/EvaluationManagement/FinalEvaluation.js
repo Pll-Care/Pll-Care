@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import { toast } from "react-toastify";
@@ -7,9 +7,11 @@ import useEvaluationManagementMutation from "../../hooks/useEvaluationManagement
 
 import Button from "../../components/common/Button";
 import ControlMenu from "../common/ControlMenu";
+import ModalContainer from "../common/ModalContainer";
+import AlertCheckModal from "../common/AlertCheckModal";
 
 import { getProjectId } from "../../utils/getProjectId";
-import { useOutsideClick } from "../../hooks/useOutsideClick";
+import { getAlertText } from "../../utils/getAlertText";
 
 import enthusiasticParticipantBadgeImgUrl from "../../assets/enthusiastic-participant-badge-img.png";
 import goodLeaderBadgeImgUrl from "../../assets/good-leader-badge-img.png";
@@ -73,6 +75,7 @@ const FinalEvaluation = ({
   participantId,
   member,
   setIsFinalEvaluationVisible,
+  isFinalEvaluationVisible,
   badgeQuantity,
   data,
 }) => {
@@ -81,13 +84,13 @@ const FinalEvaluation = ({
   const [jobPerformanceScore, setJobPerformanceScore] = useState(0);
   const [communicationScore, setCommunicationScore] = useState(0);
 
+  const [isAlertModalVisible, setIsAlertModalVisible] = useState(false);
+
   const projectId = getProjectId(useLocation());
 
   const [content, setContent] = useState("");
 
-  const modalOutsideRef = useRef();
-
-  useOutsideClick(modalOutsideRef, () => setIsFinalEvaluationVisible(""));
+  const handleModalClose = () => setIsFinalEvaluationVisible(false);
 
   const { finalEvaluationMutate } = useEvaluationManagementMutation();
 
@@ -101,19 +104,7 @@ const FinalEvaluation = ({
       return;
     }
 
-    finalEvaluationMutate({
-      projectId: projectId,
-      evaluatedId: participantId,
-      score: {
-        sincerity: sincerityScore,
-        punctuality: punctualityScore,
-        jobPerformance: jobPerformanceScore,
-        communication: communicationScore,
-      },
-      content: content,
-    });
-
-    setIsFinalEvaluationVisible(false);
+    setIsAlertModalVisible(true);
   };
 
   const getValue = (idx) => {
@@ -157,12 +148,18 @@ const FinalEvaluation = ({
       case 3:
         return ideaBankBadgeImgUrl;
       default:
-        return '';
+        return "";
     }
-  }
+  };
 
   return (
-    <div className="final-evaluation-wrapper" ref={modalOutsideRef}>
+    <ModalContainer
+      open={isFinalEvaluationVisible}
+      onClose={handleModalClose}
+      type={"dark"}
+      width={"80%"}
+      height={"90%"}
+    >
       {type === "evaluation" ? (
         <div className="evaluation-management-final-evaluation">
           <div className="final-evaluation-heading">
@@ -191,9 +188,7 @@ const FinalEvaluation = ({
                   <div className="badge" key={idx}>
                     <figure
                       style={{
-                        backgroundImage: `url(${
-                          getBadgeImgUrl(idx)
-                        })`,
+                        backgroundImage: `url(${getBadgeImgUrl(idx)})`,
                       }}
                     />
                     <div>{badge.evaluationBadge}</div>
@@ -241,9 +236,13 @@ const FinalEvaluation = ({
             <div className="badges">
               <h1>누적 배지</h1>
               <div className="badges-body">
-                {badgeQuantity?.map((badge) => (
-                  <div className="badge">
-                    <figure />
+                {badgeQuantity?.map((badge, idx) => (
+                  <div className="badge" key={idx}>
+                    <figure
+                      style={{
+                        backgroundImage: `url(${getBadgeImgUrl(idx)})`,
+                      }}
+                    />
                     <div>{badge.evaluationBadge}</div>
                     <div>{badge.quantity} 개</div>
                   </div>
@@ -260,7 +259,29 @@ const FinalEvaluation = ({
           </div>
         </div>
       )}
-    </div>
+      {isAlertModalVisible && (
+        <AlertCheckModal
+          onClose={() => setIsAlertModalVisible(false)}
+          open={isAlertModalVisible}
+          text={getAlertText("평가 작성")}
+          clickHandler={() => {
+            finalEvaluationMutate({
+              projectId: projectId,
+              evaluatedId: participantId,
+              score: {
+                sincerity: sincerityScore,
+                punctuality: punctualityScore,
+                jobPerformance: jobPerformanceScore,
+                communication: communicationScore,
+              },
+              content: content,
+            });
+
+            setIsFinalEvaluationVisible(false);
+          }}
+        />
+      )}
+    </ModalContainer>
   );
 };
 
