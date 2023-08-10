@@ -43,8 +43,6 @@ const ContactBox = () => {
   }, [isModify, refetch]);
 
   const submitModify = async () => {
-    console.log(userInfo);
-
     if (userInfo.emailStart === "") {
       return toast.error("이메일을 반드시 입력해야합니다.");
     }
@@ -139,6 +137,7 @@ const ContactBox = () => {
 export default ContactBox;
 
 const Default_UI = ({ email = "", github = "", websiteUrl = "" }) => {
+  console.log(github);
   return (
     <div className="profile_body_introduce_contactBox_items">
       <div className="profile_body_introduce_contactBox_items_item">
@@ -151,7 +150,7 @@ const Default_UI = ({ email = "", github = "", websiteUrl = "" }) => {
         <span className="profile_body_introduce_contactBox_items_title">
           Github
         </span>
-        <a href={github} target="_blank" rel="noreferrer">
+        <a href={`https://${github}`} target="_blank" rel="noreferrer">
           {github}
         </a>
       </div>
@@ -159,7 +158,7 @@ const Default_UI = ({ email = "", github = "", websiteUrl = "" }) => {
         <span className="profile_body_introduce_contactBox_items_title">
           Website
         </span>
-        <a href={websiteUrl} target="_blank" rel="noreferrer">
+        <a href={`https://${websiteUrl}`} target="_blank" rel="noreferrer">
           {websiteUrl}
         </a>
       </div>
