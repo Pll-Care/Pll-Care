@@ -140,7 +140,7 @@ public class ProfileController {
 //            @ApiResponse(responseCode = "400", description = "개인페이지 작성한 모집글 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @GetMapping("/post")
-    public ResponseEntity<CustomPageImpl<MyPostResponse>> findMyPost(@PathVariable Long memberId, @RequestParam(value = "state", defaultValue = "TBD") State state, CustomPageRequest pageRequest, @CurrentLoginMember Member member) {
+    public ResponseEntity<CustomPageImpl<MyPostResponse>> findMyPost(@PathVariable Long memberId, @RequestParam(value = "state", defaultValue = "ONGOING") State state, CustomPageRequest pageRequest, @CurrentLoginMember Member member) {
         if (memberId != member.getId()) {
             throw new UnauthorizedAccessException(MemberErrorCode.MEMBER_PROFILE_UNAUTHORIZED_ACCESS);
         }

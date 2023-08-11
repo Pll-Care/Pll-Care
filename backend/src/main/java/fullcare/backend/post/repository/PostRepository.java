@@ -36,8 +36,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Optional<PostDetailResponse> findPostDto(@Param("memberId") Long memberId, @Param("postId") Long postId);
 
 
-    @Query(value = "select p from Post p join p.project pp join pp.projectMembers pm where pm.member.id  = :memberId and p.state = :state",
-            countQuery = "select count(p) from Post p join p.project pp join pp.projectMembers pm where pm.member.id = :memberId and p.state = :state")
+    @Query(value = "select p from Post p join p.project pp where p.author.id  = :memberId and p.state = :state",
+            countQuery = "select count(p) from Post p join p.project pp where p.author.id = :memberId and p.state = :state")
     Page<Post> findPageByMemberId(@Param("memberId") Long memberId, @Param("state") State state, Pageable pageable);
 
     @Query(value = "select p from Post p join fetch p.likes l where l.member.id =:memberId",
