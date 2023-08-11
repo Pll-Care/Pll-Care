@@ -1,8 +1,11 @@
 import { useQuery } from "react-query";
 import ApplicationItem from "./ApplicationItem";
 import { getApplicationUser } from "../../lib/apis/teamMemberManagementApi";
+import { useProjectDetail } from "../../context/ProjectDetailContext";
 
-const ApplicationStatus = ({ projectId }) => {
+const ApplicationStatus = () => {
+  const { projectId } = useProjectDetail();
+
   const { data: users = [], refetch } = useQuery(
     ["applyUsers", projectId],
     () => getApplicationUser(projectId)

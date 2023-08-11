@@ -19,14 +19,14 @@ const MemberItem = ({
             alt={`${name}의 프로필`}
             className="member_item_imgbox_img"
           />
-          {isEdit ? (
+          {isEdit && (
             <EditTeamMember
               memberId={memberId}
               refetch={refetch}
               name={name}
               position={position}
             />
-          ) : null}
+          )}
         </div>
       </div>
       <div className="member_item_infobox">

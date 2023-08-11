@@ -65,7 +65,7 @@ const EditTeamMember = ({ memberId, refetch, name, position }) => {
     try {
       const response = await putLeaderChangeAPI(projectId, memberId);
       if (response.status === 200) {
-        routeTo(`/management/${projectId}/overview`);
+        routeTo(`/management/${projectId}`);
         toast.success("변경되었습니다.");
       }
     } catch (error) {

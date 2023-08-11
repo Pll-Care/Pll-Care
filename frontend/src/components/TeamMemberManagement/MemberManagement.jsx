@@ -3,9 +3,11 @@ import Button from "../common/Button";
 import MemberItem from "./MemberItem";
 import { useQuery } from "react-query";
 import { getTeamMember } from "../../lib/apis/teamMemberManagementApi";
+import { useProjectDetail } from "../../context/ProjectDetailContext";
 
-const MemberManagement = ({ projectId }) => {
+const MemberManagement = () => {
   const [isEdit, setIsEdit] = useState(false);
+  const { isLeader, projectId } = useProjectDetail();
 
   const {
     isLoading,
@@ -25,11 +27,13 @@ const MemberManagement = ({ projectId }) => {
     <section className="memberMangement">
       <div className="memberMangement_head">
         <span className="teamMember_title">팀원 관리</span>
-        {isEdit ? (
-          <Button text="수정완료" size="small" onClick={editCompleted} />
-        ) : (
-          <Button text="수정" size="small" onClick={editMember} />
-        )}
+        {isLeader ? (
+          isEdit ? (
+            <Button text="수정완료" size="small" onClick={editCompleted} />
+          ) : (
+            <Button text="수정" size="small" onClick={editMember} />
+          )
+        ) : null}
       </div>
       <div>
         <ul className="memberMangement_members">
