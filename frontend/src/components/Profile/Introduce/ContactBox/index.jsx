@@ -137,7 +137,6 @@ const ContactBox = () => {
 export default ContactBox;
 
 const Default_UI = ({ email = "", github = "", websiteUrl = "" }) => {
-  console.log(github);
   return (
     <div className="profile_body_introduce_contactBox_items">
       <div className="profile_body_introduce_contactBox_items_item">

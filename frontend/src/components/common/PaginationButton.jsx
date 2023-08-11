@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 // totalPageNumber: number
 // currentPageNumber: number
 // changePageNumber: (pageNumber: number) => void
