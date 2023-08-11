@@ -50,7 +50,10 @@ const RecruitmentDetailDescription = ({
             }}
           />
         ) : (
-          <div dangerouslySetInnerHTML={{ __html: data?.description }} />
+          <div
+            className="recruitment-detail-description-content"
+            dangerouslySetInnerHTML={{ __html: data?.description }}
+          />
         )}
       </div>
 
