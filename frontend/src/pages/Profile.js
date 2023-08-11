@@ -1,17 +1,23 @@
+import { useParams } from "react-router";
 import IntroduceHeader from "../components/Profile/IntroduceHeader";
 import ProfileBody from "../components/Profile/ProfileBody";
 import { ProfileProvider } from "../context/ProfileContext";
-import { getMemberId } from "../lib/apis/profileApi";
+import PageRouterLayout from "../layout/PageRouterLayout";
 
 const Profile = () => {
-  getMemberId();
+  const { id: memberId } = useParams();
 
   return (
     <ProfileProvider>
-      <div>
-        <IntroduceHeader />
-        <ProfileBody />
-      </div>
+      <PageRouterLayout
+        pageUrl={`/profile/${memberId}/introduce`}
+        passUrl={`/profile/${memberId}`}
+      >
+        <div>
+          <IntroduceHeader />
+          <ProfileBody />
+        </div>
+      </PageRouterLayout>
     </ProfileProvider>
   );
 };
