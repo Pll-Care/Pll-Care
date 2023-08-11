@@ -25,27 +25,15 @@ const PaginationButton = ({
   const nextChapter = () => {
     changePageNumber(startNumber + 5);
   };
-  const forFirstPage = () => {
-    changePageNumber(1);
-  };
-  const forLastPage = () => {
-    changePageNumber(totalPageNumber);
-  };
 
   return (
     <nav className="pagination">
       <ul className="pageButtons">
         <li
-          className={startNumber === 1 ? "disabled first_last" : "first_last"}
-          onClick={forFirstPage}
-        >
-          처음 페이지
-        </li>
-        <li
           onClick={prevChapter}
           className={startNumber === 1 ? "disabled pageButton" : "pageButton"}
         >
-          {"<<"}
+          {"<"}
         </li>
         {pageNumbers.map((page) => (
           <li
@@ -67,17 +55,7 @@ const PaginationButton = ({
               : "pageButton"
           }
         >
-          {">>"}
-        </li>
-        <li
-          className={
-            currentPageNumber === totalPageNumber
-              ? "disabled first_last"
-              : "first_last"
-          }
-          onClick={forLastPage}
-        >
-          끝 페이지
+          {">"}
         </li>
       </ul>
     </nav>
