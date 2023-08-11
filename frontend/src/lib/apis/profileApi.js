@@ -9,15 +9,8 @@ export const getMemberId = async () => {
   }
 };
 
-export const validateProfile = async (memberId) => {
-  try {
-    const response = await customAxios.get(
-      `/auth/profile/${memberId}/validate`
-    );
-    if (response.status === 200) return response.data.myProfile;
-  } catch (error) {
-    console.log(error);
-  }
+export const validateProfile = (memberId) => {
+  return customAxios.get(`/auth/profile/${memberId}/validate`);
 };
 
 export const getBio = async (memberId) => {
