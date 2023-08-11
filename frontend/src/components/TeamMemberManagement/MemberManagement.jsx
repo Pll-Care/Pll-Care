@@ -1,23 +1,17 @@
 import { useCallback, useState } from "react";
 import Button from "../common/Button";
 import MemberItem from "./MemberItem";
-import { useQuery, useQueryClient } from "react-query";
-import {
-  deleteMember,
-  getTeamMember,
-} from "../../lib/apis/teamMemberManagementApi";
-import useManagementTeamMemeber from "../../hooks/useManagementTeamMemeber";
+import { useQuery } from "react-query";
+import { getTeamMember } from "../../lib/apis/teamMemberManagementApi";
 
 const MemberManagement = ({ projectId }) => {
   const [isEdit, setIsEdit] = useState(false);
-  const queryClient = useQueryClient();
 
-  const { deleteTeamMemeber } = useManagementTeamMemeber();
-
-  const { isLoading, data: response = [] } = useQuery(
-    ["members", projectId],
-    () => getTeamMember(projectId)
-  );
+  const {
+    isLoading,
+    data: response = [],
+    refetch,
+  } = useQuery(["members", projectId], () => getTeamMember(projectId));
 
   const editMember = useCallback(() => {
     setIsEdit(true);
@@ -26,20 +20,6 @@ const MemberManagement = ({ projectId }) => {
   const editCompleted = useCallback(() => {
     setIsEdit(false);
   }, []);
-
-  const deleteTeamMember = useCallback(
-    async (memberId) => {
-      const response = await deleteMember(projectId, memberId);
-      if (response.status === 200) {
-        queryClient.invalidateQueries(["members"]);
-      }
-      if (response.status === 401) {
-        console.log(response.message);
-      }
-      // deleteTeamMemeber(projectId, memberId);
-    },
-    [projectId, queryClient]
-  );
 
   return (
     <section className="memberMangement">
@@ -52,13 +32,11 @@ const MemberManagement = ({ projectId }) => {
         )}
       </div>
       <div>
-        <ul className="memberMangement_memebers">
+        <ul className="memberMangement_members">
           {isLoading ? (
             <div>로딩중....</div>
           ) : response.length === 0 ? (
-            <p className="memberMangement_memebers_noMember">
-              팀원이 없습니다.
-            </p>
+            <p className="memberMangement_members_noMember">팀원이 없습니다.</p>
           ) : (
             response.map((member) => (
               <MemberItem
@@ -68,7 +46,7 @@ const MemberManagement = ({ projectId }) => {
                 position={member.position}
                 imageUrl={member.imageUrl}
                 isEdit={isEdit}
-                deleteTeamMember={deleteTeamMember}
+                refetch={refetch}
               />
             ))
           )}

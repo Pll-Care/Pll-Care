@@ -1,4 +1,5 @@
 const ControlMenu = ({ onChange, value, optionList }) => {
+  console.log(optionList);
   return (
     <select
       className="control-menu"

@@ -1,5 +1,6 @@
 import React from "react";
 import profile_default from "../../assets/profile-default-img.png";
+import EditTeamMember from "./EditTeamMember";
 
 const MemberItem = ({
   name,
@@ -7,7 +8,7 @@ const MemberItem = ({
   position,
   imageUrl,
   isEdit,
-  deleteTeamMember,
+  refetch,
 }) => {
   return (
     <li className="member_item">
@@ -19,12 +20,12 @@ const MemberItem = ({
             className="member_item_imgbox_img"
           />
           {isEdit ? (
-            <div
-              onClick={() => deleteTeamMember(memberId)}
-              className="member_item_delete"
-            >
-              팀원 삭제
-            </div>
+            <EditTeamMember
+              memberId={memberId}
+              refetch={refetch}
+              name={name}
+              position={position}
+            />
           ) : null}
         </div>
       </div>
