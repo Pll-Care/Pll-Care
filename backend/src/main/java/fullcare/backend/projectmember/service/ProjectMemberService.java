@@ -142,7 +142,7 @@ public class ProjectMemberService {
         }
 
     }
-
+    @Transactional
     public void kickOutProjectMember(Long projectId, Long memberId, ProjectMemberDeleteRequest request) {
         try {
             ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, memberId, false);
@@ -155,7 +155,6 @@ public class ProjectMemberService {
                     throw new UnauthorizedAccessException(ProjectErrorCode.LEADER_INVALID_ACTION);
                 }
             }
-
             projectMemberRepository.deleteByProjectIdAndMemberId(findProjectMember.getProject().getId(), request.getMemberId());
 
         } catch (CompletedProjectException completedProjectException) {

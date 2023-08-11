@@ -178,7 +178,7 @@ public class TestDataInit {
         techStacks2.add(TechStack.Firebase);
         techStacks2.add(TechStack.Django);
         projectExperiences.add(ProjectExperienceRequestDto.builder().title("title1").description("설명2222").startDate(LocalDate.now()).endDate(LocalDate.now().plusWeeks(5l)).techStack(techStacks2).build());
-        profileService.updateProfile(member, new ProfileUpdateRequest(contact, RecruitPosition.BACKEND, techStacks, null, projectExperiences, false));
+        profileService.updateProfile(member, new ProfileUpdateRequest(contact, RecruitPosition.백엔드, techStacks, null, projectExperiences, false));
 
 
     }
