@@ -137,4 +137,8 @@ public class ProfileService {
         return new ProfileImageResponse(findMember.getId(), findMember.getImageUrl());
     }
 
+    public ValidateMyProfileResponse validateMine(Long findMemberId, Long loginMemberId) {
+        memberRepository.findById(findMemberId).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
+        return new ValidateMyProfileResponse(findMemberId == loginMemberId);
+    }
 }

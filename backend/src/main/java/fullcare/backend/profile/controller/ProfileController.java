@@ -99,7 +99,8 @@ public class ProfileController {
     })
     @GetMapping("/validate")
     public ResponseEntity<ValidateMyProfileResponse> validateMyProfile(@PathVariable Long memberId, @CurrentLoginMember Member member) {
-        return new ResponseEntity<>(new ValidateMyProfileResponse(memberId == member.getId()), HttpStatus.OK);
+        ValidateMyProfileResponse response = profileService.validateMine(memberId, member.getId());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 
