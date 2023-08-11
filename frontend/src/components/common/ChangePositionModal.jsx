@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ModalContainer from "./ModalContainer";
-import { projectPositionSelect } from "../../utils/optionData";
+import { positionSelect } from "../../utils/optionData";
 import Select from "./Select";
 import { toast } from "react-toastify";
 
@@ -19,7 +19,6 @@ const ChagePositionModal = ({
       toast.error("변경하실 직무를 선택해주세요.");
       return;
     }
-    console.log(123);
     clickHandler(chagePosition);
   };
   return (
@@ -31,7 +30,7 @@ const ChagePositionModal = ({
         <div className="modal-position-box">
           <Select
             onChange={(value) => setChangePosition(value.target.value)}
-            options={projectPositionSelect}
+            options={positionSelect}
           />
           <p className="modal-position-text">로 변경합니다.</p>
         </div>
