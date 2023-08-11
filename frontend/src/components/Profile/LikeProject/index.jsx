@@ -12,7 +12,7 @@ const LikeProject = () => {
   const { memberId } = useProfile();
 
   const { data, refetch } = useQuery(
-    [QUERY_KEY, memberId, currentPageNumber],
+    [memberId, QUERY_KEY, currentPageNumber],
     () => getLikeProjectAPI({ memberId, page: currentPageNumber })
   );
 
@@ -25,31 +25,37 @@ const LikeProject = () => {
   useEffect(() => {
     refetch();
   }, [currentPageNumber, refetch]);
-
   return (
     <div>
       <div className="profile_introduce_titleBox">
         <h1>'좋아요' 한 모집글</h1>
       </div>
       <div className="myProject">
-        <div className="myProject_selectContainer"></div>
-        <div className="myProject_project">
-          <ul>
-            {data?.content.map((project) => (
-              <ProjectItem
-                key={project.postId}
-                postId={project.postId}
-                title={project.title}
-                description={project.description}
-              />
-            ))}
-          </ul>
-        </div>
-        <PaginationButton
-          changePageNumber={changePageNumber}
-          totalPageNumber={totalPages}
-          currentPageNumber={currentPageNumber}
-        />
+        {data?.content.length > 0 ? (
+          <>
+            <div className="myProject_project">
+              <ul>
+                {data.content.map((project) => (
+                  <ProjectItem
+                    key={project.postId}
+                    postId={project.postId}
+                    title={project.title}
+                    description={project.description}
+                  />
+                ))}
+              </ul>
+            </div>
+            <PaginationButton
+              changePageNumber={changePageNumber}
+              totalPageNumber={totalPages}
+              currentPageNumber={currentPageNumber}
+            />
+          </>
+        ) : (
+          <div className="project-no-item">
+            <p>모집글이 없습니다.</p>
+          </div>
+        )}
       </div>
     </div>
   );

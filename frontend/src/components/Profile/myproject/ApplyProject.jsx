@@ -37,32 +37,38 @@ const ApplyProject = ({ memberId }) => {
       <div className="profile_introduce_titleBox">
         <h1>지원한 프로젝트</h1>
       </div>
-      <div className="myProject">
-        <div className="myProject_selectContainer">
-          <Select
-            options={recruitSelect}
-            onChange={changeRecruit}
-            type={"small"}
+      {data?.content.length > 0 ? (
+        <div className="myProject">
+          <div className="myProject_selectContainer">
+            <Select
+              options={recruitSelect}
+              onChange={changeRecruit}
+              type={"small"}
+            />
+          </div>
+          <div className="myProject_project">
+            <ul>
+              {data?.content.map((project, idx) => (
+                <ProjectItem
+                  key={QUERY_KEY + "-" + idx}
+                  postId={project.postId}
+                  title={project.title}
+                  description={project.description}
+                />
+              ))}
+            </ul>
+          </div>
+          <PaginationButton
+            changePageNumber={changePageNumber}
+            totalPageNumber={totalPages}
+            currentPageNumber={currentPageNumber}
           />
         </div>
-        <div className="myProject_project">
-          <ul>
-            {data?.content.map((project, idx) => (
-              <ProjectItem
-                key={QUERY_KEY + "-" + idx}
-                postId={project.postId}
-                title={project.title}
-                description={project.description}
-              />
-            ))}
-          </ul>
+      ) : (
+        <div className="project-no-item">
+          <p>지원한 프로젝트가 없습니다.</p>
         </div>
-        <PaginationButton
-          changePageNumber={changePageNumber}
-          totalPageNumber={totalPages}
-          currentPageNumber={currentPageNumber}
-        />
-      </div>
+      )}
     </section>
   );
 };

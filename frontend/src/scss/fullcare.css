@@ -3568,6 +3568,7 @@ a {
 .myProject {
   width: 85%;
   margin: 0 auto;
+  padding: 14px 0;
 }
 .myProject_selectContainer {
   display: flex;
@@ -3893,6 +3894,15 @@ a {
 .image_bg {
   background-color: #01e89e;
   padding: 3px;
+}
+
+.project-no-item {
+  min-height: 200px;
+  font-weight: 700;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .select_small {
