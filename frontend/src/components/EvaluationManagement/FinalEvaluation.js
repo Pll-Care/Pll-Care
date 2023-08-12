@@ -13,10 +13,10 @@ import AlertCheckModal from "../common/AlertCheckModal";
 import { getProjectId } from "../../utils/getProjectId";
 import { getAlertText } from "../../utils/getAlertText";
 
-import enthusiasticParticipantBadgeImgUrl from "../../assets/enthusiastic-participant-badge-img.png";
-import goodLeaderBadgeImgUrl from "../../assets/good-leader-badge-img.png";
-import ideaBankBadgeImgUrl from "../../assets/idea-bank-badge-img.png";
-import bestSupporterBadgeImgUrl from "../../assets/best-supporter-badge-img.png";
+import enthusiasticParticipantBadgeImgUrl from "../../assets/enthusiastic-participant-badge-img.svg";
+import goodLeaderBadgeImgUrl from "../../assets/good-leader-badge-img.svg";
+import ideaBankBadgeImgUrl from "../../assets/idea-bank-badge-img.svg";
+import bestSupporterBadgeImgUrl from "../../assets/best-supporter-badge-img.svg";
 
 const evaluationCriterion = [
   {
@@ -212,6 +212,7 @@ const FinalEvaluation = ({
           <div className="final-evaluation-button-wrapper">
             <Button
               text={"평가 완료하기"}
+              size={"small"}
               onClick={handleSubmitFinalEvaluation}
             />
           </div>
@@ -264,6 +265,8 @@ const FinalEvaluation = ({
           onClose={() => setIsAlertModalVisible(false)}
           open={isAlertModalVisible}
           text={getAlertText("평가 작성")}
+          width={380}
+          height={210}
           clickHandler={() => {
             finalEvaluationMutate({
               projectId: projectId,

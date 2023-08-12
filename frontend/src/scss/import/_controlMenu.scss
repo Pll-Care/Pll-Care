@@ -8,8 +8,17 @@
   -webkit-appearance: none; /* for chrome */
   -moz-appearance: none; /*for firefox*/
   appearance: none;
-  height: 25px;
-  padding: 2px 10px;
+  width: 72px;
+  height: 30.8px;
+  border-radius: 10px;
+  border: $border;
 
-  @include button_03;
+  @include heading_05;
+
+  &-small {
+    height: 25px;
+    padding: 2px 10px;
+
+    @include button_03;
+  }
 }

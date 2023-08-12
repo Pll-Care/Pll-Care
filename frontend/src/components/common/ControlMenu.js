@@ -1,7 +1,7 @@
-const ControlMenu = ({ onChange, value, optionList }) => {
+const ControlMenu = ({ onChange, value, optionList, size }) => {
   return (
     <select
-      className="control-menu"
+      className={size === "small" ? "control-menu-small" : "control-menu"}
       onChange={(e) => onChange(e.target.value)}
       value={value}
     >
