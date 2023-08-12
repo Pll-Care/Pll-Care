@@ -31,7 +31,7 @@ const NewMeetingRecord = ({
         <Button
           size={"small"}
           type={"underlined"}
-          text={"작성 완료하기"}
+          text={"작성 완료"}
           onClick={handleSubmit}
         />
       </div>

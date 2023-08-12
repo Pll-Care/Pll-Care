@@ -94,14 +94,18 @@ const MeetingRecordEditor = () => {
       {initialState ? (
         <div className="meeting-record-initial-state">
           {isCompleted ? (
-            <h1 className="meeting-record-heading">
+            <h1 className="initial-meeting-record-heading">
               작성된 회의록을 확인해보세요!
             </h1>
           ) : (
-            <h1 className="meeting-record-heading">회의록을 작성해보세요!</h1>
+            <h1 className="initial-meeting-record-heading">회의록을 작성해보세요!</h1>
           )}
           {!isCompleted && (
-            <Button text={"작성하기"} onClick={handleInitialState} />
+            <Button
+              size={"small"}
+              text={"작성하기"}
+              onClick={handleInitialState}
+            />
           )}
         </div>
       ) : isSelectedMeetingRecord ? (

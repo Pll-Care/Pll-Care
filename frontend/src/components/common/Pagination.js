@@ -5,6 +5,7 @@ const Pagination = ({
   setCurrentPage,
   recordDatasPerPage,
   totalData,
+  color = "gray",
 }) => {
   let pageNumbers = [];
   const totalPages = Math.ceil(totalData / recordDatasPerPage);
@@ -31,7 +32,9 @@ const Pagination = ({
   };
 
   return (
-    <div className="pagination-wrapper">
+    <div
+      className={["pagination-wrapper", `pagination-wrapper-${color}`].join(" ")}
+    >
       {pageNumbers?.length ? (
         <button onClick={handleDecreasePageIndex}>{"<"}</button>
       ) : null}
