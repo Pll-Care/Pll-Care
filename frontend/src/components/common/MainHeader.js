@@ -12,7 +12,7 @@ import { isToken } from "../../utils/localstroageHandler";
 
 import profile_default from "../../assets/profile-default-img.png";
 import profile_isProfile from "../../assets/ranking-img.png";
-import logo from "../../assets/logo-with-text.png";
+import logo from "../../assets/logo-with-text.svg";
 
 export const headerMenu = [
   { id: 1, link: "/management", title: "프로젝트 관리" },
@@ -71,7 +71,7 @@ const MainHeader = () => {
     dispatch(authActions.logout());
     replaceTo("/");
   };
-  
+
   const handleLogin = () => {
     dispatch(authActions.setIsLoginModalVisible(true));
 
@@ -115,7 +115,14 @@ const MainHeader = () => {
                 }
                 key={menu.id}
               >
-                <Link onClick={() => handleClickLinkMenu(menu.link)}>
+                <Link
+                  className={
+                    menu.link === currentPath
+                      ? "main-header-link-on"
+                      : "main-header-link-off"
+                  }
+                  onClick={() => handleClickLinkMenu(menu.link)}
+                >
                   {menu.title}
                 </Link>
               </li>

@@ -242,7 +242,7 @@ a {
 }
 .main-header {
   border-bottom: 2px solid #01e89e;
-  height: 90px;
+  height: 80px;
   display: grid;
   grid-template-rows: 100%;
   grid-template-columns: 20% 60% 20%;
@@ -271,10 +271,14 @@ a {
   align-items: center;
 }
 .main-header .nav_item > a {
-  font-size: 25px;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  color: black;
+  color: #003b28;
   text-decoration: none;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+}
+.main-header .nav_item .main-header-link-off {
+  color: #7a7a7a;
 }
 .main-header-right-col {
   display: flex;
@@ -309,27 +313,29 @@ a {
 }
 
 .button {
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 20px;
   background-color: white;
   color: #01e89e;
   border-radius: 45px;
   border: 2px solid #01e89e;
-  padding: 5px 25px;
+  padding: 5px 15px;
+  height: 37px;
   cursor: pointer;
   /* 텍스트 줄바꿈 방지 */
   display: inline-flex;
   align-items: center;
   white-space: nowrap;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
 }
 .button_small {
   font-size: 14px;
   padding: 3px 13px;
 }
 .button_positive {
-  color: white;
+  color: #fcfcfc;
   background-color: #01e89e;
-  border: 2px solid #01e89e;
+  border-radius: 10px;
 }
 .button_positive_dark {
   color: white;
@@ -345,7 +351,8 @@ a {
 .button_profile {
   background-color: #01e89e;
   color: white;
-  border: 2px solid white;
+  width: 37px;
+  height: 37px;
 }
 
 @media (min-width: 767px) and (max-width: 1024px) {
