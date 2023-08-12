@@ -1091,24 +1091,6 @@ a {
   text-align: right;
 }
 
-.confirm-modal {
-  text-align: center;
-}
-.confirm-modal h1 {
-  color: white;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  margin-bottom: 40px;
-  font-size: 25px;
-}
-.confirm-modal-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.confirm-modal-button Button {
-  margin: 0px 5px;
-}
-
 .schedule-detail-modal {
   border: 2px solid #01e89e;
   border-radius: 10px;
@@ -2129,8 +2111,8 @@ a {
   align-items: center;
 }
 .MuiBox-root .project-editor {
-  height: 90%;
-  width: 80%;
+  height: 100%;
+  width: 100%;
   display: grid;
   grid-template-rows: 15% 70% 15%;
   grid-template-columns: 100%;
@@ -2267,6 +2249,7 @@ a {
   border-radius: 50%;
   width: 230px;
   height: 230px;
+  margin-bottom: 30px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -2274,8 +2257,9 @@ a {
 }
 .project-management .project-button-wrapper h1 {
   color: #003b28;
-  font-size: 18px;
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
 }
 .project-management .completed-project {
   display: grid;
@@ -2295,6 +2279,38 @@ a {
   display: grid;
   grid-template-columns: repeat(3, 30%);
   justify-content: space-between;
+}
+
+.confirm-modal {
+  text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.confirm-modal h1 {
+  width: 55%;
+  line-height: 1.5;
+  color: white;
+  margin-bottom: 40px;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+}
+.confirm-modal-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.confirm-modal-button Button {
+  margin: 0px 5px;
 }
 
 .home {

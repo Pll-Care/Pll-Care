@@ -6,6 +6,7 @@
       border-radius: 50%;
       width: 230px;
       height: 230px;
+      margin-bottom: 30px;
       background: {
         position: center;
         repeat: no-repeat;
@@ -15,9 +16,9 @@
     }
 
     h1 {
-      color: #003b28;
-      font-size: $body-font-size;
-      font-family: $body-font;
+      color: $green-500;
+
+      @include heading_04;
     }
 
     @include displayFlex(column, space-around);

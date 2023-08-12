@@ -2,9 +2,6 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
 
-import { getStringDate } from "../../utils/date";
-import { getProjectId } from "../../utils/getProjectId";
-
 import projectButtonImgUrl from "../../assets/project-management-img.png";
 import completedProjectButtonImgUrl from "../../assets/completed-project-management-img.png";
 
@@ -15,6 +12,8 @@ import { getProjectData } from "../../lib/apis/projectManagementApi";
 import { getCompleteProjectData } from "../../lib/apis/managementApi";
 import useManagementMutation from "../../hooks/useManagementMutation";
 import { getAlertText } from "../../utils/getAlertText";
+import { getStringDate } from "../../utils/date";
+import { getProjectId } from "../../utils/getProjectId";
 
 const ProjectManagement = () => {
   const projectId = getProjectId(useLocation());
@@ -116,7 +115,8 @@ const ProjectManagement = () => {
               clickHandler={() => {
                 completeMutate(completeProjectId);
               }}
-              width={500}
+              width={380}
+              height={210}
             />
           )}
           {deleteModalVisible && (
@@ -127,7 +127,8 @@ const ProjectManagement = () => {
               clickHandler={() => {
                 deleteMutate(deleteProjectId);
               }}
-              width={500}
+              width={380}
+              height={210}
             />
           )}
           {editModalVisible && (
@@ -176,7 +177,8 @@ const ProjectManagement = () => {
               clickHandler={() => {
                 completeMutate(completeProjectId);
               }}
-              width={500}
+                width={380}
+                height={210}
             />
           )}
           {deleteModalVisible && (
@@ -187,7 +189,8 @@ const ProjectManagement = () => {
               clickHandler={() => {
                 deleteMutate(deleteProjectId);
               }}
-              width={500}
+                width={380}
+                height={210}
             />
           )}
           {editModalVisible && (

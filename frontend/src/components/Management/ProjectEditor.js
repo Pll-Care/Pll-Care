@@ -128,8 +128,8 @@ const ProjectEditor = ({
     <ModalContainer
       open={isModalVisible}
       onClose={handleModalClose}
-      width={"70%"}
-      height={"75%"}
+      width={"45%"}
+      height={"55%"}
     >
       <div className="project-editor">
         <div className="project-editor-heading">
@@ -210,6 +210,7 @@ const ProjectEditor = ({
             text="작성 완료"
             size={"small"}
             type={"positive"}
+            color={"white"}
             onClick={handleSubmitNewProject}
           />
         </div>
