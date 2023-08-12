@@ -1,8 +1,8 @@
 import { useState } from "react";
 import profile_isProfile from "../../../assets/profile-default-img.png";
 import Button from "../../common/Button";
-import { putBioAPI } from "../../../lib/apis/profileApi";
 import { uploadImage } from "../../../lib/apis/projectManagementApi";
+import { useProfileClient } from "../../../context/Client/ProfileClientContext";
 
 const ModifyUserProfile = ({
   memberId,
@@ -16,6 +16,7 @@ const ModifyUserProfile = ({
     imageFile: null,
     useImageUrl: imageUrl,
   });
+  const { putBioAPI } = useProfileClient();
 
   const reqImageUrl = { url: "" };
 
@@ -48,7 +49,7 @@ const ModifyUserProfile = ({
       imageUrl: !reqImageUrl.url ? imageUrl ?? "" : reqImageUrl.url,
     };
 
-    const responsePutBioAPI = await putBioAPI(memberId, reqBody);
+    const responsePutBioAPI = await putBioAPI(reqBody);
 
     if (responsePutBioAPI?.status === 200) changeModify();
   };

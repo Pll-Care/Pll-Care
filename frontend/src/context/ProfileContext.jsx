@@ -5,10 +5,10 @@
 // getMemberId():Promise<undefined>
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { validateProfile } from "../lib/apis/profileApi";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useRouter } from "../hooks/useRouter";
+import { useProfileClient } from "./Client/ProfileClientContext";
 
 const ProfileContext = createContext(null);
 export const useProfile = () => useContext(ProfileContext);
@@ -16,13 +16,14 @@ export const useProfile = () => useContext(ProfileContext);
 export function ProfileProvider({ children }) {
   const [isMyProfile, setIsMyProfile] = useState(false);
   const { routeOptionTo } = useRouter();
+  const { validateProfileAPI } = useProfileClient();
 
   const { id: memberId } = useParams();
 
   useEffect(() => {
     const getIdAndValidateProfile = async () => {
       try {
-        const response = await validateProfile(memberId);
+        const response = await validateProfileAPI();
         if (response.status === 200)
           setIsMyProfile((_) => response.data.myProfile);
       } catch (error) {

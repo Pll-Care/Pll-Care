@@ -4,20 +4,21 @@ import Select from "../../common/Select";
 import { recruitSelect } from "../../../utils/optionData";
 import PaginationButton from "../../common/PaginationButton";
 import { useQuery } from "react-query";
-import { getApplyProjectAPI } from "../../../lib/apis/profileApi";
+import { useProfileClient } from "../../../context/Client/ProfileClientContext";
 
 const QUERY_KEY = "my-apply-prject";
 
 const ApplyProject = ({ memberId }) => {
   const [selecValue, setSelectValue] = useState("ONGOING");
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
+  const { getApplyProjectAPI } = useProfileClient();
 
   const { data, refetch } = useQuery(
     [QUERY_KEY, memberId, currentPageNumber],
-    () => getApplyProjectAPI(memberId, selecValue, currentPageNumber)
+    () => getApplyProjectAPI(selecValue, currentPageNumber)
   );
 
-  const totalPages = data?.totalPages || 0;
+  const totalPages = data?.data?.totalPages || 0;
 
   const changeRecruit = (event) => {
     setSelectValue(event.target.value);
@@ -37,7 +38,7 @@ const ApplyProject = ({ memberId }) => {
       <div className="profile_introduce_titleBox">
         <h1>지원한 프로젝트</h1>
       </div>
-      {data?.content.length > 0 ? (
+      {data?.data?.content.length > 0 ? (
         <div className="myProject">
           <div className="myProject_selectContainer">
             <Select
@@ -48,7 +49,7 @@ const ApplyProject = ({ memberId }) => {
           </div>
           <div className="myProject_project">
             <ul>
-              {data?.content.map((project, idx) => (
+              {data.data.content.map((project, idx) => (
                 <ProjectItem
                   key={QUERY_KEY + "-" + idx}
                   postId={project.postId}

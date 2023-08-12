@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useProfile } from "../../../context/ProfileContext";
 import { useQuery } from "react-query";
-import { getEvaluationChartAPI } from "../../../lib/apis/profileApi";
+import { useProfileClient } from "../../../context/Client/ProfileClientContext";
 
 const CHART_TITLE = {
   sincerity: "성실도",
@@ -13,11 +13,11 @@ const CHART_TITLE = {
 const QUERY_KEY = "evaluateChart";
 
 const EvaluateChart = () => {
-  const { memberId } = useProfile();
-
   const [score, setScore] = useState([]);
+  const { memberId } = useProfile();
+  const { getEvaluationChartAPI } = useProfileClient();
 
-  useQuery([QUERY_KEY, memberId], () => getEvaluationChartAPI(memberId), {
+  useQuery([memberId, QUERY_KEY], () => getEvaluationChartAPI(), {
     onSuccess: (res) => {
       const { data } = res;
       const extractData = extractScore(data.score);

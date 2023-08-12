@@ -3,21 +3,21 @@ import { useQuery } from "react-query";
 import project_default from "../../../assets/project-default-img.jpg";
 import { useRouter } from "../../../hooks/useRouter";
 import { useProfile } from "../../../context/ProfileContext";
-import { getEvaluationProjectListAPI } from "../../../lib/apis/profileApi";
 import PaginationButton from "../../common/PaginationButton";
 import { useEffect, useState } from "react";
+import { useProfileClient } from "../../../context/Client/ProfileClientContext";
 
 const QUERY_KEY = "evaluate-projectList";
 
 const ProjectList = () => {
+  const [page, setPage] = useState({ totlaPages: 0, currentPage: 1 });
   const { currentPath, haveDataTo } = useRouter();
   const { memberId } = useProfile();
-
-  const [page, setPage] = useState({ totlaPages: 0, currentPage: 1 });
+  const { getEvaluationProjectListAPI } = useProfileClient();
 
   const { data, refetch } = useQuery(
     [memberId, QUERY_KEY, page.currentPage],
-    () => getEvaluationProjectListAPI(memberId, page.currentPage),
+    () => getEvaluationProjectListAPI(page.currentPage),
     {
       onSuccess: (res) => {
         const { data } = res;

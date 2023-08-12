@@ -3,20 +3,21 @@ import ProjectItem from "../myproject/ProjectItem";
 import PaginationButton from "../../common/PaginationButton";
 import { useProfile } from "../../../context/ProfileContext";
 import { useQuery } from "react-query";
-import { getLikeProjectAPI } from "../../../lib/apis/profileApi";
+import { useProfileClient } from "../../../context/Client/ProfileClientContext";
 
 const QUERY_KEY = "likeproject";
 
 const LikeProject = () => {
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
   const { memberId } = useProfile();
+  const { getLikeProjectAPI } = useProfileClient();
 
   const { data, refetch } = useQuery(
     [memberId, QUERY_KEY, currentPageNumber],
-    () => getLikeProjectAPI({ memberId, page: currentPageNumber })
+    () => getLikeProjectAPI(currentPageNumber)
   );
 
-  const totalPages = data?.totalPages || 0;
+  const totalPages = data?.data?.totalPages || 0;
 
   const changePageNumber = (pageNumber) => {
     setCurrentPageNumber(pageNumber);
@@ -31,11 +32,11 @@ const LikeProject = () => {
         <h1>'좋아요' 한 모집글</h1>
       </div>
       <div className="myProject">
-        {data?.content.length > 0 ? (
+        {data?.data?.content.length > 0 ? (
           <>
             <div className="myProject_project">
               <ul>
-                {data.content.map((project) => (
+                {data.data.content.map((project) => (
                   <ProjectItem
                     key={project.postId}
                     postId={project.postId}
