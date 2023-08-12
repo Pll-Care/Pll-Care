@@ -3,11 +3,9 @@ import MeetingRecordList from "../components/MeetingRecordManagement/MeetingReco
 
 const MeetingRecordManagement = () => {
   return (
-    <div className="meeting-record-management-wrapper">
-      <div className="meeting-record-management">
-        <MeetingRecordList />
-        <MeetingRecordEditor />
-      </div>
+    <div className="meeting-record-management">
+      <MeetingRecordList />
+      <MeetingRecordEditor />
     </div>
   );
 };

@@ -134,6 +134,7 @@ const MainHeader = () => {
             <Button
               text={"log out"}
               type={"positive"}
+              color={"white"}
               onClick={handleLogout}
               isProfile={true}
             />
@@ -159,7 +160,12 @@ const MainHeader = () => {
           </div>
         ) : (
           <div className="main-header-right-col main-header-login-col">
-            <Button text={"log in"} type={"positive"} onClick={handleLogin} />
+            <Button
+              text={"log in"}
+              color={"white"}
+              type={"positive"}
+              onClick={handleLogin}
+            />
           </div>
         )}
       </header>

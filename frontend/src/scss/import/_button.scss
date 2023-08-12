@@ -11,6 +11,22 @@
   align-items: center;
   white-space: nowrap;
 
+  &_gray {
+    color: $gray-500;
+  }
+
+  &_white {
+    color: white;
+  }
+
+  &_green {
+    color: $green-400;
+  }
+
+  &_black {
+    color: black;
+  }
+
   &_small {
     height: 25px;
     padding: 2px 10px;
@@ -19,7 +35,6 @@
   }
 
   &_positive {
-    color: $gray-100;
     background-color: $green-200;
     border-radius: 10px;
   }
@@ -34,6 +49,8 @@
     border: none;
     color: #7a7a7a;
     text-decoration: underline;
+
+    @include body_01;
   }
 
   &_profile {
@@ -44,17 +61,4 @@
   }
 
   @include button_01;
-}
-
-@include tablet {
-  .button {
-    font-size: $button-font-size-medium;
-  }
-}
-
-@include mobile {
-  .button {
-    font-size: $button-font-size-small;
-    padding: 3px 13px;
-  }
 }

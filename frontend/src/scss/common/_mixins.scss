@@ -97,6 +97,14 @@
   }
 }
 
+@mixin heading_07 {
+  font: {
+    family: "Noto Sans KR", sans-serif;
+    size: 14px;
+    weight: 900;
+  }
+}
+
 @mixin body_01 {
   font: {
     family: "Noto Sans KR", sans-serif;

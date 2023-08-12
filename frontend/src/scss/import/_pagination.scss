@@ -2,6 +2,7 @@
   width: 250px;
   margin-top: 8px;
   margin-bottom: 10px;
+  height: 30px;
 
   button {
     border: none;
@@ -29,6 +30,14 @@
     }
   }
 
+  &-white {
+    button,
+    ul .pagination-page-number-on,
+    ul .pagination-page-number {
+      color: white;
+    }
+  }
+
   @include putCenter;
-  @include displayFlex(row, space-between);
+  @include displayFlex;
 }

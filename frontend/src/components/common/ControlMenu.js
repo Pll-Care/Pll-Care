@@ -6,9 +6,11 @@ const ControlMenu = ({ onChange, value, optionList }) => {
       value={value}
     >
       {optionList.map((opt) => (
-        <option key={opt.id} value={opt.value}>
-          {opt.name}
-        </option>
+        <>
+          <option key={opt.id} value={opt.value}>
+            {opt.name}
+          </option>
+        </>
       ))}
     </select>
   );

@@ -6,7 +6,7 @@ export const getAllMeetingRecordList = async (
   direction = "DESC"
 ) => {
   const response = await customAxios.get(
-    `/auth/memo/list?project_id=${projectId}&page=${pageNum}&size=3&direction=${direction}`
+    `/auth/memo/list?project_id=${projectId}&page=${pageNum}&size=2&direction=${direction}`
   );
 
   return {
@@ -18,7 +18,7 @@ export const getAllMeetingRecordList = async (
 
 export const getBookMarkMeetingRecordList = async (projectId, pageNum = 1) => {
   const response = await customAxios.get(
-    `/auth/memo/bookmarklist?project_id=${projectId}&page=${pageNum}&size=3`
+    `/auth/memo/bookmarklist?project_id=${projectId}&page=${pageNum}&size=2`
   );
 
   return {

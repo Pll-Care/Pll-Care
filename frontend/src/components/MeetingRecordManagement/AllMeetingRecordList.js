@@ -17,12 +17,12 @@ import { getCompleteProjectData } from "../../lib/apis/managementApi";
 const filterOptionList = [
   {
     id: 1,
-    name: "최신순",
+    name: "최신 순",
     value: "DESC",
   },
   {
     id: 2,
-    name: "오래된순",
+    name: "오래된 순",
     value: "ASC",
   },
 ];
@@ -90,6 +90,7 @@ const AllMeetingRecordList = () => {
         <div className="header-right-col">
           {!isCompleted && (
             <Button
+              size={"small"}
               text={"새로운 회의록 작성하기"}
               onClick={handleCreateMeetingRecord}
             />
@@ -103,6 +104,7 @@ const AllMeetingRecordList = () => {
           setCurrentPage={setCurrentPage}
           recordDatasPerPage={recordDatasPerPage}
           totalData={data.totalElements}
+          color={"white"}
         />
       </div>
     </div>

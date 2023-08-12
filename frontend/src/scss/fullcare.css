@@ -332,6 +332,18 @@ a {
   font-size: 20px;
   font-weight: 600;
 }
+.button_gray {
+  color: #7a7a7a;
+}
+.button_white {
+  color: white;
+}
+.button_green {
+  color: #00aa72;
+}
+.button_black {
+  color: black;
+}
 .button_small {
   height: 25px;
   padding: 2px 10px;
@@ -340,7 +352,6 @@ a {
   font-weight: 600;
 }
 .button_positive {
-  color: #fcfcfc;
   background-color: #01e89e;
   border-radius: 10px;
 }
@@ -353,6 +364,9 @@ a {
   border: none;
   color: #7a7a7a;
   text-decoration: underline;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
 }
 .button_profile {
   background-color: #01e89e;
@@ -361,64 +375,33 @@ a {
   height: 37px;
 }
 
-@media (min-width: 767px) and (max-width: 1024px) {
-  .button {
-    font-size: 17px;
-  }
-}
-@media (max-width: 767px) {
-  .button {
-    font-size: 14px;
-    padding: 3px 13px;
-  }
-}
 .control-menu {
   border-radius: 55px;
   border: none;
   font-family: "IBM Plex Sans KR", sans-serif;
-  color: #01E89E;
+  color: #00aa72;
   text-align: center;
   cursor: pointer;
   -webkit-appearance: none; /* for chrome */
   -moz-appearance: none; /*for firefox*/
   appearance: none;
-  background-image: url("../assets/select-arrow-img.png");
-  background-position: 88%;
-  background-repeat: no-repeat;
-  background-size: 10%, 10%;
-}
-.control-menu::-ms-expand {
-  display: none; /*for IE10,11*/
+  height: 25px;
+  padding: 2px 10px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
 }
 
-@media (min-width: 1024px) {
-  .control-menu {
-    font-size: 20px;
-    width: 135px;
-    height: 40px;
-  }
-}
-@media (min-width: 767px) and (max-width: 1024px) {
-  .control-menu {
-    font-size: 17px;
-    padding: 5px 25px;
-  }
-}
-@media (max-width: 767px) {
-  .control-menu {
-    font-size: 14px;
-    padding: 3px 13px;
-  }
-}
 .pagination-wrapper {
   width: 250px;
   margin-top: 8px;
   margin-bottom: 10px;
+  height: 30px;
   margin-left: auto;
   margin-right: auto;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 .pagination-wrapper button {
@@ -449,6 +432,11 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
+}
+.pagination-wrapper-white button,
+.pagination-wrapper-white ul .pagination-page-number-on,
+.pagination-wrapper-white ul .pagination-page-number {
+  color: white;
 }
 
 .toggle-menu-button-wrapper {
@@ -1184,66 +1172,62 @@ a {
   margin-top: 30px;
 }
 
-/* MEETING RECORD MANAGEMENT */
-.meeting-record-management-wrapper {
-  padding-bottom: 30px;
-}
-.meeting-record-management-wrapper .meeting-record {
-  /* MEETING RECORD BOOK MARKED RECORD LIST */
-  /* ALL MEETING RECORD LIST */
-  /* MEETING RECORD ITEM */
-}
-.meeting-record-management-wrapper .meeting-record-management {
+.meeting-record-management {
   width: 100%;
-  border: 2px solid #01e89e;
   display: flex;
   justify-content: space-between;
   border-radius: 35px;
   background-color: #01e89e;
+  box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1);
 }
-.meeting-record-management-wrapper .meeting-record-management .meeting-record-heading {
+.meeting-record-management .meeting-record-heading {
   font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
 }
-.meeting-record-management-wrapper .meeting-record-list {
-  width: 35%;
-  padding: 10px;
+.meeting-record-list {
+  width: 30%;
+  padding: 5px;
   border-top-left-radius: 35px;
   border-bottom-left-radius: 35px;
   color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
-.meeting-record-management-wrapper .meeting-record-book-marked-record-list {
+.meeting-record-book-marked-record-list {
   padding-top: 10px;
   margin-bottom: 10px;
-  height: 48%;
+  height: 42%;
   display: grid;
-  grid-template-rows: 13% 87%;
+  grid-template-rows: 15% 85%;
 }
-.meeting-record-management-wrapper .meeting-record-book-marked-record-list .meeting-record-heading {
-  height: 40px;
+.meeting-record-book-marked-record-list .meeting-record-heading {
+  height: 100%;
   margin-bottom: 20px;
   padding: 5px;
 }
-.meeting-record-management-wrapper .meeting-record-book-marked-record-list .meeting-record-body {
-  height: 100%;
+.meeting-record-book-marked-record-list .meeting-record-body {
   display: grid;
-  grid-template-rows: 86% 14%;
+  grid-template-rows: 80% 20%;
 }
-.meeting-record-management-wrapper .meeting-record-book-marked-record-list .meeting-record-body .meeting-record-all-meeting-record-list-data {
+.meeting-record-book-marked-record-list .meeting-record-body .meeting-record-all-meeting-record-list-data {
   height: 100%;
   width: 100%;
 }
-.meeting-record-management-wrapper .meeting-record-book-marked-record-list .meeting-record-body .pagination-wrapper {
+.meeting-record-book-marked-record-list .meeting-record-body .pagination-wrapper {
   margin-left: auto;
   margin-right: auto;
 }
-.meeting-record-management-wrapper .meeting-record-all-meeting-record-list {
-  height: 52%;
+.meeting-record-all-meeting-record-list {
+  height: 47%;
   display: grid;
-  grid-template-rows: 20% 80%;
+  grid-template-rows: 25% 75%;
 }
-.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .meeting-record-list-header {
+.meeting-record-all-meeting-record-list .meeting-record-list-header {
   width: 100%;
-  height: 100px;
+  height: 100%;
   flex-wrap: wrap;
   display: flex;
   flex-direction: row;
@@ -1252,138 +1236,158 @@ a {
   margin-left: auto;
   margin-right: auto;
 }
-.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .meeting-record-list-header .header-left-col {
+.meeting-record-all-meeting-record-list .meeting-record-list-header .header-left-col {
   width: 100%;
+  height: 60%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .meeting-record-list-header .header-left-col .meeting-record-heading {
+.meeting-record-all-meeting-record-list .meeting-record-list-header .header-left-col .meeting-record-heading {
   height: 40px;
   padding: 5px;
 }
-.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .meeting-record-list-header .header-left-col .control-menu {
+.meeting-record-all-meeting-record-list .meeting-record-list-header .header-left-col .control-menu {
   margin-right: 5px;
 }
-.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .meeting-record-list-header .header-right-col {
+.meeting-record-all-meeting-record-list .meeting-record-list-header .header-right-col {
   margin-left: auto;
+  height: 40%;
+  border-radius: 10px;
 }
-.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .meeting-record-list-header .header-right-col Button {
+.meeting-record-all-meeting-record-list .meeting-record-list-header .header-right-col Button {
   margin-right: 5px;
 }
-.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .record-list-item-wrapper {
-  padding-top: 20px;
+.meeting-record-all-meeting-record-list .record-list-item-wrapper {
+  padding-top: 10px;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
 }
-.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .meeting-record-all-meeting-record-list-data {
+.meeting-record-all-meeting-record-list .meeting-record-all-meeting-record-list-data {
   height: 100%;
   width: 100%;
 }
-.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .pagination-wrapper {
+.meeting-record-all-meeting-record-list .pagination-wrapper {
   margin-top: auto;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor {
-  width: 65%;
+.meeting-record-new-meeting-record-editor {
+  width: 70%;
   border-radius: 35px;
   background-color: #fcfcfc;
-  padding: 25px;
+  padding: 50px 25px;
   color: #7a7a7a;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-initial-state {
+.meeting-record-new-meeting-record-editor .meeting-record-initial-state {
   color: #01e89e;
-  height: 100px;
+  height: 60px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-editor {
+.meeting-record-new-meeting-record-editor .meeting-record-editor {
   width: 93%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: space-between;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-editor .meeting-record-title {
+.meeting-record-new-meeting-record-editor .initial-meeting-record-heading {
+  color: #00aa72;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+}
+.meeting-record-new-meeting-record-editor .meeting-record-editor .meeting-record-title {
   height: 15%;
   border-bottom: 2px solid #d9d9d9;
   display: flex;
   justify-content: space-between;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-title input {
+.meeting-record-new-meeting-record-editor .meeting-record-title input {
   width: 87%;
-  height: 70px;
+  height: 45px;
   border: none;
   border-radius: 10px;
   padding: 10px;
-  font-size: 40px;
-  font-family: "IBM Plex Sans KR", sans-serif;
   align-self: center;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-title input::-moz-placeholder {
+.meeting-record-new-meeting-record-editor .meeting-record-title input::-moz-placeholder {
   color: #d9d9d9;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-title input::placeholder {
+.meeting-record-new-meeting-record-editor .meeting-record-title input::placeholder {
   color: #d9d9d9;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-title button {
+.meeting-record-new-meeting-record-editor .meeting-record-title button {
   align-self: flex-end;
+  margin-bottom: 5px;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .react-quill {
-  height: 85%;
+.meeting-record-new-meeting-record-editor .react-quill {
+  height: 100%;
   line-height: 1.5;
   margin-top: 20px;
   margin-bottom: 68px;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record {
+.meeting-record-new-meeting-record-editor .meeting-record {
   height: 100%;
   width: 93%;
   color: #7a7a7a;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record .meeting-record-heading {
-  height: 15%;
+.meeting-record-new-meeting-record-editor .meeting-record .meeting-record-heading {
+  height: 25%;
   display: grid;
-  font-size: 15px;
-  font-family: "Noto Sans KR", sans-serif;
   grid-template-rows: 20% 60% 20%;
   border-bottom: 2px solid #d9d9d9;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-heading .meeting-record-title {
-  font-size: 40px;
-  font-family: "IBM Plex Sans KR", sans-serif;
+.meeting-record-new-meeting-record-editor .meeting-record-button-wrapper {
+  margin-bottom: 20px;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-container {
+.meeting-record-new-meeting-record-editor .meeting-record-date,
+.meeting-record-new-meeting-record-editor .meeting-record-author {
+  margin-bottom: 20px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+.meeting-record-new-meeting-record-editor .meeting-record-title {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+}
+.meeting-record-new-meeting-record-editor .meeting-record-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .selected-meeting-record-content,
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .created-meeting-record-content {
+.meeting-record-new-meeting-record-editor .selected-meeting-record-content,
+.meeting-record-new-meeting-record-editor .created-meeting-record-content {
   height: 85%;
   line-height: 1.5;
   padding: 10px;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .selected-meeting-record-content img,
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .created-meeting-record-content img {
+.meeting-record-new-meeting-record-editor .selected-meeting-record-content img,
+.meeting-record-new-meeting-record-editor .created-meeting-record-content img {
   max-width: 100%;
 }
-.meeting-record-management-wrapper .meeting-record-item {
+.meeting-record-item {
   background-color: white;
   margin-bottom: 10px;
-  border-radius: 20px;
-  width: 95%;
-  height: 110px;
+  border-radius: 10px;
+  width: 233px;
+  height: 71px;
   padding: 10px 20px;
   color: #7a7a7a;
   cursor: pointer;
@@ -1394,34 +1398,22 @@ a {
   justify-content: space-around;
   align-items: flex-start;
 }
-.meeting-record-management-wrapper .meeting-record-item-date {
+.meeting-record-item-date {
   font-family: "Noto Sans KR", sans-serif;
+  font-size: 10px;
+  font-weight: 500;
 }
-.meeting-record-management-wrapper .meeting-record-item-title {
-  font-family: "IBM Plex Sans KR", sans-serif;
-}
-.meeting-record-management-wrapper .meeting-record-item-writer {
+.meeting-record-item-title {
   font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 900;
+}
+.meeting-record-item-writer {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 10px;
+  font-weight: 500;
 }
 
-@media (min-width: 1024px) {
-  .meeting-record-management {
-    height: 1080px;
-    width: 85%;
-  }
-  .meeting-record-management .meeting-record-heading {
-    font-size: 25px;
-  }
-  .meeting-record-item-date {
-    font-size: 18px;
-  }
-  .meeting-record-item-title {
-    font-size: 25px;
-  }
-  .meeting-record-item-writer {
-    font-size: 18px;
-  }
-}
 .teamMember {
   width: 85%;
   margin: 0 auto;
@@ -1907,7 +1899,7 @@ a {
   appearance: none;
   width: 100px;
   height: 40px;
-  background-image: url("../assets/select-arrow-img.png");
+  background-image: url("../assets/select-arrow-img.svg");
   background-position: 88%;
   background-repeat: no-repeat;
   background-size: 10%, 10%;
@@ -2117,7 +2109,7 @@ a {
   align-items: center;
 }
 .management .project-list-wrapper .project-list .project-item-right-col .leave-button-text {
-  color: #0f6341;
+  color: #00aa72;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 12px;
   font-weight: 600;
@@ -2201,7 +2193,7 @@ a {
   margin-bottom: 10px;
   height: 40px;
   width: 85%;
-  color: #0f6341;
+  color: #00aa72;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;

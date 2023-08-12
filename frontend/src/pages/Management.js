@@ -3,7 +3,6 @@ import ProjectList from "../components/Management/ProjectList";
 import Pagination from "../components/common/Pagination";
 import NewProject from "../components/Management/NewProject";
 
-import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
@@ -14,8 +13,6 @@ const Management = () => {
   const [ongoingCurrentPage, setOngoingCurrentPage] = useState(1);
   const [allProjectListVisible, setAllProjectListVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const authState = useSelector((state) => state.auth.isLoggedIn);
 
   const [recordDatasPerPage, setRecordDatasPerPage] = useState(4);
 
@@ -79,17 +76,23 @@ const Management = () => {
         <header className="management-main-header">
           <div className="management-main-header-left-col">
             <h1>참여 프로젝트</h1>
-            <Button onClick={handleModalVisible} text={"새 프로젝트 생성"} />
+            <Button
+              onClick={handleModalVisible}
+              color={"gray"}
+              text={"새 프로젝트 생성"}
+            />
           </div>
           <div className="management-main-header-right-col">
             <Button
               className="all-projects-button"
               text={"전체"}
+              color={"gray"}
               type={allProjectListVisible && "positive_dark"}
               onClick={handleClickAllProjectList}
             />
             <Button
               text={"진행중"}
+              color={"gray"}
               type={!allProjectListVisible && "positive_dark"}
               onClick={handleClickOngoingProjectList}
             />
