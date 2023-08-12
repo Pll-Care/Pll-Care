@@ -82,6 +82,7 @@ const AllMeetingRecordList = () => {
         <div className="header-left-col">
           <h1 className="meeting-record-heading">전체</h1>
           <ControlMenu
+            size={"small"}
             value={sortType}
             onChange={setSortType}
             optionList={filterOptionList}
