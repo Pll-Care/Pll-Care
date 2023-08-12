@@ -24,14 +24,16 @@ const ProjectItem = ({ project, handleLeaveProjectClick }) => {
           <div className="project-item-text-wrapper">
             <div className="project-item-heading">{project.title}</div>
             <div className="project-item-period">
-              <div className="project-item-period-heading">진행 기간: </div>
-              <div>
+              <span className="project-item-period-heading">진행 기간: </span>
+              <span>
                 {new Date(project.startDate).toLocaleDateString()}~
                 {new Date(project.endDate).toLocaleDateString()}
-              </div>
+              </span>
             </div>
             <div className="project-item-description">
-              <div>프로젝트 설명:</div>
+              <span className="project-item-description-heading">
+                프로젝트 설명:{" "}
+              </span>
               {project.description?.length > 40
                 ? [project.description.slice(0, 40), "..."].join("")
                 : project.description}

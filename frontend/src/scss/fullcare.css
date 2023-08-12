@@ -314,10 +314,10 @@ a {
 
 .button {
   background-color: white;
-  color: #01e89e;
+  color: #7a7a7a;
   border-radius: 45px;
   border: 2px solid #01e89e;
-  padding: 5px 15px;
+  padding: 5px 20px;
   height: 37px;
   cursor: pointer;
   /* 텍스트 줄바꿈 방지 */
@@ -329,8 +329,11 @@ a {
   font-weight: 600;
 }
 .button_small {
-  font-size: 14px;
-  padding: 3px 13px;
+  height: 25px;
+  padding: 2px 10px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
 }
 .button_positive {
   color: #fcfcfc;
@@ -340,7 +343,6 @@ a {
 .button_positive_dark {
   color: white;
   background-color: #00aa72;
-  border: 2px solid #00aa72;
 }
 .button_underlined {
   background-color: transparent;
@@ -408,6 +410,8 @@ a {
   width: 250px;
   margin-top: 8px;
   margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -416,12 +420,14 @@ a {
 .pagination-wrapper button {
   border: none;
   cursor: pointer;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 20px;
   color: white;
   background-color: transparent;
   margin-top: auto;
   margin-bottom: auto;
+  color: #7a7a7a;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
   margin-left: auto;
   margin-right: auto;
 }
@@ -431,19 +437,14 @@ a {
   justify-content: space-between;
   align-items: center;
 }
-.pagination-wrapper ul .pagination-page-number-on {
-  cursor: pointer;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
-  color: white;
-  padding: 5px;
-}
+.pagination-wrapper ul .pagination-page-number-on,
 .pagination-wrapper ul .pagination-page-number {
   cursor: pointer;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 20px;
-  color: white;
   padding: 5px;
+  color: #7a7a7a;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .toggle-menu-button-wrapper {
@@ -2000,19 +2001,19 @@ a {
   display: none;
 }
 
+.management {
+  padding-bottom: 20px;
+}
 .management-main-header {
   background-color: #01e89e;
-  font-family: "IBM Plex Sans KR", sans-serif;
   color: white;
-  height: 200px;
-  border-bottom-left-radius: 60px;
-  border-bottom-right-radius: 60px;
-  padding: 35px;
-  padding-top: 120px;
+  height: 254px;
+  border-radius: 0px 0px 35px 35px;
+  padding: 25px 45px;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 .management-main-header-left-col {
   display: flex;
@@ -2021,9 +2022,13 @@ a {
   align-items: center;
 }
 .management-main-header-left-col h1 {
-  margin-right: 20px;
+  margin-right: 40px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 38px;
+  font-weight: 700;
 }
 .management-main-header-right-col {
+  gap: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -2033,29 +2038,34 @@ a {
   margin-top: 30px;
 }
 .management .project-list-wrapper .project-list-description {
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
   color: #7a7a7a;
+  margin-top: 80px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
 }
 .management .project-list-wrapper .project-list-description p {
   text-align: center;
 }
 .management .project-list-wrapper .project-list .project-item {
   border: 2px solid #01e89e;
-  width: 50%;
-  border-radius: 20px;
-  margin-bottom: 30px;
+  width: 650px;
+  height: 203px;
+  border-radius: 33px;
+  margin-bottom: 25px;
   text-decoration: none;
   box-shadow: 0px 10px 30px 5px rgba(181, 181, 181, 0.2);
   display: grid;
-  grid-template-columns: 20% 80%;
+  grid-template-columns: 15% 85%;
   cursor: pointer;
+  padding: 45px 30px;
   margin-left: auto;
   margin-right: auto;
 }
 .management .project-list-wrapper .project-list .project-item-left-col figure {
-  border: 2px solid #01e89e;
   border-radius: 50%;
+  width: 60px;
+  height: 60px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -2064,58 +2074,56 @@ a {
   display: grid;
   grid-template-columns: 80% 20%;
   grid-template-rows: 100%;
-  justify-content: flex-end;
   color: #003b28;
   font-size: 18px;
   font-family: "Noto Sans KR", sans-serif;
   height: 100%;
 }
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-heading {
-  font-size: 25px;
-  font-family: "IBM Plex Sans KR", sans-serif;
   margin-bottom: 7px;
+  color: #003b28;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
 }
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-period,
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-description {
   margin-bottom: 7px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
 }
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-description {
   line-height: 1.5;
   overflow-wrap: break-word;
 }
-.management .project-list-wrapper .project-list .project-item-right-col .project-item-period-heading {
+.management .project-list-wrapper .project-list .project-item-right-col .project-item-period-heading,
+.management .project-list-wrapper .project-list .project-item-right-col .project-item-description-heading {
   margin-right: 5px;
 }
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-button-wrapper {
-  width: 100%;
-  height: 40%;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-left: auto;
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 }
 .management .project-list-wrapper .project-list .project-item-right-col .leave-button-text {
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 18px;
-  color: #00AA72;
+  color: #0f6341;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
 }
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-button-wrapper figure {
   background-position: center;
   background-repeat: no-repeat;
-  border: 2px solid #01e89e;
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
-}
-.management .pagination-wrapper {
-  margin-left: auto;
-  margin-right: auto;
-}
-.management .pagination-wrapper button {
-  color: #01e89e;
-}
-.management .pagination-wrapper li {
-  color: #01e89e;
+  width: 17px;
+  height: 17px;
+  margin-bottom: 5px;
 }
 
 .MuiBox-root {
@@ -2126,7 +2134,7 @@ a {
 }
 .MuiBox-root .project-editor {
   height: 90%;
-  width: 100%;
+  width: 80%;
   display: grid;
   grid-template-rows: 15% 70% 15%;
   grid-template-columns: 100%;
@@ -2138,9 +2146,10 @@ a {
   width: 100%;
   border: none;
   height: 100%;
-  font-size: 25px;
-  font-family: "IBM Plex Sans KR", sans-serif;
   border-radius: 10px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 38px;
+  font-weight: 700;
 }
 .MuiBox-root .project-editor-body {
   height: 100%;
@@ -2188,9 +2197,10 @@ a {
   margin-bottom: 10px;
   height: 40px;
   width: 85%;
-  font-family: "Noto Sans KR", sans-serif;
+  color: #0f6341;
+  font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
-  color: #00aa72;
+  font-weight: 600;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -2198,9 +2208,10 @@ a {
 }
 .MuiBox-root .project-editor-body .project-editor-right-col .project-editor-period-first-row input[type=date] {
   border: none;
+  width: 100px;
   font-family: "Noto Sans KR", sans-serif;
-  font-size: 18px;
-  width: 130px;
+  font-size: 14px;
+  font-weight: 500;
 }
 .MuiBox-root .project-editor-body .project-editor-right-col .project-editor-period-second-row {
   width: 100%;
@@ -2214,8 +2225,9 @@ a {
   padding: 10px;
   border: none;
   border-radius: 10px;
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
+  font-weight: 600;
 }
 .MuiBox-root .project-editor .button-wrapper {
   display: flex;
@@ -2246,42 +2258,6 @@ a {
   padding-bottom: 30px;
 }
 
-@media (min-width: 1024px) {
-  .management-main-header {
-    font-size: 40px;
-  }
-  .management .project-list-wrapper {
-    padding: 30px;
-  }
-  .management .project-list-wrapper .project-item {
-    width: 700px;
-    height: 200px;
-    padding: 15px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-  }
-  .management .project-list-wrapper .project-item figure {
-    width: 70px;
-    height: 70px;
-  }
-  .management .project-list-wrapper .project-item-right-col {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .management .project-list-wrapper .project-item-period, .management .project-list-wrapper .project-item-description {
-    width: 400px;
-  }
-  .management .project-list-wrapper .project-item-period {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-  }
-}
 .project-management {
   height: 300px;
 }

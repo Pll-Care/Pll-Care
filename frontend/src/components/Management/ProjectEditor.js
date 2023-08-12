@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 
-import { getStringDate } from "../../utils/date";
-
 import projectDefaultImg from "../../assets/project-default-img.jpg";
 
-import { deleteImage } from "../../lib/apis/managementApi";
 import ModalContainer from "../common/ModalContainer";
+import Button from "../common/Button";
+
 import useManagementMutation from "../../hooks/useManagementMutation";
 
+import { getStringDate } from "../../utils/date";
+import { deleteImage } from "../../lib/apis/managementApi";
 import { toast } from "react-toastify";
-import Button from "../common/Button";
 import { handleImageUploader } from "../../utils/handleImageUploader";
 
 const ProjectEditor = ({
@@ -128,7 +128,7 @@ const ProjectEditor = ({
     <ModalContainer
       open={isModalVisible}
       onClose={handleModalClose}
-      width={"60%"}
+      width={"70%"}
       height={"75%"}
     >
       <div className="project-editor">

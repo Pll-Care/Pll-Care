@@ -1,40 +1,34 @@
 .pagination-wrapper {
-    width: 250px;
-    margin-top: 8px;
-    margin-bottom: 10px;
+  width: 250px;
+  margin-top: 8px;
+  margin-bottom: 10px;
 
-    button {
-        border: none;
-        cursor: pointer;
-        font-family: $button-font;
-        font-size: $button-font-size;
-        color: white;
-        background-color: transparent;
-        margin-top: auto;
-        margin-bottom: auto;
+  button {
+    border: none;
+    cursor: pointer;
+    color: white;
+    background-color: transparent;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: $gray-500;
 
-        @include putCenter;
-    }
-    
-    ul {
-        @include displayFlex(row, space-between);
+    @include heading_05;
+    @include putCenter;
+  }
 
-        .pagination-page-number-on {
-            cursor: pointer;
-            font-family: $button-font;
-            font-size: $button-font-size + 5;
-            color: white;
-            padding: 5px;
-        }
-
-        .pagination-page-number {
-            cursor: pointer;
-            font-family: $button-font;
-            font-size: $button-font-size;
-            color: white;
-            padding: 5px;
-        }
-    }
-
+  ul {
     @include displayFlex(row, space-between);
+
+    .pagination-page-number-on,
+    .pagination-page-number {
+      cursor: pointer;
+      padding: 5px;
+      color: $gray-500;
+
+      @include heading_05;
+    }
+  }
+
+  @include putCenter;
+  @include displayFlex(row, space-between);
 }
