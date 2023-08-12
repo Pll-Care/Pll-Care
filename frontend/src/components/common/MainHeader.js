@@ -147,6 +147,7 @@ const MainHeader = () => {
               to={`/profile/${profileImage.id}/introduce`}
             >
               <img
+                className="main-header_img"
                 src={
                   profileImage.imageUrl === ""
                     ? isProfilePage

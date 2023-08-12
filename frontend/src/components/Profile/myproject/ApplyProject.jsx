@@ -31,6 +31,7 @@ const ApplyProject = ({ memberId }) => {
   useEffect(() => {
     refetch();
   }, [selecValue, currentPageNumber, refetch]);
+
   return (
     <section>
       <div className="profile_introduce_titleBox">
@@ -49,7 +50,7 @@ const ApplyProject = ({ memberId }) => {
             {data?.content.map((project, idx) => (
               <ProjectItem
                 key={QUERY_KEY + "-" + idx}
-                projectId={project.projectId}
+                postId={project.postId}
                 title={project.title}
                 description={project.description}
               />

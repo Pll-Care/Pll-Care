@@ -11,7 +11,7 @@ const QUERY_KEY = "experience-project";
 const ProjectBox = () => {
   const [newProject, setNewProject] = useState(false);
 
-  const { memberId } = useProfile();
+  const { memberId, isMyProfile } = useProfile();
 
   const { data: experienceData, refetch } = useQuery(
     [QUERY_KEY, memberId],
@@ -30,15 +30,18 @@ const ProjectBox = () => {
     <div className="profile_body_introduce_Box">
       <div className="profile_body_introduce_Box_title">
         <h2>프로젝트 경험</h2>
-        <Button
-          text="프로젝트 추가"
-          size="small"
-          onClick={() => setNewProject((prev) => !prev)}
-        />
+        {isMyProfile && (
+          <Button
+            text="프로젝트 추가"
+            type="profile"
+            size="small"
+            onClick={() => setNewProject((prev) => !prev)}
+          />
+        )}
       </div>
       {newProject && (
         <div className="project_list_item">
-          <ModifyProject changeModify={editNewProject} />
+          <ModifyProject changeModify={editNewProject} type="추가" />
         </div>
       )}
       <div className="project">

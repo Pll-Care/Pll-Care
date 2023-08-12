@@ -1,4 +1,4 @@
-import MemberRecruitmentWrite from "../components/MemberRecruitment/MemberRecruitmentWrite";
+import MemberRecruitmentWrite from "../components/RecruitmentWrite/MemberRecruitmentWrite";
 
 const RecruitmentWritePage = () => {
   return (
