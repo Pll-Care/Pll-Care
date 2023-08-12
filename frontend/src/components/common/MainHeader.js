@@ -117,7 +117,7 @@ const MainHeader = () => {
               >
                 <Link
                   className={
-                    menu.link === currentPath
+                    currentPath.includes(menu.link)
                       ? "main-header-link-on"
                       : "main-header-link-off"
                   }

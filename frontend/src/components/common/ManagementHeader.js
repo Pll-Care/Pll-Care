@@ -67,7 +67,7 @@ const ManagementHeader = ({ id, isLeader }) => {
               className={comparePath(menu.value) && `header-link-on`}
               to={menu.link}
             >
-              관리
+              {menu.title}
             </Link>
           )
         ) : (
