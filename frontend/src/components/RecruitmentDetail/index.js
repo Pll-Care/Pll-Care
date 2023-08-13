@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";
 
@@ -29,6 +29,8 @@ const RecruitmentDetailContent = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const baseUrl = "https://fullcare.store";
 
   // 수정 상태
   const [isEdit, setIsEdit] = useState(false);
@@ -162,6 +164,16 @@ const RecruitmentDetailContent = () => {
     }
   };
 
+  // url 복사 버튼을 눌렀을 때
+  const handleCopyClipBoard = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast.success("클립보드에 링크가 복사되었어요.");
+    } catch (err) {
+      toast.error("클립보드에 링크가 복사에 실패하였습니다");
+    }
+  };
+
   return (
     <>
       {/*모집글 삭제 확인 모달*/}
@@ -238,7 +250,12 @@ const RecruitmentDetailContent = () => {
                 onClick={handleClickFavoriteIcon}
               />
             )}
-            <ShareIcon className="post-icon" />
+            <ShareIcon
+              className="post-icon"
+              onClick={() =>
+                handleCopyClipBoard(`${baseUrl}${location.pathname}`)
+              }
+            />
           </>
         )}
       </div>
