@@ -250,6 +250,7 @@ const MemberRecruitmentWrite = () => {
 
           <div className="member-grid-position">
             <h3>포지션</h3>
+
             {/*모집글 포지션 인원 수 선택*/}
             <RecruitmentPostionWrite
               formValues={formValues}
