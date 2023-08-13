@@ -79,7 +79,7 @@ export const deleteRecruitmentPost = async (postId) => {
 export const applyRecruitmentPost = async (body) => {
   const { postId, position } = body;
   const res = await customAxios.post(`/auth/post/${postId}/apply`, {
-    postion: position,
+    position: position,
   });
   return res;
 };

@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { toast } from "react-toastify";
 
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -11,13 +11,9 @@ import Button from "../common/Button";
 import AlertCheckModal from "../common/AlertCheckModal";
 
 import { isToken } from "../../utils/localstroageHandler";
-import {
-  applyRecruitmentPost,
-  getRecruitmentPostDetail,
-} from "../../lib/apis/memberRecruitmentApi";
+import { getRecruitmentPostDetail } from "../../lib/apis/memberRecruitmentApi";
 import {
   useAddLikeRecruitmentMutation,
-  useApplyRecruitmentPostMutation,
   useDeleteRecruitmentPostMutation,
   useModifyRecruitmentPostMutation,
 } from "../../hooks/useRecruitmentMutation";
@@ -32,14 +28,12 @@ import RecruitmentDetailDescription from "./RecruitmentDetailDescription";
 const RecruitmentDetailContent = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // 수정 상태
   const [isEdit, setIsEdit] = useState(false);
   // 삭제 상태
   const [deleteIsModalVisible, setDeleteIsModalVisible] = useState(false);
-  // 에러 창 모달
-  const [errorModal, setErrorModal] = useState(false);
-  const [errorText, setErrorText] = useState("");
 
   const [formValues, setFormValues] = useState({
     title: "",
@@ -78,7 +72,6 @@ const RecruitmentDetailContent = () => {
       },
     }
   );
-  const dispatch = useDispatch();
 
   // 모집글 수정
   const { mutate: modifyPostMutate } =
@@ -87,24 +80,10 @@ const RecruitmentDetailContent = () => {
   // 모집글 삭제
   const { mutate: deletePostMutate } = useDeleteRecruitmentPostMutation(id);
 
-  // 모집글 지원
-  const queryClient = useQueryClient();
-  const { mutate: applyPostMutate } = useMutation(applyRecruitmentPost, {
-    onSuccess: () => {
-      toast.success("모집글 지원하였습니다.");
-      queryClient.invalidateQueries("recruitmentDetail");
-    },
-    onError: (error) => {
-      setErrorText(error.response.data.message);
-      setErrorModal(true);
-    },
-  });
-
   // 모집글 좋아요
   const { mutate } = useAddLikeRecruitmentMutation(id);
 
-  const { title, description, recruitStartDate, recruitEndDate, contact } =
-    formValues;
+  const { title, description, recruitStartDate, recruitEndDate } = formValues;
 
   const inputRefs = {
     title: useRef(),
@@ -183,87 +162,15 @@ const RecruitmentDetailContent = () => {
     }
   };
 
-  //// 백엔드 지원하기 버튼을 눌렀을 때
-  //const handleBackendApply = () => {
-  //  if (!isToken("access_token")) {
-  //    dispatch(authActions.setIsLoginModalVisible(true));
-  //  } else {
-  //    setBackendApply((prevState) => !prevState);
-  //  }
-  //};
-
-  //// 프론트엔드 지원하기 버튼을 눌렀을 때
-  //const handleFrontendApply = () => {
-  //  if (!isToken("access_token")) {
-  //    dispatch(authActions.setIsLoginModalVisible(true));
-  //  } else {
-  //    setFrontendApply((prevState) => !prevState);
-  //  }
-  //};
-
-  //// 기획 지원하기 버튼을 눌렀을 때
-  //const handleManagerApply = () => {
-  //  if (!isToken("access_token")) {
-  //    dispatch(authActions.setIsLoginModalVisible(true));
-  //  } else {
-  //    setFrontendApply((prevState) => !prevState);
-  //  }
-  //};
-
-  //// 디자인 지원하기 버튼을 눌렀을 때
-  //const handleDesignApply = () => {
-  //  if (!isToken("access_token")) {
-  //    dispatch(authActions.setIsLoginModalVisible(true));
-  //  } else {
-  //    setDesignApply((prevState) => !prevState);
-  //  }
-  //};
-
   return (
     <>
-      <AlertCheckModal
-        open={errorModal}
-        onClose={() => {
-          setErrorText("");
-          setErrorModal(false);
-        }}
-        text={errorText}
-        clickHandler={() => {
-          setErrorText("");
-          setErrorModal(false);
-        }}
-      />
+      {/*모집글 삭제 확인 모달*/}
       <AlertCheckModal
         open={deleteIsModalVisible}
         onClose={() => setDeleteIsModalVisible(false)}
         text="인원 모집글 삭제하시겠습니까?"
         clickHandler={deleteRecruitmentPost}
       />
-      {/* 지원 */}
-      {/*<AlertCheckModal
-        open={backendApply}
-        onClose={() => setBackendApply(false)}
-        text="해당 모집글 백엔드에 지원하시겠습니까?"
-        clickHandler={() => applyPostMutate(backendBody)}
-      />
-      <AlertCheckModal
-        open={frontendApply}
-        onClose={() => setFrontendApply(false)}
-        text="해당 모집글 프론트에 지원하시겠습니까?"
-        clickHandler={() => applyPostMutate(frontendBody)}
-      />
-      <AlertCheckModal
-        open={managerApply}
-        onClose={() => setManagerApply(false)}
-        text="해당 모집글 기획에 지원하시겠습니까?"
-        clickHandler={() => applyPostMutate(managerBody)}
-      />
-      <AlertCheckModal
-        open={designApply}
-        onClose={() => setDesignApply(false)}
-        text="해당 모집글 디자인에 지원하시겠습니까?"
-        clickHandler={() => applyPostMutate(designBody)}
-      />*/}
 
       {/*모집글 제목 컴포넌트*/}
       <RecruitmentDetailTitle
