@@ -3,6 +3,7 @@ import "react-quill/dist/quill.snow.css";
 import Quill from "quill";
 import ImageResize from "quill-image-resize";
 import { useRef } from "react";
+import { useEditorImageUploader } from "../../hooks/useEditorImageHandler";
 
 Quill.register("modules/ImageResize", ImageResize);
 
@@ -15,6 +16,7 @@ const RecruitmentDetailDescription = ({
   inputRefs,
 }) => {
   const quillRef = useRef(null);
+  useEditorImageUploader(quillRef.current);
 
   // 모집글 설명 작성
   const handleChangeDescription = (content) => {

@@ -28,18 +28,9 @@ const RecruitmentDetailTitle = ({
       reference: data?.reference,
       contact: data?.contact,
       region: data?.region,
-      backendCnt: data?.recruitInfoList.filter(
-        (stack) => stack.position === "백엔드"
-      )[0].totalCnt,
-      frontendCnt: data?.recruitInfoList.filter(
-        (stack) => stack.position === "프론트엔드"
-      )[0].totalCnt,
-      designCnt: data?.recruitInfoList.filter(
-        (stack) => stack.position === "디자인"
-      )[0].totalCnt,
-      managerCnt: data?.recruitInfoList.filter(
-        (stack) => stack.position === "기획"
-      )[0].totalCnt,
+
+      techStack: data?.techStackList,
+      recruitmentInfo: data?.recruitInfoList,
     });
 
     setIsEdit((prevState) => !prevState);

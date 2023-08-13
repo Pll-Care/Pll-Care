@@ -7,7 +7,6 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShareIcon from "@mui/icons-material/Share";
 
-import { useEditorImageUploader } from "../../hooks/useEditorImageHandler";
 import Button from "../common/Button";
 import AlertCheckModal from "../common/AlertCheckModal";
 
@@ -34,9 +33,6 @@ const RecruitmentDetailContent = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const quillRef = useRef(null);
-  useEditorImageUploader(quillRef.current);
-
   // 수정 상태
   const [isEdit, setIsEdit] = useState(false);
   // 삭제 상태
@@ -44,32 +40,6 @@ const RecruitmentDetailContent = () => {
   // 에러 창 모달
   const [errorModal, setErrorModal] = useState(false);
   const [errorText, setErrorText] = useState("");
-
-  // 지원 상태
-  // 백엔드
-  const [backendApply, setBackendApply] = useState(false);
-  const backendBody = {
-    postId: id,
-    position: "백엔드",
-  };
-  // 프론트
-  const [frontendApply, setFrontendApply] = useState(false);
-  const frontendBody = {
-    postId: id,
-    position: "프론트엔드",
-  };
-  // 기획
-  const [managerApply, setManagerApply] = useState(false);
-  const managerBody = {
-    postId: id,
-    position: "기획",
-  };
-  // 디자인
-  const [designApply, setDesignApply] = useState(false);
-  const designBody = {
-    postId: id,
-    position: "디자인",
-  };
 
   const [formValues, setFormValues] = useState({
     title: "",
@@ -79,10 +49,9 @@ const RecruitmentDetailContent = () => {
     reference: "",
     contact: "",
     region: "",
-    backendCnt: 0,
-    frontendCnt: 0,
-    designCnt: 0,
-    managerCnt: 0,
+
+    techStack: [],
+    recruitInfo: [],
   });
 
   // 모집글 디테일 페이지 조회
@@ -90,32 +59,25 @@ const RecruitmentDetailContent = () => {
     ["recruitmentDetail"],
     () => getRecruitmentPostDetail(id),
     {
+      enabled: !isEdit,
       onSuccess: (data) => {
-        setFormValues({
-          title: data?.title,
-          description: data?.description,
-          recruitStartDate: data?.recruitStartDate,
-          recruitEndDate: data?.recruitEndDate,
-          reference: data?.reference,
-          contact: data?.contact,
-          region: data?.region,
-          backendCnt: data?.recruitInfoList.filter(
-            (stack) => stack.position === "백엔드"
-          )[0].totalCnt,
-          frontendCnt: data?.recruitInfoList.filter(
-            (stack) => stack.position === "프론트엔드"
-          )[0].totalCnt,
-          designCnt: data?.recruitInfoList.filter(
-            (stack) => stack.position === "디자인"
-          )[0].totalCnt,
-          managerCnt: data?.recruitInfoList.filter(
-            (stack) => stack.position === "기획"
-          )[0].totalCnt,
-        });
+        if (!isEdit) {
+          setFormValues({
+            title: data?.title,
+            description: data?.description,
+            recruitStartDate: data?.recruitStartDate,
+            recruitEndDate: data?.recruitEndDate,
+            reference: data?.reference,
+            contact: data?.contact,
+            region: data?.region,
+
+            techStack: data?.techStackList,
+            recruitInfo: data?.recruitInfoList,
+          });
+        }
       },
     }
   );
-
   const dispatch = useDispatch();
 
   // 모집글 수정
@@ -141,17 +103,8 @@ const RecruitmentDetailContent = () => {
   // 모집글 좋아요
   const { mutate } = useAddLikeRecruitmentMutation(id);
 
-  const {
-    title,
-    description,
-    recruitStartDate,
-    recruitEndDate,
-    contact,
-    backendCnt,
-    frontendCnt,
-    managerCnt,
-    designCnt,
-  } = formValues;
+  const { title, description, recruitStartDate, recruitEndDate, contact } =
+    formValues;
 
   const inputRefs = {
     title: useRef(),
@@ -162,7 +115,6 @@ const RecruitmentDetailContent = () => {
     region: useRef(),
     techStack: useRef(),
     contact: useRef(),
-    backendCnt: useRef(),
   };
 
   const handleChange = (e) => {
@@ -175,9 +127,7 @@ const RecruitmentDetailContent = () => {
 
   // 수정 버튼 눌렀을 때
   const handleModifyPost = () => {
-    const { backendCnt, frontendCnt, designCnt, managerCnt, ...allData } =
-      formValues;
-
+    const { techStack, ...formData } = formValues;
     if (title.length < 2) {
       toast.error("모집글 제목을 입력해주세요");
       inputRefs.title.current.focus();
@@ -195,54 +145,22 @@ const RecruitmentDetailContent = () => {
       inputRefs.description.current.focus();
       return;
     }
-    if (
-      parseInt(backendCnt, 10) +
-        parseInt(frontendCnt, 10) +
-        parseInt(managerCnt, 10) +
-        parseInt(designCnt, 10) ===
+    const totalCntSum = formValues.recruitInfo.reduce(
+      (sum, item) => sum + item.totalCnt,
       0
-    ) {
+    );
+    if (totalCntSum < 1) {
       toast.error("포지션 인원 1명 이상이어야 합니다");
       inputRefs.backendCnt.current.focus();
       return;
     }
 
-    const recruitCnt = [
-      {
-        position: "백엔드",
-        currentCnt: data?.recruitInfoList.filter(
-          (stack) => stack.position === "백엔드"
-        )[0].currentCnt,
-        totalCnt: parseInt(backendCnt, 10),
-      },
-      {
-        position: "프론트엔드",
-        currentCnt: data?.recruitInfoList.filter(
-          (stack) => stack.position === "프론트엔드"
-        )[0].currentCnt,
-        totalCnt: parseInt(frontendCnt, 10),
-      },
-      {
-        position: "기획",
-        currentCnt: data?.recruitInfoList.filter(
-          (stack) => stack.position === "기획"
-        )[0].currentCnt,
-        totalCnt: parseInt(managerCnt, 10),
-      },
-      {
-        position: "디자인",
-        currentCnt: data?.recruitInfoList.filter(
-          (stack) => stack.position === "디자인"
-        )[0].currentCnt,
-        totalCnt: parseInt(designCnt, 10),
-      },
-    ];
+    const stacks = techStack.map((item) => item.name);
+
     const body = {
-      ...allData,
-      recruitInfo: recruitCnt,
-      techStack: ["Firebase"],
+      ...formData,
+      techStack: stacks,
       postId: id,
-      //projectId: 11,
     };
 
     console.log("수정후", body);
@@ -265,41 +183,41 @@ const RecruitmentDetailContent = () => {
     }
   };
 
-  // 백엔드 지원하기 버튼을 눌렀을 때
-  const handleBackendApply = () => {
-    if (!isToken("access_token")) {
-      dispatch(authActions.setIsLoginModalVisible(true));
-    } else {
-      setBackendApply((prevState) => !prevState);
-    }
-  };
+  //// 백엔드 지원하기 버튼을 눌렀을 때
+  //const handleBackendApply = () => {
+  //  if (!isToken("access_token")) {
+  //    dispatch(authActions.setIsLoginModalVisible(true));
+  //  } else {
+  //    setBackendApply((prevState) => !prevState);
+  //  }
+  //};
 
-  // 프론트엔드 지원하기 버튼을 눌렀을 때
-  const handleFrontendApply = () => {
-    if (!isToken("access_token")) {
-      dispatch(authActions.setIsLoginModalVisible(true));
-    } else {
-      setFrontendApply((prevState) => !prevState);
-    }
-  };
+  //// 프론트엔드 지원하기 버튼을 눌렀을 때
+  //const handleFrontendApply = () => {
+  //  if (!isToken("access_token")) {
+  //    dispatch(authActions.setIsLoginModalVisible(true));
+  //  } else {
+  //    setFrontendApply((prevState) => !prevState);
+  //  }
+  //};
 
-  // 기획 지원하기 버튼을 눌렀을 때
-  const handleManagerApply = () => {
-    if (!isToken("access_token")) {
-      dispatch(authActions.setIsLoginModalVisible(true));
-    } else {
-      setFrontendApply((prevState) => !prevState);
-    }
-  };
+  //// 기획 지원하기 버튼을 눌렀을 때
+  //const handleManagerApply = () => {
+  //  if (!isToken("access_token")) {
+  //    dispatch(authActions.setIsLoginModalVisible(true));
+  //  } else {
+  //    setFrontendApply((prevState) => !prevState);
+  //  }
+  //};
 
-  // 디자인 지원하기 버튼을 눌렀을 때
-  const handleDesignApply = () => {
-    if (!isToken("access_token")) {
-      dispatch(authActions.setIsLoginModalVisible(true));
-    } else {
-      setDesignApply((prevState) => !prevState);
-    }
-  };
+  //// 디자인 지원하기 버튼을 눌렀을 때
+  //const handleDesignApply = () => {
+  //  if (!isToken("access_token")) {
+  //    dispatch(authActions.setIsLoginModalVisible(true));
+  //  } else {
+  //    setDesignApply((prevState) => !prevState);
+  //  }
+  //};
 
   return (
     <>
@@ -322,7 +240,7 @@ const RecruitmentDetailContent = () => {
         clickHandler={deleteRecruitmentPost}
       />
       {/* 지원 */}
-      <AlertCheckModal
+      {/*<AlertCheckModal
         open={backendApply}
         onClose={() => setBackendApply(false)}
         text="해당 모집글 백엔드에 지원하시겠습니까?"
@@ -345,7 +263,7 @@ const RecruitmentDetailContent = () => {
         onClose={() => setDesignApply(false)}
         text="해당 모집글 디자인에 지원하시겠습니까?"
         clickHandler={() => applyPostMutate(designBody)}
-      />
+      />*/}
 
       {/*모집글 제목 컴포넌트*/}
       <RecruitmentDetailTitle
@@ -375,11 +293,17 @@ const RecruitmentDetailContent = () => {
           isEdit={isEdit}
           data={data}
           formValues={formValues}
+          setFormValues={setFormValues}
           handleChange={handleChange}
         />
 
         {/*모집글 스택, 프로젝트 이름 컴포넌트*/}
-        <RecruitmentDetailStackName isEdit={isEdit} data={data} />
+        <RecruitmentDetailStackName
+          isEdit={isEdit}
+          data={data}
+          formValues={formValues}
+          setFormValues={setFormValues}
+        />
 
         {/*모집글 설명 컴포넌트*/}
         <RecruitmentDetailDescription
