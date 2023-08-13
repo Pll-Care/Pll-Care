@@ -1,27 +1,29 @@
 .management {
+  padding-bottom: 20px;
+
   &-main-header {
-    background-color: $background-color;
-    font-family: $heading-font;
+    background-color: $green-200;
     color: white;
-    height: 200px;
-    border-bottom-left-radius: 60px;
-    border-bottom-right-radius: 60px;
-    padding: 35px;
-    padding-top: 120px;
+    height: 254px;
+    border-radius: 0px 0px 35px 35px;
+    padding: 25px 45px;
 
     &-left-col {
       h1 {
-        margin-right: 20px;
+        margin-right: 40px;
+
+        @include heading_01;
       }
 
       @include displayFlex;
     }
 
     &-right-col {
+      gap: 20px;
       @include displayFlex(row, space-between);
     }
 
-    @include displayFlex(row, space-around);
+    @include displayFlex(row, space-between, flex-end);
   }
 
   .project-list-wrapper {
@@ -29,30 +31,34 @@
       margin-top: 30px;
 
       &-description {
-        font-family: $heading-font;
-        font-size: $sub-heading-font-size;
-        color: #7a7a7a;
+        color: $gray-500;
+        margin-top: 80px;
 
         p {
           text-align: center;
         }
+
+        @include heading_04;
       }
 
       .project-item {
         border: $border;
-        width: 50%;
-        border-radius: 20px;
-        margin-bottom: 30px;
+        width: 650px;
+        height: 203px;
+        border-radius: 33px;
+        margin-bottom: 25px;
         text-decoration: none;
         box-shadow: 0px 10px 30px 5px #b5b5b533;
         display: grid;
-        grid-template-columns: 20% 80%;
+        grid-template-columns: 15% 85%;
         cursor: pointer;
+        padding: 45px 30px;
 
         &-left-col {
           figure {
-            border: $border;
             border-radius: 50%;
+            width: 60px;
+            height: 60px;
             background: {
               position: center;
               repeat: no-repeat;
@@ -65,21 +71,23 @@
           display: grid;
           grid-template-columns: 80% 20%;
           grid-template-rows: 100%;
-          justify-content: flex-end;
           color: #003b28;
           font-size: $body-font-size;
           font-family: $body-font;
           height: 100%;
 
           .project-item-heading {
-            font-size: $sub-heading-font-size;
-            font-family: $heading-font;
             margin-bottom: 7px;
+            color: $green-500;
+
+            @include heading_03;
           }
 
           .project-item-period,
           .project-item-description {
             margin-bottom: 7px;
+
+            @include body_01;
           }
 
           .project-item-description {
@@ -87,23 +95,27 @@
             overflow-wrap: break-word;
           }
 
-          .project-item-period {
+          .project-item-period,
+          .project-item-description {
             &-heading {
               margin-right: 5px;
             }
           }
 
           .project-item-button-wrapper {
-            width: 100%;
-            height: 40%;
-            
-            @include displayFlex(column, space-around, center);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-left: auto;
+            box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
+
+            @include displayFlex(column);
           }
 
           .leave-button-text {
-            font-family: $body-font;
-            font-size: $body-font-size;
-            color: #00AA72;
+            color: $green-400;
+
+            @include button_03;
           }
 
           .project-item-button-wrapper figure {
@@ -112,10 +124,9 @@
               repeat: no-repeat;
             }
 
-            border: $border;
-            border-radius: 50%;
-            width: 35px;
-            height: 35px;
+            width: 17px;
+            height: 17px;
+            margin-bottom: 5px;
           }
         }
 
@@ -123,26 +134,14 @@
       }
     }
   }
-
-  .pagination-wrapper {
-    button {
-      color: $background-color;
-    }
-
-    li {
-      color: $font-color;
-    }
-
-    @include putCenter;
-  }
 }
 
 .MuiBox-root {
   .project-editor {
-    height: 90%;
+    height: 100%;
     width: 100%;
     display: grid;
-    grid-template-rows: 15% 70% 15%;
+    grid-template-rows: 18% 70% 12%;
     grid-template-columns: 100%;
 
     &-heading {
@@ -152,9 +151,9 @@
         width: 100%;
         border: none;
         height: 100%;
-        font-size: $sub-heading-font-size;
-        font-family: $heading-font;
         border-radius: 10px;
+
+        @include heading_01;
       }
     }
 
@@ -205,17 +204,16 @@
         margin-bottom: 10px;
         height: 40px;
         width: 85%;
-        font-family: $body-font;
-        font-size: $body-font-size;
-        color: #00aa72;
+        color: $green-400;
 
         input[type="date"] {
           border: none;
-          font-family: $body-font;
-          font-size: $body-font-size;
-          width: 130px;
+          width: 100px;
+
+          @include body_01;
         }
 
+        @include heading_05;
         @include displayFlex(row, space-around);
       }
 
@@ -231,8 +229,8 @@
           padding: 10px;
           border: none;
           border-radius: 10px;
-          font-family: $body-font;
-          font-size: $body-font-size;
+
+          @include heading_05;
         }
       }
 
@@ -268,42 +266,4 @@
   margin: 0 auto;
   padding-top: 25px;
   padding-bottom: 30px;
-}
-
-@include desktop {
-  .management {
-    &-main-header {
-      font-size: $heading-font-size;
-    }
-
-    .project-list-wrapper {
-      padding: 30px;
-
-      .project-item {
-        width: 700px;
-        height: 200px;
-        padding: 15px;
-
-        figure {
-          width: 70px;
-          height: 70px;
-        }
-
-        &-right-col {
-          @include displayFlex(row, space-between);
-        }
-
-        &-period,
-        &-description {
-          width: 400px;
-        }
-
-        &-period {
-          @include displayFlex(row, flex-start);
-        }
-
-        @include displayFlex(row, flex-start, flex-start);
-      }
-    }
-  }
 }

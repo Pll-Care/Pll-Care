@@ -32,16 +32,8 @@
   justify-content: space-between;
 }
 .member-button {
-  padding: 0.5rem;
   display: flex;
-  justify-content: space-between;
-  Button {
-    height: 40px;
-    margin: 10px;
-  }
-  @include mobile {
-    flex-direction: column;
-  }
+  justify-content: flex-start;
 }
 
 // MemberFilterOption 컴포넌트

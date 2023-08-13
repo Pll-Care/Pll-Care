@@ -3,13 +3,14 @@ import ApplicationItem from "./ApplicationItem";
 import { getApplicationUser } from "../../lib/apis/teamMemberManagementApi";
 
 const ApplicationStatus = ({ projectId }) => {
-  const { data: users = [] } = useQuery(["applyUsers", projectId], () =>
-    getApplicationUser(projectId)
+  const { data: users = [], refetch } = useQuery(
+    ["applyUsers", projectId],
+    () => getApplicationUser(projectId)
   );
 
   return (
     <section className="applicationStatus">
-      <div>
+      <div className="memberMangement_head">
         <span className="teamMember_title">지원 현황</span>
       </div>
       <div>
@@ -21,11 +22,14 @@ const ApplicationStatus = ({ projectId }) => {
           ) : (
             users.map((user) => (
               <ApplicationItem
-                key={user.id}
-                userId={user.id}
+                key={user.memberId}
+                memberId={user.memberId}
                 name={user.name}
-                job={user.position}
+                position={user.position}
                 imageUrl={user.imageUrl}
+                postId={user.postId}
+                projectId={projectId}
+                refetch={refetch}
               />
             ))
           )}

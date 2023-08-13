@@ -2,10 +2,10 @@ import defaultImgUrl from "../../assets/project-default-img.jpg";
 
 import Button from "../../components/common/Button";
 
-import enthusiasticParticipantBadgeImgUrl from "../../assets/enthusiastic-participant-badge-img.png";
-import goodLeaderBadgeImgUrl from "../../assets/good-leader-badge-img.png";
-import ideaBankBadgeImgUrl from "../../assets/idea-bank-badge-img.png";
-import bestSupporterBadgeImgUrl from "../../assets/best-supporter-badge-img.png";
+import enthusiasticParticipantBadgeImgUrl from "../../assets/enthusiastic-participant-badge-img.svg";
+import goodLeaderBadgeImgUrl from "../../assets/good-leader-badge-img.svg";
+import ideaBankBadgeImgUrl from "../../assets/idea-bank-badge-img.svg";
+import bestSupporterBadgeImgUrl from "../../assets/best-supporter-badge-img.svg";
 
 const ParticipantItem = ({
   member,
@@ -89,6 +89,7 @@ const ParticipantItem = ({
             text={"최종 평가보기"}
             size={"small"}
             type={"positive"}
+            color={"white"}
             onClick={(e) => {
               e.stopPropagation();
               setBadgeQuantity(member.badgeDtos);

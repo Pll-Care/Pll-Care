@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import { customAxios } from "./customAxios";
 
 // 키값 : allRecruitmentPosts
@@ -19,8 +20,8 @@ export const getRecruitmentPostDetail = async (postId) => {
   try {
     const res = await customAxios.get(`/auth/post/${postId}`);
     return res.data;
-  } catch (err) {
-    return err;
+  } catch (error) {
+    throw error;
   }
 };
 

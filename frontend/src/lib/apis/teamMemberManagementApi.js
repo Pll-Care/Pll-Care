@@ -37,3 +37,16 @@ export const getApplicationUser = async (projectId) => {
     console.log(error);
   }
 };
+
+export const postApplyAcceptAPI = (projectId, memberId, postId) => {
+  return customAxios.post(`/auth/project/${projectId}/applyaccept`, {
+    memberId,
+    postId,
+  });
+};
+export const postApplyRejectAPI = (projectId, memberId, postId) => {
+  return customAxios.post(`/auth/project/${projectId}/applyreject`, {
+    memberId,
+    postId,
+  });
+};

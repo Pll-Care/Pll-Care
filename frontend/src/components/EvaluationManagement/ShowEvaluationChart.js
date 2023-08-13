@@ -104,8 +104,8 @@ const ShowEvaluationChart = ({ chartData = null, isCompleted }) => {
             <div key={i}>
               <BarChart
                 className="chart"
-                width={495}
-                height={320}
+                width={530}
+                height={230}
                 data={data.slice(i * chartDataNum, (i + 1) * chartDataNum)}
               >
                 <Tooltip
@@ -135,8 +135,8 @@ const ShowEvaluationChart = ({ chartData = null, isCompleted }) => {
             <div key={i}>
               <BarChart
                 className="chart"
-                width={495}
-                height={320}
+                width={530}
+                height={230}
                 data={data.slice(i * chartDataNum, (i + 1) * chartDataNum)}
               >
                 <Tooltip content={<CustomTooltip />} />

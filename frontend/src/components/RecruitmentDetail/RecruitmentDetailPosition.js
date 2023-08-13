@@ -55,7 +55,6 @@ const RecruitmentDetailPosition = ({
         onClose={() => setApplyModal(false)}
         text={`해당 모집글 ${position}에 지원하시겠습니까?`}
         clickHandler={() => {
-          //console.log({ postId: id, position: position });
           applyPostMutate({ postId: id, position: position });
         }}
       />

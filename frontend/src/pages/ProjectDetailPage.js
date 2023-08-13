@@ -13,7 +13,7 @@ import { useRouter } from "../hooks/useRouter";
 const ProjectDetailPage = () => {
   const { id } = useParams();
 
-  const { replaceTo } = useRouter();
+  const { replaceTo, currentPath } = useRouter();
 
   const location = useLocation();
 
@@ -40,10 +40,10 @@ const ProjectDetailPage = () => {
   useEffect(() => {
     const pathRegex = new RegExp(`/management/${id}$`);
 
-    if (data && location.pathname.match(pathRegex)) {
+    if (data && currentPath.match(pathRegex)) {
       replaceTo(`/management/${id}/overview`);
     }
-  }, [id, location.pathname, data, replaceTo]);
+  }, [id, location.pathname, data, replaceTo, currentPath]);
 
   if (!data) {
     replaceTo(-1);
