@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useProfile } from "../../../context/ProfileContext";
 import { useQuery } from "react-query";
 import { useProfileClient } from "../../../context/Client/ProfileClientContext";
+import ChartBar from "./\bChartBar";
 
 const CHART_TITLE = {
   sincerity: "성실도",
@@ -29,7 +30,7 @@ const EvaluateChart = () => {
     <div className="evaluate_chart-warp">
       <div className="evaluate_chart">
         {score.map((item) => (
-          <Bar key={item.title} title={item.title} score={item.score} />
+          <ChartBar key={item.title} title={item.title} score={item.score} />
         ))}
       </div>
       <div className="evaluate_chart_line"></div>
@@ -38,20 +39,6 @@ const EvaluateChart = () => {
 };
 
 export default EvaluateChart;
-
-const Bar = ({ title, score }) => {
-  return (
-    <div className="evaluate_chart_bars">
-      <div className="evaluate_chart_bars_bar">
-        <div
-          className="evaluate_chart_bars_score"
-          style={{ "--custom-value": `${score}%` }}
-        ></div>
-      </div>
-      <div className="evaluate_chart_bars_title">{title}</div>
-    </div>
-  );
-};
 
 const extractScore = (data) => {
   return Object.keys(data).map((key) => {
