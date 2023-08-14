@@ -80,12 +80,14 @@ const ApplicationItem = ({
             <Button
               text="수락"
               type="positive"
+              color="white"
               size="small"
               onClick={openAcceptModal}
             />
             <Button
               text="거절"
               type="positive"
+              color="white"
               size="small"
               onClick={openRejectModal}
             />

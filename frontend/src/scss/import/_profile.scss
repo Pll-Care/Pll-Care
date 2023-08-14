@@ -195,7 +195,7 @@
 
       min-width: 48px;
       min-height: 48px;
-      background-color: $green-300;
+      background-color: $green-400;
       border-radius: 15px;
 
       & > img {
@@ -392,7 +392,6 @@
     }
 
     &_button {
-      width: 60px;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -566,7 +565,7 @@
 
       &_score_text {
         padding: 10px 15px;
-        background-color: $green-300;
+        background-color: $green-400;
         position: absolute;
         border-radius: 24px;
         color: $white-100;

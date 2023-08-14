@@ -34,7 +34,8 @@ const ProjectBox = () => {
         {isMyProfile && (
           <Button
             text="프로젝트 추가"
-            type="profile"
+            type="positive"
+            color="white"
             size="small"
             onClick={() => setNewProject((prev) => !prev)}
           />

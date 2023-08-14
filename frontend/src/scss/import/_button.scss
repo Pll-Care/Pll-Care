@@ -55,9 +55,8 @@
 
   &_profile {
     background-color: $green-200;
-    color: white;
-    width: 37px;
-    height: 37px;
+    color: $gray-100;
+    border: 2px solid $gray-100;
   }
 
   @include button_01;

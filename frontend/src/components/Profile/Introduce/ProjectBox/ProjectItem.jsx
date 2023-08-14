@@ -126,7 +126,7 @@ const ShowProjectItem = ({
         </div>
       </div>
       <div className="project_list_button">
-        {isMyProfile ? (
+        {isMyProfile && (
           <>
             <Button
               text="수정"
@@ -135,7 +135,7 @@ const ShowProjectItem = ({
             />
             <Button text="삭제" size="small" onClick={() => deleProject()} />
           </>
-        ) : null}
+        )}
       </div>
     </>
   );
