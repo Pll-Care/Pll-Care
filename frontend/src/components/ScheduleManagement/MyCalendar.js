@@ -45,15 +45,13 @@ const MyCalendar = () => {
   // 달력 간격 커스텀
   const dayCellContent = (args) => {
     return (
-      <div style={{ width: "80%", height: "80%", margin: "auto" }}>
-        {args.dayNumberText}
-      </div>
+      <div style={{ width: "20px", height: "10px" }}>{args.dayNumberText}</div>
     );
   };
 
   return (
-    <div className="calendar">
-      <div className="calendar-schedule">
+    <div className="schedule-calendar">
+      <div className="schedule-calendar-schedulelist">
         <FullCalendar
           defaultView="dayGridMonth"
           plugins={[dayGridPlugin]}

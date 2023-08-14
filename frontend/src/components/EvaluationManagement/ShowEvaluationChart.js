@@ -1,4 +1,11 @@
-import { BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -101,26 +108,28 @@ const ShowEvaluationChart = ({ chartData = null, isCompleted }) => {
       <div className="evaluation-management-show-evaluation-chart">
         <Slider className="slider" {...settings}>
           {chartIndices(data, chartDataNum).map((i) => (
-            <div key={i}>
-              <BarChart
-                className="chart"
-                width={530}
-                height={230}
-                data={data.slice(i * chartDataNum, (i + 1) * chartDataNum)}
-              >
-                <Tooltip
-                  content={<CustomTooltip isCompleted={isCompleted} />}
-                />
-                <XAxis dataKey="name" tickSize={8} />
-                <YAxis
-                  dataKey="evaluation"
-                  domain={[0, evaluateBadgeMaxNumRounded(chartData)]}
-                />
-                <Bar dataKey="sincerity" fill="#01E89E" />
-                <Bar dataKey="punctuality" fill="#00AA72" />
-                <Bar dataKey="jobPerformance" fill="#D7D7D7" />
-                <Bar dataKey="communication" fill="#01E89E" />
-              </BarChart>
+            <div key={i} className="chart-container">
+              <div key={i}>
+                <BarChart
+                  className="chart"
+                  width={530}
+                  height={260}
+                  data={data.slice(i * chartDataNum, (i + 1) * chartDataNum)}
+                >
+                  <Tooltip
+                    content={<CustomTooltip isCompleted={isCompleted} />}
+                  />
+                  <XAxis dataKey="name" tickSize={8} />
+                  <YAxis
+                    dataKey="evaluation"
+                    domain={[0, evaluateBadgeMaxNumRounded(chartData)]}
+                  />
+                  <Bar dataKey="sincerity" fill="#01E89E" />
+                  <Bar dataKey="punctuality" fill="#00AA72" />
+                  <Bar dataKey="jobPerformance" fill="#D7D7D7" />
+                  <Bar dataKey="communication" fill="#01E89E" />
+                </BarChart>
+              </div>
             </div>
           ))}
         </Slider>
@@ -136,7 +145,7 @@ const ShowEvaluationChart = ({ chartData = null, isCompleted }) => {
               <BarChart
                 className="chart"
                 width={530}
-                height={230}
+                height={260}
                 data={data.slice(i * chartDataNum, (i + 1) * chartDataNum)}
               >
                 <Tooltip content={<CustomTooltip />} />

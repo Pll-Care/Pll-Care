@@ -4,6 +4,7 @@ import Tooltip from "@mui/material/Tooltip";
 import { getDateTimeDuration } from "../../utils/date";
 
 const CalendarItem = ({ data }) => {
+  console.log("일정아이템", data);
   const location = data.address ? data.address : "";
   const type = location ? "MEETING" : "MILESTONE";
   const time = getDateTimeDuration(data.startDate, data.endDate, type);

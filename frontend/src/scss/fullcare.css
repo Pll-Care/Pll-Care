@@ -229,19 +229,7 @@ a {
 
 @media (min-width: 767px) and (max-width: 1024px) {
   .management-header {
-    height: 65px;
-  }
-  .management-header a {
-    font-size: 22px;
-  }
-}
-@media (max-width: 767px) {
-  .management-header {
-    height: 45px;
-    width: 90%;
-  }
-  .management-header a {
-    font-size: 13px;
+    margin-bottom: 60px;
   }
 }
 .main-header {
@@ -249,7 +237,7 @@ a {
   height: 80px;
   display: grid;
   grid-template-rows: 100%;
-  grid-template-columns: 20% 60% 20%;
+  grid-template-columns: 20% 55% 25%;
 }
 .main-header-left-col {
   display: flex;
@@ -610,35 +598,47 @@ a {
 
 .fc-toolbar-title {
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 5px;
-  color: gray;
+  font-size: 1px;
+  color: #7a7a7a;
 }
 
-.calendar {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+.schedule-calendar {
+  display: grid;
+  grid-template-columns: 65% 35%;
 }
-.calendar-schedule {
-  width: 50%;
+.schedule-calendar-schedulelist .fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {
+  height: 100%;
+}
+.schedule-calendar-schedulelist .fc-header-toolbar.fc-toolbar {
+  font-size: 15px;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .schedule-calendar-schedulelist .fc-header-toolbar.fc-toolbar {
+    font-size: 15px;
+  }
+}
+@media (max-width: 767px) {
+  .schedule-calendar-schedulelist .fc-header-toolbar.fc-toolbar {
+    font-size: 11px;
+  }
 }
 
 .calendar-list {
   background-color: #01e89e;
   align-items: center;
   padding: 2rem;
-  height: 470px;
-  width: 40%;
+  width: 100%;
+  height: 100%;
   overflow-y: auto;
+}
+@media (max-width: 767px) {
+  .calendar-list {
+    padding: 10px;
+  }
 }
 .calendar-list .button-container {
   display: flex;
   justify-content: flex-end;
-}
-.calendar-list-pagination {
-  justify-content: center;
-  margin-bottom: 20px;
 }
 .calendar-list-time {
   color: white;
@@ -648,11 +648,21 @@ a {
   font-size: 25px;
   margin-bottom: 10px;
 }
+@media (max-width: 767px) {
+  .calendar-list-time h5 {
+    font-size: 21px;
+  }
+}
 .calendar-list-time h1 {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 40px;
   border-bottom: 2px solid white;
   margin-bottom: 20px;
+}
+@media (max-width: 767px) {
+  .calendar-list-time h1 {
+    font-size: 33px;
+  }
 }
 .calendar-list-item {
   background-color: white;
@@ -689,6 +699,7 @@ a {
 }
 
 .modal-container {
+  padding: 20px;
   font-family: "Noto Sans KR", sans-serif;
   width: 100%;
 }
@@ -1193,6 +1204,11 @@ a {
   justify-content: space-around;
   align-items: center;
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .meeting-record-list {
+    padding: 10px;
+  }
+}
 .meeting-record-book-marked-record-list {
   padding-top: 10px;
   margin-bottom: 10px;
@@ -1214,12 +1230,22 @@ a {
   width: 100%;
 }
 .meeting-record-book-marked-record-list .meeting-record-body .pagination-wrapper {
-  margin-left: auto;
-  margin-right: auto;
+  margin-top: auto;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .meeting-record-book-marked-record-list .meeting-record-body .pagination-wrapper {
+    width: 100%;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .meeting-record-book-marked-record-list {
+    width: 100%;
+  }
 }
 .meeting-record-all-meeting-record-list {
   height: 47%;
   display: grid;
+  grid-template-columns: 100%;
   grid-template-rows: 25% 75%;
 }
 .meeting-record-all-meeting-record-list .meeting-record-list-header {
@@ -1264,12 +1290,27 @@ a {
   justify-content: space-between;
   align-items: center;
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .meeting-record-all-meeting-record-list .record-list-item-wrapper {
+    display: grid;
+    grid-template-columns: 100%;
+  }
+}
 .meeting-record-all-meeting-record-list .meeting-record-all-meeting-record-list-data {
   height: 100%;
-  width: 100%;
 }
 .meeting-record-all-meeting-record-list .pagination-wrapper {
   margin-top: auto;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .meeting-record-all-meeting-record-list .pagination-wrapper {
+    width: 100%;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .meeting-record-all-meeting-record-list {
+    width: 100%;
+  }
 }
 .meeting-record-new-meeting-record-editor {
   width: 70%;
@@ -1388,7 +1429,7 @@ a {
   background-color: white;
   margin-bottom: 10px;
   border-radius: 10px;
-  width: 233px;
+  width: 100%;
   height: 71px;
   padding: 10px 20px;
   color: #7a7a7a;
@@ -1585,9 +1626,10 @@ a {
   margin-right: auto;
 }
 .evaluation-management-ranking-wrapper, .evaluation-management-ranking-wrapper-non-evaluated {
-  height: 400px;
   padding-bottom: 30px;
   border-bottom: 2px solid #d9d9d9;
+  display: flex;
+  flex-wrap: wrap;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -1595,7 +1637,7 @@ a {
 }
 .evaluation-management-ranking-wrapper .evaluation-management-chart-wrapper, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-chart-wrapper {
   height: 350px;
-  width: 65%;
+  width: 62%;
 }
 .evaluation-management-ranking-wrapper .evaluation-management-chart-wrapper h1, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-chart-wrapper h1 {
   color: #01e89e;
@@ -1603,6 +1645,11 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 24px;
   font-weight: 700;
+}
+@media (max-width: 1000px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-chart-wrapper, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-chart-wrapper {
+    width: 600px;
+  }
 }
 .evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart {
   border: 2px solid #01e89e;
@@ -1620,7 +1667,7 @@ a {
   align-items: center;
 }
 .evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart .slick-slider, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart .slick-slider {
-  width: 96%;
+  width: 100%;
   height: 83%;
   display: flex;
   flex-direction: row;
@@ -1628,8 +1675,16 @@ a {
   align-items: center;
 }
 .evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart .slick-slider .slick-list, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart .slick-slider .slick-list {
-  width: 100%;
-  height: 95%;
+  width: 90%;
+  height: 100%;
+}
+.evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart .slick-slider .slick-list .recharts-wrapper,
+.evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart .slick-slider .slick-list .recharts-surface, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart .slick-slider .slick-list .recharts-wrapper,
+.evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart .slick-slider .slick-list .recharts-surface {
+  max-width: 100%;
+}
+.evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart .slick-slider .slick-list .recharts-surface, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart .slick-slider .slick-list .recharts-surface {
+  height: 100%;
 }
 .evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart .slick-arrow, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart .slick-arrow {
   display: none;
@@ -1717,14 +1772,52 @@ a {
   font-size: 14px;
   font-weight: 500;
 }
+@media (max-width: 1000px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
+@media (max-width: 1000px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item {
+    padding: 10px;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
 .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item_1 .evaluation-management-left-col figure, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item_1 .evaluation-management-left-col figure {
   background-image: url("../assets/ranking-1-img.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 85%, 85%;
 }
+@media (max-width: 1000px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body {
+    gap: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
 .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body::-webkit-scrollbar, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body::-webkit-scrollbar {
   display: none;
+}
+@media (max-width: 1000px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking {
+    width: 600px;
+    height: 200px;
+    margin-top: 20px;
+  }
 }
 .evaluation-management .evaluation-management-ranking-wrapper {
   position: relative;
@@ -1858,6 +1951,16 @@ a {
   font-size: 20px;
   font-weight: 600;
 }
+@media (max-width: 1000px) {
+  .evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant {
+    width: 100%;
+  }
+}
+@media (max-width: 1000px) {
+  .evaluation-management-participant-wrapper {
+    width: 600px;
+  }
+}
 .evaluation-management-final-evaluation {
   overflow: auto;
   padding: 40px;
@@ -1889,11 +1992,23 @@ a {
   margin-bottom: 15px;
   padding: 50px;
   display: grid;
-  grid-template-rows: 20% 30% 50%;
+  grid-template-rows: 25% 25% 50%;
+}
+@media (max-width: 1000px) {
+  .evaluation-management-final-evaluation .final-evaluation-body {
+    grid-template-rows: 35% 35% 30%;
+    height: 150%;
+  }
 }
 .evaluation-management-final-evaluation .final-evaluation-body .evaluation,
-.evaluation-management-final-evaluation .final-evaluation-body .badges {
+.evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges {
   border-bottom: 2px solid #d9d9d9;
+  padding-bottom: 15px;
+}
+.evaluation-management-final-evaluation .final-evaluation-body .evaluation {
+  display: grid;
+  grid-template-rows: 15% 85%;
+  padding-bottom: 15px;
 }
 .evaluation-management-final-evaluation .final-evaluation-body .evaluation h1 {
   margin-bottom: 20px;
@@ -1927,22 +2042,31 @@ a {
   background-repeat: no-repeat;
   background-size: 10%, 10%;
 }
+@media (max-width: 1000px) {
+  .evaluation-management-final-evaluation .final-evaluation-body .evaluation-criterion {
+    width: 70%;
+    height: 100%;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: 100%;
+    padding-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
 .evaluation-management-final-evaluation .final-evaluation-body .evaluation-criterion div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-.evaluation-management-final-evaluation .final-evaluation-body .badges {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
+.evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges {
+  display: grid;
+  grid-template-rows: 15% 85%;
 }
-.evaluation-management-final-evaluation .final-evaluation-body .badges h1 {
+.evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges h1 {
   margin-top: 20px;
 }
-.evaluation-management-final-evaluation .final-evaluation-body .badges-body {
+.evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges-body {
   width: 100%;
   display: grid;
   grid-template-columns: 42% 42%;
@@ -1957,19 +2081,28 @@ a {
   font-size: 18px;
   font-weight: 600;
 }
-.evaluation-management-final-evaluation .final-evaluation-body .badges-body .badge {
+.evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges-body .badge {
   display: grid;
   grid-template-columns: 20% 50% 30%;
   grid-template-rows: 100%;
   align-items: center;
 }
-.evaluation-management-final-evaluation .final-evaluation-body .badges-body .badge figure {
+.evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges-body .badge figure {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
+}
+@media (max-width: 1000px) {
+  .evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges-body {
+    width: 100%;
+    height: 100%;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: 100%;
+    padding-bottom: 10px;
+  }
 }
 .evaluation-management-final-evaluation .final-evaluation-body .content {
   display: flex;
@@ -2160,8 +2293,8 @@ a {
   align-items: center;
 }
 .MuiBox-root .project-editor {
-  height: 100%;
-  width: 100%;
+  height: 90%;
+  width: 80%;
   display: grid;
   grid-template-rows: 18% 70% 12%;
   grid-template-columns: 100%;
@@ -2175,7 +2308,7 @@ a {
   height: 100%;
   border-radius: 10px;
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 38px;
+  font-size: 24px;
   font-weight: 700;
 }
 .MuiBox-root .project-editor-body {
@@ -2284,9 +2417,18 @@ a {
   padding-top: 25px;
   padding-bottom: 30px;
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .management_project_layout {
+    width: 90%;
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+}
 
 .project-management {
-  height: 300px;
+  min-height: 65vh;
+  display: flex;
+  align-items: center;
 }
 .project-management .project-button-wrapper {
   display: flex;
@@ -2296,8 +2438,8 @@ a {
 }
 .project-management .project-button-wrapper figure {
   border-radius: 50%;
-  width: 230px;
-  height: 230px;
+  width: 210px;
+  height: 210px;
   margin-bottom: 30px;
   background-position: center;
   background-repeat: no-repeat;
@@ -2310,48 +2452,60 @@ a {
   font-size: 20px;
   font-weight: 600;
 }
-.project-management .completed-project {
-  display: grid;
-  grid-template-columns: repeat(3, 30%);
+.project-management .completed-project,
+.project-management .ongoing-project {
+  width: 100%;
+  display: flex;
   justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+@media (max-width: 1000px) {
+  .project-management .completed-project,
+  .project-management .ongoing-project {
+    gap: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
 .project-management .completed-project .project-button-wrapper figure {
-  border-radius: 50%;
-  width: 230px;
-  height: 230px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
   pointer-events: none;
 }
-.project-management .ongoing-project {
-  display: grid;
-  grid-template-columns: repeat(3, 30%);
-  justify-content: space-between;
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  background-color: white;
+}
+.modal_dark {
+  background-color: #01e89e;
 }
 
 .confirm-modal {
   text-align: center;
-  height: 100%;
+  height: 50%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
 }
 .confirm-modal h1 {
-  width: 66%;
+  width: 50%;
   line-height: 1.5;
   color: white;
   margin-bottom: 40px;
-  white-space: normal;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0;
+  white-space: pre-line;
+  word-break: keep-all;
   margin-left: auto;
   margin-right: auto;
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 16px;
-  font-weight: 500;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
 }
 .confirm-modal-button {
   display: flex;
@@ -2492,18 +2646,8 @@ a {
 }
 
 .member-button {
-  padding: 0.5rem;
   display: flex;
-  justify-content: space-between;
-}
-.member-button Button {
-  height: 40px;
-  margin: 10px;
-}
-@media (max-width: 767px) {
-  .member-button {
-    flex-direction: column;
-  }
+  justify-content: flex-start;
 }
 
 .filter-options {
@@ -2559,7 +2703,7 @@ a {
   margin-right: 20px;
 }
 .member-write h3 {
-  color: #0f6341;
+  color: #00aa72;
   white-space: nowrap;
   font-size: 18px;
 }
@@ -3323,7 +3467,7 @@ a {
   justify-content: center;
   width: 48px;
   height: 48px;
-  background-color: #00aa72;
+  background-color: #01e89e;
   border-radius: 15px;
 }
 .profile_nav_link > img {
@@ -3739,7 +3883,7 @@ a {
 .projectEvaluate_title {
   font-size: 20px;
   font-weight: 700;
-  color: #00aa72;
+  color: #01e89e;
 }
 
 .badgeBox {

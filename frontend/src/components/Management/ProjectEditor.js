@@ -128,8 +128,8 @@ const ProjectEditor = ({
     <ModalContainer
       open={isModalVisible}
       onClose={handleModalClose}
-      width={"45%"}
-      height={"55%"}
+      width={600}
+      height={350}
     >
       <div className="project-editor">
         <div className="project-editor-heading">
