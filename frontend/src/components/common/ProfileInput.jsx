@@ -5,6 +5,7 @@ const ProfileInput = ({
   readOnly = false,
   width = "100",
   onClick,
+  position = "basic",
 }) => {
   return (
     <input
@@ -13,7 +14,11 @@ const ProfileInput = ({
       placeholder={placeholder}
       onChange={(event) => onChange(event.target.value)}
       readOnly={readOnly}
-      className={`profileInput profileInput_width${width}`}
+      className={
+        position === "basic"
+          ? `profileInput profileInput_width${width}`
+          : `profileInput-header profileInput_width${width}`
+      }
       onClick={!!onClick ? onClick : null}
     />
   );

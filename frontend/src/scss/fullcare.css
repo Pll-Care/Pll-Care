@@ -4030,8 +4030,24 @@ a {
 .profileInput_width100 {
   width: 100%;
 }
+.profileInput_width50 {
+  width: 50%;
+}
 .profileInput_width45 {
   width: 45%;
+}
+.profileInput-header {
+  color: #f1f1f1;
+  text-align: center;
+  border: 1px solid #ffffff;
+  background-color: #01e89e;
+  border-radius: 10px;
+  padding: 4px 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+.profileInput-header:hover {
+  background-color: #52eab8;
 }
 
 .calendar {

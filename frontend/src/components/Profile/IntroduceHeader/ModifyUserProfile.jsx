@@ -3,6 +3,7 @@ import profile_isProfile from "../../../assets/profile-default-img.png";
 import Button from "../../common/Button";
 import { uploadImage } from "../../../lib/apis/projectManagementApi";
 import { useProfileClient } from "../../../context/Client/ProfileClientContext";
+import ProfileInput from "../../common/ProfileInput";
 
 const ModifyUserProfile = ({
   memberId,
@@ -16,8 +17,9 @@ const ModifyUserProfile = ({
     imageFile: null,
     useImageUrl: imageUrl,
   });
-  const { putBioAPI } = useProfileClient();
 
+  const [userInfo, setUserInfo] = useState({ nickname: nickname, bio: bio });
+  const { putBioAPI } = useProfileClient();
   const reqImageUrl = { url: "" };
 
   const handleImageUpload = (event) => {
@@ -31,7 +33,6 @@ const ModifyUserProfile = ({
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
 
     if (image.imageFile) {
       const imageReqBody = {
@@ -44,8 +45,8 @@ const ModifyUserProfile = ({
     }
 
     const reqBody = {
-      nickname: formData.get("nickname") || nickname,
-      bio: formData.get("bio") || bio,
+      nickname: userInfo.nickname,
+      bio: userInfo.bio,
       imageUrl: !reqImageUrl.url ? imageUrl ?? "" : reqImageUrl.url,
     };
 
@@ -79,28 +80,27 @@ const ModifyUserProfile = ({
       <form className="profile_introduce_info" onSubmit={handleSubmit}>
         <div className="profile_introduce_info_name">
           <div className="profile_introduce_info_name_kr">{name}</div>
-          <input
-            className="profile_input"
-            type="text"
-            defaultValue={nickname}
-            placeholder="닉네임을 입력해주세요."
-            name="nickname"
+
+          <ProfileInput
+            value={userInfo.nickname}
+            placeholder={"닉네임을 입력해주세요."}
+            onChange={(value) =>
+              setUserInfo((prev) => ({ ...prev, nickname: value }))
+            }
+            width="50"
+            position="header"
           />
         </div>
         <div className="profile_introduce_info_myself">
-          <input
-            className="profile_input"
-            type="text"
-            defaultValue={bio}
-            placeholder="한 줄 자기소개를 입력해주세요."
-            name="bio"
+          <ProfileInput
+            value={userInfo.bio}
+            placeholder={"한 줄 자기소개를 입력해주세요."}
+            onChange={(value) =>
+              setUserInfo((prev) => ({ ...prev, bio: value }))
+            }
+            position="header"
           />
-          <Button
-            text="취소"
-            size="small"
-            type="profile"
-            onClick={changeModify}
-          />
+
           <Button
             text="완료"
             size="small"
