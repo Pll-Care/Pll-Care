@@ -23,21 +23,6 @@
 
 @include tablet {
   .management-header {
-    height: 65px;
-
-    a {
-      font-size: $link-font-size-medium;
-    }
-  }
-}
-
-@include mobile {
-  .management-header {
-    height: 45px;
-    width: 90%;
-
-    a {
-      font-size: $link-font-size-small;
-    }
+    margin-bottom: 60px;
   }
 }

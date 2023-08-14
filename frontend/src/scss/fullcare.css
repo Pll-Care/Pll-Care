@@ -229,19 +229,7 @@ a {
 
 @media (min-width: 767px) and (max-width: 1024px) {
   .management-header {
-    height: 65px;
-  }
-  .management-header a {
-    font-size: 22px;
-  }
-}
-@media (max-width: 767px) {
-  .management-header {
-    height: 45px;
-    width: 90%;
-  }
-  .management-header a {
-    font-size: 13px;
+    margin-bottom: 60px;
   }
 }
 .main-header {
@@ -2284,9 +2272,18 @@ a {
   padding-top: 25px;
   padding-bottom: 30px;
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .management_project_layout {
+    width: 82%;
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+}
 
 .project-management {
-  height: 300px;
+  min-height: 65vh;
+  display: flex;
+  align-items: center;
 }
 .project-management .project-button-wrapper {
   display: flex;
@@ -2296,8 +2293,8 @@ a {
 }
 .project-management .project-button-wrapper figure {
   border-radius: 50%;
-  width: 230px;
-  height: 230px;
+  width: 210px;
+  height: 210px;
   margin-bottom: 30px;
   background-position: center;
   background-repeat: no-repeat;
@@ -2310,24 +2307,26 @@ a {
   font-size: 20px;
   font-weight: 600;
 }
-.project-management .completed-project {
-  display: grid;
-  grid-template-columns: repeat(3, 30%);
+.project-management .completed-project,
+.project-management .ongoing-project {
+  width: 100%;
+  display: flex;
   justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+@media (max-width: 1000px) {
+  .project-management .completed-project,
+  .project-management .ongoing-project {
+    gap: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
 .project-management .completed-project .project-button-wrapper figure {
-  border-radius: 50%;
-  width: 230px;
-  height: 230px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
   pointer-events: none;
-}
-.project-management .ongoing-project {
-  display: grid;
-  grid-template-columns: repeat(3, 30%);
-  justify-content: space-between;
 }
 
 .modal {
@@ -2569,7 +2568,7 @@ a {
   margin-right: 20px;
 }
 .member-write h3 {
-  color: #0f6341;
+  color: #00aa72;
   white-space: nowrap;
   font-size: 18px;
 }
@@ -3344,7 +3343,7 @@ a {
   justify-content: center;
   width: 48px;
   height: 48px;
-  background-color: #00aa72;
+  background-color: #01e89e;
   border-radius: 15px;
 }
 .profile_nav_link > img {
@@ -3760,7 +3759,7 @@ a {
 .projectEvaluate_title {
   font-size: 20px;
   font-weight: 700;
-  color: #00aa72;
+  color: #01e89e;
 }
 
 .badgeBox {
