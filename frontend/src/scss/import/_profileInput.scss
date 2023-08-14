@@ -17,7 +17,28 @@
     width: 100%;
   }
 
+  &_width50 {
+    width: 50%;
+  }
+
   &_width45 {
     width: 45%;
+  }
+
+  &-header {
+    color: $white-200;
+    text-align: center;
+
+    border: 1px solid $white-100;
+    background-color: #01e89e;
+    border-radius: 10px;
+
+    padding: 4px 0;
+    font-size: 18px;
+    font-weight: $weight-bold;
+  }
+
+  &-header:hover {
+    background-color: #52eab8;
   }
 }

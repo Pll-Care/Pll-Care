@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import Button from "../../../common/Button";
 import StackItem from "../../../common/StackItem";
 import ModifyProject from "./ModifyProject";
-import { patchProfile } from "../../../../lib/apis/profileApi";
 import { useProfile } from "../../../../context/ProfileContext";
+import { useProfileClient } from "../../../../context/Client/ProfileClientContext";
 
 const ProjectItem = ({
   title,
@@ -15,7 +15,7 @@ const ProjectItem = ({
   refetch,
 }) => {
   const [isModify, setIsmodify] = useState(false);
-  const { memberId } = useProfile();
+  const { patchProfileAPI } = useProfileClient();
 
   const changeModify = (modify) => {
     setIsmodify(modify);
@@ -26,7 +26,7 @@ const ProjectItem = ({
       projectId: projectId,
       delete: true,
     };
-    const response = await patchProfile(memberId, reqBody);
+    const response = await patchProfileAPI(reqBody);
     if (response.status === 200) refetch();
   };
 
@@ -128,7 +128,6 @@ const ShowProjectItem = ({
       <div className="project_list_button">
         {isMyProfile ? (
           <>
-            {" "}
             <Button
               text="수정"
               size="small"

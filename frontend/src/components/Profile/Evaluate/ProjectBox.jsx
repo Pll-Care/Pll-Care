@@ -4,7 +4,7 @@ const ProjectBox = () => {
   return (
     <section className="evaluate_Box" style={{ marginTop: "43px" }}>
       <div className="evaluate_Box_title">
-        <h2>평가 종합 차트</h2>
+        <h2>받은 평가</h2>
       </div>
       <div>
         <ProjectList />

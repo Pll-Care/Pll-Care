@@ -4,7 +4,7 @@ import ProjectList from "./ProjectList";
 import ModifyProject from "./ModifyProject";
 import { useProfile } from "../../../../context/ProfileContext";
 import { useQuery } from "react-query";
-import { getProjectExperienceAPI } from "../../../../lib/apis/profileApi";
+import { useProfileClient } from "../../../../context/Client/ProfileClientContext";
 
 const QUERY_KEY = "experience-project";
 
@@ -12,10 +12,11 @@ const ProjectBox = () => {
   const [newProject, setNewProject] = useState(false);
 
   const { memberId, isMyProfile } = useProfile();
+  const { getProjectExperienceAPI } = useProfileClient();
 
   const { data: experienceData, refetch } = useQuery(
-    [QUERY_KEY, memberId],
-    () => getProjectExperienceAPI({ memberId })
+    [memberId, QUERY_KEY],
+    () => getProjectExperienceAPI()
   );
 
   useEffect(() => {
@@ -45,7 +46,10 @@ const ProjectBox = () => {
         </div>
       )}
       <div className="project">
-        <ProjectList experienceData={experienceData?.data} refetch={refetch} />
+        <ProjectList
+          experienceData={experienceData?.data.data}
+          refetch={refetch}
+        />
       </div>
     </div>
   );

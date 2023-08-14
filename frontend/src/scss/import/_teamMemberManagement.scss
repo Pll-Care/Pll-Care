@@ -23,7 +23,7 @@
     margin-bottom: 31px;
   }
 
-  &_memebers {
+  &_members {
     min-height: 450px;
     margin-top: 10px;
     display: grid;
@@ -47,8 +47,8 @@
     justify-content: center;
 
     > div {
-      width: 150px;
-      height: 150px;
+      width: 160px;
+      height: 160px;
       position: relative;
     }
 
@@ -85,21 +85,17 @@
   &_delete {
     z-index: 10;
     display: inline-block;
-    width: 150px;
-    height: 150px;
-    background-color: #fff;
-    opacity: 0.75;
+    width: 160px;
+    height: 160px;
+    background-color: rgba(200, 200, 200, 0.6);
     position: absolute;
     left: 0;
     top: 0;
     border-radius: 50%;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #003b28;
-    font-weight: bold;
-    text-decoration: underline;
-    cursor: pointer;
   }
 }
 
@@ -182,5 +178,36 @@
     align-items: center;
     gap: 15px;
     width: 20%;
+  }
+}
+
+.edit_option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  &_item {
+    width: 42px;
+    height: 42px;
+    border-radius: 42px;
+    background-color: $white-100;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    &_image {
+      width: 15px;
+      height: 15px;
+    }
+    &_title {
+      color: $green-300;
+      font-weight: 700;
+      font-size: 8px;
+    }
   }
 }

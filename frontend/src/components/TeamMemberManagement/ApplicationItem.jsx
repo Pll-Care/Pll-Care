@@ -8,6 +8,7 @@ import {
   postApplyAcceptAPI,
   postApplyRejectAPI,
 } from "../../lib/apis/teamMemberManagementApi";
+import { useProjectDetail } from "../../context/ProjectDetailContext";
 
 const ApplicationItem = ({
   name,
@@ -15,11 +16,11 @@ const ApplicationItem = ({
   position,
   imageUrl,
   postId,
-  projectId,
   refetch,
 }) => {
   const [message, setMessage] = useState("");
   const { isOpen, chageModalOpen } = useModalIsOpen();
+  const { projectId, isLeader } = useProjectDetail();
 
   const openAcceptModal = () => {
     setMessage("수락");
@@ -74,20 +75,22 @@ const ApplicationItem = ({
             <p className="application_item_infobox_job">{position}</p>
           </div>
         </Link>
-        <div className="application_item_btnbox">
-          <Button
-            text="수락"
-            type="positive"
-            size="small"
-            onClick={openAcceptModal}
-          />
-          <Button
-            text="거절"
-            type="positive"
-            size="small"
-            onClick={openRejectModal}
-          />
-        </div>
+        {isLeader && (
+          <div className="application_item_btnbox">
+            <Button
+              text="수락"
+              type="positive"
+              size="small"
+              onClick={openAcceptModal}
+            />
+            <Button
+              text="거절"
+              type="positive"
+              size="small"
+              onClick={openRejectModal}
+            />
+          </div>
+        )}
       </li>
     </>
   );
