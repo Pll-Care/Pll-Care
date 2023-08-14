@@ -186,6 +186,10 @@ public class PostService {
         Optional<Apply> findApply = applyRepository.findByPostIdAndMemberId(findPostDetailResponse.getPostId(), memberId);
         findPostDetailResponse.setAvailable(findApply.isEmpty());
 
+        if (findPostDetailResponse.getAuthorId().equals(memberId)) {
+            findPostDetailResponse.setAvailable(false);
+        }
+        
         return findPostDetailResponse;
     }
 
