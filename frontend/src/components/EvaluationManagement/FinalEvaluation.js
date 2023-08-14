@@ -2,16 +2,13 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import { toast } from "react-toastify";
-
+import { getProjectId } from "../../utils/getProjectId";
 import useEvaluationManagementMutation from "../../hooks/useEvaluationManagementMutation";
 
 import Button from "../../components/common/Button";
 import ControlMenu from "../common/ControlMenu";
 import ModalContainer from "../common/ModalContainer";
 import AlertCheckModal from "../common/AlertCheckModal";
-
-import { getProjectId } from "../../utils/getProjectId";
-import { getAlertText } from "../../utils/getAlertText";
 
 import enthusiasticParticipantBadgeImgUrl from "../../assets/enthusiastic-participant-badge-img.svg";
 import goodLeaderBadgeImgUrl from "../../assets/good-leader-badge-img.svg";
@@ -181,9 +178,9 @@ const FinalEvaluation = ({
                 ))}
               </div>
             </div>
-            <div className="badges">
+            <div className="evaluation-badges">
               <h1>누적 배지</h1>
-              <div className="badges-body">
+              <div className="evaluation-badges-body">
                 {badgeQuantity?.map((badge, idx) => (
                   <div className="badge" key={idx}>
                     <figure
