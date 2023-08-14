@@ -32,16 +32,8 @@
   justify-content: space-between;
 }
 .member-button {
-  padding: 0.5rem;
   display: flex;
-  justify-content: space-between;
-  Button {
-    height: 40px;
-    margin: 10px;
-  }
-  @include mobile {
-    flex-direction: column;
-  }
+  justify-content: flex-start;
 }
 
 // MemberFilterOption 컴포넌트
@@ -189,8 +181,11 @@
   }
 
   .member-grid-position {
+    display: flex;
     display: grid;
-    grid-template-columns: repeat(3, 0.25fr);
+    grid-template-columns: repeat(3, 0.2fr);
+    grid-gap: 27px;
+
     margin-top: 40px;
     border-bottom: 2px solid $gray-400;
     padding-bottom: 40px;
@@ -199,11 +194,13 @@
       white-space: nowrap;
       @include mobile {
         font-size: $body-font-size-small;
+        color: yello;
       }
     }
-    .options {
+    .recruitment-positions {
       display: grid;
       grid-template-columns: repeat(2, 0.5fr);
+
       align-items: center;
 
       input {
