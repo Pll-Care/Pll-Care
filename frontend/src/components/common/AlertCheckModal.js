@@ -1,9 +1,20 @@
 import Button from "./Button";
 import ModalContainer from "./ModalContainer";
 
-const AlertCheckModal = ({ onClose, open, text, clickHandler, width, height }) => {
+const AlertCheckModal = ({
+  onClose,
+  open,
+  text,
+  clickHandler,
+}) => {
   return (
-    <ModalContainer open={open} onClose={onClose} type="dark" width={width} height={height}>
+    <ModalContainer
+      open={open}
+      onClose={onClose}
+      type="dark"
+      width={500}
+      height={300}
+    >
       <div className="confirm-modal">
         <h1>{text}</h1>
         <div className="confirm-modal-button">

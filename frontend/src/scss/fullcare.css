@@ -2160,8 +2160,8 @@ a {
   align-items: center;
 }
 .MuiBox-root .project-editor {
-  height: 100%;
-  width: 100%;
+  height: 90%;
+  width: 80%;
   display: grid;
   grid-template-rows: 18% 70% 12%;
   grid-template-columns: 100%;
@@ -2175,7 +2175,7 @@ a {
   height: 100%;
   border-radius: 10px;
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 38px;
+  font-size: 24px;
   font-weight: 700;
 }
 .MuiBox-root .project-editor-body {
@@ -2330,28 +2330,38 @@ a {
   justify-content: space-between;
 }
 
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  background-color: white;
+}
+.modal_dark {
+  background-color: #01e89e;
+}
+
 .confirm-modal {
   text-align: center;
-  height: 100%;
+  height: 50%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
 }
 .confirm-modal h1 {
-  width: 66%;
+  width: 50%;
   line-height: 1.5;
   color: white;
   margin-bottom: 40px;
-  white-space: normal;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0;
+  white-space: pre-line;
+  word-break: keep-all;
   margin-left: auto;
   margin-right: auto;
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 16px;
-  font-weight: 500;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
 }
 .confirm-modal-button {
   display: flex;
