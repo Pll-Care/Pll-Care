@@ -35,8 +35,8 @@ const RecruitmentProject = ({ memberId }) => {
 
   return (
     <section>
-      <div className="profile_introduce_titleBox">
-        <h1>내가 모집하는 프로젝트</h1>
+      <div>
+        <h1 className="profile_introduce_title">내가 모집하는 프로젝트</h1>
       </div>
       {data?.data?.content.length > 0 ? (
         <div className="myProject">

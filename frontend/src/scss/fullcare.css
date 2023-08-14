@@ -3178,12 +3178,7 @@ a {
 .profile_introduce {
   background-color: #01e89e;
 }
-.profile_introduce_titleBox {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.profile_introduce_titleBox > h1 {
+.profile_introduce_title {
   font-size: 24px;
   font-weight: bold;
 }
@@ -3197,6 +3192,7 @@ a {
   margin: 0 auto;
   min-height: 150px;
   display: flex;
+  flex-direction: row;
   justify-content: start;
   align-items: center;
   gap: 30px;
@@ -3271,8 +3267,9 @@ a {
 .profile_body_introduce_Box_title {
   width: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   padding-bottom: 8px;
 }
 .profile_body_introduce_Box_title > h2 {
@@ -3285,8 +3282,8 @@ a {
 .profile_body_introduce_contactBox_items {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   justify-content: center;
+  align-items: flex-start;
   gap: 24px;
 }
 .profile_body_introduce_contactBox_items_item {
@@ -3310,8 +3307,9 @@ a {
 .profile_body_introduce_contactBox_items_email {
   width: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 }
 .profile_body_introduce_positionBox_position > span {
   color: #767676;
@@ -3337,21 +3335,21 @@ a {
   border-top-left-radius: 24px;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
   gap: 48px;
-  background-color: #f9f9f9;
 }
 .profile_nav_link {
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  align-items: center;
+  min-width: 48px;
+  min-height: 48px;
   background-color: #00aa72;
   border-radius: 15px;
 }
 .profile_nav_link > img {
-  border: 1px salmon;
   width: 27px;
   height: 27px;
 }
@@ -3474,8 +3472,9 @@ a {
   margin-bottom: 15px;
   padding: 5px 10px;
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 }
 .project_list_item_box {
   width: 100%;
@@ -3484,8 +3483,9 @@ a {
   padding: 10px;
   width: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   gap: 30px;
 }
 .project_list_item_title-date > :first-child {
@@ -3502,6 +3502,7 @@ a {
 .project_list_item_year {
   width: 100%;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   gap: 8px;
@@ -3532,8 +3533,9 @@ a {
 .project_list_blank {
   min-height: 80px;
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: center;
+  align-items: center;
 }
 .project_list_blank > span {
   font-size: 18px;
@@ -3542,6 +3544,8 @@ a {
 .project_item_name {
   margin-right: 15px;
   display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
   min-width: 85px;
   font-weight: 700;
@@ -3549,8 +3553,9 @@ a {
 
 .fl_bw {
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 }
 
 .fl {
@@ -3711,8 +3716,9 @@ a {
   border: 1px solid #01e89e;
   border-radius: 15px;
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   padding: 15px 24px;
 }
 .evaluate_project_item_user {
@@ -3736,8 +3742,9 @@ a {
 .evaluate_project_item_score {
   width: 50%;
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 }
 .evaluate_project_item_score > :first-child {
   color: #7a7a7a;
@@ -3768,8 +3775,9 @@ a {
   width: 24px;
   height: 24px;
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: center;
+  align-items: center;
 }
 
 .projectEvaluate {
@@ -3788,12 +3796,14 @@ a {
   border-radius: 25px;
   padding: 21px;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
 
 .badges {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   gap: 26px;
@@ -3801,8 +3811,9 @@ a {
 
 .badge {
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   gap: 12px;
 }
 
@@ -3825,8 +3836,9 @@ a {
   color: #7a7a7a;
   font-weight: 600;
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: center;
+  align-items: center;
   height: 28px;
 }
 .badge_quantity_score {
@@ -3894,8 +3906,9 @@ a {
   font-weight: 700;
   font-size: 12px;
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: center;
+  align-items: center;
 }
 .finalEvaluate_userContent {
   font-size: 14px;

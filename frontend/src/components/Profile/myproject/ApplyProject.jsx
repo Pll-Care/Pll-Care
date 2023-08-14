@@ -35,8 +35,8 @@ const ApplyProject = ({ memberId }) => {
 
   return (
     <section>
-      <div className="profile_introduce_titleBox">
-        <h1>지원한 프로젝트</h1>
+      <div>
+        <h1 className="profile_introduce_title">지원한 프로젝트</h1>
       </div>
       {data?.data?.content.length > 0 ? (
         <div className="myProject">

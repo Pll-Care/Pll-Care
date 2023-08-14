@@ -5,8 +5,8 @@ import ProjectBox from "./ProjectBox";
 const Introduce = () => {
   return (
     <div>
-      <div className="profile_introduce_titleBox">
-        <h1>개인정보</h1>
+      <div>
+        <h1 className="profile_introduce_title">개인정보</h1>
       </div>
       <div className="profile_introduce_informationBox">
         <ContactBox />

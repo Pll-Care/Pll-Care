@@ -19,8 +19,8 @@ const ProjectEvaluate = () => {
 
   return (
     <div>
-      <div className="profile_introduce_titleBox">
-        <h1>{title}</h1>
+      <div>
+        <h1 className="profile_introduce_title">{title}</h1>
       </div>
       <div className="projectEvaluate">
         <BadgeBox badgeDtos={data?.data?.badgeDtos} />

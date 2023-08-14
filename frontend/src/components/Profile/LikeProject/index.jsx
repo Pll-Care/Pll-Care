@@ -28,8 +28,8 @@ const LikeProject = () => {
   }, [currentPageNumber, refetch]);
   return (
     <div>
-      <div className="profile_introduce_titleBox">
-        <h1>'좋아요' 한 모집글</h1>
+      <div>
+        <h1 className="profile_introduce_title">'좋아요' 한 모집글</h1>
       </div>
       <div className="myProject">
         {data?.data?.content.length > 0 ? (
