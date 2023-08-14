@@ -218,24 +218,6 @@
     text-align: right;
   }
 }
-// Confirm Modal 컴포넌트
-.confirm-modal {
-  text-align: center;
-  h1 {
-    color: white;
-    font-family: $heading-font;
-    margin-bottom: 40px;
-    font-size: $sub-heading-font-size;
-  }
-  &-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    Button {
-      margin: 0px 5px;
-    }
-  }
-}
 
 // scheduleDetailModal 컴포넌트
 .schedule-detail-modal {

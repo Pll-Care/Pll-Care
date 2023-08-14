@@ -1,11 +1,14 @@
 .project-management {
-  height: 300px;
+  min-height: 65vh;
+  display: flex;
+  align-items: center;
 
   .project-button-wrapper {
     figure {
       border-radius: 50%;
-      width: 230px;
-      height: 230px;
+      width: 210px;
+      height: 210px;
+      margin-bottom: 30px;
       background: {
         position: center;
         repeat: no-repeat;
@@ -15,37 +18,33 @@
     }
 
     h1 {
-      color: #003b28;
-      font-size: $body-font-size;
-      font-family: $body-font;
+      color: $green-500;
+
+      @include heading_04;
     }
 
     @include displayFlex(column, space-around);
   }
 
-  .completed-project {
-    display: grid;
-    grid-template-columns: repeat(3, 30%);
+  .completed-project,
+  .ongoing-project {
+    width: 100%;
+    display: flex;
     justify-content: space-between;
+    align-items: center;
+    height: 100%;
 
-    .project-button-wrapper {
-      figure {
-        border-radius: 50%;
-        width: 230px;
-        height: 230px;
-        background: {
-          position: center;
-          repeat: no-repeat;
-          size: 100% 100%;
-        }
-        pointer-events: none;
-      }
+    @media (max-width: 1000px) {
+      gap: 25px;
+      @include displayFlex(column);
     }
   }
 
-  .ongoing-project {
-    display: grid;
-    grid-template-columns: repeat(3, 30%);
-    justify-content: space-between;
+  .completed-project {
+    .project-button-wrapper {
+      figure {
+        pointer-events: none;
+      }
+    }
   }
 }

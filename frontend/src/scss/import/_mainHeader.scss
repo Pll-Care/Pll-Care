@@ -1,9 +1,9 @@
 .main-header {
   border-bottom: $border;
-  height: 90px;
+  height: 80px;
   display: grid;
   grid-template-rows: 100%;
-  grid-template-columns: 20% 60% 20%;
+  grid-template-columns: 20% 55% 25%;
 
   &-left-col {
     .main-header-logo-img {
@@ -31,10 +31,14 @@
 
   .nav_item {
     & > a {
-      font-size: $link-font-size;
-      font-family: $link-font;
-      color: black;
+      color: $green-500;
       text-decoration: none;
+
+      @include heading_03;
+    }
+
+    .main-header-link-off {
+      color: $gray-500;
     }
   }
 

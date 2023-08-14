@@ -67,8 +67,8 @@ video {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: none;
-     -moz-text-size-adjust: none;
-          text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  text-size-adjust: none;
 }
 
 footer,
@@ -207,7 +207,7 @@ a {
   border-radius: 30px;
   box-shadow: 0px 10px 35px 5px rgba(0, 0, 0, 0.04);
   width: 100%;
-  height: 70px;
+  height: 58px;
   margin-bottom: 25px;
   margin-left: auto;
   margin-right: auto;
@@ -218,34 +218,26 @@ a {
 }
 .management-header a {
   text-decoration: none;
+  color: #7a7a7a;
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
-  color: black;
+  font-size: 20px;
+  font-weight: 600;
+}
+.management-header .header-link-on {
+  color: #003b28;
 }
 
 @media (min-width: 767px) and (max-width: 1024px) {
   .management-header {
-    height: 65px;
-  }
-  .management-header a {
-    font-size: 22px;
-  }
-}
-@media (max-width: 767px) {
-  .management-header {
-    height: 45px;
-    width: 90%;
-  }
-  .management-header a {
-    font-size: 13px;
+    margin-bottom: 60px;
   }
 }
 .main-header {
   border-bottom: 2px solid #01e89e;
-  height: 90px;
+  height: 80px;
   display: grid;
   grid-template-rows: 100%;
-  grid-template-columns: 20% 60% 20%;
+  grid-template-columns: 20% 55% 25%;
 }
 .main-header-left-col {
   display: flex;
@@ -271,10 +263,14 @@ a {
   align-items: center;
 }
 .main-header .nav_item > a {
-  font-size: 25px;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  color: black;
+  color: #003b28;
   text-decoration: none;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+}
+.main-header .nav_item .main-header-link-off {
+  color: #7a7a7a;
 }
 .main-header-right-col {
   display: flex;
@@ -314,112 +310,113 @@ a {
 }
 
 .button {
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 20px;
   background-color: white;
-  color: #01e89e;
+  color: #7a7a7a;
   border-radius: 45px;
   border: 2px solid #01e89e;
-  padding: 5px 25px;
+  padding: 5px 20px;
+  height: 37px;
   cursor: pointer;
   /* 텍스트 줄바꿈 방지 */
   display: inline-flex;
   align-items: center;
   white-space: nowrap;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+}
+.button_gray {
+  color: #7a7a7a;
+}
+.button_white {
+  color: white;
+}
+.button_green {
+  color: #00aa72;
+}
+.button_black {
+  color: black;
 }
 .button_small {
-  font-size: 14px;
-  padding: 3px 13px;
+  height: 25px;
+  padding: 2px 10px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
 }
 .button_positive {
-  color: white;
   background-color: #01e89e;
-  border: 2px solid #01e89e;
+  border-radius: 10px;
 }
 .button_positive_dark {
   color: white;
   background-color: #00aa72;
-  border: 2px solid #00aa72;
 }
 .button_underlined {
   background-color: transparent;
   border: none;
   color: #7a7a7a;
   text-decoration: underline;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
 }
 .button_profile {
   background-color: #01e89e;
   color: white;
-  border: 2px solid white;
+  width: 37px;
+  height: 37px;
 }
 
-@media (min-width: 767px) and (max-width: 1024px) {
-  .button {
-    font-size: 17px;
-  }
-}
-@media (max-width: 767px) {
-  .button {
-    font-size: 14px;
-    padding: 3px 13px;
-  }
-}
 .control-menu {
   border-radius: 55px;
   border: none;
   font-family: "IBM Plex Sans KR", sans-serif;
-  color: #01e89e;
+  color: #00aa72;
   text-align: center;
   cursor: pointer;
   -webkit-appearance: none; /* for chrome */
   -moz-appearance: none; /*for firefox*/
   appearance: none;
-  background-image: url("../assets/select-arrow-img.png");
-  background-position: 88%;
-  background-repeat: no-repeat;
-  background-size: 10%, 10%;
+  width: 72px;
+  height: 30.8px;
+  border-radius: 10px;
+  border: 2px solid #01e89e;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
 }
-.control-menu::-ms-expand {
-  display: none; /*for IE10,11*/
+.control-menu-small {
+  height: 25px;
+  padding: 2px 10px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
 }
 
-@media (min-width: 1024px) {
-  .control-menu {
-    font-size: 20px;
-    width: 135px;
-    height: 40px;
-  }
-}
-@media (min-width: 767px) and (max-width: 1024px) {
-  .control-menu {
-    font-size: 17px;
-    padding: 5px 25px;
-  }
-}
-@media (max-width: 767px) {
-  .control-menu {
-    font-size: 14px;
-    padding: 3px 13px;
-  }
-}
 .pagination-wrapper {
   width: 250px;
   margin-top: 8px;
   margin-bottom: 10px;
+  height: 30px;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 .pagination-wrapper button {
   border: none;
   cursor: pointer;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 20px;
   color: white;
   background-color: transparent;
   margin-top: auto;
   margin-bottom: auto;
+  color: #7a7a7a;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
   margin-left: auto;
   margin-right: auto;
 }
@@ -429,19 +426,19 @@ a {
   justify-content: space-between;
   align-items: center;
 }
-.pagination-wrapper ul .pagination-page-number-on {
-  cursor: pointer;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
-  color: white;
-  padding: 5px;
-}
+.pagination-wrapper ul .pagination-page-number-on,
 .pagination-wrapper ul .pagination-page-number {
   cursor: pointer;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 20px;
-  color: white;
   padding: 5px;
+  color: #7a7a7a;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+}
+.pagination-wrapper-white button,
+.pagination-wrapper-white ul .pagination-page-number-on,
+.pagination-wrapper-white ul .pagination-page-number {
+  color: white;
 }
 
 .toggle-menu-button-wrapper {
@@ -452,7 +449,7 @@ a {
   top: 0;
   background: rgba(0, 0, 0, 0.8);
   -webkit-backdrop-filter: blur(5px);
-          backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
   opacity: 90%;
 }
 .toggle-menu-button-wrapper .toggle-menu-button {
@@ -1096,24 +1093,6 @@ a {
   text-align: right;
 }
 
-.confirm-modal {
-  text-align: center;
-}
-.confirm-modal h1 {
-  color: white;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  margin-bottom: 40px;
-  font-size: 25px;
-}
-.confirm-modal-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.confirm-modal-button Button {
-  margin: 0px 5px;
-}
-
 .schedule-detail-modal {
   border: 2px solid #01e89e;
   border-radius: 10px;
@@ -1177,66 +1156,84 @@ a {
   margin-top: 30px;
 }
 
-/* MEETING RECORD MANAGEMENT */
-.meeting-record-management-wrapper {
-  padding-bottom: 30px;
-}
-.meeting-record-management-wrapper .meeting-record {
-  /* MEETING RECORD BOOK MARKED RECORD LIST */
-  /* ALL MEETING RECORD LIST */
-  /* MEETING RECORD ITEM */
-}
-.meeting-record-management-wrapper .meeting-record-management {
+.meeting-record-management {
   width: 100%;
-  border: 2px solid #01e89e;
+  height: 630px;
   display: flex;
   justify-content: space-between;
   border-radius: 35px;
   background-color: #01e89e;
+  box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1);
 }
-.meeting-record-management-wrapper .meeting-record-management .meeting-record-heading {
+.meeting-record-management .meeting-record-heading {
   font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
 }
-.meeting-record-management-wrapper .meeting-record-list {
-  width: 35%;
-  padding: 10px;
+.meeting-record-list {
+  width: 30%;
+  padding: 5px;
   border-top-left-radius: 35px;
   border-bottom-left-radius: 35px;
   color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
-.meeting-record-management-wrapper .meeting-record-book-marked-record-list {
+@media (min-width: 767px) and (max-width: 1024px) {
+  .meeting-record-list {
+    padding: 10px;
+  }
+}
+.meeting-record-book-marked-record-list {
   padding-top: 10px;
   margin-bottom: 10px;
-  height: 48%;
+  height: 42%;
   display: grid;
-  grid-template-rows: 13% 87%;
+  grid-template-rows: 15% 85%;
 }
-.meeting-record-management-wrapper .meeting-record-book-marked-record-list .meeting-record-heading {
-  height: 40px;
+.meeting-record-book-marked-record-list .meeting-record-heading {
+  height: 100%;
   margin-bottom: 20px;
   padding: 5px;
 }
-.meeting-record-management-wrapper .meeting-record-book-marked-record-list .meeting-record-body {
-  height: 100%;
+.meeting-record-book-marked-record-list .meeting-record-body {
   display: grid;
-  grid-template-rows: 86% 14%;
+  grid-template-rows: 80% 20%;
 }
-.meeting-record-management-wrapper .meeting-record-book-marked-record-list .meeting-record-body .meeting-record-all-meeting-record-list-data {
+.meeting-record-book-marked-record-list
+  .meeting-record-body
+  .meeting-record-all-meeting-record-list-data {
   height: 100%;
   width: 100%;
 }
-.meeting-record-management-wrapper .meeting-record-book-marked-record-list .meeting-record-body .pagination-wrapper {
-  margin-left: auto;
-  margin-right: auto;
+.meeting-record-book-marked-record-list
+  .meeting-record-body
+  .pagination-wrapper {
+  margin-top: auto;
 }
-.meeting-record-management-wrapper .meeting-record-all-meeting-record-list {
-  height: 52%;
+@media (min-width: 767px) and (max-width: 1024px) {
+  .meeting-record-book-marked-record-list
+    .meeting-record-body
+    .pagination-wrapper {
+    width: 100%;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .meeting-record-book-marked-record-list {
+    width: 100%;
+  }
+}
+.meeting-record-all-meeting-record-list {
+  height: 47%;
   display: grid;
-  grid-template-rows: 20% 80%;
+  grid-template-columns: 100%;
+  grid-template-rows: 25% 75%;
 }
-.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .meeting-record-list-header {
+.meeting-record-all-meeting-record-list .meeting-record-list-header {
   width: 100%;
-  height: 100px;
+  height: 100%;
   flex-wrap: wrap;
   display: flex;
   flex-direction: row;
@@ -1245,138 +1242,200 @@ a {
   margin-left: auto;
   margin-right: auto;
 }
-.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .meeting-record-list-header .header-left-col {
+.meeting-record-all-meeting-record-list
+  .meeting-record-list-header
+  .header-left-col {
   width: 100%;
+  height: 60%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .meeting-record-list-header .header-left-col .meeting-record-heading {
+.meeting-record-all-meeting-record-list
+  .meeting-record-list-header
+  .header-left-col
+  .meeting-record-heading {
   height: 40px;
   padding: 5px;
 }
-.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .meeting-record-list-header .header-left-col .control-menu {
+.meeting-record-all-meeting-record-list
+  .meeting-record-list-header
+  .header-left-col
+  .control-menu {
   margin-right: 5px;
 }
-.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .meeting-record-list-header .header-right-col {
+.meeting-record-all-meeting-record-list
+  .meeting-record-list-header
+  .header-right-col {
   margin-left: auto;
+  height: 40%;
+  border-radius: 10px;
 }
-.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .meeting-record-list-header .header-right-col Button {
+.meeting-record-all-meeting-record-list
+  .meeting-record-list-header
+  .header-right-col
+  Button {
   margin-right: 5px;
 }
-.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .record-list-item-wrapper {
-  padding-top: 20px;
+.meeting-record-all-meeting-record-list .record-list-item-wrapper {
+  padding-top: 10px;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
 }
-.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .meeting-record-all-meeting-record-list-data {
-  height: 100%;
-  width: 100%;
+@media (min-width: 767px) and (max-width: 1024px) {
+  .meeting-record-all-meeting-record-list .record-list-item-wrapper {
+    display: grid;
+    grid-template-columns: 100%;
+  }
 }
-.meeting-record-management-wrapper .meeting-record-all-meeting-record-list .pagination-wrapper {
+.meeting-record-all-meeting-record-list
+  .meeting-record-all-meeting-record-list-data {
+  height: 100%;
+}
+.meeting-record-all-meeting-record-list .pagination-wrapper {
   margin-top: auto;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor {
-  width: 65%;
+@media (min-width: 767px) and (max-width: 1024px) {
+  .meeting-record-all-meeting-record-list .pagination-wrapper {
+    width: 100%;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .meeting-record-all-meeting-record-list {
+    width: 100%;
+  }
+}
+.meeting-record-new-meeting-record-editor {
+  width: 70%;
   border-radius: 35px;
   background-color: #fcfcfc;
-  padding: 25px;
+  padding: 50px 25px;
   color: #7a7a7a;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-initial-state {
+.meeting-record-new-meeting-record-editor .meeting-record-initial-state {
   color: #01e89e;
-  height: 100px;
+  height: 60px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-editor {
+.meeting-record-new-meeting-record-editor .meeting-record-editor {
   width: 93%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: space-between;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-editor .meeting-record-title {
+.meeting-record-new-meeting-record-editor .initial-meeting-record-heading {
+  color: #00aa72;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+}
+.meeting-record-new-meeting-record-editor
+  .meeting-record-editor
+  .meeting-record-title {
   height: 15%;
   border-bottom: 2px solid #d9d9d9;
   display: flex;
   justify-content: space-between;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-title input {
+.meeting-record-new-meeting-record-editor .meeting-record-title input {
   width: 87%;
-  height: 70px;
+  height: 45px;
   border: none;
   border-radius: 10px;
   padding: 10px;
-  font-size: 40px;
-  font-family: "IBM Plex Sans KR", sans-serif;
   align-self: center;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-title input::-moz-placeholder {
+.meeting-record-new-meeting-record-editor
+  .meeting-record-title
+  input::-moz-placeholder {
   color: #d9d9d9;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-title input::placeholder {
+.meeting-record-new-meeting-record-editor
+  .meeting-record-title
+  input::placeholder {
   color: #d9d9d9;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-title button {
+.meeting-record-new-meeting-record-editor .meeting-record-title button {
   align-self: flex-end;
+  margin-bottom: 5px;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .react-quill {
-  height: 85%;
+.meeting-record-new-meeting-record-editor .react-quill {
+  height: 100%;
   line-height: 1.5;
   margin-top: 20px;
   margin-bottom: 68px;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record {
+.meeting-record-new-meeting-record-editor .meeting-record {
   height: 100%;
   width: 93%;
   color: #7a7a7a;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record .meeting-record-heading {
-  height: 15%;
+.meeting-record-new-meeting-record-editor
+  .meeting-record
+  .meeting-record-heading {
+  height: 25%;
   display: grid;
-  font-size: 15px;
-  font-family: "Noto Sans KR", sans-serif;
   grid-template-rows: 20% 60% 20%;
   border-bottom: 2px solid #d9d9d9;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-heading .meeting-record-title {
-  font-size: 40px;
-  font-family: "IBM Plex Sans KR", sans-serif;
+.meeting-record-new-meeting-record-editor .meeting-record-button-wrapper {
+  margin-bottom: 20px;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .meeting-record-container {
+.meeting-record-new-meeting-record-editor .meeting-record-date,
+.meeting-record-new-meeting-record-editor .meeting-record-author {
+  margin-bottom: 20px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+.meeting-record-new-meeting-record-editor .meeting-record-title {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+}
+.meeting-record-new-meeting-record-editor .meeting-record-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .selected-meeting-record-content,
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .created-meeting-record-content {
+.meeting-record-new-meeting-record-editor .selected-meeting-record-content,
+.meeting-record-new-meeting-record-editor .created-meeting-record-content {
+  width: 100%;
   height: 85%;
   line-height: 1.5;
   padding: 10px;
 }
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .selected-meeting-record-content img,
-.meeting-record-management-wrapper .meeting-record-new-meeting-record-editor .created-meeting-record-content img {
+.meeting-record-new-meeting-record-editor .selected-meeting-record-content p,
+.meeting-record-new-meeting-record-editor .created-meeting-record-content p {
   max-width: 100%;
 }
-.meeting-record-management-wrapper .meeting-record-item {
+.meeting-record-new-meeting-record-editor .selected-meeting-record-content img,
+.meeting-record-new-meeting-record-editor .created-meeting-record-content img {
+  max-width: 100%;
+}
+.meeting-record-item {
   background-color: white;
   margin-bottom: 10px;
-  border-radius: 20px;
-  width: 95%;
-  height: 110px;
+  border-radius: 10px;
+  width: 100%;
+  height: 71px;
   padding: 10px 20px;
   color: #7a7a7a;
   cursor: pointer;
@@ -1387,34 +1446,22 @@ a {
   justify-content: space-around;
   align-items: flex-start;
 }
-.meeting-record-management-wrapper .meeting-record-item-date {
+.meeting-record-item-date {
   font-family: "Noto Sans KR", sans-serif;
+  font-size: 10px;
+  font-weight: 500;
 }
-.meeting-record-management-wrapper .meeting-record-item-title {
-  font-family: "IBM Plex Sans KR", sans-serif;
-}
-.meeting-record-management-wrapper .meeting-record-item-writer {
+.meeting-record-item-title {
   font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 900;
+}
+.meeting-record-item-writer {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 10px;
+  font-weight: 500;
 }
 
-@media (min-width: 1024px) {
-  .meeting-record-management {
-    height: 1080px;
-    width: 85%;
-  }
-  .meeting-record-management .meeting-record-heading {
-    font-size: 25px;
-  }
-  .meeting-record-item-date {
-    font-size: 18px;
-  }
-  .meeting-record-item-title {
-    font-size: 25px;
-  }
-  .meeting-record-item-writer {
-    font-size: 18px;
-  }
-}
 .teamMember {
   width: 85%;
   margin: 0 auto;
@@ -1605,55 +1652,126 @@ a {
   margin-left: auto;
   margin-right: auto;
 }
-.evaluation-management-ranking-wrapper, .evaluation-management-ranking-wrapper-non-evaluated {
-  height: 500px;
+.evaluation-management-ranking-wrapper,
+.evaluation-management-ranking-wrapper-non-evaluated {
   padding-bottom: 30px;
   border-bottom: 2px solid #d9d9d9;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-.evaluation-management-ranking-wrapper .evaluation-management-chart-wrapper, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-chart-wrapper {
-  height: 470px;
-  width: 65%;
-}
-.evaluation-management-ranking-wrapper .evaluation-management-chart-wrapper h1, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-chart-wrapper h1 {
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
-  color: #01e89e;
-  padding: 10px;
-}
-.evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart {
-  border: 2px solid #01e89e;
-  border-radius: 30px;
-  margin-right: 10px;
-  width: 98%;
-  height: calc(100% - 45px);
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 18px;
-  overflow-x: hidden;
+  flex-wrap: wrap;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
-.evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart .slick-slider, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart .slick-slider {
-  width: 96%;
+.evaluation-management-ranking-wrapper .evaluation-management-chart-wrapper,
+.evaluation-management-ranking-wrapper-non-evaluated
+  .evaluation-management-chart-wrapper {
+  height: 350px;
+  width: 62%;
+}
+.evaluation-management-ranking-wrapper .evaluation-management-chart-wrapper h1,
+.evaluation-management-ranking-wrapper-non-evaluated
+  .evaluation-management-chart-wrapper
+  h1 {
+  color: #01e89e;
+  padding: 10px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+}
+@media (max-width: 1000px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-chart-wrapper,
+  .evaluation-management-ranking-wrapper-non-evaluated
+    .evaluation-management-chart-wrapper {
+    width: 600px;
+  }
+}
+.evaluation-management-ranking-wrapper
+  .evaluation-management-show-evaluation-chart,
+.evaluation-management-ranking-wrapper-non-evaluated
+  .evaluation-management-show-evaluation-chart {
+  border: 2px solid #01e89e;
+  border-radius: 30px;
+  margin-right: 10px;
+  width: 100%;
+  height: 300px;
+  overflow-x: hidden;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.evaluation-management-ranking-wrapper
+  .evaluation-management-show-evaluation-chart
+  .slick-slider,
+.evaluation-management-ranking-wrapper-non-evaluated
+  .evaluation-management-show-evaluation-chart
+  .slick-slider {
+  width: 100%;
   height: 83%;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
 }
-.evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart .slick-slider .slick-list, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart .slick-slider .slick-list {
-  width: 100%;
-  height: 95%;
+.evaluation-management-ranking-wrapper
+  .evaluation-management-show-evaluation-chart
+  .slick-slider
+  .slick-list,
+.evaluation-management-ranking-wrapper-non-evaluated
+  .evaluation-management-show-evaluation-chart
+  .slick-slider
+  .slick-list {
+  width: 90%;
+  height: 100%;
 }
-.evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart .slick-arrow, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart .slick-arrow {
+.evaluation-management-ranking-wrapper
+  .evaluation-management-show-evaluation-chart
+  .slick-slider
+  .slick-list
+  .recharts-wrapper,
+.evaluation-management-ranking-wrapper
+  .evaluation-management-show-evaluation-chart
+  .slick-slider
+  .slick-list
+  .recharts-surface,
+.evaluation-management-ranking-wrapper-non-evaluated
+  .evaluation-management-show-evaluation-chart
+  .slick-slider
+  .slick-list
+  .recharts-wrapper,
+.evaluation-management-ranking-wrapper-non-evaluated
+  .evaluation-management-show-evaluation-chart
+  .slick-slider
+  .slick-list
+  .recharts-surface {
+  max-width: 100%;
+}
+.evaluation-management-ranking-wrapper
+  .evaluation-management-show-evaluation-chart
+  .slick-slider
+  .slick-list
+  .recharts-surface,
+.evaluation-management-ranking-wrapper-non-evaluated
+  .evaluation-management-show-evaluation-chart
+  .slick-slider
+  .slick-list
+  .recharts-surface {
+  height: 100%;
+}
+.evaluation-management-ranking-wrapper
+  .evaluation-management-show-evaluation-chart
+  .slick-arrow,
+.evaluation-management-ranking-wrapper-non-evaluated
+  .evaluation-management-show-evaluation-chart
+  .slick-arrow {
   display: none;
 }
-.evaluation-management-ranking-wrapper .custom-tooltip, .evaluation-management-ranking-wrapper-non-evaluated .custom-tooltip {
+.evaluation-management-ranking-wrapper .custom-tooltip,
+.evaluation-management-ranking-wrapper-non-evaluated .custom-tooltip {
   background-color: #d7d7d7;
   opacity: 0.9;
   border: none;
@@ -1665,44 +1783,73 @@ a {
   justify-content: center;
   align-items: center;
 }
-.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking {
-  height: 470px;
+.evaluation-management-ranking-wrapper
+  .evaluation-management-evaluation-ranking,
+.evaluation-management-ranking-wrapper-non-evaluated
+  .evaluation-management-evaluation-ranking {
+  height: 350px;
   width: 35%;
   margin-left: 10px;
   overflow-y: hidden;
 }
-.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-header, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-header {
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
+.evaluation-management-ranking-wrapper
+  .evaluation-management-evaluation-ranking-header,
+.evaluation-management-ranking-wrapper-non-evaluated
+  .evaluation-management-evaluation-ranking-header {
   color: #01e89e;
   padding: 10px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
 }
-.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body {
+.evaluation-management-ranking-wrapper
+  .evaluation-management-evaluation-ranking-body,
+.evaluation-management-ranking-wrapper-non-evaluated
+  .evaluation-management-evaluation-ranking-body {
   height: calc(100% - 45px);
   background-color: #01e89e;
   border-radius: 25px;
-  padding: 30px;
-  padding-bottom: 5px;
-  overflow-y: scroll;
+  padding: 20px;
 }
-.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item {
+.evaluation-management-ranking-wrapper
+  .evaluation-management-evaluation-ranking-body
+  .evaluation-management-evaluation-ranking-item,
+.evaluation-management-ranking-wrapper-non-evaluated
+  .evaluation-management-evaluation-ranking-body
+  .evaluation-management-evaluation-ranking-item {
   border-radius: 20px;
   padding: 10px;
-  margin-bottom: 26px;
+  margin-bottom: 15px;
   background-color: white;
-  height: 104px;
+  height: 80px;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }
-.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-left-col, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-left-col {
+.evaluation-management-ranking-wrapper
+  .evaluation-management-evaluation-ranking-body
+  .evaluation-management-evaluation-ranking-item
+  .evaluation-management-left-col,
+.evaluation-management-ranking-wrapper-non-evaluated
+  .evaluation-management-evaluation-ranking-body
+  .evaluation-management-evaluation-ranking-item
+  .evaluation-management-left-col {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
 }
-.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-left-col figure, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-left-col figure {
+.evaluation-management-ranking-wrapper
+  .evaluation-management-evaluation-ranking-body
+  .evaluation-management-evaluation-ranking-item
+  .evaluation-management-left-col
+  figure,
+.evaluation-management-ranking-wrapper-non-evaluated
+  .evaluation-management-evaluation-ranking-body
+  .evaluation-management-evaluation-ranking-item
+  .evaluation-management-left-col
+  figure {
   width: 40px;
   height: 40px;
   margin-right: 5px;
@@ -1711,52 +1858,160 @@ a {
   background-repeat: no-repeat;
   background-size: 100%, 100%;
 }
-.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-left-col .ranking, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-left-col .ranking {
+.evaluation-management-ranking-wrapper
+  .evaluation-management-evaluation-ranking-body
+  .evaluation-management-evaluation-ranking-item
+  .evaluation-management-left-col
+  .ranking,
+.evaluation-management-ranking-wrapper-non-evaluated
+  .evaluation-management-evaluation-ranking-body
+  .evaluation-management-evaluation-ranking-item
+  .evaluation-management-left-col
+  .ranking {
   color: #01e89e;
-  font-size: 25px;
   font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
 }
-.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col {
+.evaluation-management-ranking-wrapper
+  .evaluation-management-evaluation-ranking-body
+  .evaluation-management-evaluation-ranking-item
+  .evaluation-management-right-col,
+.evaluation-management-ranking-wrapper-non-evaluated
+  .evaluation-management-evaluation-ranking-body
+  .evaluation-management-evaluation-ranking-item
+  .evaluation-management-right-col {
   width: 49%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
 }
-.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col .name, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col .name {
-  font-size: 25px;
-  font-family: "IBM Plex Sans KR", sans-serif;
+.evaluation-management-ranking-wrapper
+  .evaluation-management-evaluation-ranking-body
+  .evaluation-management-evaluation-ranking-item
+  .evaluation-management-right-col
+  .name,
+.evaluation-management-ranking-wrapper-non-evaluated
+  .evaluation-management-evaluation-ranking-body
+  .evaluation-management-evaluation-ranking-item
+  .evaluation-management-right-col
+  .name {
   color: #01e89e;
   margin-bottom: 4px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
 }
-.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col .score, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col .score {
-  font-size: 15px;
-  font-family: "Noto Sans KR", sans-serif;
+.evaluation-management-ranking-wrapper
+  .evaluation-management-evaluation-ranking-body
+  .evaluation-management-evaluation-ranking-item
+  .evaluation-management-right-col
+  .score,
+.evaluation-management-ranking-wrapper-non-evaluated
+  .evaluation-management-evaluation-ranking-body
+  .evaluation-management-evaluation-ranking-item
+  .evaluation-management-right-col
+  .score {
   color: #7a7a7a;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
 }
-.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item_1 .evaluation-management-left-col figure, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item_1 .evaluation-management-left-col figure {
+@media (max-width: 1000px) {
+  .evaluation-management-ranking-wrapper
+    .evaluation-management-evaluation-ranking-body
+    .evaluation-management-evaluation-ranking-item
+    .evaluation-management-right-col,
+  .evaluation-management-ranking-wrapper-non-evaluated
+    .evaluation-management-evaluation-ranking-body
+    .evaluation-management-evaluation-ranking-item
+    .evaluation-management-right-col {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
+@media (max-width: 1000px) {
+  .evaluation-management-ranking-wrapper
+    .evaluation-management-evaluation-ranking-body
+    .evaluation-management-evaluation-ranking-item,
+  .evaluation-management-ranking-wrapper-non-evaluated
+    .evaluation-management-evaluation-ranking-body
+    .evaluation-management-evaluation-ranking-item {
+    padding: 10px;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
+.evaluation-management-ranking-wrapper
+  .evaluation-management-evaluation-ranking-body
+  .evaluation-management-evaluation-ranking-item_1
+  .evaluation-management-left-col
+  figure,
+.evaluation-management-ranking-wrapper-non-evaluated
+  .evaluation-management-evaluation-ranking-body
+  .evaluation-management-evaluation-ranking-item_1
+  .evaluation-management-left-col
+  figure {
   background-image: url("../assets/ranking-1-img.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 85%, 85%;
 }
-.evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body::-webkit-scrollbar, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body::-webkit-scrollbar {
+@media (max-width: 1000px) {
+  .evaluation-management-ranking-wrapper
+    .evaluation-management-evaluation-ranking-body,
+  .evaluation-management-ranking-wrapper-non-evaluated
+    .evaluation-management-evaluation-ranking-body {
+    gap: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+.evaluation-management-ranking-wrapper
+  .evaluation-management-evaluation-ranking-body::-webkit-scrollbar,
+.evaluation-management-ranking-wrapper-non-evaluated
+  .evaluation-management-evaluation-ranking-body::-webkit-scrollbar {
   display: none;
+}
+@media (max-width: 1000px) {
+  .evaluation-management-ranking-wrapper
+    .evaluation-management-evaluation-ranking,
+  .evaluation-management-ranking-wrapper-non-evaluated
+    .evaluation-management-evaluation-ranking {
+    width: 600px;
+    height: 200px;
+    margin-top: 20px;
+  }
 }
 .evaluation-management .evaluation-management-ranking-wrapper {
   position: relative;
   width: 100%;
 }
 .evaluation-management .evaluation-management-ranking-wrapper-non-evaluated,
-.evaluation-management .final-evaluation-management-ranking-wrapper-non-evaluated {
+.evaluation-management
+  .final-evaluation-management-ranking-wrapper-non-evaluated {
   position: relative;
   width: 100%;
   background-color: #fcfcfc;
   filter: opacity(35%) blur(1px);
   pointer-events: none;
 }
-.evaluation-management .evaluation-management-ranking-wrapper-non-evaluated::before,
-.evaluation-management .final-evaluation-management-ranking-wrapper-non-evaluated::before {
+.evaluation-management
+  .evaluation-management-ranking-wrapper-non-evaluated::before,
+.evaluation-management
+  .final-evaluation-management-ranking-wrapper-non-evaluated::before {
   content: "";
   position: absolute;
   top: 0;
@@ -1766,10 +2021,12 @@ a {
   z-index: 2;
   background-size: 100% 100%;
 }
-.evaluation-management .evaluation-management-ranking-wrapper-non-evaluated::before {
+.evaluation-management
+  .evaluation-management-ranking-wrapper-non-evaluated::before {
   background: url("../assets/evaluation-error-text.png") no-repeat center;
 }
-.evaluation-management .final-evaluation-management-ranking-wrapper-non-evaluated::before {
+.evaluation-management
+  .final-evaluation-management-ranking-wrapper-non-evaluated::before {
   background: url("../assets/final-evaluation-error-text.png") no-repeat center;
 }
 .evaluation-management-participant-wrapper {
@@ -1779,10 +2036,11 @@ a {
   margin-right: auto;
 }
 .evaluation-management-participant-wrapper h1 {
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
   color: #01e89e;
   padding-top: 15px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
 }
 .evaluation-management-participant-wrapper .evaluation-management-participants {
   flex-wrap: wrap;
@@ -1795,7 +2053,9 @@ a {
   justify-content: space-between;
   align-items: center;
 }
-.evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant {
+.evaluation-management-participant-wrapper
+  .evaluation-management-participants
+  .evaluation-management-participant {
   box-shadow: 0px 10px 20px 5px rgba(0, 0, 0, 0.07);
   border-radius: 20px;
   padding: 20px;
@@ -1809,8 +2069,10 @@ a {
   justify-content: center;
   align-items: center;
 }
-.evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-left-col .evaluation-management-user-profile {
-  border: 2px solid #01e89e;
+.evaluation-management-participant-wrapper
+  .evaluation-management-participants
+  .evaluation-management-participant-left-col
+  .evaluation-management-user-profile {
   width: 70px;
   height: 70px;
   border-radius: 50%;
@@ -1820,42 +2082,58 @@ a {
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
-.evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col {
+.evaluation-management-participant-wrapper
+  .evaluation-management-participants
+  .evaluation-management-participant-right-col {
   width: 100%;
   height: 95%;
   margin-left: 30px;
   color: #7a7a7a;
-  font-size: 25px;
-  font-family: "IBM Plex Sans KR", sans-serif;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-.evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col .name-badge-wrapper {
+.evaluation-management-participant-wrapper
+  .evaluation-management-participants
+  .evaluation-management-participant-right-col
+  .name-badge-wrapper {
   height: 100%;
+  color: #7a7a7a;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
 }
-.evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col .evaluation-management-badges {
+.evaluation-management-participant-wrapper
+  .evaluation-management-participants
+  .evaluation-management-participant-right-col
+  .evaluation-management-badges {
   width: 180px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-.evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col .evaluation-management-badges .badge-quantity-container {
+.evaluation-management-participant-wrapper
+  .evaluation-management-participants
+  .evaluation-management-participant-right-col
+  .evaluation-management-badges
+  .badge-quantity-container {
   height: 35px;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-.evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col .evaluation-management-badges figure {
+.evaluation-management-participant-wrapper
+  .evaluation-management-participants
+  .evaluation-management-participant-right-col
+  .evaluation-management-badges
+  figure {
   border-radius: 50%;
   width: 30px;
   height: 30px;
@@ -1863,14 +2141,38 @@ a {
   background-repeat: no-repeat;
   background-size: 100%;
 }
-.evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col .evaluation-management-badges .badge-quantity {
+.evaluation-management-participant-wrapper
+  .evaluation-management-participants
+  .evaluation-management-participant-right-col
+  .evaluation-management-badges
+  .badge-quantity {
   position: relative;
   margin-right: 18px;
 }
-.evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col .evaluation-management-badges .badge-quantity div {
+.evaluation-management-participant-wrapper
+  .evaluation-management-participants
+  .evaluation-management-participant-right-col
+  .evaluation-management-badges
+  .badge-quantity
+  div {
   position: absolute;
   top: 5px;
   left: 20px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+}
+@media (max-width: 1000px) {
+  .evaluation-management-participant-wrapper
+    .evaluation-management-participants
+    .evaluation-management-participant {
+    width: 100%;
+  }
+}
+@media (max-width: 1000px) {
+  .evaluation-management-participant-wrapper {
+    width: 600px;
+  }
 }
 .evaluation-management-final-evaluation {
   overflow: auto;
@@ -1878,14 +2180,21 @@ a {
   width: 100%;
   height: 90vh;
   color: white;
+}
+.evaluation-management-final-evaluation h1 {
+  color: #01e89e;
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
+  font-size: 20px;
+  font-weight: 600;
 }
 .evaluation-management-final-evaluation h1 {
   color: #01e89e;
 }
 .evaluation-management-final-evaluation .final-evaluation-heading {
   margin-bottom: 25px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 32px;
+  font-weight: 700;
 }
 .evaluation-management-final-evaluation .final-evaluation-body {
   background-color: white;
@@ -1894,34 +2203,52 @@ a {
   height: 200%;
   border-radius: 30px;
   margin-bottom: 15px;
-  padding: 15px;
+  padding: 50px;
   display: grid;
   grid-template-rows: 25% 25% 50%;
 }
+@media (max-width: 1000px) {
+  .evaluation-management-final-evaluation .final-evaluation-body {
+    grid-template-rows: 35% 35% 30%;
+    height: 150%;
+  }
+}
 .evaluation-management-final-evaluation .final-evaluation-body .evaluation,
-.evaluation-management-final-evaluation .final-evaluation-body .badges {
+.evaluation-management-final-evaluation
+  .final-evaluation-body
+  .evaluation-badges {
   border-bottom: 2px solid #d9d9d9;
+  padding-bottom: 15px;
+}
+.evaluation-management-final-evaluation .final-evaluation-body .evaluation {
+  display: grid;
+  grid-template-rows: 15% 85%;
+  padding-bottom: 15px;
 }
 .evaluation-management-final-evaluation .final-evaluation-body .evaluation h1 {
   margin-bottom: 20px;
 }
-.evaluation-management-final-evaluation .final-evaluation-body .evaluation-criterion {
+.evaluation-management-final-evaluation
+  .final-evaluation-body
+  .evaluation-criterion {
   color: #7a7a7a;
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 18px;
   display: grid;
   grid-template-columns: 35% 35%;
   grid-template-rows: 50% 50%;
   -moz-column-gap: 0px;
-       column-gap: 0px;
+  column-gap: 0px;
   row-gap: 20px;
   justify-content: space-around;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
 }
-.evaluation-management-final-evaluation .final-evaluation-body .evaluation-criterion .evaluation-score {
+.evaluation-management-final-evaluation
+  .final-evaluation-body
+  .evaluation-criterion
+  .evaluation-score {
   border-radius: 55px;
   border: 2px solid #01e89e;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 20px;
   color: #01e89e;
   text-align: center;
   cursor: pointer;
@@ -1930,24 +2257,48 @@ a {
   appearance: none;
   width: 100px;
   height: 40px;
-  background-image: url("../assets/select-arrow-img.png");
+  background-image: url("../assets/select-arrow-img.svg");
   background-position: 88%;
   background-repeat: no-repeat;
   background-size: 10%, 10%;
 }
-.evaluation-management-final-evaluation .final-evaluation-body .evaluation-criterion div {
+@media (max-width: 1000px) {
+  .evaluation-management-final-evaluation
+    .final-evaluation-body
+    .evaluation-criterion {
+    width: 70%;
+    height: 100%;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: 100%;
+    padding-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+.evaluation-management-final-evaluation
+  .final-evaluation-body
+  .evaluation-criterion
+  div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-.evaluation-management-final-evaluation .final-evaluation-body .badges {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
+.evaluation-management-final-evaluation
+  .final-evaluation-body
+  .evaluation-badges {
+  display: grid;
+  grid-template-rows: 15% 85%;
 }
-.evaluation-management-final-evaluation .final-evaluation-body .badges-body {
+.evaluation-management-final-evaluation
+  .final-evaluation-body
+  .evaluation-badges
+  h1 {
+  margin-top: 20px;
+}
+.evaluation-management-final-evaluation
+  .final-evaluation-body
+  .evaluation-badges-body {
   width: 100%;
   display: grid;
   grid-template-columns: 42% 42%;
@@ -1955,19 +2306,27 @@ a {
   justify-content: space-around;
   row-gap: 20px;
   -moz-column-gap: 0px;
-       column-gap: 0px;
+  column-gap: 0px;
   padding: 20px;
   color: #7a7a7a;
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
+  font-weight: 600;
 }
-.evaluation-management-final-evaluation .final-evaluation-body .badges-body .badge {
+.evaluation-management-final-evaluation
+  .final-evaluation-body
+  .evaluation-badges-body
+  .badge {
   display: grid;
   grid-template-columns: 20% 50% 30%;
   grid-template-rows: 100%;
   align-items: center;
 }
-.evaluation-management-final-evaluation .final-evaluation-body .badges-body .badge figure {
+.evaluation-management-final-evaluation
+  .final-evaluation-body
+  .evaluation-badges-body
+  .badge
+  figure {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -1975,16 +2334,28 @@ a {
   background-repeat: no-repeat;
   background-size: 100%;
 }
+@media (max-width: 1000px) {
+  .evaluation-management-final-evaluation
+    .final-evaluation-body
+    .evaluation-badges-body {
+    width: 100%;
+    height: 100%;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: 100%;
+    padding-bottom: 10px;
+  }
+}
 .evaluation-management-final-evaluation .final-evaluation-body .content {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
 }
+.evaluation-management-final-evaluation .final-evaluation-body .content h1 {
+  margin-top: 20px;
+}
 .evaluation-management-final-evaluation .final-evaluation-body .content div {
   color: #7a7a7a;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
   font-weight: 700;
   flex-grow: 1;
   padding: 20px;
@@ -1992,26 +2363,49 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
-.evaluation-management-final-evaluation .final-evaluation-body .content div div {
-  padding-left: 20px;
+.evaluation-management-final-evaluation
+  .final-evaluation-body
+  .content
+  div
+  div {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
 }
-.evaluation-management-final-evaluation .final-evaluation-body .content div textarea {
+.evaluation-management-final-evaluation
+  .final-evaluation-body
+  .content
+  div
+  textarea {
   color: #7a7a7a;
   height: 100%;
-  width: 90%;
+  width: 100%;
+  resize: none;
   border: 2px solid #cccccc;
   border-radius: 20px;
   box-shadow: 0px 10px 20px 5px rgba(0, 0, 0, 0.07);
   padding: 20px;
 }
-.evaluation-management-final-evaluation .final-evaluation-body .content div textarea::-moz-placeholder {
+.evaluation-management-final-evaluation
+  .final-evaluation-body
+  .content
+  div
+  textarea::-moz-placeholder {
   font-size: 18px;
   font-family: "Noto Sans KR", sans-serif;
 }
-.evaluation-management-final-evaluation .final-evaluation-body .content div textarea::placeholder,
-.evaluation-management-final-evaluation .final-evaluation-body .content div textarea {
+.evaluation-management-final-evaluation
+  .final-evaluation-body
+  .content
+  div
+  textarea::placeholder,
+.evaluation-management-final-evaluation
+  .final-evaluation-body
+  .content
+  div
+  textarea {
   font-size: 18px;
   font-family: "Noto Sans KR", sans-serif;
 }
@@ -2021,26 +2415,28 @@ a {
   justify-content: flex-end;
   align-items: center;
 }
-.evaluation-management-final-evaluation .final-evaluation-button-wrapper Button {
+.evaluation-management-final-evaluation
+  .final-evaluation-button-wrapper
+  Button {
   margin-right: 0;
 }
 .evaluation-management-final-evaluation::-webkit-scrollbar {
   display: none;
 }
 
+.management {
+  padding-bottom: 20px;
+}
 .management-main-header {
   background-color: #01e89e;
-  font-family: "IBM Plex Sans KR", sans-serif;
   color: white;
-  height: 200px;
-  border-bottom-left-radius: 60px;
-  border-bottom-right-radius: 60px;
-  padding: 35px;
-  padding-top: 120px;
+  height: 254px;
+  border-radius: 0px 0px 35px 35px;
+  padding: 25px 45px;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 .management-main-header-left-col {
   display: flex;
@@ -2049,9 +2445,13 @@ a {
   align-items: center;
 }
 .management-main-header-left-col h1 {
-  margin-right: 20px;
+  margin-right: 40px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 38px;
+  font-weight: 700;
 }
 .management-main-header-right-col {
+  gap: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -2061,29 +2461,34 @@ a {
   margin-top: 30px;
 }
 .management .project-list-wrapper .project-list-description {
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
   color: #7a7a7a;
+  margin-top: 80px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
 }
 .management .project-list-wrapper .project-list-description p {
   text-align: center;
 }
 .management .project-list-wrapper .project-list .project-item {
   border: 2px solid #01e89e;
-  width: 50%;
-  border-radius: 20px;
-  margin-bottom: 30px;
+  width: 650px;
+  height: 203px;
+  border-radius: 33px;
+  margin-bottom: 25px;
   text-decoration: none;
   box-shadow: 0px 10px 30px 5px rgba(181, 181, 181, 0.2);
   display: grid;
-  grid-template-columns: 20% 80%;
+  grid-template-columns: 15% 85%;
   cursor: pointer;
+  padding: 45px 30px;
   margin-left: auto;
   margin-right: auto;
 }
 .management .project-list-wrapper .project-list .project-item-left-col figure {
-  border: 2px solid #01e89e;
   border-radius: 50%;
+  width: 60px;
+  height: 60px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -2092,58 +2497,93 @@ a {
   display: grid;
   grid-template-columns: 80% 20%;
   grid-template-rows: 100%;
-  justify-content: flex-end;
   color: #003b28;
   font-size: 18px;
   font-family: "Noto Sans KR", sans-serif;
   height: 100%;
 }
-.management .project-list-wrapper .project-list .project-item-right-col .project-item-heading {
-  font-size: 25px;
+.management
+  .project-list-wrapper
+  .project-list
+  .project-item-right-col
+  .project-item-heading {
+  margin-bottom: 7px;
+  color: #003b28;
   font-family: "IBM Plex Sans KR", sans-serif;
-  margin-bottom: 7px;
+  font-size: 24px;
+  font-weight: 700;
 }
-.management .project-list-wrapper .project-list .project-item-right-col .project-item-period,
-.management .project-list-wrapper .project-list .project-item-right-col .project-item-description {
+.management
+  .project-list-wrapper
+  .project-list
+  .project-item-right-col
+  .project-item-period,
+.management
+  .project-list-wrapper
+  .project-list
+  .project-item-right-col
+  .project-item-description {
   margin-bottom: 7px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
 }
-.management .project-list-wrapper .project-list .project-item-right-col .project-item-description {
+.management
+  .project-list-wrapper
+  .project-list
+  .project-item-right-col
+  .project-item-description {
   line-height: 1.5;
   overflow-wrap: break-word;
 }
-.management .project-list-wrapper .project-list .project-item-right-col .project-item-period-heading {
+.management
+  .project-list-wrapper
+  .project-list
+  .project-item-right-col
+  .project-item-period-heading,
+.management
+  .project-list-wrapper
+  .project-list
+  .project-item-right-col
+  .project-item-description-heading {
   margin-right: 5px;
 }
-.management .project-list-wrapper .project-list .project-item-right-col .project-item-button-wrapper {
-  width: 100%;
-  height: 40%;
+.management
+  .project-list-wrapper
+  .project-list
+  .project-item-right-col
+  .project-item-button-wrapper {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-left: auto;
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 }
-.management .project-list-wrapper .project-list .project-item-right-col .leave-button-text {
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 18px;
-  color: #00AA72;
+.management
+  .project-list-wrapper
+  .project-list
+  .project-item-right-col
+  .leave-button-text {
+  color: #00aa72;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
 }
-.management .project-list-wrapper .project-list .project-item-right-col .project-item-button-wrapper figure {
+.management
+  .project-list-wrapper
+  .project-list
+  .project-item-right-col
+  .project-item-button-wrapper
+  figure {
   background-position: center;
   background-repeat: no-repeat;
-  border: 2px solid #01e89e;
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
-}
-.management .pagination-wrapper {
-  margin-left: auto;
-  margin-right: auto;
-}
-.management .pagination-wrapper button {
-  color: #01e89e;
-}
-.management .pagination-wrapper li {
-  color: #01e89e;
+  width: 17px;
+  height: 17px;
+  margin-bottom: 5px;
 }
 
 .MuiBox-root {
@@ -2154,9 +2594,9 @@ a {
 }
 .MuiBox-root .project-editor {
   height: 90%;
-  width: 100%;
+  width: 80%;
   display: grid;
-  grid-template-rows: 15% 70% 15%;
+  grid-template-rows: 18% 70% 12%;
   grid-template-columns: 100%;
 }
 .MuiBox-root .project-editor-heading {
@@ -2166,9 +2606,10 @@ a {
   width: 100%;
   border: none;
   height: 100%;
-  font-size: 25px;
-  font-family: "IBM Plex Sans KR", sans-serif;
   border-radius: 10px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
 }
 .MuiBox-root .project-editor-body {
   height: 100%;
@@ -2210,31 +2651,47 @@ a {
   width: 80%;
   height: 100%;
 }
-.MuiBox-root .project-editor-body .project-editor-right-col .project-editor-period-first-row {
+.MuiBox-root
+  .project-editor-body
+  .project-editor-right-col
+  .project-editor-period-first-row {
   background-color: white;
   border-radius: 10px;
   margin-bottom: 10px;
   height: 40px;
   width: 85%;
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 18px;
   color: #00aa72;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
 }
-.MuiBox-root .project-editor-body .project-editor-right-col .project-editor-period-first-row input[type=date] {
+.MuiBox-root
+  .project-editor-body
+  .project-editor-right-col
+  .project-editor-period-first-row
+  input[type="date"] {
   border: none;
+  width: 100px;
   font-family: "Noto Sans KR", sans-serif;
-  font-size: 18px;
-  width: 130px;
+  font-size: 14px;
+  font-weight: 500;
 }
-.MuiBox-root .project-editor-body .project-editor-right-col .project-editor-period-second-row {
+.MuiBox-root
+  .project-editor-body
+  .project-editor-right-col
+  .project-editor-period-second-row {
   width: 100%;
   height: calc(100% - 50px);
 }
-.MuiBox-root .project-editor-body .project-editor-right-col .project-editor-period-second-row textarea {
+.MuiBox-root
+  .project-editor-body
+  .project-editor-right-col
+  .project-editor-period-second-row
+  textarea {
   min-width: 100%;
   max-width: 100%;
   min-height: 100%;
@@ -2242,8 +2699,9 @@ a {
   padding: 10px;
   border: none;
   border-radius: 10px;
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
+  font-weight: 600;
 }
 .MuiBox-root .project-editor .button-wrapper {
   display: flex;
@@ -2273,45 +2731,18 @@ a {
   padding-top: 25px;
   padding-bottom: 30px;
 }
-
-@media (min-width: 1024px) {
-  .management-main-header {
-    font-size: 40px;
-  }
-  .management .project-list-wrapper {
-    padding: 30px;
-  }
-  .management .project-list-wrapper .project-item {
-    width: 700px;
-    height: 200px;
-    padding: 15px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-  }
-  .management .project-list-wrapper .project-item figure {
-    width: 70px;
-    height: 70px;
-  }
-  .management .project-list-wrapper .project-item-right-col {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .management .project-list-wrapper .project-item-period, .management .project-list-wrapper .project-item-description {
-    width: 400px;
-  }
-  .management .project-list-wrapper .project-item-period {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
+@media (min-width: 767px) and (max-width: 1024px) {
+  .management_project_layout {
+    width: 90%;
+    padding-top: 60px;
+    padding-bottom: 60px;
   }
 }
+
 .project-management {
-  height: 300px;
+  min-height: 65vh;
+  display: flex;
+  align-items: center;
 }
 .project-management .project-button-wrapper {
   display: flex;
@@ -2321,8 +2752,9 @@ a {
 }
 .project-management .project-button-wrapper figure {
   border-radius: 50%;
-  width: 230px;
-  height: 230px;
+  width: 210px;
+  height: 210px;
+  margin-bottom: 30px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -2330,27 +2762,72 @@ a {
 }
 .project-management .project-button-wrapper h1 {
   color: #003b28;
-  font-size: 18px;
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
 }
-.project-management .completed-project {
-  display: grid;
-  grid-template-columns: repeat(3, 30%);
+.project-management .completed-project,
+.project-management .ongoing-project {
+  width: 100%;
+  display: flex;
   justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+@media (max-width: 1000px) {
+  .project-management .completed-project,
+  .project-management .ongoing-project {
+    gap: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
 .project-management .completed-project .project-button-wrapper figure {
-  border-radius: 50%;
-  width: 230px;
-  height: 230px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
   pointer-events: none;
 }
-.project-management .ongoing-project {
-  display: grid;
-  grid-template-columns: repeat(3, 30%);
-  justify-content: space-between;
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  background-color: white;
+}
+.modal_dark {
+  background-color: #01e89e;
+}
+
+.confirm-modal {
+  text-align: center;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.confirm-modal h1 {
+  width: 50%;
+  line-height: 1.5;
+  color: white;
+  margin-bottom: 40px;
+  white-space: pre-line;
+  word-break: keep-all;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+}
+.confirm-modal-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.confirm-modal-button Button {
+  margin: 0px 5px;
 }
 
 .home {
@@ -2483,18 +2960,8 @@ a {
 }
 
 .member-button {
-  padding: 0.5rem;
   display: flex;
-  justify-content: space-between;
-}
-.member-button Button {
-  height: 40px;
-  margin: 10px;
-}
-@media (max-width: 767px) {
-  .member-button {
-    flex-direction: column;
-  }
+  justify-content: flex-start;
 }
 
 .filter-options {
@@ -2550,7 +3017,7 @@ a {
   margin-right: 20px;
 }
 .member-write h3 {
-  color: #0f6341;
+  color: #00aa72;
   white-space: nowrap;
   font-size: 18px;
 }
@@ -2567,7 +3034,8 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   color: #b4bcbd;
 }
-.member-write input:hover, .member-write input:focus {
+.member-write input:hover,
+.member-write input:focus {
   border-color: #01e89e;
 }
 @media (max-width: 767px) {
@@ -2633,8 +3101,10 @@ a {
   width: 90%;
 }
 .member-content .member-grid-position {
+  display: flex;
   display: grid;
-  grid-template-columns: repeat(3, 0.25fr);
+  grid-template-columns: repeat(3, 0.2fr);
+  grid-gap: 27px;
   margin-top: 40px;
   border-bottom: 2px solid #b4bcbd;
   padding-bottom: 40px;
@@ -2645,14 +3115,15 @@ a {
 @media (max-width: 767px) {
   .member-content .member-grid-position h5 {
     font-size: 12px;
+    color: yello;
   }
 }
-.member-content .member-grid-position .options {
+.member-content .member-grid-position .recruitment-positions {
   display: grid;
   grid-template-columns: repeat(2, 0.5fr);
   align-items: center;
 }
-.member-content .member-grid-position .options input {
+.member-content .member-grid-position .recruitment-positions input {
   width: 40px;
   height: 30px;
 }
@@ -2667,7 +3138,8 @@ a {
   height: 200px;
   padding: 0.5rem;
 }
-.member-content textarea:hover, .member-content textarea:focus {
+.member-content textarea:hover,
+.member-content textarea:focus {
   border: 2px solid #01e89e;
 }
 .member-content-description {
@@ -2683,7 +3155,8 @@ a {
 .member-content-description .react-quill {
   height: 100%;
 }
-.member-content-description .react-quill:hover, .member-content-description .react-quill:focus {
+.member-content-description .react-quill:hover,
+.member-content-description .react-quill:focus {
   border: 2px solid #01e89e;
 }
 .member-content-contact h3 {
@@ -2793,16 +3266,12 @@ a {
   justify-content: space-between;
   align-items: center;
   font-family: "IBM Plex Sans KR", sans-serif;
-  padding: 2.5rem;
+  padding: 2rem;
 }
 @media (max-width: 767px) {
   .detail-title {
     margin: 0px 0px;
-  }
-}
-@media (max-width: 767px) {
-  .detail-title {
-    flex-direction: column;
+    padding: 10px;
   }
 }
 .detail-title-content {
@@ -2818,27 +3287,43 @@ a {
 }
 .detail-title-content .mui-arrow {
   color: black;
-  margin-right: 20px;
+  margin-right: 10px;
 }
 .detail-title-content img {
   width: 80px;
   height: 80px;
   border-radius: 30px;
 }
+@media (max-width: 767px) {
+  .detail-title-content img {
+    width: 50px;
+    height: 50px;
+  }
+}
 .detail-title-content input {
   font-family: "IBM Plex Sans KR", sans-serif;
-  margin-left: 20px;
+  margin-left: 10px;
   border-radius: 20px;
   padding: 10px;
 }
 .detail-title-content h1 {
   font-size: 40px;
-  color: rgb(109, 109, 109);
+  color: #7a7a7a;
   margin-left: 20px;
+}
+@media (max-width: 767px) {
+  .detail-title-content h1 {
+    font-size: 33px;
+  }
 }
 .detail-title-content h2 {
   color: gray;
-  margin-left: 20px;
+  margin-left: 10px;
+}
+@media (max-width: 767px) {
+  .detail-title-content h2 {
+    font-size: 12px;
+  }
 }
 .detail-title-button {
   display: flex;
@@ -2848,10 +3333,16 @@ a {
 .recruitment-detail {
   border: 2px solid #01e89e;
   border-radius: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   padding: 2.5rem;
-  margin-left: 7%;
-  margin-right: 7%;
+  margin: 0px 7%;
   font-family: "Noto Sans KR", sans-serif;
+}
+@media (max-width: 767px) {
+  .recruitment-detail {
+    margin: 0px 7px;
+    padding: 1rem;
+  }
 }
 .recruitment-detail input,
 .recruitment-detail textarea,
@@ -2869,12 +3360,15 @@ a {
   margin-right: 20px;
 }
 .recruitment-detail-content {
-  display: flex;
+  display: grid;
+  grid-template-columns: 15% 85%;
+  grid-gap: 20px 0px;
   align-items: center;
-  margin-bottom: 20px;
+  border-bottom: 1px solid rgb(204, 204, 204);
+  padding-bottom: 30px;
 }
-.recruitment-detail-content h5 {
-  margin-left: 15px;
+.recruitment-detail-content select {
+  width: 70px;
 }
 .recruitment-detail-content-name {
   display: flex;
@@ -2883,94 +3377,59 @@ a {
 .recruitment-detail-content-name h5 {
   margin-left: 10px;
 }
-.recruitment-detail-content-last {
-  border-bottom: 1px solid rgb(204, 204, 204);
-}
-.recruitment-detail-content-last-content {
-  margin-bottom: 20px;
+.recruitment-detail-content-duration {
   display: flex;
-  align-items: center;
-}
-.recruitment-detail-content-last-content h5 {
-  margin-left: 15px;
 }
 .recruitment-detail-container {
-  display: flex;
-  align-items: center;
+  margin-top: 50px;
   border-bottom: 1px solid rgb(204, 204, 204);
+  padding-bottom: 50px;
+  display: grid;
+  grid-template-columns: 15% 85%;
+  grid-gap: 20px 0px;
+  align-content: center;
 }
-.recruitment-detail-container h4 {
-  white-space: nowrap;
-  margin: 0px, 50px;
+.recruitment-detail-container-select {
+  display: flex;
 }
-.recruitment-detail-container-select, .recruitment-detail-container-member, .recruitment-detail-container-button {
-  margin-left: 20px;
+.recruitment-detail-container .recruitment-grid-row {
+  display: grid;
+  grid-template-rows: repeat(4, auto);
+  grid-gap: 50px 0;
+  align-items: center;
+  margin-right: 30px;
 }
-.recruitment-detail-container-select h5, .recruitment-detail-container-member h5, .recruitment-detail-container-button h5 {
-  margin: 30px 20px;
-}
-.recruitment-detail-container-member {
-  margin-right: 20px;
-}
-.recruitment-detail-container-member-cnt {
+.recruitment-detail-container .recruitment-grid-row-item {
   display: flex;
   align-items: center;
 }
-.recruitment-detail-container-member-cnt input {
-  height: 25px;
+.recruitment-detail-container .recruitment-grid-row-item input {
   width: 40px;
-}
-.recruitment-detail-container-button {
-  display: flex;
-  flex-direction: column;
-  margin-top: 9px;
-}
-.recruitment-detail-container-button Button {
-  margin: 7px 40px;
+  margin-left: 10px;
 }
 .recruitment-detail-description {
   display: flex;
   flex-direction: column;
+  padding-bottom: 5px;
   border-bottom: 1px solid rgb(204, 204, 204);
 }
+.recruitment-detail-description-content {
+  padding-bottom: 15px;
+}
 .recruitment-detail-description-stacks {
-  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 .recruitment-detail-description-stacks img {
   width: 50px;
   height: 50px;
-  margin: 10px 5px;
+  margin-right: 20px;
 }
 .recruitment-detail-description h4 {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin: 20px 0px;
 }
 .recruitment-detail-description h5 {
   margin-bottom: 20px;
-}
-.recruitment-detail-description .member-stack-button {
-  border: 1px solid rgb(246, 246, 246);
-  border-radius: 20px;
-  margin: 10px 0px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-.recruitment-detail-description .member-stack-button Button {
-  margin: 15px;
-}
-.recruitment-detail-description .member-stack {
-  position: relative;
-}
-.recruitment-detail-description .member-stack .member-inputcontainer-box {
-  cursor: pointer;
-  z-index: 1;
-  position: absolute;
-  top: calc(100% + 5px);
-  background-color: white;
-  width: 180px;
-}
-.recruitment-detail-description .member-stack .member-inputcontainer-box h5 {
-  border-bottom: 1px solid rgb(234, 234, 234);
-  text-align: center;
 }
 
 .recruitment-detail-icon {
@@ -3347,6 +3806,7 @@ a {
   min-width: 48px;
   min-height: 48px;
   background-color: #00aa72;
+
   border-radius: 15px;
 }
 .profile_nav_link > img {
@@ -3788,7 +4248,7 @@ a {
 .projectEvaluate_title {
   font-size: 20px;
   font-weight: 700;
-  color: #00aa72;
+  color: #01e89e;
 }
 
 .badgeBox {
@@ -4256,4 +4716,4 @@ a {
   font-weight: 600;
   cursor: pointer;
   box-shadow: 0 4px 15px 0.2px;
-}/*# sourceMappingURL=fullcare.css.map */
+} /*# sourceMappingURL=fullcare.css.map */

@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 
-import { getStringDate } from "../../utils/date";
-
 import projectDefaultImg from "../../assets/project-default-img.jpg";
 
-import { deleteImage } from "../../lib/apis/managementApi";
 import ModalContainer from "../common/ModalContainer";
+import Button from "../common/Button";
+
 import useManagementMutation from "../../hooks/useManagementMutation";
 
+import { getStringDate } from "../../utils/date";
+import { deleteImage } from "../../lib/apis/managementApi";
 import { toast } from "react-toastify";
-import Button from "../common/Button";
 import { handleImageUploader } from "../../utils/handleImageUploader";
 
 const ProjectEditor = ({
@@ -128,8 +128,8 @@ const ProjectEditor = ({
     <ModalContainer
       open={isModalVisible}
       onClose={handleModalClose}
-      width={"60%"}
-      height={"75%"}
+      width={600}
+      height={350}
     >
       <div className="project-editor">
         <div className="project-editor-heading">
@@ -210,6 +210,7 @@ const ProjectEditor = ({
             text="작성 완료"
             size={"small"}
             type={"positive"}
+            color={"white"}
             onClick={handleSubmitNewProject}
           />
         </div>

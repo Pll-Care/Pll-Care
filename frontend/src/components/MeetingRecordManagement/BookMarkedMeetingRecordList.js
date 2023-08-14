@@ -41,6 +41,7 @@ const BookMarkedMeetingRecordList = () => {
           setCurrentPage={setCurrentPage}
           recordDatasPerPage={recordDatasPerPage}
           totalData={data.totalElements}
+          color={"white"}
         />
       </div>
     </div>
