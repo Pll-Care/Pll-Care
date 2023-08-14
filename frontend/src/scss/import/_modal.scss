@@ -1,0 +1,41 @@
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  background-color: white;
+
+  &_dark {
+    background-color: $green-200;
+  }
+}
+
+.confirm-modal {
+  text-align: center;
+  height: 50%;
+
+  h1 {
+    width: 50%;
+    line-height: 1.5;
+    color: white;
+    margin-bottom: 40px;
+    white-space: pre-line;
+    word-break: keep-all;
+
+    @include putCenter;
+    @include heading_04;
+  }
+
+  &-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    Button {
+      margin: 0px 5px;
+    }
+  }
+
+  @include displayFlex(column, space-around);
+}
