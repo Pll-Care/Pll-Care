@@ -22,6 +22,10 @@
     }
     color: white;
 
+    @include tablet {
+      padding: 10px;
+    }
+
     @include displayFlex(column, space-around);
   }
 
@@ -48,14 +52,23 @@
       }
 
       .pagination-wrapper {
-        @include putCenter;
+        margin-top: auto;
+
+        @include tablet {
+          width: 100%;
+        }
       }
+    }
+
+    @include tablet {
+      width: 100%;
     }
   }
 
   &-all-meeting-record-list {
     height: 47%;
     display: grid;
+    grid-template-columns: 100%;
     grid-template-rows: 25% 75%;
 
     .meeting-record-list-header {
@@ -96,16 +109,28 @@
       padding-top: 10px;
       height: 100%;
 
+      @include tablet {
+        display: grid;
+        grid-template-columns: 100%;
+      }
+
       @include displayFlex(column, space-between);
     }
 
     .meeting-record-all-meeting-record-list-data {
       height: 100%;
-      width: 100%;
     }
 
     .pagination-wrapper {
       margin-top: auto;
+
+      @include tablet {
+        width: 100%;
+      }
+    }
+
+    @include tablet {
+      width: 100%;
     }
   }
 
@@ -226,7 +251,7 @@
     background-color: white;
     margin-bottom: 10px;
     border-radius: 10px;
-    width: 233px;
+    width: 100%;
     height: 71px;
     padding: 10px 20px;
     color: #7a7a7a;
