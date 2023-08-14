@@ -3,19 +3,24 @@
 
   &-ranking-wrapper,
   &-ranking-wrapper-non-evaluated {
-    height: 400px;
     padding-bottom: 30px;
     border-bottom: 2px solid #d9d9d9;
+    display: flex;
+    flex-wrap: wrap;
 
     .evaluation-management-chart-wrapper {
       height: 350px;
-      width: 65%;
+      width: 62%;
 
       h1 {
         color: $green-200;
         padding: 10px;
 
         @include heading_03;
+      }
+
+      @media (max-width: 1000px) {
+        width: 600px;
       }
     }
 
@@ -28,12 +33,21 @@
       overflow-x: hidden;
 
       .slick-slider {
-        width: 96%;
+        width: 100%;
         height: 83%;
 
         .slick-list {
-          width: 100%;
-          height: 95%;
+          width: 90%;
+          height: 100%;
+
+          .recharts-wrapper,
+          .recharts-surface {
+            max-width: 100%;
+          }
+
+          .recharts-surface {
+            height: 100%;
+          }
         }
 
         @include displayFlex(row, flex-start);
@@ -118,9 +132,25 @@
               @include body_01;
             }
 
+            @media (max-width: 1000px) {
+              width: 100%;
+              height: 100%;
+
+              @include displayFlex(column, space-around);
+            }
+
             @include displayFlex(column, center, flex-end);
           }
 
+          @media (max-width: 1000px) {
+            padding: 10px;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+
+            @include displayFlex(column, space-around);
+          }
+          
           @include displayFlex(row, space-around);
         }
 
@@ -137,10 +167,21 @@
             }
           }
         }
+
+        @media (max-width: 1000px) {
+          gap: 20px;
+          @include displayFlex(row, space-between);
+        }
       }
 
       &-body::-webkit-scrollbar {
         display: none;
+      }
+
+      @media (max-width: 1000px) {
+        width: 600px;
+        height: 200px;
+        margin-top: 20px;
       }
     }
 
@@ -280,10 +321,18 @@
           @include displayFlex(row, space-between, center);
         }
 
+        @media (max-width: 1000px) {
+          width: 100%;
+        } 
+
         @include displayFlex;
       }
 
       @include displayFlex(row, space-between);
+    }
+
+    @media (max-width: 1000px) {
+      width: 600px;
     }
 
     @include putCenter;
@@ -321,14 +370,24 @@
       margin-bottom: 15px;
       padding: 50px;
       display: grid;
-      grid-template-rows: 20% 30% 50%;
+      grid-template-rows: 25% 25% 50%;
+
+      @media (max-width: 1000px) {
+        grid-template-rows: 35% 35% 30%;
+        height: 150%;
+      }
 
       .evaluation,
-      .badges {
+      .evaluation-badges {
         border-bottom: 2px solid #d9d9d9;
+        padding-bottom: 15px;
       }
 
       .evaluation {
+        display: grid;
+        grid-template-rows: 15% 85%;
+        padding-bottom: 15px;
+
         h1 {
           margin-bottom: 20px;
         }
@@ -364,6 +423,16 @@
           );
         }
 
+        @media (max-width: 1000px) {
+          width: 70%;
+          height: 100%;
+          grid-template-rows: repeat(4, 1fr);
+          grid-template-columns: 100%;
+          padding-bottom: 10px;
+
+          @include putCenter;
+        }
+
         div {
           @include displayFlex(row, space-between);
         }
@@ -371,7 +440,10 @@
         @include heading_05;
       }
 
-      .badges {
+      .evaluation-badges {
+        display: grid;
+        grid-template-rows: 15% 85%;
+
         h1 {
           margin-top: 20px;
         }
@@ -406,10 +478,16 @@
             }
           }
 
+          @media (max-width: 1000px) {
+            width: 100%;
+            height: 100%;
+            grid-template-rows: repeat(4, 1fr);
+            grid-template-columns: 100%;
+            padding-bottom: 10px;
+          }
+
           @include heading_05;
         }
-
-        @include displayFlex(column, center, flex-start);
       }
 
       .content {

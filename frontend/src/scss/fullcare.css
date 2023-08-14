@@ -1603,9 +1603,10 @@ a {
   margin-right: auto;
 }
 .evaluation-management-ranking-wrapper, .evaluation-management-ranking-wrapper-non-evaluated {
-  height: 400px;
   padding-bottom: 30px;
   border-bottom: 2px solid #d9d9d9;
+  display: flex;
+  flex-wrap: wrap;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -1613,7 +1614,7 @@ a {
 }
 .evaluation-management-ranking-wrapper .evaluation-management-chart-wrapper, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-chart-wrapper {
   height: 350px;
-  width: 65%;
+  width: 62%;
 }
 .evaluation-management-ranking-wrapper .evaluation-management-chart-wrapper h1, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-chart-wrapper h1 {
   color: #01e89e;
@@ -1621,6 +1622,11 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 24px;
   font-weight: 700;
+}
+@media (max-width: 1000px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-chart-wrapper, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-chart-wrapper {
+    width: 600px;
+  }
 }
 .evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart {
   border: 2px solid #01e89e;
@@ -1638,7 +1644,7 @@ a {
   align-items: center;
 }
 .evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart .slick-slider, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart .slick-slider {
-  width: 96%;
+  width: 100%;
   height: 83%;
   display: flex;
   flex-direction: row;
@@ -1646,8 +1652,16 @@ a {
   align-items: center;
 }
 .evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart .slick-slider .slick-list, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart .slick-slider .slick-list {
-  width: 100%;
-  height: 95%;
+  width: 90%;
+  height: 100%;
+}
+.evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart .slick-slider .slick-list .recharts-wrapper,
+.evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart .slick-slider .slick-list .recharts-surface, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart .slick-slider .slick-list .recharts-wrapper,
+.evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart .slick-slider .slick-list .recharts-surface {
+  max-width: 100%;
+}
+.evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart .slick-slider .slick-list .recharts-surface, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart .slick-slider .slick-list .recharts-surface {
+  height: 100%;
 }
 .evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart .slick-arrow, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart .slick-arrow {
   display: none;
@@ -1735,14 +1749,52 @@ a {
   font-size: 14px;
   font-weight: 500;
 }
+@media (max-width: 1000px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
+@media (max-width: 1000px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item {
+    padding: 10px;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
 .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item_1 .evaluation-management-left-col figure, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item_1 .evaluation-management-left-col figure {
   background-image: url("../assets/ranking-1-img.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 85%, 85%;
 }
+@media (max-width: 1000px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body {
+    gap: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
 .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body::-webkit-scrollbar, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body::-webkit-scrollbar {
   display: none;
+}
+@media (max-width: 1000px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking {
+    width: 600px;
+    height: 200px;
+    margin-top: 20px;
+  }
 }
 .evaluation-management .evaluation-management-ranking-wrapper {
   position: relative;
@@ -1876,6 +1928,16 @@ a {
   font-size: 20px;
   font-weight: 600;
 }
+@media (max-width: 1000px) {
+  .evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant {
+    width: 100%;
+  }
+}
+@media (max-width: 1000px) {
+  .evaluation-management-participant-wrapper {
+    width: 600px;
+  }
+}
 .evaluation-management-final-evaluation {
   overflow: auto;
   padding: 40px;
@@ -1907,11 +1969,23 @@ a {
   margin-bottom: 15px;
   padding: 50px;
   display: grid;
-  grid-template-rows: 20% 30% 50%;
+  grid-template-rows: 25% 25% 50%;
+}
+@media (max-width: 1000px) {
+  .evaluation-management-final-evaluation .final-evaluation-body {
+    grid-template-rows: 35% 35% 30%;
+    height: 150%;
+  }
 }
 .evaluation-management-final-evaluation .final-evaluation-body .evaluation,
-.evaluation-management-final-evaluation .final-evaluation-body .badges {
+.evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges {
   border-bottom: 2px solid #d9d9d9;
+  padding-bottom: 15px;
+}
+.evaluation-management-final-evaluation .final-evaluation-body .evaluation {
+  display: grid;
+  grid-template-rows: 15% 85%;
+  padding-bottom: 15px;
 }
 .evaluation-management-final-evaluation .final-evaluation-body .evaluation h1 {
   margin-bottom: 20px;
@@ -1945,22 +2019,31 @@ a {
   background-repeat: no-repeat;
   background-size: 10%, 10%;
 }
+@media (max-width: 1000px) {
+  .evaluation-management-final-evaluation .final-evaluation-body .evaluation-criterion {
+    width: 70%;
+    height: 100%;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: 100%;
+    padding-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
 .evaluation-management-final-evaluation .final-evaluation-body .evaluation-criterion div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-.evaluation-management-final-evaluation .final-evaluation-body .badges {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
+.evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges {
+  display: grid;
+  grid-template-rows: 15% 85%;
 }
-.evaluation-management-final-evaluation .final-evaluation-body .badges h1 {
+.evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges h1 {
   margin-top: 20px;
 }
-.evaluation-management-final-evaluation .final-evaluation-body .badges-body {
+.evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges-body {
   width: 100%;
   display: grid;
   grid-template-columns: 42% 42%;
@@ -1975,19 +2058,28 @@ a {
   font-size: 18px;
   font-weight: 600;
 }
-.evaluation-management-final-evaluation .final-evaluation-body .badges-body .badge {
+.evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges-body .badge {
   display: grid;
   grid-template-columns: 20% 50% 30%;
   grid-template-rows: 100%;
   align-items: center;
 }
-.evaluation-management-final-evaluation .final-evaluation-body .badges-body .badge figure {
+.evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges-body .badge figure {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
+}
+@media (max-width: 1000px) {
+  .evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges-body {
+    width: 100%;
+    height: 100%;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: 100%;
+    padding-bottom: 10px;
+  }
 }
 .evaluation-management-final-evaluation .final-evaluation-body .content {
   display: flex;
