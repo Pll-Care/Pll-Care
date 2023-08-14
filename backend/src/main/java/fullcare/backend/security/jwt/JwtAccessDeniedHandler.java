@@ -24,14 +24,14 @@ import java.io.IOException;
 public class JwtAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        ErrorResponse errorResponse = ErrorResponse.getResponse(GlobalErrorCode.INVALID_ACCESS, accessDeniedException, request);
+        ErrorResponse errorResponse = ErrorResponse.getResponse(GlobalErrorCode.UNAUTHORIZED_ACCESS, accessDeniedException, request);
 
         final ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.setStatus(GlobalErrorCode.INVALID_ACCESS.getStatus().value());
+        response.setStatus(GlobalErrorCode.UNAUTHORIZED_ACCESS.getStatus().value());
         mapper.writeValue(response.getOutputStream(), errorResponse);
     }
 }

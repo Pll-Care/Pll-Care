@@ -20,6 +20,8 @@ public class PostDetailResponse {
     private String projectTitle; // * 프로젝트 이름
     private String projectImageUrl;
 
+    @JsonIgnore
+    private Long authorId;
     private String author; // * 작성자 이름
     private String authorImageUrl;
 
@@ -49,7 +51,7 @@ public class PostDetailResponse {
 
     @Builder
     public PostDetailResponse(Long postId, Long projectId, String projectTitle, String projectImageUrl,
-                              String author, String authorImageUrl,
+                              Long authorId, String author, String authorImageUrl,
                               String title, String description, LocalDate recruitStartDate, LocalDate recruitEndDate,
                               String reference, String contact, String region, String techStack,
                               boolean isLiked, boolean isEditable, boolean isDeletable,
@@ -59,6 +61,7 @@ public class PostDetailResponse {
         this.projectId = projectId;
         this.projectTitle = projectTitle;
         this.projectImageUrl = projectImageUrl;
+        this.authorId = authorId;
         this.author = author;
         this.authorImageUrl = authorImageUrl;
         this.title = title;

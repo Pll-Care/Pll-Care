@@ -25,7 +25,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @Tag(name = "메인 페이지", description = "메인 페이지 관련 API")
-@RequestMapping("/api/main")
+@RequestMapping("/api/auth/main")
 @RestController
 public class MainController {
 
@@ -34,7 +34,7 @@ public class MainController {
     @Operation(method = "get", summary = "실시간 인기 모집글 리스트 조회")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "모집글 리스트 조회 성공", useReturnTypeSchema = true),
-            @ApiResponse(responseCode = "400", description = "모집글 리스트 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse(responseCode = "400", description = "모집글 리스트 조회ㅓ 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping("/mostliked")
     public ResponseEntity<List<MostLikedPostResponse>> mostLiked() {

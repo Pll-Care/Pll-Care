@@ -34,7 +34,7 @@ public class JwtConfig {
 
         log.info("JwtConfig.jwtFilterChain");
 
-        // ! cors 설정
+        // ! cors 설정ㅓ
         http.cors(withDefaults());
 
 
@@ -46,7 +46,7 @@ public class JwtConfig {
         http
                 .securityMatcher("/api/auth/**")
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET, "api/main/**").hasAnyRole("USER", "ANONYMOUS")
+                        .requestMatchers(HttpMethod.GET, "api/auth/main/**").hasAnyRole("USER", "ANONYMOUS")
                         .requestMatchers(HttpMethod.GET, "/api/auth/post/list", "/api/auth/post/{postId:[\\d+]}").hasAnyRole("USER", "ANONYMOUS")
                         .requestMatchers(HttpMethod.GET, "api/auth/util/techstack").hasAnyRole("USER", "ANONYMOUS")
                         .requestMatchers(HttpMethod.GET, "/api/auth/profile/{memberId:[\\d+]}/rolestack",
