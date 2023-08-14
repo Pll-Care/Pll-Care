@@ -1,4 +1,4 @@
-import RecruitmentDetailContent from "../components/RecruitmentDetail/RecruitmentDetailContent";
+import RecruitmentDetailContent from "../components/RecruitmentDetail";
 
 const RecruitmentDetailPage = () => {
   return (

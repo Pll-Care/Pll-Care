@@ -2501,18 +2501,8 @@ a {
 }
 
 .member-button {
-  padding: 0.5rem;
   display: flex;
-  justify-content: space-between;
-}
-.member-button Button {
-  height: 40px;
-  margin: 10px;
-}
-@media (max-width: 767px) {
-  .member-button {
-    flex-direction: column;
-  }
+  justify-content: flex-start;
 }
 
 .filter-options {
@@ -2651,8 +2641,10 @@ a {
   width: 90%;
 }
 .member-content .member-grid-position {
+  display: flex;
   display: grid;
-  grid-template-columns: repeat(3, 0.25fr);
+  grid-template-columns: repeat(3, 0.2fr);
+  grid-gap: 27px;
   margin-top: 40px;
   border-bottom: 2px solid #b4bcbd;
   padding-bottom: 40px;
@@ -2663,14 +2655,15 @@ a {
 @media (max-width: 767px) {
   .member-content .member-grid-position h5 {
     font-size: 12px;
+    color: yello;
   }
 }
-.member-content .member-grid-position .options {
+.member-content .member-grid-position .recruitment-positions {
   display: grid;
   grid-template-columns: repeat(2, 0.5fr);
   align-items: center;
 }
-.member-content .member-grid-position .options input {
+.member-content .member-grid-position .recruitment-positions input {
   width: 40px;
   height: 30px;
 }
@@ -2811,16 +2804,12 @@ a {
   justify-content: space-between;
   align-items: center;
   font-family: "IBM Plex Sans KR", sans-serif;
-  padding: 2.5rem;
+  padding: 2rem;
 }
 @media (max-width: 767px) {
   .detail-title {
     margin: 0px 0px;
-  }
-}
-@media (max-width: 767px) {
-  .detail-title {
-    flex-direction: column;
+    padding: 10px;
   }
 }
 .detail-title-content {
@@ -2836,27 +2825,43 @@ a {
 }
 .detail-title-content .mui-arrow {
   color: black;
-  margin-right: 20px;
+  margin-right: 10px;
 }
 .detail-title-content img {
   width: 80px;
   height: 80px;
   border-radius: 30px;
 }
+@media (max-width: 767px) {
+  .detail-title-content img {
+    width: 50px;
+    height: 50px;
+  }
+}
 .detail-title-content input {
   font-family: "IBM Plex Sans KR", sans-serif;
-  margin-left: 20px;
+  margin-left: 10px;
   border-radius: 20px;
   padding: 10px;
 }
 .detail-title-content h1 {
   font-size: 40px;
-  color: rgb(109, 109, 109);
+  color: #7a7a7a;
   margin-left: 20px;
+}
+@media (max-width: 767px) {
+  .detail-title-content h1 {
+    font-size: 33px;
+  }
 }
 .detail-title-content h2 {
   color: gray;
-  margin-left: 20px;
+  margin-left: 10px;
+}
+@media (max-width: 767px) {
+  .detail-title-content h2 {
+    font-size: 12px;
+  }
 }
 .detail-title-button {
   display: flex;
@@ -2866,10 +2871,16 @@ a {
 .recruitment-detail {
   border: 2px solid #01e89e;
   border-radius: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   padding: 2.5rem;
-  margin-left: 7%;
-  margin-right: 7%;
+  margin: 0px 7%;
   font-family: "Noto Sans KR", sans-serif;
+}
+@media (max-width: 767px) {
+  .recruitment-detail {
+    margin: 0px 7px;
+    padding: 1rem;
+  }
 }
 .recruitment-detail input,
 .recruitment-detail textarea,
@@ -2887,12 +2898,15 @@ a {
   margin-right: 20px;
 }
 .recruitment-detail-content {
-  display: flex;
+  display: grid;
+  grid-template-columns: 15% 85%;
+  grid-gap: 20px 0px;
   align-items: center;
-  margin-bottom: 20px;
+  border-bottom: 1px solid rgb(204, 204, 204);
+  padding-bottom: 30px;
 }
-.recruitment-detail-content h5 {
-  margin-left: 15px;
+.recruitment-detail-content select {
+  width: 70px;
 }
 .recruitment-detail-content-name {
   display: flex;
@@ -2901,94 +2915,59 @@ a {
 .recruitment-detail-content-name h5 {
   margin-left: 10px;
 }
-.recruitment-detail-content-last {
-  border-bottom: 1px solid rgb(204, 204, 204);
-}
-.recruitment-detail-content-last-content {
-  margin-bottom: 20px;
+.recruitment-detail-content-duration {
   display: flex;
-  align-items: center;
-}
-.recruitment-detail-content-last-content h5 {
-  margin-left: 15px;
 }
 .recruitment-detail-container {
-  display: flex;
-  align-items: center;
+  margin-top: 50px;
   border-bottom: 1px solid rgb(204, 204, 204);
+  padding-bottom: 50px;
+  display: grid;
+  grid-template-columns: 15% 85%;
+  grid-gap: 20px 0px;
+  align-content: center;
 }
-.recruitment-detail-container h4 {
-  white-space: nowrap;
-  margin: 0px, 50px;
+.recruitment-detail-container-select {
+  display: flex;
 }
-.recruitment-detail-container-select, .recruitment-detail-container-member, .recruitment-detail-container-button {
-  margin-left: 20px;
+.recruitment-detail-container .recruitment-grid-row {
+  display: grid;
+  grid-template-rows: repeat(4, auto);
+  grid-gap: 50px 0;
+  align-items: center;
+  margin-right: 30px;
 }
-.recruitment-detail-container-select h5, .recruitment-detail-container-member h5, .recruitment-detail-container-button h5 {
-  margin: 30px 20px;
-}
-.recruitment-detail-container-member {
-  margin-right: 20px;
-}
-.recruitment-detail-container-member-cnt {
+.recruitment-detail-container .recruitment-grid-row-item {
   display: flex;
   align-items: center;
 }
-.recruitment-detail-container-member-cnt input {
-  height: 25px;
+.recruitment-detail-container .recruitment-grid-row-item input {
   width: 40px;
-}
-.recruitment-detail-container-button {
-  display: flex;
-  flex-direction: column;
-  margin-top: 9px;
-}
-.recruitment-detail-container-button Button {
-  margin: 7px 40px;
+  margin-left: 10px;
 }
 .recruitment-detail-description {
   display: flex;
   flex-direction: column;
+  padding-bottom: 5px;
   border-bottom: 1px solid rgb(204, 204, 204);
 }
+.recruitment-detail-description-content {
+  padding-bottom: 15px;
+}
 .recruitment-detail-description-stacks {
-  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 .recruitment-detail-description-stacks img {
   width: 50px;
   height: 50px;
-  margin: 10px 5px;
+  margin-right: 20px;
 }
 .recruitment-detail-description h4 {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin: 20px 0px;
 }
 .recruitment-detail-description h5 {
   margin-bottom: 20px;
-}
-.recruitment-detail-description .member-stack-button {
-  border: 1px solid rgb(246, 246, 246);
-  border-radius: 20px;
-  margin: 10px 0px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-.recruitment-detail-description .member-stack-button Button {
-  margin: 15px;
-}
-.recruitment-detail-description .member-stack {
-  position: relative;
-}
-.recruitment-detail-description .member-stack .member-inputcontainer-box {
-  cursor: pointer;
-  z-index: 1;
-  position: absolute;
-  top: calc(100% + 5px);
-  background-color: white;
-  width: 180px;
-}
-.recruitment-detail-description .member-stack .member-inputcontainer-box h5 {
-  border-bottom: 1px solid rgb(234, 234, 234);
-  text-align: center;
 }
 
 .recruitment-detail-icon {
