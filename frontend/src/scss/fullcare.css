@@ -237,7 +237,7 @@ a {
   height: 80px;
   display: grid;
   grid-template-rows: 100%;
-  grid-template-columns: 20% 60% 20%;
+  grid-template-columns: 20% 55% 25%;
 }
 .main-header-left-col {
   display: flex;
