@@ -39,7 +39,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         log.info("OAuth2 로그인 및 인증 성공! 이제 JWT 토큰을 생성하여 발급합니다.");
         OAuth2AuthenticationToken token = (OAuth2AuthenticationToken) authentication;
 
-
         // CustomOAuth2UserService에서 인증에 성공한 유저 정보
         CustomOAuth2User oAuth2User = (CustomOAuth2User) token.getPrincipal();
 

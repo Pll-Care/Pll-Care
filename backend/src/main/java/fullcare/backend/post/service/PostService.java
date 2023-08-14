@@ -41,6 +41,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -326,7 +327,7 @@ public class PostService {
     }
 
     public List<CloseDeadlinePostResponse> findCloseDeadlinePost() {
-        List<Post> closeDeadlinePostList = postRepository.findTop5ByRecruitEndDateAfterOrderByRecruitEndDateAsc(LocalDate.now());
+        List<Post> closeDeadlinePostList = postRepository.findTop5ByRecruitEndDateAfterOrderByRecruitEndDateAscCreatedDateAsc(LocalDate.now());
 
         List<CloseDeadlinePostResponse> content = closeDeadlinePostList.stream().map(p -> CloseDeadlinePostResponse.builder()
                 .postId(p.getId())
@@ -342,7 +343,7 @@ public class PostService {
     }
 
     public List<UpToDatePostResponse> findUpToDateProject() {
-        List<Post> upToDatePostList = postRepository.findTop5ByCreatedDateAfterOrderByCreatedDateAscRecruitEndDateAsc(LocalDate.now());
+        List<Post> upToDatePostList = postRepository.findTop5ByCreatedDateBeforeOrderByCreatedDateDescRecruitEndDateAsc(LocalDateTime.now());
 
         List<UpToDatePostResponse> content = upToDatePostList.stream().map(p -> UpToDatePostResponse.builder()
                 .postId(p.getId())

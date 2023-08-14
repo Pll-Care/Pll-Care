@@ -13,6 +13,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,9 +49,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findTop5ByRecruitEndDateAfterOrderByLikeCountDescRecruitEndDateAsc(LocalDate baseDate);
 
     @EntityGraph(attributePaths = {"project"})
-    List<Post> findTop5ByRecruitEndDateAfterOrderByRecruitEndDateAsc(LocalDate baseDate);
+    List<Post> findTop5ByRecruitEndDateAfterOrderByRecruitEndDateAscCreatedDateAsc(LocalDate baseDate);
 
     @EntityGraph(attributePaths = {"project"})
-    List<Post> findTop5ByCreatedDateAfterOrderByCreatedDateAscRecruitEndDateAsc(LocalDate baseDate);
+    List<Post> findTop5ByCreatedDateBeforeOrderByCreatedDateDescRecruitEndDateAsc(LocalDateTime baseDateTime);
 
 }

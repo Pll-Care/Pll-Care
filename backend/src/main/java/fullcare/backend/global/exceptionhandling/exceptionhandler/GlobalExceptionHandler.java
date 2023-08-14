@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import java.security.InvalidParameterException;
-
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -28,57 +26,36 @@ public class GlobalExceptionHandler {
     // * 스프링 프레임워크단에서 발생하는 예외 처리
     @ExceptionHandler(value = {MethodArgumentNotValidException.class,})
     public ResponseEntity<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException e, HttpServletRequest request) {
-
-        ErrorResponse errorResponse = ErrorResponse.getResponse(GlobalErrorCode.INTERNAL_SERVER_ERROR, e, request);
-        return new ResponseEntity(errorResponse, HttpStatus.METHOD_NOT_ALLOWED);
+        
+        ErrorResponse errorResponse = ErrorResponse.getResponse(GlobalErrorCode.INVALID_REQUEST_DATA, e, request);
+        return new ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = {MethodArgumentTypeMismatchException.class})
     public ResponseEntity<?> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e, HttpServletRequest request) {
 
-        ErrorResponse errorResponse = ErrorResponse.getResponse(GlobalErrorCode.INTERNAL_SERVER_ERROR, e, request);
-        return new ResponseEntity(errorResponse, HttpStatus.METHOD_NOT_ALLOWED);
+        ErrorResponse errorResponse = ErrorResponse.getResponse(GlobalErrorCode.INVALID_REQUEST_DATA, e, request);
+        return new ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = {HttpRequestMethodNotSupportedException.class})
     public ResponseEntity<?> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e, HttpServletRequest request) {
 
-        ErrorResponse errorResponse = ErrorResponse.getResponse(GlobalErrorCode.INTERNAL_SERVER_ERROR, e, request);
-        return new ResponseEntity(errorResponse, HttpStatus.METHOD_NOT_ALLOWED);
-    }
-
-    @ExceptionHandler(value = {InvalidParameterException.class})
-    public ResponseEntity<?> handleInvalidParameterException(InvalidParameterException e, HttpServletRequest request) {
-
-        ErrorResponse errorResponse = ErrorResponse.getResponse(GlobalErrorCode.INTERNAL_SERVER_ERROR, e, request);
-        return new ResponseEntity(errorResponse, HttpStatus.METHOD_NOT_ALLOWED);
-    }
-
-    @ExceptionHandler(value = {IllegalStateException.class})
-    public ResponseEntity<?> handleIllegalStateException(IllegalStateException e, HttpServletRequest request) {
-
-        ErrorResponse errorResponse = ErrorResponse.getResponse(GlobalErrorCode.INTERNAL_SERVER_ERROR, e, request);
-        return new ResponseEntity(errorResponse, HttpStatus.METHOD_NOT_ALLOWED);
-    }
-
-    @ExceptionHandler(value = {IllegalArgumentException.class})
-    public ResponseEntity<?> handleIllegalArgumentException(IllegalArgumentException e, HttpServletRequest request) {
-
-        ErrorResponse errorResponse = ErrorResponse.getResponse(GlobalErrorCode.INTERNAL_SERVER_ERROR, e, request);
+        ErrorResponse errorResponse = ErrorResponse.getResponse(GlobalErrorCode.INVALID_ACCESS, e, request);
         return new ResponseEntity(errorResponse, HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     @ExceptionHandler(value = {BindException.class})
     public ResponseEntity<?> handleBindException(BindException e, HttpServletRequest request) {
-        ErrorResponse errorResponse = ErrorResponse.getResponse(GlobalErrorCode.INTERNAL_SERVER_ERROR, e, request);
-        return new ResponseEntity(errorResponse, HttpStatus.METHOD_NOT_ALLOWED);
+        ErrorResponse errorResponse = ErrorResponse.getResponse(GlobalErrorCode.INVALID_REQUEST_DATA, e, request);
+        return new ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
 
-    // * 그 외의 예상하지 못한 예외 처리
+    // * 그 외의 예상하지 못한 서버 내부 동작 도중 발생하는 예외 처리
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception e, HttpServletRequest request) {
-//        e.printStackTrace();
+        e.printStackTrace();
         ErrorResponse errorResponse = ErrorResponse.getResponse(GlobalErrorCode.INTERNAL_SERVER_ERROR, e, request);
         return new ResponseEntity(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }

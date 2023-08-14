@@ -12,7 +12,6 @@ import fullcare.backend.profile.dto.request.ProfileBioUpdateRequest;
 import fullcare.backend.profile.dto.request.ProfileUpdateRequest;
 import fullcare.backend.profile.dto.response.*;
 import fullcare.backend.s3.S3Service;
-import fullcare.backend.schedule.dto.MilestoneDto;
 import fullcare.backend.util.TechStackUtil;
 import fullcare.backend.util.dto.TechStack;
 import fullcare.backend.util.dto.TechStackDto;
@@ -132,8 +131,9 @@ public class ProfileService {
     }
 
 
-    public ProfileImageResponse findProfileImage(Member member) {
-        Member findMember = memberRepository.findById(member.getId()).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
+    @Transactional(readOnly = true)
+    public ProfileImageResponse findProfileImage(Long memberId) {
+        Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
         return new ProfileImageResponse(findMember.getId(), findMember.getImageUrl());
     }
 

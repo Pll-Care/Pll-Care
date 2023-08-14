@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Key;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 @Transactional(readOnly = true)
@@ -36,14 +35,7 @@ public class JwtTokenService {
     private final long refreshTokenValidationMilliseconds;
     private final MemberRepository memberRepository;
 
-
     private Key key;
-
-    @Value(("${jwt.access.header}"))
-    private String accessHeader;
-
-    @Value(("${jwt.refresh.header}"))
-    private String refreshHeader;
 
     public JwtTokenService(@Value("${jwt.secret}") String secret, @Value("${jwt.access.token-validity-in-seconds}") long accessTokenValidationMilliseconds,
                            @Value("${jwt.refresh.token-validity-in-seconds}") long refreshTokenValidationMilliseconds, MemberRepository memberRepository) {
@@ -60,36 +52,29 @@ public class JwtTokenService {
     }
 
     public String createAccessToken(CustomOAuth2User oAuth2User) {
-
-        long now = new Date().getTime();
-        Date validity = new Date(now + accessTokenValidationMilliseconds);
-
-        HashMap<String, Object> claims = new HashMap<>();
-        claims.put("sub", oAuth2User.getName());
-        claims.put("role", oAuth2User.getAuthorities());
-        claims.put("nickname", oAuth2User.getUsername());
+//        ConcurrentHashMap<String, Object> claims = new ConcurrentHashMap<>();
+//        HashMap<String, Object> claims = new HashMap<>();
+//        claims.put("sub", oAuth2User.getName());
+//        claims.put("role", oAuth2User.getAuthorities());
+//        claims.put("nickname", oAuth2User.getUsername());
 
         return Jwts.builder()
-                .setExpiration(validity)
-                .addClaims(claims)
+                .setSubject(oAuth2User.getName())
+                .claim("role", oAuth2User.getAuthorities())
+                .claim("nickname", oAuth2User.getUsername())
+                .setExpiration(new Date(System.currentTimeMillis() + accessTokenValidationMilliseconds))
                 .signWith(key, SignatureAlgorithm.HS512)
+                .setHeaderParam("typ", "JWT")
                 .compact();
-
-
     }
 
     public String createRefreshToken(CustomOAuth2User oAuth2User) {
 
-        long now = new Date().getTime();
-        Date validity = new Date(now + refreshTokenValidationMilliseconds);
-
-        HashMap<String, Object> claims = new HashMap<>();
-        claims.put("sub", oAuth2User.getName());
-
         return Jwts.builder()
-                .setExpiration(validity)
-                .addClaims(claims)
+                .setSubject(oAuth2User.getName())
+                .setExpiration(new Date(System.currentTimeMillis() + refreshTokenValidationMilliseconds))
                 .signWith(key, SignatureAlgorithm.HS512)
+                .setHeaderParam("typ", "JWT")
                 .compact();
     }
 
