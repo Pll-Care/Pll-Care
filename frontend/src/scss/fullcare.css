@@ -1187,10 +1187,12 @@ a {
   }
 }
 .meeting-record-book-marked-record-list {
+  max-width: 100%;
   padding-top: 10px;
   margin-bottom: 10px;
   height: 42%;
   display: grid;
+  grid-template-columns: 100%;
   grid-template-rows: 15% 85%;
 }
 .meeting-record-book-marked-record-list .meeting-record-heading {
@@ -1201,6 +1203,9 @@ a {
 .meeting-record-book-marked-record-list .meeting-record-body {
   display: grid;
   grid-template-rows: 80% 20%;
+  grid-template-columns: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 .meeting-record-book-marked-record-list .meeting-record-body .meeting-record-all-meeting-record-list-data {
   height: 100%;
@@ -1208,6 +1213,7 @@ a {
 }
 .meeting-record-book-marked-record-list .meeting-record-body .pagination-wrapper {
   margin-top: auto;
+  max-width: 100%;
 }
 @media (min-width: 767px) and (max-width: 1024px) {
   .meeting-record-book-marked-record-list .meeting-record-body .pagination-wrapper {
@@ -1220,6 +1226,7 @@ a {
   }
 }
 .meeting-record-all-meeting-record-list {
+  max-width: 100%;
   height: 47%;
   display: grid;
   grid-template-columns: 100%;
@@ -1262,6 +1269,8 @@ a {
 .meeting-record-all-meeting-record-list .record-list-item-wrapper {
   padding-top: 10px;
   height: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1274,10 +1283,12 @@ a {
   }
 }
 .meeting-record-all-meeting-record-list .meeting-record-all-meeting-record-list-data {
+  width: 100%;
   height: 100%;
 }
 .meeting-record-all-meeting-record-list .pagination-wrapper {
   margin-top: auto;
+  max-width: 100%;
 }
 @media (min-width: 767px) and (max-width: 1024px) {
   .meeting-record-all-meeting-record-list .pagination-wrapper {
