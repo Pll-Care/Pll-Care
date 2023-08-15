@@ -39,6 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -326,16 +327,16 @@ public class ScheduleService {
         ScheduleListResponse scheduleListResponse = null;
         if (!scheduleList.isEmpty()) {
             int month = startDate.getMonthValue();//scheduleList.get(0).getStartDate().getMonthValue(); //초기값
-            LocalDateTime compareDate = scheduleList.get(0).getStartDate();
+            Long startMonth = scheduleList.get(0).getStartDate().getMonth().getLong(ChronoField.MONTH_OF_YEAR);
 
             Long order = 1l;
             for (Schedule s : scheduleList) {
                 if (dateCategory.equals(DateCategory.MONTH)) {
-                    if (month < s.getStartDate().getMonth().getValue()) {
-                        month = s.getStartDate().getMonth().getValue();
-//                        order++;
-                        order = ChronoUnit.MONTHS.between(startDate, s.getStartDate()) + 1;
-                    }
+                    order = s.getStartDate().getMonth().getLong(ChronoField.MONTH_OF_YEAR) - startMonth + 1;
+//                    if (month < s.getStartDate().getMonth().getValue()) {
+//                        month = s.getStartDate().getMonth().getValue().;
+////                        order = ChronoUnit.MONTHS.between(startDate, s.getStartDate()) + 1;
+//                    }
                 } else {
                     order = ChronoUnit.WEEKS.between(startDate, s.getStartDate()) / 2 + 1;
 //                    if (ChronoUnit.WEEKS.between(compareDate, s.getStartDate()) > 1) {//* 2주 차이
