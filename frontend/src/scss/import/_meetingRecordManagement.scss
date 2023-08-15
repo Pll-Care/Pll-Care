@@ -123,6 +123,11 @@
         grid-template-columns: 100%;
       }
 
+      @include tablet {
+        display: grid;
+        grid-template-columns: 100%;
+      }
+
       @include displayFlex(column, space-between);
     }
 

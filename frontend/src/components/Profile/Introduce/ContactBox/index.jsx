@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
 import Button from "../../../common/Button";
-import { getContact, patchProfile } from "../../../../lib/apis/profileApi";
 import { useProfile } from "../../../../context/ProfileContext";
 import { toast } from "react-toastify";
 import ProfileInput from "../../../common/ProfileInput";
+import { useProfileClient } from "../../../../context/Client/ProfileClientContext";
 
 const QUERY_KEY = "profile-contact";
 
@@ -19,25 +19,27 @@ const ContactBox = () => {
   });
 
   const { isMyProfile, memberId } = useProfile();
+  const { getContactAPI, patchProfileAPI } = useProfileClient();
 
   const { data, refetch } = useQuery(
-    [QUERY_KEY, memberId],
-    () => getContact(memberId),
+    [memberId, QUERY_KEY],
+    () => getContactAPI(),
     {
       onSuccess: (res) => {
-        if (!!res.contact) {
-          const [emailStart, emailEnd] = res.contact.email.split("@");
+        if (!!res.data.contact) {
+          const [emailStart, emailEnd] = res.data.contact.email.split("@");
           const info = {
             emailStart,
             emailEnd,
-            github: res.contact.github,
-            websiteUrl: res.contact.websiteUrl,
+            github: res.data.contact.github,
+            websiteUrl: res.data.contact.websiteUrl,
           };
           setUserInfo((_) => info);
         }
       },
     }
   );
+
   useEffect(() => {
     refetch();
   }, [isModify, refetch]);
@@ -65,7 +67,8 @@ const ContactBox = () => {
       contact: info,
     };
 
-    await patchProfile(memberId, reqBody);
+    await patchProfileAPI(reqBody);
+    toast.success("수정되었습니다.");
     setIsModify(false);
   };
 
@@ -126,9 +129,9 @@ const ContactBox = () => {
             chageWebsite: chageWebsite,
           })
         : Default_UI({
-            email: data?.contact?.email,
-            github: data?.contact?.github,
-            websiteUrl: data?.contact?.websiteUrl,
+            email: data?.data?.contact?.email,
+            github: data?.data?.contact?.github,
+            websiteUrl: data?.data?.contact?.websiteUrl,
           })}
     </div>
   );
@@ -137,7 +140,6 @@ const ContactBox = () => {
 export default ContactBox;
 
 const Default_UI = ({ email = "", github = "", websiteUrl = "" }) => {
-  console.log(github);
   return (
     <div className="profile_body_introduce_contactBox_items">
       <div className="profile_body_introduce_contactBox_items_item">

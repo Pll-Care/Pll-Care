@@ -49,16 +49,20 @@ export const editProject = async (newProjectData) => {
 };
 
 export const completeProject = async (projectId) => {
-  const response = await customAxios.post(`/auth/project/${projectId}/complete`);
+  const response = await customAxios.post(
+    `/auth/project/${projectId}/complete`
+  );
 
   return response.data;
 };
 
 export const leaveProject = async (projectId) => {
-  const response = await customAxios.delete(`/auth/project/${projectId}/selfout`);
+  const response = await customAxios.delete(
+    `/auth/project/${projectId}/selfout`
+  );
 
   return response.data;
-}
+};
 
 export const uploadImage = async (imgData) => {
   const response = await customAxios.post(
@@ -75,21 +79,19 @@ export const uploadImage = async (imgData) => {
 };
 
 export const deleteImage = async (imgUrl) => {
-  const response = await customAxios.delete(
-    `/auth/upload/image?url=${imgUrl}`
-  );
+  const response = await customAxios.delete(`/auth/upload/image?url=${imgUrl}`);
 
   return response.data;
-}
+};
 
 export const getCompleteProjectData = async (projectId) => {
-  const response = await customAxios.get(`/auth/project/${projectId}/iscompleted`);
+  const response = await customAxios.get(
+    `/auth/project/${projectId}/iscompleted`
+  );
 
   return response.data.completed;
-}
+};
 
-export const getIsLeaderData = async (projectId) => {
-  const response = await customAxios.get(`/auth/project/${projectId}/isleader`);
-
-  return response.data.leader;
-}
+export const getIsLeaderData = (projectId) => {
+  return customAxios.get(`/auth/project/${projectId}/isleader`);
+};

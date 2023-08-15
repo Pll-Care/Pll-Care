@@ -15,11 +15,11 @@ customAxios.defaults.headers.common["Authorization"] = accessToken
   ? `Bearer ${accessToken}`
   : null;
 
-customAxios.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  (error) => {
-    
-  }
-)
+// customAxios.interceptors.response.use(
+//   (response) => {
+//     return response;
+//   },
+//   (error) => {
+
+//   }
+// )

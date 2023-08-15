@@ -2,11 +2,10 @@ import { useCallback, useState } from "react";
 import Button from "../../../common/Button";
 import SearchStack from "../PositionBox/SearchStack";
 import { filterSelectStack } from "../../../../utils/searchStack/handleStackList";
-import { patchProfile } from "../../../../lib/apis/profileApi";
-import { useProfile } from "../../../../context/ProfileContext";
 import { toast } from "react-toastify";
 import ProfileInput from "../../../common/ProfileInput";
 import Calendar from "../../../common/Calendar";
+import { useProfileClient } from "../../../../context/Client/ProfileClientContext";
 
 const ModifyProject = ({
   type = "",
@@ -26,7 +25,7 @@ const ModifyProject = ({
     endDate,
   });
 
-  const { memberId } = useProfile();
+  const { patchProfileAPI } = useProfileClient();
 
   const changeStack = (stack) => {
     setSubmitData((prev) => ({
@@ -99,7 +98,7 @@ const ModifyProject = ({
       return;
     }
 
-    const response = await patchProfile(memberId, reqestData);
+    const response = await patchProfileAPI(reqestData);
     if (response.status === 200) {
       toast.success(`${type}되었습니다.`);
       changeModify(false);
