@@ -34,7 +34,7 @@
     align-items: center;
     height: 100%;
 
-    @media (max-width: 1000px) {
+    @include tablet {
       gap: 25px;
       @include displayFlex(column);
     }

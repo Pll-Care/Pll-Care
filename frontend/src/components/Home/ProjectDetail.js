@@ -16,8 +16,6 @@ const settings = {
 };
 
 const ProjectDetail = ({ type, projectList }) => {
-  console.log(type, projectList);
-
   return (
     projectList.length && (
       <div className="project-detail-wrapper">

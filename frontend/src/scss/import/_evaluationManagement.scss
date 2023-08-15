@@ -19,7 +19,7 @@
         @include heading_03;
       }
 
-      @media (max-width: 1000px) {
+      @include tablet {
         width: 600px;
       }
     }
@@ -132,7 +132,7 @@
               @include body_01;
             }
 
-            @media (max-width: 1000px) {
+            @include tablet {
               width: 100%;
               height: 100%;
 
@@ -142,7 +142,7 @@
             @include displayFlex(column, center, flex-end);
           }
 
-          @media (max-width: 1000px) {
+          @include tablet {
             padding: 10px;
             margin: 0;
             height: 100%;
@@ -168,8 +168,9 @@
           }
         }
 
-        @media (max-width: 1000px) {
+        @include tablet {
           gap: 20px;
+
           @include displayFlex(row, space-between);
         }
       }
@@ -178,7 +179,7 @@
         display: none;
       }
 
-      @media (max-width: 1000px) {
+      @include tablet {
         width: 600px;
         height: 200px;
         margin-top: 20px;
@@ -321,9 +322,9 @@
           @include displayFlex(row, space-between, center);
         }
 
-        @media (max-width: 1000px) {
+        @include tablet {
           width: 100%;
-        } 
+        }
 
         @include displayFlex;
       }
@@ -331,7 +332,7 @@
       @include displayFlex(row, space-between);
     }
 
-    @media (max-width: 1000px) {
+    @include tablet {
       width: 600px;
     }
 
@@ -371,11 +372,6 @@
       padding: 50px;
       display: grid;
       grid-template-rows: 25% 25% 50%;
-
-      @media (max-width: 1000px) {
-        grid-template-rows: 35% 35% 30%;
-        height: 150%;
-      }
 
       .evaluation,
       .evaluation-badges {
@@ -423,7 +419,11 @@
           );
         }
 
-        @media (max-width: 1000px) {
+        div {
+          @include displayFlex(row, space-between);
+        }
+
+        @include tablet {
           width: 70%;
           height: 100%;
           grid-template-rows: repeat(4, 1fr);
@@ -431,10 +431,6 @@
           padding-bottom: 10px;
 
           @include putCenter;
-        }
-
-        div {
-          @include displayFlex(row, space-between);
         }
 
         @include heading_05;
@@ -478,7 +474,7 @@
             }
           }
 
-          @media (max-width: 1000px) {
+          @include tablet {
             width: 100%;
             height: 100%;
             grid-template-rows: repeat(4, 1fr);
@@ -527,6 +523,11 @@
         }
 
         @include displayFlex(column, center, flex-start);
+      }
+
+      @include tablet {
+        grid-template-rows: 35% 35% 30%;
+        height: 150%;
       }
     }
 
