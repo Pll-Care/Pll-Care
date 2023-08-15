@@ -129,6 +129,14 @@
   }
 }
 
+@mixin body_04 {
+  font: {
+    family: "Noto Sans KR", sans-serif;
+    size: 22px;
+    weight: 500;
+  }
+}
+
 @mixin button_01 {
   font: {
     family: "IBM Plex Sans KR", sans-serif;
