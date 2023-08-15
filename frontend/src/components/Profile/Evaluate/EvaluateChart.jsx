@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useProfile } from "../../../context/ProfileContext";
 import { useQuery } from "react-query";
 import { useProfileClient } from "../../../context/Client/ProfileClientContext";
-import ChartBar from "./\bChartBar";
+import ChartBar from "./ChartBar";
 
 const CHART_TITLE = {
   sincerity: "성실도",
