@@ -262,14 +262,17 @@ a {
   justify-content: space-around;
   align-items: center;
 }
-.main-header .nav_item > a {
-  color: #003b28;
+.main-header .nav_item {
   text-decoration: none;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 24px;
   font-weight: 700;
+  cursor: pointer;
 }
-.main-header .nav_item .main-header-link-off {
+.main-header .main-header-link-on {
+  color: #003b28;
+}
+.main-header .main-header-link-off {
   color: #7a7a7a;
 }
 .main-header-right-col {
@@ -289,7 +292,6 @@ a {
   width: 40px;
   height: 40px;
   margin-right: 20px;
-  background-color: #01e89e;
   background-image: url("../assets/profile-default-img.png");
   background-position: center;
   background-repeat: no-repeat;
@@ -307,6 +309,22 @@ a {
   width: 100%;
   height: 100%;
   border-radius: 35%;
+}
+
+.header-profile-bg {
+  background-color: #01e89e;
+}
+
+.header-profile-menu {
+  color: #fcfcfc;
+}
+
+.header-profile-image-bg {
+  background-color: #fcfcfc;
+}
+
+.header-image-bg {
+  background-color: #01e89e;
 }
 
 .button {
@@ -365,6 +383,13 @@ a {
   background-color: #01e89e;
   color: #fcfcfc;
   border: 2px solid #fcfcfc;
+}
+.button_profile_header {
+  background-color: #ffffff;
+  color: #01e89e;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 .control-menu {
@@ -1281,6 +1306,12 @@ a {
     grid-template-columns: 100%;
   }
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .meeting-record-all-meeting-record-list .record-list-item-wrapper {
+    display: grid;
+    grid-template-columns: 100%;
+  }
+}
 .meeting-record-all-meeting-record-list .meeting-record-all-meeting-record-list-data {
   width: 100%;
   height: 100%;
@@ -1288,16 +1319,6 @@ a {
 .meeting-record-all-meeting-record-list .pagination-wrapper {
   margin-top: auto;
   max-width: 100%;
-}
-@media (min-width: 767px) and (max-width: 1024px) {
-  .meeting-record-all-meeting-record-list .pagination-wrapper {
-    width: 100%;
-  }
-}
-@media (min-width: 767px) and (max-width: 1024px) {
-  .meeting-record-all-meeting-record-list {
-    width: 100%;
-  }
 }
 @media (min-width: 767px) and (max-width: 1024px) {
   .meeting-record-all-meeting-record-list .pagination-wrapper {
