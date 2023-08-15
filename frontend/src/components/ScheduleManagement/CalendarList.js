@@ -36,11 +36,11 @@ const CalendarList = () => {
         <h1>{calendar}</h1>
       </div>
       {!data && !isLoading && (
-        <h1 className="check-schedule">통신 오류났습니다.</h1>
+        <h2 className="check-schedule">통신 오류났습니다.</h2>
       )}
       {isLoading && <Loading />}
       {data && data?.length === 0 && (
-        <h1 className="check-schedule">오늘 일정이 없습니다.</h1>
+        <h2 className="check-schedule">오늘 일정이 없습니다.</h2>
       )}
       {data &&
         data.map((data, index) => <CalendarItem key={index} data={data} />)}

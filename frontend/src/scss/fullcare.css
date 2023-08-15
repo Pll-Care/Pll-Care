@@ -657,26 +657,11 @@ a {
   font-size: 25px;
   margin-bottom: 10px;
 }
-@media (max-width: 767px) {
-  .calendar-list-time h5 {
-    font-size: 21px;
-  }
-}
 .calendar-list-time h1 {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 40px;
   border-bottom: 2px solid white;
   margin-bottom: 20px;
-}
-@media (max-width: 767px) {
-  .calendar-list-time h1 {
-    font-size: 33px;
-  }
-}
-@media (min-width: 767px) and (max-width: 1024px) {
-  .calendar-list-time h1 {
-    font-size: 38px;
-  }
 }
 .calendar-list-item {
   background-color: white;
@@ -684,6 +669,11 @@ a {
   padding: 1rem;
   color: #7a7a7a;
   margin-bottom: 20px;
+}
+@media (max-width: 767px) {
+  .calendar-list-item {
+    padding: 8px;
+  }
 }
 .calendar-list-item h5 {
   font-family: "Noto Sans KR", sans-serif;
@@ -813,6 +803,16 @@ a {
   .fc-toolbar-title {
     font-size: 5px;
   }
+  .calendar-list .check-schedule {
+    font-size: 17px;
+  }
+  .calendar-list h5 {
+    font-size: 17px;
+  }
+  .calendar-list h1,
+  .calendar-list h4 {
+    font-size: 23px;
+  }
 }
 @media (max-width: 767px) {
   .fc-daygrid-day {
@@ -824,6 +824,16 @@ a {
   }
   .fc-scrollgrid-sync-inner {
     font-size: 5px;
+  }
+  .calendar-list .check-schedule {
+    font-size: 12px;
+  }
+  .calendar-list h5 {
+    font-size: 12px;
+  }
+  .calendar-list h1,
+  .calendar-list h4 {
+    font-size: 21px;
   }
   .calendar-list-item-name-avatar .MuiAvatar-root {
     transform: scale(0.5);

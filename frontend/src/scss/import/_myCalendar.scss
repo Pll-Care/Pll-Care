@@ -40,40 +40,35 @@
     padding: 10px;
   }
   overflow-y: auto;
+
   .button-container {
     display: flex;
     justify-content: flex-end;
   }
+
   &-time {
     color: white;
     h5 {
       font-family: $heading-font;
       font-size: $sub-heading-font-size;
       margin-bottom: 10px;
-      //@include tabelt {
-      //  font-size: $sub-heading-font-size-medium;
-      //}
-      @include mobile {
-        font-size: $sub-heading-font-size-small;
-      }
     }
     h1 {
       font-family: $heading-font;
       font-size: $heading-font-size;
       border-bottom: 2px solid white;
       margin-bottom: 20px;
-      @include mobile {
-        font-size: $heading-font-size-small;
-      }
-      @include tablet {
-        font-size: $heading-font-size-medium;
-      }
     }
   }
+
+  // CalendarItem 컴포넌트
   &-item {
     background-color: white;
     border-radius: 10px;
     padding: 1rem;
+    @include mobile {
+      padding: 8px;
+    }
     color: $body-font-color;
     margin-bottom: 20px;
 
@@ -199,23 +194,20 @@
   .fc-toolbar-title {
     font-size: 5px;
   }
-  //.calendar {
-  //  flex-direction: column;
-  //  &-schedule {
-  //    width: 100%;
-  //  }
-  //  &-list {
-  //    margin-top: 10px;
-  //    width: 85%;
-  //    h5 {
-  //      font-size: $body-font-size-medium;
-  //    }
-  //    h1,
-  //    h4 {
-  //      font-size: $sub-heading-font-size-medium;
-  //    }
-  //  }
-  //}
+  .calendar {
+    &-list {
+      .check-schedule {
+        font-size: $body-font-size-medium;
+      }
+      h5 {
+        font-size: $body-font-size-medium;
+      }
+      h1,
+      h4 {
+        font-size: $sub-heading-font-size-medium;
+      }
+    }
+  }
 }
 
 @include mobile {
@@ -229,17 +221,21 @@
   .fc-scrollgrid-sync-inner {
     font-size: 5px;
   }
-  //.calendar {
-  //  &-list {
-  //    h5 {
-  //      font-size: $body-font-size-small;
-  //    }
-  //    h1,
-  //    h4 {
-  //      font-size: $sub-heading-font-size-small;
-  //    }
-  //  }
-  //}
+  .calendar {
+    &-list {
+      .check-schedule {
+        font-size: $body-font-size-small;
+      }
+      h5 {
+        font-size: $body-font-size-small;
+      }
+      h1,
+      h4 {
+        font-size: $sub-heading-font-size-small;
+      }
+    }
+  }
+
   .calendar-list-item-name-avatar {
     .MuiAvatar-root {
       transform: scale(0.5);
