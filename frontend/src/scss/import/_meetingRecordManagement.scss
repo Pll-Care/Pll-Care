@@ -58,7 +58,10 @@
 
       .pagination-wrapper {
         margin-top: auto;
+<<<<<<< HEAD
+=======
         max-width: 100%;
+>>>>>>> f5a19494d2861663c1bef788efef1b96a75a4e00
 
         @include tablet {
           width: 100%;
@@ -128,17 +131,28 @@
         grid-template-columns: 100%;
       }
 
+      @include tablet {
+        display: grid;
+        grid-template-columns: 100%;
+      }
+
       @include displayFlex(column, space-between);
     }
 
     .meeting-record-all-meeting-record-list-data {
+<<<<<<< HEAD
+=======
       width: 100%;
+>>>>>>> f5a19494d2861663c1bef788efef1b96a75a4e00
       height: 100%;
     }
 
     .pagination-wrapper {
       margin-top: auto;
+<<<<<<< HEAD
+=======
       max-width: 100%;
+>>>>>>> f5a19494d2861663c1bef788efef1b96a75a4e00
 
       @include tablet {
         width: 100%;

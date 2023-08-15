@@ -55,7 +55,6 @@ const OverviewChart = () => {
       orderGroups.push(group.length > 0 ? group : []);
     }
   }
-  console.log(orderGroups);
 
   return (
     <Card>
@@ -92,7 +91,7 @@ const OverviewChart = () => {
               className="vertical-timeline-element-small"
               contentStyle={{
                 background: "#01E89E",
-                color: "white",
+                fontFamily: "Noto Sans KR",
                 borderRadius: "15px",
               }}
               contentArrowStyle={{ borderRight: "7px solid  #01E89E" }}
@@ -102,12 +101,9 @@ const OverviewChart = () => {
               }}
               icon={<ComputerIcon />}
             >
-              <h2
-                className="vertical-timeline-element-title"
-                style={{ color: "white", fontWeight: "bold", fontSize: "20px" }}
-              >
-                아직 계획이 없습니다
-              </h2>
+              <h5 className="endpoint" style={{ color: "white" }}>
+                아직 계획이 없습니다.
+              </h5>
             </VerticalTimelineElement>
           )}
 
@@ -137,7 +133,7 @@ const OverviewChart = () => {
                     style={{
                       color: "white",
                       fontWeight: "bold",
-                      fontSize: "20px",
+                      fontSize: "18px",
                     }}
                   >
                     {(index + 1) * 2 - 1}주 ~ {(index + 1) * 2}주차
@@ -149,7 +145,7 @@ const OverviewChart = () => {
                     style={{
                       color: "white",
                       fontWeight: "bold",
-                      fontSize: "20px",
+                      fontSize: "18px",
                     }}
                   >
                     {months[(month + index) % 12]}

@@ -2,16 +2,18 @@
 .schedule {
   h1 {
     font-size: $sub-heading-font-size;
-    color: $sub-heading-color;
+    color: $green-400;
     font-family: $link-font;
     margin: 15px;
     margin-left: 7%;
   }
-}
-.endpoint {
-  color: gray;
-  margin-bottom: 10px;
-  font-size: $body-font-size;
+  h3,
+  h5 {
+    margin-top: 10px;
+    font-family: $link-font;
+    font-size: $body-font-size;
+    color: $gray-500;
+  }
 }
 
 .simple {
@@ -23,13 +25,13 @@
   h2 {
     font-family: $link-font;
     font-size: $link-font-size;
-    color: #7a7a7a;
+    color: $gray-500;
   }
   h3 {
     margin-top: 10px;
     font-family: $link-font;
     font-size: 14px;
-    color: #7a7a7a;
+    color: $gray-500;
   }
 }
 
@@ -38,10 +40,12 @@
     h1 {
       font-size: $body-font-size-small;
     }
+    h3,
+    h5 {
+      font-size: $body-font-size-small;
+    }
   }
-  .endpoint {
-    font-size: $body-font-size-small;
-  }
+
   .simple {
     h2,
     h3 {
@@ -50,7 +54,10 @@
   }
 }
 @include tablet {
-  .endpoint {
-    font-size: $body-font-size-medium;
+  .schedule {
+    h3,
+    h5 {
+      font-size: $body-font-size-medium;
+    }
   }
 }

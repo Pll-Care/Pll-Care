@@ -1,12 +1,11 @@
-import MyCalendar from "../components/ScheduleManagement/MyCalendar";
-import ScheduleOption from "../components/ScheduleManagement/ScheduleOption";
+import { Fragment } from "react";
+import ScheduleManagementPage from "../components/ScheduleManagement";
 
 const ScheduleManagement = () => {
   return (
-    <>
-      <MyCalendar />
-      <ScheduleOption />
-    </>
+    <Fragment>
+      <ScheduleManagementPage />
+    </Fragment>
   );
 };
 

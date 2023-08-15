@@ -130,7 +130,7 @@ const ScheduleModal = ({
   };
 
   return (
-    <ModalContainer open={open} onClose={onClose} type="light" width="50%">
+    <ModalContainer open={open} onClose={onClose} type="light" width="70%">
       <div className="modal-container">
         <input
           type="text"

@@ -15,6 +15,8 @@ export const useAddNewScheduleMutation = () => {
       queryClient.invalidateQueries("calendarSchedule");
       queryClient.invalidateQueries("filterSchedule");
       queryClient.invalidateQueries("overviewSchedule");
+      queryClient.invalidateQueries("todayAfterSchedule");
+
       toast.success("일정이 생성되었습니다");
     },
   });
@@ -29,6 +31,7 @@ export const useModifyScheduleMutation = () => {
       queryClient.invalidateQueries("filterSchedule");
       queryClient.invalidateQueries("overviewSchedule");
       queryClient.invalidateQueries("scheduleDetail");
+      queryClient.invalidateQueries("todayAfterSchedule");
       toast.success("일정이 수정되었습니다");
     },
   });
@@ -41,6 +44,7 @@ export const useDeleteScheduleMutation = () => {
     onSuccess: () => {
       queryClient.invalidateQueries("calendarSchedule");
       queryClient.invalidateQueries("filterSchedule");
+      queryClient.invalidateQueries("todayAfterSchedule");
       queryClient.invalidateQueries("overviewSchedule");
       toast.success("일정이 삭제되었습니다");
     },

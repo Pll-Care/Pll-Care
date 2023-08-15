@@ -193,9 +193,15 @@
     &_link {
       @include displayFlex(row, center, center);
 
+<<<<<<< HEAD
+      width: 48px;
+      height: 48px;
+      background-color: $green-200;
+=======
       min-width: 48px;
       min-height: 48px;
       background-color: $green-400;
+>>>>>>> f5a19494d2861663c1bef788efef1b96a75a4e00
       border-radius: 15px;
 
       & > img {

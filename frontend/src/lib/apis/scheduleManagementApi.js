@@ -25,7 +25,6 @@ export const getCalendarAllSchedule = async (id) => {
 };
 
 // 일정 생성하는 함수
-
 export const createNewSchedule = async (data) => {
   try {
     const res = await customAxios.post("/auth/schedule", data);
@@ -62,10 +61,10 @@ export const getFilterSchedule = async (projectId, memberId, type, page) => {
 
 // todayAfterSchedule
 // 오늘 이후 일정
-export const getTodayAfterSchedule = async (page, projectId, year, month) => {
+export const getTodayAfterSchedule = async (projectId) => {
   try {
     const res = await customAxios.get(
-      `/auth/schedule/monthlist?page=${page}&size=4&project_id=${projectId}&year=${year}&month=${month}`
+      `/auth/schedule/daily?project_id=${projectId}`
     );
     return res.data;
   } catch (err) {
