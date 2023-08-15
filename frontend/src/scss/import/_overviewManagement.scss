@@ -7,6 +7,13 @@
     margin: 15px;
     margin-left: 7%;
   }
+  h3,
+  h5 {
+    margin-top: 10px;
+    font-family: $link-font;
+    font-size: $body-font-size;
+    color: $gray-500;
+  }
 }
 
 .simple {
@@ -33,10 +40,12 @@
     h1 {
       font-size: $body-font-size-small;
     }
+    h3,
+    h5 {
+      font-size: $body-font-size-small;
+    }
   }
-  .endpoint {
-    font-size: $body-font-size-small;
-  }
+
   .simple {
     h2,
     h3 {
@@ -45,7 +54,10 @@
   }
 }
 @include tablet {
-  .endpoint {
-    font-size: $body-font-size-medium;
+  .schedule {
+    h3,
+    h5 {
+      font-size: $body-font-size-medium;
+    }
   }
 }

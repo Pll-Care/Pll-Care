@@ -840,6 +840,13 @@ a {
   margin: 15px;
   margin-left: 7%;
 }
+.schedule h3,
+.schedule h5 {
+  margin-top: 10px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  color: #7a7a7a;
+}
 
 .simple {
   background-color: white;
@@ -864,7 +871,8 @@ a {
   .schedule h1 {
     font-size: 12px;
   }
-  .endpoint {
+  .schedule h3,
+  .schedule h5 {
     font-size: 12px;
   }
   .simple h2,
@@ -873,7 +881,8 @@ a {
   }
 }
 @media (min-width: 767px) and (max-width: 1024px) {
-  .endpoint {
+  .schedule h3,
+  .schedule h5 {
     font-size: 17px;
   }
 }
