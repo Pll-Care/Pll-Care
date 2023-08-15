@@ -604,7 +604,15 @@ a {
 
 .schedule-calendar {
   display: grid;
-  grid-template-columns: 65% 35%;
+  grid-template-columns: 60% 40%;
+}
+@media (max-width: 767px) {
+  .schedule-calendar {
+    height: 400px;
+  }
+}
+.schedule-calendar-schedulelist {
+  width: 100%;
 }
 .schedule-calendar-schedulelist .fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {
   height: 100%;
@@ -619,16 +627,17 @@ a {
 }
 @media (max-width: 767px) {
   .schedule-calendar-schedulelist .fc-header-toolbar.fc-toolbar {
-    font-size: 11px;
+    font-size: 7px;
   }
 }
 
 .calendar-list {
-  background-color: #01e89e;
-  align-items: center;
-  padding: 2rem;
   width: 100%;
   height: 100%;
+  background-color: #01e89e;
+  border-radius: 20px;
+  align-items: center;
+  padding: 2rem;
   overflow-y: auto;
 }
 @media (max-width: 767px) {
@@ -664,6 +673,11 @@ a {
     font-size: 33px;
   }
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .calendar-list-time h1 {
+    font-size: 38px;
+  }
+}
 .calendar-list-item {
   background-color: white;
   border-radius: 10px;
@@ -676,9 +690,29 @@ a {
   font-size: 18px;
   margin-bottom: 10px;
 }
+@media (max-width: 767px) {
+  .calendar-list-item h5 {
+    font-size: 12px;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .calendar-list-item h5 {
+    font-size: 17px;
+  }
+}
 .calendar-list-item h4 {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 25px;
+}
+@media (max-width: 767px) {
+  .calendar-list-item h4 {
+    font-size: 21px;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .calendar-list-item h4 {
+    font-size: 23px;
+  }
 }
 .calendar-list-item-name {
   display: flex;
@@ -772,22 +806,12 @@ a {
 }
 
 @media (min-width: 767px) and (max-width: 1024px) {
-  .calendar {
-    flex-direction: column;
+  .fc-daygrid-day {
+    font-size: 7px;
+    margin: 80%;
   }
-  .calendar-schedule {
-    width: 100%;
-  }
-  .calendar-list {
-    margin-top: 10px;
-    width: 85%;
-  }
-  .calendar-list h5 {
-    font-size: 17px;
-  }
-  .calendar-list h1,
-  .calendar-list h4 {
-    font-size: 23px;
+  .fc-toolbar-title {
+    font-size: 5px;
   }
 }
 @media (max-width: 767px) {
@@ -798,22 +822,8 @@ a {
   .fc-toolbar-title {
     font-size: 5px;
   }
-  .calendar {
-    flex-direction: column;
-  }
-  .calendar-schedule {
-    width: 100%;
-  }
-  .calendar-list {
-    margin-top: 10px;
-    width: 100%;
-  }
-  .calendar-list h5 {
-    font-size: 12px;
-  }
-  .calendar-list h1,
-  .calendar-list h4 {
-    font-size: 21px;
+  .fc-scrollgrid-sync-inner {
+    font-size: 5px;
   }
   .calendar-list-item-name-avatar .MuiAvatar-root {
     transform: scale(0.5);
@@ -829,12 +839,6 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   margin: 15px;
   margin-left: 7%;
-}
-
-.endpoint {
-  color: gray;
-  margin-bottom: 10px;
-  font-size: 18px;
 }
 
 .simple {

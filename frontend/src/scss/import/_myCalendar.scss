@@ -6,9 +6,13 @@
 
 .schedule-calendar {
   display: grid;
-  grid-template-columns: 65% 35%;
+  grid-template-columns: 60% 40%;
+  @include mobile {
+    height: 400px;
+  }
 
   &-schedulelist {
+    width: 100%;
     .fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {
       height: 100%;
     }
@@ -18,7 +22,7 @@
         font-size: $sub-body-font-size-medium;
       }
       @include mobile {
-        font-size: $sub-body-font-size-small;
+        font-size: 7px;
       }
     }
   }
@@ -29,6 +33,7 @@
   width: 100%;
   height: 100%;
   background-color: $green-200;
+  border-radius: 20px;
   align-items: center;
   padding: 2rem;
   @include mobile {
@@ -45,9 +50,9 @@
       font-family: $heading-font;
       font-size: $sub-heading-font-size;
       margin-bottom: 10px;
-      @include tabelt {
-        font-size: $sub-heading-font-size-medium;
-      }
+      //@include tabelt {
+      //  font-size: $sub-heading-font-size-medium;
+      //}
       @include mobile {
         font-size: $sub-heading-font-size-small;
       }
@@ -187,23 +192,30 @@
 }
 
 @include tablet {
-  .calendar {
-    flex-direction: column;
-    &-schedule {
-      width: 100%;
-    }
-    &-list {
-      margin-top: 10px;
-      width: 85%;
-      h5 {
-        font-size: $body-font-size-medium;
-      }
-      h1,
-      h4 {
-        font-size: $sub-heading-font-size-medium;
-      }
-    }
+  .fc-daygrid-day {
+    font-size: 7px;
+    margin: 80%;
   }
+  .fc-toolbar-title {
+    font-size: 5px;
+  }
+  //.calendar {
+  //  flex-direction: column;
+  //  &-schedule {
+  //    width: 100%;
+  //  }
+  //  &-list {
+  //    margin-top: 10px;
+  //    width: 85%;
+  //    h5 {
+  //      font-size: $body-font-size-medium;
+  //    }
+  //    h1,
+  //    h4 {
+  //      font-size: $sub-heading-font-size-medium;
+  //    }
+  //  }
+  //}
 }
 
 @include mobile {
@@ -214,23 +226,20 @@
   .fc-toolbar-title {
     font-size: 5px;
   }
-  .calendar {
-    flex-direction: column;
-    &-schedule {
-      width: 100%;
-    }
-    &-list {
-      margin-top: 10px;
-      width: 100%;
-      h5 {
-        font-size: $body-font-size-small;
-      }
-      h1,
-      h4 {
-        font-size: $sub-heading-font-size-small;
-      }
-    }
+  .fc-scrollgrid-sync-inner {
+    font-size: 5px;
   }
+  //.calendar {
+  //  &-list {
+  //    h5 {
+  //      font-size: $body-font-size-small;
+  //    }
+  //    h1,
+  //    h4 {
+  //      font-size: $sub-heading-font-size-small;
+  //    }
+  //  }
+  //}
   .calendar-list-item-name-avatar {
     .MuiAvatar-root {
       transform: scale(0.5);
