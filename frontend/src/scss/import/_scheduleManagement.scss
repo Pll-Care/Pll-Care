@@ -4,11 +4,17 @@
   font-size: 20px;
   color: white;
   margin-bottom: 10px;
+  @include mobile {
+    font-size: $sub-heading-font-size-small;
+  }
   &-gray {
     color: rgb(173, 173, 173);
     margin: 20px;
     font-family: $heading-font;
     font-size: 20px;
+    @include mobile {
+      font-size: $sub-heading-font-size-small;
+    }
   }
 }
 
@@ -32,6 +38,16 @@
       font-family: $link-font;
       font-size: $link-font-size;
       margin-bottom: 20px;
+
+      @include tablet {
+        font-size: $link-font-size-medium;
+      }
+    }
+    @include mobile {
+      padding: 20px;
+      h4 {
+        font-size: $link-font-size-small;
+      }
     }
   }
 }

@@ -5,11 +5,11 @@ import { useQuery } from "react-query";
 import CalendarItem from "./CalendarItem";
 import ScheduleModal from "./ScheduleModal";
 import Button from "../common/Button";
+import { Loading } from "../common/Loading";
+
 import { getTodayDateEnglish } from "../../utils/date";
 import { getProjectId } from "../../utils/getProjectId";
-
 import { getTodayAfterSchedule } from "../../lib/apis/scheduleManagementApi";
-import { Loading } from "../common/Loading";
 
 const CalendarList = () => {
   const projectId = getProjectId(useLocation());

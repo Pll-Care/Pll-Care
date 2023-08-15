@@ -642,7 +642,7 @@ a {
 }
 @media (max-width: 767px) {
   .calendar-list {
-    padding: 10px;
+    padding: 20px 10px;
   }
 }
 .calendar-list .button-container {
@@ -902,11 +902,21 @@ a {
   color: white;
   margin-bottom: 10px;
 }
+@media (max-width: 767px) {
+  .check-schedule {
+    font-size: 21px;
+  }
+}
 .check-schedule-gray {
   color: rgb(173, 173, 173);
   margin: 20px;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
+}
+@media (max-width: 767px) {
+  .check-schedule-gray {
+    font-size: 21px;
+  }
 }
 
 .schedule-option {
@@ -929,6 +939,19 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 25px;
   margin-bottom: 20px;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .schedule-option-person h4 {
+    font-size: 22px;
+  }
+}
+@media (max-width: 767px) {
+  .schedule-option-person {
+    padding: 20px;
+  }
+  .schedule-option-person h4 {
+    font-size: 13px;
+  }
 }
 
 .schedule-lists-pagination {
