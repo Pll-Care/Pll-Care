@@ -1,14 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import Button from "../../../common/Button";
 import SearchStack from "./SearchStack";
 import { useProfile } from "../../../../context/ProfileContext";
-import { getPositionAPI, patchProfile } from "../../../../lib/apis/profileApi";
 import { toast } from "react-toastify";
 
 import Select from "../../../../components/common/Select";
 import { positionSelect } from "../../../../utils/optionData";
 import StackItem from "../../../common/StackItem";
 import { filterSelectStack } from "../../../../utils/searchStack/handleStackList";
+import { useProfileClient } from "../../../../context/Client/ProfileClientContext";
 
 const PositionBox = () => {
   const [isModify, setIsModify] = useState(false);
@@ -17,15 +18,16 @@ const PositionBox = () => {
     stack: [],
   });
   const { isMyProfile, memberId } = useProfile();
+  const { getPositionAPI, patchProfileAPI } = useProfileClient();
 
   useEffect(() => {
     const getPosition = async () => {
       const response = await getPositionAPI(memberId);
-      if (response)
+      if (response.data)
         setPositionAndStack((prev) => ({
           ...prev,
-          position: response.recruitPosition,
-          stack: response.techStack,
+          position: response.data.recruitPosition,
+          stack: response.data.techStack,
         }));
     };
 
@@ -43,7 +45,7 @@ const PositionBox = () => {
     if (!reqBody.recruitPosition || !reqBody.techStack) {
       toast.error("개발 직무와 기술 스택을 반드시 선택해야합니다.");
     } else {
-      await patchProfile(memberId, reqBody);
+      await patchProfileAPI(reqBody);
       setIsModify(false);
       toast.success("수정되었습니다.");
     }

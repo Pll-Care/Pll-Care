@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 const SearchPosition = ({ positionData, changePosition }) => {
   return (
     <div>

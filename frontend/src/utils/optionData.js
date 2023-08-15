@@ -10,8 +10,16 @@ export const sortSelect = [
 
 export const positionSelect = [
   { value: "", title: "직무를 선택해주세요." },
-  { value: "FRONTEND", title: "프론트엔드" },
-  { value: "BACKEND", title: "백엔드" },
-  { value: "DESIGN", title: "디자이너" },
-  { value: "MANAGER", title: "매니저" },
+  { value: "프론트엔드", title: "프론트엔드" },
+  { value: "백엔드", title: "백엔드" },
+  { value: "디자인", title: "디자인" },
+  { value: "기획", title: "기획" },
+];
+
+export const projectPositionSelect = [
+  { value: "", title: "직무를 선택해주세요." },
+  { value: "프론트엔드", title: "프론트엔드" },
+  { value: "백엔드", title: "백엔드" },
+  { value: "디자인", title: "디자인" },
+  { value: "기획", title: "기획" },
 ];

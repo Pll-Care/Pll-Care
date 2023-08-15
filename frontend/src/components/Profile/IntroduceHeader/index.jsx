@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import profile_isProfile from "../../../assets/profile-default-img.png";
 import { useProfile } from "../../../context/ProfileContext";
-import { getBio } from "../../../lib/apis/profileApi";
 import Button from "../../common/Button";
 import ModifyUserProfile from "./ModifyUserProfile";
 import { useQuery } from "react-query";
+import { useProfileClient } from "../../../context/Client/ProfileClientContext";
 
 const QUERY_KEY = "Introduce";
 
@@ -12,9 +12,10 @@ const Introduce = () => {
   const [isModify, setIsModify] = useState(false);
 
   const { isMyProfile, memberId } = useProfile();
+  const { getBioAPI } = useProfileClient();
 
-  const { data: profile, refetch } = useQuery([QUERY_KEY, memberId], () =>
-    getBio(memberId)
+  const { data: profile, refetch } = useQuery([memberId, QUERY_KEY], () =>
+    getBioAPI()
   );
 
   useEffect(() => {
@@ -30,18 +31,18 @@ const Introduce = () => {
       {isModify ? (
         <ModifyUserProfile
           memberId={memberId}
-          imageUrl={profile?.imageUrl}
-          name={profile?.name}
-          nickname={profile?.nickName}
-          bio={profile?.bio}
+          imageUrl={profile?.data?.imageUrl}
+          name={profile?.data?.name}
+          nickname={profile?.data?.nickName}
+          bio={profile?.data?.bio}
           changeModify={changeModify}
         />
       ) : (
         <UserProfile
-          imageUrl={profile?.imageUrl}
-          name={profile?.name}
-          nickName={profile?.nickName}
-          bio={profile?.bio}
+          imageUrl={profile?.data?.imageUrl}
+          name={profile?.data?.name}
+          nickName={profile?.data?.nickName}
+          bio={profile?.data?.bio}
           isMyProfile={isMyProfile}
           changeModify={changeModify}
         />

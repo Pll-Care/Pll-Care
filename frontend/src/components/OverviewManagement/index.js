@@ -101,9 +101,9 @@ const OverviewChart = () => {
               }}
               icon={<ComputerIcon />}
             >
-              <h4 className="endpoint" style={{ color: "white" }}>
+              <h5 className="endpoint" style={{ color: "white" }}>
                 아직 계획이 없습니다.
-              </h4>
+              </h5>
             </VerticalTimelineElement>
           )}
 

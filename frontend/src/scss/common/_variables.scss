@@ -57,8 +57,15 @@ $link-font-size-small: 13px;
 
 $button-font-size-small: 14px;
 
+//bold
+$weight-regular: 400;
+$weight-medium: 500;
+$weight-semi-bold: 600;
+$weight-bold: 700;
+
 // 컬러 팔레트
 $white-100: #ffffff;
+$white-200: #f1f1f1;
 
 // green
 $green-200: #01e89e;
@@ -67,6 +74,7 @@ $green-500: #003b28;
 
 // gray
 $gray-100: #fcfcfc;
+$gray-300: #d9d9d9;
 $gray-400: #b4bcbd;
 $gray-500: #7a7a7a;
 $gray-600: #767676;

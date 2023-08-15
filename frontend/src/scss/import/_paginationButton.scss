@@ -4,7 +4,7 @@
 }
 
 .pageButtons {
-  width: 60%;
+  width: 250px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -18,7 +18,7 @@
 
 .disabled {
   pointer-events: none;
-  color: #999;
+  color: $gray-500;
 }
 
 .first_last {
@@ -35,8 +35,8 @@
 }
 
 .current {
-  border: 3px solid #01e89e;
-  border-radius: 100%;
+  font-weight: $weight-bold;
+  font-size: 20px;
 }
 
 .pageNumber {

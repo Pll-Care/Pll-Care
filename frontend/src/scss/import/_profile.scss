@@ -2,15 +2,9 @@
   &_introduce {
     background-color: $green-200;
 
-    &_titleBox {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      & > h1 {
-        font-size: 24px;
-        font-weight: bold;
-      }
+    &_title {
+      font-size: 24px;
+      font-weight: bold;
     }
 
     &_informationBox {
@@ -24,9 +18,7 @@
       margin: 0 auto;
       min-height: 150px;
 
-      display: flex;
-      justify-content: start;
-      align-items: center;
+      @include displayFlex(row, start, center);
       gap: 30px;
     }
 
@@ -114,9 +106,7 @@
 
         &_title {
           width: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
+          @include displayFlex(row, space-between, center);
           padding-bottom: 8px;
           & > h2 {
             font-size: 18px;
@@ -133,10 +123,7 @@
 
       &_contactBox {
         &_items {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          justify-content: center;
+          @include displayFlex(column, center, flex-start);
           gap: 24px;
 
           &_item {
@@ -162,9 +149,7 @@
 
           &_email {
             width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            @include displayFlex(row, space-between, center);
           }
         }
       }
@@ -202,26 +187,24 @@
     height: 100vh;
     padding-top: 30px;
     border-top-left-radius: 24px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    @include displayFlex(column, flex-start, center);
     gap: 48px;
 
-    background-color: #f9f9f9;
-
     &_link {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      @include displayFlex(row, center, center);
 
+<<<<<<< HEAD
       width: 48px;
       height: 48px;
       background-color: $green-200;
+=======
+      min-width: 48px;
+      min-height: 48px;
+      background-color: $green-400;
+>>>>>>> f5a19494d2861663c1bef788efef1b96a75a4e00
       border-radius: 15px;
 
       & > img {
-        border: 1px salmon;
         width: 27px;
         height: 27px;
       }
@@ -250,7 +233,7 @@
     font-weight: 700;
 
     &::placeholder {
-      color: #f1f1f1;
+      color: $white-200;
     }
 
     &:focus {
@@ -361,9 +344,7 @@
       gap: 10px;
       margin-bottom: 15px;
       padding: 5px 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      @include displayFlex(row, space-between, center);
 
       &_box {
         width: 100%;
@@ -372,9 +353,7 @@
       &_title-date {
         padding: 10px;
         width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        @include displayFlex(row, space-between, center);
         gap: 30px;
         & > :first-child {
           width: 50%;
@@ -392,9 +371,7 @@
 
       &_year {
         width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        @include displayFlex(row, space-between, center);
         gap: 8px;
       }
 
@@ -421,7 +398,6 @@
     }
 
     &_button {
-      width: 60px;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -429,10 +405,7 @@
 
     &_blank {
       min-height: 80px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      @include displayFlex(row, center, center);
 
       & > span {
         font-size: 18px;
@@ -443,8 +416,8 @@
 
   &_item_name {
     margin-right: 15px;
-    display: flex;
-    align-items: center;
+    @include displayFlex(row, flex-start, center);
+
     min-width: 85px;
 
     font-weight: 700;
@@ -452,9 +425,7 @@
 }
 
 .fl_bw {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include displayFlex(row, space-between, center);
 }
 
 .fl {
@@ -476,6 +447,7 @@
 .myProject {
   width: 85%;
   margin: 0 auto;
+  padding: 14px 0;
 
   &_selectContainer {
     display: flex;
@@ -542,14 +514,12 @@
 ////
 ////
 ////
-///
 
 .evaluate {
   width: 95%;
   margin: 0 auto;
   padding: 15px 0;
   &_Box {
-    // border: 1px solid red;
     margin-top: 15px;
     &_title {
       font-size: 20px;
@@ -561,7 +531,6 @@
     width: 660px;
     height: 330px;
     margin: 0 auto;
-    // border: 1px solid black;
     padding: 24px 45px;
     border: 2px solid $green-200;
     border-radius: 15px;
@@ -569,15 +538,13 @@
 
   &_chart {
     height: 100%;
-    // border: 1px solid blue;
     display: flex;
     justify-content: space-between;
-    position: relative;
 
     &_line {
       position: relative;
       height: 2px;
-      background-color: #d9d9d9;
+      background-color: $gray-300;
       width: 100%;
       border-radius: 10px;
 
@@ -588,7 +555,6 @@
       display: flex;
       align-items: center;
       flex-direction: column;
-      // border: 1px solid saddlebrown;
 
       &_title {
         font-weight: bold;
@@ -603,10 +569,26 @@
         background-color: $green-200;
       }
 
+      &_score_text {
+        padding: 10px 15px;
+        background-color: $green-400;
+        position: absolute;
+        border-radius: 24px;
+        color: $white-100;
+        font-size: 12px;
+        font-weight: $weight-bold;
+
+        @include displayFlex;
+        gap: 3px;
+      }
+
+      &_score_title {
+        font-size: 16px;
+      }
+
       &_bar {
         width: 28px;
         height: 100%;
-        // border: 1px solid violet;
         display: flex;
         align-items: flex-end;
       }
@@ -628,9 +610,7 @@
     &_item {
       border: 1px solid $green-200;
       border-radius: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      @include displayFlex(row, space-between, center);
       padding: 15px 24px;
 
       &_user {
@@ -655,9 +635,7 @@
 
       &_score {
         width: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        @include displayFlex(row, space-between, center);
 
         & > :first-child {
           color: $gray-500;
@@ -695,13 +673,9 @@
   width: 24px;
   height: 24px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include displayFlex(row, center, center);
 }
 
-///
-///
 ///
 ///
 .projectEvaluate {
@@ -719,22 +693,16 @@
   border: 2px solid $green-200;
   border-radius: 25px;
   padding: 21px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include displayFlex(row, space-between, center);
 }
 
 .badges {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include displayFlex(row, space-between, center);
   gap: 26px;
 }
 
 .badge {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include displayFlex(row, space-between, center);
   gap: 12px;
 }
 
@@ -757,9 +725,7 @@
   color: $gray-500;
   font-weight: 600;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include displayFlex(row, center, center);
   height: 28px;
 
   &_score {
@@ -836,9 +802,7 @@
       color: $green-200;
       font-weight: 700;
       font-size: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      @include displayFlex(row, center, center);
     }
   }
 
@@ -857,4 +821,11 @@
 .image_bg {
   background-color: $green-200;
   padding: 3px;
+}
+
+.project-no-item {
+  min-height: 200px;
+  font-weight: $weight-bold;
+
+  @include displayFlex();
 }
