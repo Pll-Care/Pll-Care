@@ -760,6 +760,54 @@ a {
 @media (max-width: 767px) {
   .modal-container input {
     font-size: 15px;
+    margin-top: 20px;
+  }
+}
+.modal-container h5 {
+  margin-right: 30px;
+  color: #00aa72;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .modal-container h5 {
+    font-size: 15px;
+  }
+}
+@media (max-width: 767px) {
+  .modal-container h5 {
+    font-size: 11px;
+  }
+}
+.modal-container input {
+  font-size: 20px;
+  margin-top: 10px;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .modal-container input {
+    font-size: 15px;
+  }
+}
+@media (max-width: 767px) {
+  .modal-container input {
+    font-size: 11px;
+  }
+}
+.modal-container-content {
+  background-color: white;
+  border-radius: 15px;
+  padding: 1rem;
+  margin-top: 15px;
+  border: 2px solid #01e89e;
+}
+.modal-container-content textarea {
+  font-family: "Noto Sans KR", sans-serif;
+  border: none;
+  width: 100%;
+  margin-top: 20px;
+  height: 90%;
+}
+@media (max-width: 767px) {
+  .modal-container-content {
+    height: 40%;
   }
 }
 .modal-container-description {
@@ -769,35 +817,22 @@ a {
   margin-top: 15px;
   border: 2px solid #01e89e;
 }
-.modal-container-description h5 {
-  margin-right: 30px;
-  color: #00aa72;
-}
-@media (min-width: 767px) and (max-width: 1024px) {
-  .modal-container-description h5 {
-    font-size: 15px;
-  }
-}
 .modal-container-description .plan-option {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
 }
-.modal-container-description .plan-option-duraction {
+.modal-container-description .plan-option-duration {
   display: flex;
   align-items: center;
 }
+@media (max-width: 767px) {
+  .modal-container-description .plan-option-duration {
+    flex-direction: column;
+  }
+}
 .modal-container-description .plan-option h4 {
   margin: 0px 5px;
-}
-.modal-container-description .plan-option input {
-  font-size: 20px;
-  margin-top: 10px;
-}
-@media (min-width: 767px) and (max-width: 1024px) {
-  .modal-container-description .plan-option input {
-    font-size: 15px;
-  }
 }
 .modal-container-description .plan-option Button {
   margin-right: 10px;
@@ -927,7 +962,7 @@ a {
 }
 @media (max-width: 767px) {
   .check-schedule {
-    font-size: 21px;
+    font-size: 15px;
   }
 }
 .check-schedule-gray {
@@ -938,7 +973,7 @@ a {
 }
 @media (max-width: 767px) {
   .check-schedule-gray {
-    font-size: 21px;
+    font-size: 15px;
   }
 }
 

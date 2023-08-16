@@ -144,6 +144,46 @@
     font-family: $body-font;
     @include mobile {
       font-size: 15px;
+      margin-top: 20px;
+    }
+  }
+
+  h5 {
+    margin-right: 30px;
+    color: $green-400;
+    @include tablet {
+      font-size: $sub-body-font-size-medium;
+    }
+    @include mobile {
+      font-size: $sub-body-font-size-small;
+    }
+  }
+  input {
+    font-size: 20px;
+    margin-top: 10px;
+    @include tablet {
+      font-size: $sub-body-font-size-medium;
+    }
+    @include mobile {
+      font-size: $sub-body-font-size-small;
+    }
+  }
+
+  &-content {
+    background-color: white;
+    border-radius: 15px;
+    padding: 1rem;
+    margin-top: 15px;
+    border: $border;
+    textarea {
+      font-family: $body-font;
+      border: none;
+      width: 100%;
+      margin-top: 20px;
+      height: 90%;
+    }
+    @include mobile {
+      height: 40%;
     }
   }
   &-description {
@@ -152,31 +192,22 @@
     padding: 1rem;
     margin-top: 15px;
     border: $border;
-    h5 {
-      margin-right: 30px;
-      color: $green-400;
-      @include tablet {
-        font-size: $sub-body-font-size-medium;
-      }
-    }
+
     .plan-option {
       display: flex;
       align-items: center;
       margin-bottom: 20px;
-      &-duraction {
+      &-duration {
         display: flex;
         align-items: center;
+        @include mobile {
+          flex-direction: column;
+        }
       }
       h4 {
         margin: 0px 5px;
       }
-      input {
-        font-size: 20px;
-        margin-top: 10px;
-        @include tablet {
-          font-size: $sub-body-font-size-medium;
-        }
-      }
+
       Button {
         margin-right: 10px;
       }

@@ -15,7 +15,7 @@ const CalendarList = () => {
   const projectId = getProjectId(useLocation());
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
-  const { data, isLoading } = useQuery(["todayAfterSchedule"], () =>
+  const { data, isLoading, status } = useQuery(["todayAfterSchedule"], () =>
     getTodayAfterSchedule(projectId)
   );
 
@@ -35,15 +35,18 @@ const CalendarList = () => {
         <h5>오늘</h5>
         <h1>{calendar}</h1>
       </div>
-      {!data && !isLoading && (
+      {status === "error" && (
         <h2 className="check-schedule">통신 오류났습니다.</h2>
       )}
+
       {isLoading && <Loading />}
-      {data && data?.length === 0 && (
+      {status === "success" && data && data?.length === 0 && (
         <h2 className="check-schedule">오늘 일정이 없습니다.</h2>
       )}
-      {data &&
-        data.map((data, index) => <CalendarItem key={index} data={data} />)}
+
+      {status === "success" &&
+        data &&
+        data?.map((data, index) => <CalendarItem key={index} data={data} />)}
 
       <div className="button-container">
         <Button text="새 일정 생성" onClick={() => modalOpen()} />

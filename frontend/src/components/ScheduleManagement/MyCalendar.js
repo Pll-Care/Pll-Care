@@ -10,7 +10,7 @@ import { getProjectId } from "../../utils/getProjectId";
 const MyCalendar = () => {
   const projectId = getProjectId(useLocation());
 
-  const { data } = useQuery(["calendarSchedule", projectId], () =>
+  const { data, status } = useQuery(["calendarSchedule", projectId], () =>
     getCalendarAllSchedule(projectId)
   );
 
@@ -52,13 +52,23 @@ const MyCalendar = () => {
   return (
     <div className="schedule-calendar">
       <div className="schedule-calendar-schedulelist">
-        <FullCalendar
-          defaultView="dayGridMonth"
-          plugins={[dayGridPlugin]}
-          eventContent={eventContent}
-          events={events}
-          dayCellContent={dayCellContent}
-        />
+        {status === "success" && (
+          <FullCalendar
+            defaultView="dayGridMonth"
+            plugins={[dayGridPlugin]}
+            eventContent={eventContent}
+            events={events}
+            dayCellContent={dayCellContent}
+          />
+        )}
+        {status === "error" && (
+          <FullCalendar
+            defaultView="dayGridMonth"
+            plugins={[dayGridPlugin]}
+            eventContent={eventContent}
+            dayCellContent={dayCellContent}
+          />
+        )}
       </div>
       <CalendarList />
     </div>
