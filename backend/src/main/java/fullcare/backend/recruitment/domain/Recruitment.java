@@ -1,6 +1,7 @@
 package fullcare.backend.recruitment.domain;
 
 import fullcare.backend.global.errorcode.PostErrorCode;
+import fullcare.backend.global.exceptionhandling.exception.InvalidRecruimentException;
 import fullcare.backend.global.exceptionhandling.exception.UnauthorizedAccessException;
 import fullcare.backend.post.domain.Post;
 import fullcare.backend.projectmember.domain.ProjectMemberPositionType;
@@ -36,7 +37,17 @@ public class Recruitment {
     @Builder(builderMethodName = "createNewRecruitment")
     public Recruitment(Post post, ProjectMemberPositionType recruitPosition, long currentAmount, long totalAmount) {
         this.post = post;
+
+        if (recruitPosition == ProjectMemberPositionType.미정) {
+            throw new InvalidRecruimentException(PostErrorCode.RECRUITMENT_NOT_FOUND);
+        }
+
         this.recruitPosition = recruitPosition;
+
+        if (currentAmount > totalAmount) {
+            throw new InvalidRecruimentException(PostErrorCode.INVALID_RECRUITMENT_AMOUNT);
+        }
+
         this.currentAmount = currentAmount;
         this.totalAmount = totalAmount;
     }

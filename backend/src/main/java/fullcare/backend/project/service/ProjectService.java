@@ -155,7 +155,7 @@ public class ProjectService {
         List<ProjectListResponse> content = pageProject.stream().map(p -> ProjectListResponse.builder()
                 .projectId(p.getId())
                 .title(p.getTitle())
-                .description(p.getDescription().length() > 20 ? p.getDescription().substring(0, 20) + "..." : p.getDescription())
+                .description(p.getDescription())
                 .startDate(p.getStartDate())
                 .endDate(p.getEndDate())
                 .state(p.getState())

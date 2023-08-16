@@ -31,7 +31,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Optional<Post> findPostWithRecruitmentsAndProjectById(Long postId);
 
 
-    @Query("select new fullcare.backend.post.dto.response.PostDetailResponse(p.id, pj.id, pj.title,pj.imageUrl, a.id, a.nickname,a.imageUrl, p.title, p.description,p.recruitStartDate, p.recruitEndDate, p.reference, p.contact, p.region, p.techStack, case when l.id is null then false else true end, case when a.id = :memberId then true else false end , case when a.id = :memberId then true else false end ,p.createdDate, p.modifiedDate)" +
+    @Query("select new fullcare.backend.post.dto.response.PostDetailResponse(p.id, pj.id, pj.title, pj.imageUrl, pj.state, a.id, a.nickname,a.imageUrl, p.title, p.description,p.recruitStartDate, p.recruitEndDate, p.reference, p.contact, p.region, p.techStack, case when l.id is null then false else true end, case when a.id = :memberId then true else false end , case when a.id = :memberId then true else false end ,p.createdDate, p.modifiedDate)" +
             "from Post p left join Likes l on l.post.id = p.id and l.member.id = :memberId " +
             "join p.project pj join p.author a where p.id = :postId")
     Optional<PostDetailResponse> findPostDto(@Param("memberId") Long memberId, @Param("postId") Long postId);

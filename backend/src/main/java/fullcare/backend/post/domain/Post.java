@@ -122,7 +122,7 @@ public class Post extends BaseEntity {
     }
 
     public void updateRecruitments(List<Recruitment> recruitments) {
-        this.recruitments.clear();
+        this.recruitments.clear(); // ! todo delete 시에 N+1 문제 생김 -> 그래봐야 At most 4개인데, 굳이 벌크를 할 필요가 있을까?
         this.recruitments.addAll(recruitments);
     }
 
