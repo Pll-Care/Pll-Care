@@ -39,7 +39,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 
                 String[] newTokens = jwtTokenService.reIssueTokens(refreshToken); // * 리프레쉬 토큰이 DB와 일치 시 access, refresh 재발급
                 String requestURI = request.getRequestURI();
-                String successUrl = UriComponentsBuilder.fromUriString("https://fullcare.store/token")
+                String successUrl = UriComponentsBuilder.fromUriString("http://localhost:3000/token")
                         .queryParam("access_token", newTokens[0])
                         .queryParam("refresh_token", newTokens[1])
                         .queryParam("redirect_uri", requestURI)
