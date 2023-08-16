@@ -123,9 +123,7 @@ const ScheduleItem = (props) => {
       </div>
 
       <div
-        className={`schedule-list-content ${
-          remainDate === "past" ? "schedule-list-content-past" : ""
-        }`}
+        className="schedule-list-content"
         onClick={() => openDetailModalHandler()}
       >
         <div>

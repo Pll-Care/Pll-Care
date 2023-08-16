@@ -136,7 +136,10 @@
     width: 90%;
     border: none;
     border-radius: 10px;
-    font-size: 35px;
+    font-size: $sub-heading-font-size;
+    @include tablet {
+      font-size: $sub-heading-font-size-medium;
+    }
     margin-bottom: 10px;
     font-family: $body-font;
     @include mobile {
@@ -151,18 +154,28 @@
     border: $border;
     h5 {
       margin-right: 30px;
-      color: $font-color;
+      color: $green-400;
+      @include tablet {
+        font-size: $sub-body-font-size-medium;
+      }
     }
     .plan-option {
       display: flex;
       align-items: center;
       margin-bottom: 20px;
+      &-duraction {
+        display: flex;
+        align-items: center;
+      }
       h4 {
-        margin: 0px 10px;
+        margin: 0px 5px;
       }
       input {
         font-size: 20px;
         margin-top: 10px;
+        @include tablet {
+          font-size: $sub-body-font-size-medium;
+        }
       }
       Button {
         margin-right: 10px;

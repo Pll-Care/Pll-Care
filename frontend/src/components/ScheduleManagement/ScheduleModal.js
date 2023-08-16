@@ -151,25 +151,27 @@ const ScheduleModal = ({
           </div>
           <div className="plan-option">
             <h5>진행 기간</h5>
-            <input
-              type="datetime-local"
-              ref={inputRefs.startDate}
-              required
-              name="startDate"
-              value={startDate}
-              onChange={handleChange}
-              data-placeholder="시작 일자"
-            />
-            <h4>~</h4>
-            <input
-              type="datetime-local"
-              ref={inputRefs.endDate}
-              required
-              name="endDate"
-              value={endDate}
-              onChange={handleChange}
-              data-placeholder="종료 일자"
-            />
+            <div className="plan-option-duraction">
+              <input
+                type="datetime-local"
+                ref={inputRefs.startDate}
+                required
+                name="startDate"
+                value={startDate}
+                onChange={handleChange}
+                data-placeholder="시작 일자"
+              />
+              <h4>~</h4>
+              <input
+                type="datetime-local"
+                ref={inputRefs.endDate}
+                required
+                name="endDate"
+                value={endDate}
+                onChange={handleChange}
+                data-placeholder="종료 일자"
+              />
+            </div>
           </div>
           {category === "MEETING" && (
             <div className="plan-option-bottom">

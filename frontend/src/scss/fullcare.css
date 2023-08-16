@@ -594,6 +594,11 @@ a {
   border-radius: 35px;
   padding: 10px;
 }
+@media (max-width: 767px) {
+  .card {
+    padding: 1px;
+  }
+}
 
 .fc-toolbar-title {
   font-family: "IBM Plex Sans KR", sans-serif;
@@ -743,9 +748,14 @@ a {
   width: 90%;
   border: none;
   border-radius: 10px;
-  font-size: 35px;
+  font-size: 25px;
   margin-bottom: 10px;
   font-family: "Noto Sans KR", sans-serif;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .modal-container input {
+    font-size: 23px;
+  }
 }
 @media (max-width: 767px) {
   .modal-container input {
@@ -761,19 +771,33 @@ a {
 }
 .modal-container-description h5 {
   margin-right: 30px;
-  color: #01e89e;
+  color: #00aa72;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .modal-container-description h5 {
+    font-size: 15px;
+  }
 }
 .modal-container-description .plan-option {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
 }
+.modal-container-description .plan-option-duraction {
+  display: flex;
+  align-items: center;
+}
 .modal-container-description .plan-option h4 {
-  margin: 0px 10px;
+  margin: 0px 5px;
 }
 .modal-container-description .plan-option input {
   font-size: 20px;
   margin-top: 10px;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .modal-container-description .plan-option input {
+    font-size: 15px;
+  }
 }
 .modal-container-description .plan-option Button {
   margin-right: 10px;
@@ -962,6 +986,11 @@ a {
   display: flex;
   padding: 1rem;
 }
+@media (max-width: 767px) {
+  .schedule-list {
+    padding: 10px;
+  }
+}
 .schedule-list-time {
   display: flex;
   flex-direction: column;
@@ -971,11 +1000,6 @@ a {
   color: #7a7a7a;
   font-family: "IBM Plex Sans KR", sans-serif;
   width: 15%;
-}
-@media (max-width: 767px) {
-  .schedule-list-time {
-    width: 20%;
-  }
 }
 .schedule-list-time h1 {
   font-size: 40px;
@@ -1007,6 +1031,11 @@ a {
   justify-content: space-between;
   align-items: center;
 }
+@media (max-width: 767px) {
+  .schedule-list-content {
+    padding: 15px;
+  }
+}
 .schedule-list-content h5 {
   font-family: "Noto Sans KR", sans-serif;
   font-size: 18px;
@@ -1027,9 +1056,6 @@ a {
   .schedule-list-content h4 {
     font-size: 21px;
   }
-}
-.schedule-list-content-past {
-  border: 3px solid rgb(197, 197, 197);
 }
 .schedule-list-content-option {
   align-items: center;
@@ -2496,6 +2522,13 @@ a {
     width: 90%;
     padding-top: 60px;
     padding-bottom: 60px;
+  }
+}
+@media (max-width: 767px) {
+  .management_project_layout {
+    width: 97%;
+    padding-top: 30px;
+    padding-bottom: 30px;
   }
 }
 

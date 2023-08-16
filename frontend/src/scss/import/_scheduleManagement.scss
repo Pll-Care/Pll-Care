@@ -63,6 +63,10 @@
   display: flex;
   padding: 1rem;
 
+  @include mobile {
+    padding: 10px;
+  }
+
   &-time {
     @include displayFlex(column);
 
@@ -70,9 +74,7 @@
     color: $gray-500;
     font-family: $heading-font;
     width: 15%;
-    @include mobile {
-      width: 20%;
-    }
+
     h1 {
       font-size: $heading-font-size;
       color: $gray-500;
@@ -97,6 +99,9 @@
     padding: 1.5rem;
     cursor: pointer;
     @include displayFlex(row, space-between, center);
+    @include mobile {
+      padding: 15px;
+    }
 
     h5 {
       font-family: $body-font;
@@ -115,9 +120,7 @@
         font-size: $sub-heading-font-size-small;
       }
     }
-    &-past {
-      border: 3px solid rgb(197, 197, 197);
-    }
+
     &-option {
       h5 {
         margin-right: 20px;
