@@ -4,6 +4,10 @@
     margin-bottom: 30px;
     width: 60%;
 
+    @include tablet {
+      width: 75%;
+    }
+
     @include putCenter;
   }
 
@@ -34,6 +38,10 @@
 
       @include body_04;
       @include putCenter;
+    }
+
+    @include tablet {
+      height: 100%;
     }
   }
 
@@ -170,6 +178,12 @@
       }
 
       @include displayFlex(column, space-between, flex-start);
+    }
+
+    @include tablet {
+      display: flex;
+      flex-wrap: wrap;
+      height: 100%;
     }
   }
 
