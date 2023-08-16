@@ -1,11 +1,15 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 
-const ToggleMenuButton = ({ isToggleMenuOpen, setIsToggleMenuOpen }) => {
+const ToggleMenuButton = ({
+  isToggleMenuOpen,
+  setIsToggleMenuOpen,
+  isProfilePage,
+}) => {
   const modalOutside = useRef();
 
-  const handleToggleMenuButtonClick = () => {
-    setIsToggleMenuOpen((prevState) => !prevState);
+  const handleToggleMenuButtonClick = (isBoolean) => {
+    setIsToggleMenuOpen((_) => isBoolean);
   };
 
   const handleToggleButtonClose = (e) => {
@@ -16,33 +20,57 @@ const ToggleMenuButton = ({ isToggleMenuOpen, setIsToggleMenuOpen }) => {
 
   return (
     <div
-      className={
-        isToggleMenuOpen
-          ? "toggle-menu-button-wrapper"
-          : "toggle-menu-button-wrapper-close"
-      }
       ref={modalOutside}
+      className={isToggleMenuOpen ? "toggle-menu-wrapper" : ""}
       onClick={handleToggleButtonClose}
     >
-      <div className="toggle-menu-button">
-        {isToggleMenuOpen ? (
-          <div>
-            <figure onClick={handleToggleMenuButtonClick} />
-            <div className="toggle-menu-button-link-wrapper">
-              <div>
-                <Link to={"/management"}>프로젝트 관리</Link>
-              </div>
-              <div>
-                <Link to={"/recruitment"}>인원 모집</Link>
-              </div>
+      {isToggleMenuOpen ? (
+        <div className="toggle-menu">
+          <div className="toggle-menu-button-wrapper">
+            <figure
+              className="toggle-menu-button"
+              onClick={() => handleToggleMenuButtonClick(false)}
+            />
+          </div>
+          <div className="toggle-menu-items">
+            <div>
+              <Link
+                to={"/management"}
+                onClick={() => handleToggleMenuButtonClick(false)}
+              >
+                프로젝트 관리
+              </Link>
+            </div>
+            <div>
+              <Link
+                to={"/recruitment"}
+                onClick={() => handleToggleMenuButtonClick(false)}
+              >
+                인원 모집
+              </Link>
+            </div>
+            <div>
+              <Link
+                to={"/profile/1"}
+                onClick={() => handleToggleMenuButtonClick(false)}
+              >
+                내 프로필
+              </Link>
             </div>
           </div>
-        ) : (
-          <div>
-            <figure onClick={handleToggleMenuButtonClick} />
-          </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <div className="toggle-menu-button-wrapper">
+          <figure
+            className={
+              isProfilePage
+                ? "toggle-menu-button-profile"
+                : "toggle-menu-button"
+            }
+            onClick={() => handleToggleMenuButtonClick(true)}
+          />
+        </div>
+      )}
     </div>
   );
 };

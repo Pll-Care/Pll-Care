@@ -1,14 +1,26 @@
 .main-header {
   border-bottom: $border;
   height: 80px;
-  display: grid;
-  grid-template-rows: 100%;
-  grid-template-columns: 20% 55% 25%;
+
+  // display: grid;
+  // grid-template-rows: 100%;
+  // grid-template-columns: 20% 55% 25%;
+
+  @include displayFlex(row, space-between, center);
+  @include mobile {
+    padding: 0 14px;
+  }
+
+  &-medium-col {
+    @include mobile {
+      display: none;
+    }
+  }
 
   &-left-col {
     .main-header-logo-img {
-      width: 90%;
-      height: 60px;
+      min-width: 226px;
+      min-height: 50px;
       cursor: pointer;
 
       background: {
@@ -16,17 +28,26 @@
         repeat: no-repeat;
         size: 100%;
       }
+
+      @include tablet {
+        min-width: 186px;
+      }
+      @include mobile {
+        min-width: 77px;
+        min-height: 30px;
+      }
     }
 
     @include displayFlex;
   }
 
   &-link {
-    width: 80%;
-    height: 100%;
-    margin: auto;
+    @include displayFlex(row, space-around, center);
+    gap: 89px;
 
-    @include displayFlex(row, space-around);
+    @include tablet {
+      gap: 40px;
+    }
   }
 
   .nav_item {
@@ -57,7 +78,9 @@
       height: 40px;
       margin-right: 20px;
 
-      @include backgroundImage("../assets/profile-default-img.png");
+      @include mobile {
+        display: none;
+      }
     }
 
     img {
