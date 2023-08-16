@@ -58,6 +58,7 @@
 
       .pagination-wrapper {
         margin-top: auto;
+        max-width: 100%;
 
         @include tablet {
           width: 100%;
@@ -122,25 +123,17 @@
         grid-template-columns: 100%;
       }
 
-      @include tablet {
-        display: grid;
-        grid-template-columns: 100%;
-      }
-
-      @include tablet {
-        display: grid;
-        grid-template-columns: 100%;
-      }
-
       @include displayFlex(column, space-between);
     }
 
     .meeting-record-all-meeting-record-list-data {
+      width: 100%;
       height: 100%;
     }
 
     .pagination-wrapper {
       margin-top: auto;
+      max-width: 100%;
 
       @include tablet {
         width: 100%;
