@@ -231,9 +231,9 @@ const FinalEvaluation = ({
                 ))}
               </div>
             </div>
-            <div className="badges">
+            <div className="evaluation-badges">
               <h1>누적 배지</h1>
-              <div className="badges-body">
+              <div className="evaluation-badges-body">
                 {badgeQuantity?.map((badge, idx) => (
                   <div className="badge" key={idx}>
                     <figure
@@ -261,7 +261,9 @@ const FinalEvaluation = ({
         <AlertCheckModal
           onClose={() => setIsAlertModalVisible(false)}
           open={isAlertModalVisible}
-          text={"최종 평가는 작성 후 수정 / 삭제가 불가합니다. 작성 완료하시겠습니까?"}
+          text={
+            "최종 평가는 작성 후 수정 / 삭제가 불가합니다. 작성 완료하시겠습니까?"
+          }
           width={380}
           height={210}
           clickHandler={() => {

@@ -4,9 +4,9 @@ import { useQuery } from "react-query";
 
 import Card from "../common/Card";
 import Button from "../common/Button";
+import { Loading } from "../common/Loading";
 import ScheduleList from "./ScheduleList";
 import { getTeamMember } from "../../lib/apis/teamMemberManagementApi";
-import { Loading } from "../common/Loading";
 
 const ScheduleOption = () => {
   const { id } = useParams();

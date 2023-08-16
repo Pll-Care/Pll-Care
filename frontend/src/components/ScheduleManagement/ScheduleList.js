@@ -8,6 +8,7 @@ import Card from "../common/Card";
 import { getFilterSchedule } from "../../lib/apis/scheduleManagementApi";
 import ScheduleItem from "./ScheduleItem";
 import { getProjectId } from "../../utils/getProjectId";
+import { Loading } from "../common/Loading";
 
 const ScheduleList = ({ nameId, option }) => {
   const projectId = getProjectId(useLocation());
@@ -35,10 +36,10 @@ const ScheduleList = ({ nameId, option }) => {
     pageCount = Math.ceil(itemCount / itemsPerPage);
   }
 
-  //console.log(option, "에 따른", schedules);
   return (
     <Card className="schedule-lists">
-      {isLoading && <h1 className="check-schedule-gray">⏳ 로딩 중...</h1>}
+      {isLoading && <Loading />}
+
       {!isLoading && schedules?.content && schedules?.content.length === 0 && (
         <h1 className="check-schedule-gray">해당 일정이 없습니다</h1>
       )}
