@@ -131,17 +131,21 @@ const ModifyProject = ({
               <span>진행 기간</span>
             </div>
             <div className="project_list_item_year">
-              <Calendar
-                date={startDate}
-                modifyDate={submitData.startDate}
-                onChangeDate={changeStartDate}
-              />
+              <div className="project_list_item_year_position">
+                <Calendar
+                  date={startDate}
+                  modifyDate={submitData.startDate}
+                  onChangeDate={changeStartDate}
+                />
+              </div>
               <span>~</span>
-              <Calendar
-                date={endDate}
-                modifyDate={submitData.endDate}
-                onChangeDate={changeEndDate}
-              />
+              <div className="project_list_item_year_position">
+                <Calendar
+                  date={endDate}
+                  modifyDate={submitData.endDate}
+                  onChangeDate={changeEndDate}
+                />
+              </div>
             </div>
           </div>
         </div>

@@ -3483,12 +3483,18 @@ a {
   font-size: 8px;
 }
 
+.profile_content {
+  width: 85%;
+  margin: 0 auto;
+}
+.profile_title {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
 .profile_introduce {
   background-color: #01e89e;
-}
-.profile_introduce_title {
-  font-size: 24px;
-  font-weight: bold;
 }
 .profile_introduce_informationBox {
   width: 80%;
@@ -3569,7 +3575,7 @@ a {
   padding: 25px;
   border: 2px solid #01e89e;
   border-radius: 10px;
-  margin-top: 18px;
+  margin-bottom: 18px;
   min-height: 200px;
 }
 .profile_body_introduce_Box_title {
@@ -3631,14 +3637,24 @@ a {
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 10px;
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .profile_body_introduce_positionBox_stack_bc_items_five {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
 .profile_body_introduce_positionBox_stack_bc_items_three {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .profile_body_introduce_positionBox_stack_bc_items_three {
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 10px;
+  }
+}
 .profile_nav {
-  width: 90px;
-  height: 100vh;
+  min-width: 90px;
   padding-top: 30px;
   border-top-left-radius: 24px;
   display: flex;
@@ -3689,12 +3705,13 @@ a {
   border-bottom: 2px solid;
 }
 
-.w-f {
-  width: 100%;
-}
-
 .search_select {
   width: 350px;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .search_select {
+    width: 280px;
+  }
 }
 
 .select_list:hover {
@@ -3762,16 +3779,25 @@ a {
   gap: 15px;
   padding: 10px;
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .project_devide-year {
+    display: block;
+  }
+}
 .project_year {
   padding-top: 10px;
   font-weight: bold;
   color: #767676;
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .project_year {
+    margin-bottom: 15px;
+  }
+}
 .project_list {
   width: 100%;
 }
 .project_list_item {
-  width: 100%;
   border: 2px solid #dee2e6;
   border-radius: 15px;
   font-size: 14px;
@@ -3784,8 +3810,24 @@ a {
   justify-content: space-between;
   align-items: center;
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .project_list_item {
+    padding: 5px 5px;
+  }
+}
+.project_list_item_text {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 24px;
+}
 .project_list_item_box {
   width: 100%;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .project_list_item_box {
+    width: 80%;
+  }
 }
 .project_list_item_title-date {
   padding: 10px;
@@ -3802,10 +3844,29 @@ a {
 .project_list_item_title-date > :last-child {
   width: 50%;
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .project_list_item_title-date {
+    padding-right: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .project_list_item_title-date > :first-child {
+    width: 100%;
+  }
+  .project_list_item_title-date > :last-child {
+    width: 100%;
+  }
+}
 .project_list_item_input {
   border: none;
   color: #7a7a7a;
   outline: none;
+}
+.project_list_item_year_position {
+  position: relative;
 }
 .project_list_item_year {
   width: 100%;
@@ -3828,9 +3889,19 @@ a {
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 10px;
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .project_list_item_stack-list > ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 .project_list_item_description {
   display: flex;
   padding: 10px;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .project_list_item_description {
+    padding-right: 0px;
+  }
 }
 .project_list_button {
   display: flex;
@@ -3849,13 +3920,24 @@ a {
   font-weight: bold;
 }
 .project_item_name {
-  margin-right: 15px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  min-width: 85px;
-  font-weight: 700;
+  min-width: 65px;
+  color: #003b28;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 24px;
+}
+.project_item_search {
+  width: 100%;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .project_item_search {
+    width: 80%;
+  }
 }
 
 .fl_bw {
@@ -3873,14 +3955,11 @@ a {
 .project_container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   gap: 50px;
 }
 
 .myProject {
-  width: 85%;
-  margin: 0 auto;
-  padding: 14px 0;
+  width: 100%;
 }
 .myProject_selectContainer {
   display: flex;
@@ -3889,11 +3968,6 @@ a {
   padding-bottom: 30px;
 }
 .myProject_project {
-  width: 80%;
-  margin: 0 auto;
-}
-.myProject_project > ul {
-  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -3939,35 +4013,45 @@ a {
   padding: 15px 0;
 }
 .evaluate_Box {
-  margin-top: 15px;
+  margin-bottom: 43px;
 }
 .evaluate_Box_title {
   font-size: 20px;
   font-weight: bold;
   color: #7a7a7a;
+  margin-bottom: 25px;
 }
 .evaluate_chart-warp {
-  width: 660px;
+  width: 761px;
   height: 330px;
   margin: 0 auto;
   padding: 24px 45px;
   border: 2px solid #01e89e;
   border-radius: 15px;
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .evaluate_chart-warp {
+    width: 480px;
+  }
+}
 .evaluate_chart {
+  width: 100%;
   height: 100%;
   display: flex;
   justify-content: space-between;
+  margin: 0 auto;
+  position: relative;
 }
 .evaluate_chart_line {
-  position: relative;
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
   height: 2px;
   background-color: #d9d9d9;
-  width: 100%;
   border-radius: 10px;
-  bottom: 25px;
 }
 .evaluate_chart_bars {
+  width: 25%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -3977,6 +4061,9 @@ a {
   font-weight: bold;
   padding-top: 15px;
   color: #7a7a7a;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
 }
 .evaluate_chart_bars_score {
   --custom-value: initial;
@@ -3985,9 +4072,9 @@ a {
   background-color: #01e89e;
 }
 .evaluate_chart_bars_score_text {
+  position: absolute;
   padding: 10px 15px;
   background-color: #00aa72;
-  position: absolute;
   border-radius: 24px;
   color: #ffffff;
   font-size: 12px;
@@ -4011,12 +4098,17 @@ a {
   width: 90%;
   margin: 0 auto;
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .evaluate_project {
+    width: 100%;
+    margin: 0;
+  }
+}
 .evaluate_project_list {
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 15px;
-  margin-top: 24px;
   cursor: pointer;
 }
 .evaluate_project_item {
@@ -4028,11 +4120,21 @@ a {
   align-items: center;
   padding: 15px 24px;
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .evaluate_project_item {
+    padding: 15px 15px;
+  }
+}
 .evaluate_project_item_user {
   width: 65%;
   display: flex;
   align-items: center;
   gap: 23px;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .evaluate_project_item_user {
+    width: 50%;
+  }
 }
 .evaluate_project_item_scores {
   width: 35%;
@@ -4041,10 +4143,20 @@ a {
   justify-content: center;
   gap: 10px;
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .evaluate_project_item_scores {
+    width: 50%;
+  }
+}
 .evaluate_project_item_scores > div {
   display: flex;
   justify-content: space-between;
   gap: 37px;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .evaluate_project_item_scores > div {
+    gap: 15px;
+  }
 }
 .evaluate_project_item_score {
   width: 50%;
@@ -4055,8 +4167,14 @@ a {
 }
 .evaluate_project_item_score > :first-child {
   color: #7a7a7a;
+  font-family: "Noto Sans KR", sans-serif;
   font-size: 14px;
   font-weight: 500;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .evaluate_project_item_score > :first-child {
+    font-size: 12px;
+  }
 }
 .evaluate_project_item_img {
   width: 45px;
@@ -4068,8 +4186,9 @@ a {
   border-radius: 100%;
 }
 .evaluate_project_item_title {
+  font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 600;
   color: #003b28;
 }
 
@@ -4241,6 +4360,10 @@ a {
   align-items: center;
 }
 
+.w-f {
+  width: 100%;
+}
+
 .select_small {
   border: 2px solid #01e89e;
   border-radius: 15px;
@@ -4262,6 +4385,11 @@ a {
   padding: 4px 0;
   font-size: 14px;
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .select_large {
+    width: 280px;
+  }
+}
 
 .select_large:focus {
   outline: none;
@@ -4269,8 +4397,9 @@ a {
 
 .stackItem {
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   border: 2px solid #01e89e;
   padding: 5px 15px;
   border-radius: 24px;
@@ -4278,15 +4407,24 @@ a {
   font-size: 14px;
   font-weight: bold;
 }
-.stackItem > button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
+@media (min-width: 767px) and (max-width: 1024px) {
+  .stackItem {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 8px;
+    gap: 8px;
+  }
 }
 .stackItem_image {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .stackItem_image {
+    width: 20px;
+    height: 20px;
+  }
 }
 .stackItem_image > img {
   width: 100%;
@@ -4294,17 +4432,29 @@ a {
 }
 .stackItem_button {
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: center;
+  align-items: center;
   border: none;
   background-color: #00aa72;
-  color: white;
+  color: #fcfcfc;
   border-radius: 50%;
   width: 18px;
   height: 18px;
   cursor: pointer;
+  padding-bottom: 2px;
   font-size: 14px;
   font-weight: bold;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .stackItem_button {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    width: 12px;
+    height: 12px;
+    font-size: 5px;
+  }
 }
 
 .pagination {
@@ -4395,6 +4545,7 @@ a {
   position: absolute;
   z-index: 1000;
   margin-top: 5px;
+  right: 0px;
 }
 
 .year-month {

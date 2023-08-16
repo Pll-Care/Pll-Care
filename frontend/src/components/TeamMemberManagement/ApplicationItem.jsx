@@ -59,7 +59,7 @@ const ApplicationItem = ({
         text={`${name}님의 지원을 ${message}하시겠습니까?`}
         clickHandler={message === "수락" ? applyAccept : applyReject}
       />
-      <li className="w-f application_item">
+      <li className="application_item">
         <Link
           to={`/profile/${memberId}/introduce`}
           className="application_item_link"

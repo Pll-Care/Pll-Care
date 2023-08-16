@@ -8,11 +8,11 @@ const StackItem = ({ imageUrl, name, onClick, type = "basic" }) => {
         <span>{name}</span>
       </div>
       <div>
-        {type === "change" ? (
+        {type === "change" && (
           <button className="stackItem_button" name={name} onClick={onClick}>
             x
           </button>
-        ) : null}
+        )}
       </div>
     </li>
   );

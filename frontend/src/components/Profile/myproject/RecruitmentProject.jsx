@@ -35,10 +35,10 @@ const RecruitmentProject = ({ memberId }) => {
 
   return (
     <section>
-      <div>
-        <h1 className="profile_introduce_title">내가 모집하는 프로젝트</h1>
+      <div className="profile_title">
+        <h1>내가 모집하는 프로젝트</h1>
       </div>
-      <div className="myProject">
+      <div className="profile_content">
         <div className="myProject_selectContainer">
           <Select
             options={recruitSelect}

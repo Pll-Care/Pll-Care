@@ -2,7 +2,7 @@ import ProjectList from "./ProjectList";
 
 const ProjectBox = () => {
   return (
-    <section className="evaluate_Box" style={{ marginTop: "43px" }}>
+    <section className="evaluate_Box">
       <div className="evaluate_Box_title">
         <h2>받은 평가</h2>
       </div>
