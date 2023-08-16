@@ -30,7 +30,8 @@ public enum PostErrorCode implements ErrorCode {
 
 
     RECRUITMENT_NOT_FOUND("RECRUITMENT_001", HttpStatus.BAD_REQUEST, "모집 중인 포지션이 아닙니다."),
-    RECRUITMENT_COMPLETED("RECRUITMENT_002", HttpStatus.FORBIDDEN, "이미 모집이 완료된 포지션입니다.");
+    INVALID_RECRUITMENT_AMOUNT("RECRUITMENT_002", HttpStatus.BAD_REQUEST, "모집인원 정보가 올바르지 않습니다."),
+    RECRUITMENT_COMPLETED("RECRUITMENT_003", HttpStatus.FORBIDDEN, "이미 모집이 완료된 포지션입니다.");
 
 
     private final String code;

@@ -3,7 +3,7 @@ spring:
     active: local
     include:
       - secret
-    #Database
+  #Database
   #  datasource:
   #    url: jdbc:h2:tcp://localhost/~/userdb
   #    username: sa
@@ -59,7 +59,7 @@ springdoc:
   cache:
     disabled: true # swagger cache 설정
 
-## OAuth2
+# OAuth2
 #spring.security.oauth2.client:
 #  registration:
 #    google:
@@ -116,7 +116,7 @@ springdoc:
 #    token-validity-in-seconds: 86400
 #
 #
-#
+
 #
 #
 ## AWS S3

@@ -25,6 +25,7 @@ import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.dto.request.ProjectApplyRequest;
 import fullcare.backend.project.service.ProjectService;
 import fullcare.backend.projectmember.domain.ProjectMember;
+import fullcare.backend.projectmember.domain.ProjectMemberPositionType;
 import fullcare.backend.projectmember.repository.ProjectMemberRepository;
 import fullcare.backend.recruitment.domain.RecruitInfo;
 import fullcare.backend.recruitment.domain.Recruitment;
@@ -91,7 +92,7 @@ public class PostService {
             List<Recruitment> recruitments = recruitInfo.stream().map(r -> Recruitment.createNewRecruitment()
                     .post(newPost)
                     .recruitPosition(r.getPosition())
-                    .currentAmount(0)
+                    .currentAmount(r.getCurrentCnt())
                     .totalAmount(r.getTotalCnt())
                     .build()).toList();
 
@@ -175,6 +176,7 @@ public class PostService {
     public PostDetailResponse findPostDetailResponse(Long memberId, Long postId) {
         PostDetailResponse findPostDetailResponse = postRepository.findPostDto(memberId, postId).orElseThrow(() -> new EntityNotFoundException(PostErrorCode.POST_NOT_FOUND));
 
+
         List<TechStackDto> techStackList = TechStackUtil.stringToList(findPostDetailResponse.getTechStack()).stream()
                 .map(t -> new TechStackDto(t.getValue(), s3Service.find(t.getValue(), t.getContentType()))).collect(Collectors.toList());
         findPostDetailResponse.setTechStackList(techStackList);
@@ -184,12 +186,20 @@ public class PostService {
 
         // ! sql에 null값이 전달되었을 때 문제가 없는가?
         Optional<Apply> findApply = applyRepository.findByPostIdAndMemberId(findPostDetailResponse.getPostId(), memberId);
-        findPostDetailResponse.setAvailable(findApply.isEmpty());
 
-        if (findPostDetailResponse.getAuthorId().equals(memberId)) {
+        if (findApply.isPresent()) {
+            ProjectMemberPositionType applyPosition = findApply.get().getPosition();
+            findPostDetailResponse.setAvailable(false);
+            findPostDetailResponse.setApplyPosition(applyPosition);
+        } else {
+            findPostDetailResponse.setAvailable(true);
+        }
+
+        // ! 완료된 프로젝트는 available -> false?
+        if (findPostDetailResponse.getAuthorId().equals(memberId) || findPostDetailResponse.getProjectState().equals(State.COMPLETE)) {
             findPostDetailResponse.setAvailable(false);
         }
-        
+
         return findPostDetailResponse;
     }
 
@@ -250,14 +260,14 @@ public class PostService {
 
                 Recruitment findRecruitment = findPost.getRecruitments().stream()
                         .filter(r -> r.getRecruitPosition() == request.getPosition()).findAny()
-                        .orElseThrow(() -> new EntityNotFoundException(PostErrorCode.RECRUITMENT_NOT_FOUND));
+                        .orElseThrow(() -> new InvalidApplyException(PostErrorCode.RECRUITMENT_NOT_FOUND));
 
                 if (findRecruitment.getCurrentAmount() < findRecruitment.getTotalAmount()) {
                     Apply newApply = findMember.apply(findPost, request.getPosition());
                     applyRepository.save(newApply);
 
                 } else {
-                    throw new UnauthorizedAccessException(PostErrorCode.RECRUITMENT_COMPLETED);
+                    throw new InvalidApplyException(PostErrorCode.RECRUITMENT_COMPLETED);
                 }
 
             } else {

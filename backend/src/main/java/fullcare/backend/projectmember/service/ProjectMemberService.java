@@ -8,6 +8,7 @@ import fullcare.backend.global.errorcode.PostErrorCode;
 import fullcare.backend.global.errorcode.ProjectErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.CompletedProjectException;
 import fullcare.backend.global.exceptionhandling.exception.EntityNotFoundException;
+import fullcare.backend.global.exceptionhandling.exception.InvalidRecruimentException;
 import fullcare.backend.global.exceptionhandling.exception.UnauthorizedAccessException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.post.domain.Post;
@@ -177,7 +178,7 @@ public class ProjectMemberService {
 
             // 쿼리1
             Apply findApply = applyRepository.findByPostIdAndMemberId(request.getPostId(), request.getMemberId()).orElseThrow(() -> new EntityNotFoundException(PostErrorCode.APPLY_NOT_FOUND)); // todo 지원자 정보가 없습니다.
-            
+
             // 쿼리2
             Member findMember = findApply.getMember();
 
@@ -191,7 +192,7 @@ public class ProjectMemberService {
             List<Recruitment> recruitments = findPost.getRecruitments();
 
             // 쿼리6
-            Recruitment recruitment = recruitments.stream().filter(r -> r.getRecruitPosition() == findApply.getPosition()).findAny().orElseThrow(() -> new EntityNotFoundException(PostErrorCode.RECRUITMENT_NOT_FOUND));
+            Recruitment recruitment = recruitments.stream().filter(r -> r.getRecruitPosition() == findApply.getPosition()).findAny().orElseThrow(() -> new InvalidRecruimentException(PostErrorCode.RECRUITMENT_NOT_FOUND));
             recruitment.updateRecruitment(); // -> o
 
             // 쿼리7 -> o
