@@ -251,8 +251,6 @@
 
     &-heading {
       color: white;
-      font-family: $heading-font;
-      font-size: $sub-heading-font-size;
       text-align: center;
       line-height: 1.5;
     }
@@ -271,5 +269,9 @@
     width: 90%;
     padding-top: 60px;
     padding-bottom: 60px;
+  }
+
+  @include mobile {
+    width: 90%;
   }
 }

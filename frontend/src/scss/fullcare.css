@@ -223,15 +223,27 @@ a {
   font-size: 20px;
   font-weight: 600;
 }
+@media (max-width: 767px) {
+  .management-header a {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+}
 .management-header .header-link-on {
   color: #003b28;
 }
-
 @media (min-width: 767px) and (max-width: 1024px) {
   .management-header {
     margin-bottom: 60px;
   }
 }
+@media (max-width: 767px) {
+  .management-header {
+    height: 33px;
+  }
+}
+
 .main-header {
   border-bottom: 2px solid #01e89e;
   height: 80px;
@@ -2488,8 +2500,6 @@ a {
 }
 .MuiBox-root .delete-project-heading {
   color: white;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
   text-align: center;
   line-height: 1.5;
 }
@@ -2505,6 +2515,11 @@ a {
     width: 90%;
     padding-top: 60px;
     padding-bottom: 60px;
+  }
+}
+@media (max-width: 767px) {
+  .management_project_layout {
+    width: 90%;
   }
 }
 
@@ -2529,11 +2544,25 @@ a {
   background-size: 100% 100%;
   cursor: pointer;
 }
+@media (max-width: 767px) {
+  .project-management .project-button-wrapper figure {
+    margin-bottom: 10px;
+    width: 180px;
+    height: 180px;
+  }
+}
 .project-management .project-button-wrapper h1 {
   color: #003b28;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
   font-weight: 600;
+}
+@media (max-width: 767px) {
+  .project-management .project-button-wrapper h1 {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+  }
 }
 .project-management .completed-project,
 .project-management .ongoing-project {
@@ -2547,6 +2576,16 @@ a {
   .project-management .completed-project,
   .project-management .ongoing-project {
     gap: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+@media (max-width: 767px) {
+  .project-management .completed-project,
+  .project-management .ongoing-project {
+    gap: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
