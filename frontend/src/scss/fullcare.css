@@ -1596,25 +1596,24 @@ a {
   align-items: center;
 }
 .application_item_link {
-  width: 100%;
   display: flex;
   align-items: center;
-  gap: 27px;
+  gap: 22px;
 }
 .application_item_imgbox {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 6%;
-}
-.application_item_imgbox > img {
   width: 55px;
   height: 55px;
+}
+.application_item_imgbox > img {
+  width: 100%;
+  height: 100%;
   background-color: #01e89e;
   border-radius: 24px;
 }
 .application_item_infobox {
-  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -1633,10 +1632,9 @@ a {
 }
 .application_item_btnbox {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   gap: 15px;
-  width: 20%;
 }
 
 .edit_option {
@@ -1666,6 +1664,49 @@ a {
   font-size: 8px;
 }
 
+@media (min-width: 767px) and (max-width: 1024px) {
+  .memberMangement_members {
+    grid-template-columns: repeat(2, minmax(250px, 1fr));
+  }
+}
+@media (max-width: 767px) {
+  .memberMangement_members {
+    grid-template-columns: repeat(1, minmax(250px, 1fr));
+  }
+  .application_item_imgbox {
+    width: 35px;
+    height: 35px;
+  }
+  .application_item_infobox_name {
+    font-family: "IBM Plex Sans KR SemiBold", sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+  }
+  .application_item_infobox_job {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    line-height: 16px;
+  }
+  .application_item_link {
+    gap: 11px;
+  }
+  .application_item {
+    padding: 10px 16px;
+  }
+  .application_item_btnbox {
+    gap: 6px;
+  }
+  .application_item_btnbox Button {
+    width: 30px;
+    height: 16px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    padding: 0 7px;
+    border: 0;
+  }
+}
 .evaluation-management {
   width: 100%;
   margin-left: auto;
@@ -3419,25 +3460,24 @@ a {
   align-items: center;
 }
 .application_item_link {
-  width: 100%;
   display: flex;
   align-items: center;
-  gap: 27px;
+  gap: 22px;
 }
 .application_item_imgbox {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 6%;
-}
-.application_item_imgbox > img {
   width: 55px;
   height: 55px;
+}
+.application_item_imgbox > img {
+  width: 100%;
+  height: 100%;
   background-color: #01e89e;
   border-radius: 24px;
 }
 .application_item_infobox {
-  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -3456,10 +3496,9 @@ a {
 }
 .application_item_btnbox {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   gap: 15px;
-  width: 20%;
 }
 
 .edit_option {
@@ -3489,6 +3528,49 @@ a {
   font-size: 8px;
 }
 
+@media (min-width: 767px) and (max-width: 1024px) {
+  .memberMangement_members {
+    grid-template-columns: repeat(2, minmax(250px, 1fr));
+  }
+}
+@media (max-width: 767px) {
+  .memberMangement_members {
+    grid-template-columns: repeat(1, minmax(250px, 1fr));
+  }
+  .application_item_imgbox {
+    width: 35px;
+    height: 35px;
+  }
+  .application_item_infobox_name {
+    font-family: "IBM Plex Sans KR SemiBold", sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+  }
+  .application_item_infobox_job {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    line-height: 16px;
+  }
+  .application_item_link {
+    gap: 11px;
+  }
+  .application_item {
+    padding: 10px 16px;
+  }
+  .application_item_btnbox {
+    gap: 6px;
+  }
+  .application_item_btnbox Button {
+    width: 30px;
+    height: 16px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    padding: 0 7px;
+    border: 0;
+  }
+}
 .profile_content {
   width: 85%;
   margin: 0 auto;

@@ -131,28 +131,27 @@
   align-items: center;
 
   &_link {
-    width: 100%;
     display: flex;
     align-items: center;
-    gap: 27px;
+    gap: 22px;
   }
 
   &_imgbox {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 6%;
+    width: 55px;
+    height: 55px;
 
     > img {
-      width: 55px;
-      height: 55px;
+      width: 100%;
+      height: 100%;
       background-color: #01e89e;
       border-radius: 24px;
     }
   }
 
   &_infobox {
-    width: 80%;
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -174,10 +173,9 @@
 
   &_btnbox {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     gap: 15px;
-    width: 20%;
   }
 }
 
@@ -208,6 +206,52 @@
       color: $green-400;
       font-weight: 700;
       font-size: 8px;
+    }
+  }
+}
+
+@include tablet {
+  .memberMangement_members {
+    grid-template-columns: repeat(2, minmax(250px, 1fr));
+  }
+}
+
+@include mobile {
+  .memberMangement_members {
+    grid-template-columns: repeat(1, minmax(250px, 1fr));
+  }
+
+  .application_item_imgbox {
+    width: 35px;
+    height: 35px;
+  }
+
+  .application_item_infobox_name {
+    @include m_heading_03;
+  }
+
+  .application_item_infobox_job {
+    @include m_body_01;
+    line-height: 16px;
+  }
+
+  .application_item_link {
+    gap: 11px;
+  }
+
+  .application_item {
+    padding: 10px 16px;
+  }
+
+  .application_item_btnbox {
+    gap: 6px;
+
+    Button {
+      width: 30px;
+      height: 16px;
+      @include m_body_01;
+      padding: 0 7px;
+      border: 0;
     }
   }
 }
