@@ -5,7 +5,7 @@
   border-radius: 5px;
   box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.08);
 
-  padding: 4px 0;
+  padding: 4px 10px;
   font-size: 14px;
 
   &:focus {
@@ -25,19 +25,24 @@
   }
 
   &-header {
-    color: $white-200;
+    color: $gray-400;
     text-align: center;
 
-    border: 1px solid $white-100;
-    background-color: #01e89e;
+    border: 1px solid $gray-100;
+    background-color: $gray-100;
     border-radius: 10px;
 
-    padding: 4px 0;
-    font-size: 18px;
-    font-weight: $weight-bold;
+    padding: 4px 10px;
+    @include button_02;
   }
 
-  &-header:hover {
-    background-color: #52eab8;
+  &-header:focus {
+    outline: none;
+  }
+}
+
+@include mobile {
+  .profileInput-header {
+    @include m_heading_03;
   }
 }

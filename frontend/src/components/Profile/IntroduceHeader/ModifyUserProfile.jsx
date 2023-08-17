@@ -79,17 +79,17 @@ const ModifyUserProfile = ({
       </div>
       <form className="profile_introduce_info" onSubmit={handleSubmit}>
         <div className="profile_introduce_info_name">
-          <div className="profile_introduce_info_name_kr">{name}</div>
-
-          <ProfileInput
-            value={userInfo.nickname}
-            placeholder={"닉네임을 입력해주세요."}
-            onChange={(value) =>
-              setUserInfo((prev) => ({ ...prev, nickname: value }))
-            }
-            width="50"
-            position="header"
-          />
+          <div className="profile_introduce_info_name_real">{name}</div>
+          <div>
+            <ProfileInput
+              value={userInfo.nickname}
+              placeholder={"닉네임을 입력해주세요."}
+              onChange={(value) =>
+                setUserInfo((prev) => ({ ...prev, nickname: value }))
+              }
+              position="header"
+            />
+          </div>
         </div>
         <div className="profile_introduce_info_myself">
           <ProfileInput
@@ -102,7 +102,7 @@ const ModifyUserProfile = ({
           />
 
           <Button
-            text="완료"
+            text="수정 완료"
             size="small"
             type="profile"
             buttonType="onSubmit"
