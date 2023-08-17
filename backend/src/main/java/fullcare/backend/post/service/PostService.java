@@ -269,7 +269,7 @@ public class PostService {
                         .filter(r -> r.getRecruitPosition() == request.getPosition()).findAny()
                         .orElseThrow(() -> new InvalidApplyException(PostErrorCode.RECRUITMENT_NOT_FOUND));
 
-                if (findRecruitment.getCurrentAmount() < findRecruitment.getTotalAmount()) {ㅛ
+                if (findRecruitment.getCurrentAmount() < findRecruitment.getTotalAmount()) {
                     Apply newApply = findMember.apply(findPost, request.getPosition());
                     applyRepository.save(newApply);
 
