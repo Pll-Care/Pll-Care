@@ -6,7 +6,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import ModalContainer from "../common/ModalContainer";
 import Button from "../common/Button";
-import AlertModal from "./AlertModal";
+import AlertCheckModal from "../common/AlertCheckModal";
 
 import { getDetailSchedule } from "../../lib/apis/scheduleManagementApi";
 import { getDateTimeDuration } from "../../utils/date";
@@ -197,11 +197,10 @@ const ScheduleDetailModal = ({
   };
 
   return (
-    <ModalContainer open={open} onClose={onClose}>
-      <AlertModal
+    <ModalContainer open={open} onClose={onClose} width="50%" padding="15px">
+      <AlertCheckModal
         open={deleteModalVisible}
         onClose={hideDeleteModalHandler}
-        width="35%"
         text="정말 일정 삭제하시겠습니까?"
         clickHandler={() => deleteSchedule(deleteBody)}
       />
@@ -224,6 +223,7 @@ const ScheduleDetailModal = ({
         )}
 
         <div className="schedule-detail-modal-content">
+          {/*첫번째 행 진행일시*/}
           <h5>진행일시</h5>
           {isEdit ? (
             <div className="schedule-detail-modal-content-time">
@@ -250,37 +250,35 @@ const ScheduleDetailModal = ({
           ) : (
             <h5>{time}</h5>
           )}
-        </div>
-
-        <div className="schedule-detail-modal-member">
+          {/*두번째 행 참여자*/}
           <h5>참여자</h5>
-          {isEdit && (
-            <div className="schedule-detail-modal-member-buttons">
-              {memberIds.map((member, index) => (
-                <Button
-                  text={member.name}
-                  key={index}
-                  type={member.in ? "positive_dark" : ""}
-                  size="small"
-                  onClick={() => handleMemberClick(member)}
-                />
-              ))}
-            </div>
-          )}
-          {!isEdit && (
-            <>
-              {data?.members.map(
-                (member) =>
-                  member.in && <h6 key={member.id}>{member.name}, </h6>
-              )}
-            </>
-          )}
-        </div>
-
-        {category === "MEETING" && (
-          <div className="schedule-detail-modal-content">
-            <h5>장소</h5>
-            {isEdit ? (
+          <div className="schedule-detail-modal-member">
+            {isEdit && (
+              <div className="schedule-detail-modal-member-buttons">
+                {memberIds.map((member, index) => (
+                  <Button
+                    text={member.name}
+                    key={index}
+                    type={member.in ? "positive_dark" : ""}
+                    size="small"
+                    onClick={() => handleMemberClick(member)}
+                  />
+                ))}
+              </div>
+            )}
+            {!isEdit && (
+              <>
+                {data?.members.map(
+                  (member) =>
+                    member.in && <h6 key={member.id}>{member.name + " "} </h6>
+                )}
+              </>
+            )}
+          </div>
+          {/*세번째 행 장소*/}
+          {category === "MEETING" && <h5>장소</h5>}
+          {category === "MEETING" &&
+            (isEdit ? (
               <input
                 type="text"
                 ref={inputRefs.address}
@@ -292,12 +290,9 @@ const ScheduleDetailModal = ({
               />
             ) : (
               <h5>{address}</h5>
-            )}
-          </div>
-        )}
+            ))}
 
-        <div className="schedule-detail-modal-content">
-          <h5>설명</h5>
+          <h5>내용</h5>
           {isEdit ? (
             <input
               type="text"
@@ -316,7 +311,7 @@ const ScheduleDetailModal = ({
         <div className="schedule-detail-modal-button">
           {data?.deleteAuthorization && (
             <Button
-              text="삭제"
+              text="삭제하기"
               type="underlined"
               size="small"
               onClick={() => setDeleteModalVisible((prevState) => !prevState)}

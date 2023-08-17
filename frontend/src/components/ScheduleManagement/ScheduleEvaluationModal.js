@@ -7,7 +7,7 @@ import { Tooltip } from "@mui/material";
 
 import Button from "../common/Button";
 import ModalContainer from "../common/ModalContainer";
-import AlertModal from "./AlertModal";
+import AlertCheckModal from "../common/AlertCheckModal";
 
 import { getDateTimeDuration } from "../../utils/date";
 import { makeNewMidEvaluation } from "../../lib/apis/evaluationManagementApi";
@@ -76,10 +76,9 @@ const ScheduleEvaluationModal = (props) => {
       type="dark"
       width="40%"
     >
-      <AlertModal
+      <AlertCheckModal
         open={confirmModalVisible}
         onClose={closeConfirmModalHandler}
-        width="30%"
         text="작성 완료한 평가는 수정 또는 삭제할 수 없습니다. 작성 완료 하시겠습니까?"
         clickHandler={() => {
           mutate(evaluation);

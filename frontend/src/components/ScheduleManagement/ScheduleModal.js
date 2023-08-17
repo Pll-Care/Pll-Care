@@ -139,6 +139,7 @@ const ScheduleModal = ({
       type="light"
       width={isMobile ? "100%" : "70%"}
       height={isMobile && "100%"}
+      border={isMobile && "0px"}
     >
       <div className="modal-container">
         <input

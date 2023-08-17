@@ -5,8 +5,8 @@ import { Avatar } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 
 import Button from "../common/Button";
+import AlertCheckModal from "../common/AlertCheckModal";
 import ScheduleEvaluationModal from "./ScheduleEvaluationModal";
-import AlertModal from "./AlertModal";
 import ScheduleDetailModal from "./ScheduleDetailModal";
 
 import {
@@ -84,7 +84,7 @@ const ScheduleItem = (props) => {
         type={props.data.scheduleCategory}
       />
 
-      <AlertModal
+      <AlertCheckModal
         open={completeModalVisible}
         onClose={hideCompleteModalHandler}
         text="일정이 완료되었습니까?"

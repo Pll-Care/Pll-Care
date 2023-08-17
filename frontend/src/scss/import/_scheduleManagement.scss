@@ -237,21 +237,21 @@
 // scheduleDetailModal 컴포넌트
 .schedule-detail-modal {
   border: $border;
-  border-radius: 10px;
+  border-radius: 17px;
   width: 100%;
-  padding: 1rem;
-  color: $body-font-color;
+  padding: 1.5rem;
+  color: $gray-500;
   font-family: $heading-font;
 
   input {
     border-radius: 20px;
     height: 30px;
     font-family: $heading-font;
-    color: $body-font-color;
+    color: $gray-500;
   }
   h1 {
     font-size: $sub-heading-font-size;
-    margin: 15px;
+    margin-bottom: 30px;
   }
 
   &-title {
@@ -264,36 +264,24 @@
   }
 
   &-content {
-    display: flex;
-    margin: 40px 20px;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 20% 80%;
 
-    h5 {
-      margin-right: 20px;
+    @include tablet {
+      grid-template-columns: 30% 70%;
     }
-
+    align-items: center;
+    grid-gap: 20px 0px;
+    font-family: $body-font;
     &-time {
       display: flex;
+      align-items: center;
     }
   }
 
-  &-member {
+  &-member-buttons {
     display: flex;
-    align-items: center;
-    width: 100%;
-    @include mobile {
-      flex-direction: column;
-    }
-    h5 {
-      width: 15%;
-      margin-left: 20px;
-      display: inline-block;
-      line-height: normal;
-      vertical-align: middle;
-    }
-    &-buttons {
-      width: 90%;
-    }
+    flex-wrap: wrap;
   }
 
   &-button {
