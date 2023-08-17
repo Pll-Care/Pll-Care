@@ -3,13 +3,14 @@ import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useQuery } from "react-query";
 
+import { useMediaQuery } from "@mui/material";
+
 import Button from "../common/Button";
 import ModalContainer from "../common/ModalContainer";
 
 import { getTeamMember } from "../../lib/apis/teamMemberManagementApi";
 import { getProjectId } from "../../utils/getProjectId";
 import { useAddNewScheduleMutation } from "../../hooks/useScheduleManagementMutation";
-import { useMediaQuery } from "@mui/material";
 import { query } from "../../utils/mediaQuery";
 
 const ScheduleModal = ({

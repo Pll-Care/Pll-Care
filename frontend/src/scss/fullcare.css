@@ -913,17 +913,25 @@ a {
   }
 }
 .schedule h1 {
-  font-size: 25px;
-  color: #00aa72;
   font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #00aa72;
   margin: 15px;
   margin-left: 7%;
+}
+.schedule .overview-time {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
 }
 .schedule h3,
 .schedule h5 {
   margin-top: 10px;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 18px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
   color: #7a7a7a;
 }
 
@@ -935,14 +943,16 @@ a {
   margin-top: 10px;
 }
 .simple h2 {
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
   color: #7a7a7a;
 }
 .simple h3 {
   margin-top: 10px;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 14px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
   color: #7a7a7a;
 }
 
@@ -957,12 +967,6 @@ a {
   .simple h2,
   .simple h3 {
     font-size: 13px;
-  }
-}
-@media (min-width: 767px) and (max-width: 1024px) {
-  .schedule h3,
-  .schedule h5 {
-    font-size: 17px;
   }
 }
 .check-schedule {
@@ -1217,6 +1221,20 @@ a {
   text-align: right;
 }
 
+.schedule-detail-mobile {
+  width: 100%;
+}
+.schedule-detail-mobile input {
+  border-radius: 20px;
+  height: 30px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  color: #7a7a7a;
+}
+.schedule-detail-mobile h1 {
+  font-size: 25px;
+  margin-bottom: 30px;
+}
+
 .schedule-detail-modal {
   border: 2px solid #01e89e;
   border-radius: 17px;
@@ -1224,6 +1242,11 @@ a {
   padding: 1.5rem;
   color: #7a7a7a;
   font-family: "IBM Plex Sans KR", sans-serif;
+}
+@media (max-width: 767px) {
+  .schedule-detail-modal {
+    height: 90%;
+  }
 }
 .schedule-detail-modal input {
   border-radius: 20px;

@@ -235,7 +235,24 @@
 }
 
 // scheduleDetailModal 컴포넌트
+.schedule-detail-mobile {
+  width: 100%;
+  input {
+    border-radius: 20px;
+    height: 30px;
+    font-family: $heading-font;
+    color: $gray-500;
+  }
+  h1 {
+    font-size: $sub-heading-font-size;
+    margin-bottom: 30px;
+  }
+}
+
 .schedule-detail-modal {
+  @include mobile {
+    height: 90%;
+  }
   border: $border;
   border-radius: 17px;
   width: 100%;

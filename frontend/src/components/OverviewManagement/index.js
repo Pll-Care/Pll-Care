@@ -132,26 +132,12 @@ const OverviewChart = () => {
                   icon={<ComputerIcon />}
                 >
                   {data?.dateCategory === "WEEK" && (
-                    <h2
-                      className="vertical-timeline-element-title"
-                      style={{
-                        color: "white",
-                        fontWeight: "bold",
-                        fontSize: "18px",
-                      }}
-                    >
+                    <h2 className="overview-time">
                       {(index + 1) * 2 - 1}주 ~ {(index + 1) * 2}주차
                     </h2>
                   )}
                   {data?.dateCategory === "MONTH" && (
-                    <h2
-                      className="vertical-timeline-element-title"
-                      style={{
-                        color: "white",
-                        fontWeight: "bold",
-                        fontSize: "18px",
-                      }}
-                    >
+                    <h2 className="overview-time">
                       {months[(month + index) % 12]}
                     </h2>
                   )}
