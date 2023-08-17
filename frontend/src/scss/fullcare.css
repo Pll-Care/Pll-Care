@@ -312,11 +312,11 @@ a {
   margin-left: auto;
 }
 .main-header-right-col .main-header-user-profile-img {
-  border: 2px solid #01e89e;
   border-radius: 35%;
   width: 40px;
   height: 40px;
   margin-right: 20px;
+  cursor: pointer;
 }
 @media (max-width: 767px) {
   .main-header-right-col .main-header-user-profile-img {

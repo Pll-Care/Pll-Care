@@ -72,11 +72,12 @@
     }
 
     .main-header-user-profile-img {
-      border: $border;
       border-radius: 35%;
       width: 40px;
       height: 40px;
       margin-right: 20px;
+
+      cursor: pointer;
 
       @include mobile {
         display: none;

@@ -1,59 +1,55 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "../../hooks/useRouter";
-
 import Button from "./Button";
 import ToggleMenuButton from "./ToggleMenuButton";
-
 import { authActions } from "../../redux/authSlice";
-import { getProfileImage } from "../../lib/apis/mainHeaderApi";
 import { isToken } from "../../utils/localstroageHandler";
-
 import profile_default from "../../assets/profile-default-img.png";
 import profile_isProfile from "../../assets/ranking-img.png";
 import logo from "../../assets/logo-with-text.svg";
 import profileLogo from "../../assets/logo-with-text-profile.png";
+import { useGeneralClient } from "../../context/Client/GeneralClientContext";
+import { userInfoActions } from "../../redux/userInfoSlice";
 
 const MainHeader = () => {
   const [isToggleMenuOpen, setIsToggleMenuOpen] = useState(false);
   const [isProfilePage, setIsProfilePage] = useState(false);
-  const [profileImage, setProfileImage] = useState({ id: "", imageUrl: "" });
 
   const { replaceTo, currentPath, routeTo } = useRouter();
   const dispatch = useDispatch();
   const authState = useSelector((state) => state.auth.isLoggedIn);
+  const userInfo = useSelector((state) => state.userInfo);
+
+  const { getProfileAPI } = useGeneralClient();
 
   useEffect(() => {
-    window.addEventListener("message", (event) => {
-      if (event.data === "login") {
-        dispatch(authActions.login());
-      }
-    });
-  }, [currentPath, authState]);
-
-  useEffect(() => {
-    if (currentPath.includes("/profile")) setIsProfilePage(true);
-    const getProfile = async () => {
-      const response = await getProfileImage();
-      if (response) {
-        setProfileImage(response);
-      }
-    };
-    getProfile();
-
-    return () => {
+    if (currentPath.includes("/profile")) {
+      setIsProfilePage(true);
+    } else {
       setIsProfilePage(false);
-      setProfileImage({ id: "", imageUrl: "" });
-    };
+    }
   }, [currentPath]);
 
   useEffect(() => {
-    if (isToken("access_token") && isToken("refresh_token")) {
-      dispatch(authActions.login());
-    }
-  }, []);
+    const getUser = async () => {
+      try {
+        const response = await getProfileAPI();
+        if (response.status === 200) {
+          const payload = {
+            memberId: response.data.id,
+            imageUrl: response.data.imageUrl,
+          };
+          dispatch(userInfoActions.setUserInfo(payload));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (authState) getUser();
+  }, [authState]);
 
   const handleClickLinkMenu = (link) => {
     if (link === "/management" && !isToken("access_token")) {
@@ -70,12 +66,6 @@ const MainHeader = () => {
 
   const handleLogin = () => {
     dispatch(authActions.setIsLoginModalVisible(true));
-
-    window.addEventListener("message", (event) => {
-      if (event.data === "login") {
-        dispatch(authActions.login());
-      }
-    });
   };
 
   return (
@@ -132,26 +122,26 @@ const MainHeader = () => {
                 onClick={handleLogout}
               />
             )}
-            <Link
+            <div
               className={
                 isProfilePage
                   ? "main-header-user-profile-img header-profile-image-bg"
                   : "main-header-user-profile-img header-image-bg"
               }
-              to={`/profile/${profileImage.id}/introduce`}
+              onClick={() => routeTo(`profile/${userInfo.memberId}`)}
             >
               <img
                 className="main-header_img"
                 src={
-                  !profileImage.imageUrl
+                  !userInfo.imageUrl
                     ? isProfilePage
                       ? profile_isProfile
                       : profile_default
-                    : profileImage.imageUrl
+                    : userInfo.imageUrl
                 }
                 alt={"유저 프로필"}
               />
-            </Link>
+            </div>
             <ToggleMenuButton
               isProfilePage={isProfilePage}
               isToggleMenuOpen={isToggleMenuOpen}
