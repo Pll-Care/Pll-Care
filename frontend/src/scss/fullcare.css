@@ -1281,7 +1281,6 @@ a {
 }
 .meeting-record-book-marked-record-list .meeting-record-body .pagination-wrapper {
   margin-top: auto;
-  max-width: 100%;
 }
 @media (min-width: 767px) and (max-width: 1024px) {
   .meeting-record-book-marked-record-list .meeting-record-body .pagination-wrapper {
@@ -1359,13 +1358,15 @@ a {
   max-width: 100%;
 }
 @media (min-width: 767px) and (max-width: 1024px) {
-  .meeting-record-all-meeting-record-list .pagination-wrapper {
-    width: 100%;
+  .meeting-record-all-meeting-record-list .record-list-item-wrapper {
+    display: grid;
+    grid-template-columns: 100%;
   }
 }
 @media (min-width: 767px) and (max-width: 1024px) {
-  .meeting-record-all-meeting-record-list {
-    width: 100%;
+  .meeting-record-all-meeting-record-list .record-list-item-wrapper {
+    display: grid;
+    grid-template-columns: 100%;
   }
 }
 .meeting-record-new-meeting-record-editor {
