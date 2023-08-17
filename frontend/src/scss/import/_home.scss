@@ -1,6 +1,6 @@
 .home {
   overflow-x: hidden;
-  
+
   .banner-wrapper {
     margin-top: 30px;
     margin-bottom: 30px;
@@ -186,7 +186,7 @@
         .project-heading-wrapper div {
           color: $gray-500;
 
-          @include body_01;
+          @include heading_05;
 
           @include mobile {
             @include m_body_01;
@@ -220,7 +220,7 @@
             @include m_heading_05;
           }
 
-          @include heading_05;
+          @include heading_03;
         }
 
         .project-second-row {
@@ -232,7 +232,7 @@
             @include m_body_01;
           }
 
-          @include body_01;
+          @include heading_05;
         }
       }
 

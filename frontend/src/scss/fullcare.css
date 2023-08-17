@@ -2829,9 +2829,9 @@ a {
 }
 .home .project-container-wrapper .project .project-detail .project-heading-wrapper div {
   color: #7a7a7a;
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 14px;
-  font-weight: 500;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
 }
 @media (max-width: 767px) {
   .home .project-container-wrapper .project .project-detail .project-heading-wrapper div {
@@ -2863,8 +2863,8 @@ a {
 .home .project-container-wrapper .project .project-detail h1 {
   color: #7a7a7a;
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
 }
 @media (max-width: 767px) {
   .home .project-container-wrapper .project .project-detail h1 {
@@ -2877,9 +2877,9 @@ a {
   padding: 10px;
   height: 35%;
   color: #7a7a7a;
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 14px;
-  font-weight: 500;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
 }
 @media (max-width: 767px) {
   .home .project-container-wrapper .project .project-detail .project-second-row {
