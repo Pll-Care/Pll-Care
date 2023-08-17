@@ -5,9 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor // * -> RequestDto를 만드는 과정에서 필드가 1개뿐이면, Default 생성자가 필요함.
 public class MemoBookmarkRequest {
-
 
     @NotNull
     private Long projectId;

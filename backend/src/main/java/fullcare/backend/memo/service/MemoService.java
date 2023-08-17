@@ -46,10 +46,9 @@ public class MemoService {
             ProjectMember findProjectMember = projectService.isProjectAvailable(request.getProjectId(), memberId, false);
 
             Memo newMemo = Memo.createNewMemo()
-                    .project(findProjectMember.getProject())
+                    .author(findProjectMember)
                     .title(request.getTitle())
                     .content(request.getContent())
-                    .author(findProjectMember.getMember())
                     .build();
 
             return memoRepository.save(newMemo).getId();
@@ -81,8 +80,8 @@ public class MemoService {
         try {
             ProjectMember findProjectMember = projectService.isProjectAvailable(request.getProjectId(), memberId, false);
             Memo findMemo = findMemo(memoId);
-
-            if (findMemo.getAuthor().getId() != findProjectMember.getMember().getId() && !findProjectMember.isLeader()) {
+            
+            if (findMemo.getAuthor().getId() != findProjectMember.getId() && !findProjectMember.isLeader()) {
                 throw new UnauthorizedAccessException(MemoErrorCode.UNAUTHORIZED_DELETE);
             }
 
@@ -102,9 +101,10 @@ public class MemoService {
     public MemoDetailResponse findMemoDetailResponse(Long projectId, Long memberId, Long memoId) {
 
         ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, memberId, true);
-        MemoDetailResponse findMemoDetailResponse = memoRepository.findMemoDetailDto(memberId, memoId).orElseThrow(() -> new EntityNotFoundException(MemoErrorCode.MEMO_NOT_FOUND));
 
-        if (findMemoDetailResponse.getAuthorId() == findProjectMember.getMember().getId() || findProjectMember.isLeader()) {
+        MemoDetailResponse findMemoDetailResponse = memoRepository.findMemoDetailDto(findProjectMember.getId(), memoId).orElseThrow(() -> new EntityNotFoundException(MemoErrorCode.MEMO_NOT_FOUND));
+
+        if (findMemoDetailResponse.getAuthorId() == findProjectMember.getId() || findProjectMember.isLeader()) {
             findMemoDetailResponse.setDeletable(true);
         } else {
             findMemoDetailResponse.setDeletable(false);
@@ -122,10 +122,16 @@ public class MemoService {
 
 
     public CustomPageImpl<MemoListResponse> findMemoList(Long projectId, Long memberId, Pageable pageable) {
-        projectService.isProjectAvailable(projectId, memberId, true);
+        ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, memberId, true);
 
-        Page<Memo> result = memoRepository.findMemoListByProjectId(projectId, pageable);
-        List<MemoListResponse> content = result.stream().map(MemoListResponse::entityToDto)
+        Page<Memo> result = memoRepository.findMemoListByProjectId(findProjectMember.getProject().getId(), pageable);
+        List<MemoListResponse> content = result.stream().map(m -> MemoListResponse.builder()
+                        .memoId(m.getId())
+                        .title(m.getTitle())
+                        .author(m.getAuthor().getMember().getName())
+                        .createdDate(m.getCreatedDate())
+                        .modifiedDate(m.getModifiedDate())
+                        .build())
                 .collect(Collectors.toList());
 
         return new CustomPageImpl<>(content, pageable, result.getTotalElements());
@@ -134,8 +140,16 @@ public class MemoService {
     public CustomPageImpl<BookmarkMemoListResponse> findBookmarkMemoList(Long projectId, Long memberId, Pageable pageable) {
         ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, memberId, true);
 
-        Page<BookmarkMemo> result = bookmarkMemoRepository.findList(findProjectMember.getProject().getId(), findProjectMember.getMember().getId(), pageable);
-        List<BookmarkMemoListResponse> content = result.stream().map(BookmarkMemoListResponse::entityToDto).collect(Collectors.toList());
+        Page<BookmarkMemo> result = bookmarkMemoRepository.findList(findProjectMember.getId(), pageable);
+
+        List<BookmarkMemoListResponse> content = result.stream().map(bmm -> BookmarkMemoListResponse.builder()
+                        .memoId(bmm.getMemo().getId())
+                        .title(bmm.getMemo().getTitle())
+                        .author(bmm.getMemo().getAuthor().getMember().getName())
+                        .createdDate(bmm.getMemo().getCreatedDate())
+                        .modifiedDate(bmm.getMemo().getModifiedDate())
+                        .build())
+                .collect(Collectors.toList());
 
         return new CustomPageImpl<>(content, pageable, result.getTotalElements());
     }
@@ -146,10 +160,10 @@ public class MemoService {
             ProjectMember findProjectMember = projectService.isProjectAvailable(request.getProjectId(), memberId, false);
             Memo findMemo = findMemo(memoId);
 
-            Optional<BookmarkMemo> findBookmarkMemo = bookmarkMemoRepository.findByMemoAndMember(findMemo, findProjectMember.getMember());
+            Optional<BookmarkMemo> findBookmarkMemo = bookmarkMemoRepository.findByMemoAndProjectMember(findMemo, findProjectMember);
 
             if (!findBookmarkMemo.isPresent()) {
-                BookmarkMemo newBookmarkMemo = findProjectMember.getMember().bookmark(findMemo);
+                BookmarkMemo newBookmarkMemo = findProjectMember.bookmark(findMemo);
                 bookmarkMemoRepository.save(newBookmarkMemo);
             } else {
                 bookmarkMemoRepository.delete(findBookmarkMemo.get());

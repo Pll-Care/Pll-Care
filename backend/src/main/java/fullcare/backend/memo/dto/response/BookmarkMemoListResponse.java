@@ -1,7 +1,5 @@
 package fullcare.backend.memo.dto.response;
 
-import fullcare.backend.bookmarkmemo.domain.BookmarkMemo;
-import fullcare.backend.memo.domain.Memo;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -25,18 +23,4 @@ public class BookmarkMemoListResponse {
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
     }
-
-    public static BookmarkMemoListResponse entityToDto(BookmarkMemo bookmarkMemo) {
-        Memo memo = bookmarkMemo.getMemo();
-
-        return BookmarkMemoListResponse.builder()
-                .memoId(memo.getId())
-                .title(memo.getTitle())
-                .author(memo.getAuthor().getName())
-                .createdDate(memo.getCreatedDate())
-                .modifiedDate(memo.getModifiedDate())
-                .build();
-    }
-
-
 }

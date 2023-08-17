@@ -6,8 +6,8 @@ import fullcare.backend.global.entity.BaseEntity;
 import fullcare.backend.global.errorcode.PostErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.InvalidDateRangeException;
 import fullcare.backend.likes.domain.Likes;
-import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
+import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.recruitment.domain.Recruitment;
 import jakarta.persistence.*;
 import lombok.*;
@@ -36,7 +36,7 @@ public class Post extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", nullable = false)
-    private Member author;
+    private ProjectMember author;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -87,9 +87,10 @@ public class Post extends BaseEntity {
     private int likeCount;
 
     @Builder(builderMethodName = "createNewPost")
-    public Post(Project project, Member author, String title, String description,
+    public Post(Project project, ProjectMember author, String title, String description,
                 LocalDate recruitStartDate, LocalDate recruitEndDate,
                 String reference, String contact, String region, String techStack, State state) {
+
         this.project = project;
         this.author = author;
         this.title = title;
@@ -126,6 +127,7 @@ public class Post extends BaseEntity {
         this.recruitments.addAll(recruitments);
     }
 
+    // ? -> 아마 모집 완료를 위해 넣은것 같은데 사용하지 않음
     public void completed() {
         this.state = State.COMPLETE;
     }

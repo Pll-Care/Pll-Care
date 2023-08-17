@@ -2,13 +2,14 @@ package fullcare.backend.project.dto.request;
 
 import fullcare.backend.projectmember.domain.ProjectMemberPositionType;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+
+@Getter
 @NoArgsConstructor
-@Data
 public class ProjectApplyRequest {
+    
     @NotNull
     private ProjectMemberPositionType position;
 

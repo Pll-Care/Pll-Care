@@ -76,7 +76,7 @@ public class PostService {
 
             Post newPost = Post.createNewPost()
                     .project(findProjectMember.getProject())
-                    .author(findProjectMember.getMember())
+                    .author(findProjectMember)
                     .title(request.getTitle())
                     .description(request.getDescription())
                     .recruitStartDate(request.getRecruitStartDate())
@@ -94,7 +94,7 @@ public class PostService {
                     .recruitPosition(r.getPosition())
                     .currentAmount(r.getCurrentCnt())
                     .totalAmount(r.getTotalCnt())
-                    .build()).toList();
+                    .build()).collect(Collectors.toList());
 
             newPost.updateRecruitments(recruitments);
             return postRepository.save(newPost).getId();
@@ -112,7 +112,7 @@ public class PostService {
             Post findPost = findPostWithRecruitmentsAndProject(postId);
             ProjectMember findProjectMember = projectService.isProjectAvailable(findPost.getProject().getId(), memberId, false);
 
-            if (findPost.getAuthor().getId() != findProjectMember.getMember().getId() && !findProjectMember.isLeader()) {
+            if (findPost.getAuthor().getId() != findProjectMember.getId() && !findProjectMember.isLeader()) {
                 throw new UnauthorizedAccessException(PostErrorCode.UNAUTHORIZED_MODIFY);
             }
 
@@ -132,12 +132,12 @@ public class PostService {
                     .recruitPosition(r.getPosition())
                     .currentAmount(r.getCurrentCnt())
                     .totalAmount(r.getTotalCnt())
-                    .build()).toList();
+                    .build()).collect(Collectors.toList());
 
             findPost.updateAll(request.getTitle(), request.getDescription(),
                     request.getRecruitStartDate(), request.getRecruitEndDate(),
-                    request.getReference(), request.getContact(), request.getRegion(), TechStackUtil.listToString(request.getTechStack()), recruitments);
-
+                    request.getReference(), request.getContact(), request.getRegion(), TechStackUtil.listToString(request.getTechStack()),
+                    recruitments);
 
         } catch (CompletedProjectException completedProjectException) {
             throw new CompletedProjectException(PostErrorCode.INVALID_MODIFY);
@@ -149,10 +149,10 @@ public class PostService {
     @Transactional
     public void deletePost(Long memberId, Long postId) {
         try {
-            Post findPost = findPost(postId);
+            Post findPost = findPostWithProject(postId);
             ProjectMember findProjectMember = projectService.isProjectAvailable(findPost.getProject().getId(), memberId, false);
 
-            if (findPost.getAuthor().getId() != findProjectMember.getMember().getId() && !findProjectMember.isLeader()) {
+            if (findPost.getAuthor().getId() != findProjectMember.getId() && !findProjectMember.isLeader()) {
                 throw new UnauthorizedAccessException(PostErrorCode.UNAUTHORIZED_DELETE);
             }
 
@@ -168,6 +168,10 @@ public class PostService {
         return postRepository.findById(postId).orElseThrow(() -> new EntityNotFoundException(PostErrorCode.POST_NOT_FOUND));
     }
 
+    public Post findPostWithProject(Long postId) {
+        return postRepository.findPostWithProjectById(postId).orElseThrow(() -> new EntityNotFoundException(PostErrorCode.POST_NOT_FOUND));
+    }
+
     public Post findPostWithRecruitmentsAndProject(Long postId) {
         return postRepository.findPostWithRecruitmentsAndProjectById(postId).orElseThrow(() -> new EntityNotFoundException(PostErrorCode.POST_NOT_FOUND));
 
@@ -176,13 +180,12 @@ public class PostService {
     public PostDetailResponse findPostDetailResponse(Long memberId, Long postId) {
         PostDetailResponse findPostDetailResponse = postRepository.findPostDto(memberId, postId).orElseThrow(() -> new EntityNotFoundException(PostErrorCode.POST_NOT_FOUND));
 
-
         List<TechStackDto> techStackList = TechStackUtil.stringToList(findPostDetailResponse.getTechStack()).stream()
                 .map(t -> new TechStackDto(t.getValue(), s3Service.find(t.getValue(), t.getContentType()))).collect(Collectors.toList());
         findPostDetailResponse.setTechStackList(techStackList);
 
         List<Recruitment> recruitments = recruitmentRepository.findByPostId(findPostDetailResponse.getPostId());
-        findPostDetailResponse.setRecruitInfoList(recruitments.stream().map(r -> new RecruitInfo(r)).toList());
+        findPostDetailResponse.setRecruitInfoList(recruitments.stream().map(r -> new RecruitInfo(r)).collect(Collectors.toList()));
 
         // ! sql에 null값이 전달되었을 때 문제가 없는가?
         Optional<Apply> findApply = applyRepository.findByPostIdAndMemberId(findPostDetailResponse.getPostId(), memberId);
@@ -195,8 +198,13 @@ public class PostService {
             findPostDetailResponse.setAvailable(true);
         }
 
-        // ! 완료된 프로젝트는 available -> false?
-        if (findPostDetailResponse.getAuthorId().equals(memberId) || findPostDetailResponse.getProjectState().equals(State.COMPLETE)) {
+        // ! 작성자는 false
+        if (findPostDetailResponse.getAuthorId() == memberId) {
+            findPostDetailResponse.setAvailable(false);
+        }
+
+        // ! 완료된 프로젝트는 available -> false
+        if (findPostDetailResponse.getProjectState().equals(State.COMPLETE)) {
             findPostDetailResponse.setAvailable(false);
         }
 
@@ -217,7 +225,7 @@ public class PostService {
         List<Recruitment> recruitments = recruitmentRepository.findByPostIds(postIds);
         Map<Long, List<Recruitment>> recruitMap = recruitments.stream().collect(Collectors.groupingBy(r -> r.getPost().getId()));
 
-        content.forEach(postListResponse -> postListResponse.setRecruitInfoList(recruitMap.get(postListResponse.getPostId()).stream().map(r -> new RecruitInfo(r)).toList()));
+        content.forEach(postListResponse -> postListResponse.setRecruitInfoList(recruitMap.get(postListResponse.getPostId()).stream().map(r -> new RecruitInfo(r)).collect(Collectors.toList())));
 
         return new CustomPageImpl<>(content, pageable, result.getTotalElements());
     }
@@ -252,17 +260,16 @@ public class PostService {
         if (findProjectMember.isPresent()) {
             throw new DuplicateProjectMemberException(ProjectErrorCode.DUPLICATE_PROJECT_MEMBER); // todo 이미 프로젝트에 소속된 사용자입니다.
         } else {
-
             Optional<Apply> findApply = applyRepository.findByPostIdAndMemberId(findPost.getId(), memberId);
 
-            if (!(findApply.isPresent())) {
+            if (!findApply.isPresent()) {
                 Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
 
                 Recruitment findRecruitment = findPost.getRecruitments().stream()
                         .filter(r -> r.getRecruitPosition() == request.getPosition()).findAny()
                         .orElseThrow(() -> new InvalidApplyException(PostErrorCode.RECRUITMENT_NOT_FOUND));
 
-                if (findRecruitment.getCurrentAmount() < findRecruitment.getTotalAmount()) {
+                if (findRecruitment.getCurrentAmount() < findRecruitment.getTotalAmount()) {ㅛ
                     Apply newApply = findMember.apply(findPost, request.getPosition());
                     applyRepository.save(newApply);
 
@@ -278,7 +285,7 @@ public class PostService {
 
     @Transactional
     public void cancelApply(Long memberId, Long postId) {
-        Post findPost = findPost(postId);
+        Post findPost = findPostWithProject(postId);
 
         // ! V1
 //            Project project = projectService.findProject(findPost.getProject().getId());
@@ -288,9 +295,9 @@ public class PostService {
         Optional<ProjectMember> findProjectMember = projectMemberRepository.findByProjectIdAndMemberId(findPost.getProject().getId(), memberId);
 
         if (findProjectMember.isPresent()) {
-            throw new UnauthorizedAccessException(ProjectErrorCode.DUPLICATE_PROJECT_MEMBER); // todo 비정상적인 API 호출 -> 이미 프로젝트에 소속된 사용자입니다. 소속된 사용자는 탈퇴 혹은 강퇴에 의해 프로젝트에서 나갈 수 있음.
+            throw new UnauthorizedAccessException(ProjectErrorCode.DUPLICATE_PROJECT_MEMBER);
         } else {
-            Apply findApply = applyRepository.findByPostIdAndMemberId(findPost.getId(), memberId).orElseThrow(() -> new EntityNotFoundException(PostErrorCode.APPLY_NOT_FOUND));// todo 프로젝트 지원 정보가 없습니다.
+            Apply findApply = applyRepository.findByPostIdAndMemberId(findPost.getId(), memberId).orElseThrow(() -> new EntityNotFoundException(PostErrorCode.APPLY_NOT_FOUND));
             applyRepository.delete(findApply);
         }
 
@@ -300,12 +307,12 @@ public class PostService {
     public CustomPageImpl<MyPostResponse> findMyPost(Long memberId, State state, Pageable pageable) {
         Page<Post> posts = postRepository.findPageByMemberId(memberId, state, pageable);
         List<MyPostResponse> content = posts.stream().map(p -> MyPostResponse.builder()
-                .postId(p.getId())
-                .title(p.getTitle())
-                .description(p.getDescription())
-                .state(p.getState())
-                .build()
-        ).collect(Collectors.toList());
+                        .postId(p.getId())
+                        .title(p.getTitle())
+                        .description(p.getDescription())
+                        .state(p.getState())
+                        .build())
+                .collect(Collectors.toList());
 
         return new CustomPageImpl<>(content, pageable, posts.getTotalElements());
     }
@@ -313,12 +320,12 @@ public class PostService {
     public CustomPageImpl<MyPostResponse> findMyLikePost(Long memberId, Pageable pageable) {
         Page<Post> posts = postRepository.findLikePageByMemberId(memberId, pageable);
         List<MyPostResponse> content = posts.stream().map(p -> MyPostResponse.builder()
-                .postId(p.getId())
-                .title(p.getTitle())
-                .description(p.getDescription())
-                .state(p.getState())
-                .build()
-        ).collect(Collectors.toList());
+                        .postId(p.getId())
+                        .title(p.getTitle())
+                        .description(p.getDescription())
+                        .state(p.getState())
+                        .build())
+                .collect(Collectors.toList());
 
         return new CustomPageImpl<>(content, pageable, posts.getTotalElements());
     }
@@ -327,15 +334,16 @@ public class PostService {
         List<Post> mostLikedPostList = postRepository.findTop5ByRecruitEndDateAfterOrderByLikeCountDescRecruitEndDateAsc(LocalDate.now());
 
         List<MostLikedPostResponse> content = mostLikedPostList.stream().map(p -> MostLikedPostResponse.builder()
-                .postId(p.getId())
-                .projectId(p.getProject().getId())
-                .projectTitle(p.getProject().getTitle())
-                .projectImageUrl(p.getProject().getImageUrl())
-                .recruitEndDate(p.getRecruitEndDate())
-                .likeCount(p.getLikeCount())
-                .title(p.getTitle())
-                .description(p.getDescription())
-                .build()).collect(Collectors.toList());
+                        .postId(p.getId())
+                        .projectId(p.getProject().getId())
+                        .projectTitle(p.getProject().getTitle())
+                        .projectImageUrl(p.getProject().getImageUrl())
+                        .recruitEndDate(p.getRecruitEndDate())
+                        .likeCount(p.getLikeCount())
+                        .title(p.getTitle())
+                        .description(p.getDescription())
+                        .build())
+                .collect(Collectors.toList());
 
         return content;
     }
@@ -344,14 +352,15 @@ public class PostService {
         List<Post> closeDeadlinePostList = postRepository.findTop5ByRecruitEndDateAfterOrderByRecruitEndDateAscCreatedDateAsc(LocalDate.now());
 
         List<CloseDeadlinePostResponse> content = closeDeadlinePostList.stream().map(p -> CloseDeadlinePostResponse.builder()
-                .postId(p.getId())
-                .projectId(p.getProject().getId())
-                .projectTitle(p.getProject().getTitle())
-                .projectImageUrl(p.getProject().getImageUrl())
-                .recruitEndDate(p.getRecruitEndDate())
-                .title(p.getTitle())
-                .description(p.getDescription())
-                .build()).collect(Collectors.toList());
+                        .postId(p.getId())
+                        .projectId(p.getProject().getId())
+                        .projectTitle(p.getProject().getTitle())
+                        .projectImageUrl(p.getProject().getImageUrl())
+                        .recruitEndDate(p.getRecruitEndDate())
+                        .title(p.getTitle())
+                        .description(p.getDescription())
+                        .build())
+                .collect(Collectors.toList());
 
         return content;
     }
@@ -360,14 +369,15 @@ public class PostService {
         List<Post> upToDatePostList = postRepository.findTop5ByCreatedDateBeforeOrderByCreatedDateDescRecruitEndDateAsc(LocalDateTime.now());
 
         List<UpToDatePostResponse> content = upToDatePostList.stream().map(p -> UpToDatePostResponse.builder()
-                .postId(p.getId())
-                .projectId(p.getProject().getId())
-                .projectTitle(p.getProject().getTitle())
-                .projectImageUrl(p.getProject().getImageUrl())
-                .recruitEndDate(p.getRecruitEndDate())
-                .title(p.getTitle())
-                .description(p.getDescription())
-                .build()).collect(Collectors.toList());
+                        .postId(p.getId())
+                        .projectId(p.getProject().getId())
+                        .projectTitle(p.getProject().getTitle())
+                        .projectImageUrl(p.getProject().getImageUrl())
+                        .recruitEndDate(p.getRecruitEndDate())
+                        .title(p.getTitle())
+                        .description(p.getDescription())
+                        .build())
+                .collect(Collectors.toList());
 
         return content;
     }

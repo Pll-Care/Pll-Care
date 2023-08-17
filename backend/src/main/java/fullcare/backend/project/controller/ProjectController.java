@@ -254,8 +254,8 @@ public class ProjectController {
     @GetMapping("/{projectId}/iscompleted")
     public ResponseEntity<ProjectCompleteResponse> isProjectCompleted(@PathVariable Long projectId, @CurrentLoginMember Member member) {
 
-        ProjectCompleteResponse projectCompleteResponse = projectMemberService.checkProjectComplete(projectId, member.getId());
-        return new ResponseEntity<>(projectCompleteResponse, HttpStatus.OK);
+        boolean isProjectCompleted = projectMemberService.checkProjectComplete(projectId, member.getId());
+        return new ResponseEntity<>(new ProjectCompleteResponse(isProjectCompleted), HttpStatus.OK);
     }
 
     // * 특정 프로젝트의 리더 여부
@@ -267,8 +267,8 @@ public class ProjectController {
     @GetMapping("/{projectId}/isleader")
     public ResponseEntity<ProjectLeaderResponse> isProjectLeader(@PathVariable Long projectId, @CurrentLoginMember Member member) {
 
-        ProjectLeaderResponse projectLeaderResponse = projectMemberService.checkProjectLeader(projectId, member.getId());
-        return new ResponseEntity<>(projectLeaderResponse, HttpStatus.OK);
+        boolean isLeader = projectMemberService.checkProjectLeader(projectId, member.getId());
+        return new ResponseEntity<>(new ProjectLeaderResponse(isLeader), HttpStatus.OK);
     }
 
 }

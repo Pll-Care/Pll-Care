@@ -4,16 +4,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
 
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProjectCreateRequest {
 
     @NotBlank
@@ -23,8 +20,6 @@ public class ProjectCreateRequest {
     @NotEmpty
     private String description;
 
-
-    // TODO startDate(이전) < endDate(이후) + NotBlank인가 NotEmpty인가?
     @FutureOrPresent
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate startDate;

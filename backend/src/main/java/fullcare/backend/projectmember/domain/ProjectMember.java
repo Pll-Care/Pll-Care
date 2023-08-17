@@ -1,12 +1,18 @@
 package fullcare.backend.projectmember.domain;
 
+import fullcare.backend.bookmarkmemo.domain.BookmarkMemo;
 import fullcare.backend.member.domain.Member;
+import fullcare.backend.memo.domain.Memo;
+import fullcare.backend.post.domain.Post;
 import fullcare.backend.project.domain.Project;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -30,6 +36,12 @@ public class ProjectMember {
     //    @OneToMany(mappedBy = "projectMember", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<Schedule> schedules = new ArrayList<>();
 
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Memo> memos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> posts = new ArrayList<>();
+
     @Embedded
     private ProjectMemberType projectMemberType; // 포지션 + 역할
 
@@ -52,5 +64,14 @@ public class ProjectMember {
 
     public void updatePosition(ProjectMemberPositionType projectMemberPositionType) {
         this.projectMemberType.updatePosition(projectMemberPositionType);
+    }
+
+    public BookmarkMemo bookmark(Memo memo) {
+        BookmarkMemo bookmarkMemo = BookmarkMemo.createNewBookmarkMemo()
+                .projectMember(this)
+                .memo(memo)
+                .build();
+
+        return bookmarkMemo;
     }
 }

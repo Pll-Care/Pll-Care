@@ -145,10 +145,6 @@ public class ProjectService {
         return projectRepository.findProjectWithPMAndMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
     }
 
-    public Project findSimpleProject(Long projectId) {
-        return projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
-    }
-
     public CustomPageImpl<ProjectListResponse> findProjectList(Pageable pageable, Long memberId, List<State> states) {
         Page<Project> pageProject = projectRepository.findProjectList(pageable, memberId, states);
 
