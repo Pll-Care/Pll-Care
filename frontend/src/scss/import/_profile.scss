@@ -216,12 +216,14 @@
     border-top-left-radius: 24px;
     @include displayFlex(column, flex-start, center);
     gap: 48px;
+    background-color: $gray-100;
+    box-shadow: 4px 0px 30px rgba(0, 0, 0, 0.1);
 
     &_link {
       @include displayFlex(row, center, center);
 
-      min-width: 48px;
-      min-height: 48px;
+      width: 48px;
+      height: 48px;
       background-color: $green-400;
       border-radius: 15px;
 
@@ -233,7 +235,7 @@
 
     &_image_active {
       background-color: $green-500;
-      box-shadow: rgba(0, 0, 0, 0.4) 0px 22px 22px 0px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     }
   }
 
@@ -929,6 +931,9 @@
 }
 
 @include mobile {
+  .profile_introduce_container {
+    min-height: 60px;
+  }
   .profile_introduce_image {
     width: 42px;
     height: 42px;
@@ -966,5 +971,40 @@
 
   .profile_introduce_image_change {
     @include m_heading_03;
+  }
+
+  .profile_body_container {
+    display: block;
+  }
+
+  .profile_nav {
+    @include displayFlex(row, flex-start, center);
+    gap: 0;
+    height: 30px;
+    padding: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
+    border-top-right-radius: 24px;
+  }
+
+  .profile_nav_link {
+    width: 17px;
+    height: 17px;
+    border-radius: 6px;
+
+    & > img {
+      width: 10px;
+      height: 10px;
+    }
+  }
+
+  .profile_nav_box {
+    @include displayFlex(row, center, center);
+    width: 56px;
+    height: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .profile_nav_image_active {
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
   }
 }
