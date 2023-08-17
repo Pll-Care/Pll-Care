@@ -5,9 +5,8 @@
   padding-bottom: 50px;
 
   &_title {
-    color: #01e89e;
-    font-size: 25px;
-    font-weight: bold;
+    color: $green-400;
+    @include heading_03;
   }
 }
 
@@ -217,6 +216,23 @@
 }
 
 @include mobile {
+  .teamMember {
+    margin: 0;
+    padding: 0 5px;
+    width: 100%;
+  }
+  .memberMangement_head {
+    margin-bottom: 16px;
+
+    Button {
+      border: 1px solid $green-200;
+      @include m_body_01;
+    }
+  }
+  .teamMember_title {
+    @include m_heading_02;
+  }
+
   .memberMangement_members {
     grid-template-columns: repeat(1, minmax(250px, 1fr));
   }

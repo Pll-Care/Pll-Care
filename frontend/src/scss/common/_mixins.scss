@@ -69,7 +69,7 @@
   font: {
     family: "IBM Plex Sans KR", sans-serif;
     size: 24px;
-    weight: 700;
+    weight: $weight-bold;
   }
 }
 
@@ -105,14 +105,6 @@
   }
 }
 
-@mixin m_heading_03 {
-  font: {
-    family: "IBM Plex Sans KR SemiBold", sans-serif;
-    size: 10px;
-    weight: $weight-regular;
-  }
-}
-
 @mixin body_01 {
   font: {
     family: "Noto Sans KR", sans-serif;
@@ -145,14 +137,6 @@
   }
 }
 
-@mixin m_body_01 {
-  font: {
-    family: "Noto Sans KR", sans-serif;
-    size: 8px;
-    weight: $weight-medium;
-  }
-}
-
 @mixin button_01 {
   font: {
     family: "IBM Plex Sans KR", sans-serif;
@@ -174,5 +158,31 @@
     family: "IBM Plex Sans KR", sans-serif;
     size: 12px;
     weight: 600;
+  }
+}
+
+// 모바일
+
+@mixin m_heading_02 {
+  font: {
+    family: "IBM Plex Sans KR", sans-serif;
+    size: 12px;
+    weight: $weight-bold;
+  }
+}
+
+@mixin m_heading_03 {
+  font: {
+    family: "IBM Plex Sans KR SemiBold", sans-serif;
+    size: 10px;
+    weight: $weight-regular;
+  }
+}
+
+@mixin m_body_01 {
+  font: {
+    family: "Noto Sans KR", sans-serif;
+    size: 8px;
+    weight: $weight-medium;
   }
 }

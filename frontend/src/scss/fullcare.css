@@ -1488,9 +1488,10 @@ a {
   padding-bottom: 50px;
 }
 .teamMember_title {
-  color: #01e89e;
-  font-size: 25px;
-  font-weight: bold;
+  color: #00aa72;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
 }
 
 .memberMangement {
@@ -1670,6 +1671,25 @@ a {
   }
 }
 @media (max-width: 767px) {
+  .teamMember {
+    margin: 0;
+    padding: 0 5px;
+    width: 100%;
+  }
+  .memberMangement_head {
+    margin-bottom: 16px;
+  }
+  .memberMangement_head Button {
+    border: 1px solid #01e89e;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+  .teamMember_title {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+  }
   .memberMangement_members {
     grid-template-columns: repeat(1, minmax(250px, 1fr));
   }
@@ -3352,9 +3372,10 @@ a {
   padding-bottom: 50px;
 }
 .teamMember_title {
-  color: #01e89e;
-  font-size: 25px;
-  font-weight: bold;
+  color: #00aa72;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
 }
 
 .memberMangement {
@@ -3534,6 +3555,25 @@ a {
   }
 }
 @media (max-width: 767px) {
+  .teamMember {
+    margin: 0;
+    padding: 0 5px;
+    width: 100%;
+  }
+  .memberMangement_head {
+    margin-bottom: 16px;
+  }
+  .memberMangement_head Button {
+    border: 1px solid #01e89e;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+  .teamMember_title {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+  }
   .memberMangement_members {
     grid-template-columns: repeat(1, minmax(250px, 1fr));
   }
