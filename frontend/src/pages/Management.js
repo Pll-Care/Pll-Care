@@ -59,11 +59,11 @@ const Management = () => {
   // }, [navigate]);
 
   const handleClickAllProjectList = () => {
-    setAllProjectListVisible((prevData) => true);
+    setAllProjectListVisible(true);
   };
 
   const handleClickOngoingProjectList = () => {
-    setAllProjectListVisible((prevData) => false);
+    setAllProjectListVisible(false);
   };
 
   const handleModalVisible = () => {
@@ -79,7 +79,7 @@ const Management = () => {
             <Button
               onClick={handleModalVisible}
               color={"gray"}
-              text={"새 프로젝트 생성"}
+              text={"프로젝트 생성"}
             />
           </div>
           <div className="management-main-header-right-col">

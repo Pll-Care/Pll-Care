@@ -383,6 +383,15 @@ a {
   color: #fcfcfc;
   border: 2px solid #fcfcfc;
 }
+@media (max-width: 767px) {
+  .button {
+    padding: 2px 9px;
+    height: 18px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 600;
+  }
+}
 
 .control-menu {
   border-radius: 55px;
@@ -436,6 +445,13 @@ a {
   margin-left: auto;
   margin-right: auto;
 }
+@media (max-width: 767px) {
+  .pagination-wrapper button {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+  }
+}
 .pagination-wrapper ul {
   display: flex;
   flex-direction: row;
@@ -450,6 +466,14 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
+}
+@media (max-width: 767px) {
+  .pagination-wrapper ul .pagination-page-number-on,
+  .pagination-wrapper ul .pagination-page-number {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+  }
 }
 .pagination-wrapper-white button,
 .pagination-wrapper-white ul .pagination-page-number-on,
@@ -2282,12 +2306,44 @@ a {
   font-size: 38px;
   font-weight: 700;
 }
+@media (max-width: 767px) {
+  .management-main-header-left-col h1 {
+    margin-right: 5px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+  }
+}
+@media (max-width: 767px) {
+  .management-main-header-left-col {
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+}
 .management-main-header-right-col {
   gap: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+@media (max-width: 767px) {
+  .management-main-header-right-col {
+    width: -moz-fit-content;
+    width: fit-content;
+    gap: 5px;
+  }
+}
+@media (max-width: 767px) {
+  .management-main-header {
+    border-radius: 0px 0px 15px 15px;
+    padding: 8px;
+  }
+}
+@media (max-width: 767px) {
+  .management-main-header {
+    height: 130px;
+  }
 }
 .management .project-list-wrapper .project-list {
   margin-top: 30px;
@@ -2325,13 +2381,17 @@ a {
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
+@media (max-width: 767px) {
+  .management .project-list-wrapper .project-list .project-item-left-col figure {
+    width: 25px;
+    height: 25px;
+  }
+}
 .management .project-list-wrapper .project-list .project-item-right-col {
   display: grid;
   grid-template-columns: 80% 20%;
   grid-template-rows: 100%;
   color: #003b28;
-  font-size: 18px;
-  font-family: "Noto Sans KR", sans-serif;
   height: 100%;
 }
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-heading {
@@ -2341,6 +2401,14 @@ a {
   font-size: 24px;
   font-weight: 700;
 }
+@media (max-width: 767px) {
+  .management .project-list-wrapper .project-list .project-item-right-col .project-item-heading {
+    margin-bottom: 10px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+  }
+}
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-period,
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-description {
   margin-bottom: 7px;
@@ -2348,13 +2416,21 @@ a {
   font-size: 14px;
   font-weight: 500;
 }
+@media (max-width: 767px) {
+  .management .project-list-wrapper .project-list .project-item-right-col .project-item-period,
+  .management .project-list-wrapper .project-list .project-item-right-col .project-item-description {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+}
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-description {
   line-height: 1.5;
   overflow-wrap: break-word;
 }
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-period-heading,
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-description-heading {
-  margin-right: 5px;
+  margin-right: 2px;
 }
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-button-wrapper {
   width: 60px;
@@ -2367,18 +2443,52 @@ a {
   justify-content: center;
   align-items: center;
 }
+@media (max-width: 767px) {
+  .management .project-list-wrapper .project-list .project-item-right-col .project-item-button-wrapper {
+    width: 40px;
+    height: 40px;
+  }
+}
 .management .project-list-wrapper .project-list .project-item-right-col .leave-button-text {
   color: #00aa72;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 12px;
   font-weight: 600;
 }
+@media (max-width: 767px) {
+  .management .project-list-wrapper .project-list .project-item-right-col .leave-button-text {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 5px;
+    font-weight: 600;
+  }
+}
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-button-wrapper figure {
   background-position: center;
   background-repeat: no-repeat;
+  background-size: 100% 100%;
   width: 17px;
   height: 17px;
   margin-bottom: 5px;
+}
+@media (max-width: 767px) {
+  .management .project-list-wrapper .project-list .project-item-right-col .project-item-button-wrapper figure {
+    margin-bottom: 2px;
+    width: 12px;
+    height: 12px;
+  }
+}
+@media (max-width: 767px) {
+  .management .project-list-wrapper .project-list .project-item-right-col {
+    margin-left: 8px;
+  }
+}
+@media (max-width: 767px) {
+  .management .project-list-wrapper .project-list .project-item {
+    grid-template-columns: 10% 90%;
+    width: 90%;
+    height: 125px;
+    padding: 25px 7px;
+  }
 }
 
 .MuiBox-root {
