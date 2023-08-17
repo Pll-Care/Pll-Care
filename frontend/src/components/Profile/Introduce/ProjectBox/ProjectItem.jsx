@@ -95,7 +95,7 @@ const ShowProjectItem = ({
             <div className="project_item_name">
               <span>진행 기간</span>
             </div>
-            <div className="project_list_item_year project_list_item_text">
+            <div className="project_list_item_text">
               <span>{`${start} ~ ${end}`}</span>
             </div>
           </div>

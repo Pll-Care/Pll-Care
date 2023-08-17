@@ -7,6 +7,7 @@
   &_title {
     @include heading_03;
     margin-bottom: 15px;
+    color: $green-500;
   }
 
   &_introduce {
@@ -117,11 +118,6 @@
         border-radius: 10px;
         margin-bottom: 18px;
         min-height: 200px;
-
-        // @include tablet {
-        //   padding-right: 10px;
-        //   padding-left: 5px;
-        // }
 
         &_title {
           width: 100%;
@@ -328,9 +324,11 @@
       font-weight: bold;
     }
     &_image {
+      width: 25px;
+      height: 25px;
       & > img {
-        width: 25px;
-        height: 25px;
+        width: 100%;
+        height: 100%;
       }
     }
   }
@@ -343,7 +341,7 @@
 .project {
   width: 100%;
 
-  &_devide-year {
+  &_divide-year {
     display: flex;
     gap: 15px;
     padding: 10px;
@@ -392,6 +390,11 @@
         }
       }
 
+      &_year {
+        @include displayFlex(row, center, center);
+        gap: 8px;
+      }
+
       &_title-date {
         padding: 10px;
         width: 100%;
@@ -426,12 +429,6 @@
 
       &_year_position {
         position: relative;
-      }
-
-      &_year {
-        width: 100%;
-        @include displayFlex(row, space-between, center);
-        gap: 8px;
       }
 
       &_stack {
@@ -1006,5 +1003,183 @@
 
   .profile_nav_image_active {
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .profile_body_sec {
+    padding: 36px 23px;
+  }
+
+  .profile_title {
+    @include m_heading_03;
+  }
+  .profile_content {
+    width: 100%;
+  }
+
+  .profile_body_introduce_Box {
+    border: 1px solid $green-200;
+    padding: 13px 12px;
+    min-height: 119px;
+  }
+  .profile_body_introduce_Box_title {
+    & > h2 {
+      @include m_heading_03;
+    }
+  }
+
+  .profile_body_introduce_Box_title_btnBox {
+    Button {
+      @include m_body_01;
+      height: 16px;
+      padding: 0 7px 0 6px;
+      border: 1px solid $green-200;
+    }
+  }
+
+  .profile_body_introduce_contactBox_items {
+    gap: 6px;
+  }
+  .profile_body_introduce_contactBox_items_title {
+    @include m_body_01;
+  }
+
+  .profile_body_introduce_contactBox_items_item {
+    & > a,
+    p {
+      @include m_body_01;
+    }
+  }
+
+  .profile_body_introduce_contactBox_items_email {
+    input,
+    span {
+      @include m_body_01;
+    }
+  }
+
+  .profile_body_introduce_contactBox_items_item {
+    input {
+      @include m_body_01;
+    }
+  }
+
+  .profile_body_introduce_positionBox_position {
+    @include m_body_01;
+  }
+
+  .search_select {
+    width: 100%;
+  }
+
+  .list_input {
+    & > input {
+      @include m_body_01;
+      height: 18px;
+    }
+  }
+
+  .search_wrap {
+    width: 200px;
+    @include m_body_01;
+  }
+
+  .search_item {
+    padding: 3px 8px;
+  }
+  .search_item_name {
+    @include m_body_01;
+  }
+  .search_item_image {
+    width: 12px;
+    height: 12px;
+  }
+
+  .profile_body_introduce_positionBox_stack_bc_items_five {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .profile_body_introduce_Box_title {
+    Button {
+      @include m_body_01;
+      height: 16px;
+      padding: 0 5px;
+    }
+  }
+
+  .project_divide-year {
+    display: block;
+  }
+
+  .project_list_item {
+    padding: 5px;
+  }
+
+  .project_year {
+    @include m_body_01;
+    margin-bottom: 8px;
+  }
+
+  .project_list_item_title-date {
+    display: block;
+  }
+
+  .project_item_name {
+    @include m_body_01;
+  }
+  .project_list_item_text {
+    @include m_body_01;
+  }
+
+  .project_list_item_box {
+    width: 80%;
+  }
+
+  .project_list_item_title-date {
+    padding-right: 0px;
+    @include displayFlex(column, space-between, flex-start);
+    gap: 20px;
+    & > :first-child {
+      width: 100%;
+    }
+    & > :last-child {
+      width: 100%;
+    }
+  }
+
+  .project_list_item_stack-list {
+    & > ul {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+
+  .project_list_item_title-date {
+    input {
+      @include m_body_01;
+    }
+  }
+
+  .project_list_item_stack {
+    .search_wrap {
+      width: 130px;
+    }
+
+    .project_item_search {
+      width: 90%;
+    }
+  }
+
+  .profile_body_introduce_positionBox_stack_bc_items_three {
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 10px;
+  }
+
+  .project_list_item_description {
+    input {
+      @include m_body_01;
+    }
+  }
+
+  .project_list_item_year {
+    @include displayFlex(row, center, center);
   }
 }

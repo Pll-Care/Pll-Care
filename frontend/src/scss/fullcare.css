@@ -3620,6 +3620,7 @@ a {
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 15px;
+  color: #003b28;
 }
 .profile_introduce {
   background-color: #01e89e;
@@ -3909,9 +3910,13 @@ a {
   font-size: 18px;
   font-weight: bold;
 }
-.search_item_image > img {
+.search_item_image {
   width: 25px;
   height: 25px;
+}
+.search_item_image > img {
+  width: 100%;
+  height: 100%;
 }
 
 .highlighted {
@@ -3921,13 +3926,13 @@ a {
 .project {
   width: 100%;
 }
-.project_devide-year {
+.project_divide-year {
   display: flex;
   gap: 15px;
   padding: 10px;
 }
 @media (min-width: 767px) and (max-width: 1024px) {
-  .project_devide-year {
+  .project_divide-year {
     display: block;
   }
 }
@@ -3976,6 +3981,13 @@ a {
     width: 80%;
   }
 }
+.project_list_item_year {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
 .project_list_item_title-date {
   padding: 10px;
   width: 100%;
@@ -4014,14 +4026,6 @@ a {
 }
 .project_list_item_year_position {
   position: relative;
-}
-.project_list_item_year {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
 }
 .project_list_item_stack {
   width: 100%;
@@ -4592,6 +4596,173 @@ a {
   .profile_nav_image_active {
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
   }
+  .profile_body_sec {
+    padding: 36px 23px;
+  }
+  .profile_title {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+  .profile_content {
+    width: 100%;
+  }
+  .profile_body_introduce_Box {
+    border: 1px solid #01e89e;
+    padding: 13px 12px;
+    min-height: 119px;
+  }
+  .profile_body_introduce_Box_title > h2 {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+  .profile_body_introduce_Box_title_btnBox Button {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    height: 16px;
+    padding: 0 7px 0 6px;
+    border: 1px solid #01e89e;
+  }
+  .profile_body_introduce_contactBox_items {
+    gap: 6px;
+  }
+  .profile_body_introduce_contactBox_items_title {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+  .profile_body_introduce_contactBox_items_item > a,
+  .profile_body_introduce_contactBox_items_item p {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+  .profile_body_introduce_contactBox_items_email input,
+  .profile_body_introduce_contactBox_items_email span {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+  .profile_body_introduce_contactBox_items_item input {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+  .profile_body_introduce_positionBox_position {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+  .search_select {
+    width: 100%;
+  }
+  .list_input > input {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    height: 18px;
+  }
+  .search_wrap {
+    width: 200px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+  .search_item {
+    padding: 3px 8px;
+  }
+  .search_item_name {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+  .search_item_image {
+    width: 12px;
+    height: 12px;
+  }
+  .profile_body_introduce_positionBox_stack_bc_items_five {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .profile_body_introduce_Box_title Button {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    height: 16px;
+    padding: 0 5px;
+  }
+  .project_divide-year {
+    display: block;
+  }
+  .project_list_item {
+    padding: 5px;
+  }
+  .project_year {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .project_list_item_title-date {
+    display: block;
+  }
+  .project_item_name {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+  .project_list_item_text {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+  .project_list_item_box {
+    width: 80%;
+  }
+  .project_list_item_title-date {
+    padding-right: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .project_list_item_title-date > :first-child {
+    width: 100%;
+  }
+  .project_list_item_title-date > :last-child {
+    width: 100%;
+  }
+  .project_list_item_stack-list > ul {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .project_list_item_title-date input {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+  .project_list_item_stack .search_wrap {
+    width: 130px;
+  }
+  .project_list_item_stack .project_item_search {
+    width: 90%;
+  }
+  .profile_body_introduce_positionBox_stack_bc_items_three {
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 10px;
+  }
+  .project_list_item_description input {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+  .project_list_item_year {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
 }
 .select_small {
   border: 2px solid #01e89e;
@@ -4624,17 +4795,34 @@ a {
   outline: none;
 }
 
+@media (max-width: 767px) {
+  .select_large {
+    width: 100%;
+    height: 18px;
+    padding: 0;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+  .select_large > option {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+}
 .stackItem {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   border: 2px solid #01e89e;
+  background-color: #fcfcfc;
   padding: 5px 15px;
   border-radius: 24px;
   color: #00aa72;
+  font-family: "Noto Sans KR", sans-serif;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 500;
 }
 @media (min-width: 767px) and (max-width: 1024px) {
   .stackItem {
@@ -4686,6 +4874,29 @@ a {
   }
 }
 
+@media (max-width: 767px) {
+  .stackItem {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    padding: 5px 5px;
+    gap: 3px;
+    border: 1px solid #01e89e;
+  }
+  .stackItem_image {
+    width: 12px;
+    height: 12px;
+  }
+  .stackItem_button {
+    width: 10px;
+    height: 10px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    padding: 0;
+    padding-bottom: 3px;
+  }
+}
 .pagination {
   width: 100%;
   margin-top: 30px;
@@ -4782,7 +4993,7 @@ a {
   position: absolute;
   z-index: 1000;
   margin-top: 5px;
-  right: 0px;
+  right: -95px;
 }
 
 .year-month {

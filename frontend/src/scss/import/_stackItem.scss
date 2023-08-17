@@ -1,14 +1,13 @@
 .stackItem {
   @include displayFlex(row, space-between, center);
 
-  border: 2px solid #01e89e;
+  border: 2px solid $green-200;
+  background-color: $gray-100;
   padding: 5px 15px;
   border-radius: 24px;
 
   color: #00aa72;
-  font-size: 14px;
-  font-weight: bold;
-
+  @include body_01;
   @include tablet {
     @include button_03;
     padding: 5px 8px;
@@ -51,5 +50,27 @@
       height: 12px;
       font-size: 5px;
     }
+  }
+}
+
+@include mobile {
+  .stackItem {
+    @include m_body_01;
+    padding: 5px 5px;
+    gap: 3px;
+    border: 1px solid $green-200;
+  }
+
+  .stackItem_image {
+    width: 12px;
+    height: 12px;
+  }
+
+  .stackItem_button {
+    width: 10px;
+    height: 10px;
+    @include m_body_01;
+    padding: 0;
+    padding-bottom: 3px;
   }
 }
