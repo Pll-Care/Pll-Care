@@ -262,6 +262,11 @@ a {
   justify-content: space-around;
   align-items: center;
 }
+@media (max-width: 767px) {
+  .main-header-link {
+    display: none;
+  }
+}
 .main-header .nav_item > a {
   color: #003b28;
   text-decoration: none;
@@ -1281,6 +1286,7 @@ a {
 }
 .meeting-record-book-marked-record-list .meeting-record-body .pagination-wrapper {
   margin-top: auto;
+  max-width: 100%;
 }
 @media (min-width: 767px) and (max-width: 1024px) {
   .meeting-record-book-marked-record-list .meeting-record-body .pagination-wrapper {
@@ -1358,15 +1364,13 @@ a {
   max-width: 100%;
 }
 @media (min-width: 767px) and (max-width: 1024px) {
-  .meeting-record-all-meeting-record-list .record-list-item-wrapper {
-    display: grid;
-    grid-template-columns: 100%;
+  .meeting-record-all-meeting-record-list .pagination-wrapper {
+    width: 100%;
   }
 }
 @media (min-width: 767px) and (max-width: 1024px) {
-  .meeting-record-all-meeting-record-list .record-list-item-wrapper {
-    display: grid;
-    grid-template-columns: 100%;
+  .meeting-record-all-meeting-record-list {
+    width: 100%;
   }
 }
 .meeting-record-new-meeting-record-editor {
@@ -2624,6 +2628,9 @@ a {
   margin: 0px 5px;
 }
 
+.home {
+  overflow-x: hidden;
+}
 .home .banner-wrapper {
   margin-top: 30px;
   margin-bottom: 30px;
@@ -2634,6 +2641,11 @@ a {
 @media (min-width: 767px) and (max-width: 1024px) {
   .home .banner-wrapper {
     width: 75%;
+  }
+}
+@media (max-width: 767px) {
+  .home .banner-wrapper {
+    width: 100%;
   }
 }
 .home .banner {
@@ -2654,6 +2666,13 @@ a {
   font-size: 38px;
   font-weight: 700;
 }
+@media (max-width: 767px) {
+  .home .description h1 {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
 .home .description p {
   width: 95%;
   color: #7a7a7a;
@@ -2665,24 +2684,55 @@ a {
   margin-left: auto;
   margin-right: auto;
 }
+@media (max-width: 767px) {
+  .home .description p {
+    line-height: 20px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+}
 @media (min-width: 767px) and (max-width: 1024px) {
   .home .description {
     height: 100%;
   }
 }
-.home .project-wrapper {
+@media (max-width: 767px) {
+  .home .description {
+    height: 100%;
+    padding: 15px 30px;
+  }
+}
+.home .project-container-wrapper {
+  width: 100%;
+  height: 450px;
+  border-radius: 48px 48px 0px 0px;
+  box-shadow: 4px 4px 20px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  overflow: auto;
+}
+.home .project-container-wrapper .project-container {
   display: grid;
   grid-template-columns: repeat(3, 300px);
   grid-template-rows: 100%;
   justify-content: center;
   gap: 22px;
   width: 100%;
-  height: 450px;
-  border-radius: 48px 48px 0px 0px;
-  box-shadow: 4px 4px 20px 10px rgba(0, 0, 0, 0.1);
-  padding: 30px;
 }
-.home .project-wrapper .project {
+@media (min-width: 767px) and (max-width: 1024px) {
+  .home .project-container-wrapper .project-container {
+    grid-template-columns: repeat(3, 33.3%);
+    gap: 8px;
+  }
+}
+@media (max-width: 767px) {
+  .home .project-container-wrapper .project-container {
+    width: -moz-max-content;
+    width: max-content;
+    grid-template-columns: repeat(3, 220px);
+  }
+}
+.home .project-container-wrapper .project {
   width: 304px;
   height: 339px;
   border-radius: 20px;
@@ -2693,13 +2743,21 @@ a {
   justify-content: space-between;
   align-items: flex-start;
 }
-.home .project-wrapper .project h1 {
+.home .project-container-wrapper .project h1 {
   color: white;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 24px;
   font-weight: 700;
 }
-.home .project-wrapper .project .project-detail-wrapper {
+@media (max-width: 767px) {
+  .home .project-container-wrapper .project h1 {
+    margin-bottom: 12px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
+.home .project-container-wrapper .project .project-detail-wrapper {
   width: 100%;
   height: 258px;
   display: flex;
@@ -2707,59 +2765,60 @@ a {
   justify-content: center;
   align-items: center;
 }
-@media (min-width: 767px) and (max-width: 1024px) {
-  .home .project-wrapper .project .project-detail-wrapper {
-    width: 100%;
-  }
-}
-.home .project-wrapper .project .project-detail {
+.home .project-container-wrapper .project .project-detail {
   background-color: white;
   border-radius: 10px;
   width: 100%;
   height: 100%;
   padding: 10px;
 }
-.home .project-wrapper .project .project-detail a {
+.home .project-container-wrapper .project .project-detail a {
   height: 100%;
 }
-.home .project-wrapper .project .project-detail .slick-slider {
+.home .project-container-wrapper .project .project-detail .slick-slider {
   height: 90%;
 }
-.home .project-wrapper .project .project-detail .slick-slider > button {
+.home .project-container-wrapper .project .project-detail .slick-slider > button {
   width: 0;
   height: 0;
 }
-.home .project-wrapper .project .project-detail .slick-prev::before,
-.home .project-wrapper .project .project-detail .slick-next::before {
+.home .project-container-wrapper .project .project-detail .slick-prev::before,
+.home .project-container-wrapper .project .project-detail .slick-next::before {
   content: "";
 }
-.home .project-wrapper .project .project-detail .slick-list,
-.home .project-wrapper .project .project-detail .slick-track,
-.home .project-wrapper .project .project-detail .slick-slide,
-.home .project-wrapper .project .project-detail .slick-slide > div,
-.home .project-wrapper .project .project-detail .slick-slide > div > div {
+.home .project-container-wrapper .project .project-detail .slick-list,
+.home .project-container-wrapper .project .project-detail .slick-track,
+.home .project-container-wrapper .project .project-detail .slick-slide,
+.home .project-container-wrapper .project .project-detail .slick-slide > div,
+.home .project-container-wrapper .project .project-detail .slick-slide > div > div {
   height: 100%;
 }
-.home .project-wrapper .project .project-detail img {
+.home .project-container-wrapper .project .project-detail img {
   width: 70px;
   height: 70px;
   border-radius: 50%;
 }
-.home .project-wrapper .project .project-detail .project-first-row {
+@media (max-width: 767px) {
+  .home .project-container-wrapper .project .project-detail img {
+    width: 60px;
+    height: 60px;
+  }
+}
+.home .project-container-wrapper .project .project-detail .project-first-row {
   height: 65%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
 }
-.home .project-wrapper .project .project-detail .project-img-wrapper {
+.home .project-container-wrapper .project .project-detail .project-img-wrapper {
   width: -moz-fit-content;
   width: fit-content;
   height: -moz-fit-content;
   height: fit-content;
   margin-right: 5px;
 }
-.home .project-wrapper .project .project-detail .project-heading-wrapper {
+.home .project-container-wrapper .project .project-detail .project-heading-wrapper {
   padding: 10px;
   width: 100%;
   height: 100%;
@@ -2768,13 +2827,20 @@ a {
   justify-content: space-between;
   align-items: flex-end;
 }
-.home .project-wrapper .project .project-detail .project-heading-wrapper div {
+.home .project-container-wrapper .project .project-detail .project-heading-wrapper div {
   color: #7a7a7a;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 18px;
-  font-weight: 600;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
 }
-.home .project-wrapper .project .project-detail .project-like-count {
+@media (max-width: 767px) {
+  .home .project-container-wrapper .project .project-detail .project-heading-wrapper div {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+}
+.home .project-container-wrapper .project .project-detail .project-like-count {
   border: 2px solid #01e89e;
   width: 52px;
   height: 52px;
@@ -2784,39 +2850,61 @@ a {
   justify-content: center;
   align-items: center;
 }
-.home .project-wrapper .project .project-detail .project-like-count img {
+.home .project-container-wrapper .project .project-detail .project-like-count img {
   width: 24px;
   height: 24px;
 }
-.home .project-wrapper .project .project-detail .project-like-count div {
+.home .project-container-wrapper .project .project-detail .project-like-count div {
   color: #01e89e;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 12px;
   font-weight: 500;
 }
-.home .project-wrapper .project .project-detail h1 {
-  color: #7a7a7a;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-}
-.home .project-wrapper .project .project-detail .project-second-row {
-  padding: 10px;
-  height: 35%;
+.home .project-container-wrapper .project .project-detail h1 {
   color: #7a7a7a;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
 }
-@media (min-width: 767px) and (max-width: 1024px) {
-  .home .project-wrapper .project {
-    width: 100%;
+@media (max-width: 767px) {
+  .home .project-container-wrapper .project .project-detail h1 {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
+.home .project-container-wrapper .project .project-detail .project-second-row {
+  padding: 10px;
+  height: 35%;
+  color: #7a7a7a;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+@media (max-width: 767px) {
+  .home .project-container-wrapper .project .project-detail .project-second-row {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
   }
 }
 @media (min-width: 767px) and (max-width: 1024px) {
-  .home .project-wrapper {
-    grid-template-columns: repeat(3, 33.3%);
-    gap: 8px;
+  .home .project-container-wrapper .project {
+    width: 100%;
+  }
+}
+@media (max-width: 767px) {
+  .home .project-container-wrapper .project {
+    width: 100%;
+    height: 258px;
+  }
+}
+@media (max-width: 767px) {
+  .home .project-container-wrapper {
+    width: 100%;
+    height: -moz-fit-content;
+    height: fit-content;
+    padding: 35px 15px;
   }
 }
 .home .footer {
@@ -2839,8 +2927,22 @@ a {
   background-repeat: no-repeat;
   background-size: 100%;
 }
+@media (max-width: 767px) {
+  .home .footer figure {
+    width: 100px;
+    height: 25px;
+  }
+}
 .home .footer div {
   margin-bottom: 10px;
+}
+@media (max-width: 767px) {
+  .home .footer {
+    height: 130px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
 }
 
 .member-option {

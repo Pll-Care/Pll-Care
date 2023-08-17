@@ -26,6 +26,10 @@
     height: 100%;
     margin: auto;
 
+    @include mobile {
+      display: none;
+    }
+
     @include displayFlex(row, space-around);
   }
 
