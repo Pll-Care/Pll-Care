@@ -6,9 +6,7 @@ export const getOverviewAllSchedule = async (id) => {
   try {
     const res = await customAxios.get(`/auth/schedule/list?project_id=${id}`);
     return res.data;
-  } catch (err) {
-    return err;
-  }
+  } catch (err) {}
 };
 
 // query key : calendarSchedule
@@ -67,9 +65,7 @@ export const getTodayAfterSchedule = async (projectId) => {
       `/auth/schedule/daily?project_id=${projectId}`
     );
     return res.data;
-  } catch (err) {
-    return err;
-  }
+  } catch (err) {}
 };
 
 // query key: detailSchedule

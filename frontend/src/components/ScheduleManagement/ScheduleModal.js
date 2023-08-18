@@ -3,12 +3,15 @@ import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useQuery } from "react-query";
 
+import { useMediaQuery } from "@mui/material";
+
 import Button from "../common/Button";
 import ModalContainer from "../common/ModalContainer";
 
 import { getTeamMember } from "../../lib/apis/teamMemberManagementApi";
 import { getProjectId } from "../../utils/getProjectId";
 import { useAddNewScheduleMutation } from "../../hooks/useScheduleManagementMutation";
+import { query } from "../../utils/mediaQuery";
 
 const ScheduleModal = ({
   open,
@@ -17,6 +20,7 @@ const ScheduleModal = ({
   scheduleState = "TBD",
 }) => {
   const projectId = getProjectId(useLocation());
+  const isMobile = useMediaQuery(query);
   // 멤버 리스트 받아오기
   const { data: names } = useQuery(["members", projectId], () =>
     getTeamMember(projectId)
@@ -130,9 +134,17 @@ const ScheduleModal = ({
   };
 
   return (
-    <ModalContainer open={open} onClose={onClose} type="light" width="70%">
+    <ModalContainer
+      open={open}
+      onClose={onClose}
+      type="light"
+      width={isMobile ? "100%" : "70%"}
+      height={isMobile && "100%"}
+      border={isMobile && "0px"}
+    >
       <div className="modal-container">
         <input
+          className="modal-container-title-input"
           type="text"
           ref={inputRefs.title}
           required
@@ -151,25 +163,27 @@ const ScheduleModal = ({
           </div>
           <div className="plan-option">
             <h5>진행 기간</h5>
-            <input
-              type="datetime-local"
-              ref={inputRefs.startDate}
-              required
-              name="startDate"
-              value={startDate}
-              onChange={handleChange}
-              data-placeholder="시작 일자"
-            />
-            <h4>~</h4>
-            <input
-              type="datetime-local"
-              ref={inputRefs.endDate}
-              required
-              name="endDate"
-              value={endDate}
-              onChange={handleChange}
-              data-placeholder="종료 일자"
-            />
+            <div className="plan-option-duration">
+              <input
+                type="datetime-local"
+                ref={inputRefs.startDate}
+                required
+                name="startDate"
+                value={startDate}
+                onChange={handleChange}
+                data-placeholder="시작 일자"
+              />
+              <h4>~</h4>
+              <input
+                type="datetime-local"
+                ref={inputRefs.endDate}
+                required
+                name="endDate"
+                value={endDate}
+                onChange={handleChange}
+                data-placeholder="종료 일자"
+              />
+            </div>
           </div>
           {category === "MEETING" && (
             <div className="plan-option-bottom">
@@ -199,21 +213,37 @@ const ScheduleModal = ({
             ))}
           </div>
         </div>
-        <div className="modal-container-description">
-          <div className="plan-option">
-            <h5>내용 입력</h5>
-            <input
-              type="text"
-              ref={inputRefs.content}
-              required
-              placeholder="내용을 입력하세요"
-              name="content"
-              value={content}
-              onChange={handleChange}
-            />
-          </div>
+        <div className="modal-container-content">
+          {isMobile ? (
+            <div className="plan-option-mobile">
+              <h5>내용 입력</h5>
+              <textarea
+                type="text"
+                ref={inputRefs.content}
+                required
+                placeholder="내용을 입력하세요"
+                name="content"
+                value={content}
+                onChange={handleChange}
+              />
+            </div>
+          ) : (
+            <div className="plan-option">
+              <h5>내용 입력</h5>
+              <input
+                type="text"
+                ref={inputRefs.content}
+                required
+                placeholder="내용을 입력하세요"
+                name="content"
+                value={content}
+                onChange={handleChange}
+              />
+            </div>
+          )}
         </div>
         <div className="button-container">
+          {isMobile && <Button text="취소" onClick={onClose} />}
           {!addIsLoading && <Button text="생성 완료" onClick={submitNewPlan} />}
           {addIsLoading && <Button text="로딩 중.." />}
         </div>

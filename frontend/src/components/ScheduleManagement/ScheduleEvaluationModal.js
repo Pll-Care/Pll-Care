@@ -7,10 +7,11 @@ import { Tooltip } from "@mui/material";
 
 import Button from "../common/Button";
 import ModalContainer from "../common/ModalContainer";
-import AlertModal from "./AlertModal";
+import AlertCheckModal from "../common/AlertCheckModal";
 
 import { getDateTimeDuration } from "../../utils/date";
 import { makeNewMidEvaluation } from "../../lib/apis/evaluationManagementApi";
+import { badges } from "../../utils/evaluation";
 
 const ScheduleEvaluationModal = (props) => {
   const { id } = useParams();
@@ -23,9 +24,11 @@ const ScheduleEvaluationModal = (props) => {
   const [badge, setBadge] = useState("열정적인_참여자");
   const [evaluation, setEvaluation] = useState();
 
+  // 인원 선택 함수
   const participantsClickHandler = (name) => {
     setName(name);
   };
+  // 뱃지 선택 함수
   const badgeClickHandler = (badge) => {
     setBadge(badge);
   };
@@ -65,7 +68,7 @@ const ScheduleEvaluationModal = (props) => {
     };
     setEvaluation(data);
 
-    //console.log(data);
+    console.log(data);
     openConfirmModalHandler();
   };
 
@@ -74,12 +77,12 @@ const ScheduleEvaluationModal = (props) => {
       open={props.open}
       onClose={props.onClose}
       type="dark"
-      width="40%"
+      width="700px"
+      padding="25px"
     >
-      <AlertModal
+      <AlertCheckModal
         open={confirmModalVisible}
         onClose={closeConfirmModalHandler}
-        width="30%"
         text="작성 완료한 평가는 수정 또는 삭제할 수 없습니다. 작성 완료 하시겠습니까?"
         clickHandler={() => {
           mutate(evaluation);
@@ -91,8 +94,8 @@ const ScheduleEvaluationModal = (props) => {
           <h1>{props.title}</h1>
           <h2>{time} 진행</h2>
           <div className="schedule-modal-content-evaluation">
-            <div className="modal-member">
-              <h3>참여자</h3>
+            <h3>참여자</h3>
+            <div className="schedule-modal-content-evaluation-member">
               {props.members.map((member, index) => (
                 <Button
                   key={index}
@@ -103,50 +106,22 @@ const ScheduleEvaluationModal = (props) => {
                 />
               ))}
             </div>
-            <div className="modal-badges">
-              <h3>뱃지 선택</h3>
-              <div className="modal-badges-items">
-                <Tooltip title="열정적인 참여자">
+
+            <h3>뱃지 선택</h3>
+            <div className="schedule-modal-content-evaluation-badge">
+              {badges.map((b) => (
+                <Tooltip title={b.name} key={b.name}>
                   <div
                     className={`modal-badge ${
-                      badge === "열정적인_참여자" ? "selected" : ""
+                      badge === b.name ? "selected" : ""
                     }`}
-                    onClick={() => badgeClickHandler("열정적인_참여자")}
+                    key={b.name}
+                    onClick={() => badgeClickHandler(b.name)}
                   >
-                    🔥
+                    <img src={b.image} alt={b.name} key={b.name} />
                   </div>
                 </Tooltip>
-                <Tooltip title="아이디어 뱅크">
-                  <div
-                    className={`modal-badge ${
-                      badge === "아이디어_뱅크" ? "selected" : ""
-                    }`}
-                    onClick={() => badgeClickHandler("아이디어_뱅크")}
-                  >
-                    💡
-                  </div>
-                </Tooltip>
-                <Tooltip title="탁월한 리더">
-                  <div
-                    className={`modal-badge ${
-                      badge === "탁월한_리더" ? "selected" : ""
-                    }`}
-                    onClick={() => badgeClickHandler("탁월한_리더")}
-                  >
-                    👏
-                  </div>
-                </Tooltip>
-                <Tooltip title="최고의 서포터">
-                  <div
-                    className={`modal-badge ${
-                      badge === "최고의_서포터" ? "selected" : ""
-                    }`}
-                    onClick={() => badgeClickHandler("최고의_서포터")}
-                  >
-                    👥
-                  </div>
-                </Tooltip>
-              </div>
+              ))}
             </div>
           </div>
         </div>

@@ -7,10 +7,15 @@ const ModalContainer = ({
   type,
   width,
   height = "auto",
+  padding = "auto",
+  border = "auto",
 }) => {
   return (
     <Modal open={open} onClose={onClose}>
-      <Box className={["modal", `modal_${type}`]} style={{ width, height }}>
+      <Box
+        className={["modal", `modal_${type}`]}
+        style={{ width, height, padding, borderRadius: border }}
+      >
         {children}
       </Box>
     </Modal>

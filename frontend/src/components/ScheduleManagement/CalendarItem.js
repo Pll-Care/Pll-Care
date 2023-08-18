@@ -9,11 +9,6 @@ const CalendarItem = ({ data }) => {
   const time = getDateTimeDuration(data.startDate, data.endDate, type);
   return (
     <div className="calendar-list-item">
-      {data.address ? (
-        <h5 style={{ color: "#00aa72" }}>Meeting</h5>
-      ) : (
-        <h5 style={{ color: "#00aa72" }}>Plan</h5>
-      )}
       <h5>{time}</h5>
       <h4>{data.title}</h4>
       <div className="calendar-list-item-name">
