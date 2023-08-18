@@ -1336,24 +1336,13 @@ a {
     grid-template-columns: 100%;
   }
 }
-@media (min-width: 767px) and (max-width: 1024px) {
-  .meeting-record-all-meeting-record-list .record-list-item-wrapper {
-    display: grid;
-    grid-template-columns: 100%;
-  }
-}
-@media (min-width: 767px) and (max-width: 1024px) {
-  .meeting-record-all-meeting-record-list .record-list-item-wrapper {
-    display: grid;
-    grid-template-columns: 100%;
-  }
-}
 .meeting-record-all-meeting-record-list .meeting-record-all-meeting-record-list-data {
   width: 100%;
   height: 100%;
 }
 .meeting-record-all-meeting-record-list .pagination-wrapper {
   margin-top: auto;
+  max-width: 100%;
   max-width: 100%;
 }
 @media (min-width: 767px) and (max-width: 1024px) {
@@ -2635,6 +2624,11 @@ a {
   margin-left: auto;
   margin-right: auto;
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .home .banner-wrapper {
+    width: 75%;
+  }
+}
 .home .banner {
   width: 100%;
   height: 100%;
@@ -2664,6 +2658,11 @@ a {
   margin-left: auto;
   margin-right: auto;
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .home .description {
+    height: 100%;
+  }
+}
 .home .project-wrapper {
   display: grid;
   grid-template-columns: repeat(3, 300px);
@@ -2672,7 +2671,7 @@ a {
   gap: 22px;
   width: 100%;
   height: 450px;
-  border-radius: 48.815px 48.815px 0px 0px;
+  border-radius: 48px 48px 0px 0px;
   box-shadow: 4px 4px 20px 10px rgba(0, 0, 0, 0.1);
   padding: 30px;
 }
@@ -2694,12 +2693,17 @@ a {
   font-weight: 700;
 }
 .home .project-wrapper .project .project-detail-wrapper {
-  width: 275px;
+  width: 100%;
   height: 258px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .home .project-wrapper .project .project-detail-wrapper {
+    width: 100%;
+  }
 }
 .home .project-wrapper .project .project-detail {
   background-color: white;
@@ -2796,6 +2800,17 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .home .project-wrapper .project {
+    width: 100%;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .home .project-wrapper {
+    grid-template-columns: repeat(3, 33.3%);
+    gap: 8px;
+  }
 }
 .home .footer {
   height: 150px;
