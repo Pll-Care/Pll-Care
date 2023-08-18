@@ -83,7 +83,7 @@
         border: 1px solid $green-200;
         width: 18px;
         height: 18px;
-        margin-right: 10px;
+        margin-right: 30px;
         margin-top: auto;
       }
 
@@ -103,6 +103,12 @@
   &-login-col {
     Button {
       margin-left: auto;
+    }
+
+    @include mobile {
+      Button {
+        margin-right: 30px;
+      }
     }
   }
 

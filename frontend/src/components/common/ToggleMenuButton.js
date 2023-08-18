@@ -1,10 +1,14 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 
-import menuBar from "../../assets/toggle-button-img.png";
+import menuBarImgUrl from "../../assets/toggle-button-img.png";
+import logoImgUrl from "../../assets/logo.svg";
+import managementIconImgUrl from "../../assets/management-icon.svg";
+import recruitmentIconImgUrl from "../../assets/recruitment-icon.svg";
+import useLinkMenuClick from "../../hooks/useLinkMenuClick";
 
 const ToggleMenuButton = ({ isToggleMenuOpen, setIsToggleMenuOpen }) => {
-  const modalOutside = useRef();
+  const modalOutside = useRef(null);
 
   const handleToggleMenuButtonClick = () => {
     setIsToggleMenuOpen((prevState) => !prevState);
@@ -15,6 +19,8 @@ const ToggleMenuButton = ({ isToggleMenuOpen, setIsToggleMenuOpen }) => {
       setIsToggleMenuOpen(false);
     }
   };
+
+  const handleClickLinkMenu = useLinkMenuClick();
 
   return (
     <div
@@ -29,18 +35,40 @@ const ToggleMenuButton = ({ isToggleMenuOpen, setIsToggleMenuOpen }) => {
       <div className="toggle-menu-button">
         {isToggleMenuOpen ? (
           <div>
-            <figure
-              style={{
-                backgroundImage: `url(${menuBar})`,
-              }}
-              onClick={handleToggleMenuButtonClick}
-            />
+            <div className="toggle-menu-button-figure-wrapper">
+              <figure
+                style={{
+                  backgroundImage: `url(${logoImgUrl})`,
+                }}
+                onClick={handleToggleMenuButtonClick}
+              />
+              <figure
+                style={{
+                  backgroundImage: `url(${menuBarImgUrl})`,
+                }}
+                onClick={handleToggleMenuButtonClick}
+              />
+            </div>
             <div className="toggle-menu-button-link-wrapper">
               <div>
-                <Link to={"/management"}>프로젝트 관리</Link>
+                <figure
+                  style={{
+                    backgroundImage: `url(${managementIconImgUrl})`,
+                  }}
+                />
+                <Link onClick={() => handleClickLinkMenu("/management")}>
+                  프로젝트 관리
+                </Link>
               </div>
               <div>
-                <Link to={"/recruitment"}>인원 모집</Link>
+                <figure
+                  style={{
+                    backgroundImage: `url(${recruitmentIconImgUrl})`,
+                  }}
+                />
+                <Link onClick={() => handleClickLinkMenu("/recruitment")}>
+                  인원 모집
+                </Link>
               </div>
             </div>
           </div>
@@ -48,7 +76,7 @@ const ToggleMenuButton = ({ isToggleMenuOpen, setIsToggleMenuOpen }) => {
           <div>
             <figure
               style={{
-                backgroundImage: `url(${menuBar})`,
+                backgroundImage: `url(${menuBarImgUrl})`,
               }}
               onClick={handleToggleMenuButtonClick}
             />
