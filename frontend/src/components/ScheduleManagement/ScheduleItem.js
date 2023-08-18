@@ -17,6 +17,7 @@ import {
 } from "../../utils/date";
 import { getProjectId } from "../../utils/getProjectId";
 import { useCompleteScheduleMutation } from "../../hooks/useScheduleManagementMutation";
+import ScheduleRemainDate from "./ScheduleRemainDate";
 
 const ScheduleItem = (props) => {
   const projectId = getProjectId(useLocation());
@@ -68,7 +69,7 @@ const ScheduleItem = (props) => {
     props.data.scheduleCategory
   );
   const modifyDate = getStringDate(new Date(props.data.modifyDate));
-  const remainDate = getRemainDate(props.data.startDate);
+  //const remainDate = getRemainDate(props.data.startDate);
   const day = new Date(props.data.startDate).getDate();
 
   return (
@@ -126,23 +127,21 @@ const ScheduleItem = (props) => {
         className="schedule-list-content"
         onClick={() => openDetailModalHandler()}
       >
-        <div>
-          <h5>{time}</h5>
+        <h5>{time}</h5>
+        <div className="schedule-list-content-title">
           <h4>{props.data.title}</h4>
-          <div className="schedule-list-content-option">
-            <h5>{modifyDate} 수정</h5>
-            <div className="schedule-list-content-option-mui">
-              {props.data.members.map((member, index) => (
-                <Tooltip key={index} title={member.name}>
-                  <Avatar src={member.imageUrl} />
-                </Tooltip>
-              ))}
-            </div>
-          </div>
+          <ScheduleRemainDate startDate={props.data.startDate} />
         </div>
 
-        <div className="schedule-list-content-time">
-          {remainDate !== "past" && <h1>{remainDate}</h1>}
+        <div className="schedule-list-content-option">
+          <h5>{modifyDate} 수정</h5>
+          <div className="schedule-list-content-option-mui">
+            {props.data.members.map((member, index) => (
+              <Tooltip key={index} title={member.name}>
+                <Avatar src={member.imageUrl} />
+              </Tooltip>
+            ))}
+          </div>
         </div>
       </div>
     </div>

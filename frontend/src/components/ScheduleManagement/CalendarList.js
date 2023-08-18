@@ -35,13 +35,11 @@ const CalendarList = () => {
         <h5>오늘</h5>
         <h1>{calendar}</h1>
       </div>
-      {status === "error" && (
-        <h2 className="check-schedule">통신 오류났습니다.</h2>
-      )}
+      {status === "error" && <h5>통신 오류났습니다.</h5>}
 
       {isLoading && <Loading />}
       {status === "success" && data && data?.length === 0 && (
-        <h2 className="check-schedule">오늘 일정이 없습니다.</h2>
+        <h5>오늘 회의가 없습니다.</h5>
       )}
 
       {status === "success" &&

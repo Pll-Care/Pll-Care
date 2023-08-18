@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import { toast } from "react-toastify";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import CloseIcon from "@mui/icons-material/Close";
 import { useMediaQuery } from "@mui/material";
 
 import ModalContainer from "../common/ModalContainer";
@@ -16,6 +17,7 @@ import {
   useModifyScheduleMutation,
 } from "../../hooks/useScheduleManagementMutation";
 import { query } from "../../utils/mediaQuery";
+import ScheduleRemainDate from "./ScheduleRemainDate";
 
 const ScheduleDetailModal = ({
   open,
@@ -204,7 +206,7 @@ const ScheduleDetailModal = ({
     <ModalContainer
       open={open}
       onClose={onClose}
-      width={isMobile ? "100%" : "50%"}
+      width={isMobile ? "100%" : "600px"}
       height={isMobile && "100%"}
       border={isMobile && "0px"}
       padding="15px"
@@ -215,159 +217,147 @@ const ScheduleDetailModal = ({
         text="정말 일정 삭제하시겠습니까?"
         clickHandler={() => deleteSchedule(deleteBody)}
       />
-      <div className="schedule-detail-mobile">
-        {isMobile && (
-          <>
-            {isEdit ? (
-              <div className="schedule-detail-modal-title">
-                <ArrowBackIcon
+
+      <div className="schedule-detail-modal">
+        {isEdit ? (
+          <div className="schedule-detail-modal-date">
+            <input
+              type="text"
+              ref={inputRefs.title}
+              required
+              placeholder="일정 제목을 입력해주세요"
+              name="title"
+              value={title}
+              onChange={handleChange}
+            />
+            <CloseIcon className="mui-icon" onClick={handleCancelModify} />
+          </div>
+        ) : (
+          <div className="schedule-detail-modal-date">
+            <h1 className="schedule-title">{title}</h1>
+            <div className="schedule-detail-modal-date-mobile">
+              <ScheduleRemainDate startDate={formValues.startDate} />
+              {isMobile && isEdit && (
+                <CloseIcon
                   className="mui-icon"
                   onClick={handleCancelModify}
+                  style={{ marginLeft: "30px" }}
                 />
-                <input
-                  type="text"
-                  ref={inputRefs.title}
-                  required
-                  placeholder="일정 제목을 입력해주세요"
-                  name="title"
-                  value={title}
-                  onChange={handleChange}
-                />
-              </div>
-            ) : (
-              <h1>{title}</h1>
-            )}
-          </>
-        )}
-
-        <div className="schedule-detail-modal">
-          {!isMobile &&
-            (isEdit ? (
-              <div className="schedule-detail-modal-title">
-                <ArrowBackIcon
-                  className="mui-icon"
-                  onClick={handleCancelModify}
-                />
-                <input
-                  type="text"
-                  ref={inputRefs.title}
-                  required
-                  placeholder="일정 제목을 입력해주세요"
-                  name="title"
-                  value={title}
-                  onChange={handleChange}
-                />
-              </div>
-            ) : (
-              <h1>{title}</h1>
-            ))}
-
-          <div className="schedule-detail-modal-content">
-            {/*첫번째 행 진행일시*/}
-            <h5>진행일시</h5>
-            {isEdit ? (
-              <div className="schedule-detail-modal-content-time">
-                <input
-                  type="datetime-local"
-                  ref={inputRefs.startDate}
-                  required
-                  name="startDate"
-                  value={startDate}
-                  onChange={handleChange}
-                  data-placeholder="시작 일자"
-                />
-                <h4>~</h4>
-                <input
-                  type="datetime-local"
-                  ref={inputRefs.endDate}
-                  required
-                  name="endDate"
-                  value={endDate}
-                  onChange={handleChange}
-                  data-placeholder="종료 일자"
-                />
-              </div>
-            ) : (
-              <h5>{time}</h5>
-            )}
-            {/*두번째 행 참여자*/}
-            <h5>참여자</h5>
-            <div className="schedule-detail-modal-member">
-              {isEdit && (
-                <div className="schedule-detail-modal-member-buttons">
-                  {memberIds.map((member, index) => (
-                    <Button
-                      text={member.name}
-                      key={index}
-                      type={member.in ? "positive_dark" : ""}
-                      size="small"
-                      onClick={() => handleMemberClick(member)}
-                    />
-                  ))}
-                </div>
               )}
-              {!isEdit && (
-                <>
-                  {data?.members.map(
-                    (member) =>
-                      member.in && <h6 key={member.id}>{member.name + " "} </h6>
-                  )}
-                </>
+              {isMobile && !isEdit && (
+                <CloseIcon
+                  className="mui-icon"
+                  onClick={onClose}
+                  style={{ marginLeft: "30px" }}
+                />
               )}
             </div>
-            {/*세번째 행 장소*/}
-            {category === "MEETING" && <h5>장소</h5>}
-            {category === "MEETING" &&
-              (isEdit ? (
-                <input
-                  type="text"
-                  ref={inputRefs.address}
-                  required
-                  placeholder="장소를 입력하세요"
-                  name="address"
-                  value={address}
-                  onChange={handleChange}
-                />
-              ) : (
-                <h5>{address}</h5>
-              ))}
-
-            <h5>내용</h5>
-            {isEdit ? (
+          </div>
+        )}
+        <div className="schedule-detail-modal-content">
+          {/*첫번째 행 진행일시*/}
+          <h5>진행일시</h5>
+          {isEdit ? (
+            <div className="schedule-detail-modal-content-time">
+              <input
+                type="datetime-local"
+                ref={inputRefs.startDate}
+                required
+                name="startDate"
+                value={startDate}
+                onChange={handleChange}
+                data-placeholder="시작 일자"
+              />
+              <h4>~</h4>
+              <input
+                type="datetime-local"
+                ref={inputRefs.endDate}
+                required
+                name="endDate"
+                value={endDate}
+                onChange={handleChange}
+                data-placeholder="종료 일자"
+              />
+            </div>
+          ) : (
+            <h5>{time}</h5>
+          )}
+          {/*두번째 행 참여자*/}
+          <h5>참여자</h5>
+          <div className="schedule-detail-modal-member">
+            {isEdit && (
+              <div className="schedule-detail-modal-member-buttons">
+                {memberIds.map((member, index) => (
+                  <Button
+                    text={member.name}
+                    key={index}
+                    type={member.in ? "positive_dark" : ""}
+                    size="small"
+                    onClick={() => handleMemberClick(member)}
+                  />
+                ))}
+              </div>
+            )}
+            {!isEdit && (
+              <>
+                {data?.members.map(
+                  (member) =>
+                    member.in && <h6 key={member.id}>{member.name + " "} </h6>
+                )}
+              </>
+            )}
+          </div>
+          {/*세번째 행 장소*/}
+          {category === "MEETING" && <h5>장소</h5>}
+          {category === "MEETING" &&
+            (isEdit ? (
               <input
                 type="text"
-                ref={inputRefs.content}
+                ref={inputRefs.address}
                 required
-                placeholder="내용을 입력하세요"
-                name="content"
-                value={content}
+                placeholder="장소를 입력하세요"
+                name="address"
+                value={address}
                 onChange={handleChange}
               />
             ) : (
-              <h5>{content}</h5>
-            )}
-          </div>
+              <h5>{address}</h5>
+            ))}
 
-          <div className="schedule-detail-modal-button">
-            {data?.deleteAuthorization && (
-              <Button
-                text="삭제하기"
-                type="underlined"
-                size="small"
-                onClick={() => setDeleteModalVisible((prevState) => !prevState)}
-              />
-            )}
-            <Button
-              text={isEdit ? "수정완료" : "수정하기"}
-              size="small"
-              type="positive"
-              onClick={
-                isEdit
-                  ? handleCompleteModify
-                  : () => setIsEdit((prevState) => !prevState)
-              }
+          <h5>내용</h5>
+          {isEdit ? (
+            <input
+              type="text"
+              ref={inputRefs.content}
+              required
+              placeholder="내용을 입력하세요"
+              name="content"
+              value={content}
+              onChange={handleChange}
             />
-          </div>
+          ) : (
+            <h5>{content}</h5>
+          )}
+        </div>
+        <div className="schedule-detail-modal-button">
+          {data?.deleteAuthorization && (
+            <Button
+              text="삭제하기"
+              type="underlined"
+              size="small"
+              onClick={() => setDeleteModalVisible((prevState) => !prevState)}
+            />
+          )}
+          <Button
+            text={isEdit ? "수정완료" : "수정하기"}
+            size="small"
+            type="positive"
+            onClick={
+              isEdit
+                ? handleCompleteModify
+                : () => setIsEdit((prevState) => !prevState)
+            }
+          />
         </div>
       </div>
     </ModalContainer>

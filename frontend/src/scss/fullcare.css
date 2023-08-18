@@ -600,12 +600,6 @@ a {
   }
 }
 
-.fc-toolbar-title {
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 1px;
-  color: #7a7a7a;
-}
-
 .schedule-calendar {
   display: grid;
   grid-template-columns: 60% 40%;
@@ -622,19 +616,33 @@ a {
   height: 100%;
 }
 .schedule-calendar-schedulelist .fc-header-toolbar.fc-toolbar {
-  font-size: 15px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 900;
+  color: #7a7a7a;
 }
 @media (min-width: 767px) and (max-width: 1024px) {
-  .schedule-calendar-schedulelist .fc-header-toolbar.fc-toolbar {
-    font-size: 15px;
+  .fc-daygrid-day {
+    font-size: 7px;
+    margin: 80%;
   }
 }
 @media (max-width: 767px) {
-  .schedule-calendar-schedulelist .fc-header-toolbar.fc-toolbar {
-    font-size: 7px;
+  .fc-daygrid-day {
+    font-size: 3px;
+    margin: 80%;
+  }
+  .fc-scrollgrid-sync-inner {
+    font-size: 5px;
+  }
+  .calendar-list-item-name-avatar .MuiAvatar-root {
+    transform: scale(0.5);
+    margin-left: -25px;
+  }
+  .calendar-list-item-name-avatar .MuiAvatar-root:hover {
+    transform: scale(0.6);
   }
 }
-
 .calendar-list {
   width: 100%;
   height: 100%;
@@ -653,17 +661,20 @@ a {
   display: flex;
   justify-content: flex-end;
 }
+.calendar-list h5 {
+  color: white;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
 .calendar-list-time {
   color: white;
 }
-.calendar-list-time h5 {
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
-  margin-bottom: 10px;
-}
 .calendar-list-time h1 {
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 40px;
+  font-size: 38px;
+  font-weight: 700;
   border-bottom: 2px solid white;
   margin-bottom: 20px;
 }
@@ -681,31 +692,22 @@ a {
 }
 .calendar-list-item h5 {
   font-family: "Noto Sans KR", sans-serif;
-  font-size: 18px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #7a7a7a;
   margin-bottom: 10px;
-}
-@media (max-width: 767px) {
-  .calendar-list-item h5 {
-    font-size: 12px;
-  }
-}
-@media (min-width: 767px) and (max-width: 1024px) {
-  .calendar-list-item h5 {
-    font-size: 17px;
-  }
+  margin-top: 5px;
 }
 .calendar-list-item h4 {
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
-}
-@media (max-width: 767px) {
-  .calendar-list-item h4 {
-    font-size: 21px;
-  }
+  font-size: 20px;
+  font-weight: 600;
 }
 @media (min-width: 767px) and (max-width: 1024px) {
   .calendar-list-item h4 {
-    font-size: 23px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
   }
 }
 .calendar-list-item-name {
@@ -728,7 +730,6 @@ a {
 
 .modal-container {
   padding: 20px;
-  font-family: "Noto Sans KR", sans-serif;
   width: 100%;
 }
 @media (max-width: 767px) {
@@ -745,51 +746,28 @@ a {
   margin-left: 10px;
 }
 .modal-container input {
-  width: 90%;
+  width: 80%;
   border: none;
   border-radius: 10px;
-  font-size: 25px;
-  margin-bottom: 10px;
-  font-family: "Noto Sans KR", sans-serif;
 }
-@media (min-width: 767px) and (max-width: 1024px) {
-  .modal-container input {
-    font-size: 23px;
-  }
-}
-@media (max-width: 767px) {
-  .modal-container input {
-    font-size: 15px;
-    margin-top: 20px;
-  }
+.modal-container-title-input {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 38px;
+  font-weight: 700;
 }
 .modal-container h5 {
   margin-right: 30px;
   color: #00aa72;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
 }
-@media (min-width: 767px) and (max-width: 1024px) {
-  .modal-container h5 {
-    font-size: 15px;
-  }
-}
-@media (max-width: 767px) {
-  .modal-container h5 {
-    font-size: 11px;
-  }
-}
-.modal-container input {
-  font-size: 20px;
-  margin-top: 10px;
-}
-@media (min-width: 767px) and (max-width: 1024px) {
-  .modal-container input {
-    font-size: 15px;
-  }
-}
-@media (max-width: 767px) {
-  .modal-container input {
-    font-size: 11px;
-  }
+.modal-container select {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #00aa72;
+  border-radius: 10px;
 }
 .modal-container-content {
   background-color: white;
@@ -822,6 +800,11 @@ a {
     height: 40%;
   }
 }
+.modal-container-description input {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
 .modal-container-description .plan-option {
   display: flex;
   align-items: center;
@@ -842,76 +825,19 @@ a {
 .modal-container-description .plan-option Button {
   margin-right: 10px;
 }
-.modal-container-description .plan-option select {
-  border-radius: 10px;
-  padding: 0.5rem;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  color: #00aa72;
-}
-@media (max-width: 767px) {
-  .modal-container-description .plan-option select {
-    font-size: 11px;
-    padding: 2px;
-  }
-}
 .modal-container-description .plan-option-bottom {
   display: flex;
   align-items: center;
-  border-bottom: 1.5px solid rgb(217, 217, 217);
+  border-bottom: 1.5px solid #b4bcbd;
   margin-bottom: 20px;
 }
 .modal-container-description .plan-option-bottom input {
-  font-size: 15px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #b4bcbd;
 }
 
-@media (min-width: 767px) and (max-width: 1024px) {
-  .fc-daygrid-day {
-    font-size: 7px;
-    margin: 80%;
-  }
-  .fc-toolbar-title {
-    font-size: 5px;
-  }
-  .calendar-list .check-schedule {
-    font-size: 17px;
-  }
-  .calendar-list h5 {
-    font-size: 17px;
-  }
-  .calendar-list h1,
-  .calendar-list h4 {
-    font-size: 23px;
-  }
-}
-@media (max-width: 767px) {
-  .fc-daygrid-day {
-    font-size: 7px;
-    margin: 80%;
-  }
-  .fc-toolbar-title {
-    font-size: 5px;
-  }
-  .fc-scrollgrid-sync-inner {
-    font-size: 5px;
-  }
-  .calendar-list .check-schedule {
-    font-size: 12px;
-  }
-  .calendar-list h5 {
-    font-size: 12px;
-  }
-  .calendar-list h1,
-  .calendar-list h4 {
-    font-size: 21px;
-  }
-  .calendar-list-item-name-avatar .MuiAvatar-root {
-    transform: scale(0.5);
-    margin-left: -25px;
-  }
-  .calendar-list-item-name-avatar .MuiAvatar-root:hover {
-    transform: scale(0.6);
-  }
-}
 .schedule h1 {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
@@ -972,26 +898,17 @@ a {
 .check-schedule {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
+  font-weight: 600;
   color: white;
   margin-bottom: 10px;
-}
-@media (max-width: 767px) {
-  .check-schedule {
-    font-size: 15px;
-  }
 }
 .check-schedule-gray {
   color: #7a7a7a;
   margin: 20px;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
+  font-weight: 600;
 }
-@media (max-width: 767px) {
-  .check-schedule-gray {
-    font-size: 15px;
-  }
-}
-
 .schedule-option {
   margin-top: 80px;
   margin-bottom: 20px;
@@ -1010,20 +927,13 @@ a {
 .schedule-option-person h4 {
   color: white;
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
+  font-size: 18px;
+  font-weight: 600;
   margin-bottom: 20px;
-}
-@media (min-width: 767px) and (max-width: 1024px) {
-  .schedule-option-person h4 {
-    font-size: 22px;
-  }
 }
 @media (max-width: 767px) {
   .schedule-option-person {
     padding: 20px;
-  }
-  .schedule-option-person h4 {
-    font-size: 13px;
   }
 }
 
@@ -1048,36 +958,32 @@ a {
   align-items: center;
   font-style: normal;
   color: #7a7a7a;
-  font-family: "IBM Plex Sans KR", sans-serif;
   width: 15%;
 }
 .schedule-list-time h1 {
-  font-size: 40px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 38px;
+  font-weight: 700;
   color: #7a7a7a;
 }
-@media (max-width: 767px) {
-  .schedule-list-time h1 {
-    font-size: 33px;
-  }
-}
 .schedule-list-time h2 {
-  font-size: 25px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
   margin-bottom: 15px;
-}
-@media (max-width: 767px) {
-  .schedule-list-time h2 {
-    font-size: 13px;
-  }
 }
 .schedule-list-content {
   text-align: left;
   border: 3px solid #01e89e;
-  border-radius: 35px;
+  border-radius: 15px;
   width: 85%;
   padding: 1.5rem;
   cursor: pointer;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+}
+.schedule-list-content-title {
+  display: flex;
   justify-content: space-between;
   align-items: center;
 }
@@ -1088,24 +994,16 @@ a {
 }
 .schedule-list-content h5 {
   font-family: "Noto Sans KR", sans-serif;
-  font-size: 18px;
+  font-size: 14px;
+  font-weight: 500;
   color: #7a7a7a;
-}
-@media (max-width: 767px) {
-  .schedule-list-content h5 {
-    font-size: 12px;
-  }
 }
 .schedule-list-content h4 {
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
+  font-size: 24px;
+  font-weight: 700;
   color: #7a7a7a;
   margin: 10px 0px;
-}
-@media (max-width: 767px) {
-  .schedule-list-content h4 {
-    font-size: 21px;
-  }
 }
 .schedule-list-content-option {
   align-items: center;
@@ -1113,6 +1011,9 @@ a {
 }
 .schedule-list-content-option h5 {
   margin-right: 20px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
   color: #00aa72;
 }
 .schedule-list-content-option-mui {
@@ -1136,16 +1037,12 @@ a {
     transform: scale(0.6);
   }
 }
-.schedule-list-content-time {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+
 .schedule-list-content-time h1 {
   color: #00aa72;
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 18px;
+  font-size: 14px;
+  font-weight: 600;
   background: #ffffff;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.05);
   border-radius: 30px;
@@ -1154,20 +1051,17 @@ a {
 @media (max-width: 767px) {
   .schedule-list-content-time h1 {
     padding: 5px;
-    font-size: 12px;
   }
-}
-.schedule-list-content-time Button {
-  margin-top: 10px;
 }
 
 .schedule-modal {
-  font-family: "IBM Plex Sans KR", sans-serif;
+  width: 100%;
 }
 .schedule-modal h1 {
   color: white;
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
+  font-size: 24px;
+  font-weight: 700;
   margin-bottom: 20px;
 }
 .schedule-modal-content {
@@ -1176,63 +1070,71 @@ a {
   border-radius: 14px;
   padding: 1.5rem;
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .schedule-modal-content {
+    padding: 20px;
+  }
+}
 .schedule-modal-content h1 {
-  color: #01e89e;
+  color: #00aa72;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
 }
 .schedule-modal-content h2 {
   color: #7a7a7a;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
   margin-bottom: 10px;
 }
 .schedule-modal-content-evaluation {
   border: 2px solid #01e89e;
   border-radius: 10px;
   padding: 1.5rem;
+  display: grid;
+  grid-template-columns: 20% 80%;
+  grid-gap: 30px 0px;
+  align-items: center;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .schedule-modal-content-evaluation {
+    padding: 10px;
+  }
 }
 .schedule-modal-content-evaluation h3 {
-  color: #01e89e;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #00aa72;
   margin-right: 20px;
   margin-top: 5px;
 }
-.schedule-modal-content-evaluation .modal-member {
+.schedule-modal-content-evaluation-member {
   display: flex;
-  align-items: center;
-  margin-left: 10px;
-  margin-bottom: 30px;
+  flex-wrap: wrap;
 }
-.schedule-modal-content-evaluation .modal-badges {
+.schedule-modal-content-evaluation-badge {
   display: flex;
+  flex-wrap: wrap;
 }
-.schedule-modal-content-evaluation .modal-badges-items {
-  display: flex;
-  margin-right: 30px;
-}
-.schedule-modal-content-evaluation .modal-badges-items .modal-badge {
+.schedule-modal-content-evaluation-badge .modal-badge {
   cursor: pointer;
   border-radius: 80%;
-  background-color: rgb(242, 242, 242);
+  border: 1px solid rgb(243, 243, 243);
   padding: 0.5rem;
   margin-right: 30px;
 }
-.schedule-modal-content-evaluation .modal-badges-items .selected {
-  background-color: rgb(181, 181, 181);
+.schedule-modal-content-evaluation-badge .modal-badge img {
+  width: 20px;
+  height: 20px;
+}
+.schedule-modal-content-evaluation-badge .selected {
+  border: 2px solid #01e89e;
 }
 .schedule-modal-button {
   margin-top: 15px;
   text-align: right;
-}
-
-.schedule-detail-mobile {
-  width: 100%;
-}
-.schedule-detail-mobile input {
-  border-radius: 20px;
-  height: 30px;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  color: #7a7a7a;
-}
-.schedule-detail-mobile h1 {
-  font-size: 25px;
-  margin-bottom: 30px;
 }
 
 .schedule-detail-modal {
@@ -1241,7 +1143,6 @@ a {
   width: 100%;
   padding: 1.5rem;
   color: #7a7a7a;
-  font-family: "IBM Plex Sans KR", sans-serif;
 }
 @media (max-width: 767px) {
   .schedule-detail-modal {
@@ -1249,22 +1150,32 @@ a {
   }
 }
 .schedule-detail-modal input {
-  border-radius: 20px;
-  height: 30px;
-  font-family: "IBM Plex Sans KR", sans-serif;
   color: #7a7a7a;
+  border-radius: 20px;
 }
-.schedule-detail-modal h1 {
-  font-size: 25px;
-  margin-bottom: 30px;
-}
-.schedule-detail-modal-title {
+.schedule-detail-modal-date {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
 }
-.schedule-detail-modal-title .mui-icon {
+.schedule-detail-modal-date .schedule-title {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+}
+.schedule-detail-modal-date .mui-icon {
   cursor: pointer;
-  margin-right: 10px;
+}
+.schedule-detail-modal-date input {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  width: 80%;
+}
+.schedule-detail-modal-date-mobile {
+  display: flex;
+  align-items: center;
 }
 .schedule-detail-modal-content {
   display: grid;
@@ -1272,15 +1183,22 @@ a {
   align-items: center;
   grid-gap: 20px 0px;
   font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
 }
 @media (min-width: 767px) and (max-width: 1024px) {
   .schedule-detail-modal-content {
-    grid-template-columns: 30% 70%;
+    grid-template-columns: 15% 85%;
   }
 }
 .schedule-detail-modal-content-time {
   display: flex;
   align-items: center;
+}
+.schedule-detail-modal-content-time input {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
 }
 .schedule-detail-modal-member-buttons {
   display: flex;

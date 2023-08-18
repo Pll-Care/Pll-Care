@@ -144,6 +144,7 @@ const ScheduleModal = ({
     >
       <div className="modal-container">
         <input
+          className="modal-container-title-input"
           type="text"
           ref={inputRefs.title}
           required
