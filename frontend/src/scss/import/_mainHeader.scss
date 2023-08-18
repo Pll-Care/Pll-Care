@@ -1,10 +1,17 @@
-.main-header {
+.header {
   border-bottom: $border;
   height: 80px;
 
-  // display: grid;
-  // grid-template-rows: 100%;
-  // grid-template-columns: 20% 55% 25%;
+  @include mobile {
+    height: 65px;
+    display: flex;
+    align-items: flex-end;
+    border: none;
+  }
+}
+.main-header {
+  padding: 18px 12px 11px 12px;
+  width: 100%;
 
   @include displayFlex(row, space-between, center);
   @include mobile {
@@ -65,22 +72,43 @@
   }
 
   &-right-col {
+    @include displayFlex;
+    gap: 12px;
+    @include mobile {
+      gap: 9px;
+    }
+
     Button {
       cursor: pointer;
-      margin-right: 15px;
-      margin-left: auto;
+
+      @include tablet {
+        padding: 4px 14px 4px 14px;
+        height: 34px;
+      }
+
+      @include mobile {
+        height: 20px;
+        @include m_button_00;
+        padding: 4px 10px 5px 10px;
+        margin: 0;
+      }
     }
 
     .main-header-user-profile-img {
       border-radius: 35%;
       width: 40px;
       height: 40px;
-      margin-right: 20px;
 
       cursor: pointer;
 
+      @include tablet {
+        width: 34px;
+        height: 34px;
+      }
+
       @include mobile {
-        display: none;
+        width: 20px;
+        height: 20px;
       }
     }
 
@@ -89,8 +117,6 @@
       height: 100%;
       border-radius: 35%;
     }
-
-    @include displayFlex;
   }
 
   &-login-col {

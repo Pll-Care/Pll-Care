@@ -69,8 +69,8 @@ const MainHeader = () => {
   };
 
   return (
-    <>
-      <header
+    <header className={isProfilePage ? "header header-profile-bg" : "header"}>
+      <div
         className={
           isProfilePage ? "main-header header-profile-bg" : "main-header"
         }
@@ -108,7 +108,7 @@ const MainHeader = () => {
           <div className="main-header-right-col main-header-logout-col">
             {isProfilePage ? (
               <Button
-                text={"log out"}
+                text={"Log out"}
                 type={"positive"}
                 color={"white"}
                 onClick={handleLogout}
@@ -116,7 +116,7 @@ const MainHeader = () => {
               />
             ) : (
               <Button
-                text={"log out"}
+                text={"Log out"}
                 type={"positive"}
                 color={"white"}
                 onClick={handleLogout}
@@ -128,7 +128,7 @@ const MainHeader = () => {
                   ? "main-header-user-profile-img header-profile-image-bg"
                   : "main-header-user-profile-img header-image-bg"
               }
-              onClick={() => routeTo(`profile/${userInfo.memberId}`)}
+              onClick={() => routeTo(`/profile/${userInfo.memberId}`)}
             >
               <img
                 className="main-header_img"
@@ -151,7 +151,7 @@ const MainHeader = () => {
         ) : (
           <div className="main-header-right-col main-header-login-col">
             <Button
-              text={"log in"}
+              text={"Log in"}
               color={"white"}
               type={"positive"}
               onClick={handleLogin}
@@ -162,8 +162,8 @@ const MainHeader = () => {
             />
           </div>
         )}
-      </header>
-    </>
+      </div>
+    </header>
   );
 };
 

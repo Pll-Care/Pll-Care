@@ -49,14 +49,6 @@ const ToggleMenuButton = ({
                 인원 모집
               </Link>
             </div>
-            <div>
-              <Link
-                to={"/profile/1"}
-                onClick={() => handleToggleMenuButtonClick(false)}
-              >
-                내 프로필
-              </Link>
-            </div>
           </div>
         </div>
       ) : (

@@ -213,6 +213,14 @@
   line-height: 12px;
 }
 
+@mixin m_button_00 {
+  font: {
+    family: "IBM Plex Sans KR", sans-serif;
+    size: 10px;
+    weight: $weight-bold;
+  }
+}
+
 @mixin m_button_01 {
   font: {
     family: "IBM Plex Sans KR", sans-serif;
