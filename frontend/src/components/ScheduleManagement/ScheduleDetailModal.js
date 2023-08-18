@@ -2,7 +2,6 @@ import React, { useState, useRef } from "react";
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";
 
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CloseIcon from "@mui/icons-material/Close";
 import { useMediaQuery } from "@mui/material";
 

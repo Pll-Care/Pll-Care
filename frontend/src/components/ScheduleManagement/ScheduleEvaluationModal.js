@@ -77,7 +77,7 @@ const ScheduleEvaluationModal = (props) => {
       open={props.open}
       onClose={props.onClose}
       type="dark"
-      width="60%"
+      width="700px"
       padding="25px"
     >
       <AlertCheckModal
