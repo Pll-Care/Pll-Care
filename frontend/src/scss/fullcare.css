@@ -4583,13 +4583,18 @@ a {
 
 @media (max-width: 767px) {
   .profile_introduce_container {
-    min-height: 60px;
+    align-items: flex-end;
+    padding-bottom: 22px;
   }
   .profile_introduce_image {
     width: 42px;
     height: 42px;
   }
   .profile_introduce_info_name {
+    height: 20px;
+    gap: 14px;
+  }
+  .profile_introduce_info_name input {
     height: 20px;
   }
   .profile_introduce_info_name_real {
@@ -4604,6 +4609,10 @@ a {
     font-weight: 700;
   }
   .profile_introduce_info_myself {
+    height: 20px;
+    gap: 14px;
+  }
+  .profile_introduce_info_myself input {
     height: 20px;
   }
   .profile_introduce_info_myself Button {
