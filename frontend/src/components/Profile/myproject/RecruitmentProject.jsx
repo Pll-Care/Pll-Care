@@ -48,8 +48,8 @@ const RecruitmentProject = ({ memberId }) => {
         </div>
         {data?.data?.content.length > 0 ? (
           <div>
-            <div className="myProject_project">
-              <ul>
+            <div>
+              <ul className="myProject_project">
                 {data.data.content.map((project, idx) => (
                   <ProjectItem
                     key={QUERY_KEY + "-" + idx}

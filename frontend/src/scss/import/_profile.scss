@@ -556,12 +556,13 @@
       gap: 10px;
 
       &_title {
-        font-size: 18px;
-        font-weight: bold;
+        @include heading_05;
+        color: $green-500;
       }
 
       &_description {
         color: $gray-500;
+        @include body_02;
 
         & > :first-child {
           font-weight: bold;
@@ -1321,5 +1322,47 @@
 
   .finalEvaluate_userContent {
     @include m_body_01;
+  }
+
+  .project_container {
+    gap: 14px;
+  }
+
+  .myProject_selectContainer {
+    padding-bottom: 11px;
+    .select_small {
+      border: 1px solid $green-200;
+      @include m_button_01;
+      height: 22px;
+      padding-top: 0px;
+      padding-bottom: 0px;
+    }
+  }
+
+  .myProject_project {
+    gap: 10px;
+  }
+
+  .myProject_item {
+    padding: 13px 10px 10px 10px;
+    border: 1px solid $green-200;
+  }
+
+  .myProject_item_img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .myProject_item_wrap_title {
+    @include m_heading_03;
+  }
+
+  .myProject_item_wrap_description {
+    @include m_body_01;
+  }
+
+  .project-no-item {
+    @include m_heading_02;
+    min-height: 50px;
   }
 }

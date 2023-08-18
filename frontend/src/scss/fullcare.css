@@ -4147,11 +4147,16 @@ a {
   gap: 10px;
 }
 .myProject_item_wrap_title {
+  font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 600;
+  color: #003b28;
 }
 .myProject_item_wrap_description {
   color: #7a7a7a;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
 }
 .myProject_item_wrap_description > :first-child {
   font-weight: bold;
@@ -4919,6 +4924,48 @@ a {
     font-family: "Noto Sans KR", sans-serif;
     font-size: 8px;
     font-weight: 500;
+  }
+  .project_container {
+    gap: 14px;
+  }
+  .myProject_selectContainer {
+    padding-bottom: 11px;
+  }
+  .myProject_selectContainer .select_small {
+    border: 1px solid #01e89e;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 600;
+    height: 22px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+  .myProject_project {
+    gap: 10px;
+  }
+  .myProject_item {
+    padding: 13px 10px 10px 10px;
+    border: 1px solid #01e89e;
+  }
+  .myProject_item_img {
+    width: 22px;
+    height: 22px;
+  }
+  .myProject_item_wrap_title {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+  .myProject_item_wrap_description {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+  .project-no-item {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    min-height: 50px;
   }
 }
 .select_small {
