@@ -418,6 +418,17 @@ a {
   font-size: 12px;
   font-weight: 600;
 }
+@media (max-width: 767px) {
+  .control-menu-small {
+    height: 20px;
+    width: -moz-fit-content;
+    width: fit-content;
+    padding: 1px 3px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+}
 
 .pagination-wrapper {
   width: 250px;
@@ -1279,6 +1290,22 @@ a {
   font-size: 18px;
   font-weight: 600;
 }
+@media (max-width: 767px) {
+  .meeting-record-management .meeting-record-heading {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+}
+@media (max-width: 767px) {
+  .meeting-record-management {
+    background-color: white;
+    flex-direction: column;
+    box-shadow: none;
+    height: -moz-fit-content;
+    height: fit-content;
+  }
+}
 .meeting-record-list {
   width: 30%;
   padding: 5px;
@@ -1295,6 +1322,15 @@ a {
     padding: 10px;
   }
 }
+@media (max-width: 767px) {
+  .meeting-record-list {
+    background-color: #01e89e;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    width: 100%;
+    height: 385px;
+  }
+}
 .meeting-record-book-marked-record-list {
   max-width: 100%;
   padding-top: 10px;
@@ -1309,16 +1345,27 @@ a {
   margin-bottom: 20px;
   padding: 5px;
 }
+@media (max-width: 767px) {
+  .meeting-record-book-marked-record-list .meeting-record-heading {
+    margin-bottom: 0;
+    height: -moz-fit-content;
+    height: fit-content;
+  }
+}
 .meeting-record-book-marked-record-list .meeting-record-body {
-  display: grid;
-  grid-template-rows: 80% 20%;
-  grid-template-columns: 100%;
+  padding-top: 10px;
+  height: 210px;
   padding-left: 10px;
   padding-right: 10px;
 }
 .meeting-record-book-marked-record-list .meeting-record-body .meeting-record-all-meeting-record-list-data {
-  height: 100%;
+  height: 160px;
   width: 100%;
+}
+@media (max-width: 767px) {
+  .meeting-record-book-marked-record-list .meeting-record-body .meeting-record-all-meeting-record-list-data {
+    height: 100px;
+  }
 }
 .meeting-record-book-marked-record-list .meeting-record-body .pagination-wrapper {
   margin-top: auto;
@@ -1329,9 +1376,26 @@ a {
     width: 100%;
   }
 }
+@media (max-width: 767px) {
+  .meeting-record-book-marked-record-list .meeting-record-body .pagination-wrapper {
+    height: -moz-fit-content;
+    height: fit-content;
+    margin-top: 5px;
+  }
+}
 @media (min-width: 767px) and (max-width: 1024px) {
   .meeting-record-book-marked-record-list {
     width: 100%;
+  }
+}
+@media (max-width: 767px) {
+  .meeting-record-book-marked-record-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 0px;
+    margin-bottom: 0px;
+    height: 165px;
   }
 }
 .meeting-record-all-meeting-record-list {
@@ -1362,10 +1426,15 @@ a {
 }
 .meeting-record-all-meeting-record-list .meeting-record-list-header .header-left-col .meeting-record-heading {
   height: 40px;
-  padding: 5px;
+  padding: 10px 5px;
 }
 .meeting-record-all-meeting-record-list .meeting-record-list-header .header-left-col .control-menu {
   margin-right: 5px;
+}
+@media (max-width: 767px) {
+  .meeting-record-all-meeting-record-list .meeting-record-list-header .header-left-col {
+    height: 25px;
+  }
 }
 .meeting-record-all-meeting-record-list .meeting-record-list-header .header-right-col {
   margin-left: auto;
@@ -1375,9 +1444,15 @@ a {
 .meeting-record-all-meeting-record-list .meeting-record-list-header .header-right-col Button {
   margin-right: 5px;
 }
+@media (max-width: 767px) {
+  .meeting-record-all-meeting-record-list .meeting-record-list-header {
+    height: -moz-fit-content;
+    height: fit-content;
+  }
+}
 .meeting-record-all-meeting-record-list .record-list-item-wrapper {
   padding-top: 10px;
-  height: 100%;
+  height: 210px;
   padding-left: 10px;
   padding-right: 10px;
   display: flex;
@@ -1393,7 +1468,12 @@ a {
 }
 .meeting-record-all-meeting-record-list .meeting-record-all-meeting-record-list-data {
   width: 100%;
-  height: 100%;
+  height: 160px;
+}
+@media (max-width: 767px) {
+  .meeting-record-all-meeting-record-list .meeting-record-all-meeting-record-list-data {
+    height: 100px;
+  }
 }
 .meeting-record-all-meeting-record-list .pagination-wrapper {
   margin-top: auto;
@@ -1404,9 +1484,24 @@ a {
     width: 100%;
   }
 }
+@media (max-width: 767px) {
+  .meeting-record-all-meeting-record-list .pagination-wrapper {
+    margin-top: 5px;
+    height: -moz-fit-content;
+    height: fit-content;
+  }
+}
 @media (min-width: 767px) and (max-width: 1024px) {
   .meeting-record-all-meeting-record-list {
     width: 100%;
+  }
+}
+@media (max-width: 767px) {
+  .meeting-record-all-meeting-record-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 180px;
   }
 }
 .meeting-record-new-meeting-record-editor {
@@ -1428,6 +1523,14 @@ a {
   justify-content: space-between;
   align-items: center;
 }
+@media (max-width: 767px) {
+  .meeting-record-new-meeting-record-editor .meeting-record-initial-state {
+    flex-direction: row;
+    width: 100%;
+    align-items: flex-start;
+    margin-bottom: auto;
+  }
+}
 .meeting-record-new-meeting-record-editor .meeting-record-editor {
   width: 93%;
   height: 100%;
@@ -1436,11 +1539,23 @@ a {
   justify-content: space-between;
   align-items: space-between;
 }
+@media (max-width: 767px) {
+  .meeting-record-new-meeting-record-editor .meeting-record-editor {
+    width: 100%;
+  }
+}
 .meeting-record-new-meeting-record-editor .initial-meeting-record-heading {
   color: #00aa72;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
+}
+@media (max-width: 767px) {
+  .meeting-record-new-meeting-record-editor .initial-meeting-record-heading {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
 }
 .meeting-record-new-meeting-record-editor .meeting-record-editor .meeting-record-title {
   height: 15%;
@@ -1472,8 +1587,21 @@ a {
 .meeting-record-new-meeting-record-editor .react-quill {
   height: 100%;
   line-height: 1.5;
-  margin-top: 20px;
-  margin-bottom: 68px;
+  display: inline-flex;
+  flex-direction: column;
+}
+@media (max-width: 767px) {
+  .meeting-record-new-meeting-record-editor .react-quill .ql-toolbar {
+    padding: 5px;
+  }
+  .meeting-record-new-meeting-record-editor .react-quill .ql-toolbar .ql-formats {
+    margin-right: 2px;
+  }
+  .meeting-record-new-meeting-record-editor .react-quill p {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
 }
 .meeting-record-new-meeting-record-editor .meeting-record {
   height: 100%;
@@ -1489,6 +1617,10 @@ a {
 .meeting-record-new-meeting-record-editor .meeting-record-button-wrapper {
   margin-bottom: 20px;
 }
+.meeting-record-new-meeting-record-editor .meeting-record-button-wrapper .button {
+  padding: 0;
+  margin-left: 4px;
+}
 .meeting-record-new-meeting-record-editor .meeting-record-date,
 .meeting-record-new-meeting-record-editor .meeting-record-author {
   margin-bottom: 20px;
@@ -1496,10 +1628,29 @@ a {
   font-size: 14px;
   font-weight: 500;
 }
-.meeting-record-new-meeting-record-editor .meeting-record-title {
+@media (max-width: 767px) {
+  .meeting-record-new-meeting-record-editor .meeting-record-date,
+  .meeting-record-new-meeting-record-editor .meeting-record-author {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+}
+.meeting-record-new-meeting-record-editor .meeting-record-title input {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 24px;
   font-weight: 700;
+}
+@media (max-width: 767px) {
+  .meeting-record-new-meeting-record-editor .meeting-record-title input {
+    height: -moz-fit-content;
+    height: fit-content;
+    padding: 5px;
+    border-radius: 5px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
 }
 .meeting-record-new-meeting-record-editor .meeting-record-container {
   display: flex;
@@ -1518,9 +1669,33 @@ a {
 .meeting-record-new-meeting-record-editor .created-meeting-record-content p {
   max-width: 100%;
 }
+@media (max-width: 767px) {
+  .meeting-record-new-meeting-record-editor .selected-meeting-record-content p,
+  .meeting-record-new-meeting-record-editor .created-meeting-record-content p {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+}
+@media (max-width: 767px) {
+  .meeting-record-new-meeting-record-editor .selected-meeting-record-content,
+  .meeting-record-new-meeting-record-editor .created-meeting-record-content {
+    padding: 5px;
+  }
+}
 .meeting-record-new-meeting-record-editor .selected-meeting-record-content img,
 .meeting-record-new-meeting-record-editor .created-meeting-record-content img {
   max-width: 100%;
+}
+@media (max-width: 767px) {
+  .meeting-record-new-meeting-record-editor {
+    width: 100%;
+    box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    height: 360px;
+    margin-bottom: 30px;
+    padding: 15px;
+  }
 }
 .meeting-record-item {
   background-color: white;
@@ -1538,20 +1713,37 @@ a {
   justify-content: space-around;
   align-items: flex-start;
 }
-.meeting-record-item-date {
+.meeting-record-item-date, .meeting-record-item-writer {
   font-family: "Noto Sans KR", sans-serif;
   font-size: 10px;
   font-weight: 500;
+}
+@media (max-width: 767px) {
+  .meeting-record-item-date, .meeting-record-item-writer {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 6px;
+    font-weight: 500;
+  }
 }
 .meeting-record-item-title {
   font-family: "Noto Sans KR", sans-serif;
   font-size: 14px;
   font-weight: 900;
 }
-.meeting-record-item-writer {
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 10px;
-  font-weight: 500;
+@media (max-width: 767px) {
+  .meeting-record-item-title {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 7px;
+    font-weight: 700;
+  }
+}
+@media (max-width: 767px) {
+  .meeting-record-item {
+    height: 44px;
+    width: 100%;
+    margin-bottom: 5px;
+    border-radius: 5px;
+  }
 }
 
 .teamMember {
