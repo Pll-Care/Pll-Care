@@ -1,6 +1,8 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 
+import menuBar from "../../assets/toggle-button-img.png";
+
 const ToggleMenuButton = ({ isToggleMenuOpen, setIsToggleMenuOpen }) => {
   const modalOutside = useRef();
 
@@ -27,7 +29,12 @@ const ToggleMenuButton = ({ isToggleMenuOpen, setIsToggleMenuOpen }) => {
       <div className="toggle-menu-button">
         {isToggleMenuOpen ? (
           <div>
-            <figure onClick={handleToggleMenuButtonClick} />
+            <figure
+              style={{
+                backgroundImage: `url(${menuBar})`,
+              }}
+              onClick={handleToggleMenuButtonClick}
+            />
             <div className="toggle-menu-button-link-wrapper">
               <div>
                 <Link to={"/management"}>프로젝트 관리</Link>
@@ -39,7 +46,12 @@ const ToggleMenuButton = ({ isToggleMenuOpen, setIsToggleMenuOpen }) => {
           </div>
         ) : (
           <div>
-            <figure onClick={handleToggleMenuButtonClick} />
+            <figure
+              style={{
+                backgroundImage: `url(${menuBar})`,
+              }}
+              onClick={handleToggleMenuButtonClick}
+            />
           </div>
         )}
       </div>

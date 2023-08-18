@@ -99,10 +99,6 @@ const MainHeader = () => {
             className="main-header-logo-img"
             onClick={() => routeTo("/")}
           />
-          <ToggleMenuButton
-            isToggleMenuOpen={isToggleMenuOpen}
-            setIsToggleMenuOpen={setIsToggleMenuOpen}
-          />
         </div>
         <div className="main-header-medium-col">
           <ul className="main-header-link">
@@ -158,6 +154,10 @@ const MainHeader = () => {
                 alt={"유저 프로필"}
               />
             </Link>
+            <ToggleMenuButton
+              isToggleMenuOpen={isToggleMenuOpen}
+              setIsToggleMenuOpen={setIsToggleMenuOpen}
+            />
           </div>
         ) : (
           <div className="main-header-right-col main-header-login-col">
@@ -166,6 +166,10 @@ const MainHeader = () => {
               color={"white"}
               type={"positive"}
               onClick={handleLogin}
+            />
+            <ToggleMenuButton
+              isToggleMenuOpen={isToggleMenuOpen}
+              setIsToggleMenuOpen={setIsToggleMenuOpen}
             />
           </div>
         )}

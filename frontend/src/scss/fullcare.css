@@ -265,6 +265,21 @@ a {
   background-repeat: no-repeat;
   background-size: 100%;
 }
+@media (max-width: 767px) {
+  .main-header-left-col .main-header-logo-img {
+    width: 77px;
+    height: 17px;
+  }
+}
+@media (max-width: 767px) {
+  .main-header-left-col {
+    width: -moz-fit-content;
+    width: fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    margin-top: auto;
+  }
+}
 .main-header-link {
   width: 80%;
   height: 100%;
@@ -300,6 +315,16 @@ a {
   margin-right: 15px;
   margin-left: auto;
 }
+@media (max-width: 767px) {
+  .main-header-right-col Button {
+    border-radius: 5px;
+    margin-top: auto;
+    margin-right: 9px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+  }
+}
 .main-header-right-col .main-header-user-profile-img {
   border: 2px solid #01e89e;
   border-radius: 35%;
@@ -311,6 +336,15 @@ a {
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%, 100%;
+}
+@media (max-width: 767px) {
+  .main-header-right-col .main-header-user-profile-img {
+    border: 1px solid #01e89e;
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    margin-top: auto;
+  }
 }
 .main-header-right-col img {
   width: 100%;
@@ -324,6 +358,14 @@ a {
   width: 100%;
   height: 100%;
   border-radius: 35%;
+}
+@media (max-width: 767px) {
+  .main-header {
+    height: 65px;
+    grid-template-columns: 45% 0% 55%;
+    padding: 7px;
+    border-bottom: none;
+  }
 }
 
 .button {
@@ -492,96 +534,35 @@ a {
   color: white;
 }
 
-.toggle-menu-button-wrapper {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  left: 0;
-  top: 0;
-  background: rgba(0, 0, 0, 0.8);
-  -webkit-backdrop-filter: blur(5px);
-          backdrop-filter: blur(5px);
-  opacity: 90%;
+.toggle-menu-button-wrapper, .toggle-menu-button-wrapper-close {
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
 }
-.toggle-menu-button-wrapper .toggle-menu-button {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 200px;
-  background-color: white;
-  text-align: start;
-  padding: 20px;
-}
-.toggle-menu-button-wrapper .toggle-menu-button figure {
-  width: 50px;
-  height: 50px;
-  margin-left: 70%;
-  cursor: pointer;
-  background-image: url("../assets/toggle-button-img.png");
+.toggle-menu-button-wrapper figure, .toggle-menu-button-wrapper-close figure {
+  width: 20px;
+  height: 18px;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 100%, 100%;
+  background-size: 100%;
 }
-.toggle-menu-button-wrapper .toggle-menu-button-link-wrapper {
-  height: 500px;
-}
-.toggle-menu-button-wrapper .toggle-menu-button-link-wrapper div {
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
-  margin-top: 25px;
-  margin-bottom: 25px;
-}
-.toggle-menu-button-wrapper .toggle-menu-button-link-wrapper a {
-  text-decoration: none;
-  color: black;
-}
-.toggle-menu-button-wrapper-close {
-  width: 200px;
-  height: 90px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 15px;
-}
-.toggle-menu-button-wrapper-close .toggle-menu-button div figure {
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-  background-image: url("../assets/toggle-button-img.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100%, 100%;
-}
-
 @media (min-width: 1024px) {
-  .toggle-menu-button-wrapper-close {
+  .toggle-menu-button-wrapper, .toggle-menu-button-wrapper-close {
     display: none;
   }
 }
 @media (min-width: 767px) and (max-width: 1024px) {
-  .toggle-menu-button-wrapper-close {
+  .toggle-menu-button-wrapper, .toggle-menu-button-wrapper-close {
     display: none;
   }
 }
 @media (max-width: 767px) {
-  .toggle-menu-button-wrapper .toggle-menu-button {
-    padding: 15px;
-    width: 120px;
-  }
-  .toggle-menu-button-wrapper .toggle-menu-button figure {
-    width: 35px;
-    height: 35px;
-    margin-left: 0%;
-  }
-  .toggle-menu-button-wrapper .toggle-menu-button-link-wrapper div {
-    font-size: 13px;
-  }
-  .toggle-menu-button-wrapper-close .toggle-menu-button div figure {
-    width: 35px;
-    height: 35px;
+  .toggle-menu-button-wrapper, .toggle-menu-button-wrapper-close {
+    margin-top: auto;
   }
 }
+
 .Toastify__toast-container {
   width: -moz-max-content;
   width: max-content;
@@ -2865,6 +2846,7 @@ a {
     width: 90%;
     height: 125px;
     padding: 25px 7px;
+    border-radius: 15px;
   }
 }
 
@@ -3171,6 +3153,7 @@ a {
 }
 @media (max-width: 767px) {
   .home .banner-wrapper {
+    margin-top: 15px;
     width: 100%;
   }
 }

@@ -217,6 +217,14 @@
   }
 }
 
+@mixin m_button_00 {
+  font: {
+    family: "IBM Plex Sans KR", sans-serif;
+    size: 10px;
+    weight: 700;
+  }
+}
+
 @mixin m_button_01 {
   font: {
     family: "IBM Plex Sans KR", sans-serif;
