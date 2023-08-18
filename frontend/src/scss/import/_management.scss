@@ -266,10 +266,16 @@
   margin: 0 auto;
   padding-top: 25px;
   padding-bottom: 30px;
-  
+
   @include tablet {
     width: 90%;
     padding-top: 60px;
     padding-bottom: 60px;
+  }
+
+  @include mobile {
+    width: 97%;
+    padding-top: 30px;
+    padding-bottom: 30px;
   }
 }
