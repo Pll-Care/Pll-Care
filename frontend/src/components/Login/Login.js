@@ -5,7 +5,7 @@ import { authActions } from "../../redux/authSlice";
 
 import { googleAuthUrl, kakaoAuthUrl, naverAuthUrl } from "../../utils/auth";
 
-import logo from "../../assets/logo.png";
+import logo from "../../assets/logo.svg";
 import ModalContainer from "../common/ModalContainer";
 
 const Login = () => {

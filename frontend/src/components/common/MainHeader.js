@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "../../hooks/useRouter";
 
@@ -13,6 +13,7 @@ import { isToken } from "../../utils/localstroageHandler";
 import profile_default from "../../assets/profile-default-img.png";
 import profile_isProfile from "../../assets/ranking-img.png";
 import logo from "../../assets/logo-with-text.svg";
+import useLinkMenuClick from "../../hooks/useLinkMenuClick";
 
 export const headerMenu = [
   { id: 1, link: "/management", title: "프로젝트 관리" },
@@ -57,16 +58,6 @@ const MainHeader = () => {
     }
   }, [authState, dispatch]);
 
-  const handleClickLinkMenu = useCallback((link) => {
-    if (link === "/recruitment") {
-      routeTo(link);
-    } else if (!isToken("access_token")) {
-      dispatch(authActions.setIsLoginModalVisible(true));
-    } else {
-      routeTo(link);
-    }
-  }, []);
-
   const handleLogout = () => {
     dispatch(authActions.logout());
     replaceTo("/");
@@ -81,6 +72,8 @@ const MainHeader = () => {
       }
     });
   };
+
+  const handleClickLinkMenu = useLinkMenuClick();
 
   return (
     <>
@@ -98,10 +91,6 @@ const MainHeader = () => {
             }}
             className="main-header-logo-img"
             onClick={() => routeTo("/")}
-          />
-          <ToggleMenuButton
-            isToggleMenuOpen={isToggleMenuOpen}
-            setIsToggleMenuOpen={setIsToggleMenuOpen}
           />
         </div>
         <div className="main-header-medium-col">
@@ -158,6 +147,10 @@ const MainHeader = () => {
                 alt={"유저 프로필"}
               />
             </Link>
+            <ToggleMenuButton
+              isToggleMenuOpen={isToggleMenuOpen}
+              setIsToggleMenuOpen={setIsToggleMenuOpen}
+            />
           </div>
         ) : (
           <div className="main-header-right-col main-header-login-col">
@@ -166,6 +159,10 @@ const MainHeader = () => {
               color={"white"}
               type={"positive"}
               onClick={handleLogin}
+            />
+            <ToggleMenuButton
+              isToggleMenuOpen={isToggleMenuOpen}
+              setIsToggleMenuOpen={setIsToggleMenuOpen}
             />
           </div>
         )}

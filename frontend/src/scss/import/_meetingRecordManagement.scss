@@ -10,6 +10,17 @@
 
     .meeting-record-heading {
       @include heading_05;
+
+      @include mobile {
+        @include m_heading_03;
+      }
+    }
+
+    @include mobile {
+      background-color: white;
+      flex-direction: column;
+      box-shadow: none;
+      height: fit-content;
     }
   }
 
@@ -24,6 +35,14 @@
 
     @include tablet {
       padding: 10px;
+    }
+
+    @include mobile {
+      background-color: $green-200;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      width: 100%;
+      height: 385px;
     }
 
     @include displayFlex(column, space-around);
@@ -42,31 +61,54 @@
       height: 100%;
       margin-bottom: 20px;
       padding: 5px;
+
+      @include mobile {
+        margin-bottom: 0;
+        height: fit-content;
+      }
     }
 
     .meeting-record-body {
-      display: grid;
-      grid-template-rows: 80% 20%;
-      grid-template-columns: 100%;
+      padding-top: 10px;
+      height: 210px;
       padding-left: 10px;
       padding-right: 10px;
 
       .meeting-record-all-meeting-record-list-data {
-        height: 100%;
+        height: 160px;
         width: 100%;
+
+        @include mobile {
+          height: 100px;
+        }
       }
 
       .pagination-wrapper {
         margin-top: auto;
         max-width: 100%;
+
         @include tablet {
           width: 100%;
+        }
+
+        @include mobile {
+          height: fit-content;
+          margin-top: 5px;
         }
       }
     }
 
     @include tablet {
       width: 100%;
+    }
+
+    @include mobile {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      padding-top: 0px;
+      margin-bottom: 0px;
+      height: 165px;
     }
   }
 
@@ -88,11 +130,15 @@
 
         .meeting-record-heading {
           height: 40px;
-          padding: 5px;
+          padding: 10px 5px;
         }
 
         .control-menu {
           margin-right: 5px;
+        }
+
+        @include mobile {
+          height: 25px;
         }
 
         @include displayFlex(row, space-between);
@@ -107,13 +153,17 @@
         }
       }
 
+      @include mobile {
+        height: fit-content;
+      }
+
       @include displayFlex(row, space-between, center);
       @include putCenter;
     }
 
     .record-list-item-wrapper {
       padding-top: 10px;
-      height: 100%;
+      height: 210px;
       padding-left: 10px;
       padding-right: 10px;
 
@@ -127,7 +177,11 @@
 
     .meeting-record-all-meeting-record-list-data {
       width: 100%;
-      height: 100%;
+      height: 160px;
+
+      @include mobile {
+        height: 100px;
+      }
     }
 
     .pagination-wrapper {
@@ -139,23 +193,42 @@
       @include tablet {
         width: 100%;
       }
+
+      @include mobile {
+        margin-top: 5px;
+        height: fit-content;
+      }
     }
 
     @include tablet {
       width: 100%;
+    }
+
+    @include mobile {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 180px;
     }
   }
 
   &-new-meeting-record-editor {
     width: 70%;
     border-radius: 35px;
-    background-color: #fcfcfc;
+    background-color: $gray-100;
     padding: 50px 25px;
-    color: #7a7a7a;
+    color: $gray-500;
 
     .meeting-record-initial-state {
-      color: $font-color;
+      color: $green-200;
       height: 60px;
+
+      @include mobile {
+        flex-direction: row;
+        width: 100%;
+        align-items: flex-start;
+        margin-bottom: auto;
+      }
 
       @include displayFlex(column, space-between);
     }
@@ -164,11 +237,19 @@
       width: 93%;
       height: 100%;
 
+      @include mobile {
+        width: 100%;
+      }
+
       @include displayFlex(column, space-between, space-between);
     }
 
     .initial-meeting-record-heading {
       color: $green-400;
+
+      @include mobile {
+        @include m_heading_03;
+      }
 
       @include heading_05;
     }
@@ -203,8 +284,22 @@
     .react-quill {
       height: 100%;
       line-height: 1.5;
-      margin-top: 20px;
-      margin-bottom: 68px;
+      display: inline-flex;
+      flex-direction: column;
+
+      @include mobile {
+        .ql-toolbar {
+          padding: 5px;
+
+          .ql-formats {
+            margin-right: 2px;
+          }
+        }
+
+        p {
+          @include m_body_01;
+        }
+      }
     }
 
     .meeting-record {
@@ -222,17 +317,34 @@
 
     .meeting-record-button-wrapper {
       margin-bottom: 20px;
+
+      .button {
+        padding: 0;
+        margin-left: 4px;
+      }
     }
 
     .meeting-record-date,
     .meeting-record-author {
       margin-bottom: 20px;
 
+      @include mobile {
+        @include m_body_01;
+      }
+
       @include body_01;
     }
 
-    .meeting-record-title {
+    .meeting-record-title input {
       @include heading_03;
+
+      @include mobile {
+        height: fit-content;
+        padding: 5px;
+        border-radius: 5px;
+
+        @include m_heading_03;
+      }
     }
 
     .meeting-record-container {
@@ -248,12 +360,29 @@
 
       p {
         max-width: 100%;
+
+        @include mobile {
+          @include m_body_01;
+        }
+      }
+
+      @include mobile {
+        padding: 5px;
       }
     }
 
     .selected-meeting-record-content img,
     .created-meeting-record-content img {
       max-width: 100%;
+    }
+
+    @include mobile {
+      width: 100%;
+      box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      height: 360px;
+      margin-bottom: 30px;
+      padding: 15px;
     }
 
     @include displayFlex;
@@ -269,16 +398,28 @@
     color: #7a7a7a;
     cursor: pointer;
 
-    &-date {
+    &-date,
+    &-writer {
       @include body_03;
+
+      @include mobile {
+        @include m_body_02;
+      }
     }
 
     &-title {
       @include heading_07;
+
+      @include mobile {
+        @include m_heading_04;
+      }
     }
 
-    &-writer {
-      @include body_03;
+    @include mobile {
+      height: 44px;
+      width: 100%;
+      margin-bottom: 5px;
+      border-radius: 5px;
     }
 
     @include putCenter;

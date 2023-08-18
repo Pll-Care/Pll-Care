@@ -105,6 +105,46 @@
   }
 }
 
+@mixin m_heading_01 {
+  font: {
+    family: "IBM Plex Sans KR", sans-serif;
+    size: 14px;
+    weight: 700;
+  }
+}
+
+@mixin m_heading_02 {
+  font: {
+    family: "IBM Plex Sans KR", sans-serif;
+    size: 12px;
+    weight: 700;
+  }
+}
+
+@mixin m_heading_03 {
+  font: {
+    family: "IBM Plex Sans KR", sans-serif;
+    size: 10px;
+    weight: 600;
+  }
+}
+
+@mixin m_heading_04 {
+  font: {
+    family: "Noto Sans KR", sans-serif;;
+    size: 7px;
+    weight: 700;
+  }
+}
+
+@mixin m_heading_05 {
+  font: {
+    family: "IBM Plex Sans KR", sans-serif;
+    size: 18px;
+    weight: 700;
+  }
+}
+
 @mixin body_01 {
   font: {
     family: "Noto Sans KR", sans-serif;
@@ -137,6 +177,22 @@
   }
 }
 
+@mixin m_body_01 {
+  font: {
+    family: "Noto Sans KR", sans-serif;
+    size: 8px;
+    weight: 500;
+  }
+}
+
+@mixin m_body_02 {
+  font: {
+    family: "Noto Sans KR", sans-serif;
+    size: 6px;
+    weight: 500;
+  }
+}
+
 @mixin button_01 {
   font: {
     family: "IBM Plex Sans KR", sans-serif;
@@ -157,6 +213,38 @@
   font: {
     family: "IBM Plex Sans KR", sans-serif;
     size: 12px;
+    weight: 600;
+  }
+}
+
+@mixin m_button_00 {
+  font: {
+    family: "IBM Plex Sans KR", sans-serif;
+    size: 10px;
+    weight: 700;
+  }
+}
+
+@mixin m_button_01 {
+  font: {
+    family: "IBM Plex Sans KR", sans-serif;
+    size: 8px;
+    weight: 600;
+  }
+}
+
+@mixin m_button_02 {
+  font: {
+    family: "IBM Plex Sans KR", sans-serif;
+    size: 5px;
+    weight: 600;
+  }
+}
+
+@mixin m_button_03 {
+  font: {
+    family: "IBM Plex Sans KR", sans-serif;
+    size: 6px;
     weight: 600;
   }
 }
