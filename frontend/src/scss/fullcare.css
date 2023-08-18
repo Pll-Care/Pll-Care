@@ -4167,8 +4167,9 @@ a {
   margin-bottom: 43px;
 }
 .evaluate_Box_title {
+  font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 600;
   color: #7a7a7a;
   margin-bottom: 25px;
 }
@@ -4362,10 +4363,17 @@ a {
   margin: 0 auto;
   padding: 30px 0;
 }
-.projectEvaluate_title {
-  font-size: 20px;
+.projectEvaluate_name {
+  color: #003b28;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 24px;
   font-weight: 700;
-  color: #01e89e;
+}
+.projectEvaluate_title {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #00aa72;
 }
 
 .badgeBox {
@@ -4402,24 +4410,26 @@ a {
 }
 
 .badge_divide {
-  width: 5px;
-  height: 5px;
-  background-color: #7a7a7a;
-  border-radius: 100%;
+  color: #7a7a7a;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .badge_quantity {
-  font-size: 18px;
   color: #7a7a7a;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
   font-weight: 600;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   height: 28px;
-}
-.badge_quantity_score {
-  padding-top: 3px;
 }
 
 .finalEvaluate {
@@ -4451,9 +4461,10 @@ a {
   padding: 15px 47px 15px 24px;
 }
 .finalEvaluate_userName {
-  font-size: 18px;
-  font-weight: bold;
   color: #7a7a7a;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
 }
 .finalEvaluate_userScores {
   display: flex;
@@ -4472,6 +4483,9 @@ a {
 }
 .finalEvaluate_userScore_partTitle {
   color: #7a7a7a;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
 }
 .finalEvaluate_userScore_partScore {
   width: 26px;
@@ -4480,18 +4494,20 @@ a {
   padding: 3px;
   border-radius: 100%;
   color: #01e89e;
-  font-weight: 700;
+  font-family: "Noto Sans KR", sans-serif;
   font-size: 12px;
+  font-weight: 500;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
 .finalEvaluate_userContent {
-  font-size: 14px;
   color: #7a7a7a;
-  font-weight: 600;
   padding: 0 14px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
 }
 .finalEvaluate_userContent > p {
   line-height: 200%;
@@ -4763,6 +4779,147 @@ a {
     justify-content: center;
     align-items: center;
   }
+  .evaluate_Box_title {
+    color: #003b28;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+  .evaluate_chart-warp {
+    width: 279px;
+    height: 184px;
+    padding: 12px 15px;
+  }
+  .evaluate_chart_bars_title {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+  .evaluate_chart_bars_score_text {
+    display: none;
+  }
+  .evaluate_project_item_user {
+    width: 40%;
+  }
+  .evaluate_project_item {
+    padding: 7px 10px;
+  }
+  .evaluate_project_item_scores {
+    width: 60%;
+  }
+  .evaluate_project_item_scores > div {
+    gap: 10px;
+  }
+  .evaluate_project_item_img {
+    width: 23px;
+    height: 23px;
+  }
+  .evaluate_project_item_title {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+  .evaluate_project_item_scores {
+    gap: 7px;
+  }
+  .evaluate_project_item_score > :first-child {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 6px;
+    font-weight: 500;
+    line-height: 12px;
+  }
+  .score-border {
+    width: 15px;
+    height: 15px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 6px;
+    font-weight: 500;
+    line-height: 12px;
+    border: 1px solid #01e89e;
+  }
+  .projectEvaluate {
+    width: 95%;
+  }
+  .projectEvaluate_name {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+  .projectEvaluate_title {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+  .badges {
+    gap: 7px;
+  }
+  .badge {
+    gap: 4px;
+  }
+  .badge_divide {
+    width: 3px;
+    height: 3px;
+  }
+  .badge_quantity,
+  .badge_divide {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+  .badgeImage {
+    width: 15px;
+    height: 15px;
+  }
+  .finalEvaluate {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+  .finalEvaluate_user {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+  .finalEvaluate_userEval {
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+  .finalEvaluate_userScores {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 10px;
+    box-shadow: 0 10px 30px 5px rgba(181, 181, 181, 0.2);
+    border-radius: 10px;
+    padding: 10px 14px;
+  }
+  .finalEvaluate_userScore {
+    width: 100%;
+    gap: 10px;
+  }
+  .finalEvaluate_userName {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+  .finalEvaluate_userScore_partTitle {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+  .finalEvaluate_userScore_partScore {
+    width: 15px;
+    height: 15px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    background-color: #fcfcfc;
+    border: 1px solid #01e89e;
+  }
+  .finalEvaluate_userContent {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
 }
 .select_small {
   border: 2px solid #01e89e;
@@ -4941,6 +5098,19 @@ a {
   line-height: 30px;
 }
 
+@media (max-width: 767px) {
+  .pagination {
+    margin-top: 7px;
+  }
+  .pageButton {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+  .pageButtons {
+    width: 150px;
+  }
+}
 .profileInput {
   text-align: center;
   border: none;

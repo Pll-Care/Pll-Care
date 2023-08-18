@@ -203,3 +203,12 @@
     weight: $weight-medium;
   }
 }
+
+@mixin m_body_02 {
+  font: {
+    family: "Noto Sans KR", sans-serif;
+    size: 6px;
+    weight: $weight-medium;
+  }
+  line-height: 12px;
+}

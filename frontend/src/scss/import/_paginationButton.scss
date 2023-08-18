@@ -43,3 +43,16 @@
   text-align: center;
   line-height: 30px;
 }
+
+@include mobile {
+  .pagination {
+    margin-top: 7px;
+  }
+
+  .pageButton {
+    @include m_body_01;
+  }
+  .pageButtons {
+    width: 150px;
+  }
+}
