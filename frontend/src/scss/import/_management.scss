@@ -12,7 +12,16 @@
       h1 {
         margin-right: 40px;
 
+        @include mobile {
+          margin-right: 5px;
+
+          @include m_heading_01;
+        }
         @include heading_01;
+      }
+
+      @include mobile {
+        width: fit-content;
       }
 
       @include displayFlex;
@@ -20,7 +29,22 @@
 
     &-right-col {
       gap: 20px;
+
+      @include mobile {
+        width: fit-content;
+        gap: 5px;
+      }
+
       @include displayFlex(row, space-between);
+    }
+
+    @include mobile {
+      border-radius: 0px 0px 15px 15px;
+      padding: 8px;
+    }
+
+    @include mobile {
+      height: 130px;
     }
 
     @include displayFlex(row, space-between, flex-end);
@@ -36,6 +60,10 @@
 
         p {
           text-align: center;
+        }
+
+        @include mobile {
+          @include m_heading_04;
         }
 
         @include heading_04;
@@ -64,6 +92,11 @@
               repeat: no-repeat;
               size: 100% 100%;
             }
+
+            @include mobile {
+              width: 25px;
+              height: 25px;
+            }
           }
         }
 
@@ -72,13 +105,17 @@
           grid-template-columns: 80% 20%;
           grid-template-rows: 100%;
           color: #003b28;
-          font-size: $body-font-size;
-          font-family: $body-font;
           height: 100%;
 
           .project-item-heading {
             margin-bottom: 7px;
             color: $green-500;
+
+            @include mobile {
+              margin-bottom: 10px;
+
+              @include m_heading_02;
+            }
 
             @include heading_03;
           }
@@ -86,6 +123,10 @@
           .project-item-period,
           .project-item-description {
             margin-bottom: 7px;
+
+            @include mobile {
+              @include m_body_01;
+            }
 
             @include body_01;
           }
@@ -98,7 +139,7 @@
           .project-item-period,
           .project-item-description {
             &-heading {
-              margin-right: 5px;
+              margin-right: 2px;
             }
           }
 
@@ -109,11 +150,20 @@
             margin-left: auto;
             box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
 
+            @include mobile {
+              width: 40px;
+              height: 40px;
+            }
+
             @include displayFlex(column);
           }
 
           .leave-button-text {
             color: $green-400;
+
+            @include mobile {
+              @include m_button_02;
+            }
 
             @include button_03;
           }
@@ -122,12 +172,31 @@
             background: {
               position: center;
               repeat: no-repeat;
+              size: 100% 100%;
             }
 
             width: 17px;
             height: 17px;
             margin-bottom: 5px;
+
+            @include mobile {
+              margin-bottom: 2px;
+              width: 12px;
+              height: 12px;
+            }
           }
+
+          @include mobile {
+            margin-left: 8px;
+          }
+        }
+
+        @include mobile {
+          grid-template-columns: 10% 90%;
+          width: 90%;
+          height: 125px;
+          padding: 25px 7px;
+          border-radius: 15px;
         }
 
         @include putCenter;
@@ -251,8 +320,6 @@
 
     &-heading {
       color: white;
-      font-family: $heading-font;
-      font-size: $sub-heading-font-size;
       text-align: center;
       line-height: 1.5;
     }
@@ -274,8 +341,6 @@
   }
 
   @include mobile {
-    width: 97%;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    width: 90%;
   }
 }

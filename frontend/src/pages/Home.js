@@ -8,10 +8,12 @@ const Home = () => {
     <div className="home">
       <Banner />
       <Description />
-      <div className="project-wrapper">
-        <Project type={"popular"} />
-        <Project type={"imminent"} />
-        <Project type={"upToDate"} />
+      <div className="project-container-wrapper">
+        <div className="project-container">
+          <Project type={"popular"} />
+          <Project type={"imminent"} />
+          <Project type={"upToDate"} />
+        </div>
       </div>
       <Footer />
     </div>
