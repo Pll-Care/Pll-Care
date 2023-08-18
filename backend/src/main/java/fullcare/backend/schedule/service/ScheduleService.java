@@ -46,6 +46,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static fullcare.backend.global.errorcode.ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND;
 import static fullcare.backend.global.errorcode.ScheduleErrorCode.INVALID_DELETE;
 import static fullcare.backend.global.errorcode.ScheduleErrorCode.INVALID_MODIFY;
 
@@ -80,7 +81,7 @@ public class ScheduleService {
     }
 
     public boolean validateAuthor(Long projectId, Long scheduleId, Long authorId) {
-        ProjectMember projectMember = projectMemberRepository.findPMWithProjectByProjectIdAndMemberId(projectId, authorId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
+        ProjectMember projectMember = projectMemberRepository.findPMWithProjectByProjectIdAndMemberId(projectId, authorId).orElseThrow(() -> new EntityNotFoundException(PROJECT_MEMBER_NOT_FOUND));
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
         if (schedule.getMember().getId() == projectMember.getMember().getId()) {
             return true;
@@ -132,7 +133,7 @@ public class ScheduleService {
 
         List<Member> updateMemberList = memberRepository.findByIds(scheduleUpdateRequest.getMemberIds()); // 새로 업데이트 되는 멤버 리스트
         if (!members.containsAll(updateMemberList)) {// 프로젝트에 속한 사람인지 확인
-            return false;
+            throw new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND);
         }
 
 
@@ -208,11 +209,15 @@ public class ScheduleService {
 
 
     public void updateState(ScheduleStateUpdateRequest scheduleStateUpdateRequest, Long scheduleId, Long memberId) { // 상태 바꿀 때도 schedulemember recentview 바꿔야함
-        projectService.isProjectAvailable(scheduleStateUpdateRequest.getProjectId(), memberId, false);
-        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
-        LocalDateTime now = LocalDateTime.now();
-        schedule.updateState(now, scheduleStateUpdateRequest.getState());
-        scheduleMemberRepository.updateRecentView(now, schedule.getId());
+        try {
+            projectService.isProjectAvailable(scheduleStateUpdateRequest.getProjectId(), memberId, false);
+            Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
+            LocalDateTime now = LocalDateTime.now();
+            schedule.updateState(now, scheduleStateUpdateRequest.getState());
+            scheduleMemberRepository.updateRecentView(now, schedule.getId());
+        }catch(CompletedProjectException completedProjectException){
+            throw new CompletedProjectException(INVALID_MODIFY);
+        }
     }
 
     @Transactional(readOnly = true) // 프로젝트별 일정 내용

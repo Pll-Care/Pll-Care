@@ -80,9 +80,7 @@ public class ScheduleController {
     })
     @PutMapping("/{scheduleId}")
     public ResponseEntity update(@PathVariable Long scheduleId, @Valid @RequestBody ScheduleUpdateRequest scheduleUpdateRequest, @CurrentLoginMember Member member) {
-        if (!scheduleService.updateSchedule(scheduleUpdateRequest, scheduleId, member.getId())) {
-            throw new UnauthorizedAccessException(ScheduleErrorCode.UNAUTHORIZED_MODIFY);
-        }
+        scheduleService.updateSchedule(scheduleUpdateRequest, scheduleId, member.getId());
         return new ResponseEntity(HttpStatus.OK);
     }
 

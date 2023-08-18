@@ -1,8 +1,10 @@
 package fullcare.backend.schedule.service;
 
 import fullcare.backend.global.State;
+import fullcare.backend.global.errorcode.MemberErrorCode;
 import fullcare.backend.global.errorcode.ProjectErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.CompletedProjectException;
+import fullcare.backend.global.exceptionhandling.exception.EntityNotFoundException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.project.domain.Project;
@@ -14,7 +16,6 @@ import fullcare.backend.schedule.domain.Milestone;
 import fullcare.backend.schedule.domain.Schedule;
 import fullcare.backend.schedule.dto.request.ScheduleCreateRequest;
 import fullcare.backend.schedule.repository.MilestoneRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -48,7 +49,7 @@ public class MilestoneService {
             List<Long> memberIds = scheduleCreateRequest.getMemberIds();
             List<Member> memberList = new ArrayList<>();
             memberIds.forEach(m -> {
-                Member member = memberRepository.findById(m).orElseThrow(() -> new EntityNotFoundException("해당 사용자가 존재하지 않습니다."));
+                Member member = memberRepository.findById(m).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
                 memberList.add(member);
             });
             Milestone milestone = Milestone.builder()

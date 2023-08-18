@@ -104,36 +104,36 @@ public class EvaluationController {
         return new ResponseEntity(new FinalEvaluationCreateResponse(finalEvalId), HttpStatus.OK);
     }
 
-    @Operation(method = "put", summary = "최종 평가 수정")
-    @ApiResponses(value = {
-            @ApiResponse(description = "최종 평가 수정 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
-    })
-    @PutMapping("/final/{evaluationId}")
-    public ResponseEntity finalEvalUpdate(@RequestBody FinalEvalUpdateRequest finalEvalUpdateRequest, @PathVariable Long evaluationId,
-                                          @CurrentLoginMember Member member) {
-        // ? 작성자가 맞는지 검증
-        if (!evaluationService.validateAuthor(evaluationId, member.getId())) {
-            throw new UnauthorizedAccessException(EvaluationErrorCode.UNAUTHORIZED_ACCESS);
-        }
-        evaluationService.updateFinalEvaluation(evaluationId, finalEvalUpdateRequest);
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
-    @Operation(method = "delete", summary = "최종 평가 삭제")
-    @ApiResponses(value = {
-            @ApiResponse(description = "최종 평가 삭제 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
-    })
-    @DeleteMapping("/final/{evaluationId}")
-    public ResponseEntity finalEvalDelete(@PathVariable Long evaluationId, @Valid @RequestParam("project_id") Long projectId,
-                                          @CurrentLoginMember Member member) {
-        // ? 작성자가 맞는지 검증
-        if (!evaluationService.validateAuthor(evaluationId, member.getId())) {
-            throw new UnauthorizedAccessException(EvaluationErrorCode.UNAUTHORIZED_ACCESS);
-        }
-        evaluationService.deleteFinalEvaluation(evaluationId, projectId);
-
-        return new ResponseEntity(HttpStatus.OK);
-    }
+//    @Operation(method = "put", summary = "최종 평가 수정")
+//    @ApiResponses(value = {
+//            @ApiResponse(description = "최종 평가 수정 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
+//    })
+//    @PutMapping("/final/{evaluationId}")
+//    public ResponseEntity finalEvalUpdate(@RequestBody FinalEvalUpdateRequest finalEvalUpdateRequest, @PathVariable Long evaluationId,
+//                                          @CurrentLoginMember Member member) {
+//        // ? 작성자가 맞는지 검증
+//        if (!evaluationService.validateAuthor(evaluationId, member.getId())) {
+//            throw new UnauthorizedAccessException(EvaluationErrorCode.UNAUTHORIZED_ACCESS);
+//        }
+//        evaluationService.updateFinalEvaluation(evaluationId, finalEvalUpdateRequest);
+//        return new ResponseEntity(HttpStatus.OK);
+//    }
+//
+//    @Operation(method = "delete", summary = "최종 평가 삭제")
+//    @ApiResponses(value = {
+//            @ApiResponse(description = "최종 평가 삭제 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
+//    })
+//    @DeleteMapping("/final/{evaluationId}")
+//    public ResponseEntity finalEvalDelete(@PathVariable Long evaluationId, @Valid @RequestParam("project_id") Long projectId,
+//                                          @CurrentLoginMember Member member) {
+//        // ? 작성자가 맞는지 검증
+//        if (!evaluationService.validateAuthor(evaluationId, member.getId())) {
+//            throw new UnauthorizedAccessException(EvaluationErrorCode.UNAUTHORIZED_ACCESS);
+//        }
+//        evaluationService.deleteFinalEvaluation(evaluationId, projectId);
+//
+//        return new ResponseEntity(HttpStatus.OK);
+//    }
 
     @Operation(method = "get", summary = "최종 평가 조회")
     @ApiResponses(value = {
