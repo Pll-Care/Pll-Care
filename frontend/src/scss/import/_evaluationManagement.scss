@@ -88,6 +88,7 @@
 
       @include mobile {
         height: 205px;
+        border-radius: 10px;
       }
 
       @include body_01;
@@ -254,8 +255,9 @@
 
         @include mobile {
           gap: 9px;
-          width: 100%;
-          height: fit-content;
+          min-width: 100%;
+          width: fit-content;
+          height: 110px;
           padding: 10px;
           border-radius: 10px;
 

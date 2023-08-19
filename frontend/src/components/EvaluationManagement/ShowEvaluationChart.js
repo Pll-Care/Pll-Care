@@ -4,7 +4,6 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  ResponsiveContainer,
 } from "recharts";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";

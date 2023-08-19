@@ -2357,6 +2357,7 @@ a {
 @media (max-width: 767px) {
   .evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart {
     height: 205px;
+    border-radius: 10px;
   }
 }
 .evaluation-management-ranking-wrapper .custom-tooltip, .evaluation-management-ranking-wrapper-non-evaluated .custom-tooltip {
@@ -2545,9 +2546,10 @@ a {
 @media (max-width: 767px) {
   .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body {
     gap: 9px;
-    width: 100%;
-    height: -moz-fit-content;
-    height: fit-content;
+    min-width: 100%;
+    width: -moz-fit-content;
+    width: fit-content;
+    height: 110px;
     padding: 10px;
     border-radius: 10px;
     display: flex;
