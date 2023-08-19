@@ -1,11 +1,9 @@
 package fullcare.backend.member.domain;
 
 import fullcare.backend.apply.domain.Apply;
-import fullcare.backend.bookmarkmemo.domain.BookmarkMemo;
 import fullcare.backend.evaluation.domain.FinalTermEvaluation;
 import fullcare.backend.evaluation.domain.MidtermEvaluation;
 import fullcare.backend.likes.domain.Likes;
-import fullcare.backend.memo.domain.Memo;
 import fullcare.backend.post.domain.Post;
 import fullcare.backend.profile.domain.Profile;
 import fullcare.backend.projectmember.domain.ProjectMember;
@@ -65,8 +63,8 @@ public class Member {
     //    @Column
 //    private String profileContent;
 
-    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Post> posts = new ArrayList<>();
+//    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Post> posts = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Likes> likes = new HashSet<>();
@@ -134,7 +132,6 @@ public class Member {
         return likes;
     }
 
-
     public Apply apply(Post post, ProjectMemberPositionType position) {
         Apply apply = Apply.createNewApply()
                 .member(this)
@@ -145,13 +142,5 @@ public class Member {
         return apply;
     }
 
-    public BookmarkMemo bookmark(Memo memo) {
-        BookmarkMemo bookmarkMemo = BookmarkMemo.createNewBookmarkMemo()
-                .member(this)
-                .memo(memo)
-                .build();
-
-        return bookmarkMemo;
-    }
 
 }

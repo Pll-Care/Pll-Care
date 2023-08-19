@@ -15,8 +15,6 @@ import fullcare.backend.post.domain.Post;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.dto.request.*;
 import fullcare.backend.project.dto.response.ApplyMemberListResponse;
-import fullcare.backend.project.dto.response.ProjectCompleteResponse;
-import fullcare.backend.project.dto.response.ProjectLeaderResponse;
 import fullcare.backend.project.dto.response.ProjectMemberListResponse;
 import fullcare.backend.project.service.ProjectService;
 import fullcare.backend.projectmember.domain.ProjectMember;
@@ -143,6 +141,7 @@ public class ProjectMemberService {
         }
 
     }
+
     @Transactional
     public void kickOutProjectMember(Long projectId, Long memberId, ProjectMemberDeleteRequest request) {
         try {
@@ -185,7 +184,7 @@ public class ProjectMemberService {
             Post findPost = findApply.getPost();
 
             // 쿼리4
-            Project findProject = findPost.getProject();
+            Project findProject = findPost.getAuthor().getProject();
 
             // 쿼리5  -> o
             List<Recruitment> recruitments = findPost.getRecruitments();
@@ -228,28 +227,18 @@ public class ProjectMemberService {
         }
     }
 
-    public ProjectCompleteResponse checkProjectComplete(Long projectId, Long memberId) {
-
+    public boolean checkProjectComplete(Long projectId, Long memberId) {
         ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, memberId, true);
         Project findProject = findProjectMember.getProject();
 
-        ProjectCompleteResponse response = ProjectCompleteResponse.builder()
-                .isCompleted(findProject.getState() == State.COMPLETE)
-                .build();
-
-        return response;
-
+        return findProject.getState().equals(State.COMPLETE);
     }
 
-    public ProjectLeaderResponse checkProjectLeader(Long projectId, Long memberId) {
+    public boolean checkProjectLeader(Long projectId, Long memberId) {
         try {
             ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, memberId, false);
 
-            ProjectLeaderResponse response = ProjectLeaderResponse.builder()
-                    .isLeader(findProjectMember.isLeader())
-                    .build();
-
-            return response;
+            return findProjectMember.isLeader();
 
         } catch (CompletedProjectException completedProjectException) {
             throw new CompletedProjectException(ProjectErrorCode.INVALID_ACTION);

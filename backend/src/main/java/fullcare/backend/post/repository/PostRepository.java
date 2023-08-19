@@ -21,26 +21,28 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query("select new fullcare.backend.post.dto.response.PostListResponse(p.id, pj.title, pj.imageUrl, p.title,p.recruitStartDate,p.recruitEndDate, p.techStack, case when l.id is null then false else true end, p.createdDate, p.modifiedDate) " +
             "from Post p left join Likes l on l.post.id = p.id and l.member.id = :memberId " +
-            "join p.project pj")
+            "join p.author a join a.project pj")
     Page<PostListResponse> findList(@Param("memberId") Long memberId, Pageable pageable);
 
     @EntityGraph(attributePaths = {"project"})
     Optional<Post> findPostWithProjectById(Long postId);
 
     @EntityGraph(attributePaths = {"recruitments", "project"})
-    Optional<Post> findPostWithRecruitmentsAndProjectById(Long postId);
+    Optional<Post> findPostWithRecruitmentsAndProjectById(@Param("postId") Long postId);
 
 
-    @Query("select new fullcare.backend.post.dto.response.PostDetailResponse(p.id, pj.id, pj.title, pj.imageUrl, pj.state, a.id, a.nickname,a.imageUrl, p.title, p.description,p.recruitStartDate, p.recruitEndDate, p.reference, p.contact, p.region, p.techStack, case when l.id is null then false else true end, case when a.id = :memberId then true else false end , case when a.id = :memberId then true else false end ,p.createdDate, p.modifiedDate)" +
+    @Query("select new fullcare.backend.post.dto.response.PostDetailResponse(p.id, pj.id, pj.title, pj.imageUrl, pj.state, m.id, m.nickname, m.imageUrl, p.title, p.description,p.recruitStartDate, p.recruitEndDate, p.reference, p.contact, p.region, p.techStack, case when l.id is null then false else true end, case when m.id = :memberId then true else false end , case when m.id = :memberId then true else false end ,p.createdDate, p.modifiedDate)" +
             "from Post p left join Likes l on l.post.id = p.id and l.member.id = :memberId " +
-            "join p.project pj join p.author a where p.id = :postId")
+            "join p.project pj join p.author a join a.member m where p.id = :postId")
     Optional<PostDetailResponse> findPostDto(@Param("memberId") Long memberId, @Param("postId") Long postId);
 
 
-    @Query(value = "select p from Post p join p.project pp where p.author.id  = :memberId and p.state = :state",
-            countQuery = "select count(p) from Post p join p.project pp where p.author.id = :memberId and p.state = :state")
+    @Query(value = "select p from Post p join p.author a where a.member.id = :memberId and p.state = :state",
+            countQuery = "select count(p) from Post p join p.author a where a.member.id = :memberId and p.state = :state")
     Page<Post> findPageByMemberId(@Param("memberId") Long memberId, @Param("state") State state, Pageable pageable);
 
+
+    // ! 쿼리 확인 필요
     @Query(value = "select p from Post p join fetch p.likes l where l.member.id =:memberId",
             countQuery = "select p from Post p join fetch p.likes l where l.member.id =:memberId")
     Page<Post> findLikePageByMemberId(@Param("memberId") Long memberId, Pageable pageable);

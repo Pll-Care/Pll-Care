@@ -1,8 +1,8 @@
 package fullcare.backend.bookmarkmemo.domain;
 
 import fullcare.backend.global.entity.BaseEntity;
-import fullcare.backend.member.domain.Member;
 import fullcare.backend.memo.domain.Memo;
+import fullcare.backend.projectmember.domain.ProjectMember;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -20,17 +20,17 @@ public class BookmarkMemo extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "projectmember_id")
+    private ProjectMember projectMember;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memo_id")
     private Memo memo;
-
-
+    
     @Builder(builderMethodName = "createNewBookmarkMemo")
-    public BookmarkMemo(Member member, Memo memo) {
-        this.member = member;
+    public BookmarkMemo(ProjectMember projectMember, Memo memo) {
+        this.projectMember = projectMember;
         this.memo = memo;
     }
 }

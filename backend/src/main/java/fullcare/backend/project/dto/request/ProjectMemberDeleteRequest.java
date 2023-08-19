@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class ProjectMemberDeleteRequest {
-    
+
     @NotNull
     private Long memberId;
 }
