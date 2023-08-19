@@ -25,12 +25,11 @@
 
   .login-heading {
     position: absolute;
-    top: 29%;
+    top: 27%;
     padding: 12px;
 
-    font: {
-      family: $heading-font;
-      size: $heading-font-size;
+    h1 {
+      @include heading_01;
     }
   }
 
@@ -42,10 +41,11 @@
     padding: 12px;
     margin-bottom: 30px;
 
-    font: {
-      family: $body-font;
-      size: $body-font-size;
+    @include mobile {
+      @include m_heading_01;
     }
+
+    @include body_04;
   }
 
   .login-button-wrapper {
@@ -91,6 +91,15 @@
           100%
         );
       }
+
+      @include mobile {
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    @include mobile {
+      width: 250px;
     }
 
     @include displayFlex(row, space-around);

@@ -7,20 +7,25 @@ import { googleAuthUrl, kakaoAuthUrl, naverAuthUrl } from "../../utils/auth";
 
 import logo from "../../assets/logo.svg";
 import ModalContainer from "../common/ModalContainer";
+import { useMediaQuery } from "@mui/material";
 
 const Login = () => {
   const dispatch = useDispatch();
 
-  const isLoginModalVisible = useSelector((state) => state.auth.isLoginModalVisible);
+  const isLoginModalVisible = useSelector(
+    (state) => state.auth.isLoginModalVisible
+  );
 
   const handleModalVisible = (visible) => {
     dispatch(authActions.setIsLoginModalVisible(visible));
   };
 
+  const isMobile = useMediaQuery("(max-width: 767px)");
+
   return (
     <ModalContainer
-      width={380}
-      height={400}
+      width={isMobile ? 252 : 380}
+      height={isMobile ? 294: 400}
       open={isLoginModalVisible}
       onClose={() => handleModalVisible(false)}
     >
