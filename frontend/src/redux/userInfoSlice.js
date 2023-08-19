@@ -15,6 +15,9 @@ const userInfoSlice = createSlice({
       state.memberId = memberId;
       state.imageUrl = imageUrl;
     },
+    setImageUrl(state, action) {
+      state.imageUrl = action.payload;
+    },
   },
 });
 
