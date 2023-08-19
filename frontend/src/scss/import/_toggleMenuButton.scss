@@ -80,6 +80,8 @@
   display: flex;
   gap: 12px;
   align-items: center;
+
+  @include m_heading_02;
 }
 
 .toggle-menu-button-link-logo {

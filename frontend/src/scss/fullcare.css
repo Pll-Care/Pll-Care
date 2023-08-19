@@ -688,6 +688,9 @@ a {
   display: flex;
   gap: 12px;
   align-items: center;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .toggle-menu-button-link-logo {
