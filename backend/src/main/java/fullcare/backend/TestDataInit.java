@@ -264,7 +264,7 @@ public class TestDataInit {
             int randDay = rand.nextInt(1, lastDay);
 //            LocalDateTime startDate = LocalDateTime.of(2023, randMonth, randDay, 13, 0);
             LocalDateTime startDate = LocalDateTime.of(2023, month, randDay, 13, 0);
-
+            memberIds.add(1l);
             if (i < 16) {
                 LocalDateTime endDate = LocalDateTime.of(2023, month, randDay, 16, 0);
                 ProjectMember projectMember = projectService.isProjectAvailable(1l, 1l, false);
