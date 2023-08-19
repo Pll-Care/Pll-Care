@@ -10,8 +10,8 @@ const AlertCheckModal = ({ onClose, open, text, clickHandler }) => {
       open={open}
       onClose={onClose}
       type="dark"
-      width={isMobile ? "90%" : 500}
-      height={isMobile ? 280 : 300}
+      width={isMobile ? 250 : 500}
+      height={isMobile ? 270 : 300}
     >
       <div className="confirm-modal">
         <h1>{text}</h1>

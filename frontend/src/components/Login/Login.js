@@ -24,8 +24,8 @@ const Login = () => {
 
   return (
     <ModalContainer
-      width={isMobile ? "90%": 380}
-      height={isMobile ? "45%": 430}
+      width={isMobile ? 252 : 380}
+      height={isMobile ? 294: 400}
       open={isLoginModalVisible}
       onClose={() => handleModalVisible(false)}
     >

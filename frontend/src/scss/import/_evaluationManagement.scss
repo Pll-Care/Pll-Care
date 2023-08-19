@@ -749,6 +749,10 @@
       @include tablet {
         grid-template-rows: 35% 35% 30%;
         height: 150%;
+
+        @media (orientation: landscape) {
+          height: 280vh;
+        }
       }
 
       @include mobile {
@@ -756,6 +760,10 @@
         border-radius: 10px;
         padding: 10px;
         height: 140%;
+
+        @media (orientation: landscape) {
+          height: 220vh;
+        }
       }
     }
 

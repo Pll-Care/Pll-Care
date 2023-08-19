@@ -3080,12 +3080,22 @@ a {
     height: 150%;
   }
 }
+@media (min-width: 767px) and (max-width: 1024px) and (orientation: landscape) {
+  .evaluation-management-final-evaluation .final-evaluation-body {
+    height: 280vh;
+  }
+}
 @media (max-width: 767px) {
   .evaluation-management-final-evaluation .final-evaluation-body {
     grid-template-rows: 30% 30% 40%;
     border-radius: 10px;
     padding: 10px;
     height: 140%;
+  }
+}
+@media (max-width: 767px) and (orientation: landscape) {
+  .evaluation-management-final-evaluation .final-evaluation-body {
+    height: 220vh;
   }
 }
 .evaluation-management-final-evaluation .final-evaluation-button-wrapper {
