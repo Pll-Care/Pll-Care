@@ -1,109 +1,102 @@
+.toggle-menu-button {
+  width: 100%;
+  height: 100%;
+  @include backgroundImage("../assets/toggle-button-img.png");
+}
+
+.toggle-menu-button-profile {
+  width: 100%;
+  height: 100%;
+  @include backgroundImage("../assets/menu-profile.png");
+}
+
+.toggle-menu-wrapper {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: rgba(100, 100, 100, 0.6);
+  backdrop-filter: blur(5px);
+  z-index: 10000;
+  display: flex;
+  justify-content: flex-end;
+}
+.toggle-menu {
+  height: 100%;
+  width: 200px;
+  background-color: $white-100;
+  text-align: start;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.toggle-menu-items {
+  width: 100%;
+  font-family: $link-font;
+  font-size: 18px;
+  margin-top: 15px;
+  @include displayFlex(column, space-between, flex-start);
+  gap: 15px;
+}
+
 .toggle-menu-button-wrapper {
-  &,
-  &-close {
-    width: fit-content;
-    height: fit-content;
-    position: relative;
-
-    figure {
-      width: 20px;
-      height: 18px;
-      z-index: 101;
-
-      background: {
-        position: center;
-        repeat: no-repeat;
-        size: 100%;
-      }
-    }
-
-    @include desktop {
-      display: none;
-    }
-
-    @include tablet {
-      display: none;
-    }
-
-    @include mobile {
-      margin-top: auto;
-    }
-  }
-
-  &-close {
-    .toggle-menu-button {
-      position: absolute;
-      right: -7px;
-      top: -60px;
-      height: 60px;
-      width: 30px;
-      background-color: white;
-      z-index: 100;
-
-      div {
-        height: 100%;
-
-        @include displayFlex(row, flex-start, flex-end);
-      }
-    }
-  }
-
-  .toggle-menu-button {
-    position: fixed;
-    right: 0px;
-    top: 0;
-    width: 163px;
-    height: 905px;
-    background-color: white;
-
-    > div {
-      height: 100%;
-      width: 100%;
-      margin: 0;
-
-      @include displayFlex(column, flex-start, flex-end);
-    }
-
-    &-figure-wrapper {
-      width: 100%;
-      height: 72px;
-      padding: 10px;
-      border-bottom: 1px solid $gray-400;
-
-      @include displayFlex(row, space-between, flex-end);
-    }
-  }
-
-  .toggle-menu-button-link-wrapper {
+  width: 100%;
+  height: 80px;
+  @include displayFlex(row, space-between, flex-end);
+  border-bottom: 1px solid $gray-400;
+  padding: 0 10px 0 9px;
+}
+.toggle-menu-button-logo {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 3px;
+  figure {
     width: 100%;
     height: 100%;
-    padding: 20px;
-
-    div {
-      display: flex;
-      margin-bottom: 15px;
-    }
-
-    figure {
-      width: 15px;
-      height: 14px;
-      margin-right: 12px;
-    }
-
-    a {
-      color: $gray-500;
-
-      @include m_heading_02;
-    }
   }
+}
+.toggle-menu-button-menu {
+  width: 20px;
+  height: 20px;
+}
 
-  & {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 100;
-    background: rgba(122, 122, 122, 0.40);
+.toggle-menu-button-menu-open {
+  margin-bottom: 8px;
+}
+
+.toggle-menu-button-link-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-top: 20px;
+  padding-left: 19px;
+}
+
+.toggle-menu-button-link {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  @include m_heading_02;
+}
+
+.toggle-menu-button-link-logo {
+  width: 15px;
+  height: 15px;
+}
+
+@include desktop {
+  .toggle-menu-button-menu {
+    display: none;
+  }
+}
+
+@include tablet {
+  .toggle-menu-button-menu {
+    display: none;
   }
 }

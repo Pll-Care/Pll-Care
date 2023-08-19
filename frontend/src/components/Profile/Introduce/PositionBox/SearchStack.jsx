@@ -65,13 +65,13 @@ const SearchStack = ({
   };
 
   return (
-    <div className="w-f">
+    <div className="project_item_search">
       <div className="search">
         <div className="search_select">
-          <ul className="w-f">
+          <ul className="project_item_search">
             <li className="list_input">
               <input
-                className="w-f profileInput"
+                className="profileInput"
                 type="search"
                 placeholder="기술 이름을 입력해주세요."
                 name="검색"

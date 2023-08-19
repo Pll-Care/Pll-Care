@@ -67,13 +67,13 @@ const ProjectList = () => {
                     <div className="evaluate_project_item_score">
                       <span>성실도</span>
                       <span className="score-border">
-                        {item.score.sincerity}
+                        {Math.round(item.score.sincerity)}
                       </span>
                     </div>
                     <div className="evaluate_project_item_score">
                       <span>엄무 수행 능력</span>
                       <span className="score-border">
-                        {item.score.jobPerformance}
+                        {Math.round(item.score.jobPerformance)}
                       </span>
                     </div>
                   </div>
@@ -81,13 +81,13 @@ const ProjectList = () => {
                     <div className="evaluate_project_item_score">
                       <span>시간 엄수</span>
                       <span className="score-border">
-                        {item.score.punctuality}
+                        {Math.round(item.score.punctuality)}
                       </span>
                     </div>
                     <div className="evaluate_project_item_score">
                       <span>의사소통</span>
                       <span className="score-border">
-                        {item.score.communication}
+                        {Math.round(item.score.communication)}
                       </span>
                     </div>
                   </div>
@@ -111,8 +111,3 @@ const ProjectList = () => {
 };
 
 export default ProjectList;
-
-/*
-
-
-*/

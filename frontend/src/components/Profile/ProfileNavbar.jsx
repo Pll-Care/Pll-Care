@@ -16,17 +16,18 @@ const ProfileNavbar = () => {
           return isMyProfile ? !!element : !element.isAdmin;
         })
         .map((element) => (
-          <NavLink
-            key={element.title}
-            to={`/profile/${memberId}/${element.to}`}
-            className={({ isActive }) =>
-              isActive
-                ? "profile_nav_link profile_nav_image_active"
-                : "profile_nav_link"
-            }
-          >
-            {element.child}
-          </NavLink>
+          <div key={element.title} className="profile_nav_box">
+            <NavLink
+              to={`/profile/${memberId}/${element.to}`}
+              className={({ isActive }) =>
+                isActive
+                  ? "profile_nav_link profile_nav_image_active"
+                  : "profile_nav_link"
+              }
+            >
+              {element.child}
+            </NavLink>
+          </div>
         ))}
     </nav>
   );

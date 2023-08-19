@@ -20,7 +20,7 @@ const ProjectEvaluate = () => {
   return (
     <div>
       <div>
-        <h1 className="profile_introduce_title">{title}</h1>
+        <h1 className="projectEvaluate_name">{title}</h1>
       </div>
       <div className="projectEvaluate">
         <BadgeBox badgeDtos={data?.data?.badgeDtos} />
