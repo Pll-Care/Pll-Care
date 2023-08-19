@@ -1,11 +1,9 @@
-import MemberOption from "../components/MemberRecruitment/MemberOption";
-import RecruitmentPostList from "../components/MemberRecruitment/RecruitmentPostList";
+import MemberRecruitment from "../components/MemberRecruitment";
 
 const Recruitment = () => {
   return (
     <>
-      <MemberOption />
-      <RecruitmentPostList />
+      <MemberRecruitment />
     </>
   );
 };

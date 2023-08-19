@@ -34,14 +34,20 @@ const RecruitmentPost = ({ data }) => {
               <FavoriteBorderIcon className="post-icon" />
             )}
           </div>
-          <h3>모집 기간</h3>
+
+          <h5>모집 기간 </h5>
           <h6>
             {data?.recruitStartDate} ~ {data?.recruitEndDate}
           </h6>
-          <h3>모집 포지션</h3>
-          {filteredPositions?.map((item, index) => (
-            <h6 key={index}>{item}</h6>
-          ))}
+
+          <h5>모집 포지션 </h5>
+          <div className="recruitment-post-project-position">
+            {filteredPositions?.map((item, index) => (
+              <h6 key={index} className="item">
+                {item}
+              </h6>
+            ))}
+          </div>
         </div>
       </div>
     </Link>

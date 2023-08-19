@@ -4,7 +4,6 @@ import { useQuery } from "react-query";
 
 import Button from "../common/Button";
 import AlertCheckModal from "../common/AlertCheckModal";
-import MemberFilterOption from "./MemberFilterOption";
 
 import { authActions } from "../../redux/authSlice";
 import { useRouter } from "../../hooks/useRouter";
@@ -57,7 +56,6 @@ const MemberOption = () => {
       </div>
       <div className="member-button">
         <Button text="작성하기" type="positive" onClick={handleClickLinkMenu} />
-        {/*<MemberFilterOption />*/}
       </div>
     </Fragment>
   );
