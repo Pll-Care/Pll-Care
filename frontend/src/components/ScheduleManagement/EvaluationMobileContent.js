@@ -25,7 +25,7 @@ const EvaluationMobileContent = ({
       <h3>뱃지 선택</h3>
       <div className="schedule-modal-mobile-badge">
         {badges.map((b) => (
-          <div className="schedule-modal-mobile-badge-item">
+          <div className="schedule-modal-mobile-badge-item" key={b.name}>
             <div
               className={`modal-badge ${badge === b.name ? "selected" : ""}`}
               key={b.name}
