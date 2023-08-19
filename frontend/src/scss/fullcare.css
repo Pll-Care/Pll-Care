@@ -3605,6 +3605,15 @@ a {
   font-size: 20px;
   font-weight: 600;
 }
+@media (max-width: 767px) {
+  .confirm-modal h1 {
+    width: 75%;
+    line-height: 30px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
 .confirm-modal-button {
   display: flex;
   justify-content: center;
@@ -5755,6 +5764,15 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
   font-weight: 600;
+}
+@media (max-width: 767px) {
+  .confirm-modal h1 {
+    width: 75%;
+    line-height: 30px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+  }
 }
 .confirm-modal-button {
   display: flex;

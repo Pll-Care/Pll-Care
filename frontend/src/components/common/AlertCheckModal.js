@@ -1,19 +1,17 @@
+import { useMediaQuery } from "@mui/material";
 import Button from "./Button";
 import ModalContainer from "./ModalContainer";
 
-const AlertCheckModal = ({
-  onClose,
-  open,
-  text,
-  clickHandler,
-}) => {
+const AlertCheckModal = ({ onClose, open, text, clickHandler }) => {
+  const isMobile = useMediaQuery("(max-width: 767px)");
+
   return (
     <ModalContainer
       open={open}
       onClose={onClose}
       type="dark"
-      width={500}
-      height={300}
+      width={isMobile ? "90%" : 500}
+      height={isMobile ? 280 : 300}
     >
       <div className="confirm-modal">
         <h1>{text}</h1>
