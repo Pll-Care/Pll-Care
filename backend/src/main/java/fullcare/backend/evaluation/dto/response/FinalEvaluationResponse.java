@@ -27,7 +27,7 @@ public class FinalEvaluationResponse {
     public static FinalEvaluationResponse entityToDto(FinalTermEvaluation finalTermEvaluation) {
         return FinalEvaluationResponse.builder()
                 .content(finalTermEvaluation.getContent())
-                .memberName(finalTermEvaluation.getEvaluated().getName())
+                .memberName(finalTermEvaluation.getEvaluated().getMember().getName())
                 .score(finalTermEvaluation.getScore())
 //                .state(finalTermEvaluation.getState())
                 .build();

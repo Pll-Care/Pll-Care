@@ -32,7 +32,7 @@ import static fullcare.backend.global.errorcode.ScheduleErrorCode.INVALID_CREATE
 @RequiredArgsConstructor
 @Transactional
 public class MilestoneService {
-    private final MemberRepository memberRepository;
+    private final ProjectMemberRepository projectMemberRepository;
     private final MilestoneRepository milestoneRepository;
     private final ProjectService projectService;
 
@@ -41,16 +41,15 @@ public class MilestoneService {
             ProjectMember projectMember = projectService.isProjectAvailable(scheduleCreateRequest.getProjectId(), memberId, false);
             LocalDateTime now = LocalDateTime.now();
             Project project = projectMember.getProject();
-            Member author = projectMember.getMember();
             LocalDateTime startDate = project.getStartDate().atStartOfDay();
             LocalDateTime endDate = project.getEndDate().atStartOfDay();
             Schedule.validDate(startDate, endDate, scheduleCreateRequest.getStartDate(), scheduleCreateRequest.getEndDate());
 
-            List<Long> memberIds = scheduleCreateRequest.getMemberIds();
-            List<Member> memberList = new ArrayList<>();
-            memberIds.forEach(m -> {
-                Member member = memberRepository.findById(m).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
-                memberList.add(member);
+            List<Long> pmIds = scheduleCreateRequest.getPmIds();
+            List<ProjectMember> memberList = new ArrayList<>();
+            pmIds.forEach(pmId -> {
+                ProjectMember pm = projectMemberRepository.findById(pmId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
+                memberList.add(pm);
             });
             Milestone milestone = Milestone.builder()
                     .project(project)
@@ -58,7 +57,7 @@ public class MilestoneService {
                     .endDate(scheduleCreateRequest.getEndDate())
                     .title(scheduleCreateRequest.getTitle())
                     .content(scheduleCreateRequest.getContent())
-                    .member(author)
+                    .author(projectMember)
                     .createdDate(now)
                     .modifiedDate(now)
                     .state(State.TBD)

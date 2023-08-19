@@ -7,6 +7,7 @@ import fullcare.backend.global.errorcode.ScheduleErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.InvalidDateRangeException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
+import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.schedulemember.domain.ScheduleMember;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -40,8 +41,8 @@ public abstract class Schedule {
     // todo -> private ProjectMember author;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", nullable = false)
-    private Member member;
-//    private ProjectMember projectMember;
+//    private Member member;
+    private ProjectMember author;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false)
@@ -73,9 +74,9 @@ public abstract class Schedule {
     private LocalDateTime modifiedDate;
 
 
-    public Schedule(Project project, Member member, State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    public Schedule(Project project, ProjectMember author, State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.project = project;
-        this.member = member;
+        this.author = author;
         this.state = state;
         this.title = title;
         this.content = content;
@@ -96,20 +97,20 @@ public abstract class Schedule {
         }
     }
 
-    public void addMemberList(List<Member> memberList) {
+    public void addMemberList(List<ProjectMember> memberList) {
         memberList.forEach(member -> {
             ScheduleMember sm = ScheduleMember.builder()
-                    .member(member)
+                    .projectMember(member)
                     .schedule(this)
                     .recentView(LocalDateTime.now()).build();
             scheduleMembers.add(sm);
         });
     }
 
-    public void addMember(Member member) {
+    public void addMember(ProjectMember member) {
 
         ScheduleMember sm = ScheduleMember.builder()
-                .member(member)
+                .projectMember(member)
                 .schedule(this)
                 .recentView(LocalDateTime.now()).build();
         scheduleMembers.add(sm);

@@ -1,5 +1,6 @@
 package fullcare.backend.projectmember.repository;
 
+import fullcare.backend.member.domain.Member;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import org.springframework.data.domain.Page;
@@ -31,4 +32,6 @@ public interface ProjectMemberRepository extends JpaRepository<ProjectMember, Lo
     @Query("select pm from project_member pm where pm.project.id = :projectId and pm.projectMemberType.role in :projectMemberRoleTypes")
     List<ProjectMember> findProjectMemberWithMemberByProjectIdAndProjectMemberRole(@Param("projectId") Long projectId, @Param("projectMemberRoleTypes") List<ProjectMemberRoleType> projectMemberRoleTypes);
 
+    @Query("select pm from project_member pm where pm.id in :pmIds")
+    List<ProjectMember> findByIds(@Param("pmIds") List<Long> pmIds);
 }

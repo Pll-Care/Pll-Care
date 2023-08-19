@@ -48,9 +48,9 @@ public class EvaluationController {
             @ApiResponse(description = "중간 평가 모달창 조회 성공", responseCode = "200", useReturnTypeSchema = true)
     })
     @GetMapping("/midterm")
-    public ResponseEntity<MidTermEvalModalResponse> midtermEvalModal(@RequestParam Long scheduleId,
+    public ResponseEntity<MidTermEvalModalResponse> midtermEvalModal(@RequestParam Long scheduleId, @RequestParam Long projectId,
                                                                      @CurrentLoginMember Member member) {
-        if (!(scheduleMemberService.validateScheduleMember(scheduleId, member.getId()))) {
+        if (!(scheduleMemberService.validateScheduleMember(scheduleId, projectId, member.getId()))) {
             throw new UnauthorizedAccessException(EvaluationErrorCode.UNAUTHORIZED_ACCESS);
         }
         MidTermEvalModalResponse response = evaluationService.modal(scheduleId, member.getId());
@@ -65,7 +65,7 @@ public class EvaluationController {
     @PostMapping("/midterm")
     public ResponseEntity midtermEvalCreate(@RequestBody MidTermEvalCreateRequest midTermEvalCreateRequest,
                                             @CurrentLoginMember Member member) {
-        evaluationService.createMidtermEvaluation(midTermEvalCreateRequest, member);
+        evaluationService.createMidtermEvaluation(midTermEvalCreateRequest, member.getId());
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -100,7 +100,7 @@ public class EvaluationController {
     @PostMapping("/final")
     public ResponseEntity<FinalEvaluationCreateResponse> finalEvalCreate(@RequestBody FinalEvalCreateRequest finalEvalCreateRequest,
                                                                          @CurrentLoginMember Member member) {
-        Long finalEvalId = evaluationService.createFinalEvaluation(finalEvalCreateRequest, member);
+        Long finalEvalId = evaluationService.createFinalEvaluation(finalEvalCreateRequest, member.getId());
         return new ResponseEntity(new FinalEvaluationCreateResponse(finalEvalId), HttpStatus.OK);
     }
 
