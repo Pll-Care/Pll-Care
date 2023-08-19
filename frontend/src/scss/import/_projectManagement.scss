@@ -15,10 +15,20 @@
         size: 100% 100%;
       }
       cursor: pointer;
+
+      @include mobile {
+        margin-bottom: 10px;
+        width: 180px;
+        height: 180px;
+      }
     }
 
     h1 {
       color: $green-500;
+
+      @include mobile {
+        @include m_heading_02;
+      }
 
       @include heading_04;
     }
@@ -34,8 +44,15 @@
     align-items: center;
     height: 100%;
 
-    @media (max-width: 1000px) {
+    @include tablet {
       gap: 25px;
+
+      @include displayFlex(column);
+    }
+
+    @include mobile {
+      gap: 40px;
+
       @include displayFlex(column);
     }
   }

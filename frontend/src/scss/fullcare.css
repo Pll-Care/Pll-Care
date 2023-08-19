@@ -223,15 +223,23 @@ a {
   font-size: 20px;
   font-weight: 600;
 }
+@media (max-width: 767px) {
+  .management-header a {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+}
 .management-header .header-link-on {
   color: #003b28;
 }
-
 @media (min-width: 767px) and (max-width: 1024px) {
   .management-header {
     margin-bottom: 60px;
   }
 }
+
+
 .header {
   border-bottom: 2px solid #01e89e;
   height: 80px;
@@ -263,12 +271,14 @@ a {
     display: none;
   }
 }
+  
 .main-header-left-col {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
+  
 .main-header-left-col .main-header-logo-img {
   min-width: 226px;
   min-height: 50px;
@@ -286,6 +296,19 @@ a {
   .main-header-left-col .main-header-logo-img {
     min-width: 77px;
     min-height: 30px;
+@media (max-width: 767px) {
+  .main-header-left-col .main-header-logo-img {
+    width: 77px;
+    height: 17px;
+  }
+}
+@media (max-width: 767px) {
+  .main-header-left-col {
+    width: -moz-fit-content;
+    width: fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    margin-top: auto;
   }
 }
 .main-header-link {
@@ -301,6 +324,13 @@ a {
   }
 }
 .main-header .nav_item {
+@media (max-width: 767px) {
+  .main-header-link {
+    display: none;
+  }
+}
+.main-header .nav_item > a {
+  color: #003b28;
   text-decoration: none;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 24px;
@@ -344,6 +374,16 @@ a {
     margin: 0;
   }
 }
+@media (max-width: 767px) {
+  .main-header-right-col Button {
+    border-radius: 5px;
+    margin-top: auto;
+    margin-right: 9px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+  }
+}
 .main-header-right-col .main-header-user-profile-img {
   border-radius: 35%;
   width: 40px;
@@ -362,6 +402,15 @@ a {
     height: 20px;
   }
 }
+@media (max-width: 767px) {
+  .main-header-right-col .main-header-user-profile-img {
+    border: 1px solid #01e89e;
+    width: 18px;
+    height: 18px;
+    margin-right: 30px;
+    margin-top: auto;
+  }
+}
 .main-header-right-col img {
   width: 100%;
   height: 100%;
@@ -370,10 +419,23 @@ a {
 .main-header-login-col Button {
   margin-left: auto;
 }
+@media (max-width: 767px) {
+  .main-header-login-col Button {
+    margin-right: 30px;
+  }
+}
 .main-header_img {
   width: 100%;
   height: 100%;
   border-radius: 35%;
+}
+@media (max-width: 767px) {
+  .main-header {
+    height: 65px;
+    grid-template-columns: 45% 0% 55%;
+    padding: 7px;
+    border-bottom: none;
+  }
 }
 
 .header-profile-bg {
@@ -455,6 +517,14 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
   font-weight: 600;
+@media (max-width: 767px) {
+  .button {
+    padding: 2px 9px;
+    height: 18px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 600;
+  }
 }
 
 .control-menu {
@@ -481,6 +551,17 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 12px;
   font-weight: 600;
+}
+@media (max-width: 767px) {
+  .control-menu-small {
+    height: 20px;
+    width: -moz-fit-content;
+    width: fit-content;
+    padding: 1px 3px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
 }
 
 .pagination-wrapper {
@@ -509,6 +590,13 @@ a {
   margin-left: auto;
   margin-right: auto;
 }
+@media (max-width: 767px) {
+  .pagination-wrapper button {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+  }
+}
 .pagination-wrapper ul {
   display: flex;
   flex-direction: row;
@@ -523,6 +611,14 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
+}
+@media (max-width: 767px) {
+  .pagination-wrapper ul .pagination-page-number-on,
+  .pagination-wrapper ul .pagination-page-number {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+  }
 }
 .pagination-wrapper-white button,
 .pagination-wrapper-white ul .pagination-page-number-on,
@@ -606,6 +702,109 @@ a {
     height: 20px;
   }
 }
+.toggle-menu-button-wrapper, .toggle-menu-button-wrapper-close {
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  position: relative;
+}
+.toggle-menu-button-wrapper figure, .toggle-menu-button-wrapper-close figure {
+  width: 20px;
+  height: 18px;
+  z-index: 101;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+@media (min-width: 1024px) {
+  .toggle-menu-button-wrapper, .toggle-menu-button-wrapper-close {
+    display: none;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .toggle-menu-button-wrapper, .toggle-menu-button-wrapper-close {
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  .toggle-menu-button-wrapper, .toggle-menu-button-wrapper-close {
+    margin-top: auto;
+  }
+}
+.toggle-menu-button-wrapper-close .toggle-menu-button {
+  position: absolute;
+  right: -7px;
+  top: -60px;
+  height: 60px;
+  width: 30px;
+  background-color: white;
+  z-index: 100;
+}
+.toggle-menu-button-wrapper-close .toggle-menu-button div {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+.toggle-menu-button-wrapper .toggle-menu-button {
+  position: fixed;
+  right: 0px;
+  top: 0;
+  width: 163px;
+  height: 905px;
+  background-color: white;
+}
+.toggle-menu-button-wrapper .toggle-menu-button > div {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+.toggle-menu-button-wrapper .toggle-menu-button-figure-wrapper {
+  width: 100%;
+  height: 72px;
+  padding: 10px;
+  border-bottom: 1px solid #b4bcbd;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.toggle-menu-button-wrapper .toggle-menu-button-link-wrapper {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+}
+.toggle-menu-button-wrapper .toggle-menu-button-link-wrapper div {
+  display: flex;
+  margin-bottom: 15px;
+}
+.toggle-menu-button-wrapper .toggle-menu-button-link-wrapper figure {
+  width: 15px;
+  height: 14px;
+  margin-right: 12px;
+}
+.toggle-menu-button-wrapper .toggle-menu-button-link-wrapper a {
+  color: #7a7a7a;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+}
+.toggle-menu-button-wrapper {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  background: rgba(122, 122, 122, 0.4);
+}
+
 .Toastify__toast-container {
   width: -moz-max-content;
   width: max-content;
@@ -670,52 +869,109 @@ a {
   border-radius: 35px;
   padding: 10px;
 }
-
-.fc-toolbar-title {
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 5px;
-  color: gray;
+@media (max-width: 767px) {
+  .card {
+    padding: 1px;
+  }
 }
 
-.calendar {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+.schedule-calendar {
+  display: grid;
+  grid-template-columns: 60% 40%;
 }
-.calendar-schedule {
-  width: 50%;
+@media (max-width: 767px) {
+  .schedule-calendar {
+    height: 400px;
+  }
+}
+.schedule-calendar-schedulelist {
+  width: 100%;
+}
+.schedule-calendar-schedulelist .fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {
+  height: 100%;
+}
+.schedule-calendar-schedulelist .fc-header-toolbar.fc-toolbar {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 900;
+  color: #7a7a7a;
+}
+@media (max-width: 767px) {
+  .schedule-calendar-schedulelist .fc-header-toolbar.fc-toolbar {
+    font-size: 5px;
+  }
 }
 
+@media (min-width: 767px) and (max-width: 1024px) {
+  .fc-daygrid-day {
+    font-size: 7px;
+    margin: 80%;
+  }
+}
+@media (max-width: 767px) {
+  .fc-daygrid-day {
+    font-size: 3px;
+    margin: 80%;
+  }
+  .fc-scrollgrid-sync-inner {
+    font-size: 5px;
+  }
+  .calendar-list-item-name-avatar .MuiAvatar-root {
+    transform: scale(0.5);
+    margin-left: -25px;
+  }
+  .calendar-list-item-name-avatar .MuiAvatar-root:hover {
+    transform: scale(0.6);
+  }
+}
 .calendar-list {
+  width: 100%;
+  height: 100%;
   background-color: #01e89e;
+  border-radius: 20px;
   align-items: center;
   padding: 2rem;
-  height: 470px;
-  width: 40%;
   overflow-y: auto;
+}
+@media (max-width: 767px) {
+  .calendar-list {
+    padding: 20px 10px;
+  }
 }
 .calendar-list .button-container {
   display: flex;
   justify-content: flex-end;
 }
-.calendar-list-pagination {
-  justify-content: center;
-  margin-bottom: 20px;
+.calendar-list h5 {
+  color: white;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+@media (max-width: 767px) {
+  .calendar-list h5 {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
 }
 .calendar-list-time {
   color: white;
 }
-.calendar-list-time h5 {
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
-  margin-bottom: 10px;
-}
 .calendar-list-time h1 {
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 40px;
+  font-size: 38px;
+  font-weight: 700;
   border-bottom: 2px solid white;
   margin-bottom: 20px;
+}
+@media (max-width: 767px) {
+  .calendar-list-time h1 {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
 }
 .calendar-list-item {
   background-color: white;
@@ -724,18 +980,49 @@ a {
   color: #7a7a7a;
   margin-bottom: 20px;
 }
+@media (max-width: 767px) {
+  .calendar-list-item {
+    padding: 8px;
+  }
+}
 .calendar-list-item h5 {
   font-family: "Noto Sans KR", sans-serif;
-  font-size: 18px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #7a7a7a;
   margin-bottom: 10px;
+  margin-top: 5px;
+}
+@media (max-width: 767px) {
+  .calendar-list-item h5 {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 6px;
+    font-weight: 500;
+  }
 }
 .calendar-list-item h4 {
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
+  font-size: 20px;
+  font-weight: 600;
+}
+@media (max-width: 767px) {
+  .calendar-list-item h4 {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 7px;
+    font-weight: 700;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .calendar-list-item h4 {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+  }
 }
 .calendar-list-item-name {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-top: 10px;
 }
 .calendar-list-item-name-avatar {
@@ -747,17 +1034,39 @@ a {
   transition: all 0.3s ease;
   margin-left: -20px;
 }
+@media (max-width: 767px) {
+  .calendar-list-item-name-avatar .MuiAvatar-root {
+    transform: scale(0.5);
+  }
+}
 .calendar-list-item-name-avatar .MuiAvatar-root:hover {
   transform: scale(0.8);
 }
 
 .modal-container {
-  font-family: "Noto Sans KR", sans-serif;
+  padding: 20px;
   width: 100%;
 }
 @media (max-width: 767px) {
   .modal-container {
     height: 100%;
+  }
+}
+.modal-container-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal-container-title-input {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+}
+@media (max-width: 767px) {
+  .modal-container-title-input {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
   }
 }
 .modal-container .button-container {
@@ -769,16 +1078,57 @@ a {
   margin-left: 10px;
 }
 .modal-container input {
-  width: 90%;
+  width: 80%;
   border: none;
   border-radius: 10px;
-  font-size: 35px;
-  margin-bottom: 10px;
-  font-family: "Noto Sans KR", sans-serif;
+}
+.modal-container h5 {
+  margin-right: 30px;
+  color: #00aa72;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
 }
 @media (max-width: 767px) {
-  .modal-container input {
-    font-size: 15px;
+  .modal-container h5 {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+}
+.modal-container select {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #00aa72;
+  border-radius: 10px;
+}
+@media (max-width: 767px) {
+  .modal-container select {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+}
+.modal-container-content {
+  background-color: white;
+  border-radius: 15px;
+  padding: 1rem;
+  margin-top: 15px;
+  border: 2px solid #01e89e;
+}
+.modal-container-content textarea {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 8px;
+  font-weight: 500;
+  border: none;
+  width: 100%;
+  margin-top: 20px;
+  height: 90%;
+}
+@media (max-width: 767px) {
+  .modal-container-content {
+    height: 40%;
   }
 }
 .modal-container-description {
@@ -788,105 +1138,90 @@ a {
   margin-top: 15px;
   border: 2px solid #01e89e;
 }
-.modal-container-description h5 {
-  margin-right: 30px;
-  color: #01e89e;
+@media (max-width: 767px) {
+  .modal-container-description {
+    height: 40%;
+  }
+}
+.modal-container-description input {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
 }
 .modal-container-description .plan-option {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
 }
-.modal-container-description .plan-option h4 {
-  margin: 0px 10px;
+.modal-container-description .plan-option-duration {
+  display: flex;
+  align-items: center;
 }
-.modal-container-description .plan-option input {
-  font-size: 20px;
-  margin-top: 10px;
+.modal-container-description .plan-option-duration input {
+  width: 50%;
+}
+@media (max-width: 767px) {
+  .modal-container-description .plan-option-duration {
+    flex-wrap: wrap;
+  }
+  .modal-container-description .plan-option-duration input {
+    width: 130px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+}
+.modal-container-description .plan-option h4 {
+  margin: 0px 5px;
 }
 .modal-container-description .plan-option Button {
   margin-right: 10px;
 }
-.modal-container-description .plan-option select {
-  border-radius: 10px;
-  padding: 0.5rem;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  color: #00aa72;
+.modal-container-description .plan-option-members {
+  display: flex;
+  flex-wrap: wrap;
 }
 .modal-container-description .plan-option-bottom {
   display: flex;
   align-items: center;
-  border-bottom: 1.5px solid rgb(217, 217, 217);
+  border-bottom: 1.5px solid #b4bcbd;
   margin-bottom: 20px;
 }
 .modal-container-description .plan-option-bottom input {
-  font-size: 15px;
-}
-
-@media (min-width: 767px) and (max-width: 1024px) {
-  .calendar {
-    flex-direction: column;
-  }
-  .calendar-schedule {
-    width: 100%;
-  }
-  .calendar-list {
-    margin-top: 10px;
-    width: 85%;
-  }
-  .calendar-list h5 {
-    font-size: 17px;
-  }
-  .calendar-list h1,
-  .calendar-list h4 {
-    font-size: 23px;
-  }
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #b4bcbd;
 }
 @media (max-width: 767px) {
-  .fc-daygrid-day {
-    font-size: 7px;
-    margin: 80%;
-  }
-  .fc-toolbar-title {
-    font-size: 5px;
-  }
-  .calendar {
-    flex-direction: column;
-  }
-  .calendar-schedule {
-    width: 100%;
-  }
-  .calendar-list {
-    margin-top: 10px;
-    width: 100%;
-  }
-  .calendar-list h5 {
-    font-size: 12px;
-  }
-  .calendar-list h1,
-  .calendar-list h4 {
-    font-size: 21px;
-  }
-  .calendar-list-item-name-avatar .MuiAvatar-root {
-    transform: scale(0.5);
-    margin-left: -25px;
-  }
-  .calendar-list-item-name-avatar .MuiAvatar-root:hover {
-    transform: scale(0.6);
+  .modal-container-description .plan-option-bottom input {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
   }
 }
+
 .schedule h1 {
-  font-size: 25px;
-  color: #00aa72;
   font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #00aa72;
   margin: 15px;
   margin-left: 7%;
 }
-
-.endpoint {
-  color: gray;
-  margin-bottom: 10px;
+.schedule .overview-time {
+  font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
+  font-weight: 600;
+  color: white;
+}
+.schedule h3,
+.schedule h5 {
+  margin-top: 10px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #7a7a7a;
 }
 
 .simple {
@@ -897,45 +1232,74 @@ a {
   margin-top: 10px;
 }
 .simple h2 {
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
   color: #7a7a7a;
 }
 .simple h3 {
   margin-top: 10px;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 14px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
   color: #7a7a7a;
 }
 
 @media (max-width: 767px) {
   .schedule h1 {
-    font-size: 12px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
   }
-  .endpoint {
-    font-size: 12px;
+  .schedule h3,
+  .schedule h5 {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
   }
-  .simple h2,
+  .schedule .overview-time {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+  .simple h2 {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
   .simple h3 {
-    font-size: 13px;
-  }
-}
-@media (min-width: 767px) and (max-width: 1024px) {
-  .endpoint {
-    font-size: 17px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 6px;
+    font-weight: 500;
   }
 }
 .check-schedule {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
+  font-weight: 600;
   color: white;
   margin-bottom: 10px;
 }
+@media (max-width: 767px) {
+  .check-schedule {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+}
 .check-schedule-gray {
-  color: rgb(173, 173, 173);
+  color: #7a7a7a;
   margin: 20px;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
+  font-weight: 600;
+}
+@media (max-width: 767px) {
+  .check-schedule-gray {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
 }
 
 .schedule-option {
@@ -956,32 +1320,33 @@ a {
 .schedule-option-person h4 {
   color: white;
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
+  font-size: 18px;
+  font-weight: 600;
   margin-bottom: 20px;
+}
+@media (max-width: 767px) {
+  .schedule-option-person {
+    padding: 20px;
+  }
+  .schedule-option-person h4 {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
 }
 
 .schedule-lists-pagination {
   display: flex;
   justify-content: center;
 }
-.schedule-lists .empty-schedule {
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 20px;
-  color: gray;
-  margin: 30px 0px;
-  margin-left: 20px;
-}
 
 .schedule-list {
   display: flex;
   padding: 1rem;
 }
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
   .schedule-list {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    padding: 10px;
   }
 }
 .schedule-list-time {
@@ -991,82 +1356,98 @@ a {
   align-items: center;
   font-style: normal;
   color: #7a7a7a;
-  font-family: "IBM Plex Sans KR", sans-serif;
   width: 15%;
 }
-@media (min-width: 767px) and (max-width: 1024px) {
-  .schedule-list-time {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  }
+.schedule-list-time h1 {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 38px;
+  font-weight: 700;
+  color: #7a7a7a;
 }
 @media (max-width: 767px) {
-  .schedule-list-time {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+  .schedule-list-time h1 {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
   }
 }
-.schedule-list-time h1 {
-  font-size: 65px;
-  color: gray;
-}
 .schedule-list-time h2 {
-  font-size: 25px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
   margin-bottom: 15px;
+}
+@media (max-width: 767px) {
+  .schedule-list-time h2 {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
 }
 .schedule-list-content {
   text-align: left;
   border: 3px solid #01e89e;
-  border-radius: 35px;
+  border-radius: 15px;
   width: 85%;
   padding: 1.5rem;
   cursor: pointer;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+}
+.schedule-list-content-title {
+  display: flex;
   justify-content: space-between;
   align-items: center;
 }
 @media (max-width: 767px) {
   .schedule-list-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    padding: 15px;
   }
 }
 .schedule-list-content h5 {
   font-family: "Noto Sans KR", sans-serif;
-  font-size: 18px;
+  font-size: 14px;
+  font-weight: 500;
   color: #7a7a7a;
+}
+@media (max-width: 767px) {
+  .schedule-list-content h5 {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 7px;
+    font-weight: 700;
+  }
 }
 .schedule-list-content h4 {
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
+  font-size: 24px;
+  font-weight: 700;
   color: #7a7a7a;
   margin: 10px 0px;
 }
-.schedule-list-content-past {
-  border: 3px solid rgb(197, 197, 197);
+@media (max-width: 767px) {
+  .schedule-list-content h4 {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
 }
 .schedule-list-content-option {
   align-items: center;
   display: flex;
 }
-@media (max-width: 767px) {
-  .schedule-list-content-option {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-}
 .schedule-list-content-option h5 {
   margin-right: 20px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
   color: #00aa72;
+}
+@media (max-width: 767px) {
+  .schedule-list-content-option h5 {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 6px;
+    font-weight: 500;
+  }
 }
 .schedule-list-content-option-mui {
   display: flex;
@@ -1089,33 +1470,50 @@ a {
     transform: scale(0.6);
   }
 }
-.schedule-list-content-time {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+
 .schedule-list-content-time h1 {
-  color: #01e89e;
+  color: #00aa72;
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 18px;
+  font-size: 14px;
+  font-weight: 600;
   background: #ffffff;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.05);
   border-radius: 30px;
   padding: 0.5rem;
 }
-.schedule-list-content-time Button {
-  margin-top: 10px;
+@media (max-width: 767px) {
+  .schedule-list-content-time h1 {
+    padding: 5px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 6px;
+    font-weight: 600;
+  }
 }
 
 .schedule-modal {
-  font-family: "IBM Plex Sans KR", sans-serif;
+  width: 100%;
+}
+.schedule-modal-title {
+  display: flex;
+  justify-content: space-between;
+}
+.schedule-modal-title .mui-icon {
+  color: white;
+  cursor: pointer;
 }
 .schedule-modal h1 {
   color: white;
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
+  font-size: 24px;
+  font-weight: 700;
   margin-bottom: 20px;
+}
+@media (max-width: 767px) {
+  .schedule-modal h1 {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+  }
 }
 .schedule-modal-content {
   background-color: white;
@@ -1123,112 +1521,219 @@ a {
   border-radius: 14px;
   padding: 1.5rem;
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .schedule-modal-content {
+    padding: 20px;
+  }
+}
+@media (max-width: 767px) {
+  .schedule-modal-content {
+    padding: 30px 15px;
+  }
+}
 .schedule-modal-content h1 {
-  color: #01e89e;
+  color: #00aa72;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
 }
 .schedule-modal-content h2 {
   color: #7a7a7a;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
   margin-bottom: 10px;
+}
+.schedule-modal-content h3 {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #00aa72;
+  margin-right: 20px;
+  margin-top: 5px;
+}
+@media (max-width: 767px) {
+  .schedule-modal-content h3 {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+  }
+}
+.schedule-modal-content .modal-badge {
+  cursor: pointer;
+  border-radius: 80%;
+  border: 1px solid rgb(243, 243, 243);
+  padding: 0.5rem;
+  margin-right: 30px;
+}
+.schedule-modal-content .modal-badge img {
+  width: 20px;
+  height: 20px;
+}
+@media (max-width: 767px) {
+  .schedule-modal-content .modal-badge img {
+    width: 15px;
+    height: 15px;
+  }
+}
+.schedule-modal-content .selected {
+  border: 2px solid #01e89e;
 }
 .schedule-modal-content-evaluation {
   border: 2px solid #01e89e;
   border-radius: 10px;
   padding: 1.5rem;
-}
-.schedule-modal-content-evaluation h3 {
-  color: #01e89e;
-  margin-right: 20px;
-  margin-top: 5px;
-}
-.schedule-modal-content-evaluation .modal-member {
-  display: flex;
+  display: grid;
+  grid-template-columns: 20% 80%;
+  grid-gap: 30px 0px;
   align-items: center;
-  margin-left: 10px;
-  margin-bottom: 30px;
 }
-.schedule-modal-content-evaluation .modal-badges {
+@media (min-width: 767px) and (max-width: 1024px) {
+  .schedule-modal-content-evaluation {
+    padding: 10px;
+  }
+}
+.schedule-modal-content-evaluation-member {
   display: flex;
+  flex-wrap: wrap;
 }
-.schedule-modal-content-evaluation .modal-badges-items {
+@media (max-width: 767px) {
+  .schedule-modal-content-evaluation-member {
+    margin: 20px 15px;
+  }
+}
+.schedule-modal-content-evaluation-member .selected {
+  border: 2px solid #01e89e;
+}
+.schedule-modal-content-evaluation-badge {
   display: flex;
-  margin-right: 30px;
-}
-.schedule-modal-content-evaluation .modal-badges-items .modal-badge {
-  cursor: pointer;
-  border-radius: 80%;
-  background-color: rgb(242, 242, 242);
-  padding: 0.5rem;
-  margin-right: 30px;
-}
-.schedule-modal-content-evaluation .modal-badges-items .selected {
-  background-color: rgb(181, 181, 181);
+  flex-wrap: wrap;
 }
 .schedule-modal-button {
   margin-top: 15px;
   text-align: right;
 }
 
-.schedule-detail-modal {
+.schedule-modal-mobile {
   border: 2px solid #01e89e;
   border-radius: 10px;
-  width: 100%;
-  padding: 1rem;
-  color: #7a7a7a;
-  font-family: "IBM Plex Sans KR", sans-serif;
+  padding: 10px;
 }
-.schedule-detail-modal input {
-  border-radius: 20px;
-  height: 30px;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  color: #7a7a7a;
+.schedule-modal-mobile-badge {
+  display: flex;
+  flex-direction: column;
 }
-.schedule-detail-modal h1 {
-  font-size: 25px;
+.schedule-modal-mobile-badge-item {
+  display: flex;
+  align-items: center;
   margin: 15px;
 }
-.schedule-detail-modal-title {
+.schedule-modal-mobile-badge-item h5 {
+  color: #7a7a7a;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.schedule-detail-modal {
+  border: 2px solid #01e89e;
+  border-radius: 17px;
+  width: 100%;
+  padding: 1.5rem;
+  color: #7a7a7a;
+}
+@media (max-width: 767px) {
+  .schedule-detail-modal {
+    height: 90%;
+  }
+}
+.schedule-detail-modal input {
+  color: #7a7a7a;
+  border-radius: 20px;
+}
+.schedule-detail-modal-date {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
 }
-.schedule-detail-modal-title .mui-icon {
+.schedule-detail-modal-date .schedule-title {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+}
+@media (max-width: 767px) {
+  .schedule-detail-modal-date .schedule-title {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+  }
+}
+.schedule-detail-modal-date .mui-icon {
   cursor: pointer;
-  margin-right: 10px;
+}
+.schedule-detail-modal-date input {
+  width: 80%;
+}
+.schedule-detail-modal-date-mobile {
+  display: flex;
+  align-items: center;
 }
 .schedule-detail-modal-content {
-  display: flex;
-  margin: 40px 20px;
+  display: grid;
+  grid-template-columns: 20% 80%;
   align-items: center;
+  grid-gap: 20px 0px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
 }
-.schedule-detail-modal-content h5 {
-  margin-right: 20px;
+@media (min-width: 767px) and (max-width: 1024px) {
+  .schedule-detail-modal-content {
+    grid-template-columns: 15% 85%;
+  }
+}
+@media (max-width: 767px) {
+  .schedule-detail-modal-content {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
 }
 .schedule-detail-modal-content-time {
   display: flex;
-}
-.schedule-detail-modal-member {
-  display: flex;
   align-items: center;
-  width: 100%;
+}
+.schedule-detail-modal-content-time input {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
 }
 @media (max-width: 767px) {
-  .schedule-detail-modal-member {
-    flex-direction: column;
+  .schedule-detail-modal-content-time {
+    flex-wrap: wrap;
+  }
+  .schedule-detail-modal-content-time input {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
   }
 }
-.schedule-detail-modal-member h5 {
-  width: 15%;
-  margin-left: 20px;
-  display: inline-block;
-  line-height: normal;
-  vertical-align: middle;
-}
 .schedule-detail-modal-member-buttons {
-  width: 90%;
+  display: flex;
+  flex-wrap: wrap;
 }
 .schedule-detail-modal-button {
-  justify-content: flex-end;
   display: flex;
+  justify-content: flex-end;
   margin-top: 30px;
+}
+@media (max-width: 767px) {
+  .schedule-detail-modal-button {
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+  }
 }
 
 .meeting-record-management {
@@ -1244,6 +1749,22 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
+}
+@media (max-width: 767px) {
+  .meeting-record-management .meeting-record-heading {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+}
+@media (max-width: 767px) {
+  .meeting-record-management {
+    background-color: white;
+    flex-direction: column;
+    box-shadow: none;
+    height: -moz-fit-content;
+    height: fit-content;
+  }
 }
 .meeting-record-list {
   width: 30%;
@@ -1261,6 +1782,15 @@ a {
     padding: 10px;
   }
 }
+@media (max-width: 767px) {
+  .meeting-record-list {
+    background-color: #01e89e;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    width: 100%;
+    height: 385px;
+  }
+}
 .meeting-record-book-marked-record-list {
   max-width: 100%;
   padding-top: 10px;
@@ -1275,16 +1805,27 @@ a {
   margin-bottom: 20px;
   padding: 5px;
 }
+@media (max-width: 767px) {
+  .meeting-record-book-marked-record-list .meeting-record-heading {
+    margin-bottom: 0;
+    height: -moz-fit-content;
+    height: fit-content;
+  }
+}
 .meeting-record-book-marked-record-list .meeting-record-body {
-  display: grid;
-  grid-template-rows: 80% 20%;
-  grid-template-columns: 100%;
+  padding-top: 10px;
+  height: 210px;
   padding-left: 10px;
   padding-right: 10px;
 }
 .meeting-record-book-marked-record-list .meeting-record-body .meeting-record-all-meeting-record-list-data {
-  height: 100%;
+  height: 160px;
   width: 100%;
+}
+@media (max-width: 767px) {
+  .meeting-record-book-marked-record-list .meeting-record-body .meeting-record-all-meeting-record-list-data {
+    height: 100px;
+  }
 }
 .meeting-record-book-marked-record-list .meeting-record-body .pagination-wrapper {
   margin-top: auto;
@@ -1295,9 +1836,26 @@ a {
     width: 100%;
   }
 }
+@media (max-width: 767px) {
+  .meeting-record-book-marked-record-list .meeting-record-body .pagination-wrapper {
+    height: -moz-fit-content;
+    height: fit-content;
+    margin-top: 5px;
+  }
+}
 @media (min-width: 767px) and (max-width: 1024px) {
   .meeting-record-book-marked-record-list {
     width: 100%;
+  }
+}
+@media (max-width: 767px) {
+  .meeting-record-book-marked-record-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 0px;
+    margin-bottom: 0px;
+    height: 165px;
   }
 }
 .meeting-record-all-meeting-record-list {
@@ -1328,10 +1886,15 @@ a {
 }
 .meeting-record-all-meeting-record-list .meeting-record-list-header .header-left-col .meeting-record-heading {
   height: 40px;
-  padding: 5px;
+  padding: 10px 5px;
 }
 .meeting-record-all-meeting-record-list .meeting-record-list-header .header-left-col .control-menu {
   margin-right: 5px;
+}
+@media (max-width: 767px) {
+  .meeting-record-all-meeting-record-list .meeting-record-list-header .header-left-col {
+    height: 25px;
+  }
 }
 .meeting-record-all-meeting-record-list .meeting-record-list-header .header-right-col {
   margin-left: auto;
@@ -1341,9 +1904,15 @@ a {
 .meeting-record-all-meeting-record-list .meeting-record-list-header .header-right-col Button {
   margin-right: 5px;
 }
+@media (max-width: 767px) {
+  .meeting-record-all-meeting-record-list .meeting-record-list-header {
+    height: -moz-fit-content;
+    height: fit-content;
+  }
+}
 .meeting-record-all-meeting-record-list .record-list-item-wrapper {
   padding-top: 10px;
-  height: 100%;
+  height: 210px;
   padding-left: 10px;
   padding-right: 10px;
   display: flex;
@@ -1365,10 +1934,16 @@ a {
 }
 .meeting-record-all-meeting-record-list .meeting-record-all-meeting-record-list-data {
   width: 100%;
-  height: 100%;
+  height: 160px;
+}
+@media (max-width: 767px) {
+  .meeting-record-all-meeting-record-list .meeting-record-all-meeting-record-list-data {
+    height: 100px;
+  }
 }
 .meeting-record-all-meeting-record-list .pagination-wrapper {
   margin-top: auto;
+  max-width: 100%;
   max-width: 100%;
 }
 @media (min-width: 767px) and (max-width: 1024px) {
@@ -1376,9 +1951,24 @@ a {
     width: 100%;
   }
 }
+@media (max-width: 767px) {
+  .meeting-record-all-meeting-record-list .pagination-wrapper {
+    margin-top: 5px;
+    height: -moz-fit-content;
+    height: fit-content;
+  }
+}
 @media (min-width: 767px) and (max-width: 1024px) {
   .meeting-record-all-meeting-record-list {
     width: 100%;
+  }
+}
+@media (max-width: 767px) {
+  .meeting-record-all-meeting-record-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 180px;
   }
 }
 .meeting-record-new-meeting-record-editor {
@@ -1400,6 +1990,14 @@ a {
   justify-content: space-between;
   align-items: center;
 }
+@media (max-width: 767px) {
+  .meeting-record-new-meeting-record-editor .meeting-record-initial-state {
+    flex-direction: row;
+    width: 100%;
+    align-items: flex-start;
+    margin-bottom: auto;
+  }
+}
 .meeting-record-new-meeting-record-editor .meeting-record-editor {
   width: 93%;
   height: 100%;
@@ -1408,11 +2006,23 @@ a {
   justify-content: space-between;
   align-items: space-between;
 }
+@media (max-width: 767px) {
+  .meeting-record-new-meeting-record-editor .meeting-record-editor {
+    width: 100%;
+  }
+}
 .meeting-record-new-meeting-record-editor .initial-meeting-record-heading {
   color: #00aa72;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
+}
+@media (max-width: 767px) {
+  .meeting-record-new-meeting-record-editor .initial-meeting-record-heading {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
 }
 .meeting-record-new-meeting-record-editor .meeting-record-editor .meeting-record-title {
   height: 15%;
@@ -1444,8 +2054,21 @@ a {
 .meeting-record-new-meeting-record-editor .react-quill {
   height: 100%;
   line-height: 1.5;
-  margin-top: 20px;
-  margin-bottom: 68px;
+  display: inline-flex;
+  flex-direction: column;
+}
+@media (max-width: 767px) {
+  .meeting-record-new-meeting-record-editor .react-quill .ql-toolbar {
+    padding: 5px;
+  }
+  .meeting-record-new-meeting-record-editor .react-quill .ql-toolbar .ql-formats {
+    margin-right: 2px;
+  }
+  .meeting-record-new-meeting-record-editor .react-quill p {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
 }
 .meeting-record-new-meeting-record-editor .meeting-record {
   height: 100%;
@@ -1461,6 +2084,10 @@ a {
 .meeting-record-new-meeting-record-editor .meeting-record-button-wrapper {
   margin-bottom: 20px;
 }
+.meeting-record-new-meeting-record-editor .meeting-record-button-wrapper .button {
+  padding: 0;
+  margin-left: 4px;
+}
 .meeting-record-new-meeting-record-editor .meeting-record-date,
 .meeting-record-new-meeting-record-editor .meeting-record-author {
   margin-bottom: 20px;
@@ -1468,10 +2095,29 @@ a {
   font-size: 14px;
   font-weight: 500;
 }
-.meeting-record-new-meeting-record-editor .meeting-record-title {
+@media (max-width: 767px) {
+  .meeting-record-new-meeting-record-editor .meeting-record-date,
+  .meeting-record-new-meeting-record-editor .meeting-record-author {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+}
+.meeting-record-new-meeting-record-editor .meeting-record-title input {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 24px;
   font-weight: 700;
+}
+@media (max-width: 767px) {
+  .meeting-record-new-meeting-record-editor .meeting-record-title input {
+    height: -moz-fit-content;
+    height: fit-content;
+    padding: 5px;
+    border-radius: 5px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
 }
 .meeting-record-new-meeting-record-editor .meeting-record-container {
   display: flex;
@@ -1490,9 +2136,33 @@ a {
 .meeting-record-new-meeting-record-editor .created-meeting-record-content p {
   max-width: 100%;
 }
+@media (max-width: 767px) {
+  .meeting-record-new-meeting-record-editor .selected-meeting-record-content p,
+  .meeting-record-new-meeting-record-editor .created-meeting-record-content p {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+}
+@media (max-width: 767px) {
+  .meeting-record-new-meeting-record-editor .selected-meeting-record-content,
+  .meeting-record-new-meeting-record-editor .created-meeting-record-content {
+    padding: 5px;
+  }
+}
 .meeting-record-new-meeting-record-editor .selected-meeting-record-content img,
 .meeting-record-new-meeting-record-editor .created-meeting-record-content img {
   max-width: 100%;
+}
+@media (max-width: 767px) {
+  .meeting-record-new-meeting-record-editor {
+    width: 100%;
+    box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    height: 360px;
+    margin-bottom: 30px;
+    padding: 15px;
+  }
 }
 .meeting-record-item {
   background-color: white;
@@ -1510,20 +2180,37 @@ a {
   justify-content: space-around;
   align-items: flex-start;
 }
-.meeting-record-item-date {
+.meeting-record-item-date, .meeting-record-item-writer {
   font-family: "Noto Sans KR", sans-serif;
   font-size: 10px;
   font-weight: 500;
+}
+@media (max-width: 767px) {
+  .meeting-record-item-date, .meeting-record-item-writer {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 6px;
+    font-weight: 500;
+  }
 }
 .meeting-record-item-title {
   font-family: "Noto Sans KR", sans-serif;
   font-size: 14px;
   font-weight: 900;
 }
-.meeting-record-item-writer {
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 10px;
-  font-weight: 500;
+@media (max-width: 767px) {
+  .meeting-record-item-title {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 7px;
+    font-weight: 700;
+  }
+}
+@media (max-width: 767px) {
+  .meeting-record-item {
+    height: 44px;
+    width: 100%;
+    margin-bottom: 5px;
+    border-radius: 5px;
+  }
 }
 
 .teamMember {
@@ -1798,9 +2485,24 @@ a {
   font-size: 24px;
   font-weight: 700;
 }
-@media (max-width: 1000px) {
+@media (max-width: 767px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-chart-wrapper h1, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-chart-wrapper h1 {
+    padding: 5px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
   .evaluation-management-ranking-wrapper .evaluation-management-chart-wrapper, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-chart-wrapper {
     width: 600px;
+  }
+}
+@media (max-width: 767px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-chart-wrapper, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-chart-wrapper {
+    width: 100%;
+    height: -moz-fit-content;
+    height: fit-content;
   }
 }
 .evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart {
@@ -1838,8 +2540,31 @@ a {
 .evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart .slick-slider .slick-list .recharts-surface, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart .slick-slider .slick-list .recharts-surface {
   height: 100%;
 }
+@media (max-width: 767px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart .slick-slider .slick-list .recharts-surface, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart .slick-slider .slick-list .recharts-surface {
+    width: 100%;
+    height: 170px;
+  }
+}
+@media (max-width: 767px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart .slick-slider .slick-track, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart .slick-slider .slick-track {
+    width: -moz-max-content;
+    width: max-content;
+    height: 100%;
+  }
+}
 .evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart .slick-arrow, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart .slick-arrow {
   display: none;
+}
+@media (max-width: 767px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart .slick-dots, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart .slick-dots {
+    bottom: -10px;
+  }
+}
+@media (max-width: 767px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-show-evaluation-chart, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-show-evaluation-chart {
+    height: 205px;
+  }
 }
 .evaluation-management-ranking-wrapper .custom-tooltip, .evaluation-management-ranking-wrapper-non-evaluated .custom-tooltip {
   background-color: #d7d7d7;
@@ -1853,6 +2578,11 @@ a {
   justify-content: center;
   align-items: center;
 }
+@media (max-width: 767px) {
+  .evaluation-management-ranking-wrapper .custom-tooltip, .evaluation-management-ranking-wrapper-non-evaluated .custom-tooltip {
+    display: none;
+  }
+}
 .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking {
   height: 350px;
   width: 35%;
@@ -1865,6 +2595,14 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 24px;
   font-weight: 700;
+}
+@media (max-width: 767px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-header, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-header {
+    padding: 5px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+  }
 }
 .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body {
   height: calc(100% - 45px);
@@ -1898,11 +2636,23 @@ a {
   background-repeat: no-repeat;
   background-size: 100%, 100%;
 }
+@media (max-width: 767px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-left-col figure, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-left-col figure {
+    display: none;
+  }
+}
 .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-left-col .ranking, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-left-col .ranking {
   color: #01e89e;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
   font-weight: 600;
+}
+@media (max-width: 767px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-left-col .ranking, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-left-col .ranking {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
 }
 .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col {
   width: 49%;
@@ -1918,13 +2668,29 @@ a {
   font-size: 20px;
   font-weight: 600;
 }
+@media (max-width: 767px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col .name, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col .name {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 14px;
+    font-weight: 900;
+  }
+}
 .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col .score, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col .score {
   color: #7a7a7a;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 14px;
   font-weight: 500;
 }
-@media (max-width: 1000px) {
+@media (max-width: 767px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col .score, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col .score {
+    width: 100%;
+    text-align: center;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
   .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col {
     width: 100%;
     height: 100%;
@@ -1934,12 +2700,34 @@ a {
     align-items: center;
   }
 }
-@media (max-width: 1000px) {
+@media (max-width: 767px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col {
+    width: 100%;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
   .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item {
     padding: 10px;
     margin: 0;
     height: 100%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
+@media (max-width: 767px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item {
+    margin-bottom: 0;
+    padding: 6px;
+    width: 100%;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -1952,9 +2740,23 @@ a {
   background-repeat: no-repeat;
   background-size: 85%, 85%;
 }
-@media (max-width: 1000px) {
+@media (min-width: 767px) and (max-width: 1024px) {
   .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body {
     gap: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+@media (max-width: 767px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body {
+    gap: 9px;
+    width: 100%;
+    height: -moz-fit-content;
+    height: fit-content;
+    padding: 10px;
+    border-radius: 10px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -1964,11 +2766,20 @@ a {
 .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body::-webkit-scrollbar, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body::-webkit-scrollbar {
   display: none;
 }
-@media (max-width: 1000px) {
+@media (min-width: 767px) and (max-width: 1024px) {
   .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking {
     width: 600px;
     height: 200px;
     margin-top: 20px;
+  }
+}
+@media (max-width: 767px) {
+  .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking {
+    margin-left: 0;
+    margin-top: 20px;
+    width: 100%;
+    height: -moz-fit-content;
+    height: fit-content;
   }
 }
 .evaluation-management .evaluation-management-ranking-wrapper {
@@ -2013,6 +2824,14 @@ a {
   font-size: 24px;
   font-weight: 700;
 }
+@media (max-width: 767px) {
+  .evaluation-management-participant-wrapper h1 {
+    padding-top: 0px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+  }
+}
 .evaluation-management-participant-wrapper .evaluation-management-participants {
   flex-wrap: wrap;
   padding-top: 20px;
@@ -2048,6 +2867,12 @@ a {
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
+@media (max-width: 767px) {
+  .evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-left-col .evaluation-management-user-profile {
+    width: 40px;
+    height: 40px;
+  }
+}
 .evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col {
   width: 100%;
   height: 95%;
@@ -2068,6 +2893,16 @@ a {
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
+}
+@media (max-width: 767px) {
+  .evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col .name-badge-wrapper {
+    justify-content: flex-start;
+    width: -moz-fit-content;
+    width: fit-content;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 14px;
+    font-weight: 900;
+  }
 }
 .evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col .evaluation-management-badges {
   width: 180px;
@@ -2091,6 +2926,12 @@ a {
   background-repeat: no-repeat;
   background-size: 100%;
 }
+@media (max-width: 767px) {
+  .evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col .evaluation-management-badges figure {
+    width: 15px;
+    height: 15px;
+  }
+}
 .evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col .evaluation-management-badges .badge-quantity {
   position: relative;
   margin-right: 18px;
@@ -2103,12 +2944,46 @@ a {
   font-size: 20px;
   font-weight: 600;
 }
-@media (max-width: 1000px) {
+@media (max-width: 767px) {
+  .evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col .evaluation-management-badges .badge-quantity div {
+    top: 2px;
+    left: 10px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+}
+@media (max-width: 767px) {
+  .evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col .evaluation-management-badges .badge-quantity {
+    margin-right: 10px;
+  }
+}
+@media (max-width: 767px) {
+  .evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col .evaluation-management-badges {
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+}
+@media (max-width: 767px) {
+  .evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col {
+    width: 100%;
+    margin-left: 5px;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
   .evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant {
     width: 100%;
   }
 }
-@media (max-width: 1000px) {
+@media (max-width: 767px) {
+  .evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant {
+    width: 100%;
+    height: 65px;
+    padding: 10px;
+    justify-content: flex-start;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
   .evaluation-management-participant-wrapper {
     width: 600px;
   }
@@ -2126,9 +3001,6 @@ a {
   font-size: 20px;
   font-weight: 600;
 }
-.evaluation-management-final-evaluation h1 {
-  color: #01e89e;
-}
 .evaluation-management-final-evaluation .final-evaluation-heading {
   margin-bottom: 25px;
   font-family: "IBM Plex Sans KR", sans-serif;
@@ -2145,12 +3017,6 @@ a {
   padding: 50px;
   display: grid;
   grid-template-rows: 25% 25% 50%;
-}
-@media (max-width: 1000px) {
-  .evaluation-management-final-evaluation .final-evaluation-body {
-    grid-template-rows: 35% 35% 30%;
-    height: 150%;
-  }
 }
 .evaluation-management-final-evaluation .final-evaluation-body .evaluation,
 .evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges {
@@ -2194,7 +3060,13 @@ a {
   background-repeat: no-repeat;
   background-size: 10%, 10%;
 }
-@media (max-width: 1000px) {
+.evaluation-management-final-evaluation .final-evaluation-body .evaluation-criterion div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
   .evaluation-management-final-evaluation .final-evaluation-body .evaluation-criterion {
     width: 70%;
     height: 100%;
@@ -2204,12 +3076,6 @@ a {
     margin-left: auto;
     margin-right: auto;
   }
-}
-.evaluation-management-final-evaluation .final-evaluation-body .evaluation-criterion div {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
 }
 .evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges {
   display: grid;
@@ -2247,7 +3113,7 @@ a {
   background-repeat: no-repeat;
   background-size: 100%;
 }
-@media (max-width: 1000px) {
+@media (min-width: 767px) and (max-width: 1024px) {
   .evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges-body {
     width: 100%;
     height: 100%;
@@ -2300,6 +3166,12 @@ a {
   font-size: 18px;
   font-family: "Noto Sans KR", sans-serif;
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .evaluation-management-final-evaluation .final-evaluation-body {
+    grid-template-rows: 35% 35% 30%;
+    height: 150%;
+  }
+}
 .evaluation-management-final-evaluation .final-evaluation-button-wrapper {
   display: flex;
   flex-direction: row;
@@ -2339,12 +3211,44 @@ a {
   font-size: 38px;
   font-weight: 700;
 }
+@media (max-width: 767px) {
+  .management-main-header-left-col h1 {
+    margin-right: 5px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+  }
+}
+@media (max-width: 767px) {
+  .management-main-header-left-col {
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+}
 .management-main-header-right-col {
   gap: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+@media (max-width: 767px) {
+  .management-main-header-right-col {
+    width: -moz-fit-content;
+    width: fit-content;
+    gap: 5px;
+  }
+}
+@media (max-width: 767px) {
+  .management-main-header {
+    border-radius: 0px 0px 15px 15px;
+    padding: 8px;
+  }
+}
+@media (max-width: 767px) {
+  .management-main-header {
+    height: 130px;
+  }
 }
 .management .project-list-wrapper .project-list {
   margin-top: 30px;
@@ -2358,6 +3262,13 @@ a {
 }
 .management .project-list-wrapper .project-list-description p {
   text-align: center;
+}
+@media (max-width: 767px) {
+  .management .project-list-wrapper .project-list-description {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 7px;
+    font-weight: 700;
+  }
 }
 .management .project-list-wrapper .project-list .project-item {
   border: 2px solid #01e89e;
@@ -2382,13 +3293,17 @@ a {
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
+@media (max-width: 767px) {
+  .management .project-list-wrapper .project-list .project-item-left-col figure {
+    width: 25px;
+    height: 25px;
+  }
+}
 .management .project-list-wrapper .project-list .project-item-right-col {
   display: grid;
   grid-template-columns: 80% 20%;
   grid-template-rows: 100%;
   color: #003b28;
-  font-size: 18px;
-  font-family: "Noto Sans KR", sans-serif;
   height: 100%;
 }
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-heading {
@@ -2398,6 +3313,14 @@ a {
   font-size: 24px;
   font-weight: 700;
 }
+@media (max-width: 767px) {
+  .management .project-list-wrapper .project-list .project-item-right-col .project-item-heading {
+    margin-bottom: 10px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+  }
+}
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-period,
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-description {
   margin-bottom: 7px;
@@ -2405,13 +3328,21 @@ a {
   font-size: 14px;
   font-weight: 500;
 }
+@media (max-width: 767px) {
+  .management .project-list-wrapper .project-list .project-item-right-col .project-item-period,
+  .management .project-list-wrapper .project-list .project-item-right-col .project-item-description {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+}
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-description {
   line-height: 1.5;
   overflow-wrap: break-word;
 }
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-period-heading,
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-description-heading {
-  margin-right: 5px;
+  margin-right: 2px;
 }
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-button-wrapper {
   width: 60px;
@@ -2424,18 +3355,53 @@ a {
   justify-content: center;
   align-items: center;
 }
+@media (max-width: 767px) {
+  .management .project-list-wrapper .project-list .project-item-right-col .project-item-button-wrapper {
+    width: 40px;
+    height: 40px;
+  }
+}
 .management .project-list-wrapper .project-list .project-item-right-col .leave-button-text {
   color: #00aa72;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 12px;
   font-weight: 600;
 }
+@media (max-width: 767px) {
+  .management .project-list-wrapper .project-list .project-item-right-col .leave-button-text {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 5px;
+    font-weight: 600;
+  }
+}
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-button-wrapper figure {
   background-position: center;
   background-repeat: no-repeat;
+  background-size: 100% 100%;
   width: 17px;
   height: 17px;
   margin-bottom: 5px;
+}
+@media (max-width: 767px) {
+  .management .project-list-wrapper .project-list .project-item-right-col .project-item-button-wrapper figure {
+    margin-bottom: 2px;
+    width: 12px;
+    height: 12px;
+  }
+}
+@media (max-width: 767px) {
+  .management .project-list-wrapper .project-list .project-item-right-col {
+    margin-left: 8px;
+  }
+}
+@media (max-width: 767px) {
+  .management .project-list-wrapper .project-list .project-item {
+    grid-template-columns: 10% 90%;
+    width: 90%;
+    height: 125px;
+    padding: 25px 7px;
+    border-radius: 15px;
+  }
 }
 
 .MuiBox-root {
@@ -2557,8 +3523,6 @@ a {
 }
 .MuiBox-root .delete-project-heading {
   color: white;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 25px;
   text-align: center;
   line-height: 1.5;
 }
@@ -2574,6 +3538,11 @@ a {
     width: 90%;
     padding-top: 60px;
     padding-bottom: 60px;
+  }
+}
+@media (max-width: 767px) {
+  .management_project_layout {
+    width: 90%;
   }
 }
 
@@ -2598,11 +3567,25 @@ a {
   background-size: 100% 100%;
   cursor: pointer;
 }
+@media (max-width: 767px) {
+  .project-management .project-button-wrapper figure {
+    margin-bottom: 10px;
+    width: 180px;
+    height: 180px;
+  }
+}
 .project-management .project-button-wrapper h1 {
   color: #003b28;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
   font-weight: 600;
+}
+@media (max-width: 767px) {
+  .project-management .project-button-wrapper h1 {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+  }
 }
 .project-management .completed-project,
 .project-management .ongoing-project {
@@ -2612,10 +3595,20 @@ a {
   align-items: center;
   height: 100%;
 }
-@media (max-width: 1000px) {
+@media (min-width: 767px) and (max-width: 1024px) {
   .project-management .completed-project,
   .project-management .ongoing-project {
     gap: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+@media (max-width: 767px) {
+  .project-management .completed-project,
+  .project-management .ongoing-project {
+    gap: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -2697,12 +3690,26 @@ a {
   margin: 0px 5px;
 }
 
+.home {
+  overflow-x: hidden;
+}
 .home .banner-wrapper {
   margin-top: 30px;
   margin-bottom: 30px;
   width: 60%;
   margin-left: auto;
   margin-right: auto;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .home .banner-wrapper {
+    width: 75%;
+  }
+}
+@media (max-width: 767px) {
+  .home .banner-wrapper {
+    margin-top: 15px;
+    width: 100%;
+  }
 }
 .home .banner {
   width: 100%;
@@ -2722,6 +3729,13 @@ a {
   font-size: 38px;
   font-weight: 700;
 }
+@media (max-width: 767px) {
+  .home .description h1 {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
 .home .description p {
   width: 95%;
   color: #7a7a7a;
@@ -2733,19 +3747,55 @@ a {
   margin-left: auto;
   margin-right: auto;
 }
-.home .project-wrapper {
+@media (max-width: 767px) {
+  .home .description p {
+    line-height: 20px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .home .description {
+    height: 100%;
+  }
+}
+@media (max-width: 767px) {
+  .home .description {
+    height: 100%;
+    padding: 15px 30px;
+  }
+}
+.home .project-container-wrapper {
+  width: 100%;
+  height: 450px;
+  border-radius: 48px 48px 0px 0px;
+  box-shadow: 4px 4px 20px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  overflow: auto;
+}
+.home .project-container-wrapper .project-container {
   display: grid;
   grid-template-columns: repeat(3, 300px);
   grid-template-rows: 100%;
   justify-content: center;
   gap: 22px;
   width: 100%;
-  height: 450px;
-  border-radius: 48.815px 48.815px 0px 0px;
-  box-shadow: 4px 4px 20px 10px rgba(0, 0, 0, 0.1);
-  padding: 30px;
 }
-.home .project-wrapper .project {
+@media (min-width: 767px) and (max-width: 1024px) {
+  .home .project-container-wrapper .project-container {
+    grid-template-columns: repeat(3, 33.3%);
+    gap: 8px;
+  }
+}
+@media (max-width: 767px) {
+  .home .project-container-wrapper .project-container {
+    width: -moz-max-content;
+    width: max-content;
+    grid-template-columns: repeat(3, 220px);
+  }
+}
+.home .project-container-wrapper .project {
   width: 304px;
   height: 339px;
   border-radius: 20px;
@@ -2756,68 +3806,82 @@ a {
   justify-content: space-between;
   align-items: flex-start;
 }
-.home .project-wrapper .project h1 {
+.home .project-container-wrapper .project h1 {
   color: white;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 24px;
   font-weight: 700;
 }
-.home .project-wrapper .project .project-detail-wrapper {
-  width: 275px;
+@media (max-width: 767px) {
+  .home .project-container-wrapper .project h1 {
+    margin-bottom: 12px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
+.home .project-container-wrapper .project .project-detail-wrapper {
+  width: 100%;
   height: 258px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
-.home .project-wrapper .project .project-detail {
+.home .project-container-wrapper .project .project-detail {
   background-color: white;
   border-radius: 10px;
   width: 100%;
   height: 100%;
   padding: 10px;
 }
-.home .project-wrapper .project .project-detail a {
+.home .project-container-wrapper .project .project-detail a {
   height: 100%;
 }
-.home .project-wrapper .project .project-detail .slick-slider {
+.home .project-container-wrapper .project .project-detail .slick-slider {
   height: 90%;
 }
-.home .project-wrapper .project .project-detail .slick-slider > button {
+.home .project-container-wrapper .project .project-detail .slick-slider > button {
   width: 0;
   height: 0;
 }
-.home .project-wrapper .project .project-detail .slick-prev::before,
-.home .project-wrapper .project .project-detail .slick-next::before {
+.home .project-container-wrapper .project .project-detail .slick-prev::before,
+.home .project-container-wrapper .project .project-detail .slick-next::before {
   content: "";
 }
-.home .project-wrapper .project .project-detail .slick-list,
-.home .project-wrapper .project .project-detail .slick-track,
-.home .project-wrapper .project .project-detail .slick-slide,
-.home .project-wrapper .project .project-detail .slick-slide > div,
-.home .project-wrapper .project .project-detail .slick-slide > div > div {
+.home .project-container-wrapper .project .project-detail .slick-list,
+.home .project-container-wrapper .project .project-detail .slick-track,
+.home .project-container-wrapper .project .project-detail .slick-slide,
+.home .project-container-wrapper .project .project-detail .slick-slide > div,
+.home .project-container-wrapper .project .project-detail .slick-slide > div > div {
   height: 100%;
 }
-.home .project-wrapper .project .project-detail img {
+.home .project-container-wrapper .project .project-detail img {
   width: 70px;
   height: 70px;
   border-radius: 50%;
 }
-.home .project-wrapper .project .project-detail .project-first-row {
+@media (max-width: 767px) {
+  .home .project-container-wrapper .project .project-detail img {
+    width: 60px;
+    height: 60px;
+  }
+}
+.home .project-container-wrapper .project .project-detail .project-first-row {
   height: 65%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
 }
-.home .project-wrapper .project .project-detail .project-img-wrapper {
+.home .project-container-wrapper .project .project-detail .project-img-wrapper {
   width: -moz-fit-content;
   width: fit-content;
   height: -moz-fit-content;
   height: fit-content;
   margin-right: 5px;
 }
-.home .project-wrapper .project .project-detail .project-heading-wrapper {
+.home .project-container-wrapper .project .project-detail .project-heading-wrapper {
   padding: 10px;
   width: 100%;
   height: 100%;
@@ -2826,13 +3890,20 @@ a {
   justify-content: space-between;
   align-items: flex-end;
 }
-.home .project-wrapper .project .project-detail .project-heading-wrapper div {
+.home .project-container-wrapper .project .project-detail .project-heading-wrapper div {
   color: #7a7a7a;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
 }
-.home .project-wrapper .project .project-detail .project-like-count {
+@media (max-width: 767px) {
+  .home .project-container-wrapper .project .project-detail .project-heading-wrapper div {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+}
+.home .project-container-wrapper .project .project-detail .project-like-count {
   border: 2px solid #01e89e;
   width: 52px;
   height: 52px;
@@ -2842,29 +3913,62 @@ a {
   justify-content: center;
   align-items: center;
 }
-.home .project-wrapper .project .project-detail .project-like-count img {
+.home .project-container-wrapper .project .project-detail .project-like-count img {
   width: 24px;
   height: 24px;
 }
-.home .project-wrapper .project .project-detail .project-like-count div {
+.home .project-container-wrapper .project .project-detail .project-like-count div {
   color: #01e89e;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 12px;
   font-weight: 500;
 }
-.home .project-wrapper .project .project-detail h1 {
+.home .project-container-wrapper .project .project-detail h1 {
   color: #7a7a7a;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 24px;
   font-weight: 700;
 }
-.home .project-wrapper .project .project-detail .project-second-row {
+@media (max-width: 767px) {
+  .home .project-container-wrapper .project .project-detail h1 {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
+.home .project-container-wrapper .project .project-detail .project-second-row {
   padding: 10px;
   height: 35%;
   color: #7a7a7a;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
+}
+@media (max-width: 767px) {
+  .home .project-container-wrapper .project .project-detail .project-second-row {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .home .project-container-wrapper .project {
+    width: 100%;
+  }
+}
+@media (max-width: 767px) {
+  .home .project-container-wrapper .project {
+    width: 100%;
+    height: 258px;
+  }
+}
+@media (max-width: 767px) {
+  .home .project-container-wrapper {
+    width: 100%;
+    height: -moz-fit-content;
+    height: fit-content;
+    padding: 35px 15px;
+  }
 }
 .home .footer {
   height: 150px;
@@ -2886,8 +3990,22 @@ a {
   background-repeat: no-repeat;
   background-size: 100%;
 }
+@media (max-width: 767px) {
+  .home .footer figure {
+    width: 100px;
+    height: 25px;
+  }
+}
 .home .footer div {
   margin-bottom: 10px;
+}
+@media (max-width: 767px) {
+  .home .footer {
+    height: 130px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
 }
 
 .member-option {

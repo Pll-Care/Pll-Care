@@ -10,6 +10,10 @@
     text-decoration: none;
     color: $gray-500;
 
+    @include mobile {
+      @include m_heading_03;
+    }
+
     @include heading_04;
   }
 
@@ -17,12 +21,14 @@
     color: $green-500;
   }
 
-  @include putCenter;
-  @include displayFlex(row, space-around);
-}
-
-@include tablet {
-  .management-header {
+  @include tablet {
     margin-bottom: 60px;
   }
+
+  @include mobile {
+    height: 33px;
+  }
+
+  @include putCenter;
+  @include displayFlex(row, space-around);
 }

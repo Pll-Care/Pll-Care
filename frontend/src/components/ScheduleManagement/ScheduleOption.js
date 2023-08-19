@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 
 import Card from "../common/Card";
 import Button from "../common/Button";
+import { Loading } from "../common/Loading";
 import ScheduleList from "./ScheduleList";
 import { getTeamMember } from "../../lib/apis/teamMemberManagementApi";
 
@@ -50,12 +51,9 @@ const ScheduleOption = () => {
       </div>
       <Card className="schedule-option-person">
         <h4>참여자</h4>
-        {isLoading && <h1 className="check-schedule">⏳ 로딩 중...</h1>}
+        {isLoading && <Loading />}
         {!names && !isLoading && (
           <h1 className="check-schedule">🥲 통신 오류났습니다.</h1>
-        )}
-        {names && names.length === 0 && (
-          <h1 className="check-schedule">아직 참여자가 없습니다.</h1>
         )}
         {!isLoading &&
           names?.map((data, index) => (

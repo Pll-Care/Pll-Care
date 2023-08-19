@@ -16,11 +16,22 @@
         color: $green-200;
         padding: 10px;
 
+        @include mobile {
+          padding: 5px;
+
+          @include m_heading_02;
+        }
+
         @include heading_03;
       }
 
-      @media (max-width: 1000px) {
+      @include tablet {
         width: 600px;
+      }
+
+      @include mobile {
+        width: 100%;
+        height: fit-content;
       }
     }
 
@@ -47,6 +58,18 @@
 
           .recharts-surface {
             height: 100%;
+
+            @include mobile {
+              width: 100%;
+              height: 170px;
+            }
+          }
+        }
+
+        .slick-track {
+          @include mobile {
+            width: max-content;
+            height: 100%;
           }
         }
 
@@ -55,6 +78,16 @@
 
       .slick-arrow {
         display: none;
+      }
+
+      .slick-dots {
+        @include mobile {
+          bottom: -10px;
+        }
+      }
+
+      @include mobile {
+        height: 205px;
       }
 
       @include body_01;
@@ -69,6 +102,10 @@
       height: 140px;
       line-height: 1.5;
 
+      @include mobile {
+        display: none;
+      }
+
       @include displayFlex;
     }
 
@@ -82,12 +119,18 @@
         color: $green-200;
         padding: 10px;
 
+        @include mobile {
+          padding: 5px;
+
+          @include m_heading_02;
+        }
+
         @include heading_03;
       }
 
       &-body {
         height: calc(100% - 45px);
-        background-color: #01e89e;
+        background-color: $green-200;
         border-radius: 25px;
         padding: 20px;
 
@@ -104,11 +147,19 @@
               height: 40px;
               margin-right: 5px;
 
+              @include mobile {
+                display: none;
+              }
+
               @include backgroundImage("../assets/ranking-img.png");
             }
 
             .ranking {
               color: $green-200;
+
+              @include mobile {
+                @include m_heading_03;
+              }
 
               @include heading_04;
             }
@@ -123,18 +174,36 @@
               color: $green-200;
               margin-bottom: 4px;
 
+              @include mobile {
+                @include heading_07;
+              }
+
               @include heading_04;
             }
 
             .score {
               color: $gray-500;
 
+              @include mobile {
+                width: 100%;
+                text-align: center;
+
+                @include m_body_01;
+              }
+
               @include body_01;
             }
 
-            @media (max-width: 1000px) {
+            @include tablet {
               width: 100%;
               height: 100%;
+
+              @include displayFlex(column, space-around);
+            }
+
+            @include mobile {
+              width: 100%;
+              height: 60%;
 
               @include displayFlex(column, space-around);
             }
@@ -142,7 +211,7 @@
             @include displayFlex(column, center, flex-end);
           }
 
-          @media (max-width: 1000px) {
+          @include tablet {
             padding: 10px;
             margin: 0;
             height: 100%;
@@ -150,7 +219,16 @@
 
             @include displayFlex(column, space-around);
           }
-          
+
+          @include mobile {
+            margin-bottom: 0;
+            padding: 6px;
+            width: 100%;
+            border-radius: 10px;
+
+            @include displayFlex(column, space-around);
+          }
+
           @include displayFlex(row, space-around);
         }
 
@@ -168,8 +246,19 @@
           }
         }
 
-        @media (max-width: 1000px) {
+        @include tablet {
           gap: 20px;
+
+          @include displayFlex(row, space-between);
+        }
+
+        @include mobile {
+          gap: 9px;
+          width: 100%;
+          height: fit-content;
+          padding: 10px;
+          border-radius: 10px;
+
           @include displayFlex(row, space-between);
         }
       }
@@ -178,10 +267,17 @@
         display: none;
       }
 
-      @media (max-width: 1000px) {
+      @include tablet {
         width: 600px;
         height: 200px;
         margin-top: 20px;
+      }
+
+      @include mobile {
+        margin-left: 0;
+        margin-top: 20px;
+        width: 100%;
+        height: fit-content;
       }
     }
 
@@ -233,6 +329,12 @@
       color: $green-200;
       padding-top: 15px;
 
+      @include mobile {
+        padding-top: 0px;
+
+        @include m_heading_02;
+      }
+
       @include heading_03;
     }
 
@@ -265,6 +367,11 @@
             repeat: no-repeat;
             size: 100% 100%;
           }
+
+          @include mobile {
+            width: 40px;
+            height: 40px;
+          }
         }
 
         &-right-col {
@@ -276,6 +383,13 @@
           .name-badge-wrapper {
             height: 100%;
             color: $gray-500;
+
+            @include mobile {
+              justify-content: flex-start;
+              width: fit-content;
+
+              @include heading_07;
+            }
 
             @include heading_04;
             @include displayFlex(column, space-between, flex-start);
@@ -300,6 +414,11 @@
                 repeat: no-repeat;
                 size: 100%;
               }
+
+              @include mobile {
+                width: 15px;
+                height: 15px;
+              }
             }
 
             .badge-quantity {
@@ -311,19 +430,45 @@
                 top: 5px;
                 left: 20px;
 
+                @include mobile {
+                  top: 2px;
+                  left: 10px;
+
+                  @include m_heading_03;
+                }
                 @include heading_04;
               }
+
+              @include mobile {
+                margin-right: 10px;
+              }
+            }
+
+            @include mobile {
+              width: fit-content;
             }
 
             @include displayFlex(row, space-between);
           }
 
+          @include mobile {
+            width: 100%;
+            margin-left: 5px;
+          }
+
           @include displayFlex(row, space-between, center);
         }
 
-        @media (max-width: 1000px) {
+        @include tablet {
           width: 100%;
-        } 
+        }
+
+        @include mobile {
+          width: 100%;
+          height: 65px;
+          padding: 10px;
+          justify-content: flex-start;
+        }
 
         @include displayFlex;
       }
@@ -331,7 +476,7 @@
       @include displayFlex(row, space-between);
     }
 
-    @media (max-width: 1000px) {
+    @include tablet {
       width: 600px;
     }
 
@@ -351,10 +496,6 @@
       @include heading_04;
     }
 
-    h1 {
-      color: $font-color;
-    }
-
     .final-evaluation-heading {
       margin-bottom: 25px;
 
@@ -371,11 +512,6 @@
       padding: 50px;
       display: grid;
       grid-template-rows: 25% 25% 50%;
-
-      @media (max-width: 1000px) {
-        grid-template-rows: 35% 35% 30%;
-        height: 150%;
-      }
 
       .evaluation,
       .evaluation-badges {
@@ -423,7 +559,11 @@
           );
         }
 
-        @media (max-width: 1000px) {
+        div {
+          @include displayFlex(row, space-between);
+        }
+
+        @include tablet {
           width: 70%;
           height: 100%;
           grid-template-rows: repeat(4, 1fr);
@@ -431,10 +571,6 @@
           padding-bottom: 10px;
 
           @include putCenter;
-        }
-
-        div {
-          @include displayFlex(row, space-between);
         }
 
         @include heading_05;
@@ -478,7 +614,7 @@
             }
           }
 
-          @media (max-width: 1000px) {
+          @include tablet {
             width: 100%;
             height: 100%;
             grid-template-rows: repeat(4, 1fr);
@@ -527,6 +663,11 @@
         }
 
         @include displayFlex(column, center, flex-start);
+      }
+
+      @include tablet {
+        grid-template-rows: 35% 35% 30%;
+        height: 150%;
       }
     }
 

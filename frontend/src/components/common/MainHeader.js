@@ -1,4 +1,6 @@
+
 /* eslint-disable react-hooks/exhaustive-deps */
+
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "../../hooks/useRouter";
@@ -12,6 +14,8 @@ import logo from "../../assets/logo-with-text.svg";
 import profileLogo from "../../assets/logo-with-text-profile.png";
 import { useGeneralClient } from "../../context/Client/GeneralClientContext";
 import { userInfoActions } from "../../redux/userInfoSlice";
+
+import useLinkMenuClick from "../../hooks/useLinkMenuClick";
 
 const MainHeader = () => {
   const [isToggleMenuOpen, setIsToggleMenuOpen] = useState(false);
@@ -51,14 +55,6 @@ const MainHeader = () => {
     if (authState) getUser();
   }, [authState]);
 
-  const handleClickLinkMenu = (link) => {
-    if (link === "/management" && !isToken("access_token")) {
-      dispatch(authActions.setIsLoginModalVisible(true));
-    } else {
-      routeTo(link);
-    }
-  };
-
   const handleLogout = () => {
     dispatch(authActions.logout());
     replaceTo("/");
@@ -67,6 +63,8 @@ const MainHeader = () => {
   const handleLogin = () => {
     dispatch(authActions.setIsLoginModalVisible(true));
   };
+
+  const handleClickLinkMenu = useLinkMenuClick();
 
   return (
     <header className={isProfilePage ? "header header-profile-bg" : "header"}>
@@ -144,6 +142,7 @@ const MainHeader = () => {
             </div>
             <ToggleMenuButton
               isProfilePage={isProfilePage}
+
               isToggleMenuOpen={isToggleMenuOpen}
               setIsToggleMenuOpen={setIsToggleMenuOpen}
             />

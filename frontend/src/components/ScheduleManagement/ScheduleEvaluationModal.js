@@ -3,17 +3,22 @@ import { useParams } from "react-router";
 import { useMutation } from "react-query";
 import { toast } from "react-toastify";
 
-import { Tooltip } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 import Button from "../common/Button";
 import ModalContainer from "../common/ModalContainer";
-import AlertModal from "./AlertModal";
+import AlertCheckModal from "../common/AlertCheckModal";
+import EvaluationMobileContent from "./EvaluationMobileContent";
+import EvaluationContent from "./EvaluationContent";
 
 import { getDateTimeDuration } from "../../utils/date";
+import { query } from "../../utils/mediaQuery";
 import { makeNewMidEvaluation } from "../../lib/apis/evaluationManagementApi";
 
 const ScheduleEvaluationModal = (props) => {
   const { id } = useParams();
+  const isMobile = useMediaQuery(query);
 
   const projectId = parseInt(id, 10);
   const scheduleId = parseInt(props.id, 10);
@@ -23,9 +28,11 @@ const ScheduleEvaluationModal = (props) => {
   const [badge, setBadge] = useState("열정적인_참여자");
   const [evaluation, setEvaluation] = useState();
 
+  // 인원 선택 함수
   const participantsClickHandler = (name) => {
     setName(name);
   };
+  // 뱃지 선택 함수
   const badgeClickHandler = (badge) => {
     setBadge(badge);
   };
@@ -65,7 +72,7 @@ const ScheduleEvaluationModal = (props) => {
     };
     setEvaluation(data);
 
-    //console.log(data);
+    console.log(data);
     openConfirmModalHandler();
   };
 
@@ -74,85 +81,54 @@ const ScheduleEvaluationModal = (props) => {
       open={props.open}
       onClose={props.onClose}
       type="dark"
-      width="40%"
+      width={isMobile ? "100%" : "700px"}
+      height={isMobile && "100%"}
+      border={isMobile && "0px"}
+      padding="25px"
     >
-      <AlertModal
+      <AlertCheckModal
         open={confirmModalVisible}
         onClose={closeConfirmModalHandler}
-        width="30%"
         text="작성 완료한 평가는 수정 또는 삭제할 수 없습니다. 작성 완료 하시겠습니까?"
         clickHandler={() => {
           mutate(evaluation);
         }}
       />
       <div className="schedule-modal">
-        <h1>평가 작성</h1>
+        <div className="schedule-modal-title">
+          <h1>중간 평가 작성</h1>
+          {isMobile && (
+            <CloseIcon className="mui-icon" onClick={props.onClose} />
+          )}
+        </div>
         <div className="schedule-modal-content">
-          <h1>{props.title}</h1>
-          <h2>{time} 진행</h2>
-          <div className="schedule-modal-content-evaluation">
-            <div className="modal-member">
-              <h3>참여자</h3>
-              {props.members.map((member, index) => (
-                <Button
-                  key={index}
-                  text={member.name}
-                  size="small"
-                  type={name === member.id ? "positive_dark" : ""}
-                  onClick={() => participantsClickHandler(member.id)}
-                />
-              ))}
-            </div>
-            <div className="modal-badges">
-              <h3>뱃지 선택</h3>
-              <div className="modal-badges-items">
-                <Tooltip title="열정적인 참여자">
-                  <div
-                    className={`modal-badge ${
-                      badge === "열정적인_참여자" ? "selected" : ""
-                    }`}
-                    onClick={() => badgeClickHandler("열정적인_참여자")}
-                  >
-                    🔥
-                  </div>
-                </Tooltip>
-                <Tooltip title="아이디어 뱅크">
-                  <div
-                    className={`modal-badge ${
-                      badge === "아이디어_뱅크" ? "selected" : ""
-                    }`}
-                    onClick={() => badgeClickHandler("아이디어_뱅크")}
-                  >
-                    💡
-                  </div>
-                </Tooltip>
-                <Tooltip title="탁월한 리더">
-                  <div
-                    className={`modal-badge ${
-                      badge === "탁월한_리더" ? "selected" : ""
-                    }`}
-                    onClick={() => badgeClickHandler("탁월한_리더")}
-                  >
-                    👏
-                  </div>
-                </Tooltip>
-                <Tooltip title="최고의 서포터">
-                  <div
-                    className={`modal-badge ${
-                      badge === "최고의_서포터" ? "selected" : ""
-                    }`}
-                    onClick={() => badgeClickHandler("최고의_서포터")}
-                  >
-                    👥
-                  </div>
-                </Tooltip>
-              </div>
-            </div>
-          </div>
+          {!isMobile && (
+            <>
+              <h1>{props.title}</h1>
+              <h2>{time} 진행</h2>
+            </>
+          )}
+
+          {isMobile ? (
+            <EvaluationMobileContent
+              members={props.members}
+              name={name}
+              participantsClickHandler={participantsClickHandler}
+              badge={badge}
+              badgeClickHandler={badgeClickHandler}
+            />
+          ) : (
+            <EvaluationContent
+              members={props.members}
+              name={name}
+              participantsClickHandler={participantsClickHandler}
+              badge={badge}
+              badgeClickHandler={badgeClickHandler}
+            />
+          )}
         </div>
         <div className="schedule-modal-button">
           <Button text="작성 완료" onClick={evaluationClickHandler} />
-          <Button text="취소" onClick={() => props.onClose()} />
         </div>
       </div>
     </ModalContainer>

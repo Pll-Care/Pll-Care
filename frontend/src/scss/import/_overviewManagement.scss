@@ -1,17 +1,21 @@
 // OverviewChart 컴포넌트 scss
 .schedule {
   h1 {
-    font-size: $sub-heading-font-size;
-    color: $sub-heading-color;
-    font-family: $link-font;
+    @include heading_04;
+    color: $green-400;
     margin: 15px;
     margin-left: 7%;
   }
-}
-.endpoint {
-  color: gray;
-  margin-bottom: 10px;
-  font-size: $body-font-size;
+  .overview-time {
+    @include heading_05;
+    color: white;
+  }
+  h3,
+  h5 {
+    margin-top: 10px;
+    @include body_01;
+    color: $gray-500;
+  }
 }
 
 .simple {
@@ -21,36 +25,37 @@
   padding: 1rem;
   margin-top: 10px;
   h2 {
-    font-family: $link-font;
-    font-size: $link-font-size;
-    color: #7a7a7a;
+    @include body_01;
+    color: $gray-500;
   }
   h3 {
     margin-top: 10px;
-    font-family: $link-font;
-    font-size: 14px;
-    color: #7a7a7a;
+    @include body_02;
+    color: $gray-500;
   }
 }
 
+// 모바일 수정 예정
 @include mobile {
   .schedule {
     h1 {
-      font-size: $body-font-size-small;
+      @include m_heading_03;
+    }
+    h3,
+    h5 {
+      @include m_body_01;
+    }
+    .overview-time {
+      @include m_heading_03;
     }
   }
-  .endpoint {
-    font-size: $body-font-size-small;
-  }
+
   .simple {
-    h2,
-    h3 {
-      font-size: $link-font-size-small;
+    h2 {
+      @include m_body_01;
     }
-  }
-}
-@include tablet {
-  .endpoint {
-    font-size: $body-font-size-medium;
+    h3 {
+      @include m_body_02;
+    }
   }
 }

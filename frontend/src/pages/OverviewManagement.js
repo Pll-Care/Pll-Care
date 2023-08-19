@@ -1,4 +1,4 @@
-import OverviewChart from "../components/OverviewManagement/OverviewChart";
+import OverviewChart from "../components/OverviewManagement";
 
 const OverviewManagement = () => {
   return (

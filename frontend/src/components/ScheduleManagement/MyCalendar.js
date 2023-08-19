@@ -10,7 +10,7 @@ import { getProjectId } from "../../utils/getProjectId";
 const MyCalendar = () => {
   const projectId = getProjectId(useLocation());
 
-  const { data } = useQuery(["calendarSchedule", projectId], () =>
+  const { data, status } = useQuery(["calendarSchedule", projectId], () =>
     getCalendarAllSchedule(projectId)
   );
 
@@ -45,22 +45,30 @@ const MyCalendar = () => {
   // 달력 간격 커스텀
   const dayCellContent = (args) => {
     return (
-      <div style={{ width: "80%", height: "80%", margin: "auto" }}>
-        {args.dayNumberText}
-      </div>
+      <div style={{ width: "20px", height: "10px" }}>{args.dayNumberText}</div>
     );
   };
 
   return (
-    <div className="calendar">
-      <div className="calendar-schedule">
-        <FullCalendar
-          defaultView="dayGridMonth"
-          plugins={[dayGridPlugin]}
-          eventContent={eventContent}
-          events={events}
-          dayCellContent={dayCellContent}
-        />
+    <div className="schedule-calendar">
+      <div className="schedule-calendar-schedulelist">
+        {status === "success" && (
+          <FullCalendar
+            defaultView="dayGridMonth"
+            plugins={[dayGridPlugin]}
+            eventContent={eventContent}
+            events={events}
+            dayCellContent={dayCellContent}
+          />
+        )}
+        {status === "error" && (
+          <FullCalendar
+            defaultView="dayGridMonth"
+            plugins={[dayGridPlugin]}
+            eventContent={eventContent}
+            dayCellContent={dayCellContent}
+          />
+        )}
       </div>
       <CalendarList />
     </div>

@@ -1,8 +1,19 @@
 .home {
+  overflow-x: hidden;
+
   .banner-wrapper {
     margin-top: 30px;
     margin-bottom: 30px;
     width: 60%;
+
+    @include tablet {
+      width: 75%;
+    }
+
+    @include mobile {
+      margin-top: 15px;
+      width: 100%;
+    }
 
     @include putCenter;
   }
@@ -23,6 +34,10 @@
       color: $green-500;
       margin-bottom: 20px;
 
+      @include mobile {
+        @include m_heading_05;
+      }
+
       @include heading_01;
     }
 
@@ -32,22 +47,52 @@
       line-height: 44px;
       word-break: keep-all;
 
+      @include mobile {
+        line-height: 20px;
+
+        @include m_body_01;
+      }
+
       @include body_04;
       @include putCenter;
     }
+
+    @include tablet {
+      height: 100%;
+    }
+
+    @include mobile {
+      height: 100%;
+      padding: 15px 30px;
+    }
   }
 
-  .project-wrapper {
-    display: grid;
-    grid-template-columns: repeat(3, 300px);
-    grid-template-rows: 100%;
-    justify-content: center;
-    gap: 22px;
+  .project-container-wrapper {
     width: 100%;
     height: 450px;
-    border-radius: 48.815px 48.815px 0px 0px;
+    border-radius: 48px 48px 0px 0px;
     box-shadow: 4px 4px 20px 10px rgba(0, 0, 0, 0.1);
     padding: 30px;
+    overflow: auto;
+
+    .project-container {
+      display: grid;
+      grid-template-columns: repeat(3, 300px);
+      grid-template-rows: 100%;
+      justify-content: center;
+      gap: 22px;
+      width: 100%;
+
+      @include tablet {
+        grid-template-columns: repeat(3, 33.3%);
+        gap: 8px;
+      }
+
+      @include mobile {
+        width: max-content;
+        grid-template-columns: repeat(3, 220px);
+      }
+    }
 
     .project {
       width: 304px;
@@ -60,10 +105,16 @@
         color: white;
 
         @include heading_03;
+
+        @include mobile {
+          margin-bottom: 12px;
+
+          @include m_heading_05;
+        }
       }
 
       .project-detail-wrapper {
-        width: 275px;
+        width: 100%;
         height: 258px;
 
         @include displayFlex;
@@ -106,6 +157,11 @@
           width: 70px;
           height: 70px;
           border-radius: 50%;
+
+          @include mobile {
+            width: 60px;
+            height: 60px;
+          }
         }
 
         .project-first-row {
@@ -132,6 +188,10 @@
           color: $gray-500;
 
           @include heading_05;
+
+          @include mobile {
+            @include m_body_01;
+          }
         }
 
         .project-like-count {
@@ -157,6 +217,10 @@
         h1 {
           color: $gray-500;
 
+          @include mobile {
+            @include m_heading_05;
+          }
+
           @include heading_03;
         }
 
@@ -165,11 +229,30 @@
           height: 35%;
           color: $gray-500;
 
+          @include mobile {
+            @include m_body_01;
+          }
+
           @include heading_05;
         }
       }
 
+      @include tablet {
+        width: 100%;
+      }
+
+      @include mobile {
+        width: 100%;
+        height: 258px;
+      }
+
       @include displayFlex(column, space-between, flex-start);
+    }
+
+    @include mobile {
+      width: 100%;
+      height: fit-content;
+      padding: 35px 15px;
     }
   }
 
@@ -187,6 +270,11 @@
         repeat: no-repeat;
         size: 100%;
       }
+
+      @include mobile {
+        width: 100px;
+        height: 25px;
+      }
     }
 
     div {
@@ -194,6 +282,12 @@
     }
 
     color: gray-500;
+
+    @include mobile {
+      height: 130px;
+
+      @include m_body_01;
+    }
 
     @include body_02;
     @include displayFlex(column);
