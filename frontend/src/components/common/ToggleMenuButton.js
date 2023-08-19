@@ -6,9 +6,12 @@ import managementIconImgUrl from "../../assets/management-icon.svg";
 import recruitmentIconImgUrl from "../../assets/recruitment-icon.svg";
 import useLinkMenuClick from "../../hooks/useLinkMenuClick";
 
-const ToggleMenuButton = ({ isToggleMenuOpen, setIsToggleMenuOpen, isProfilePage }) => {
+const ToggleMenuButton = ({
+  isToggleMenuOpen,
+  setIsToggleMenuOpen,
+  isProfilePage,
+}) => {
   const modalOutside = useRef(null);
-
 
   const handleToggleMenuButtonClick = (isBoolean) => {
     setIsToggleMenuOpen((_) => isBoolean);
@@ -22,70 +25,71 @@ const ToggleMenuButton = ({ isToggleMenuOpen, setIsToggleMenuOpen, isProfilePage
 
   const handleClickLinkMenu = useLinkMenuClick();
 
-   return (
+  return (
     <div
-      className={
-        isToggleMenuOpen
-          ? "toggle-menu-button-wrapper"
-          : "toggle-menu-button-wrapper-close"
-      }
+      className={isToggleMenuOpen ? "toggle-menu-wrapper" : ""}
       ref={modalOutside}
       onClick={handleToggleButtonClose}
     >
-      <div className="toggle-menu-button">
-        {isToggleMenuOpen ? (
-          <div>
-            <div className="toggle-menu-button-figure-wrapper">
+      {isToggleMenuOpen ? (
+        <div className="toggle-menu">
+          <div className="toggle-menu-button-wrapper">
+            <div className="toggle-menu-button-logo">
               <figure
                 style={{
                   backgroundImage: `url(${logoImgUrl})`,
                 }}
-                onClick={handleToggleMenuButtonClick}
+                onClick={() => handleToggleMenuButtonClick(false)}
               />
+            </div>
+            <div className="toggle-menu-button-menu toggle-menu-button-menu-open">
               <figure
-                style={{
-                  backgroundImage: `url(${menuBarImgUrl})`,
-                }}
-                onClick={handleToggleMenuButtonClick}
+                className="toggle-menu-button"
+                onClick={() => handleToggleMenuButtonClick(false)}
               />
             </div>
-            <div className="toggle-menu-button-link-wrapper">
-              <div>
-                <figure
-                  style={{
-                    backgroundImage: `url(${managementIconImgUrl})`,
-                  }}
-                />
-                <Link onClick={() => handleClickLinkMenu("/management")}>
-                  프로젝트 관리
-                </Link>
-              </div>
-              <div>
-                <figure
-                  style={{
-                    backgroundImage: `url(${recruitmentIconImgUrl})`,
-                  }}
-                />
-                <Link onClick={() => handleClickLinkMenu("/recruitment")}>
-                  인원 모집
-                </Link>
-              </div>
+          </div>
+          <div className="toggle-menu-button-link-wrapper">
+            <div
+              className="toggle-menu-button-link"
+              onClick={() => handleClickLinkMenu("/management")}
+            >
+              <figure
+                className="toggle-menu-button-link-logo"
+                style={{
+                  backgroundImage: `url(${managementIconImgUrl})`,
+                }}
+              />
+              <p>프로젝트 관리</p>
+            </div>
+            <div
+              className="toggle-menu-button-link"
+              onClick={() => handleClickLinkMenu("/recruitment")}
+            >
+              <figure
+                className="toggle-menu-button-link-logo"
+                style={{
+                  backgroundImage: `url(${recruitmentIconImgUrl})`,
+                }}
+              />
+              <p>인원 모집</p>
             </div>
           </div>
-        ) : (
-          <div>
-            <figure
-              style={{
-                backgroundImage: `url(${menuBarImgUrl})`,
-              }}
-              onClick={handleToggleMenuButtonClick}
-            />
-          </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <div className="toggle-menu-button-menu">
+          <figure
+            className={
+              isProfilePage
+                ? "toggle-menu-button-profile"
+                : "toggle-menu-button"
+            }
+            onClick={() => handleToggleMenuButtonClick(true)}
+          />
+        </div>
+      )}
     </div>
   );
 };
-
 
 export default ToggleMenuButton;

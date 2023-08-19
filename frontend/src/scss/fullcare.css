@@ -238,7 +238,11 @@ a {
     margin-bottom: 60px;
   }
 }
-
+@media (max-width: 767px) {
+  .management-header {
+    height: 33px;
+  }
+}
 
 .header {
   border-bottom: 2px solid #01e89e;
@@ -271,14 +275,12 @@ a {
     display: none;
   }
 }
-  
 .main-header-left-col {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
-  
 .main-header-left-col .main-header-logo-img {
   min-width: 226px;
   min-height: 50px;
@@ -296,19 +298,6 @@ a {
   .main-header-left-col .main-header-logo-img {
     min-width: 77px;
     min-height: 30px;
-@media (max-width: 767px) {
-  .main-header-left-col .main-header-logo-img {
-    width: 77px;
-    height: 17px;
-  }
-}
-@media (max-width: 767px) {
-  .main-header-left-col {
-    width: -moz-fit-content;
-    width: fit-content;
-    height: -moz-fit-content;
-    height: fit-content;
-    margin-top: auto;
   }
 }
 .main-header-link {
@@ -324,13 +313,6 @@ a {
   }
 }
 .main-header .nav_item {
-@media (max-width: 767px) {
-  .main-header-link {
-    display: none;
-  }
-}
-.main-header .nav_item > a {
-  color: #003b28;
   text-decoration: none;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 24px;
@@ -372,16 +354,7 @@ a {
     font-weight: 700;
     padding: 4px 10px 5px 10px;
     margin: 0;
-  }
-}
-@media (max-width: 767px) {
-  .main-header-right-col Button {
     border-radius: 5px;
-    margin-top: auto;
-    margin-right: 9px;
-    font-family: "IBM Plex Sans KR", sans-serif;
-    font-size: 10px;
-    font-weight: 700;
   }
 }
 .main-header-right-col .main-header-user-profile-img {
@@ -400,15 +373,6 @@ a {
   .main-header-right-col .main-header-user-profile-img {
     width: 20px;
     height: 20px;
-  }
-}
-@media (max-width: 767px) {
-  .main-header-right-col .main-header-user-profile-img {
-    border: 1px solid #01e89e;
-    width: 18px;
-    height: 18px;
-    margin-right: 30px;
-    margin-top: auto;
   }
 }
 .main-header-right-col img {
@@ -466,9 +430,6 @@ a {
   display: inline-flex;
   align-items: center;
   white-space: nowrap;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 20px;
-  font-weight: 600;
 }
 .button_gray {
   color: #7a7a7a;
@@ -517,8 +478,12 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
   font-weight: 600;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+}
 @media (max-width: 767px) {
-  .button {
+  .button_profile_header {
     padding: 2px 9px;
     height: 18px;
     font-family: "IBM Plex Sans KR", sans-serif;
@@ -626,11 +591,6 @@ a {
   color: white;
 }
 
-.toggle-menu-button-wrapper {
-  width: 30px;
-  height: 30px;
-}
-
 .toggle-menu-button {
   width: 100%;
   height: 100%;
@@ -668,7 +628,6 @@ a {
   width: 200px;
   background-color: #ffffff;
   text-align: start;
-  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -686,125 +645,66 @@ a {
   gap: 15px;
 }
 
-@media (min-width: 1024px) {
-  .toggle-menu-button-wrapper {
-    display: none;
-  }
-}
-@media (min-width: 767px) and (max-width: 1024px) {
-  .toggle-menu-button-wrapper {
-    display: none;
-  }
-}
-@media (max-width: 767px) {
-  .toggle-menu-button-wrapper {
-    width: 20px;
-    height: 20px;
-  }
-}
-.toggle-menu-button-wrapper, .toggle-menu-button-wrapper-close {
-  width: -moz-fit-content;
-  width: fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-  position: relative;
-}
-.toggle-menu-button-wrapper figure, .toggle-menu-button-wrapper-close figure {
-  width: 20px;
-  height: 18px;
-  z-index: 101;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-@media (min-width: 1024px) {
-  .toggle-menu-button-wrapper, .toggle-menu-button-wrapper-close {
-    display: none;
-  }
-}
-@media (min-width: 767px) and (max-width: 1024px) {
-  .toggle-menu-button-wrapper, .toggle-menu-button-wrapper-close {
-    display: none;
-  }
-}
-@media (max-width: 767px) {
-  .toggle-menu-button-wrapper, .toggle-menu-button-wrapper-close {
-    margin-top: auto;
-  }
-}
-.toggle-menu-button-wrapper-close .toggle-menu-button {
-  position: absolute;
-  right: -7px;
-  top: -60px;
-  height: 60px;
-  width: 30px;
-  background-color: white;
-  z-index: 100;
-}
-.toggle-menu-button-wrapper-close .toggle-menu-button div {
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-end;
-}
-.toggle-menu-button-wrapper .toggle-menu-button {
-  position: fixed;
-  right: 0px;
-  top: 0;
-  width: 163px;
-  height: 905px;
-  background-color: white;
-}
-.toggle-menu-button-wrapper .toggle-menu-button > div {
-  height: 100%;
+.toggle-menu-button-wrapper {
   width: 100%;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-end;
-}
-.toggle-menu-button-wrapper .toggle-menu-button-figure-wrapper {
-  width: 100%;
-  height: 72px;
-  padding: 10px;
-  border-bottom: 1px solid #b4bcbd;
+  height: 80px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
-}
-.toggle-menu-button-wrapper .toggle-menu-button-link-wrapper {
-  width: 100%;
-  height: 100%;
-  padding: 20px;
-}
-.toggle-menu-button-wrapper .toggle-menu-button-link-wrapper div {
-  display: flex;
-  margin-bottom: 15px;
-}
-.toggle-menu-button-wrapper .toggle-menu-button-link-wrapper figure {
-  width: 15px;
-  height: 14px;
-  margin-right: 12px;
-}
-.toggle-menu-button-wrapper .toggle-menu-button-link-wrapper a {
-  color: #7a7a7a;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-}
-.toggle-menu-button-wrapper {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 100;
-  background: rgba(122, 122, 122, 0.4);
+  border-bottom: 1px solid #b4bcbd;
+  padding: 0 10px 0 9px;
 }
 
+.toggle-menu-button-logo {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 3px;
+}
+.toggle-menu-button-logo figure {
+  width: 100%;
+  height: 100%;
+}
+
+.toggle-menu-button-menu {
+  width: 20px;
+  height: 20px;
+}
+
+.toggle-menu-button-menu-open {
+  margin-bottom: 8px;
+}
+
+.toggle-menu-button-link-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-top: 20px;
+  padding-left: 19px;
+}
+
+.toggle-menu-button-link {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.toggle-menu-button-link-logo {
+  width: 15px;
+  height: 15px;
+}
+
+@media (min-width: 1024px) {
+  .toggle-menu-button-menu {
+    display: none;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .toggle-menu-button-menu {
+    display: none;
+  }
+}
 .Toastify__toast-container {
   width: -moz-max-content;
   width: max-content;
@@ -998,6 +898,7 @@ a {
     font-family: "Noto Sans KR", sans-serif;
     font-size: 6px;
     font-weight: 500;
+    line-height: 12px;
   }
 }
 .calendar-list-item h4 {
@@ -1271,6 +1172,7 @@ a {
     font-family: "Noto Sans KR", sans-serif;
     font-size: 6px;
     font-weight: 500;
+    line-height: 12px;
   }
 }
 .check-schedule {
@@ -1447,6 +1349,7 @@ a {
     font-family: "Noto Sans KR", sans-serif;
     font-size: 6px;
     font-weight: 500;
+    line-height: 12px;
   }
 }
 .schedule-list-content-option-mui {
@@ -1926,12 +1829,6 @@ a {
     grid-template-columns: 100%;
   }
 }
-@media (min-width: 767px) and (max-width: 1024px) {
-  .meeting-record-all-meeting-record-list .record-list-item-wrapper {
-    display: grid;
-    grid-template-columns: 100%;
-  }
-}
 .meeting-record-all-meeting-record-list .meeting-record-all-meeting-record-list-data {
   width: 100%;
   height: 160px;
@@ -2190,6 +2087,7 @@ a {
     font-family: "Noto Sans KR", sans-serif;
     font-size: 6px;
     font-weight: 500;
+    line-height: 12px;
   }
 }
 .meeting-record-item-title {
@@ -5716,10 +5614,9 @@ a {
     height: 20px;
   }
   .profile_introduce_info_name_real {
-    font-family: "IBM Plex Sans KR SemiBold", sans-serif;
-    font-size: 16px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 18px;
     font-weight: 700;
-    line-height: 20px;
   }
   .profile_introduce_info_name_nick {
     font-family: "IBM Plex Sans KR", sans-serif;
