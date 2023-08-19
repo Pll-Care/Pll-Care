@@ -244,7 +244,7 @@ public class TestDataInit {
             List<Long> memberIds = new ArrayList<>();
             long lValue = rand.nextLong(3, 6);
             for (long j = 0l; j < lValue; j++) {
-                long findMemberId = rand.nextLong(1, 10);
+                long findMemberId = rand.nextLong(10, 19);
 
                 if (!insertId.contains(findMemberId)) {
                     Member member = memberRepository.findById(findMemberId).get();
