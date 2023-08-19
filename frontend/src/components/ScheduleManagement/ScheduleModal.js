@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useQuery } from "react-query";
 
 import { useMediaQuery } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 import Button from "../common/Button";
 import ModalContainer from "../common/ModalContainer";
@@ -143,16 +144,20 @@ const ScheduleModal = ({
       border={isMobile && "0px"}
     >
       <div className="modal-container">
-        <input
-          className="modal-container-title-input"
-          type="text"
-          ref={inputRefs.title}
-          required
-          placeholder="일정 제목을 입력해주세요"
-          name="title"
-          value={title}
-          onChange={handleChange}
-        />
+        <div className="modal-container-title">
+          <input
+            className="modal-container-title-input"
+            type="text"
+            ref={inputRefs.title}
+            required
+            placeholder="일정 제목을 입력해주세요"
+            name="title"
+            value={title}
+            onChange={handleChange}
+          />
+          {isMobile && <CloseIcon onClick={onClose} />}
+        </div>
+
         <div className="modal-container-description">
           <div className="plan-option">
             <h5>카테고리</h5>
@@ -202,15 +207,17 @@ const ScheduleModal = ({
 
           <div className="plan-option">
             <h5>참여자</h5>
-            {names?.map((data) => (
-              <Button
-                key={data.id}
-                text={data.name}
-                size="small"
-                type={memberIds.includes(data.id) ? "positive_dark" : ""}
-                onClick={() => handleButtonClick(data)}
-              />
-            ))}
+            <div className="plan-option-members">
+              {names?.map((data) => (
+                <Button
+                  key={data.id}
+                  text={data.name}
+                  size="small"
+                  type={memberIds.includes(data.id) ? "positive_dark" : ""}
+                  onClick={() => handleButtonClick(data)}
+                />
+              ))}{" "}
+            </div>
           </div>
         </div>
         <div className="modal-container-content">

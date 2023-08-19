@@ -221,6 +221,7 @@ const ScheduleDetailModal = ({
         {isEdit ? (
           <div className="schedule-detail-modal-date">
             <input
+              className="schedule-title"
               type="text"
               ref={inputRefs.title}
               required
@@ -236,17 +237,11 @@ const ScheduleDetailModal = ({
             <h1 className="schedule-title">{title}</h1>
             <div className="schedule-detail-modal-date-mobile">
               <ScheduleRemainDate startDate={formValues.startDate} />
-              {isMobile && isEdit && (
+
+              {isMobile && (
                 <CloseIcon
                   className="mui-icon"
-                  onClick={handleCancelModify}
-                  style={{ marginLeft: "30px" }}
-                />
-              )}
-              {isMobile && !isEdit && (
-                <CloseIcon
-                  className="mui-icon"
-                  onClick={onClose}
+                  onClick={isEdit ? handleCancelModify : onClose}
                   style={{ marginLeft: "30px" }}
                 />
               )}

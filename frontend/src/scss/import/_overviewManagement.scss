@@ -39,18 +39,23 @@
 @include mobile {
   .schedule {
     h1 {
-      font-size: $body-font-size-small;
+      @include m_heading_03;
     }
     h3,
     h5 {
-      font-size: $body-font-size-small;
+      @include m_body_01;
+    }
+    .overview-time {
+      @include m_heading_03;
     }
   }
 
   .simple {
-    h2,
+    h2 {
+      @include m_body_01;
+    }
     h3 {
-      font-size: $link-font-size-small;
+      @include m_body_02;
     }
   }
 }
