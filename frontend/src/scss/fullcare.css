@@ -467,13 +467,14 @@ a {
 }
 @media (max-width: 767px) {
   .control-menu-small {
-    height: 20px;
+    height: 19px;
     width: -moz-fit-content;
     width: fit-content;
-    padding: 1px 3px;
-    font-family: "Noto Sans KR", sans-serif;
-    font-size: 8px;
-    font-weight: 500;
+    border-radius: 10px;
+    padding: 2px 15px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
   }
 }
 
@@ -2777,6 +2778,15 @@ a {
   font-size: 32px;
   font-weight: 700;
 }
+@media (max-width: 767px) {
+  .evaluation-management-final-evaluation .final-evaluation-heading {
+    margin-top: 50px;
+    margin-bottom: 10px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
 .evaluation-management-final-evaluation .final-evaluation-body {
   background-color: white;
   box-shadow: 0px 5px 30px 3px rgba(0, 0, 0, 0.1);
@@ -2800,6 +2810,14 @@ a {
 }
 .evaluation-management-final-evaluation .final-evaluation-body .evaluation h1 {
   margin-bottom: 20px;
+}
+@media (max-width: 767px) {
+  .evaluation-management-final-evaluation .final-evaluation-body .evaluation h1 {
+    color: #00aa72;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+  }
 }
 .evaluation-management-final-evaluation .final-evaluation-body .evaluation-criterion {
   color: #7a7a7a;
@@ -2847,12 +2865,40 @@ a {
     margin-right: auto;
   }
 }
+@media (max-width: 767px) {
+  .evaluation-management-final-evaluation .final-evaluation-body .evaluation-criterion {
+    width: 90%;
+    height: 70%;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: 100%;
+    align-items: flex-start;
+    padding-bottom: 0px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+@media (max-width: 767px) {
+  .evaluation-management-final-evaluation .final-evaluation-body .evaluation-criterion {
+    width: 85%;
+  }
+}
 .evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges {
   display: grid;
   grid-template-rows: 15% 85%;
 }
 .evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges h1 {
   margin-top: 20px;
+}
+@media (max-width: 767px) {
+  .evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges h1 {
+    color: #00aa72;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+  }
 }
 .evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges-body {
   width: 100%;
@@ -2883,12 +2929,36 @@ a {
   background-repeat: no-repeat;
   background-size: 100%;
 }
+@media (max-width: 767px) {
+  .evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges-body .badge figure {
+    width: 15px;
+    height: 15px;
+  }
+}
+@media (max-width: 767px) {
+  .evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges-body .badge {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+}
 @media (min-width: 767px) and (max-width: 1024px) {
   .evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges-body {
     width: 100%;
     height: 100%;
     grid-template-rows: repeat(4, 1fr);
     grid-template-columns: 100%;
+    padding-bottom: 10px;
+  }
+}
+@media (max-width: 767px) {
+  .evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges-body {
+    width: 100%;
+    height: 70%;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: 100%;
+    padding-left: 10px;
+    padding-right: 0px;
     padding-bottom: 10px;
   }
 }
@@ -2900,6 +2970,14 @@ a {
 }
 .evaluation-management-final-evaluation .final-evaluation-body .content h1 {
   margin-top: 20px;
+}
+@media (max-width: 767px) {
+  .evaluation-management-final-evaluation .final-evaluation-body .content h1 {
+    color: #00aa72;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+  }
 }
 .evaluation-management-final-evaluation .final-evaluation-body .content div {
   color: #7a7a7a;
@@ -2917,6 +2995,13 @@ a {
   font-size: 18px;
   font-weight: 600;
 }
+@media (max-width: 767px) {
+  .evaluation-management-final-evaluation .final-evaluation-body .content div div {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+}
 .evaluation-management-final-evaluation .final-evaluation-body .content div textarea {
   color: #7a7a7a;
   height: 100%;
@@ -2927,19 +3012,56 @@ a {
   box-shadow: 0px 10px 20px 5px rgba(0, 0, 0, 0.07);
   padding: 20px;
 }
+@media (max-width: 767px) {
+  .evaluation-management-final-evaluation .final-evaluation-body .content div textarea {
+    padding: 10px;
+    border-radius: 10px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+}
 .evaluation-management-final-evaluation .final-evaluation-body .content div textarea::-moz-placeholder {
-  font-size: 18px;
   font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
 }
 .evaluation-management-final-evaluation .final-evaluation-body .content div textarea::placeholder,
 .evaluation-management-final-evaluation .final-evaluation-body .content div textarea {
-  font-size: 18px;
   font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+@media (max-width: 767px) {
+  .evaluation-management-final-evaluation .final-evaluation-body .content div textarea::-moz-placeholder {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+  .evaluation-management-final-evaluation .final-evaluation-body .content div textarea::placeholder,
+  .evaluation-management-final-evaluation .final-evaluation-body .content div textarea {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+}
+@media (max-width: 767px) {
+  .evaluation-management-final-evaluation .final-evaluation-body .content div {
+    padding: 10px;
+  }
 }
 @media (min-width: 767px) and (max-width: 1024px) {
   .evaluation-management-final-evaluation .final-evaluation-body {
     grid-template-rows: 35% 35% 30%;
     height: 150%;
+  }
+}
+@media (max-width: 767px) {
+  .evaluation-management-final-evaluation .final-evaluation-body {
+    grid-template-rows: 30% 30% 40%;
+    border-radius: 10px;
+    padding: 10px;
+    height: 140%;
   }
 }
 .evaluation-management-final-evaluation .final-evaluation-button-wrapper {
@@ -2953,6 +3075,11 @@ a {
 }
 .evaluation-management-final-evaluation::-webkit-scrollbar {
   display: none;
+}
+@media (max-width: 767px) {
+  .evaluation-management-final-evaluation {
+    padding: 10px;
+  }
 }
 
 .management {
@@ -3428,6 +3555,11 @@ a {
 }
 .modal_dark {
   background-color: #01e89e;
+}
+@media (max-width: 767px) {
+  .modal {
+    border-radius: 10px;
+  }
 }
 
 .confirm-modal {
@@ -5574,6 +5706,11 @@ a {
 }
 .modal_dark {
   background-color: #01e89e;
+}
+@media (max-width: 767px) {
+  .modal {
+    border-radius: 10px;
+  }
 }
 
 .confirm-modal {

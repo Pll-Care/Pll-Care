@@ -41,6 +41,10 @@
   &_dark {
     background-color: $green-200;
   }
+
+  @include mobile {
+    border-radius: 10px;
+  }
 }
 
 .confirm-modal {

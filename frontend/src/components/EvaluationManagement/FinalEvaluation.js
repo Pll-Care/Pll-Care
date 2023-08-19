@@ -14,6 +14,7 @@ import enthusiasticParticipantBadgeImgUrl from "../../assets/enthusiastic-partic
 import goodLeaderBadgeImgUrl from "../../assets/good-leader-badge-img.svg";
 import ideaBankBadgeImgUrl from "../../assets/idea-bank-badge-img.svg";
 import bestSupporterBadgeImgUrl from "../../assets/best-supporter-badge-img.svg";
+import { useMediaQuery } from "@mui/material";
 
 const evaluationCriterion = [
   {
@@ -149,12 +150,14 @@ const FinalEvaluation = ({
     }
   };
 
+  const isMobile = useMediaQuery("(max-width: 767px)");
+
   return (
     <ModalContainer
       open={isFinalEvaluationVisible}
       onClose={handleModalClose}
       type={"dark"}
-      width={"80%"}
+      width={isMobile ? "95%" : "80%"}
       height={"90%"}
     >
       {type === "evaluation" ? (
@@ -170,6 +173,7 @@ const FinalEvaluation = ({
                   <div key={idx}>
                     {criterion.name}
                     <ControlMenu
+                      size="small"
                       optionList={evaluationOptionList}
                       value={getValue(idx)}
                       onChange={getOnChange(idx)}
