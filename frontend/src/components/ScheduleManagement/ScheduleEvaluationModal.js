@@ -3,18 +3,22 @@ import { useParams } from "react-router";
 import { useMutation } from "react-query";
 import { toast } from "react-toastify";
 
-import { Tooltip } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 import Button from "../common/Button";
 import ModalContainer from "../common/ModalContainer";
 import AlertCheckModal from "../common/AlertCheckModal";
+import EvaluationMobileContent from "./EvaluationMobileContent";
+import EvaluationContent from "./EvaluationContent";
 
 import { getDateTimeDuration } from "../../utils/date";
+import { query } from "../../utils/mediaQuery";
 import { makeNewMidEvaluation } from "../../lib/apis/evaluationManagementApi";
-import { badges } from "../../utils/evaluation";
 
 const ScheduleEvaluationModal = (props) => {
   const { id } = useParams();
+  const isMobile = useMediaQuery(query);
 
   const projectId = parseInt(id, 10);
   const scheduleId = parseInt(props.id, 10);
@@ -77,7 +81,9 @@ const ScheduleEvaluationModal = (props) => {
       open={props.open}
       onClose={props.onClose}
       type="dark"
-      width="700px"
+      width={isMobile ? "100%" : "700px"}
+      height={isMobile && "100%"}
+      border={isMobile && "0px"}
       padding="25px"
     >
       <AlertCheckModal
@@ -89,45 +95,40 @@ const ScheduleEvaluationModal = (props) => {
         }}
       />
       <div className="schedule-modal">
-        <h1>평가 작성</h1>
+        <div className="schedule-modal-title">
+          <h1>중간 평가 작성</h1>
+          {isMobile && (
+            <CloseIcon className="mui-icon" onClick={props.onClose} />
+          )}
+        </div>
         <div className="schedule-modal-content">
-          <h1>{props.title}</h1>
-          <h2>{time} 진행</h2>
-          <div className="schedule-modal-content-evaluation">
-            <h3>참여자</h3>
-            <div className="schedule-modal-content-evaluation-member">
-              {props.members.map((member, index) => (
-                <Button
-                  key={index}
-                  text={member.name}
-                  size="small"
-                  type={name === member.id ? "positive_dark" : ""}
-                  onClick={() => participantsClickHandler(member.id)}
-                />
-              ))}
-            </div>
+          {!isMobile && (
+            <>
+              <h1>{props.title}</h1>
+              <h2>{time} 진행</h2>
+            </>
+          )}
 
-            <h3>뱃지 선택</h3>
-            <div className="schedule-modal-content-evaluation-badge">
-              {badges.map((b) => (
-                <Tooltip title={b.name} key={b.name}>
-                  <div
-                    className={`modal-badge ${
-                      badge === b.name ? "selected" : ""
-                    }`}
-                    key={b.name}
-                    onClick={() => badgeClickHandler(b.name)}
-                  >
-                    <img src={b.image} alt={b.name} key={b.name} />
-                  </div>
-                </Tooltip>
-              ))}
-            </div>
-          </div>
+          {isMobile ? (
+            <EvaluationMobileContent
+              members={props.members}
+              name={name}
+              participantsClickHandler={participantsClickHandler}
+              badge={badge}
+              badgeClickHandler={badgeClickHandler}
+            />
+          ) : (
+            <EvaluationContent
+              members={props.members}
+              name={name}
+              participantsClickHandler={participantsClickHandler}
+              badge={badge}
+              badgeClickHandler={badgeClickHandler}
+            />
+          )}
         </div>
         <div className="schedule-modal-button">
           <Button text="작성 완료" onClick={evaluationClickHandler} />
-          <Button text="취소" onClick={() => props.onClose()} />
         </div>
       </div>
     </ModalContainer>

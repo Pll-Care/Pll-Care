@@ -4,14 +4,14 @@
   color: white;
   margin-bottom: 10px;
   @include mobile {
-    //@include m_body_01;
+    @include m_body_01;
   }
   &-gray {
     color: $gray-500;
     margin: 20px;
     @include heading_04;
     @include mobile {
-      //@include m_body_01;
+      @include m_body_01;
     }
   }
 }
@@ -39,7 +39,7 @@
     @include mobile {
       padding: 20px;
       h4 {
-        //@include m_heading_03;
+        @include m_heading_03;
       }
     }
   }
@@ -71,14 +71,14 @@
       @include heading_01;
       color: $gray-500;
       @include mobile {
-        //@include m_heading_05;
+        @include m_heading_05;
       }
     }
     h2 {
       @include heading_06;
       margin-bottom: 15px;
       @include mobile {
-        //@include m_body_01;
+        @include m_body_01;
       }
     }
   }
@@ -107,7 +107,7 @@
       @include body_01;
       color: $gray-500;
       @include mobile {
-        //@include m_heading_04;
+        @include m_heading_04;
       }
     }
     h4 {
@@ -115,7 +115,7 @@
       color: $gray-500;
       margin: 10px 0px;
       @include mobile {
-        //@include m_body_01;
+        @include m_body_01;
       }
     }
 
@@ -125,7 +125,7 @@
         @include body_01;
         color: $green-400;
         @include mobile {
-          //@include m_body_02;
+          @include m_body_02;
         }
       }
       align-items: center;
@@ -166,7 +166,7 @@
     padding: 0.5rem;
     @include mobile {
       padding: 5px;
-      //@include m_button_03;
+      @include m_button_03;
     }
   }
 }
@@ -174,10 +174,23 @@
 // ScheduleEvaluationModal 컴포넌트 => 모바일 나중에 따로 처리
 .schedule-modal {
   width: 100%;
+
+  &-title {
+    display: flex;
+    justify-content: space-between;
+    .mui-icon {
+      color: white;
+      cursor: pointer;
+    }
+  }
+
   h1 {
     color: white;
     @include heading_03;
     margin-bottom: 20px;
+    @include mobile {
+      @include m_heading_05;
+    }
   }
   &-content {
     background-color: white;
@@ -186,6 +199,9 @@
     padding: 1.5rem;
     @include tablet {
       padding: 20px;
+    }
+    @include mobile {
+      padding: 30px 15px;
     }
     h1 {
       color: $green-400;
@@ -196,6 +212,37 @@
       @include heading_05;
       margin-bottom: 10px;
     }
+
+    h3 {
+      @include heading_05;
+      color: $green-400;
+      margin-right: 20px;
+      margin-top: 5px;
+
+      @include mobile {
+        @include m_heading_02;
+      }
+    }
+
+    .modal-badge {
+      cursor: pointer;
+      border-radius: 80%;
+      border: 1px solid rgb(243, 243, 243);
+      padding: 0.5rem;
+      margin-right: 30px;
+      img {
+        width: 20px;
+        height: 20px;
+        @include mobile {
+          width: 15px;
+          height: 15px;
+        }
+      }
+    }
+    .selected {
+      border: 2px solid $green-200;
+    }
+
     &-evaluation {
       border: $border;
       border-radius: 10px;
@@ -207,42 +254,47 @@
       grid-template-columns: 20% 80%;
       grid-gap: 30px 0px;
       align-items: center;
-      h3 {
-        @include heading_05;
-        color: $green-400;
-        margin-right: 20px;
-        margin-top: 5px;
-      }
 
       &-member {
         display: flex;
         flex-wrap: wrap;
+        @include mobile {
+          margin: 20px 15px;
+        }
       }
 
       &-badge {
         display: flex;
         flex-wrap: wrap;
-
-        .modal-badge {
-          cursor: pointer;
-          border-radius: 80%;
-          border: 1px solid rgb(243, 243, 243);
-          padding: 0.5rem;
-          margin-right: 30px;
-          img {
-            width: 20px;
-            height: 20px;
-          }
-        }
-        .selected {
-          border: 2px solid $green-200;
-        }
       }
     }
   }
   &-button {
     margin-top: 15px;
     text-align: right;
+  }
+}
+
+// EvaluationMobileContent 컴포넌트
+.schedule-modal-mobile {
+  border: $border;
+  border-radius: 10px;
+  padding: 10px;
+
+  &-badge {
+    display: flex;
+    flex-direction: column;
+
+    &-item {
+      display: flex;
+      align-items: center;
+      margin: 15px;
+
+      h5 {
+        color: $gray-500;
+        @include m_heading_03;
+      }
+    }
   }
 }
 
@@ -269,12 +321,15 @@
     margin-bottom: 30px;
     .schedule-title {
       @include heading_03;
+
+      @include mobile {
+        @include m_heading_01;
+      }
     }
     .mui-icon {
       cursor: pointer;
     }
     input {
-      @include heading_03;
       width: 80%;
     }
 
@@ -294,11 +349,22 @@
     align-items: center;
     grid-gap: 20px 0px;
     @include body_01;
+
+    @include mobile {
+      @include m_heading_03;
+    }
     &-time {
       display: flex;
       align-items: center;
       input {
         @include body_01;
+      }
+
+      @include mobile {
+        flex-wrap: wrap;
+        input {
+          @include m_heading_03;
+        }
       }
     }
   }
@@ -309,8 +375,13 @@
   }
 
   &-button {
-    justify-content: flex-end;
     display: flex;
+    justify-content: flex-end;
     margin-top: 30px;
+    @include mobile {
+      position: absolute;
+      bottom: 10%;
+      right: 10%;
+    }
   }
 }
