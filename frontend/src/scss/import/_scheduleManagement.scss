@@ -261,6 +261,9 @@
         @include mobile {
           margin: 20px 15px;
         }
+        .selected {
+          border: 2px solid $green-200;
+        }
       }
 
       &-badge {

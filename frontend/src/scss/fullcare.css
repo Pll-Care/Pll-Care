@@ -1439,6 +1439,9 @@ a {
     margin: 20px 15px;
   }
 }
+.schedule-modal-content-evaluation-member .selected {
+  border: 2px solid #01e89e;
+}
 .schedule-modal-content-evaluation-badge {
   display: flex;
   flex-wrap: wrap;

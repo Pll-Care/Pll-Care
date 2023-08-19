@@ -250,6 +250,7 @@ const ScheduleModal = ({
           )}
         </div>
         <div className="button-container">
+          {isMobile && <Button text="취소" onClick={onClose} />}
           {!addIsLoading && <Button text="생성 완료" onClick={submitNewPlan} />}
           {addIsLoading && <Button text="로딩 중.." />}
         </div>
