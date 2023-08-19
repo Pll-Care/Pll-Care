@@ -150,10 +150,13 @@ a {
 }
 .login-modal .login-heading {
   position: absolute;
-  top: 29%;
+  top: 27%;
   padding: 12px;
+}
+.login-modal .login-heading h1 {
   font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 40px;
+  font-size: 38px;
+  font-weight: 700;
 }
 .login-modal .login-text {
   color: #9aad84;
@@ -163,7 +166,15 @@ a {
   padding: 12px;
   margin-bottom: 30px;
   font-family: "Noto Sans KR", sans-serif;
-  font-size: 18px;
+  font-size: 22px;
+  font-weight: 500;
+}
+@media (max-width: 767px) {
+  .login-modal .login-text {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+  }
 }
 .login-modal .login-button-wrapper {
   width: 298px;
@@ -200,6 +211,17 @@ a {
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%, 100%;
+}
+@media (max-width: 767px) {
+  .login-modal .login-button-wrapper .login-button {
+    width: 50px;
+    height: 50px;
+  }
+}
+@media (max-width: 767px) {
+  .login-modal .login-button-wrapper {
+    width: 250px;
+  }
 }
 
 .management-header {
