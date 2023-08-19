@@ -4,6 +4,8 @@ import Button from "../../common/Button";
 import { uploadImage } from "../../../lib/apis/projectManagementApi";
 import { useProfileClient } from "../../../context/Client/ProfileClientContext";
 import ProfileInput from "../../common/ProfileInput";
+import { useDispatch } from "react-redux";
+import { userInfoActions } from "../../../redux/userInfoSlice";
 
 const ModifyUserProfile = ({
   memberId,
@@ -21,6 +23,7 @@ const ModifyUserProfile = ({
   const [userInfo, setUserInfo] = useState({ nickname: nickname, bio: bio });
   const { putBioAPI } = useProfileClient();
   const reqImageUrl = { url: "" };
+  const dispatch = useDispatch();
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -52,7 +55,10 @@ const ModifyUserProfile = ({
 
     const responsePutBioAPI = await putBioAPI(reqBody);
 
-    if (responsePutBioAPI?.status === 200) changeModify();
+    if (responsePutBioAPI?.status === 200) {
+      dispatch(userInfoActions.setImageUrl(reqBody.imageUrl));
+      changeModify();
+    }
   };
 
   return (
@@ -79,17 +85,17 @@ const ModifyUserProfile = ({
       </div>
       <form className="profile_introduce_info" onSubmit={handleSubmit}>
         <div className="profile_introduce_info_name">
-          <div className="profile_introduce_info_name_kr">{name}</div>
-
-          <ProfileInput
-            value={userInfo.nickname}
-            placeholder={"닉네임을 입력해주세요."}
-            onChange={(value) =>
-              setUserInfo((prev) => ({ ...prev, nickname: value }))
-            }
-            width="50"
-            position="header"
-          />
+          <div className="profile_introduce_info_name_real">{name}</div>
+          <div>
+            <ProfileInput
+              value={userInfo.nickname}
+              placeholder={"닉네임을 입력해주세요."}
+              onChange={(value) =>
+                setUserInfo((prev) => ({ ...prev, nickname: value }))
+              }
+              position="header"
+            />
+          </div>
         </div>
         <div className="profile_introduce_info_myself">
           <ProfileInput
@@ -102,7 +108,7 @@ const ModifyUserProfile = ({
           />
 
           <Button
-            text="완료"
+            text="수정 완료"
             size="small"
             type="profile"
             buttonType="onSubmit"

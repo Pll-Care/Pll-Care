@@ -6,7 +6,7 @@ const ProjectList = ({ experienceData = [], refetch }) => {
     <ul className="project">
       {experienceData.length > 0 ? (
         experienceData.map((projects) => (
-          <li key={projects.year} className="project_devide-year">
+          <li key={projects.year} className="project_divide-year">
             <div className="project_year">{projects.year}</div>
             <div className="project_list">
               {projects?.projectExperiences?.map((project, idx) => (

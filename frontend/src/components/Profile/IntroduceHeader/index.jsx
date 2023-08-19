@@ -68,21 +68,25 @@ const UserProfile = ({
       </div>
       <div className="profile_introduce_info">
         <div className="profile_introduce_info_name">
-          <span className="profile_introduce_info_name_kr">{name}</span>
-          <span className="profile_introduce_info_name_us">{nickName}</span>
+          <div>
+            <span className="profile_introduce_info_name_real">{name}</span>
+          </div>
+          <div>
+            <span className="profile_introduce_info_name_nick">{nickName}</span>
+          </div>
         </div>
         <div className="profile_introduce_info_myself">
           <div className="profile_introduce_info_myself_bio">
             <span>{bio}</span>
           </div>
-          {isMyProfile ? (
+          {isMyProfile && (
             <Button
               text="수정"
               size="small"
               type="profile"
               onClick={changeModify}
             />
-          ) : null}
+          )}
         </div>
       </div>
     </div>

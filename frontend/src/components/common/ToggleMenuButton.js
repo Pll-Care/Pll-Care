@@ -1,17 +1,17 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-
 import menuBarImgUrl from "../../assets/toggle-button-img.png";
 import logoImgUrl from "../../assets/logo.svg";
 import managementIconImgUrl from "../../assets/management-icon.svg";
 import recruitmentIconImgUrl from "../../assets/recruitment-icon.svg";
 import useLinkMenuClick from "../../hooks/useLinkMenuClick";
 
-const ToggleMenuButton = ({ isToggleMenuOpen, setIsToggleMenuOpen }) => {
+const ToggleMenuButton = ({ isToggleMenuOpen, setIsToggleMenuOpen, isProfilePage }) => {
   const modalOutside = useRef(null);
 
-  const handleToggleMenuButtonClick = () => {
-    setIsToggleMenuOpen((prevState) => !prevState);
+
+  const handleToggleMenuButtonClick = (isBoolean) => {
+    setIsToggleMenuOpen((_) => isBoolean);
   };
 
   const handleToggleButtonClose = (e) => {
@@ -22,7 +22,7 @@ const ToggleMenuButton = ({ isToggleMenuOpen, setIsToggleMenuOpen }) => {
 
   const handleClickLinkMenu = useLinkMenuClick();
 
-  return (
+   return (
     <div
       className={
         isToggleMenuOpen
@@ -86,5 +86,6 @@ const ToggleMenuButton = ({ isToggleMenuOpen, setIsToggleMenuOpen }) => {
     </div>
   );
 };
+
 
 export default ToggleMenuButton;

@@ -4,10 +4,10 @@ import ProjectBox from "./ProjectBox";
 const Evaluate = () => {
   return (
     <div>
-      <div>
-        <h1 className="profile_introduce_title">평가 관리</h1>
+      <div className="profile_title">
+        <h1>평가 관리</h1>
       </div>
-      <div className="evaluate">
+      <div className="profile_content">
         <ChartBox />
         <ProjectBox />
       </div>

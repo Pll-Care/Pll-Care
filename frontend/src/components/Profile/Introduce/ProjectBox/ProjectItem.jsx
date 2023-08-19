@@ -87,7 +87,7 @@ const ShowProjectItem = ({
             <div className="project_item_name">
               <span>프로젝트 명</span>
             </div>
-            <div className="project_list_item_title">
+            <div className="project_list_item_text">
               <span>{title}</span>
             </div>
           </div>
@@ -95,7 +95,7 @@ const ShowProjectItem = ({
             <div className="project_item_name">
               <span>진행 기간</span>
             </div>
-            <div className="project_list_item_year">
+            <div className="project_list_item_text">
               <span>{`${start} ~ ${end}`}</span>
             </div>
           </div>
@@ -120,7 +120,7 @@ const ShowProjectItem = ({
           <div className="project_item_name">
             <span>한 줄 소개</span>
           </div>
-          <div>
+          <div className="project_list_item_text">
             <span>{description}</span>
           </div>
         </div>

@@ -1,18 +1,18 @@
 import axios from "axios";
-import { getToken } from "../../utils/localstroageHandler";
 
 class HttpClient {
-  accessToken = getToken("access_token") ?? null;
-  refreshToken = getToken("refresh_token") ?? null;
-  BASE_URL = "https://fullcare.store/api";
+  constructor(baseURL, tokenRepository) {
+    this.baseURL = baseURL;
+    this.tokenRepository = tokenRepository;
 
-  customAxios = axios.create({
-    baseURL: this.BASE_URL,
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `Bearer ${this.accessToken}`,
-    },
-  });
+    this.customAxios = axios.create({
+      baseURL: this.baseURL,
+      headers: {
+        "Content-Type": "application/json",
+        authorization: "Bearer " + this.tokenRepository.get("access"),
+      },
+    });
+  }
 }
 
 export default HttpClient;

@@ -21,7 +21,7 @@ const Button = ({
     <button
       className={
         isProfile
-          ? `button ${btnSize} button_${btnType} button_${color} profile_header_button`
+          ? `button ${btnSize} button_${btnType} button_${color} button_profile_header`
           : `button ${btnSize} button_${btnType} button_${color}`
       }
       onClick={onClick}
