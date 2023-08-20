@@ -8,6 +8,7 @@ public class MemberDto {
     private Long id;
     private String name;
     private String imageUrl;
+
     @Builder
     public MemberDto(Long id, String name, String imageUrl) {
         this.id = id;

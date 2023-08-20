@@ -4,10 +4,11 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class DetailMemberDto{
+public class DetailMemberDto {
     private Long id;
     private String name;
     private boolean in;
+
     @Builder
     public DetailMemberDto(Long id, String name, boolean in) {
         this.id = id;

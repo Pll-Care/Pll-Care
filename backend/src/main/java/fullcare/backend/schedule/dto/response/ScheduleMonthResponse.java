@@ -9,6 +9,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 @Data
 public class ScheduleMonthResponse {
     private Long scheduleId;
@@ -18,6 +19,7 @@ public class ScheduleMonthResponse {
     private String address;
     private ScheduleCategory scheduleCategory;
     private List<MemberDto> members = new ArrayList<>();
+
     @Builder
     public ScheduleMonthResponse(Long scheduleId, String title, LocalDateTime startDate, LocalDateTime endDate, ScheduleCategory scheduleCategory, String address) {
         this.scheduleId = scheduleId;
@@ -28,7 +30,7 @@ public class ScheduleMonthResponse {
         this.scheduleCategory = scheduleCategory;
     }
 
-    public void addMember(Member member){
+    public void addMember(Member member) {
         members.add(MemberDto.builder()
                 .id(member.getId())
                 .imageUrl(member.getImageUrl())

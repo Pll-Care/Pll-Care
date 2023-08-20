@@ -369,7 +369,7 @@ public class EvaluationService {
 
             MyEvalListResponse response = MyEvalListResponse.builder()
                     .projectId(pm.getProject().getId())
-                    .projectTitle(pm.getProject().getTitle())
+                    .title(pm.getProject().getTitle())
                     .score(scoreDto)
                     .build();
 
@@ -409,7 +409,7 @@ public class EvaluationService {
             scoreDto.setJobPerformance(fe.getScore().getJobPerformance());
             FinalEvalDto finalEvalDto = FinalEvalDto.builder()
                     .memberId(fe.getEvaluator().getId())
-                    .memberName(member.getName())
+                    .name(member.getName())
                     .imageUrl(member.getImageUrl())
                     .content(fe.getContent())
                     .score(scoreDto)

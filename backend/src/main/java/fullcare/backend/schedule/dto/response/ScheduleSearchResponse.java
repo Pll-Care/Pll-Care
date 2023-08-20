@@ -16,7 +16,7 @@ import java.util.List;
 public class ScheduleSearchResponse {
     private Long scheduleId;
     private String title;
-//    private String content;
+    //    private String content;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     //private Address address;
@@ -26,8 +26,9 @@ public class ScheduleSearchResponse {
     private LocalDate modifyDate;
     private boolean check;
     private boolean evaluationRequired;
+
     @Builder
-    public ScheduleSearchResponse(Long scheduleId, String title, LocalDateTime startDate, LocalDateTime endDate, ScheduleCategory scheduleCategory, LocalDate modifyDate , State state) {
+    public ScheduleSearchResponse(Long scheduleId, String title, LocalDateTime startDate, LocalDateTime endDate, ScheduleCategory scheduleCategory, LocalDate modifyDate, State state) {
         this.scheduleId = scheduleId;
         this.title = title;
         this.startDate = startDate;
@@ -38,16 +39,18 @@ public class ScheduleSearchResponse {
         this.scheduleCategory = scheduleCategory;
     }
 
-    public void addMember(Member member){
+    public void addMember(Member member) {
         members.add(MemberDto.builder()
                 .id(member.getId())
                 .imageUrl(member.getImageUrl())
                 .name(member.getName()).build());
     }
-    public void updateCheck(boolean check){
+
+    public void updateCheck(boolean check) {
         this.check = check;
     }
-    public boolean getEvaluationRequired(){
+
+    public boolean getEvaluationRequired() {
         return this.evaluationRequired;
     }
 }

@@ -7,8 +7,6 @@ import lombok.Getter;
 public class ApplyMemberRejectRequest {
 
     @NotNull
-    private Long postId;
-
-    @NotNull
-    private Long memberId;
+    private Long applyId;
+    
 }

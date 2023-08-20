@@ -44,7 +44,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static fullcare.backend.global.errorcode.ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND;
 import static fullcare.backend.global.errorcode.ScheduleErrorCode.INVALID_DELETE;
@@ -93,7 +92,7 @@ public class ScheduleService {
         try {
             ProjectMember projectMember = projectService.isProjectAvailable(projectId, memberId, readOnly);
             return !(!validateAuthor(projectId, scheduleId, memberId) && !projectMember.isLeader());
-        } catch(CompletedProjectException completedProjectException){
+        } catch (CompletedProjectException completedProjectException) {
             throw new CompletedProjectException(INVALID_DELETE);
         }
     }
@@ -101,7 +100,7 @@ public class ScheduleService {
     public boolean updateSchedule(ScheduleUpdateRequest scheduleUpdateRequest, Long scheduleId, Long memberId) {// 멤버 로그인 사용자 검증 수정
         try {
             projectService.isProjectAvailable(scheduleUpdateRequest.getProjectId(), memberId, false);
-        } catch(CompletedProjectException completedProjectException){
+        } catch (CompletedProjectException completedProjectException) {
             throw new CompletedProjectException(INVALID_MODIFY);
         }
         Schedule schedule = scheduleRepository.findJoinSMById(scheduleId).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
@@ -215,7 +214,7 @@ public class ScheduleService {
             LocalDateTime now = LocalDateTime.now();
             schedule.updateState(now, scheduleStateUpdateRequest.getState());
             scheduleMemberRepository.updateRecentView(now, schedule.getId());
-        }catch(CompletedProjectException completedProjectException){
+        } catch (CompletedProjectException completedProjectException) {
             throw new CompletedProjectException(INVALID_MODIFY);
         }
     }
@@ -350,7 +349,7 @@ public class ScheduleService {
 //                    }
                 }
                 scheduleListResponse = ScheduleListResponse.builder()
-                        .scheduleId(s.getId())
+                        .id(s.getId())
                         .title(s.getTitle())
                         .startDate(s.getStartDate())
                         .endDate(s.getEndDate())

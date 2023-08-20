@@ -27,7 +27,8 @@ public class MilestoneDto {
         this.startDate = startDate;
         this.endDate = endDate;
     }
-    public void addMember(Member member){
+
+    public void addMember(Member member) {
         members.add(MemberDto.builder()
                 .id(member.getId())
                 .name(member.getName()).imageUrl(member.getImageUrl()).build());

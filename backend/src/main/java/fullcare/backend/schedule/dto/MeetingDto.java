@@ -19,6 +19,7 @@ public class MeetingDto {
     private LocalDateTime endDate;
     private String address;
     private List<MemberDto> members = new ArrayList<>();
+
     @Builder
     public MeetingDto(Long scheduleId, String title, String content, LocalDateTime startDate, LocalDateTime endDate, String address) {
         this.scheduleId = scheduleId;
@@ -28,7 +29,8 @@ public class MeetingDto {
         this.endDate = endDate;
         this.address = address;
     }
-    public void addMember(Member member){
+
+    public void addMember(Member member) {
         members.add(MemberDto.builder()
                 .id(member.getId())
                 .name(member.getName())
