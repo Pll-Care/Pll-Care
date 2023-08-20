@@ -32,6 +32,7 @@ public class Profile {
 
     @OneToOne(mappedBy = "profile")
     private Member member;
+
     @Length(min = 5, max = 25)
     private String bio; //* 한줄 자기소개
     @Embedded

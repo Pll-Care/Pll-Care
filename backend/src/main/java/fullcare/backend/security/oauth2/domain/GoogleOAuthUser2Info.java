@@ -2,7 +2,7 @@ package fullcare.backend.security.oauth2.domain;
 
 import java.util.Map;
 
-public class GoogleOAuthUser2Info extends OAuth2UserInfo{
+public class GoogleOAuthUser2Info extends OAuth2UserInfo {
 
     public GoogleOAuthUser2Info(Map<String, Object> attributes) {
         super(attributes);
@@ -10,7 +10,6 @@ public class GoogleOAuthUser2Info extends OAuth2UserInfo{
 
     @Override
     public String getId() {
-
         return (String) attributes.get("sub");
     }
 

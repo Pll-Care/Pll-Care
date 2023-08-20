@@ -10,13 +10,20 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 import java.util.Map;
+
 @Getter
 @Slf4j
-@Builder
+
 public class OAuth2Attributes {
 
     private String nameAttributeKey; // * OAuth2 로그인 성공했을 때, Provider가 사용자를 식별하는 값을 가리키는 키 (goolge = sub, kakao = id, naver = response)
     private OAuth2UserInfo oAuth2UserInfo;
+
+    @Builder
+    public OAuth2Attributes(String nameAttributeKey, OAuth2UserInfo oAuth2UserInfo) {
+        this.nameAttributeKey = nameAttributeKey;
+        this.oAuth2UserInfo = oAuth2UserInfo;
+    }
 
     public static OAuth2Attributes of(String oAuth2ProviderName, String nameAttributeKey,
                                       Map<String, Object> attributes) {
@@ -55,10 +62,10 @@ public class OAuth2Attributes {
                 .build();
     }
 
-    public Member toEntity(String oAuth2ProviderName, MemberRole role) {
+    public Member toMemberEntity(String oAuth2ProviderName, MemberRole role) {
         return Member.builder()
-                .oAuth2Id(oAuth2ProviderName +"_"+ this.oAuth2UserInfo.getId())
-                .nickname(this.oAuth2UserInfo.getName())
+                .oAuth2Id(oAuth2ProviderName + "_" + this.oAuth2UserInfo.getId())
+                .nickname("nickname_" + this.oAuth2UserInfo.getName())
                 .name(this.oAuth2UserInfo.getName())
                 .role(role)
                 .signupDate(LocalDateTime.now())

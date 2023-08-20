@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
-    
+
     Optional<Member> findByoAuth2Id(String oAuth2Id);
 
     @Query("select m from Member m where m.id in :memberIds")

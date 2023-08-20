@@ -10,7 +10,10 @@ import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberPositionType;
 import fullcare.backend.schedule.domain.Schedule;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDateTime;
@@ -19,9 +22,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Builder
+
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DynamicUpdate // ! 더티 체킹할 때 바뀐 필드만 변경
 @Table(name = "member")
@@ -60,11 +62,6 @@ public class Member {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "profile_id", nullable = false)
     private Profile profile;
-    //    @Column
-//    private String profileContent;
-
-//    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Post> posts = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Likes> likes = new HashSet<>();
@@ -88,6 +85,7 @@ public class Member {
     private List<ProjectMember> projectMembers = new ArrayList<>();
 
 
+    // ! 테스트 데이터 생성용 생성자
     public Member(String oAuth2Id, String nickname, String name, String email, MemberRole role, LocalDateTime signupDate, String refreshToken, Profile profile) {
         this.oAuth2Id = oAuth2Id;
         this.nickname = nickname;
@@ -96,6 +94,19 @@ public class Member {
         this.role = role;
         this.signupDate = signupDate;
         this.refreshToken = refreshToken;
+        this.profile = profile;
+    }
+
+    @Builder
+    public Member(String oAuth2Id, String nickname, String name, String email, MemberRole role, LocalDateTime signupDate, String refreshToken, String imageUrl, Profile profile) {
+        this.oAuth2Id = oAuth2Id;
+        this.nickname = nickname;
+        this.name = name;
+        this.email = email;
+        this.role = role;
+        this.signupDate = signupDate;
+        this.refreshToken = refreshToken;
+        this.imageUrl = imageUrl;
         this.profile = profile;
     }
 

@@ -30,15 +30,12 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     public OAuth2User loadUser(OAuth2UserRequest userRequest) {
         log.info("CustomOAuth2UserService 진입");
 
-        String registrationId = userRequest.getClientRegistration().getRegistrationId();
-        String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
-        log.info("registrationId : {}", registrationId);
-        log.info("userNameAttributeName : {}", userNameAttributeName);
-
-
         // * access 토큰을 이용하여 사용자 정보 갖고오기
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
+
+        String registrationId = userRequest.getClientRegistration().getRegistrationId();
+        String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
         Map<String, Object> attributes = oAuth2User.getAttributes();
 
         // * OAuth2 사용자 정보를 토대로, Member 엔티티를 만드는데 필요한 정보만 추출
@@ -62,24 +59,23 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         if (findMember.isEmpty()) {
             return newMember(oAuth2Attributes, oAuth2ProviderName);
+        } else {
+            return updateMember(findMember.get(), oAuth2Attributes, oAuth2ProviderName);
         }
-
-        // todo updateMember()를 진짜 달라진 경우에만 호출하는 방식으로 고쳐야한다.
-        updateMember(findMember.get(), oAuth2Attributes, oAuth2ProviderName);
-        return findMember.get();
     }
 
-
-    private void updateMember(Member member, OAuth2Attributes oAuth2Attributes, String oAuth2ProviderName) {
+    private Member updateMember(Member member, OAuth2Attributes oAuth2Attributes, String oAuth2ProviderName) {
         String oAuth2Id = oAuth2ProviderName + "_" + oAuth2Attributes.getOAuth2UserInfo().getId();
+
         member.updateOAuth2Id(oAuth2Id);
         member.updateName(oAuth2Attributes.getOAuth2UserInfo().getName());
         member.updateEmail(oAuth2Attributes.getOAuth2UserInfo().getEmail());
-//        member.updateImageUrl(oAuth2Attributes.getOAuth2UserInfo().getImageUrl());
+
+        return member;
     }
 
     private Member newMember(OAuth2Attributes oAuth2Attributes, String oAuth2providerName) {
-        Member newMember = oAuth2Attributes.toEntity(oAuth2providerName, MemberRole.USER);
+        Member newMember = oAuth2Attributes.toMemberEntity(oAuth2providerName, MemberRole.USER);
         return memberRepository.save(newMember);
     }
 }

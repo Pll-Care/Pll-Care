@@ -39,7 +39,7 @@ public class Recruitment {
         this.post = post;
 
         if (recruitPosition == ProjectMemberPositionType.미정) {
-            throw new InvalidRecruimentException(PostErrorCode.RECRUITMENT_NOT_FOUND);
+            throw new InvalidRecruimentException(PostErrorCode.INVALID_RECRUITMENT_POSITION);
         }
 
         this.recruitPosition = recruitPosition;
