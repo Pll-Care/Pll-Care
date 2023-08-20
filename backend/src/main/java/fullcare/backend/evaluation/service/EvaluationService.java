@@ -16,7 +16,6 @@ import fullcare.backend.evaluation.repository.FinalEvaluationRepository;
 import fullcare.backend.evaluation.repository.MidtermEvaluationRepository;
 import fullcare.backend.global.State;
 import fullcare.backend.global.errorcode.EvaluationErrorCode;
-import fullcare.backend.global.errorcode.MemberErrorCode;
 import fullcare.backend.global.errorcode.ProjectErrorCode;
 import fullcare.backend.global.errorcode.ScheduleErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.*;
@@ -237,13 +236,13 @@ public class EvaluationService {
         List<ScoreDao> scoreDaos = finalEvaluationRepository.findList(project.getId(), projectMembers);
 
         List<FinalCharDto> finalTermEvalFinalCharDto = projectMembers.stream().map(pm -> FinalCharDto.builder()
-                .id(pm.getMember().getId())
+                .memberId(pm.getMember().getId())
                 .name(pm.getMember().getName())
                 .build()
         ).collect(Collectors.toList());
         for (ScoreDao s : scoreDaos) {
             for (FinalCharDto chart : finalTermEvalFinalCharDto) {
-                if (s.getId() == chart.getId()) {
+                if (s.getId() == chart.getMemberId()) {
                     chart.addEvaluation(ScoreDto.builder()
                             .jobPerformance(s.getJobPerformance())
                             .punctuality(s.getPunctuality())
@@ -256,7 +255,7 @@ public class EvaluationService {
 
         // * 랭킹 부분
         List<FinalTermRankingDto> rankingDtos = finalTermEvalFinalCharDto.stream().map(fe -> FinalTermRankingDto.builder()
-                .memberId(fe.getId())
+                .memberId(fe.getMemberId())
                 .name(fe.getName())
                 .score(Score.avg((ScoreDto) fe.getEvaluation().get(0)))
                 .build()).collect(Collectors.toList());
@@ -313,7 +312,7 @@ public class EvaluationService {
         for (ProjectMember pm : projectMembers) {
             Member member = pm.getMember();
             ParticipantResponse participantResponse = ParticipantResponse.builder()
-                    .id(member.getId())
+                    .memberId(member.getId())
                     .name(member.getName())
                     .imageUrl(member.getImageUrl())
                     .isMe(member.getId() == memberId)
@@ -389,13 +388,13 @@ public class EvaluationService {
         List<BadgeDto> badgeList = midtermEvaluationRepository.findAllByMemberId(projectId, projectMember.getId());
         BadgeSubDto badgeSubDto = new BadgeSubDto();
         for (BadgeDto badgeDto : badgeList) {
-            if (badgeDto.getEvaluationBadge() == EvaluationBadge.최고의_서포터){
+            if (badgeDto.getEvaluationBadge() == EvaluationBadge.최고의_서포터) {
                 badgeSubDto.updateSupport(badgeSubDto.getSupport(), badgeDto.getQuantity());
-            }else if(badgeDto.getEvaluationBadge() == EvaluationBadge.탁월한_리더){
+            } else if (badgeDto.getEvaluationBadge() == EvaluationBadge.탁월한_리더) {
                 badgeSubDto.updateLeader(badgeSubDto.getSupport(), badgeDto.getQuantity());
-            }else if(badgeDto.getEvaluationBadge() == EvaluationBadge.열정적인_참여자){
+            } else if (badgeDto.getEvaluationBadge() == EvaluationBadge.열정적인_참여자) {
                 badgeSubDto.updateParticipant(badgeSubDto.getSupport(), badgeDto.getQuantity());
-            }else if(badgeDto.getEvaluationBadge() == EvaluationBadge.아이디어_뱅크){
+            } else if (badgeDto.getEvaluationBadge() == EvaluationBadge.아이디어_뱅크) {
                 badgeSubDto.updateBank(badgeSubDto.getSupport(), badgeDto.getQuantity());
             }
         }

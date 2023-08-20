@@ -3,7 +3,6 @@ package fullcare.backend.evaluation.controller;
 
 import fullcare.backend.evaluation.dto.*;
 import fullcare.backend.evaluation.dto.request.FinalEvalCreateRequest;
-import fullcare.backend.evaluation.dto.request.FinalEvalUpdateRequest;
 import fullcare.backend.evaluation.dto.request.MidTermEvalCreateRequest;
 import fullcare.backend.evaluation.dto.response.*;
 import fullcare.backend.evaluation.service.EvaluationService;
@@ -11,12 +10,12 @@ import fullcare.backend.global.errorcode.EvaluationErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.UnauthorizedAccessException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.service.ProjectService;
-import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.schedulemember.service.ScheduleMemberService;
 import fullcare.backend.security.jwt.CurrentLoginMember;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -38,14 +37,14 @@ import java.util.List;
 public class EvaluationController {
 
     private final EvaluationService evaluationService;
-    private final ProjectMemberService projectMemberService;
     private final ScheduleMemberService scheduleMemberService;
+    private final ProjectMemberService projectMemberService;
     private final ProjectService projectService;
 
     // * 중간평가 관련
     @Operation(method = "get", summary = "중간 평가 모달창 조회")
     @ApiResponses(value = {
-            @ApiResponse(description = "중간 평가 모달창 조회 성공", responseCode = "200", useReturnTypeSchema = true)
+            @ApiResponse(description = "중간 평가 모달창 조회 성공", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = MidTermEvalModalResponse.class)))
     })
     @GetMapping("/midterm")
     public ResponseEntity<MidTermEvalModalResponse> midtermEvalModal(@RequestParam Long scheduleId, @RequestParam Long projectId,
@@ -55,7 +54,7 @@ public class EvaluationController {
         }
         MidTermEvalModalResponse response = evaluationService.modal(scheduleId, member.getId());
 
-        return new ResponseEntity(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @Operation(method = "post", summary = "중간 평가 생성")
