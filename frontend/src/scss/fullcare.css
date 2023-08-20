@@ -3820,6 +3820,20 @@ a {
   margin: 10px;
 }
 
+.recruitment h1 {
+  color: #b4bcbd;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+}
+@media (max-width: 767px) {
+  .recruitment h1 {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 7px;
+    font-weight: 700;
+  }
+}
+
 .member-write {
   width: 100%;
   background-color: #01e89e;
@@ -4118,69 +4132,85 @@ a {
 }
 
 .detail-title {
-  margin: 0px 5%;
+  margin: 10px 5%;
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  padding: 2rem;
+  padding: 1rem;
 }
 @media (max-width: 767px) {
   .detail-title {
-    margin: 0px 0px;
-    padding: 10px;
+    margin: 10px 0px;
+    padding: 0px;
   }
 }
 .detail-title-content {
   display: flex;
   align-items: center;
-  justify-content: center;
-}
-@media (max-width: 767px) {
-  .detail-title-content {
-    float: left;
-    width: 100%;
-  }
 }
 .detail-title-content .mui-arrow {
   color: black;
-  margin-right: 10px;
+  transform: scale(0.8);
 }
 .detail-title-content img {
-  width: 80px;
-  height: 80px;
-  border-radius: 30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  margin-left: 10px;
 }
 @media (max-width: 767px) {
   .detail-title-content img {
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
   }
 }
 .detail-title-content input {
   font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 38px;
+  font-weight: 700;
   margin-left: 10px;
   border-radius: 20px;
-  padding: 10px;
+  color: #7a7a7a;
+  padding: 7px;
+}
+@media (max-width: 767px) {
+  .detail-title-content input {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 3px;
+    width: 50%;
+  }
 }
 .detail-title-content h1 {
-  font-size: 40px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 38px;
+  font-weight: 700;
   color: #7a7a7a;
   margin-left: 20px;
 }
 @media (max-width: 767px) {
   .detail-title-content h1 {
-    font-size: 33px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-left: 7px;
   }
 }
 .detail-title-content h2 {
-  color: gray;
+  margin-top: 10px;
+  color: #7a7a7a;
   margin-left: 10px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
 }
 @media (max-width: 767px) {
   .detail-title-content h2 {
-    font-size: 12px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    margin-top: 5px;
   }
 }
 .detail-title-button {
@@ -4194,7 +4224,6 @@ a {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   padding: 2.5rem;
   margin: 0px 7%;
-  font-family: "Noto Sans KR", sans-serif;
 }
 @media (max-width: 767px) {
   .recruitment-detail {
@@ -4206,16 +4235,50 @@ a {
 .recruitment-detail textarea,
 .recruitment-detail select {
   font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
   border-radius: 20px;
+  color: #7a7a7a;
+}
+@media (max-width: 767px) {
+  .recruitment-detail input,
+  .recruitment-detail textarea,
+  .recruitment-detail select {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
 }
 .recruitment-detail textarea {
   padding: 10px;
   margin: 10px 0px;
 }
 .recruitment-detail h4 {
-  color: #01e89e;
-  font-size: 18px;
+  color: #00aa72;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
   margin-right: 20px;
+}
+@media (max-width: 767px) {
+  .recruitment-detail h4 {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+}
+.recruitment-detail h5 {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #7a7a7a;
+}
+@media (max-width: 767px) {
+  .recruitment-detail h5 {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
 }
 .recruitment-detail-content {
   display: grid;
@@ -4224,6 +4287,16 @@ a {
   align-items: center;
   border-bottom: 1px solid rgb(204, 204, 204);
   padding-bottom: 30px;
+}
+@media (max-width: 767px) {
+  .recruitment-detail-content {
+    grid-template-columns: 30% 70%;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .recruitment-detail-content {
+    grid-template-columns: 20% 80%;
+  }
 }
 .recruitment-detail-content select {
   width: 70px;
@@ -4247,8 +4320,25 @@ a {
   grid-gap: 20px 0px;
   align-content: center;
 }
+@media (max-width: 767px) {
+  .recruitment-detail-container {
+    grid-template-columns: 20% 80%;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .recruitment-detail-container {
+    grid-template-columns: 20% 80%;
+  }
+}
 .recruitment-detail-container-select {
   display: flex;
+}
+@media (max-width: 767px) {
+  .recruitment-detail-container h5 {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
 }
 .recruitment-detail-container .recruitment-grid-row {
   display: grid;
@@ -4273,6 +4363,21 @@ a {
 }
 .recruitment-detail-description-content {
   padding-bottom: 15px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #7a7a7a;
+}
+.recruitment-detail-description-content img {
+  max-width: 100%;
+  height: auto;
+}
+@media (max-width: 767px) {
+  .recruitment-detail-description-content {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
 }
 .recruitment-detail-description-stacks {
   flex-wrap: wrap;
@@ -4282,6 +4387,13 @@ a {
   width: 50px;
   height: 50px;
   margin-right: 20px;
+}
+@media (max-width: 767px) {
+  .recruitment-detail-description-stacks img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+  }
 }
 .recruitment-detail-description h4 {
   margin: 20px 0px;
