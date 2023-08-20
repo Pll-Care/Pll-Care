@@ -3017,7 +3017,7 @@ a {
 }
 @media (max-width: 767px) {
   .evaluation-management-final-evaluation .final-evaluation-body .evaluation-criterion {
-    width: 90%;
+    width: 82%;
     height: 70%;
     grid-template-rows: repeat(4, 1fr);
     grid-template-columns: 100%;
@@ -3028,11 +3028,6 @@ a {
     font-weight: 600;
     margin-left: auto;
     margin-right: auto;
-  }
-}
-@media (max-width: 767px) {
-  .evaluation-management-final-evaluation .final-evaluation-body .evaluation-criterion {
-    width: 85%;
   }
 }
 .evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges {
@@ -3075,6 +3070,7 @@ a {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  justify-self: center;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -3086,7 +3082,15 @@ a {
   }
 }
 @media (max-width: 767px) {
+  .evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges-body .badge .badge-quantity {
+    justify-self: center;
+  }
+}
+@media (max-width: 767px) {
   .evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges-body .badge {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
     font-family: "IBM Plex Sans KR", sans-serif;
     font-size: 10px;
     font-weight: 600;
