@@ -244,7 +244,7 @@ public class TestDataInit {
             List<Long> memberIds = new ArrayList<>();
             long lValue = rand.nextLong(3, 6);
             for (long j = 0l; j < lValue; j++) {
-                long findMemberId = rand.nextLong(10, 19);
+                long findMemberId = rand.nextLong(1, 10);
 
                 if (!insertId.contains(findMemberId)) {
                     Member member = memberRepository.findById(findMemberId).get();
@@ -264,7 +264,6 @@ public class TestDataInit {
             int randDay = rand.nextInt(1, lastDay);
 //            LocalDateTime startDate = LocalDateTime.of(2023, randMonth, randDay, 13, 0);
             LocalDateTime startDate = LocalDateTime.of(2023, month, randDay, 13, 0);
-            memberIds.add(1l);
             if (i < 16) {
                 LocalDateTime endDate = LocalDateTime.of(2023, month, randDay, 16, 0);
                 ProjectMember projectMember = projectService.isProjectAvailable(1l, 1l, false);

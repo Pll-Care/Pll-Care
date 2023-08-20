@@ -7,11 +7,11 @@ import lombok.Data;
 
 @Data
 public class MemberDto {
-    private Long pmId;
+    private Long id;
     private String name;
     @Builder
     public MemberDto(ProjectMember projectMember) {
-        this.pmId = projectMember.getId();
+        this.id = projectMember.getMember().getId();
         this.name = projectMember.getMember().getName();
     }
 }

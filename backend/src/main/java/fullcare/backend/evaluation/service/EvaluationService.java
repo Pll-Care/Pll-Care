@@ -211,7 +211,6 @@ public class EvaluationService {
             String name = projectMembers.stream().filter(pm -> pm.getId() == r.getId()).map(pm -> pm.getMember().getName()).findFirst().get();
             rankingDtos.add(MidTermRankingDto.builder()
                     .rank(r.getRanking())
-                    .pmId(r.getId())
                     .name(name)
                     .quantity(r.getQuantity())
                     .build()
@@ -238,13 +237,13 @@ public class EvaluationService {
         List<ScoreDao> scoreDaos = finalEvaluationRepository.findList(project.getId(), projectMembers);
 
         List<FinalCharDto> finalTermEvalFinalCharDto = projectMembers.stream().map(pm -> FinalCharDto.builder()
-                .pmId(pm.getId())
+                .id(pm.getMember().getId())
                 .name(pm.getMember().getName())
                 .build()
         ).collect(Collectors.toList());
         for (ScoreDao s : scoreDaos) {
             for (FinalCharDto chart : finalTermEvalFinalCharDto) {
-                if (s.getId() == chart.getPmId()) {
+                if (s.getId() == chart.getId()) {
                     chart.addEvaluation(ScoreDto.builder()
                             .jobPerformance(s.getJobPerformance())
                             .punctuality(s.getPunctuality())
@@ -257,7 +256,7 @@ public class EvaluationService {
 
         // * 랭킹 부분
         List<FinalTermRankingDto> rankingDtos = finalTermEvalFinalCharDto.stream().map(fe -> FinalTermRankingDto.builder()
-                .memberId(fe.getPmId())
+                .memberId(fe.getId())
                 .name(fe.getName())
                 .score(Score.avg((ScoreDto) fe.getEvaluation().get(0)))
                 .build()).collect(Collectors.toList());
