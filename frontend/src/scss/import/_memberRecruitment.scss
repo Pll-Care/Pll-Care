@@ -62,27 +62,9 @@
   h3 {
     color: $green-400;
     white-space: nowrap;
-    font-size: $body-font-size;
+    @include heading_04;
     @include mobile {
-      font-size: $body-font-size-small;
-    }
-  }
-  input {
-    padding: 5px;
-    border-radius: 20px;
-    border: none;
-    border: 2px solid $gray-400;
-    font-family: $heading-font;
-    color: $gray-400;
-
-    &:hover,
-    &:focus {
-      border-color: $green-200;
-    }
-
-    @include mobile {
-      font-size: $body-font-size-small;
-      padding: 3px;
+      @include m_heading_03;
     }
   }
 
@@ -99,55 +81,91 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin: 10px 15px;
+    margin: 20px 15px;
+    color: white;
+    @include mobile {
+      margin: 10px 5px;
+    }
     .recruitment-direction {
       color: white;
       transform: scale(0.8);
+    }
+    input {
+      border: none;
+      background-color: transparent;
+      color: white;
+
+      @include heading_01;
+      &:focus {
+        outline: none;
+      }
+      &::placeholder {
+        color: white;
+      }
+      @include mobile {
+        @include m_heading_05;
+      }
     }
     img {
       width: 50px;
       height: 50px;
       border-radius: 40px;
       margin: 0px 10px;
+      @include mobile {
+        margin: 0px 3px;
+      }
     }
   }
 }
 
 .member-content {
-  font-family: $heading-font;
   // RecruitmentProjectWrite 컴포넌트
   .member-grid {
     display: grid;
-    grid-template-columns: repeat(2, 0.2fr);
+    //grid-template-columns: repeat(2, 0.2fr);
+    grid-template-columns: 20% 80%;
     grid-gap: 27px;
     align-items: center;
     border-bottom: 2px solid $gray-400;
     padding-bottom: 20px;
 
     .control-menu {
-      color: $gray-400;
-      border: 2px solid $gray-400;
+      color: $gray-500;
+      border: none;
       height: 90%;
-      font-size: $body-font-size;
+      @include heading_05;
       padding: 5px 0px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 
       @include mobile {
-        font-size: $body-font-size-small;
-        padding: 0px 3px;
-        width: 100px;
+        @include m_body_01;
       }
     }
 
     &-time {
       display: flex;
-      width: 90%;
+      align-items: center;
+      flex-wrap: wrap;
+      input {
+        border-radius: 10px;
+        padding: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        color: $gray-500;
+        border: none;
+        @include heading_05;
+        @include mobile {
+          @include m_body_01;
+        }
+      }
     }
   }
 
   .member-grid-position {
-    display: flex;
     display: grid;
-    grid-template-columns: repeat(3, 0.2fr);
+    grid-template-columns: 15% 30% 55%;
+    @include mobile {
+      grid-template-columns: 20% 80%;
+    }
     grid-gap: 27px;
 
     margin-top: 40px;
@@ -156,20 +174,32 @@
 
     h5 {
       white-space: nowrap;
+      @include heading_05;
+      color: $gray-500;
       @include mobile {
-        font-size: $body-font-size-small;
-        color: yello;
+        @include m_heading_03;
       }
     }
     .recruitment-positions {
       display: grid;
       grid-template-columns: repeat(2, 0.5fr);
-
+      grid-gap: 10px 10px;
       align-items: center;
 
       input {
         width: 40px;
         height: 30px;
+        border: none;
+        border-radius: 40px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        @include heading_05;
+        color: $gray-500;
+
+        @include mobile {
+          width: 30px;
+          height: 20px;
+          @include m_heading_03;
+        }
       }
     }
     &-stack {
@@ -186,9 +216,13 @@
     border: none;
     height: 200px;
     padding: 0.5rem;
+    @include heading_05;
     &:hover,
     &:focus {
       border: 2px solid $green-200;
+    }
+    @include mobile {
+      @include m_heading_03;
     }
   }
 

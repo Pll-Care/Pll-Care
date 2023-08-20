@@ -262,7 +262,7 @@ const MemberRecruitmentWrite = () => {
               className="member-grid-position-stack"
               ref={inputRefs.techStack}
             >
-              <h5>기술 스택</h5>
+              <h3>기술 스택</h3>
               <SearchStack
                 className="search-stack"
                 stackList={formValues.techStack}

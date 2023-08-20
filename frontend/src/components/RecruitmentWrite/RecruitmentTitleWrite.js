@@ -27,7 +27,7 @@ const RecruitmentTitleWrite = ({
         ref={inputRefs.title}
         value={formValues.title}
         onChange={handleChange}
-        placeholder="모집글 제목을 작성해보세요"
+        placeholder="New Project Title"
       />
     </div>
   );
