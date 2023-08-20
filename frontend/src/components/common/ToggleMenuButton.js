@@ -1,6 +1,5 @@
 import { useRef } from "react";
-import { Link } from "react-router-dom";
-import menuBarImgUrl from "../../assets/toggle-button-img.png";
+
 import logoImgUrl from "../../assets/logo.svg";
 import managementIconImgUrl from "../../assets/management-icon.svg";
 import recruitmentIconImgUrl from "../../assets/recruitment-icon.svg";
@@ -24,6 +23,11 @@ const ToggleMenuButton = ({
   };
 
   const handleClickLinkMenu = useLinkMenuClick();
+
+  const handleClickLink = (menu) => {
+    handleClickLinkMenu(menu);
+    setIsToggleMenuOpen(false);
+  };
 
   return (
     <div
@@ -52,7 +56,7 @@ const ToggleMenuButton = ({
           <div className="toggle-menu-button-link-wrapper">
             <div
               className="toggle-menu-button-link"
-              onClick={() => handleClickLinkMenu("/management")}
+              onClick={() => handleClickLink("/management")}
             >
               <figure
                 className="toggle-menu-button-link-logo"
@@ -64,7 +68,7 @@ const ToggleMenuButton = ({
             </div>
             <div
               className="toggle-menu-button-link"
-              onClick={() => handleClickLinkMenu("/recruitment")}
+              onClick={() => handleClickLink("/recruitment")}
             >
               <figure
                 className="toggle-menu-button-link-logo"
