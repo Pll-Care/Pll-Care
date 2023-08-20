@@ -45,10 +45,10 @@ public class MeetingService {
             LocalDateTime startDate = project.getStartDate().atStartOfDay();
             LocalDateTime endDate = project.getEndDate().atStartOfDay();
             Schedule.validDate(startDate, endDate, scheduleCreateRequest.getStartDate(), scheduleCreateRequest.getEndDate());
-            List<Long> pmIds = scheduleCreateRequest.getPmIds();
+            List<Long> memberIds = scheduleCreateRequest.getMemberIds();
             List<ProjectMember> pmList = new ArrayList<>();
-            pmIds.forEach(pmId -> {
-                ProjectMember pm = projectMemberRepository.findById(pmId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
+            memberIds.forEach(id -> {
+                ProjectMember pm = projectMemberRepository.findByProjectIdAndMemberId(scheduleCreateRequest.getProjectId(), id).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
                 pmList.add(pm);
             });
             Meeting meeting = Meeting.builder()

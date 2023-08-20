@@ -121,7 +121,7 @@ public class ScheduleService {
 
         List<ProjectMember> pmList = projectMemberRepository.findProjectMemberWithMemberByProjectIdAndProjectMemberRole(scheduleUpdateRequest.getProjectId(), projectMemberRoleTypes);
 
-        List<Member> members = pmList.stream().map(pm -> pm.getMember()).collect(Collectors.toList());// 프로젝트에 있는 멤버 리스트
+//        List<Member> members = pmList.stream().map(pm -> pm.getMember()).collect(Collectors.toList());// 프로젝트에 있는 멤버 리스트
         schedule.update(
                 scheduleUpdateRequest.getState(),
                 scheduleUpdateRequest.getTitle(),
@@ -130,7 +130,7 @@ public class ScheduleService {
                 scheduleUpdateRequest.getEndDate(),
                 LocalDateTime.now()
         );
-        List<ProjectMember> updateMemberList = projectMemberRepository.findByIds(scheduleUpdateRequest.getPmIds());
+        List<ProjectMember> updateMemberList = projectMemberRepository.findByProjectIdAndMemberIds(scheduleUpdateRequest.getProjectId(), scheduleUpdateRequest.getMemberIds());
 //        List<Member> updateMemberList = memberRepository.findByIds(scheduleUpdateRequest.getMemberIds()); // 새로 업데이트 되는 멤버 리스트
         if (!pmList.containsAll(updateMemberList)) {// 프로젝트에 속한 사람인지 확인
             throw new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND);
