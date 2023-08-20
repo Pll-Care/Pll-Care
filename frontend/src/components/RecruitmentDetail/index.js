@@ -2,13 +2,20 @@ import { useState, useRef } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShareIcon from "@mui/icons-material/Share";
 
+import { authActions } from "../../redux/authSlice";
 import Button from "../common/Button";
 import AlertCheckModal from "../common/AlertCheckModal";
+import RecruitmentDetailTitle from "./RecruitmentDetailTitle";
+import RecruitmentDetailProject from "./RecruitmentDetailProject";
+import RecruitmentDetailPosition from "./RecruitmentDetailPosition";
+import RecruitmentDetailStackName from "./RecruitmentDetailStackName";
+import RecruitmentDetailDescription from "./RecruitmentDetailDescription";
 
 import { isToken } from "../../utils/localstroageHandler";
 import { getRecruitmentPostDetail } from "../../lib/apis/memberRecruitmentApi";
@@ -17,13 +24,6 @@ import {
   useDeleteRecruitmentPostMutation,
   useModifyRecruitmentPostMutation,
 } from "../../hooks/useRecruitmentMutation";
-import { useDispatch } from "react-redux";
-import { authActions } from "../../redux/authSlice";
-import RecruitmentDetailTitle from "./RecruitmentDetailTitle";
-import RecruitmentDetailProject from "./RecruitmentDetailProject";
-import RecruitmentDetailPosition from "./RecruitmentDetailPosition";
-import RecruitmentDetailStackName from "./RecruitmentDetailStackName";
-import RecruitmentDetailDescription from "./RecruitmentDetailDescription";
 
 const RecruitmentDetailContent = () => {
   const { id } = useParams();

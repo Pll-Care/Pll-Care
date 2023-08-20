@@ -1,57 +1,63 @@
 // RecruitmentDetailTitle 컴포넌트
 .detail-title {
-  margin: 0px 5%;
+  margin: 10px 5%;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
 
-  @include displayFlex(row, space-between, center);
-
-  font-family: $heading-font;
-  padding: 2rem;
   @include mobile {
-    margin: 0px 0px;
-    padding: 10px;
+    margin: 10px 0px;
+    padding: 0px;
   }
 
   &-content {
-    @include mobile {
-      float: left;
-      width: 100%;
-    }
     .mui-arrow {
       color: black;
-      margin-right: 10px;
+      transform: scale(0.8);
     }
     img {
-      width: 80px;
-      height: 80px;
-      border-radius: 30px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50px;
+      margin-left: 10px;
       @include mobile {
-        width: 50px;
-        height: 50px;
+        width: 30px;
+        height: 30px;
+        margin-left: 5px;
       }
     }
     input {
-      font-family: $heading-font;
+      @include heading_01;
       margin-left: 10px;
       border-radius: 20px;
-      padding: 10px;
+      color: $gray-500;
+      padding: 7px;
+      @include mobile {
+        @include m_heading_05;
+        padding: 3px;
+        width: 50%;
+      }
     }
     display: flex;
     align-items: center;
-    justify-content: center;
 
     h1 {
-      font-size: $heading-font-size;
+      @include heading_01;
       color: $gray-500;
       margin-left: 20px;
       @include mobile {
-        font-size: $heading-font-size-small;
+        @include m_heading_05;
+        margin-left: 7px;
       }
     }
     h2 {
-      color: gray;
+      margin-top: 10px;
+      color: $gray-500;
       margin-left: 10px;
+      @include heading_05;
       @include mobile {
-        font-size: $body-font-size-small;
+        @include m_body_01;
+        margin-top: 5px;
       }
     }
   }
@@ -72,12 +78,15 @@
     margin: 0px 7px;
     padding: 1rem;
   }
-  font-family: $body-font;
   input,
   textarea,
   select {
-    font-family: $heading-font;
+    @include heading_05;
     border-radius: 20px;
+    color: $gray-500;
+    @include mobile {
+      @include m_body_01;
+    }
   }
   textarea {
     padding: 10px;
@@ -85,15 +94,32 @@
   }
 
   h4 {
-    color: $font-color;
-    font-size: $body-font-size;
+    color: $green-400;
+    @include heading_04;
     margin-right: 20px;
+    @include mobile {
+      @include m_heading_03;
+    }
+  }
+
+  h5 {
+    @include heading_05;
+    color: $gray-500;
+    @include mobile {
+      @include m_body_01;
+    }
   }
 
   // RecruitmentDetailProject 컴포넌트
   &-content {
     display: grid;
     grid-template-columns: 15% 85%;
+    @include mobile {
+      grid-template-columns: 30% 70%;
+    }
+    @include tablet {
+      grid-template-columns: 20% 80%;
+    }
     grid-gap: 20px 0px;
     align-items: center;
     border-bottom: 1px solid rgb(204, 204, 204);
@@ -122,10 +148,21 @@
     padding-bottom: 50px;
     display: grid;
     grid-template-columns: 15% 85%;
+    @include mobile {
+      grid-template-columns: 20% 80%;
+    }
+    @include tablet {
+      grid-template-columns: 20% 80%;
+    }
     grid-gap: 20px 0px;
     align-content: center;
     &-select {
       display: flex;
+    }
+    h5 {
+      @include mobile {
+        @include m_heading_03;
+      }
     }
     .recruitment-grid-row {
       display: grid;
@@ -152,7 +189,18 @@
     padding-bottom: 5px;
     border-bottom: 1px solid rgb(204, 204, 204);
     &-content {
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+
       padding-bottom: 15px;
+      @include heading_05;
+      color: $gray-500;
+
+      @include mobile {
+        @include m_body_01;
+      }
     }
     &-stacks {
       flex-wrap: wrap;
@@ -161,6 +209,11 @@
         width: 50px;
         height: 50px;
         margin-right: 20px;
+        @include mobile {
+          width: 30px;
+          height: 30px;
+          margin-right: 10px;
+        }
       }
     }
 

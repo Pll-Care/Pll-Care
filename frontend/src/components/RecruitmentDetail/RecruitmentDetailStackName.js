@@ -50,10 +50,10 @@ const RecruitmentDetailStackName = ({
         )}
       </div>
 
-      <div className="recruitment-detail-description">
+      {/*<div className="recruitment-detail-description">
         <h4>프로젝트 이름</h4>
         <h5>{data?.projectName}</h5>
-      </div>
+      </div>*/}
     </>
   );
 };
