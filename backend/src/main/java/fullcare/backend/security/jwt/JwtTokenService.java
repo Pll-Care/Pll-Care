@@ -61,7 +61,7 @@ public class JwtTokenService {
         return Jwts.builder()
                 .setSubject(oAuth2User.getName())
                 .claim("role", oAuth2User.getAuthorities())
-                .claim("nickname", oAuth2User.getUsername())
+                .claim("nickname", oAuth2User.getMember().getNickname())
                 .setExpiration(new Date(System.currentTimeMillis() + accessTokenValidationMilliseconds))
                 .signWith(key, SignatureAlgorithm.HS512)
                 .setHeaderParam("typ", "JWT")

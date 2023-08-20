@@ -1,5 +1,6 @@
 package fullcare.backend.global.exceptionhandling.exceptionhandler;
 
+import com.fasterxml.jackson.databind.DatabindException;
 import fullcare.backend.global.dto.ErrorResponse;
 import fullcare.backend.global.errorcode.GlobalErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.RestApiException;
@@ -26,23 +27,26 @@ public class GlobalExceptionHandler {
     // * 스프링 프레임워크단에서 발생하는 예외 처리
     @ExceptionHandler(value = {MethodArgumentNotValidException.class,})
     public ResponseEntity<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException e, HttpServletRequest request) {
-        
         ErrorResponse errorResponse = ErrorResponse.getResponse(GlobalErrorCode.INVALID_REQUEST_DATA, e, request);
         return new ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = {MethodArgumentTypeMismatchException.class})
     public ResponseEntity<?> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e, HttpServletRequest request) {
-
         ErrorResponse errorResponse = ErrorResponse.getResponse(GlobalErrorCode.INVALID_REQUEST_DATA, e, request);
         return new ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = {HttpRequestMethodNotSupportedException.class})
     public ResponseEntity<?> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e, HttpServletRequest request) {
-
         ErrorResponse errorResponse = ErrorResponse.getResponse(GlobalErrorCode.INVALID_ACCESS, e, request);
         return new ResponseEntity(errorResponse, HttpStatus.METHOD_NOT_ALLOWED);
+    }
+
+    @ExceptionHandler(value = {DatabindException.class})
+    public ResponseEntity<?> handleDataBindException(DatabindException e, HttpServletRequest request) {
+        ErrorResponse errorResponse = ErrorResponse.getResponse(GlobalErrorCode.INVALID_REQUEST_DATA, e, request);
+        return new ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = {BindException.class})

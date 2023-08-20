@@ -6,6 +6,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,16 +18,13 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.io.IOException;
 
 @Slf4j
+@RequiredArgsConstructor
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     public static final String ACCESS_TOKEN_AUTHORIZATION_HEADER = "Authorization";
     public static final String REFRESH_TOKEN_AUTHORIZATION_HEADER = "Authorization_refresh";
 
     private final JwtTokenService jwtTokenService;
-
-    public JwtAuthenticationFilter(JwtTokenService jwtTokenService) {
-        this.jwtTokenService = jwtTokenService;
-    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -36,7 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String accessToken = getAccessToken(request);
 
             if (refreshToken != null && jwtTokenService.validateJwtToken(refreshToken)) {
-                
+
                 String[] newTokens = jwtTokenService.reIssueTokens(refreshToken); // * 리프레쉬 토큰이 DB와 일치 시 access, refresh 재발급
                 String requestURI = request.getRequestURI();
                 String successUrl = UriComponentsBuilder.fromUriString("http://localhost:3000/token")
