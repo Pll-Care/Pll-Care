@@ -27,8 +27,8 @@ public class Meeting extends Schedule {
     }
 
     @Builder
-    public Meeting(Project project, Member member, State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate, String address, LocalDateTime createdDate, LocalDateTime modifiedDate) {
-        super(project, member, state, title, content, startDate, endDate, createdDate, modifiedDate);
+    public Meeting(Project project, ProjectMember author, State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate, String address, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+        super(project, author, state, title, content, startDate, endDate, createdDate, modifiedDate);
         this.address = address;
     }
 

@@ -1,8 +1,10 @@
 package fullcare.backend.schedule.service;
 
 import fullcare.backend.global.State;
+import fullcare.backend.global.errorcode.MemberErrorCode;
 import fullcare.backend.global.errorcode.ProjectErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.CompletedProjectException;
+import fullcare.backend.global.exceptionhandling.exception.EntityNotFoundException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.project.domain.Project;
@@ -14,7 +16,6 @@ import fullcare.backend.schedule.domain.Meeting;
 import fullcare.backend.schedule.domain.Schedule;
 import fullcare.backend.schedule.dto.request.ScheduleCreateRequest;
 import fullcare.backend.schedule.repository.MeetingRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ import static fullcare.backend.global.errorcode.ScheduleErrorCode.INVALID_MODIFY
 @RequiredArgsConstructor
 @Transactional
 public class MeetingService {
-    private final MemberRepository memberRepository;
+    private final ProjectMemberRepository projectMemberRepository;
     private final MeetingRepository meetingRepository;
     private final ProjectService projectService;
 
@@ -41,15 +42,14 @@ public class MeetingService {
             ProjectMember projectMember = projectService.isProjectAvailable(scheduleCreateRequest.getProjectId(), memberId, false);
             LocalDateTime now = LocalDateTime.now();
             Project project = projectMember.getProject();
-            Member author = projectMember.getMember();
             LocalDateTime startDate = project.getStartDate().atStartOfDay();
             LocalDateTime endDate = project.getEndDate().atStartOfDay();
             Schedule.validDate(startDate, endDate, scheduleCreateRequest.getStartDate(), scheduleCreateRequest.getEndDate());
-            List<Long> memberIds = scheduleCreateRequest.getMemberIds();
-            List<Member> memberList = new ArrayList<>();
-            memberIds.forEach(m -> {
-                Member member = memberRepository.findById(m).orElseThrow(() -> new EntityNotFoundException("해당 사용자가 존재하지 않습니다."));
-                memberList.add(member);
+            List<Long> pmIds = scheduleCreateRequest.getPmIds();
+            List<ProjectMember> pmList = new ArrayList<>();
+            pmIds.forEach(pmId -> {
+                ProjectMember pm = projectMemberRepository.findById(pmId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
+                pmList.add(pm);
             });
             Meeting meeting = Meeting.builder()
                     .project(project)
@@ -57,14 +57,14 @@ public class MeetingService {
                     .endDate(scheduleCreateRequest.getEndDate())
                     .title(scheduleCreateRequest.getTitle())
                     .content(scheduleCreateRequest.getContent())
-                    .member(author)
+                    .author(projectMember)
                     .state(State.TBD)
                     .address(scheduleCreateRequest.getAddress())
                     .createdDate(now)
                     .modifiedDate(now)
                     .build();
 
-            meeting.addMemberList(memberList);
+            meeting.addMemberList(pmList);
         meetingRepository.save(meeting);
         } catch (CompletedProjectException completedProjectException) {
             throw new CompletedProjectException(INVALID_CREATE);

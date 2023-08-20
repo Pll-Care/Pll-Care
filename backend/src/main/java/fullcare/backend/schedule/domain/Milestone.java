@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 
 public class Milestone extends Schedule{
     @Builder
-    public Milestone(Project project, Member member, State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdDate, LocalDateTime modifiedDate) {
-        super(project, member, state, title, content, startDate, endDate, createdDate, modifiedDate);
+    public Milestone(Project project, ProjectMember author, State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+        super(project, author, state, title, content, startDate, endDate, createdDate, modifiedDate);
     }
 }

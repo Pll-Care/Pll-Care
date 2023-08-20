@@ -1,10 +1,14 @@
 package fullcare.backend.projectmember.domain;
 
 import fullcare.backend.bookmarkmemo.domain.BookmarkMemo;
+import fullcare.backend.evaluation.domain.FinalTermEvaluation;
+import fullcare.backend.evaluation.domain.MidtermEvaluation;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.memo.domain.Memo;
 import fullcare.backend.post.domain.Post;
 import fullcare.backend.project.domain.Project;
+import fullcare.backend.schedule.domain.Schedule;
+import fullcare.backend.schedulemember.domain.ScheduleMember;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -33,14 +37,29 @@ public class ProjectMember {
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
-    //    @OneToMany(mappedBy = "projectMember", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Schedule> schedules = new ArrayList<>();
-
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Memo> memos = new ArrayList<>();
 
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Schedule> schedules = new ArrayList<>();
+
+    @OneToMany(mappedBy = "evaluator", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FinalTermEvaluation> finalTermEvaluationsEvaluator = new ArrayList<>();
+
+    @OneToMany(mappedBy = "evaluated", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FinalTermEvaluation> finalTermEvaluationsEvaluated = new ArrayList<>();
+
+    @OneToMany(mappedBy = "voter", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MidtermEvaluation> midtermEvaluationsVoter = new ArrayList<>();
+
+    @OneToMany(mappedBy = "voted", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MidtermEvaluation> midtermEvaluationsVoted = new ArrayList<>();
+
+    @OneToMany(mappedBy = "projectMember", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ScheduleMember> scheduleMembers = new ArrayList<>();
 
     @Embedded
     private ProjectMemberType projectMemberType; // 포지션 + 역할

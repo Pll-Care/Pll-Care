@@ -186,14 +186,17 @@ public class TestDataInit {
     private void createFinalEvaluation() {
         Random rand = new Random();
         Project project = projectService.findProject(1l);
+        List<ProjectMember> projectMembers = project.getProjectMembers();
         for (long i = 1l; i <= 30; i++) {
-            long evaluator = rand.nextLong(1, 10);
-            long evaluated = rand.nextLong(1, 10);
+            int evaluatorId = rand.nextInt(1, 10);
+            int evaluatedId = rand.nextInt(1, 10);
+            ProjectMember evaluator = projectMembers.get(evaluatorId);
+            ProjectMember evaluated = projectMembers.get(0);
             FinalTermEvaluation finalTermEvaluation = FinalTermEvaluation.createNewFinalEval()
                     .content("내용")
                     .score(new Score(rand.nextInt(5), rand.nextInt(5), rand.nextInt(5), rand.nextInt(5)))
-                    .evaluator(memberRepository.findById(evaluator).get())
-                    .evaluated(memberRepository.findById(evaluated).get())
+                    .evaluator(evaluator)
+                    .evaluated(evaluated)
                     .project(project)
 //                    .state(State.COMPLETE)
                     .build();
@@ -204,9 +207,12 @@ public class TestDataInit {
     private void createMidEvaluation() {
         Random rand = new Random();
         Project project = projectService.findProject(1l);
+        List<ProjectMember> projectMembers = project.getProjectMembers();
         for (long i = 1l; i <= 30; i++) {
-            long voterId = rand.nextLong(1, 10);
-            long votedId = rand.nextLong(1, 10);
+            int voterId = rand.nextInt(1, 10);
+            int votedId = rand.nextInt(1, 10);
+            ProjectMember voter = projectMembers.get(voterId);
+            ProjectMember voted = projectMembers.get(0);
             EvaluationBadge badge = null;
             if (i % 4 == 0) {
                 badge = EvaluationBadge.아이디어_뱅크;
@@ -219,8 +225,8 @@ public class TestDataInit {
             }
             Schedule schedule = scheduleRepository.findById(1l).orElseThrow();
             MidtermEvaluation midtermEvaluation = MidtermEvaluation.createNewMidtermEval()
-                    .voter(memberRepository.findById(voterId).get())
-                    .voted(memberRepository.findById(votedId).get())
+                    .voter(voter)
+                    .voted(voted)
                     .project(project)
                     .schedule(schedule)
                     .evaluationBadge(badge).build();
@@ -238,7 +244,7 @@ public class TestDataInit {
             List<Long> memberIds = new ArrayList<>();
             long lValue = rand.nextLong(3, 6);
             for (long j = 0l; j < lValue; j++) {
-                long findMemberId = rand.nextLong(1, 10);
+                long findMemberId = rand.nextLong(10, 19);
 
                 if (!insertId.contains(findMemberId)) {
                     Member member = memberRepository.findById(findMemberId).get();
@@ -258,7 +264,7 @@ public class TestDataInit {
             int randDay = rand.nextInt(1, lastDay);
 //            LocalDateTime startDate = LocalDateTime.of(2023, randMonth, randDay, 13, 0);
             LocalDateTime startDate = LocalDateTime.of(2023, month, randDay, 13, 0);
-
+            memberIds.add(1l);
             if (i < 16) {
                 LocalDateTime endDate = LocalDateTime.of(2023, month, randDay, 16, 0);
                 ProjectMember projectMember = projectService.isProjectAvailable(1l, 1l, false);

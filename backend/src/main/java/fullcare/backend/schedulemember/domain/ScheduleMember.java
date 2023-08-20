@@ -1,6 +1,7 @@
 package fullcare.backend.schedulemember.domain;
 
 import fullcare.backend.member.domain.Member;
+import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.schedule.domain.Schedule;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -22,8 +23,8 @@ public class ScheduleMember {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = false)
-    private Member member;
+    @JoinColumn(name = "project_member_id", nullable = false)
+    private ProjectMember projectMember;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule_id", nullable = false)
@@ -32,8 +33,8 @@ public class ScheduleMember {
     private LocalDateTime recentView;
 
     @Builder
-    public ScheduleMember(Member member, Schedule schedule, LocalDateTime recentView) {
-        this.member = member;
+    public ScheduleMember(ProjectMember projectMember, Schedule schedule, LocalDateTime recentView) {
+        this.projectMember = projectMember;
         this.schedule = schedule;
         this.recentView = recentView;
     }

@@ -2,6 +2,9 @@ package fullcare.backend.s3;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import fullcare.backend.global.errorcode.AwsErrorCode;
+import fullcare.backend.global.exceptionhandling.exception.NotFoundFileException;
+import fullcare.backend.global.exceptionhandling.exception.UploadException;
 import fullcare.backend.s3.dto.UploadResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,7 +39,7 @@ public class S3Service {
         }
         catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("업로드를 실패했습니다.");
+            throw new UploadException(AwsErrorCode.UPLOAD_FAIL);
         }
     }
 
@@ -53,7 +56,7 @@ public class S3Service {
                     throw new RuntimeException("파일을 찾지 못했습니다.");
                 }
             } catch (Exception e) {
-                throw new RuntimeException(e.getMessage());
+                throw new NotFoundFileException(AwsErrorCode.NOT_FOUND_FILE);
             }
         }
     }

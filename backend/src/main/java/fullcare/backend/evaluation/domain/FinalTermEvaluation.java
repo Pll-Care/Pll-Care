@@ -5,6 +5,7 @@ import fullcare.backend.evaluation.dto.request.FinalEvalUpdateRequest;
 import fullcare.backend.global.State;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
+import fullcare.backend.projectmember.domain.ProjectMember;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -30,11 +31,13 @@ public class FinalTermEvaluation {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "evaluator_id", nullable = false)
-    private Member evaluator;
+//    private Member evaluator;
+    private ProjectMember evaluator;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "evaluated_id", nullable = false)
-    private Member evaluated;
+//    private Member evaluated;
+    private ProjectMember evaluated;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")//? 삭제시 고려하여 NULL 허용
@@ -43,7 +46,7 @@ public class FinalTermEvaluation {
 //    private State state;
 
     @Builder(builderMethodName = "createNewFinalEval")
-    public FinalTermEvaluation(String content, Score score, Member evaluator, Member evaluated, Project project) {
+    public FinalTermEvaluation(String content, Score score, ProjectMember evaluator, ProjectMember evaluated, Project project) {
         this.content = content;
         this.score = score;
         this.evaluator = evaluator;

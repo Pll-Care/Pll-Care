@@ -1,16 +1,17 @@
 package fullcare.backend.evaluation.dto;
 
 import fullcare.backend.member.domain.Member;
+import fullcare.backend.projectmember.domain.ProjectMember;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 public class MemberDto {
-    private Long id;
+    private Long pmId;
     private String name;
     @Builder
-    public MemberDto(Member member) {
-        this.id = member.getId();
-        this.name = member.getName();
+    public MemberDto(ProjectMember projectMember) {
+        this.pmId = projectMember.getId();
+        this.name = projectMember.getMember().getName();
     }
 }

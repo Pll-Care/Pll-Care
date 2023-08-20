@@ -50,7 +50,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepositoryCustom {
     }
 
     private BooleanExpression memberIdEq(Long memberId) {
-        return isEmpty(memberId) ? null : scheduleMember.member.id.eq(memberId);
+        return isEmpty(memberId) ? null : scheduleMember.projectMember.member.id.eq(memberId);
     }
     private BooleanExpression scheduleCategoryEq(ScheduleCategory scheduleCategory) {
         return isEmpty(scheduleCategory) ? null : schedule.dtype.eq(scheduleCategory.toString());

@@ -46,6 +46,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static fullcare.backend.global.errorcode.ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND;
 import static fullcare.backend.global.errorcode.ScheduleErrorCode.INVALID_DELETE;
 import static fullcare.backend.global.errorcode.ScheduleErrorCode.INVALID_MODIFY;
 
@@ -80,9 +81,9 @@ public class ScheduleService {
     }
 
     public boolean validateAuthor(Long projectId, Long scheduleId, Long authorId) {
-        ProjectMember projectMember = projectMemberRepository.findPMWithProjectByProjectIdAndMemberId(projectId, authorId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
+        ProjectMember projectMember = projectMemberRepository.findPMWithProjectByProjectIdAndMemberId(projectId, authorId).orElseThrow(() -> new EntityNotFoundException(PROJECT_MEMBER_NOT_FOUND));
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
-        if (schedule.getMember().getId() == projectMember.getMember().getId()) {
+        if (schedule.getAuthor().getId() == projectMember.getId()) {
             return true;
         }
         return false;
@@ -129,16 +130,16 @@ public class ScheduleService {
                 scheduleUpdateRequest.getEndDate(),
                 LocalDateTime.now()
         );
-
-        List<Member> updateMemberList = memberRepository.findByIds(scheduleUpdateRequest.getMemberIds()); // 새로 업데이트 되는 멤버 리스트
-        if (!members.containsAll(updateMemberList)) {// 프로젝트에 속한 사람인지 확인
-            return false;
+        List<ProjectMember> updateMemberList = projectMemberRepository.findByIds(scheduleUpdateRequest.getPmIds());
+//        List<Member> updateMemberList = memberRepository.findByIds(scheduleUpdateRequest.getMemberIds()); // 새로 업데이트 되는 멤버 리스트
+        if (!pmList.containsAll(updateMemberList)) {// 프로젝트에 속한 사람인지 확인
+            throw new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND);
         }
 
 
         schedule.getScheduleMembers().clear(); // 어떤 사람이 들어오고, 나가고, 그대로 있는지를 파악을 해야함,
-        for (Member member : updateMemberList) {
-            schedule.addMember(member);
+        for (ProjectMember projectMember : updateMemberList) {
+            schedule.addMember(projectMember);
         }
 
         if (scheduleUpdateRequest.getCategory().equals(ScheduleCategory.MEETING)) { // Meeting
@@ -208,11 +209,15 @@ public class ScheduleService {
 
 
     public void updateState(ScheduleStateUpdateRequest scheduleStateUpdateRequest, Long scheduleId, Long memberId) { // 상태 바꿀 때도 schedulemember recentview 바꿔야함
-        projectService.isProjectAvailable(scheduleStateUpdateRequest.getProjectId(), memberId, false);
-        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
-        LocalDateTime now = LocalDateTime.now();
-        schedule.updateState(now, scheduleStateUpdateRequest.getState());
-        scheduleMemberRepository.updateRecentView(now, schedule.getId());
+        try {
+            projectService.isProjectAvailable(scheduleStateUpdateRequest.getProjectId(), memberId, false);
+            Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
+            LocalDateTime now = LocalDateTime.now();
+            schedule.updateState(now, scheduleStateUpdateRequest.getState());
+            scheduleMemberRepository.updateRecentView(now, schedule.getId());
+        }catch(CompletedProjectException completedProjectException){
+            throw new CompletedProjectException(INVALID_MODIFY);
+        }
     }
 
     @Transactional(readOnly = true) // 프로젝트별 일정 내용
@@ -264,9 +269,9 @@ public class ScheduleService {
 
             List<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();
             for (ScheduleMember scheduleMember : scheduleMembers) {
-                if (scheduleMember.getMember() == member && scheduleMember.getRecentView().isBefore(schedule.getModifiedDate())) {
+                if (scheduleMember.getProjectMember().getMember() == member && scheduleMember.getRecentView().isBefore(schedule.getModifiedDate())) {
                     scheduleMyDto.updateCheck(false);
-                } else if (scheduleMember.getMember() == member) {
+                } else if (scheduleMember.getProjectMember().getMember() == member) {
                     scheduleMyDto.updateCheck(true);
                 }
             }
@@ -298,7 +303,7 @@ public class ScheduleService {
                         .address(meeting.getAddress()).build();
                 List<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();
                 scheduleMembers.forEach(sm -> {
-                    meetingDto.addMember(sm.getMember());
+                    meetingDto.addMember(sm.getProjectMember().getMember());
                 });
                 scheduleMonthResponse.addMeeting(meetingDto);
                 //}
@@ -313,7 +318,7 @@ public class ScheduleService {
                         .build();
                 List<ScheduleMember> scheduleMembers = milestone.getScheduleMembers();
                 scheduleMembers.forEach(sm -> {
-                    milestoneDto.addMember(sm.getMember());
+                    milestoneDto.addMember(sm.getProjectMember().getMember());
                 });
                 scheduleMonthResponse.addMilestone(milestoneDto);
             }
@@ -380,7 +385,7 @@ public class ScheduleService {
 
             List<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();
             scheduleMembers.forEach(sm -> {
-                scheduleResponse.addMember(sm.getMember());
+                scheduleResponse.addMember(sm.getProjectMember().getMember());
             });
             if (schedule instanceof Meeting) {
                 scheduleResponse.setAddress(((Meeting) schedule).getAddress());
@@ -432,7 +437,7 @@ public class ScheduleService {
                 }
             } else {
                 if (!eval && schedule.getState().equals(State.COMPLETE)) { //? 평가한 적이 없는 완료된 일정을 고름
-                    if (schedule.getScheduleMembers().stream().anyMatch(sm -> sm.getMember().getId() == member.getId())) {//? 사용자가 일정에 들어갔는지 확인
+                    if (schedule.getScheduleMembers().stream().anyMatch(sm -> sm.getProjectMember().getMember().getId() == member.getId())) {//? 사용자가 일정에 들어갔는지 확인
                         scheduleResponse.setEvaluationRequired(true);
                     }
                 }
@@ -455,10 +460,10 @@ public class ScheduleService {
     private void checkModify(Member member, Schedule schedule, ScheduleSearchResponse scheduleResponse) {
         List<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();
         scheduleMembers.forEach(sm -> {
-            scheduleResponse.addMember(sm.getMember());
-            if (sm.getMember() == member && sm.getRecentView().isBefore(schedule.getModifiedDate())) {
+            scheduleResponse.addMember(sm.getProjectMember().getMember());
+            if (sm.getProjectMember().getMember() == member && sm.getRecentView().isBefore(schedule.getModifiedDate())) {
                 scheduleResponse.updateCheck(false);
-            } else if (sm.getMember() == member) {
+            } else if (sm.getProjectMember().getMember() == member) {
                 scheduleResponse.updateCheck(true);
             }
         });
@@ -486,10 +491,10 @@ public class ScheduleService {
             DetailMemberDto detailMemberDto = DetailMemberDto.builder().id(projectMember.getMember().getId())
                     .name(projectMember.getMember().getName()).build();
             for (ScheduleMember scheduleMember : scheduleMembers) {
-                if (projectMember.getMember() == scheduleMember.getMember()) {
+                if (projectMember.getMember() == scheduleMember.getProjectMember().getMember()) {
                     detailMemberDto.setIn(true);
                 }
-                if (projectMember.getMember() == scheduleMember.getMember() && projectMember.getMember().getId() == memberId) { // 로그인한 사용자 최근 확인한 일정 갱신
+                if (projectMember.getMember() == scheduleMember.getProjectMember().getMember() && projectMember.getMember().getId() == memberId) { // 로그인한 사용자 최근 확인한 일정 갱신
                     scheduleMember.updateRecentView(LocalDateTime.now());
                 }
             }

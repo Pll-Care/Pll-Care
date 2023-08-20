@@ -1,8 +1,10 @@
 package fullcare.backend.schedule.service;
 
 import fullcare.backend.global.State;
+import fullcare.backend.global.errorcode.MemberErrorCode;
 import fullcare.backend.global.errorcode.ProjectErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.CompletedProjectException;
+import fullcare.backend.global.exceptionhandling.exception.EntityNotFoundException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.project.domain.Project;
@@ -14,7 +16,6 @@ import fullcare.backend.schedule.domain.Milestone;
 import fullcare.backend.schedule.domain.Schedule;
 import fullcare.backend.schedule.dto.request.ScheduleCreateRequest;
 import fullcare.backend.schedule.repository.MilestoneRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ import static fullcare.backend.global.errorcode.ScheduleErrorCode.INVALID_CREATE
 @RequiredArgsConstructor
 @Transactional
 public class MilestoneService {
-    private final MemberRepository memberRepository;
+    private final ProjectMemberRepository projectMemberRepository;
     private final MilestoneRepository milestoneRepository;
     private final ProjectService projectService;
 
@@ -40,16 +41,15 @@ public class MilestoneService {
             ProjectMember projectMember = projectService.isProjectAvailable(scheduleCreateRequest.getProjectId(), memberId, false);
             LocalDateTime now = LocalDateTime.now();
             Project project = projectMember.getProject();
-            Member author = projectMember.getMember();
             LocalDateTime startDate = project.getStartDate().atStartOfDay();
             LocalDateTime endDate = project.getEndDate().atStartOfDay();
             Schedule.validDate(startDate, endDate, scheduleCreateRequest.getStartDate(), scheduleCreateRequest.getEndDate());
 
-            List<Long> memberIds = scheduleCreateRequest.getMemberIds();
-            List<Member> memberList = new ArrayList<>();
-            memberIds.forEach(m -> {
-                Member member = memberRepository.findById(m).orElseThrow(() -> new EntityNotFoundException("해당 사용자가 존재하지 않습니다."));
-                memberList.add(member);
+            List<Long> pmIds = scheduleCreateRequest.getPmIds();
+            List<ProjectMember> memberList = new ArrayList<>();
+            pmIds.forEach(pmId -> {
+                ProjectMember pm = projectMemberRepository.findById(pmId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
+                memberList.add(pm);
             });
             Milestone milestone = Milestone.builder()
                     .project(project)
@@ -57,7 +57,7 @@ public class MilestoneService {
                     .endDate(scheduleCreateRequest.getEndDate())
                     .title(scheduleCreateRequest.getTitle())
                     .content(scheduleCreateRequest.getContent())
-                    .member(author)
+                    .author(projectMember)
                     .createdDate(now)
                     .modifiedDate(now)
                     .state(State.TBD)
