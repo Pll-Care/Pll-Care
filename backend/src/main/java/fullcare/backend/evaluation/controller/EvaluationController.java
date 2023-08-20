@@ -63,7 +63,7 @@ public class EvaluationController {
             @ApiResponse(description = "중간 평가 생성 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
     })
     @PostMapping("/midterm")
-    public ResponseEntity midtermEvalCreate(@RequestBody MidTermEvalCreateRequest midTermEvalCreateRequest,
+    public ResponseEntity midtermEvalCreate(@RequestBody @Valid MidTermEvalCreateRequest midTermEvalCreateRequest,
                                             @CurrentLoginMember Member member) {
         evaluationService.createMidtermEvaluation(midTermEvalCreateRequest, member.getId());
         return new ResponseEntity(HttpStatus.OK);
