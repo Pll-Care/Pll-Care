@@ -11,17 +11,15 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class ParticipantResponse {
-    private Long memberId;
-    private Long pmId;
+    private Long id;
     private String name;
     private String imageUrl;
     private boolean isMe;
     private List<BadgeDto> badgeDtos = new ArrayList<>();
     private Long finalEvalId;
     @Builder
-    public ParticipantResponse(Long memberId, Long pmId, String name, String imageUrl, boolean isMe) {
-        this.memberId = memberId;
-        this.pmId = pmId;
+    public ParticipantResponse(Long id, String name, String imageUrl, boolean isMe) {
+        this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
         this.isMe = isMe;

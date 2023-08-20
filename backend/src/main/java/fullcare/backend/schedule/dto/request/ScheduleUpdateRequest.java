@@ -38,7 +38,7 @@ public class ScheduleUpdateRequest {
 
 
     @NotNull
-    private List<Long> pmIds;
+    private List<Long> memberIds;
 
     @NotBlank
     @Length(min = 2, max = 20)

@@ -7,17 +7,15 @@ import lombok.Getter;
 @Getter
 public class ProjectMemberListResponse {
 
-    private Long memberId;
-    private Long pmId;
+    private Long id;
     private String name;
     private String imageUrl;
     private ProjectMemberPositionType position;
     private boolean isLeader;
 
     @Builder
-    public ProjectMemberListResponse(Long memberId, Long pmId, String name, String imageUrl, ProjectMemberPositionType position, boolean isLeader) {
-        this.memberId = memberId;
-        this.pmId = pmId;
+    public ProjectMemberListResponse(Long id, String name, String imageUrl, ProjectMemberPositionType position, boolean isLeader) {
+        this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
         this.position = position;

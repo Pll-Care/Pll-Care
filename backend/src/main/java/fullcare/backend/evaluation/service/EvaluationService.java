@@ -313,9 +313,8 @@ public class EvaluationService {
         List<ParticipantResponse> response = new ArrayList<>();
         for (ProjectMember pm : projectMembers) {
             Member member = pm.getMember();
-            ParticipantResponse participantResponse = ParticipantResponse.builder().
-                    memberId(member.getId())
-                    .pmId(pm.getId())
+            ParticipantResponse participantResponse = ParticipantResponse.builder()
+                    .id(member.getId())
                     .name(member.getName())
                     .imageUrl(member.getImageUrl())
                     .isMe(member.getId() == memberId)

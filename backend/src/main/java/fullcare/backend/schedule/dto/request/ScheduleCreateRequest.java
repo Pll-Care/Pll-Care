@@ -32,7 +32,7 @@ public class ScheduleCreateRequest {
     private ScheduleCategory category;
 
     @NotEmpty
-    private List<Long> pmIds;
+    private List<Long> memberIds;
 
     @NotBlank
     @Length(min = 2, max = 20)
@@ -45,12 +45,12 @@ public class ScheduleCreateRequest {
     private String address;
 
 
-    public ScheduleCreateRequest(Long projectId, LocalDateTime startDate, LocalDateTime endDate, ScheduleCategory category, List<Long> pmIds, String title, String content, String address) {
+    public ScheduleCreateRequest(Long projectId, LocalDateTime startDate, LocalDateTime endDate, ScheduleCategory category, List<Long> memberIds, String title, String content, String address) {
         this.projectId = projectId;
         this.startDate = startDate;
         this.endDate = endDate;
         this.category = category;
-        this.pmIds = pmIds;
+        this.memberIds = memberIds;
         this.title = title;
         this.content = content;
         this.address = address;

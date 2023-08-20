@@ -49,8 +49,7 @@ public class ProjectMemberService {
 
         List<ProjectMember> projectMemberList = projectMemberRepository.findProjectMemberWithMemberByProjectIdAndProjectMemberRole(findProjectMember.getProject().getId(), projectMemberRoleTypes);
         List<ProjectMemberListResponse> response = projectMemberList.stream().map(pm -> ProjectMemberListResponse.builder()
-                .memberId(pm.getMember().getId())
-                .pmId(pm.getId())
+                .id(pm.getMember().getId())
                 .name(pm.getMember().getNickname())
                 .imageUrl(pm.getMember().getImageUrl())
                 .position(pm.getProjectMemberType().getPosition())
