@@ -211,7 +211,6 @@ public class EvaluationService {
             String name = projectMembers.stream().filter(pm -> pm.getId() == r.getId()).map(pm -> pm.getMember().getName()).findFirst().get();
             rankingDtos.add(MidTermRankingDto.builder()
                     .rank(r.getRanking())
-                    .pmId(r.getId())
                     .name(name)
                     .quantity(r.getQuantity())
                     .build()
