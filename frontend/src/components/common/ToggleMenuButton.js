@@ -1,5 +1,7 @@
 import { useRef } from "react";
 
+import { useOutsideClick } from "../../hooks/useOutsideClick";
+
 import logoImgUrl from "../../assets/logo.svg";
 import managementIconImgUrl from "../../assets/management-icon.svg";
 import recruitmentIconImgUrl from "../../assets/recruitment-icon.svg";
@@ -16,10 +18,8 @@ const ToggleMenuButton = ({
     setIsToggleMenuOpen((_) => isBoolean);
   };
 
-  const handleToggleButtonClose = (e) => {
-    if (e.target === modalOutside.current) {
-      setIsToggleMenuOpen(false);
-    }
+  const handleToggleButtonClose = () => {
+    setIsToggleMenuOpen(false);
   };
 
   const handleClickLinkMenu = useLinkMenuClick();
@@ -29,11 +29,16 @@ const ToggleMenuButton = ({
     setIsToggleMenuOpen(false);
   };
 
+  const handleOutsideClick = useOutsideClick(
+    modalOutside,
+    handleToggleButtonClose
+  );
+
   return (
     <div
       className={isToggleMenuOpen ? "toggle-menu-wrapper" : ""}
       ref={modalOutside}
-      onClick={handleToggleButtonClose}
+      onClick={handleOutsideClick}
     >
       {isToggleMenuOpen ? (
         <div className="toggle-menu">
