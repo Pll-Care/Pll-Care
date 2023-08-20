@@ -8,13 +8,13 @@ import java.util.List;
 
 @Data
 public class FinalCharDto<T> {
-    private Long pmId;
+    private Long id;
     private String name;
 //    private String imageUrl;
     private List<T> evaluation = new ArrayList<>();
     @Builder
-    public FinalCharDto(Long pmId, String name) {
-        this.pmId = pmId;
+    public FinalCharDto(Long id, String name) {
+        this.id = id;
         this.name = name;
 //        this.imageUrl = imageUrl;
     }
