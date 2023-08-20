@@ -20,11 +20,12 @@
     padding: 2px 10px;
 
     @include mobile {
-      height: 20px;
+      height: 19px;
       width: fit-content;
-      padding: 1px 3px;
+      border-radius: 10px;
+      padding: 2px 15px;
 
-      @include m_body_01;
+      @include m_heading_03;
     }
 
     @include button_03;

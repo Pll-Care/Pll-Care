@@ -35,10 +35,10 @@ const RecruitmentProject = ({ memberId }) => {
 
   return (
     <section>
-      <div>
-        <h1 className="profile_introduce_title">내가 모집하는 프로젝트</h1>
+      <div className="profile_title">
+        <h1>내가 모집하는 프로젝트</h1>
       </div>
-      <div className="myProject">
+      <div className="profile_content">
         <div className="myProject_selectContainer">
           <Select
             options={recruitSelect}
@@ -48,8 +48,8 @@ const RecruitmentProject = ({ memberId }) => {
         </div>
         {data?.data?.content.length > 0 ? (
           <div>
-            <div className="myProject_project">
-              <ul>
+            <div>
+              <ul className="myProject_project">
                 {data.data.content.map((project, idx) => (
                   <ProjectItem
                     key={QUERY_KEY + "-" + idx}

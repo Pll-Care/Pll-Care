@@ -59,12 +59,18 @@
     border: 2px solid $gray-100;
   }
 
-  @include mobile {
-    padding: 2px 9px;
-    height: 18px;
+  &_profile_header {
+    background-color: $white-100;
+    color: $green-200;
+    @include heading_04;
 
-    @include m_button_01;
+    @include mobile {
+      padding: 2px 9px;
+      height: 18px;
+
+      @include m_button_01;
+    }
+
+    @include button_01;
   }
-
-  @include button_01;
 }

@@ -1,6 +1,7 @@
 // badgeDtos : {evaluationBadge: string, quantity: number}[]
 
 const BadgeBox = ({ badgeDtos = [] }) => {
+  console.log(badgeDtos);
   return (
     <section className="badgeBox">
       <div>
@@ -13,10 +14,10 @@ const BadgeBox = ({ badgeDtos = [] }) => {
               <div className="badgeImage"></div>
             </div>
             <div>
-              <div className="badge_divide"></div>
+              <div className="badge_divide">·</div>
             </div>
             <div className="badge_quantity">
-              <span className="badge_quantity_score">{badge.quantity}</span>
+              <span>{badge.quantity}</span>
             </div>
           </div>
         ))}

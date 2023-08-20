@@ -41,6 +41,10 @@
   &_dark {
     background-color: $green-200;
   }
+
+  @include mobile {
+    border-radius: 10px;
+  }
 }
 
 .confirm-modal {
@@ -54,6 +58,13 @@
     margin-bottom: 40px;
     white-space: pre-line;
     word-break: keep-all;
+
+    @include mobile {
+      width: 75%;
+      line-height: 30px;
+
+      @include heading_06;
+    }
 
     @include putCenter;
     @include heading_04;

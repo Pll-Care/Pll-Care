@@ -61,7 +61,7 @@
   font: {
     family: "IBM Plex Sans KR", sans-serif;
     size: 32px;
-    weight: 700;
+    weight: $weight-bold;
   }
 }
 
@@ -69,7 +69,7 @@
   font: {
     family: "IBM Plex Sans KR", sans-serif;
     size: 24px;
-    weight: 700;
+    weight: $weight-bold;
   }
 }
 
@@ -85,7 +85,7 @@
   font: {
     family: "IBM Plex Sans KR", sans-serif;
     size: 18px;
-    weight: 600;
+    weight: $weight-semi-bold;
   }
 }
 
@@ -109,7 +109,7 @@
   font: {
     family: "IBM Plex Sans KR", sans-serif;
     size: 14px;
-    weight: 700;
+    weight: $weight-bold;
   }
 }
 
@@ -117,7 +117,7 @@
   font: {
     family: "IBM Plex Sans KR", sans-serif;
     size: 12px;
-    weight: 700;
+    weight: $weight-bold;
   }
 }
 
@@ -125,15 +125,15 @@
   font: {
     family: "IBM Plex Sans KR", sans-serif;
     size: 10px;
-    weight: 600;
+    weight: $weight-semi-bold;
   }
 }
 
 @mixin m_heading_04 {
   font: {
-    family: "Noto Sans KR", sans-serif;;
+    family: "Noto Sans KR", sans-serif;
     size: 7px;
-    weight: 700;
+    weight: $weight-bold;
   }
 }
 
@@ -141,7 +141,7 @@
   font: {
     family: "IBM Plex Sans KR", sans-serif;
     size: 18px;
-    weight: 700;
+    weight: $weight-bold;
   }
 }
 
@@ -191,6 +191,7 @@
     size: 6px;
     weight: 500;
   }
+  line-height: 12px;
 }
 
 @mixin button_01 {

@@ -11,6 +11,7 @@ import { getStringDate } from "../../utils/date";
 import { deleteImage } from "../../lib/apis/managementApi";
 import { toast } from "react-toastify";
 import { handleImageUploader } from "../../utils/handleImageUploader";
+import { useMediaQuery } from "@mui/material";
 
 const ProjectEditor = ({
   isModalVisible,
@@ -124,12 +125,14 @@ const ProjectEditor = ({
     }
   }, [editData, isEdit]);
 
+  const isMobile = useMediaQuery("(max-width: 767px)");
+
   return (
     <ModalContainer
       open={isModalVisible}
       onClose={handleModalClose}
-      width={600}
-      height={350}
+      width={isMobile ? "90%" : 600}
+      height={isMobile ? "80%" : 350}
     >
       <div className="project-editor">
         <div className="project-editor-heading">

@@ -5,6 +5,7 @@ import authSlice from "./authSlice";
 import meetingRecordManagementSlice from "./meetingRecordManagementSlice";
 
 import storage from "redux-persist/lib/storage";
+import userInfoSlice from "./userInfoSlice";
 
 const persistConfig = {
   key: "root",
@@ -15,6 +16,7 @@ const persistConfig = {
 export const rootReducer = combineReducers({
   auth: authSlice.reducer,
   meetingRecordManagement: meetingRecordManagementSlice.reducer,
+  userInfo: userInfoSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

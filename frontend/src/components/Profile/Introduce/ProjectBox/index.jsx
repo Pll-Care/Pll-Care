@@ -46,7 +46,7 @@ const ProjectBox = () => {
           <ModifyProject changeModify={editNewProject} type="추가" />
         </div>
       )}
-      <div className="project">
+      <div>
         <ProjectList
           experienceData={experienceData?.data.data}
           refetch={refetch}

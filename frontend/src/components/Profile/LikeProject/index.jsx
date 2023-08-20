@@ -28,30 +28,28 @@ const LikeProject = () => {
   }, [currentPageNumber, refetch]);
   return (
     <div>
-      <div>
-        <h1 className="profile_introduce_title">'좋아요' 한 모집글</h1>
+      <div className="profile_title">
+        <h1>'좋아요' 한 모집글</h1>
       </div>
-      <div className="myProject">
+      <div className="profile_content">
         {data?.data?.content.length > 0 ? (
-          <>
-            <div className="myProject_project">
-              <ul>
-                {data.data.content.map((project) => (
-                  <ProjectItem
-                    key={project.postId}
-                    postId={project.postId}
-                    title={project.title}
-                    description={project.description}
-                  />
-                ))}
-              </ul>
-            </div>
+          <div>
+            <ul className="myProject_project">
+              {data.data.content.map((project) => (
+                <ProjectItem
+                  key={project.postId}
+                  postId={project.postId}
+                  title={project.title}
+                  description={project.description}
+                />
+              ))}
+            </ul>
             <PaginationButton
               changePageNumber={changePageNumber}
               totalPageNumber={totalPages}
               currentPageNumber={currentPageNumber}
             />
-          </>
+          </div>
         ) : (
           <div className="project-no-item">
             <p>모집글이 없습니다.</p>

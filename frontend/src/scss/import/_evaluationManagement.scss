@@ -88,6 +88,7 @@
 
       @include mobile {
         height: 205px;
+        border-radius: 10px;
       }
 
       @include body_01;
@@ -254,8 +255,9 @@
 
         @include mobile {
           gap: 9px;
-          width: 100%;
-          height: fit-content;
+          min-width: 100%;
+          width: fit-content;
+          height: 110px;
           padding: 10px;
           border-radius: 10px;
 
@@ -499,6 +501,13 @@
     .final-evaluation-heading {
       margin-bottom: 25px;
 
+      @include mobile {
+        margin-top: 50px;
+        margin-bottom: 10px;
+
+        @include m_heading_05;
+      }
+
       @include heading_02;
     }
 
@@ -526,6 +535,12 @@
 
         h1 {
           margin-bottom: 20px;
+
+          @include mobile {
+            color: $green-400;
+
+            @include m_heading_02;
+          }
         }
       }
 
@@ -573,6 +588,23 @@
           @include putCenter;
         }
 
+        @include mobile {
+          width: 90%;
+          height: 70%;
+          grid-template-rows: repeat(4, 1fr);
+          grid-template-columns: 100%;
+          align-items: flex-start;
+          padding-bottom: 0px;
+
+          @include m_heading_03;
+
+          @include putCenter;
+        }
+
+        @include mobile {
+          width: 85%;
+        }
+
         @include heading_05;
       }
 
@@ -582,6 +614,12 @@
 
         h1 {
           margin-top: 20px;
+
+          @include mobile {
+            color: $green-400;
+
+            @include m_heading_02;
+          }
         }
 
         &-body {
@@ -611,6 +649,15 @@
                 repeat: no-repeat;
                 size: 100%;
               }
+
+              @include mobile {
+                width: 15px;
+                height: 15px;
+              }
+            }
+
+            @include mobile {
+              @include m_heading_03;
             }
           }
 
@@ -622,6 +669,16 @@
             padding-bottom: 10px;
           }
 
+          @include mobile {
+            width: 100%;
+            height: 70%;
+            grid-template-rows: repeat(4, 1fr);
+            grid-template-columns: 100%;
+            padding-left: 10px;
+            padding-right: 0px;
+            padding-bottom: 10px;
+          }
+
           @include heading_05;
         }
       }
@@ -629,6 +686,12 @@
       .content {
         h1 {
           margin-top: 20px;
+
+          @include mobile {
+            color: $green-400;
+
+            @include m_heading_02;
+          }
         }
 
         div {
@@ -639,6 +702,10 @@
           width: 100%;
 
           div {
+            @include mobile {
+              @include m_heading_03;
+            }
+
             @include heading_05;
           }
 
@@ -651,12 +718,26 @@
             border-radius: 20px;
             box-shadow: 0px 10px 20px 5px rgba(0, 0, 0, 0.07);
             padding: 20px;
+
+            @include mobile {
+              padding: 10px;
+              border-radius: 10px;
+
+              @include m_heading_03;
+            }
           }
 
           textarea::placeholder,
           textarea {
-            font-size: $body-font-size;
-            font-family: $body-font;
+            @include mobile {
+              @include m_heading_03;
+            }
+
+            @include body_01;
+          }
+
+          @include mobile {
+            padding: 10px;
           }
 
           @include displayFlex(column, center, flex-start);
@@ -668,6 +749,21 @@
       @include tablet {
         grid-template-rows: 35% 35% 30%;
         height: 150%;
+
+        @media (orientation: landscape) {
+          height: 280vh;
+        }
+      }
+
+      @include mobile {
+        grid-template-rows: 30% 30% 40%;
+        border-radius: 10px;
+        padding: 10px;
+        height: 140%;
+
+        @media (orientation: landscape) {
+          height: 220vh;
+        }
       }
     }
 
@@ -681,6 +777,10 @@
 
     &::-webkit-scrollbar {
       display: none;
+    }
+
+    @include mobile {
+      padding: 10px;
     }
   }
 
