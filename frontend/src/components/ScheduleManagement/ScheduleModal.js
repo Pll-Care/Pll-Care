@@ -69,9 +69,9 @@ const ScheduleModal = ({
   // 사용자 이름 버튼 클릭했을 때
   const handleButtonClick = (data) => {
     setFormValues((prevState) => {
-      const updatedParticipants = prevState.memberIds.includes(data.id)
-        ? prevState.memberIds.filter((member) => member !== data.id)
-        : [...prevState.memberIds, data.id];
+      const updatedParticipants = prevState.memberIds.includes(data.memberId)
+        ? prevState.memberIds.filter((member) => member !== data.memberId)
+        : [...prevState.memberIds, data.memberId];
 
       return {
         ...prevState,
@@ -210,10 +210,12 @@ const ScheduleModal = ({
             <div className="plan-option-members">
               {names?.map((data) => (
                 <Button
-                  key={data.id}
+                  key={data.memberId}
                   text={data.name}
                   size="small"
-                  type={memberIds.includes(data.id) ? "positive_dark" : ""}
+                  type={
+                    memberIds.includes(data.memberId) ? "positive_dark" : ""
+                  }
                   onClick={() => handleButtonClick(data)}
                 />
               ))}{" "}

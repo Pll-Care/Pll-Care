@@ -55,7 +55,12 @@ const MemberOption = () => {
         </div>
       </div>
       <div className="member-button">
-        <Button text="작성하기" type="positive" onClick={handleClickLinkMenu} />
+        <Button
+          text={"작성하기"}
+          type={"positive"}
+          color={"white"}
+          onClick={handleClickLinkMenu}
+        />
       </div>
     </Fragment>
   );
