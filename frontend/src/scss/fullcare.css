@@ -4378,13 +4378,18 @@ a {
 }
 .member-content .member-grid-position {
   display: grid;
-  grid-template-columns: 15% 30% 55%;
+  grid-template-columns: 15% 30% 50%;
   grid-gap: 27px;
   margin-top: 40px;
   border-bottom: 2px solid #b4bcbd;
   padding-bottom: 40px;
 }
 @media (max-width: 767px) {
+  .member-content .member-grid-position {
+    grid-template-columns: 20% 80%;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
   .member-content .member-grid-position {
     grid-template-columns: 20% 80%;
   }
@@ -4427,6 +4432,11 @@ a {
     font-family: "IBM Plex Sans KR", sans-serif;
     font-size: 10px;
     font-weight: 600;
+  }
+}
+@media (max-width: 767px) {
+  .member-content .member-grid-position-stack {
+    width: 200px;
   }
 }
 .member-content .member-grid-position-stack h5 {

@@ -2,23 +2,22 @@ import { useQuery } from "react-query";
 import { useLocation } from "react-router";
 import { useState } from "react";
 
-import { Pagination } from "@mui/material";
-
 import Card from "../common/Card";
 import { getFilterSchedule } from "../../lib/apis/scheduleManagementApi";
 import ScheduleItem from "./ScheduleItem";
 import { getProjectId } from "../../utils/getProjectId";
 import { Loading } from "../common/Loading";
+import Pagination from "../common/Pagination";
 
 const ScheduleList = ({ nameId, option }) => {
   const projectId = getProjectId(useLocation());
 
   // 현재 페이지
   const [currentPage, setCurrentPage] = useState({
-    all: 0,
-    MILESTONE: 0,
-    MEETING: 0,
-    pastAll: 0,
+    all: 1,
+    MILESTONE: 1,
+    MEETING: 1,
+    pastAll: 1,
   });
   // 한 페이지당 5개씩 보여주기
   const itemsPerPage = 5;
@@ -29,7 +28,7 @@ const ScheduleList = ({ nameId, option }) => {
 
   const { isLoading, data: schedules } = useQuery(
     ["filterSchedule", projectId, nameId, option, currentPage[option]],
-    () => getFilterSchedule(projectId, nameId, option, currentPage[option] + 1)
+    () => getFilterSchedule(projectId, nameId, option, currentPage[option])
   );
   if (schedules && !isLoading) {
     itemCount = schedules.totalElements;
@@ -55,14 +54,15 @@ const ScheduleList = ({ nameId, option }) => {
       <div className="schedule-lists-pagination">
         {pageCount > 0 && (
           <Pagination
-            count={pageCount}
-            page={currentPage[option] + 1}
-            onChange={(event, page) => {
+            currentPage={currentPage[option]}
+            setCurrentPage={(newPage) => {
               setCurrentPage((prevCurrentPage) => ({
                 ...prevCurrentPage,
-                [option]: page - 1,
+                [option]: newPage,
               }));
             }}
+            recordDatasPerPage={itemsPerPage}
+            totalData={itemCount}
           />
         )}
       </div>

@@ -162,8 +162,11 @@
 
   .member-grid-position {
     display: grid;
-    grid-template-columns: 15% 30% 55%;
+    grid-template-columns: 15% 30% 50%;
     @include mobile {
+      grid-template-columns: 20% 80%;
+    }
+    @include tablet {
       grid-template-columns: 20% 80%;
     }
     grid-gap: 27px;
@@ -203,6 +206,9 @@
       }
     }
     &-stack {
+      @include mobile {
+        width: 200px;
+      }
       h5 {
         margin: 10px;
       }

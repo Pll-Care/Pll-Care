@@ -33,7 +33,7 @@ const ScheduleOption = () => {
 
   useEffect(() => {
     if (!isLoading && names && names.length > 0) {
-      setNameVisible(names[0].id);
+      setNameVisible(names[0].memberId);
     }
   }, [isLoading, names]);
 
@@ -60,8 +60,8 @@ const ScheduleOption = () => {
             <Button
               key={index}
               text={data.name}
-              type={nameVisible === data.id ? "positive_dark" : ""}
-              onClick={() => nameClickHandler(data.id)}
+              type={nameVisible === data.memberId ? "positive_dark" : ""}
+              onClick={() => nameClickHandler(data.memberId)}
             />
           ))}
       </Card>
