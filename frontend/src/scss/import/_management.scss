@@ -218,9 +218,13 @@
 
       &-input {
         width: 100%;
-        border: none;
         height: 100%;
+        border: none;
         border-radius: 10px;
+
+        @include mobile {
+          @include m_heading_01;
+        }
 
         @include heading_03;
       }
@@ -239,8 +243,6 @@
         margin-right: 20px;
 
         div {
-          height: 80%;
-
           figure {
             border: 1px solid black;
             border-radius: 50%;
@@ -252,14 +254,40 @@
               size: 100% 100%;
               color: #dedada;
             }
+
+            @include mobile {
+              width: 46px;
+              height: 46px;
+            }
           }
 
           .image-input {
             display: none;
           }
+        }
+
+        .image-button-wrapper {
+          margin-top: 10px;
+
+          @include mobile {
+            margin-top: 5px;
+          }
 
           @include displayFlex(column, space-around);
         }
+
+        @include mobile {
+          width: fit-content;
+          margin-right: 5px;
+        }
+      }
+
+      .project-editor-img-wrapper {
+        @include mobile {
+          height: fit-content;
+        }
+
+        @include displayFlex(column, space-between);
       }
 
       .project-editor-right-col {
@@ -279,9 +307,28 @@
           border: none;
           width: 100px;
 
+          @include mobile {
+            width: 80px;
+
+            @include m_body_01;
+          }
+
           @include body_01;
         }
 
+        h1 {
+          @include mobile {
+            width: 50%;
+          }
+        }
+
+        @include mobile {
+          width: 100%;
+          border-radius: 5px;
+          padding: 5px;
+
+          @include m_heading_03;
+        }
         @include heading_05;
         @include displayFlex(row, space-around);
       }
@@ -299,8 +346,19 @@
           border: none;
           border-radius: 10px;
 
+          @include mobile {
+            padding: 5px;
+            border-radius: 5px;
+
+            @include m_heading_03;
+          }
+
           @include heading_05;
         }
+      }
+
+      @include mobile {
+        padding: 8px 5px;
       }
 
       @include displayFlex;
@@ -308,6 +366,10 @@
 
     .button-wrapper {
       @include displayFlex(row, flex-end, flex-end);
+    }
+
+    @include mobile {
+      width: 95%;
     }
   }
 

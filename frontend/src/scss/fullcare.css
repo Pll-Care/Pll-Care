@@ -3483,12 +3483,19 @@ a {
 }
 .MuiBox-root .project-editor-heading-input {
   width: 100%;
-  border: none;
   height: 100%;
+  border: none;
   border-radius: 10px;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 24px;
   font-weight: 700;
+}
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor-heading-input {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+  }
 }
 .MuiBox-root .project-editor-body {
   height: 100%;
@@ -3506,13 +3513,6 @@ a {
   height: 100%;
   margin-right: 20px;
 }
-.MuiBox-root .project-editor-body .project-editor-left-col div {
-  height: 80%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-}
 .MuiBox-root .project-editor-body .project-editor-left-col div figure {
   border: 1px solid black;
   border-radius: 50%;
@@ -3523,8 +3523,45 @@ a {
   background-size: 100% 100%;
   background-color: #dedada;
 }
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor-body .project-editor-left-col div figure {
+    width: 46px;
+    height: 46px;
+  }
+}
 .MuiBox-root .project-editor-body .project-editor-left-col div .image-input {
   display: none;
+}
+.MuiBox-root .project-editor-body .project-editor-left-col .image-button-wrapper {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor-body .project-editor-left-col .image-button-wrapper {
+    margin-top: 5px;
+  }
+}
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor-body .project-editor-left-col {
+    width: -moz-fit-content;
+    width: fit-content;
+    margin-right: 5px;
+  }
+}
+.MuiBox-root .project-editor-body .project-editor-img-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor-body .project-editor-img-wrapper {
+    height: -moz-fit-content;
+    height: fit-content;
+  }
 }
 .MuiBox-root .project-editor-body .project-editor-right-col {
   width: 80%;
@@ -3552,6 +3589,29 @@ a {
   font-size: 14px;
   font-weight: 500;
 }
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor-body .project-editor-right-col .project-editor-period-first-row input[type=date] {
+    width: 80px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+}
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor-body .project-editor-right-col .project-editor-period-first-row h1 {
+    width: 50%;
+  }
+}
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor-body .project-editor-right-col .project-editor-period-first-row {
+    width: 100%;
+    border-radius: 5px;
+    padding: 5px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+}
 .MuiBox-root .project-editor-body .project-editor-right-col .project-editor-period-second-row {
   width: 100%;
   height: calc(100% - 50px);
@@ -3568,11 +3628,30 @@ a {
   font-size: 18px;
   font-weight: 600;
 }
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor-body .project-editor-right-col .project-editor-period-second-row textarea {
+    padding: 5px;
+    border-radius: 5px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+}
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor-body {
+    padding: 8px 5px;
+  }
+}
 .MuiBox-root .project-editor .button-wrapper {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: flex-end;
+}
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor {
+    width: 95%;
+  }
 }
 
 .MuiBox-root .delete-project {

@@ -131,8 +131,8 @@ const ProjectEditor = ({
     <ModalContainer
       open={isModalVisible}
       onClose={handleModalClose}
-      width={isMobile ? "90%" : 600}
-      height={isMobile ? "80%" : 350}
+      width={isMobile ? 270 : 600}
+      height={isMobile ? 270 : 350}
     >
       <div className="project-editor">
         <div className="project-editor-heading">
@@ -162,16 +162,18 @@ const ProjectEditor = ({
                 ref={inputRef}
                 onChange={handleChangeImage}
               />
-              <Button
-                onClick={handleUploadImageClick}
-                text={"이미지 업로드"}
-                size={"small"}
-              />
-              <Button
-                onClick={handleRemoveImageClick}
-                text={"이미지 제거"}
-                size={"small"}
-              />
+              <div className="image-button-wrapper">
+                <Button
+                  onClick={handleUploadImageClick}
+                  text={"이미지 업로드"}
+                  size={"small"}
+                />
+                <Button
+                  onClick={handleRemoveImageClick}
+                  text={"이미지 제거"}
+                  size={"small"}
+                />
+              </div>
             </div>
           </div>
           <div className="project-editor-right-col">
@@ -186,7 +188,7 @@ const ProjectEditor = ({
                   onChange={handleChangeStartDate}
                   data-placeholder="시작 일자"
                 />
-                -
+                <span>-</span>
                 <input
                   className="project-editor-period-end-date"
                   type="date"
