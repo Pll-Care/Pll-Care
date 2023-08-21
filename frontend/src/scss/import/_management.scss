@@ -295,13 +295,19 @@
         height: 100%;
       }
 
-      .project-editor-right-col .project-editor-period-first-row {
+      .project-editor-right-col .project-editor-first-row {
         background-color: white;
         border-radius: 10px;
         margin-bottom: 10px;
         height: 40px;
         width: 85%;
         color: $green-400;
+
+        .project-editor-period {
+          @include mobile {
+            @include displayFlex(column);
+          }
+        }
 
         input[type="date"] {
           border: none;
@@ -324,8 +330,10 @@
 
         @include mobile {
           width: 100%;
+          height: fit-content;
           border-radius: 5px;
           padding: 5px;
+          margin-bottom: 5px;
 
           @include m_heading_03;
         }
@@ -333,7 +341,7 @@
         @include displayFlex(row, space-around);
       }
 
-      .project-editor-right-col .project-editor-period-second-row {
+      .project-editor-right-col .project-editor-second-row {
         width: 100%;
         height: calc(100% - 50px);
 
@@ -354,6 +362,10 @@
           }
 
           @include heading_05;
+        }
+
+        @include mobile {
+          height: calc(100% - 57px);
         }
       }
 

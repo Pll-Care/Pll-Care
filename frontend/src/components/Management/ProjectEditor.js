@@ -177,9 +177,9 @@ const ProjectEditor = ({
             </div>
           </div>
           <div className="project-editor-right-col">
-            <div className="project-editor-period-first-row">
+            <div className="project-editor-first-row">
               <h1>진행 기간:</h1>
-              <div>
+              <div className="project-editor-period">
                 <input
                   className="project-editor-period-start-date"
                   type="date"
@@ -188,7 +188,7 @@ const ProjectEditor = ({
                   onChange={handleChangeStartDate}
                   data-placeholder="시작 일자"
                 />
-                <span>-</span>
+                <div>-</div>
                 <input
                   className="project-editor-period-end-date"
                   type="date"
@@ -199,7 +199,7 @@ const ProjectEditor = ({
                 />
               </div>
             </div>
-            <div className="project-editor-period-second-row">
+            <div className="project-editor-second-row">
               <textarea
                 value={description}
                 onChange={handleChangeContent}

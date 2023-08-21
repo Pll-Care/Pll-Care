@@ -316,11 +316,19 @@
 
   .evaluation-management-ranking-wrapper-non-evaluated::before {
     background: url("../assets/evaluation-error-text.png") no-repeat center;
+
+    @include mobile {
+      background-size: 100% 20%;
+    }
   }
 
   .final-evaluation-management-ranking-wrapper-non-evaluated::before {
     background: url("../assets/final-evaluation-error-text.png") no-repeat
       center;
+
+    @include mobile {
+      background-size: 100% 20%;
+    }
   }
 
   &-participant-wrapper {
