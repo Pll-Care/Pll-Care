@@ -287,10 +287,8 @@ a {
   justify-content: space-between;
   align-items: center;
 }
-@media (max-width: 767px) {
-  .main-header {
-    padding: 0 14px;
-  }
+.main-header-medium-col {
+  width: 35%;
 }
 @media (max-width: 767px) {
   .main-header-medium-col {
@@ -323,11 +321,11 @@ a {
   }
 }
 .main-header-link {
+  gap: 89px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  gap: 89px;
 }
 @media (min-width: 767px) and (max-width: 1024px) {
   .main-header-link {
@@ -336,10 +334,10 @@ a {
 }
 .main-header .nav_item {
   text-decoration: none;
+  cursor: pointer;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 24px;
   font-weight: 700;
-  cursor: pointer;
 }
 .main-header .main-header-link-on {
   color: #003b28;
@@ -414,7 +412,7 @@ a {
   .main-header {
     height: 65px;
     grid-template-columns: 45% 0% 55%;
-    padding: 7px;
+    padding: 0 14px;
     border-bottom: none;
   }
 }
@@ -3567,7 +3565,7 @@ a {
   width: 80%;
   height: 100%;
 }
-.MuiBox-root .project-editor-body .project-editor-right-col .project-editor-period-first-row {
+.MuiBox-root .project-editor-body .project-editor-right-col .project-editor-first-row {
   background-color: white;
   border-radius: 10px;
   margin-bottom: 10px;
@@ -3582,7 +3580,15 @@ a {
   justify-content: space-around;
   align-items: center;
 }
-.MuiBox-root .project-editor-body .project-editor-right-col .project-editor-period-first-row input[type=date] {
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor-body .project-editor-right-col .project-editor-first-row .project-editor-period {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.MuiBox-root .project-editor-body .project-editor-right-col .project-editor-first-row input[type=date] {
   border: none;
   width: 100px;
   font-family: "Noto Sans KR", sans-serif;
@@ -3590,7 +3596,7 @@ a {
   font-weight: 500;
 }
 @media (max-width: 767px) {
-  .MuiBox-root .project-editor-body .project-editor-right-col .project-editor-period-first-row input[type=date] {
+  .MuiBox-root .project-editor-body .project-editor-right-col .project-editor-first-row input[type=date] {
     width: 80px;
     font-family: "Noto Sans KR", sans-serif;
     font-size: 8px;
@@ -3598,25 +3604,28 @@ a {
   }
 }
 @media (max-width: 767px) {
-  .MuiBox-root .project-editor-body .project-editor-right-col .project-editor-period-first-row h1 {
+  .MuiBox-root .project-editor-body .project-editor-right-col .project-editor-first-row h1 {
     width: 50%;
   }
 }
 @media (max-width: 767px) {
-  .MuiBox-root .project-editor-body .project-editor-right-col .project-editor-period-first-row {
+  .MuiBox-root .project-editor-body .project-editor-right-col .project-editor-first-row {
     width: 100%;
+    height: -moz-fit-content;
+    height: fit-content;
     border-radius: 5px;
     padding: 5px;
+    margin-bottom: 5px;
     font-family: "IBM Plex Sans KR", sans-serif;
     font-size: 10px;
     font-weight: 600;
   }
 }
-.MuiBox-root .project-editor-body .project-editor-right-col .project-editor-period-second-row {
+.MuiBox-root .project-editor-body .project-editor-right-col .project-editor-second-row {
   width: 100%;
   height: calc(100% - 50px);
 }
-.MuiBox-root .project-editor-body .project-editor-right-col .project-editor-period-second-row textarea {
+.MuiBox-root .project-editor-body .project-editor-right-col .project-editor-second-row textarea {
   min-width: 100%;
   max-width: 100%;
   min-height: 100%;
@@ -3629,12 +3638,17 @@ a {
   font-weight: 600;
 }
 @media (max-width: 767px) {
-  .MuiBox-root .project-editor-body .project-editor-right-col .project-editor-period-second-row textarea {
+  .MuiBox-root .project-editor-body .project-editor-right-col .project-editor-second-row textarea {
     padding: 5px;
     border-radius: 5px;
     font-family: "IBM Plex Sans KR", sans-serif;
     font-size: 10px;
     font-weight: 600;
+  }
+}
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor-body .project-editor-right-col .project-editor-second-row {
+    height: calc(100% - 57px);
   }
 }
 @media (max-width: 767px) {
