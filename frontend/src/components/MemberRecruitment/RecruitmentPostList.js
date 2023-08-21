@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
 
-import { Grid, Pagination, useMediaQuery } from "@mui/material";
+import { Grid, useMediaQuery } from "@mui/material";
 
 import RecruitmentPost from "./RecruitmentPost";
 import { getAllRecruitmentPost } from "../../lib/apis/memberRecruitmentApi";
+import Pagination from "../common/Pagination";
 
 const RecruitmentPostList = () => {
   const isMobile = useMediaQuery("(max-width:900px)");
   // 현재 페이지
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = isMobile ? 6 : 9;
 
   // 총 게시글 개수
@@ -20,7 +21,7 @@ const RecruitmentPostList = () => {
   // 모집글 리스트 조회하는 함수
   const { data, isLoading } = useQuery(
     ["allRecruitmentPosts", currentPage, isMobile],
-    () => getAllRecruitmentPost(currentPage + 1, itemsPerPage)
+    () => getAllRecruitmentPost(currentPage, itemsPerPage)
   );
 
   if (data && !isLoading) {
@@ -55,9 +56,10 @@ const RecruitmentPostList = () => {
       </Grid>
       {pageCount > 0 && (
         <Pagination
-          count={pageCount}
-          page={currentPage + 1}
-          onChange={(event, page) => setCurrentPage(page - 1)}
+          currentPage={currentPage + 1}
+          setCurrentPage={setCurrentPage}
+          recordDatasPerPage={itemsPerPage}
+          totalData={itemCount}
         />
       )}
     </div>
