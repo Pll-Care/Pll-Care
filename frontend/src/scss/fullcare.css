@@ -538,7 +538,7 @@ a {
     width: -moz-fit-content;
     width: fit-content;
     border-radius: 10px;
-    padding: 2px 15px;
+    padding: 1px 15px;
     font-family: "IBM Plex Sans KR", sans-serif;
     font-size: 10px;
     font-weight: 600;
@@ -2727,8 +2727,18 @@ a {
 .evaluation-management .evaluation-management-ranking-wrapper-non-evaluated::before {
   background: url("../assets/evaluation-error-text.png") no-repeat center;
 }
+@media (max-width: 767px) {
+  .evaluation-management .evaluation-management-ranking-wrapper-non-evaluated::before {
+    background-size: 100% 20%;
+  }
+}
 .evaluation-management .final-evaluation-management-ranking-wrapper-non-evaluated::before {
   background: url("../assets/final-evaluation-error-text.png") no-repeat center;
+}
+@media (max-width: 767px) {
+  .evaluation-management .final-evaluation-management-ranking-wrapper-non-evaluated::before {
+    background-size: 100% 20%;
+  }
 }
 .evaluation-management-participant-wrapper {
   margin-top: 15px;
