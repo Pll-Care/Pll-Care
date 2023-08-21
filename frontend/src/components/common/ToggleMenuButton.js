@@ -1,6 +1,7 @@
 import { useRef } from "react";
-import { Link } from "react-router-dom";
-import menuBarImgUrl from "../../assets/toggle-button-img.png";
+
+import { useOutsideClick } from "../../hooks/useOutsideClick";
+
 import logoImgUrl from "../../assets/logo.svg";
 import managementIconImgUrl from "../../assets/management-icon.svg";
 import recruitmentIconImgUrl from "../../assets/recruitment-icon.svg";
@@ -17,19 +18,27 @@ const ToggleMenuButton = ({
     setIsToggleMenuOpen((_) => isBoolean);
   };
 
-  const handleToggleButtonClose = (e) => {
-    if (e.target === modalOutside.current) {
-      setIsToggleMenuOpen(false);
-    }
+  const handleToggleButtonClose = () => {
+    setIsToggleMenuOpen(false);
   };
 
   const handleClickLinkMenu = useLinkMenuClick();
+
+  const handleClickLink = (menu) => {
+    handleClickLinkMenu(menu);
+    setIsToggleMenuOpen(false);
+  };
+
+  const handleOutsideClick = useOutsideClick(
+    modalOutside,
+    handleToggleButtonClose
+  );
 
   return (
     <div
       className={isToggleMenuOpen ? "toggle-menu-wrapper" : ""}
       ref={modalOutside}
-      onClick={handleToggleButtonClose}
+      onClick={handleOutsideClick}
     >
       {isToggleMenuOpen ? (
         <div className="toggle-menu">
@@ -52,7 +61,7 @@ const ToggleMenuButton = ({
           <div className="toggle-menu-button-link-wrapper">
             <div
               className="toggle-menu-button-link"
-              onClick={() => handleClickLinkMenu("/management")}
+              onClick={() => handleClickLink("/management")}
             >
               <figure
                 className="toggle-menu-button-link-logo"
@@ -64,7 +73,7 @@ const ToggleMenuButton = ({
             </div>
             <div
               className="toggle-menu-button-link"
-              onClick={() => handleClickLinkMenu("/recruitment")}
+              onClick={() => handleClickLink("/recruitment")}
             >
               <figure
                 className="toggle-menu-button-link-logo"

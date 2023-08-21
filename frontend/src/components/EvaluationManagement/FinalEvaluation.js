@@ -193,7 +193,7 @@ const FinalEvaluation = ({
                       }}
                     />
                     <div>{badge.evaluationBadge}</div>
-                    <div>{badge.quantity} 개</div>
+                    <div className="badge-quantity">{badge.quantity} 개</div>
                   </div>
                 ))}
               </div>

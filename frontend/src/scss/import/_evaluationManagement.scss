@@ -589,7 +589,7 @@
         }
 
         @include mobile {
-          width: 90%;
+          width: 82%;
           height: 70%;
           grid-template-rows: repeat(4, 1fr);
           grid-template-columns: 100%;
@@ -597,12 +597,7 @@
           padding-bottom: 0px;
 
           @include m_heading_03;
-
           @include putCenter;
-        }
-
-        @include mobile {
-          width: 85%;
         }
 
         @include heading_05;
@@ -643,6 +638,7 @@
               width: 40px;
               height: 40px;
               border-radius: 50%;
+              justify-self: center;
 
               background: {
                 position: center;
@@ -656,7 +652,16 @@
               }
             }
 
+            .badge-quantity {
+              @include mobile {
+                justify-self: center;
+              }
+            }
+
             @include mobile {
+              width: 100%;
+
+              @include putCenter;
               @include m_heading_03;
             }
           }
