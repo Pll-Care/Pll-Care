@@ -348,11 +348,11 @@ a {
   color: #7a7a7a;
 }
 .main-header-right-col {
+  gap: 12px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 12px;
 }
 @media (max-width: 767px) {
   .main-header-right-col {
@@ -371,12 +371,12 @@ a {
 @media (max-width: 767px) {
   .main-header-right-col Button {
     height: 20px;
-    font-family: "IBM Plex Sans KR", sans-serif;
-    font-size: 10px;
-    font-weight: 700;
     padding: 4px 10px 5px 10px;
     margin: 0;
     border-radius: 5px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 700;
   }
 }
 .main-header-right-col .main-header-user-profile-img {
@@ -404,11 +404,6 @@ a {
 }
 .main-header-login-col Button {
   margin-left: auto;
-}
-@media (max-width: 767px) {
-  .main-header-login-col Button {
-    margin-right: 30px;
-  }
 }
 .main-header_img {
   width: 100%;
@@ -452,6 +447,9 @@ a {
   display: inline-flex;
   align-items: center;
   white-space: nowrap;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
 }
 .button_gray {
   color: #7a7a7a;
@@ -500,12 +498,9 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
   font-weight: 600;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 20px;
-  font-weight: 600;
 }
 @media (max-width: 767px) {
-  .button_profile_header {
+  .button {
     padding: 2px 9px;
     height: 18px;
     font-family: "IBM Plex Sans KR", sans-serif;
@@ -3022,7 +3017,7 @@ a {
 }
 @media (max-width: 767px) {
   .evaluation-management-final-evaluation .final-evaluation-body .evaluation-criterion {
-    width: 90%;
+    width: 82%;
     height: 70%;
     grid-template-rows: repeat(4, 1fr);
     grid-template-columns: 100%;
@@ -3033,11 +3028,6 @@ a {
     font-weight: 600;
     margin-left: auto;
     margin-right: auto;
-  }
-}
-@media (max-width: 767px) {
-  .evaluation-management-final-evaluation .final-evaluation-body .evaluation-criterion {
-    width: 85%;
   }
 }
 .evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges {
@@ -3080,6 +3070,7 @@ a {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  justify-self: center;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -3091,7 +3082,15 @@ a {
   }
 }
 @media (max-width: 767px) {
+  .evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges-body .badge .badge-quantity {
+    justify-self: center;
+  }
+}
+@media (max-width: 767px) {
   .evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges-body .badge {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
     font-family: "IBM Plex Sans KR", sans-serif;
     font-size: 10px;
     font-weight: 600;
@@ -3484,12 +3483,19 @@ a {
 }
 .MuiBox-root .project-editor-heading-input {
   width: 100%;
-  border: none;
   height: 100%;
+  border: none;
   border-radius: 10px;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 24px;
   font-weight: 700;
+}
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor-heading-input {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+  }
 }
 .MuiBox-root .project-editor-body {
   height: 100%;
@@ -3507,13 +3513,6 @@ a {
   height: 100%;
   margin-right: 20px;
 }
-.MuiBox-root .project-editor-body .project-editor-left-col div {
-  height: 80%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-}
 .MuiBox-root .project-editor-body .project-editor-left-col div figure {
   border: 1px solid black;
   border-radius: 50%;
@@ -3524,8 +3523,45 @@ a {
   background-size: 100% 100%;
   background-color: #dedada;
 }
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor-body .project-editor-left-col div figure {
+    width: 46px;
+    height: 46px;
+  }
+}
 .MuiBox-root .project-editor-body .project-editor-left-col div .image-input {
   display: none;
+}
+.MuiBox-root .project-editor-body .project-editor-left-col .image-button-wrapper {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor-body .project-editor-left-col .image-button-wrapper {
+    margin-top: 5px;
+  }
+}
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor-body .project-editor-left-col {
+    width: -moz-fit-content;
+    width: fit-content;
+    margin-right: 5px;
+  }
+}
+.MuiBox-root .project-editor-body .project-editor-img-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor-body .project-editor-img-wrapper {
+    height: -moz-fit-content;
+    height: fit-content;
+  }
 }
 .MuiBox-root .project-editor-body .project-editor-right-col {
   width: 80%;
@@ -3553,6 +3589,29 @@ a {
   font-size: 14px;
   font-weight: 500;
 }
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor-body .project-editor-right-col .project-editor-period-first-row input[type=date] {
+    width: 80px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
+}
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor-body .project-editor-right-col .project-editor-period-first-row h1 {
+    width: 50%;
+  }
+}
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor-body .project-editor-right-col .project-editor-period-first-row {
+    width: 100%;
+    border-radius: 5px;
+    padding: 5px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+}
 .MuiBox-root .project-editor-body .project-editor-right-col .project-editor-period-second-row {
   width: 100%;
   height: calc(100% - 50px);
@@ -3569,11 +3628,30 @@ a {
   font-size: 18px;
   font-weight: 600;
 }
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor-body .project-editor-right-col .project-editor-period-second-row textarea {
+    padding: 5px;
+    border-radius: 5px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+}
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor-body {
+    padding: 8px 5px;
+  }
+}
 .MuiBox-root .project-editor .button-wrapper {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: flex-end;
+}
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor {
+    width: 95%;
+  }
 }
 
 .MuiBox-root .delete-project {
