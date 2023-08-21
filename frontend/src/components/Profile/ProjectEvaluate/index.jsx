@@ -17,13 +17,15 @@ const ProjectEvaluate = () => {
     getEvaluationProjectDetailAPI(projectId)
   );
 
+  console.log(data);
+
   return (
     <div>
       <div>
         <h1 className="projectEvaluate_name">{title}</h1>
       </div>
       <div className="projectEvaluate">
-        <BadgeBox badgeDtos={data?.data?.badgeDtos} />
+        <BadgeBox badges={data?.data?.badges} />
         <FinalEvaluationBox finalEvals={data?.data?.finalEvals} />
       </div>
     </div>

@@ -1,4 +1,3 @@
-
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import { useEffect, useState } from "react";
@@ -7,7 +6,6 @@ import { useRouter } from "../../hooks/useRouter";
 import Button from "./Button";
 import ToggleMenuButton from "./ToggleMenuButton";
 import { authActions } from "../../redux/authSlice";
-import { isToken } from "../../utils/localstroageHandler";
 import profile_default from "../../assets/profile-default-img.png";
 import profile_isProfile from "../../assets/ranking-img.png";
 import logo from "../../assets/logo-with-text.svg";
@@ -42,7 +40,7 @@ const MainHeader = () => {
         const response = await getProfileAPI();
         if (response.status === 200) {
           const payload = {
-            memberId: response.data.id,
+            memberId: response.data.memberId,
             imageUrl: response.data.imageUrl,
           };
           dispatch(userInfoActions.setUserInfo(payload));
@@ -142,7 +140,6 @@ const MainHeader = () => {
             </div>
             <ToggleMenuButton
               isProfilePage={isProfilePage}
-
               isToggleMenuOpen={isToggleMenuOpen}
               setIsToggleMenuOpen={setIsToggleMenuOpen}
             />

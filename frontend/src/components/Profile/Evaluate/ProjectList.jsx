@@ -30,6 +30,8 @@ const ProjectList = () => {
     refetch();
   }, [page.currentPage]);
 
+  console.log(123, data);
+
   //title: string
   // projectId: number
   const clickProjectItem = (title, projectId) => {
@@ -59,7 +61,7 @@ const ProjectList = () => {
                     <img src={project_default} alt="프로젝트 이미지" />
                   </div>
                   <div className="evaluate_project_item_title">
-                    <span>{item.projectTitle}</span>
+                    <span>{item.title}</span>
                   </div>
                 </div>
                 <div className="evaluate_project_item_scores">
