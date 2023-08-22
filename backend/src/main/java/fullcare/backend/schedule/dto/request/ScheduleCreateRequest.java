@@ -18,7 +18,6 @@ public class ScheduleCreateRequest {
     @NotNull
     private Long projectId;
 
-    // TODO startDate(이전) < endDate(이후) + NotBlank인가 NotEmpty인가?
     @FutureOrPresent
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime startDate;
@@ -40,7 +39,7 @@ public class ScheduleCreateRequest {
     @NotEmpty
     private String content;
 
-//    @NotNull
+    //    @NotNull
     private String address;
 
 

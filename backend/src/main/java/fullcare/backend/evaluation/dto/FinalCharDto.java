@@ -8,18 +8,19 @@ import java.util.List;
 
 @Data
 public class FinalCharDto<T> {
-    private Long id;
+    private Long memberId;
     private String name;
-//    private String imageUrl;
+    //    private String imageUrl;
     private List<T> evaluation = new ArrayList<>();
+
     @Builder
-    public FinalCharDto(Long id, String name) {
-        this.id = id;
+    public FinalCharDto(Long memberId, String name) {
+        this.memberId = memberId;
         this.name = name;
 //        this.imageUrl = imageUrl;
     }
 
-    public void addEvaluation(T evaluation){
+    public void addEvaluation(T evaluation) {
         this.evaluation.add(evaluation);
     }
 }

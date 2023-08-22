@@ -53,15 +53,15 @@ public class ProjectController {
     // * 특정 프로젝트 내용 수정
     @Operation(method = "put", summary = "프로젝트 수정")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "프로젝트 수정 성공", content = @Content),
+            @ApiResponse(responseCode = "200", description = "프로젝트 수정 성공", useReturnTypeSchema = true),
             @ApiResponse(responseCode = "400", description = "프로젝트 수정 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PutMapping("/{projectId}")
-    public ResponseEntity update(@PathVariable Long projectId, @Valid @RequestBody ProjectUpdateRequest projectUpdateRequest, @CurrentLoginMember Member member) {
+    public ResponseEntity<ProjectUpdateResponse> update(@PathVariable Long projectId, @Valid @RequestBody ProjectUpdateRequest projectUpdateRequest, @CurrentLoginMember Member member) {
 
 
         projectService.updateProject(projectId, member.getId(), projectUpdateRequest);
-        return new ResponseEntity(new ProjectUpdateResponse(projectUpdateRequest.getImageUrl()), HttpStatus.OK);
+        return new ResponseEntity<>(new ProjectUpdateResponse(projectUpdateRequest.getImageUrl()), HttpStatus.OK);
     }
 
     // * 특정 프로젝트 삭제
@@ -81,25 +81,25 @@ public class ProjectController {
     // * 특정 프로젝트 완료 처리
     @Operation(method = "post", summary = "프로젝트 완료 처리")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "프로젝트 완료 처리 성공", content = @Content),
+            @ApiResponse(responseCode = "200", description = "프로젝트 완료 처리 성공", useReturnTypeSchema = true),
             @ApiResponse(responseCode = "400", description = "프로젝트 완료 처리 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping("/{projectId}/complete")
-    public ResponseEntity complete(@PathVariable Long projectId, @CurrentLoginMember Member member) {
+    public ResponseEntity<ProjectUpdateStateResponse> complete(@PathVariable Long projectId, @CurrentLoginMember Member member) {
 
         projectService.completeProject(projectId, member.getId());
-        return new ResponseEntity(new ProjectUpdateStateResponse(projectId), HttpStatus.OK);
+        return new ResponseEntity<>(new ProjectUpdateStateResponse(projectId), HttpStatus.OK);
     }
 
     // * 특정 프로젝트 조회
     @Operation(method = "get", summary = "프로젝트 단건 조회")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "프로젝트 단건 조회 성공", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ProjectDetailResponse.class))),
+            @ApiResponse(responseCode = "200", description = "프로젝트 단건 조회 성공", useReturnTypeSchema = true),
             @ApiResponse(responseCode = "400", description = "프로젝트 단건 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping("/{projectId}")
-    public ResponseEntity<?> details(@PathVariable Long projectId,
-                                     @CurrentLoginMember Member member) {
+    public ResponseEntity<ProjectDetailResponse> details(@PathVariable Long projectId,
+                                                         @CurrentLoginMember Member member) {
 
         ProjectDetailResponse projectDetailResponse = projectService.findProjectDetail(projectId, member.getId());
         return new ResponseEntity<>(projectDetailResponse, HttpStatus.OK);
@@ -140,7 +140,7 @@ public class ProjectController {
     // * 프로젝트에 소속된 멤버의 역할 수정
     @Operation(method = "put", summary = "프로젝트 멤버 역할 수정")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "프로젝트 멤버 역할 수정 성공", useReturnTypeSchema = true),
+            @ApiResponse(responseCode = "200", description = "프로젝트 멤버 역할 수정 성공", content = @Content),
             @ApiResponse(responseCode = "400", description = "프로젝트 멤버 역할 수정 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PutMapping("/{projectId}/positionchange")
@@ -153,7 +153,7 @@ public class ProjectController {
     // * 특정 프로젝트 멤버에게 리더 위임
     @Operation(method = "put", summary = "프로젝트 리더 위임")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "프로젝트 리더 위임 성공", useReturnTypeSchema = true),
+            @ApiResponse(responseCode = "200", description = "프로젝트 리더 위임 성공", content = @Content),
             @ApiResponse(responseCode = "400", description = "프로젝트 리더 위임 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PutMapping("/{projectId}/leaderchange")
@@ -248,7 +248,7 @@ public class ProjectController {
     // * 특정 프로젝트의 완료 여부
     @Operation(method = "get", summary = "프로젝트 완료 여부 조회")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "프로젝트 완료 여부 조회 성공", content = @Content),
+            @ApiResponse(responseCode = "200", description = "프로젝트 완료 여부 조회 성공", useReturnTypeSchema = true),
             @ApiResponse(responseCode = "400", description = "프로젝트 완료 여부 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping("/{projectId}/iscompleted")
@@ -261,7 +261,7 @@ public class ProjectController {
     // * 특정 프로젝트의 리더 여부
     @Operation(method = "get", summary = "프로젝트 리더 여부 조회")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "프로젝트 리더 여부 조회 성공", content = @Content),
+            @ApiResponse(responseCode = "200", description = "프로젝트 리더 여부 조회 성공", useReturnTypeSchema = true),
             @ApiResponse(responseCode = "400", description = "프로젝트 리더 여부 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping("/{projectId}/isleader")

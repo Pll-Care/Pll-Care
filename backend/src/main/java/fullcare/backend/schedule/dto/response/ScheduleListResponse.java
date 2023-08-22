@@ -7,15 +7,16 @@ import java.time.LocalDateTime;
 
 @Data
 public class ScheduleListResponse {
-    private Long scheduleId;
+    private Long id;
     private String title;
     //private String content;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private Long order;
+
     @Builder
-    public ScheduleListResponse(Long scheduleId, String title,LocalDateTime startDate,LocalDateTime endDate, Long order) {
-        this.scheduleId = scheduleId;
+    public ScheduleListResponse(Long id, String title, LocalDateTime startDate, LocalDateTime endDate, Long order) {
+        this.id = id;
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;

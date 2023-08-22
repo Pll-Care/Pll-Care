@@ -1,5 +1,6 @@
 package fullcare.backend.evaluation.dto;
 
+import fullcare.backend.member.domain.Member;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import lombok.Builder;
 import lombok.Data;

@@ -49,7 +49,7 @@ public class ProjectMemberService {
 
         List<ProjectMember> projectMemberList = projectMemberRepository.findProjectMemberWithMemberByProjectIdAndProjectMemberRole(findProjectMember.getProject().getId(), projectMemberRoleTypes);
         List<ProjectMemberListResponse> response = projectMemberList.stream().map(pm -> ProjectMemberListResponse.builder()
-                .id(pm.getMember().getId())
+                .memberId(pm.getMember().getId())
                 .name(pm.getMember().getNickname())
                 .imageUrl(pm.getMember().getImageUrl())
                 .position(pm.getProjectMemberType().getPosition())
@@ -66,7 +66,8 @@ public class ProjectMemberService {
 
             List<Apply> applyList = applyRepository.findByProjectId(findProjectMember.getProject().getId());
             List<ApplyMemberListResponse> response = applyList.stream().map(a -> ApplyMemberListResponse.builder()
-                    .postId(a.getPost().getId())
+                    .applyId(a.getId())
+//                    .postId(a.getPost().getId())
                     .memberId(a.getMember().getId())
                     .name(a.getMember().getName())
                     .imageUrl(a.getMember().getImageUrl())
@@ -175,7 +176,7 @@ public class ProjectMemberService {
             }
 
             // 쿼리1
-            Apply findApply = applyRepository.findByPostIdAndMemberId(request.getPostId(), request.getMemberId()).orElseThrow(() -> new EntityNotFoundException(PostErrorCode.APPLY_NOT_FOUND)); // todo 지원자 정보가 없습니다.
+            Apply findApply = applyRepository.findById(request.getApplyId()).orElseThrow(() -> new EntityNotFoundException(PostErrorCode.APPLY_NOT_FOUND));// todo 지원자 정보가 없습니다.
 
             // 쿼리2
             Member findMember = findApply.getMember();
@@ -184,7 +185,7 @@ public class ProjectMemberService {
             Post findPost = findApply.getPost();
 
             // 쿼리4
-            Project findProject = findPost.getAuthor().getProject();
+            Project findProject = findPost.getProject();
 
             // 쿼리5  -> o
             List<Recruitment> recruitments = findPost.getRecruitments();
@@ -217,7 +218,7 @@ public class ProjectMemberService {
                 throw new UnauthorizedAccessException(ProjectErrorCode.UNAUTHORIZED_ACTION);
             }
 
-            Apply findApply = applyRepository.findByPostIdAndMemberId(request.getPostId(), request.getMemberId()).orElseThrow(() -> new EntityNotFoundException(PostErrorCode.APPLY_NOT_FOUND)); // todo 지원자 정보가 없습니다.
+            Apply findApply = applyRepository.findById(request.getApplyId()).orElseThrow(() -> new EntityNotFoundException(PostErrorCode.APPLY_NOT_FOUND)); // todo 지원자 정보가 없습니다.
 
             // ? state만 지원 거절로 바꾸고, 사용자가 confirm 하면 삭제하는 방향?
             applyRepository.delete(findApply);

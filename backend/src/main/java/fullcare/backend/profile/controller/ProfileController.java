@@ -20,6 +20,7 @@ import fullcare.backend.security.jwt.CurrentLoginMember;
 import fullcare.backend.util.CustomPageImpl;
 import fullcare.backend.util.CustomPageRequest;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -107,7 +108,7 @@ public class ProfileController {
     // * 개인 프로필 api 생성, 수정, 삭제
     @Operation(method = "patch", summary = "개인 프로필 생성, 수정, 삭제")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "개인 프로필 생성, 수정, 삭제 성공", useReturnTypeSchema = true),
+            @ApiResponse(responseCode = "200", description = "개인 프로필 생성, 수정, 삭제 성공", content = @Content),
 //            @ApiResponse(responseCode = "400", description = "개인 프로필 생성, 수정, 삭제 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @PatchMapping
@@ -121,7 +122,7 @@ public class ProfileController {
 
     @Operation(method = "put", summary = "개인 프로필 한 줄 소개 수정")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "개인 프로필 한 줄 소개 수정 성공", useReturnTypeSchema = true),
+            @ApiResponse(responseCode = "200", description = "개인 프로필 한 줄 소개 수정 성공", content = @Content),
 //            @ApiResponse(responseCode = "400", description = "개인 프로필 한 줄 소개 수정 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @PutMapping

@@ -8,6 +8,7 @@ public class ScheduleMemberDto {
     private Long id;
     private String name;
     private String imageUrl;
+
     @Builder
     public ScheduleMemberDto(Long id, String name, String imageUrl) {
         this.id = id;

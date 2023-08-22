@@ -16,7 +16,7 @@ import java.util.List;
 public class ScheduleSearchResponse {
     private Long scheduleId;
     private String title;
-//    private String content;
+    //    private String content;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     //private Address address;

@@ -24,7 +24,7 @@ public class ApplyService {
     public CustomPageImpl<MyApplyResponse> findMyApply(Long memberId, Pageable pageable) {
         Page<Apply> applies = applyRepository.findByMemberId(memberId, pageable);
         List<MyApplyResponse> content = applies.stream().map(a -> MyApplyResponse.builder()
-                .id(a.getPost().getId())
+                .postId(a.getPost().getId())
                 .title(a.getPost().getTitle())
                 .description(a.getPost().getDescription()).build()).collect(Collectors.toList());
         return new CustomPageImpl<>(content, pageable, applies.getTotalElements());

@@ -1,11 +1,10 @@
 package fullcare.backend.schedule.controller;
 
 import fullcare.backend.global.errorcode.ScheduleErrorCode;
-import fullcare.backend.global.exceptionhandling.exception.UnauthorizedAccessException;
 import fullcare.backend.global.exceptionhandling.exception.NotFoundCategoryException;
+import fullcare.backend.global.exceptionhandling.exception.UnauthorizedAccessException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.service.ProjectService;
-import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.schedule.ScheduleCategory;
 import fullcare.backend.schedule.ScheduleCondition;
@@ -22,6 +21,7 @@ import fullcare.backend.util.CustomPageImpl;
 import fullcare.backend.util.CustomPageRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -88,7 +88,7 @@ public class ScheduleController {
 
     @Operation(method = "get", summary = "일정 필터 리스트 조회")
     @ApiResponses(value = {
-            @ApiResponse(description = "일정 필터 리스트 조회 성공", responseCode = "200", useReturnTypeSchema = true)
+            @ApiResponse(description = "일정 필터 리스트 조회 성공", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ScheduleSearchResponse.class)))
     })
     @GetMapping("/search")
     public ResponseEntity<CustomPageImpl<ScheduleSearchResponse>> searchList(CustomPageRequest pageRequest,
