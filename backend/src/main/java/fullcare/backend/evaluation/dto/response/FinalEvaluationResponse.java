@@ -12,14 +12,12 @@ public class FinalEvaluationResponse {
     private String name;
     private String content;
     private Score score;
-//    private State state;
 
     @Builder
     public FinalEvaluationResponse(String name, String content, Score score) {
         this.name = name;
         this.content = content;
         this.score = score;
-//        this.state = state;
     }
 
 
@@ -28,7 +26,6 @@ public class FinalEvaluationResponse {
                 .content(finalTermEvaluation.getContent())
                 .name(finalTermEvaluation.getEvaluated().getMember().getName())
                 .score(finalTermEvaluation.getScore())
-//                .state(finalTermEvaluation.getState())
                 .build();
     }
 }

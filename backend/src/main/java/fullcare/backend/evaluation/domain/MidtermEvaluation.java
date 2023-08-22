@@ -22,12 +22,10 @@ public class MidtermEvaluation {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "voter_id", nullable = false)
-//    private Member voter;
     private ProjectMember voter;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "voted_id", nullable = false)
-//    private Member voted;
     private ProjectMember voted;
 
     @ManyToOne(fetch = FetchType.LAZY)

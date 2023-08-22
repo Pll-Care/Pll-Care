@@ -7,7 +7,7 @@ import lombok.Data;
 public class FinalEvalDto {
     private Long memberId;
     private String name;
-    private String imageUrl; // ? 사용자 이미지
+    private String imageUrl;
     private String content;
     private ScoreDto score;
 

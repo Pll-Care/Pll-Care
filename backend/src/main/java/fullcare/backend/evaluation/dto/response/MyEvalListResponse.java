@@ -9,15 +9,11 @@ public class MyEvalListResponse {
     private Long projectId;
     private String title;
     private ScoreDto score;
-
-    //    private List<BadgeDto> badgeDtos = new ArrayList<>();
     @Builder
     public MyEvalListResponse(Long projectId, String title, ScoreDto score) {
         this.projectId = projectId;
         this.title = title;
         this.score = score;
     }
-//    public void addBadge(BadgeDto badgeDto){
-//        this.badgeDtos.add(badgeDto);
-//    }
+
 }

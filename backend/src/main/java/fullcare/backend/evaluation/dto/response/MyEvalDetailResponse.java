@@ -12,11 +12,9 @@ import java.util.List;
 public class MyEvalDetailResponse {
     private BadgeSubDto badges;
     private List<FinalEvalDto> finalEvals = new ArrayList();
-//    private ScoreDto score;
 
     public MyEvalDetailResponse(BadgeSubDto badges, List<FinalEvalDto> finalEvals) {
         this.badges = badges;
         this.finalEvals = finalEvals;
-//        this.score = scoreDto;
     }
 }
