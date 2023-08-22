@@ -92,7 +92,7 @@ public class ScheduleController {
     @Operation(method = "get", summary = "일정 필터 리스트 조회")
     @ApiResponses(value = {
             @ApiResponse(description = "일정 필터 리스트 조회 성공", responseCode = "200", useReturnTypeSchema = true),
-            @ApiResponse(description = "일정 필터 리스트 실패", responseCode = "400",  content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse(description = "일정 필터 리스트 조회 실패", responseCode = "400",  content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping("/search")
     public ResponseEntity<CustomPageImpl<ScheduleSearchResponse>> searchList(CustomPageRequest pageRequest,
@@ -110,7 +110,7 @@ public class ScheduleController {
             @ApiResponse(description = "일정 생성 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)}),
             @ApiResponse(description = "일정 생성 실패", responseCode = "400",  content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @PostMapping// 나중에 프로젝트 시작, 종료일정 밖에 있는 일정 생성을 못하게 해야함. 테스트 데이터 생성을 활용할 때는 사용 x
+    @PostMapping
     public ResponseEntity create(@Valid @RequestBody ScheduleCreateRequest scheduleCreateRequest, @CurrentLoginMember Member member) {
 
         if (scheduleCreateRequest.getCategory().equals(ScheduleCategory.MILESTONE)) {

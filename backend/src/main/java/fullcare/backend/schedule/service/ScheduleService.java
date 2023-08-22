@@ -92,12 +92,7 @@ public class ScheduleService {
         LocalDate startDate = project.getStartDate();
         LocalDate endDate = project.getEndDate();
         long diff = ChronoUnit.WEEKS.between(startDate, endDate);
-        DateCategory dateCategory;
-        if (diff > 13) {
-            dateCategory = DateCategory.MONTH;
-        } else {
-            dateCategory = DateCategory.WEEK;
-        }
+        DateCategory dateCategory = diff > 13 ? DateCategory.MONTH : DateCategory.WEEK;
         List<Schedule> milestoneList = scheduleRepository.findMileStoneByProjectId(projectId);
         List<ScheduleDto> scheduleListResponseList = toOverallResponse(startDate, milestoneList, dateCategory);
         OverallScheduleResponse response = new OverallScheduleResponse(startDate, endDate, dateCategory, scheduleListResponseList);
@@ -121,10 +116,11 @@ public class ScheduleService {
         LocalDateTime endDate = LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDateTime.now().getDayOfMonth(), 23, 59, 59);
         List<Schedule> scheduleList = scheduleRepository.findDaily(projectId, startDate, endDate);
         List<ScheduleDailyResponse> scheduleDailyResponse = new ArrayList<>();
-        toDailyResponse(scheduleList, scheduleDailyResponse);// 미팅, 마일스톤에 맞게 일정 생성 후 응답에 넣기
+        toDailyResponse(scheduleList, scheduleDailyResponse);// * 미팅, 마일스톤에 맞게 일정 생성 후 응답에 넣기
         return scheduleDailyResponse;
     }
 
+    // * 사용자별 and (미팅 or 마일스톤 or 지난일정) 필터 조회
     @Transactional
     public CustomPageImpl<ScheduleSearchResponse> searchScheduleList(Pageable pageable, Member member, ScheduleCondition scheduleCondition) {
         projectService.isProjectAvailable(scheduleCondition.getProjectId(), member.getId(), true);
@@ -173,8 +169,6 @@ public class ScheduleService {
         } else {
             scheduleDetailResponse.setScheduleCategory(ScheduleCategory.MILESTONE);
         }
-
-
         return scheduleDetailResponse;
 
     }
@@ -388,7 +382,7 @@ public class ScheduleService {
     }
 
 
-    // * 시작 시간이 지나면 일정 진행중으로 변경, 사용자 일정 확인 업데이트
+    // * 시작 시간이 지나면 일정 진행중으로 변경, 사용자가 일정을 확인한 시간 갱신
     private static void setOngoing(LocalDateTime now, Schedule schedule) {
         if (now.isAfter(schedule.getStartDate()) && schedule.getState().equals(State.TBD)) {
             schedule.updateState(now, State.ONGOING);
