@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 @Data
-public class ScheduleMonthResponse {
+public class ScheduleDailyResponse {
     private Long scheduleId;
     private String title;
     private LocalDateTime startDate;
@@ -19,7 +19,7 @@ public class ScheduleMonthResponse {
     private ScheduleCategory scheduleCategory;
     private List<ScheduleMemberDto> members = new ArrayList<>();
     @Builder
-    public ScheduleMonthResponse(Long scheduleId, String title, LocalDateTime startDate, LocalDateTime endDate, ScheduleCategory scheduleCategory, String address) {
+    public ScheduleDailyResponse(Long scheduleId, String title, LocalDateTime startDate, LocalDateTime endDate, ScheduleCategory scheduleCategory, String address) {
         this.scheduleId = scheduleId;
         this.title = title;
         this.startDate = startDate;

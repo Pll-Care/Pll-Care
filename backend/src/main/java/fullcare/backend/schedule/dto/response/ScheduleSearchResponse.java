@@ -16,10 +16,8 @@ import java.util.List;
 public class ScheduleSearchResponse {
     private Long scheduleId;
     private String title;
-    //    private String content;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    //private Address address;
     private ScheduleCategory scheduleCategory;
     private List<ScheduleMemberDto> members = new ArrayList<>();
     private State state;
@@ -34,7 +32,6 @@ public class ScheduleSearchResponse {
         this.endDate = endDate;
         this.state = state;
         this.modifyDate = modifyDate;
-        //this.address = address;
         this.scheduleCategory = scheduleCategory;
     }
 

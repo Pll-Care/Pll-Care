@@ -20,12 +20,10 @@ public class ScheduleUpdateRequest {
     private Long projectId;
 
     @NotNull
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     @JsonSerialize
     private LocalDateTime startDate;
 
     @NotNull
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     @JsonSerialize
     private LocalDateTime endDate;
 
@@ -35,7 +33,6 @@ public class ScheduleUpdateRequest {
 
     @NotNull
     private ScheduleCategory category;
-
 
     @NotNull
     private List<Long> memberIds;
