@@ -16,12 +16,10 @@ import fullcare.backend.evaluation.repository.FinalEvaluationRepository;
 import fullcare.backend.evaluation.repository.MidtermEvaluationRepository;
 import fullcare.backend.global.State;
 import fullcare.backend.global.errorcode.EvaluationErrorCode;
-import fullcare.backend.global.errorcode.MemberErrorCode;
 import fullcare.backend.global.errorcode.ProjectErrorCode;
 import fullcare.backend.global.errorcode.ScheduleErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.*;
 import fullcare.backend.member.domain.Member;
-import fullcare.backend.member.repository.MemberRepository;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.project.repository.ProjectRepository;
 import fullcare.backend.project.service.ProjectService;
@@ -51,7 +49,6 @@ public class EvaluationService {
 
     private final FinalEvaluationRepository finalEvaluationRepository;
     private final MidtermEvaluationRepository midtermEvaluationRepository;
-    private final MemberRepository memberRepository;
     private final ProjectRepository projectRepository;
     private final ScheduleRepository scheduleRepository;
     private final ProjectMemberRepository projectMemberRepository;
@@ -83,12 +80,7 @@ public class EvaluationService {
     public boolean validateFinalDuplicationAuthor(Long evaluatedId, Long authorId, Long projectId) {
         return finalEvaluationRepository.existsByEvaluatedIdAndEvaluatorIdAndProjectId(evaluatedId, authorId, projectId);
     }
-
-    public boolean validateAuthor(Long evaluationId, Long authorId) {
-        return finalEvaluationRepository.existsByIdAndEvaluatorId(evaluationId, authorId);
-    }
-
-    public boolean validateMidDuplicationAuthor(Long scheduleId, Long voterId) {
+    public boolean validateMidEvalDuplicationAuthor(Long scheduleId, Long voterId) {
         return midtermEvaluationRepository.existsByScheduleIdAndVoterId(scheduleId, voterId);
     }
 
@@ -100,7 +92,7 @@ public class EvaluationService {
         if (voter.getId() == voted.getId()) {
             throw new SelfEvalException(EvaluationErrorCode.SELF_EVALUATION);
         }
-        if (validateMidDuplicationAuthor(midTermEvalCreateRequest.getScheduleId(), voter.getId())) {
+        if (validateMidEvalDuplicationAuthor(midTermEvalCreateRequest.getScheduleId(), voter.getId())) {
             throw new DuplicateEvalException(EvaluationErrorCode.DUPLICATE_EVALUATION);
         }
         scheduleMemberRepository.findByScheduleIdAndPmId(midTermEvalCreateRequest.getScheduleId(), voter.getId()).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_MEMBER_NOT_FOUND));
@@ -123,8 +115,6 @@ public class EvaluationService {
         ProjectMember evaluator = projectMemberRepository.findByProjectIdAndMemberId(finalEvalCreateRequest.getProjectId(), evaluatorId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
         ProjectMember evaluated = projectMemberRepository.findByProjectIdAndMemberId(finalEvalCreateRequest.getProjectId(), finalEvalCreateRequest.getEvaluatedId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
         Project project = projectRepository.findById(finalEvalCreateRequest.getProjectId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
-//        projectMemberRepository.findPMWithProjectByProjectIdAndMemberId(project.getId(), finalEvalCreateRequest.getEvaluatedId()).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
-
         //? 점수 5점 이상일 경우 에러처리
         if (!Score.valid(finalEvalCreateRequest.getScore())) {
             throw new EvalOutOfRangeException(EvaluationErrorCode.SCORE_OUT_OF_RANGE);
@@ -144,22 +134,9 @@ public class EvaluationService {
                 .score(finalEvalCreateRequest.getScore())
                 .evaluator(evaluator)
                 .evaluated(evaluated)
-//                .state(finalEvalCreateRequest.getState())
                 .build();
         FinalTermEvaluation finalEval = finalEvaluationRepository.save(newFinalTermEvaluation);
         return finalEval.getId();
-    }
-
-    @Transactional //* 임시 저장한 평가를 수정 또는 완료할 때 사용
-    public void updateFinalEvaluation(Long evaluationId, FinalEvalUpdateRequest finalEvalUpdateRequest) {
-        if (finalEvaluationRepository.existsById(evaluationId)) {
-            throw new CompletedProjectException(ProjectErrorCode.PROJECT_COMPLETED);
-        }
-        if (!Score.valid(finalEvalUpdateRequest.getScore())) {
-            throw new EvalOutOfRangeException(EvaluationErrorCode.SCORE_OUT_OF_RANGE);
-        }
-        FinalTermEvaluation finalTermEvaluation = finalEvaluationRepository.findById(evaluationId).orElseThrow(() -> new EntityNotFoundException(EvaluationErrorCode.EVALUATION_NOT_FOUND));
-        finalTermEvaluation.update(finalEvalUpdateRequest);
     }
 
     public List<BadgeDto> findMidtermEvaluationDetailResponse(Long projectId, Long memberId) {
@@ -168,15 +145,6 @@ public class EvaluationService {
         List<BadgeDto> midtermDetailResponses = midtermEvaluationRepository.findAllByMemberId(projectId, projectMember.getId());
         setBadge(midtermDetailResponses);
         return midtermDetailResponses;
-    }
-
-    @Transactional
-    public void deleteFinalEvaluation(Long evaluationId, Long projectId) {
-        if (finalEvaluationRepository.existsById(evaluationId)) {
-            throw new CompletedProjectException(ProjectErrorCode.PROJECT_COMPLETED);
-        }
-        FinalTermEvaluation finalTermEvaluation = finalEvaluationRepository.findById(evaluationId).orElseThrow(() -> new EntityNotFoundException(EvaluationErrorCode.EVALUATION_NOT_FOUND));
-        finalEvaluationRepository.delete(finalTermEvaluation);
     }
 
     public FinalEvaluationResponse findFinalEvaluationDetailResponse(Long projectId, Long memberId, Long evaluationId) {
@@ -200,7 +168,6 @@ public class EvaluationService {
         for (BadgeDao badgeDao : midtermBadgeList) {
             for (MidChartDto chart : midTermEvalChartDto) {
                 if (badgeDao.getMemberId() == chart.getMemberId()) {
-//                    chart.addEvaluation(new BadgeDto(badgeDao.getEvaluationBadge(), badgeDao.getQuantity()));//!
                     chart.getEvaluation().put(badgeDao.getEvaluationBadge(), badgeDao.getQuantity());
                 }
             }
@@ -222,8 +189,6 @@ public class EvaluationService {
             chartDto.getEvaluation().putIfAbsent(EvaluationBadge.최고의_서포터, 0l);
             chartDto.getEvaluation().putIfAbsent(EvaluationBadge.탁월한_리더, 0l);
             chartDto.getEvaluation().putIfAbsent(EvaluationBadge.열정적인_참여자, 0l);
-//            System.out.println("m.getBadges() = " + chartDto.getBadges());
-//            setBadge(chartDto.getEvaluation());
         }
         EverythingEvalResponse everythingEvalResponse = new EverythingEvalResponse(midTermEvalChartDto, rankingDtos, rankingDtos.size() != 0 ? true : false);
         return everythingEvalResponse;
@@ -231,9 +196,8 @@ public class EvaluationService {
 
     public EverythingEvalResponse findFinalEvaluationList(Long projectId, Long memberId) {
         ProjectMember projectMember = projectService.isProjectAvailable(projectId, memberId, true);
-        Project project = projectMember.getProject();// projectRepository.findProjectWithPMAndMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
+        Project project = projectMember.getProject();
         List<ProjectMember> projectMembers = project.getProjectMembers();
-//        List<Member> members = project.getProjectMembers().stream().map(pm -> pm.getMember()).collect(Collectors.toList());
         List<ScoreDao> scoreDaos = finalEvaluationRepository.findList(project.getId(), projectMembers);
 
         List<FinalCharDto> finalTermEvalFinalCharDto = projectMembers.stream().map(pm -> FinalCharDto.builder()
@@ -281,9 +245,7 @@ public class EvaluationService {
         Schedule schedule = scheduleRepository.findJoinSMJoinMemberById(scheduleId).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
         Long projectId = schedule.getProject().getId();
         ProjectMember projectMember = projectMemberRepository.findByProjectIdAndMemberId(projectId, memberId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND));
-//        Member member = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
-
-        List<MemberDto> memberDto = schedule.getScheduleMembers().stream().filter(sm -> sm.getProjectMember() != projectMember).map(sm -> MemberDto.builder().projectMember(sm.getProjectMember()).build()).collect(Collectors.toList());// 나를 제외한 일정에 참여한 팀원
+        List<EvalMemberDto> evalMemberDto = schedule.getScheduleMembers().stream().filter(sm -> sm.getProjectMember() != projectMember).map(sm -> EvalMemberDto.builder().projectMember(sm.getProjectMember()).build()).collect(Collectors.toList());// 나를 제외한 일정에 참여한 팀원
 
 
         MidTermEvalModalResponse midTermEvalModalResponse = MidTermEvalModalResponse.builder()
@@ -292,7 +254,7 @@ public class EvaluationService {
                 .endDate(schedule.getEndDate())
                 .state(schedule.getState())
                 .build();
-        midTermEvalModalResponse.setMembers(memberDto);
+        midTermEvalModalResponse.setMembers(evalMemberDto);
         List<BadgeDto> badgeDtoDtos = new ArrayList<>();
         setBadge(badgeDtoDtos);
         midTermEvalModalResponse.setBadgeDtos(badgeDtoDtos);
@@ -301,8 +263,7 @@ public class EvaluationService {
 
     public List<ParticipantResponse> findParticipantList(Long projectId, Long memberId) {
         ProjectMember projectMember = projectService.isProjectAvailable(projectId, memberId, true);
-        Project project = projectMember.getProject();//projectRepository.findProjectWithPMAndMemberById(projectId).orElseThrow(() -> new EntityNotFoundException(ProjectErrorCode.PROJECT_NOT_FOUND));
-//        List<Member> members = project.getProjectMembers().stream().map(pm -> pm.getMember()).collect(Collectors.toList());
+        Project project = projectMember.getProject();
         List<ProjectMember> projectMembers = project.getProjectMembers();
         List<BadgeDao> midtermBadgeList = midtermEvaluationRepository.findList(project.getId(), projectMembers);
         List<FinalTermEvaluation> finalEvalList = new ArrayList<>();
@@ -357,16 +318,10 @@ public class EvaluationService {
                     scoreDto.setJobPerformance(scoreDto.getJobPerformance() + fe.getScore().getJobPerformance());
                 }
             }
-//            scoreDto.setJobPerformance(scoreDto.getJobPerformance()/ feCnt);
-//            scoreDto.setPunctuality(scoreDto.getPunctuality()/ feCnt);
-//            scoreDto.setCommunication(scoreDto.getCommunication()/ feCnt);
-//            scoreDto.setSincerity(scoreDto.getSincerity()/ feCnt);
-
-            scoreDto.setSincerity(Math.round(scoreDto.getSincerity() / feCnt * 100) / 100.0);
-            scoreDto.setJobPerformance(Math.round(scoreDto.getJobPerformance() / feCnt * 100) / 100.0);
-            scoreDto.setPunctuality(Math.round(scoreDto.getPunctuality() / feCnt * 100) / 100.0);
-            scoreDto.setCommunication(Math.round(scoreDto.getCommunication() / feCnt * 100) / 100.0);
-
+            scoreDto.setSincerity(Math.round(scoreDto.getSincerity() / feCnt * 10) / 10.0);
+            scoreDto.setJobPerformance(Math.round(scoreDto.getJobPerformance() / feCnt * 10) / 10.0);
+            scoreDto.setPunctuality(Math.round(scoreDto.getPunctuality() / feCnt * 10) / 10.0);
+            scoreDto.setCommunication(Math.round(scoreDto.getCommunication() / feCnt * 10) / 10.0);
 
             MyEvalListResponse response = MyEvalListResponse.builder()
                     .projectId(pm.getProject().getId())
@@ -374,9 +329,6 @@ public class EvaluationService {
                     .score(scoreDto)
                     .build();
 
-
-//            List<BadgeDto> badgeList = midtermEvaluationRepository.findAllByMemberId(pm.getProject().getId(), memberId);
-//            response.setBadgeDtos(badgeList);
             myEvalListResponseList.add(response);
         }
 
@@ -418,8 +370,6 @@ public class EvaluationService {
             finalEvalDtoList.add(finalEvalDto);
 
         }
-
-
         return new MyEvalDetailResponse(badgeSubDto, finalEvalDtoList);
     }
 
@@ -436,16 +386,10 @@ public class EvaluationService {
             communication += scoreDao.getCommunication();
         }
         ScoreDto score = new ScoreDto();
-        score.setSincerity(sincerity / myAvgScoreList.size());
-        score.setJobPerformance(jobPerformance / myAvgScoreList.size());
-        score.setPunctuality(punctuality / myAvgScoreList.size());
-        score.setCommunication(communication / myAvgScoreList.size());
-
-        // * 소수점 조정 임시 주석
-//        score.setSincerity(Math.round((sincerity/myAvgScoreList.size())*100)/100.0);
-//        score.setJobPerformance(Math.round(jobPerformance/myAvgScoreList.size()*100)/100.0);
-//        score.setPunctuality(Math.round(punctuality/myAvgScoreList.size()*100)/100.0);
-//        score.setCommunication(Math.round(communication/myAvgScoreList.size()*100)/100.0);
+        score.setSincerity(Math.round((sincerity/myAvgScoreList.size())*10)/10.0);
+        score.setJobPerformance(Math.round(jobPerformance/myAvgScoreList.size()*10)/10.0);
+        score.setPunctuality(Math.round(punctuality/myAvgScoreList.size()*10)/10.0);
+        score.setCommunication(Math.round(communication/myAvgScoreList.size()*10)/10.0);
         return new MyEvalChartResponse(score);
     }
 

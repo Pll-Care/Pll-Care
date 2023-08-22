@@ -44,7 +44,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static fullcare.backend.global.errorcode.ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND;
 import static fullcare.backend.global.errorcode.ScheduleErrorCode.INVALID_DELETE;
@@ -68,8 +67,6 @@ public class ScheduleService {
         int pageNumber = pageable.getPageNumber();
         Long last = null;
         Long offset = pageable.getOffset();
-
-
         if ((pageNumber + 1) * pageable.getPageSize() > newResponse.size()) {
             last = Long.valueOf(newResponse.size());
         } else {
@@ -118,10 +115,7 @@ public class ScheduleService {
         List<ProjectMemberRoleType> projectMemberRoleTypes = new ArrayList<>();
         projectMemberRoleTypes.add(ProjectMemberRoleType.리더);
         projectMemberRoleTypes.add(ProjectMemberRoleType.팀원);
-
-        List<ProjectMember> pmList = projectMemberRepository.findProjectMemberWithMemberByProjectIdAndProjectMemberRole(scheduleUpdateRequest.getProjectId(), projectMemberRoleTypes);
-
-//        List<Member> members = pmList.stream().map(pm -> pm.getMember()).collect(Collectors.toList());// 프로젝트에 있는 멤버 리스트
+        List<ProjectMember> pmList = projectMemberRepository.findProjectMemberWithMemberByProjectIdAndProjectMemberRole(scheduleUpdateRequest.getProjectId(), projectMemberRoleTypes);// 프로젝트에 있는 멤버 리스트
         schedule.update(
                 scheduleUpdateRequest.getState(),
                 scheduleUpdateRequest.getTitle(),
@@ -130,12 +124,10 @@ public class ScheduleService {
                 scheduleUpdateRequest.getEndDate(),
                 LocalDateTime.now()
         );
-        List<ProjectMember> updateMemberList = projectMemberRepository.findByProjectIdAndMemberIds(scheduleUpdateRequest.getProjectId(), scheduleUpdateRequest.getMemberIds());
-//        List<Member> updateMemberList = memberRepository.findByIds(scheduleUpdateRequest.getMemberIds()); // 새로 업데이트 되는 멤버 리스트
+        List<ProjectMember> updateMemberList = projectMemberRepository.findByProjectIdAndMemberIds(scheduleUpdateRequest.getProjectId(), scheduleUpdateRequest.getMemberIds());// 새로 업데이트 되는 멤버 리스트
         if (!pmList.containsAll(updateMemberList)) {// 프로젝트에 속한 사람인지 확인
             throw new EntityNotFoundException(ProjectErrorCode.PROJECT_MEMBER_NOT_FOUND);
         }
-
 
         schedule.getScheduleMembers().clear(); // 어떤 사람이 들어오고, 나가고, 그대로 있는지를 파악을 해야함,
         for (ProjectMember projectMember : updateMemberList) {
@@ -220,80 +212,12 @@ public class ScheduleService {
         }
     }
 
-    @Transactional(readOnly = true) // 프로젝트별 일정 내용
-    public ScheduleMyListResponse findMySchedule(ScheduleMonthRequest scheduleMonthRequest, Long memberId) {
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
-        LocalDate localDate = LocalDateTime.now().toLocalDate();
-        int lastDay = LocalDateTime.now().toLocalDate().withDayOfMonth(localDate.lengthOfMonth()).getDayOfMonth();
-        LocalDateTime startDate = LocalDateTime.of(scheduleMonthRequest.getYear(), scheduleMonthRequest.getMonth(), 1, 0, 0, 0);
-        LocalDateTime endDate = LocalDateTime.of(scheduleMonthRequest.getYear(), scheduleMonthRequest.getMonth(), lastDay, 23, 59, 59);
-        List<Schedule> scheduleList = scheduleRepository.findMonthListByMember(memberId, startDate, endDate);
-        List<ScheduleMyDto> scheduleDtos = new ArrayList<>();
-        Schedule nearSchedule = toMySchedule(member, scheduleList, scheduleDtos);// 일정 리스트를 설정 및 가장 가까운 일정 반환
-
-        ScheduleMyListResponse scheduleMyListResponse = new ScheduleMyListResponse();
-        scheduleMyListResponse.setScheduleMyDtos(scheduleDtos);
-
-        ScheduleDto scheduleDto = ScheduleDto.builder()// 가장 가까운 일정을 응답값으로 변환
-                .projectId(nearSchedule.getProject().getId())
-                .scheduleId(nearSchedule.getId())
-                .title(nearSchedule.getTitle())
-                .content(nearSchedule.getContent())
-                .startDate(nearSchedule.getStartDate())
-                .endDate(nearSchedule.getEndDate()).build();
-        if (nearSchedule instanceof Meeting) {
-            scheduleDto.setAddress(((Meeting) nearSchedule).getAddress());
-        }
-        scheduleMyListResponse.setNearSchedule(scheduleDto);
-
-        return scheduleMyListResponse;
-    }
-
-    private Schedule toMySchedule(Member member, List<Schedule> scheduleList, List<ScheduleMyDto> scheduleDtos) {
-        ScheduleMyDto scheduleMyDto = null;
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime nearDate = now.plusMonths(1l);
-        Schedule nearSchedule = scheduleList.get(0);
-        for (Schedule schedule : scheduleList) {
-            if (now.isAfter(schedule.getStartDate()) && nearDate.isBefore(schedule.getStartDate())) {
-                nearDate = schedule.getStartDate();
-                nearSchedule = schedule;
-            }
-            scheduleMyDto = ScheduleMyDto.builder()
-                    .projectId(schedule.getProject().getId())
-                    .scheduleId(schedule.getId())
-                    .title(schedule.getTitle())
-                    .startDate(schedule.getStartDate())
-                    .endDate(schedule.getEndDate())
-                    .build();
-
-            List<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();
-            for (ScheduleMember scheduleMember : scheduleMembers) {
-                if (scheduleMember.getProjectMember().getMember() == member && scheduleMember.getRecentView().isBefore(schedule.getModifiedDate())) {
-                    scheduleMyDto.updateCheck(false);
-                } else if (scheduleMember.getProjectMember().getMember() == member) {
-                    scheduleMyDto.updateCheck(true);
-                }
-            }
-            if (schedule instanceof Meeting) {
-                Meeting meeting = (Meeting) schedule;
-                scheduleMyDto.setAddress(meeting.getAddress());
-                scheduleMyDto.setScheduleCategory(ScheduleCategory.MEETING);
-            } else {
-                scheduleMyDto.setScheduleCategory(ScheduleCategory.MILESTONE);
-            }
-            scheduleDtos.add(scheduleMyDto);
-        }
-        return nearSchedule;
-    }
 
     private ScheduleCalenderMonthResponse toScheduleMonthResponse(List<Schedule> scheduleList) {
         ScheduleCalenderMonthResponse scheduleMonthResponse = new ScheduleCalenderMonthResponse();
-
         for (Schedule schedule : scheduleList) {
             if (schedule instanceof Meeting) {
                 Meeting meeting = (Meeting) schedule;
-                //if (meeting.getAddress() != null){
                 MeetingDto meetingDto = MeetingDto.builder()
                         .scheduleId(schedule.getId())
                         .title(schedule.getTitle())
@@ -306,7 +230,6 @@ public class ScheduleService {
                     meetingDto.addMember(sm.getProjectMember().getMember());
                 });
                 scheduleMonthResponse.addMeeting(meetingDto);
-                //}
             } else {
                 Milestone milestone = (Milestone) schedule;
                 MilestoneDto milestoneDto = MilestoneDto.builder()
@@ -327,27 +250,17 @@ public class ScheduleService {
     }
 
     private List<ScheduleListResponse> toListResponse(LocalDate startDate, List<Schedule> scheduleList, DateCategory dateCategory) {
-        System.out.println("dateCategory = " + dateCategory);
         List<ScheduleListResponse> scheduleListResponseList = new ArrayList<>();
         ScheduleListResponse scheduleListResponse = null;
         if (!scheduleList.isEmpty()) {
-            int month = startDate.getMonthValue();//scheduleList.get(0).getStartDate().getMonthValue(); //초기값
             Long startMonth = scheduleList.get(0).getStartDate().getMonth().getLong(ChronoField.MONTH_OF_YEAR);
 
             Long order = 1l;
             for (Schedule s : scheduleList) {
                 if (dateCategory.equals(DateCategory.MONTH)) {
                     order = s.getStartDate().getMonth().getLong(ChronoField.MONTH_OF_YEAR) - startMonth + 1;
-//                    if (month < s.getStartDate().getMonth().getValue()) {
-//                        month = s.getStartDate().getMonth().getValue().;
-////                        order = ChronoUnit.MONTHS.between(startDate, s.getStartDate()) + 1;
-//                    }
                 } else {
                     order = ChronoUnit.WEEKS.between(startDate, s.getStartDate()) / 2 + 1;
-//                    if (ChronoUnit.WEEKS.between(compareDate, s.getStartDate()) > 1) {//* 2주 차이
-//                        compareDate = s.getStartDate();
-//                        order++;
-//                    }
                 }
                 scheduleListResponse = ScheduleListResponse.builder()
                         .scheduleId(s.getId())
@@ -370,11 +283,7 @@ public class ScheduleService {
                 for (ScheduleMember scheduleMember : schedule.getScheduleMembers()) {
                     scheduleMember.updateRecentView(now);
                 }
-
-//                scheduleMemberRepository.updateRecentView(now, schedule.getId());// 벌크로 수정한게 오히려 손해 -> flush, clear 하면 schedule 준영속상태로 다시 find로 조회해서 영속성 찾아야함으로 쿼리가 오히려 더 나갈 수 있음
             }
-
-
             ScheduleMonthResponse scheduleResponse = ScheduleMonthResponse.builder()
                     .scheduleId(schedule.getId())
                     .title(schedule.getTitle())
@@ -409,8 +318,6 @@ public class ScheduleService {
                     scheduleMember.updateRecentView(now);
                 }
             }
-
-
             ScheduleSearchResponse scheduleResponse = ScheduleSearchResponse.builder()
                     .scheduleId(schedule.getId())
                     .title(schedule.getTitle())
@@ -419,18 +326,14 @@ public class ScheduleService {
                     .state(schedule.getState())
                     .modifyDate(schedule.getModifiedDate().toLocalDate())
                     .build();
-
-
             checkModify(member, schedule, scheduleResponse);
             if (schedule instanceof Meeting) {
-                //scheduleResponse.setAddress(scheduleResponse.getAddress());
                 scheduleResponse.setScheduleCategory(ScheduleCategory.MEETING);
             } else {
                 scheduleResponse.setScheduleCategory(ScheduleCategory.MILESTONE);
             }
 
             boolean eval = schedule.getMidtermEvaluations().stream().anyMatch(me -> me.getVoter().getId() == member.getId());//? 해당 일정에 투표한 적이 있는지 확인
-//            boolean eval = midtermEvaluationRepository.existsByScheduleIdAndVoterId(schedule.getId(), member.getId());
             if (previous) {
                 if (eval && schedule.getState().equals(State.COMPLETE)) {
                     scheduleSearchResponse.add(scheduleResponse);
@@ -446,14 +349,8 @@ public class ScheduleService {
                 }
                 if (scheduleResponse.getEvaluationRequired() || scheduleResponse.getState().equals(State.TBD) || scheduleResponse.getState().equals(State.ONGOING))
                     scheduleSearchResponse.add(scheduleResponse);
-
-
             }
-
-
         }
-
-
         return scheduleSearchResponse;
     }
 
@@ -475,9 +372,6 @@ public class ScheduleService {
         Schedule schedule = scheduleRepository.findJoinSMById(scheduleId).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
         List<ProjectMember> projectMembers = project.getProjectMembers();
         List<ScheduleMember> scheduleMembers = schedule.getScheduleMembers();
-
-        ProjectMember pmMe = projectMembers.stream().filter(pm -> pm.getMember().getId() == memberId).findFirst().get();
-
         ScheduleDetailResponse scheduleDetailResponse = ScheduleDetailResponse.builder()
                 .projectId(project.getId())
                 .title(schedule.getTitle())

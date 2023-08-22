@@ -1,9 +1,7 @@
 package fullcare.backend.schedule.dto.response;
 
-import fullcare.backend.member.domain.Member;
 import fullcare.backend.schedule.ScheduleCategory;
 import fullcare.backend.schedule.dto.DetailMemberDto;
-import fullcare.backend.schedule.dto.MemberDto;
 import lombok.Builder;
 import lombok.Data;
 

@@ -44,26 +44,8 @@ public class ScheduleController {
     private final MeetingService meetingService;
     private final MilestoneService milestoneService;
     private final ScheduleService scheduleService;
-    private final ProjectService projectService;
-    private final ProjectMemberService projectMemberService;
 
-    @Operation(method = "post", summary = "일정 생성")
-    @ApiResponses(value = {
-            @ApiResponse(description = "일정 생성 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
-    })
-    @PostMapping// 나중에 프로젝트 시작, 종료일정 밖에 있는 일정 생성을 못하게 해야함. 테스트 데이터 생성을 활용할 때는 사용 x
-    public ResponseEntity create(@Valid @RequestBody ScheduleCreateRequest scheduleCreateRequest, @CurrentLoginMember Member member) {
-
-        if (scheduleCreateRequest.getCategory().equals(ScheduleCategory.MILESTONE)) {
-            milestoneService.createMilestone(scheduleCreateRequest, member.getId());
-        } else if (scheduleCreateRequest.getCategory().equals(ScheduleCategory.MEETING)) {
-            meetingService.createMeeting(scheduleCreateRequest, member.getId());
-        } else {
-            throw new NotFoundCategoryException(ScheduleErrorCode.CATEGORY_NOT_FOUND);
-        }
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
+    // * READ API
     @Operation(method = "get", summary = "일정 상세 조회")
     @ApiResponses(value = {
             @ApiResponse(description = "일정 상세 조회 성공", responseCode = "200", useReturnTypeSchema = true)
@@ -74,32 +56,6 @@ public class ScheduleController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @Operation(method = "put", summary = "일정 변경")
-    @ApiResponses(value = {
-            @ApiResponse(description = "일정 변경 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
-    })
-    @PutMapping("/{scheduleId}")
-    public ResponseEntity update(@PathVariable Long scheduleId, @Valid @RequestBody ScheduleUpdateRequest scheduleUpdateRequest, @CurrentLoginMember Member member) {
-        scheduleService.updateSchedule(scheduleUpdateRequest, scheduleId, member.getId());
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
-    @Operation(method = "delete", summary = "일정 삭제")
-    @ApiResponses(value = {
-            @ApiResponse(description = "일정 삭제 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
-    })
-    @DeleteMapping("/{scheduleId}")
-    public ResponseEntity delete(@PathVariable Long scheduleId, @Valid @RequestBody ScheduleDeleteRequest scheduleDeleteRequest, @CurrentLoginMember Member member) {
-        //? 작성자 또는 팀 리더만 삭제 가능
-        if (!scheduleService.validateDelete(scheduleId, scheduleDeleteRequest.getProjectId(), member.getId(), false)) {
-            throw new UnauthorizedAccessException(ScheduleErrorCode.UNAUTHORIZED_DELETE);
-        }
-        scheduleService.deleteSchedule(scheduleId);
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
-
-    // ?
     @Operation(method = "get", summary = "전체 일정 리스트 조회")
     @ApiResponses(value = {
             @ApiResponse(description = "전체 일정 리스트 조회 성공", responseCode = "200", useReturnTypeSchema = true)
@@ -144,6 +100,35 @@ public class ScheduleController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    // * CREATE API
+    @Operation(method = "post", summary = "일정 생성")
+    @ApiResponses(value = {
+            @ApiResponse(description = "일정 생성 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
+    })
+    @PostMapping// 나중에 프로젝트 시작, 종료일정 밖에 있는 일정 생성을 못하게 해야함. 테스트 데이터 생성을 활용할 때는 사용 x
+    public ResponseEntity create(@Valid @RequestBody ScheduleCreateRequest scheduleCreateRequest, @CurrentLoginMember Member member) {
+
+        if (scheduleCreateRequest.getCategory().equals(ScheduleCategory.MILESTONE)) {
+            milestoneService.createMilestone(scheduleCreateRequest, member.getId());
+        } else if (scheduleCreateRequest.getCategory().equals(ScheduleCategory.MEETING)) {
+            meetingService.createMeeting(scheduleCreateRequest, member.getId());
+        } else {
+            throw new NotFoundCategoryException(ScheduleErrorCode.CATEGORY_NOT_FOUND);
+        }
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    // * UPDATE API
+    @Operation(method = "put", summary = "일정 변경")
+    @ApiResponses(value = {
+            @ApiResponse(description = "일정 변경 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
+    })
+    @PutMapping("/{scheduleId}")
+    public ResponseEntity update(@PathVariable Long scheduleId, @Valid @RequestBody ScheduleUpdateRequest scheduleUpdateRequest, @CurrentLoginMember Member member) {
+        scheduleService.updateSchedule(scheduleUpdateRequest, scheduleId, member.getId());
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     @Operation(method = "post", summary = "일정 상태 변경")
     @ApiResponses(value = {
             @ApiResponse(description = "일정 상태 변경 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
@@ -154,19 +139,22 @@ public class ScheduleController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-//    @Operation(method = "get", summary = "개인 일정 조회")
-//    @ApiResponses(value = {
-//            @ApiResponse(description = "개인 일정 조회 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,  schema = @Schema(implementation = ScheduleMyListResponse.class))})
-//
-//    })
-//    @GetMapping("/mine")
-//    public ResponseEntity findMine(@Valid @RequestBody ScheduleMonthRequest scheduleMonthRequest,@CurrentLoginMember Member member){
-//        if (!(projectMemberService.validateProjectMember(scheduleMonthRequest.getProjectId(), member.getId()))) {
-//            throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
-//        }
-//        ScheduleMyListResponse response = scheduleService.findMySchedule(scheduleMonthRequest, member.getId());
-//        return new ResponseEntity<>(response, HttpStatus.OK);
-//    }
+    // * DELETE API
+    @Operation(method = "delete", summary = "일정 삭제")
+    @ApiResponses(value = {
+            @ApiResponse(description = "일정 삭제 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
+    })
+    @DeleteMapping("/{scheduleId}")
+    public ResponseEntity delete(@PathVariable Long scheduleId, @Valid @RequestBody ScheduleDeleteRequest scheduleDeleteRequest, @CurrentLoginMember Member member) {
+        if (!scheduleService.validateDelete(scheduleId, scheduleDeleteRequest.getProjectId(), member.getId(), false)) {
+            throw new UnauthorizedAccessException(ScheduleErrorCode.UNAUTHORIZED_DELETE);
+        }
+        scheduleService.deleteSchedule(scheduleId);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+
+
 
 
 }

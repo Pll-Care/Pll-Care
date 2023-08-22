@@ -3,7 +3,7 @@ package fullcare.backend.schedule.dto.response;
 import fullcare.backend.global.State;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.schedule.ScheduleCategory;
-import fullcare.backend.schedule.dto.MemberDto;
+import fullcare.backend.schedule.dto.ScheduleMemberDto;
 import lombok.Builder;
 import lombok.Data;
 
@@ -21,7 +21,7 @@ public class ScheduleSearchResponse {
     private LocalDateTime endDate;
     //private Address address;
     private ScheduleCategory scheduleCategory;
-    private List<MemberDto> members = new ArrayList<>();
+    private List<ScheduleMemberDto> members = new ArrayList<>();
     private State state;
     private LocalDate modifyDate;
     private boolean check;
@@ -39,7 +39,7 @@ public class ScheduleSearchResponse {
     }
 
     public void addMember(Member member){
-        members.add(MemberDto.builder()
+        members.add(ScheduleMemberDto.builder()
                 .id(member.getId())
                 .imageUrl(member.getImageUrl())
                 .name(member.getName()).build());

@@ -2,7 +2,6 @@ package fullcare.backend.schedule.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import fullcare.backend.schedule.ScheduleCategory;
-import fullcare.backend.schedule.dto.MemberDto;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
