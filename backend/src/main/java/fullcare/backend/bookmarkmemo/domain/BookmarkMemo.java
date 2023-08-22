@@ -23,11 +23,10 @@ public class BookmarkMemo extends BaseEntity {
     @JoinColumn(name = "projectmember_id")
     private ProjectMember projectMember;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memo_id")
     private Memo memo;
-    
+
     @Builder(builderMethodName = "createNewBookmarkMemo")
     public BookmarkMemo(ProjectMember projectMember, Memo memo) {
         this.projectMember = projectMember;

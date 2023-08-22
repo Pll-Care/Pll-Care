@@ -178,7 +178,7 @@ public class PostService {
     }
 
     public PostDetailResponse findPostDetailResponse(Long memberId, Long postId) {
-        PostDetailResponse findPostDetailResponse = postRepository.findPostDto(memberId, postId).orElseThrow(() -> new EntityNotFoundException(PostErrorCode.POST_NOT_FOUND));
+        PostDetailResponse findPostDetailResponse = postRepository.findPostDetailResponse(memberId, postId).orElseThrow(() -> new EntityNotFoundException(PostErrorCode.POST_NOT_FOUND));
 
         List<TechStackDto> techStackList = TechStackUtil.stringToList(findPostDetailResponse.getTechStack()).stream()
                 .map(t -> new TechStackDto(t.getValue(), s3Service.find(t.getValue(), t.getContentType()))).collect(Collectors.toList());
@@ -212,7 +212,7 @@ public class PostService {
     }
 
     public CustomPageImpl<PostListResponse> findPostList(Long memberId, Pageable pageable) {
-        Page<PostListResponse> result = postRepository.findList(memberId, pageable);
+        Page<PostListResponse> result = postRepository.findListWithPaging(memberId, pageable);
         List<PostListResponse> content = result.getContent();
 
         content.forEach(postListResponse ->
@@ -305,7 +305,7 @@ public class PostService {
     }
 
     public CustomPageImpl<MyPostResponse> findMyPost(Long memberId, State state, Pageable pageable) {
-        Page<Post> posts = postRepository.findPageByMemberId(memberId, state, pageable);
+        Page<Post> posts = postRepository.findListWithPagingByMemberId(memberId, state, pageable);
         List<MyPostResponse> content = posts.stream().map(p -> MyPostResponse.builder()
                         .postId(p.getId())
                         .title(p.getTitle())

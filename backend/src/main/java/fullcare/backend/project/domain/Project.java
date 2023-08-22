@@ -8,6 +8,7 @@ import fullcare.backend.global.entity.BaseEntity;
 import fullcare.backend.global.errorcode.ProjectErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.InvalidDateRangeException;
 import fullcare.backend.member.domain.Member;
+import fullcare.backend.memo.domain.Memo;
 import fullcare.backend.post.domain.Post;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberType;
@@ -44,6 +45,9 @@ public class Project extends BaseEntity {
     private String description;
 
     private String imageUrl;
+
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Memo> memos = new ArrayList<>();
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MidtermEvaluation> midtermEvaluations = new ArrayList<>();

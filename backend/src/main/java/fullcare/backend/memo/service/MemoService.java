@@ -46,6 +46,7 @@ public class MemoService {
             ProjectMember findProjectMember = projectService.isProjectAvailable(request.getProjectId(), memberId, false);
 
             Memo newMemo = Memo.createNewMemo()
+                    .project(findProjectMember.getProject())
                     .author(findProjectMember)
                     .title(request.getTitle())
                     .content(request.getContent())
@@ -76,11 +77,10 @@ public class MemoService {
 
     @Transactional
     public void deleteMemo(Long memberId, Long memoId, MemoDeleteRequest request) {
-
         try {
             ProjectMember findProjectMember = projectService.isProjectAvailable(request.getProjectId(), memberId, false);
             Memo findMemo = findMemo(memoId);
-            
+
             if (findMemo.getAuthor().getId() != findProjectMember.getId() && !findProjectMember.isLeader()) {
                 throw new UnauthorizedAccessException(MemoErrorCode.UNAUTHORIZED_DELETE);
             }
@@ -102,7 +102,7 @@ public class MemoService {
 
         ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, memberId, true);
 
-        MemoDetailResponse findMemoDetailResponse = memoRepository.findMemoDetailDto(findProjectMember.getId(), memoId).orElseThrow(() -> new EntityNotFoundException(MemoErrorCode.MEMO_NOT_FOUND));
+        MemoDetailResponse findMemoDetailResponse = memoRepository.findMemoDetailResponse(findProjectMember.getId(), memoId).orElseThrow(() -> new EntityNotFoundException(MemoErrorCode.MEMO_NOT_FOUND));
 
         if (findMemoDetailResponse.getAuthorId() == findProjectMember.getId() || findProjectMember.isLeader()) {
             findMemoDetailResponse.setDeletable(true);
@@ -124,7 +124,7 @@ public class MemoService {
     public CustomPageImpl<MemoListResponse> findMemoList(Long projectId, Long memberId, Pageable pageable) {
         ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, memberId, true);
 
-        Page<Memo> result = memoRepository.findMemoListByProjectId(findProjectMember.getProject().getId(), pageable);
+        Page<Memo> result = memoRepository.findListByProjectId(findProjectMember.getProject().getId(), pageable);
         List<MemoListResponse> content = result.stream().map(m -> MemoListResponse.builder()
                         .memoId(m.getId())
                         .title(m.getTitle())

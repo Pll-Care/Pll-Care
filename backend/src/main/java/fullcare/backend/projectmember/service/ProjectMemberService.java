@@ -47,7 +47,7 @@ public class ProjectMemberService {
         projectMemberRoleTypes.add(ProjectMemberRoleType.리더);
         projectMemberRoleTypes.add(ProjectMemberRoleType.팀원);
 
-        List<ProjectMember> projectMemberList = projectMemberRepository.findProjectMemberWithMemberByProjectIdAndProjectMemberRole(findProjectMember.getProject().getId(), projectMemberRoleTypes);
+        List<ProjectMember> projectMemberList = projectMemberRepository.findPMWithMemberByProjectIdAndProjectMemberRole(findProjectMember.getProject().getId(), projectMemberRoleTypes);
         List<ProjectMemberListResponse> response = projectMemberList.stream().map(pm -> ProjectMemberListResponse.builder()
                 .memberId(pm.getMember().getId())
                 .name(pm.getMember().getNickname())

@@ -15,10 +15,10 @@ import java.util.Optional;
 public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query(value = "select p from project p join p.projectMembers pm where pm.member.id = :memberId and p.state in :state",
             countQuery = "select count(p) from project p join p.projectMembers pm where pm.member.id = :memberId and p.state in :state")
-    Page<Project> findProjectList(Pageable pageable, @Param("memberId") Long memberId, @Param("state") List<State> state);
+    Page<Project> findListWithPaging(Pageable pageable, @Param("memberId") Long memberId, @Param("state") List<State> state);
 
     @Query(value = "select new fullcare.backend.project.dto.response.ProjectSimpleListResponse(p.id, p.imageUrl, p.title) from project p join p.projectMembers pm where pm.member.id = :memberId and p.state = 'ONGOING'")
-    List<ProjectSimpleListResponse> findSimpleProjectList(@Param("memberId") Long memberId);
+    List<ProjectSimpleListResponse> findSimpleList(@Param("memberId") Long memberId);
 
     @Query("select p from project p join fetch p.projectMembers pm join fetch pm.member where p.id = :projectId")
     Optional<Project> findProjectWithPMAndMemberById(@Param("projectId") Long projectId);

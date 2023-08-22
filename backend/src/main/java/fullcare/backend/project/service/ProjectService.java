@@ -146,7 +146,7 @@ public class ProjectService {
     }
 
     public CustomPageImpl<ProjectListResponse> findProjectList(Pageable pageable, Long memberId, List<State> states) {
-        Page<Project> pageProject = projectRepository.findProjectList(pageable, memberId, states);
+        Page<Project> pageProject = projectRepository.findListWithPaging(pageable, memberId, states);
 
         List<ProjectListResponse> content = pageProject.stream().map(p -> ProjectListResponse.builder()
                 .projectId(p.getId())
@@ -163,7 +163,7 @@ public class ProjectService {
     }
 
     public List<ProjectSimpleListResponse> findSimpleProjectList(Long memberId) {
-        return projectRepository.findSimpleProjectList(memberId);
+        return projectRepository.findSimpleList(memberId);
     }
 
     // ! todo readonly 옵션으로 데이터 읽기 용도로만 호출할 경우 프로젝트가 완료되어도 검증 통과

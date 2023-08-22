@@ -118,7 +118,7 @@ public class ScheduleService {
         projectMemberRoleTypes.add(ProjectMemberRoleType.리더);
         projectMemberRoleTypes.add(ProjectMemberRoleType.팀원);
 
-        List<ProjectMember> pmList = projectMemberRepository.findProjectMemberWithMemberByProjectIdAndProjectMemberRole(scheduleUpdateRequest.getProjectId(), projectMemberRoleTypes);
+        List<ProjectMember> pmList = projectMemberRepository.findPMWithMemberByProjectIdAndProjectMemberRole(scheduleUpdateRequest.getProjectId(), projectMemberRoleTypes);
 
 //        List<Member> members = pmList.stream().map(pm -> pm.getMember()).collect(Collectors.toList());// 프로젝트에 있는 멤버 리스트
         schedule.update(
