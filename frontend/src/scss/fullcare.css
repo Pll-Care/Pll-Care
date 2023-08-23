@@ -4188,34 +4188,36 @@ a {
 
 .member-option {
   background-color: #01e89e;
-  padding: 2rem;
+  padding: 25px 45px;
   top: 0;
+  height: 254px;
+  border-radius: 35px 35px 0px 0px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  color: white;
 }
 @media (max-width: 767px) {
   .member-option {
-    padding: 20px;
+    padding: 8px;
+    height: 130px;
+    border-radius: 0px;
   }
 }
-.member-option-title {
-  display: flex;
-  align-items: center;
-  color: white;
-  margin-top: 80px;
-}
-.member-option-title h2 {
+.member-option h2 {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 38px;
   font-weight: 700;
 }
-.member-option-title h3 {
+.member-option h3 {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 32px;
   font-weight: 700;
   margin-left: 10px;
 }
 @media (max-width: 767px) {
-  .member-option-title h2,
-  .member-option-title h3 {
+  .member-option h2,
+  .member-option h3 {
     font-family: "IBM Plex Sans KR", sans-serif;
     font-size: 14px;
     font-weight: 700;
@@ -4722,7 +4724,7 @@ a {
 @media (max-width: 767px) {
   .recruitment-detail {
     margin: 0px 7px;
-    padding: 1rem;
+    padding: 10px;
   }
 }
 .recruitment-detail input,
@@ -4784,7 +4786,7 @@ a {
 }
 @media (max-width: 767px) {
   .recruitment-detail-content {
-    grid-template-columns: 30% 70%;
+    grid-template-columns: 27% 73%;
   }
 }
 @media (min-width: 767px) and (max-width: 1024px) {
@@ -4802,6 +4804,16 @@ a {
 .recruitment-detail-content-name h5 {
   margin-left: 10px;
 }
+@media (max-width: 767px) {
+  .recruitment-detail-content-name h5 {
+    margin-left: 5px;
+  }
+}
+@media (max-width: 767px) {
+  .recruitment-detail-content-name .mui-icon {
+    transform: scale(0.7);
+  }
+}
 .recruitment-detail-content-duration {
   display: flex;
 }
@@ -4810,16 +4822,16 @@ a {
   border-bottom: 1px solid rgb(204, 204, 204);
   padding-bottom: 50px;
   display: grid;
-  grid-template-columns: 15% 85%;
-  grid-gap: 20px 0px;
+  grid-template-columns: 20% 80%;
+  grid-gap: 10px 0px;
   align-content: center;
 }
-@media (max-width: 767px) {
+@media (min-width: 767px) and (max-width: 1024px) {
   .recruitment-detail-container {
     grid-template-columns: 20% 80%;
   }
 }
-@media (min-width: 767px) and (max-width: 1024px) {
+@media (max-width: 767px) {
   .recruitment-detail-container {
     grid-template-columns: 20% 80%;
   }
@@ -4840,6 +4852,12 @@ a {
   grid-gap: 50px 0;
   align-items: center;
   margin-right: 30px;
+  margin-bottom: 0px;
+}
+@media (max-width: 767px) {
+  .recruitment-detail-container .recruitment-grid-row {
+    margin-right: 20px;
+  }
 }
 .recruitment-detail-container .recruitment-grid-row-item {
   display: flex;
