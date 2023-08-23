@@ -341,7 +341,7 @@ public class PostService {
                         .recruitEndDate(p.getRecruitEndDate())
                         .likeCount(p.getLikeCount())
                         .title(p.getTitle())
-                        .description(p.getDescription())
+                        .description(p.getProject().getDescription())
                         .build())
                 .collect(Collectors.toList());
 
@@ -358,7 +358,7 @@ public class PostService {
                         .projectImageUrl(p.getProject().getImageUrl())
                         .recruitEndDate(p.getRecruitEndDate())
                         .title(p.getTitle())
-                        .description(p.getDescription())
+                        .description(p.getProject().getDescription())
                         .build())
                 .collect(Collectors.toList());
 
@@ -375,7 +375,7 @@ public class PostService {
                         .projectImageUrl(p.getProject().getImageUrl())
                         .recruitEndDate(p.getRecruitEndDate())
                         .title(p.getTitle())
-                        .description(p.getDescription())
+                        .description(p.getProject().getDescription())
                         .build())
                 .collect(Collectors.toList());
 
