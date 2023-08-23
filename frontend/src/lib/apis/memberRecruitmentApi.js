@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router";
 import { customAxios } from "./customAxios";
 
 // 키값 : allRecruitmentPosts
@@ -82,5 +81,11 @@ export const applyRecruitmentPost = async (body) => {
   const res = await customAxios.post(`/auth/post/${postId}/apply`, {
     position: position,
   });
+  return res;
+};
+
+// 모집글 지원 취소
+export const applyCancelRecruitmentPost = async (postId) => {
+  const res = await customAxios.post(`/auth/post/${postId}/applycancel`);
   return res;
 };
