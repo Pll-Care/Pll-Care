@@ -21,7 +21,10 @@ import fullcare.backend.schedule.ScheduleCondition;
 import fullcare.backend.schedule.domain.Meeting;
 import fullcare.backend.schedule.domain.Milestone;
 import fullcare.backend.schedule.domain.Schedule;
-import fullcare.backend.schedule.dto.*;
+import fullcare.backend.schedule.dto.DetailMemberDto;
+import fullcare.backend.schedule.dto.MeetingDto;
+import fullcare.backend.schedule.dto.MilestoneDto;
+import fullcare.backend.schedule.dto.ScheduleDto;
 import fullcare.backend.schedule.dto.request.ScheduleStateUpdateRequest;
 import fullcare.backend.schedule.dto.request.ScheduleUpdateRequest;
 import fullcare.backend.schedule.dto.response.*;
@@ -61,6 +64,30 @@ public class ScheduleService {
     private final ScheduleRepositoryCustom scheduleRepositoryCustom;
     private final ProjectService projectService;
 
+    // * 시작 시간이 지나면 일정 진행중으로 변경, 사용자가 일정을 확인한 시간 갱신
+    private static void setOngoing(LocalDateTime now, Schedule schedule) {
+        if (now.isAfter(schedule.getStartDate()) && schedule.getState().equals(State.TBD)) {
+            schedule.updateState(now, State.ONGOING);
+            for (ScheduleMember scheduleMember : schedule.getScheduleMembers()) {
+                scheduleMember.updateRecentView(now);
+            }
+        }
+    }
+
+    // * 페이지네이션 설정
+    private static List<ScheduleSearchResponse> createPagination(Pageable pageable, List<ScheduleSearchResponse> newResponse) {
+        int pageNumber = pageable.getPageNumber();
+        Long last = null;
+        Long offset = pageable.getOffset();
+        if ((pageNumber + 1) * pageable.getPageSize() > newResponse.size()) {
+            last = Long.valueOf(newResponse.size());
+        } else {
+            last = pageable.getOffset() + pageable.getPageSize();
+        }
+        newResponse.sort(Comparator.comparing(ScheduleSearchResponse::getStartDate));// * 날짜 기준 내림차순 정렬
+        List<ScheduleSearchResponse> subList = newResponse.subList(offset.intValue(), last.intValue());
+        return subList;
+    }
 
     // * VALIDATE
     // * 작성자 검증
@@ -194,7 +221,7 @@ public class ScheduleService {
         List<ProjectMemberRoleType> projectMemberRoleTypes = new ArrayList<>();
         projectMemberRoleTypes.add(ProjectMemberRoleType.리더);
         projectMemberRoleTypes.add(ProjectMemberRoleType.팀원);
-        List<ProjectMember> pmList = projectMemberRepository.findProjectMemberWithMemberByProjectIdAndProjectMemberRole(scheduleUpdateRequest.getProjectId(), projectMemberRoleTypes);// * 프로젝트에 있는 멤버 리스트
+        List<ProjectMember> pmList = projectMemberRepository.findPMWithMemberByProjectIdAndProjectMemberRole(scheduleUpdateRequest.getProjectId(), projectMemberRoleTypes);// * 프로젝트에 있는 멤버 리스트
         schedule.update(
                 scheduleUpdateRequest.getState(),
                 scheduleUpdateRequest.getTitle(),
@@ -237,7 +264,6 @@ public class ScheduleService {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new EntityNotFoundException(ScheduleErrorCode.SCHEDULE_NOT_FOUND));
         scheduleRepository.delete(schedule);
     }
-
 
     // * INTERNAL METHOD
     private ScheduleCalenderMonthResponse toCalenderResponse(List<Schedule> scheduleList) {
@@ -327,7 +353,6 @@ public class ScheduleService {
         }
     }
 
-
     private List<ScheduleSearchResponse> toSearchResponse(List<Schedule> scheduleList, Member member, boolean previous) {
         List<ScheduleSearchResponse> scheduleSearchResponse = new ArrayList<>();
         LocalDateTime now = LocalDateTime.now();
@@ -379,31 +404,5 @@ public class ScheduleService {
                 scheduleResponse.updateCheck(true);
             }
         });
-    }
-
-
-    // * 시작 시간이 지나면 일정 진행중으로 변경, 사용자가 일정을 확인한 시간 갱신
-    private static void setOngoing(LocalDateTime now, Schedule schedule) {
-        if (now.isAfter(schedule.getStartDate()) && schedule.getState().equals(State.TBD)) {
-            schedule.updateState(now, State.ONGOING);
-            for (ScheduleMember scheduleMember : schedule.getScheduleMembers()) {
-                scheduleMember.updateRecentView(now);
-            }
-        }
-    }
-
-    // * 페이지네이션 설정
-    private static List<ScheduleSearchResponse> createPagination(Pageable pageable, List<ScheduleSearchResponse> newResponse) {
-        int pageNumber = pageable.getPageNumber();
-        Long last = null;
-        Long offset = pageable.getOffset();
-        if ((pageNumber + 1) * pageable.getPageSize() > newResponse.size()) {
-            last = Long.valueOf(newResponse.size());
-        } else {
-            last = pageable.getOffset() + pageable.getPageSize();
-        }
-        newResponse.sort(Comparator.comparing(ScheduleSearchResponse::getStartDate));// * 날짜 기준 내림차순 정렬
-        List<ScheduleSearchResponse> subList = newResponse.subList(offset.intValue(), last.intValue());
-        return subList;
     }
 }
