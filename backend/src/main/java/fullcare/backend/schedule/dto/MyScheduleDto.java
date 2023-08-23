@@ -6,19 +6,17 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 @Data
-public class ScheduleMyDto {
+public class MyScheduleDto {
     private Long projectId;
     private Long scheduleId;
     private String title;
-    //    private String content;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private String address;
     private ScheduleCategory scheduleCategory;
-    //    private List<MemberDto> members = new ArrayList<>();
     private Boolean check;
     @Builder
-    public ScheduleMyDto(Long projectId, Long scheduleId, String title, LocalDateTime startDate, LocalDateTime endDate, String address, ScheduleCategory scheduleCategory, Boolean check) {
+    public MyScheduleDto(Long projectId, Long scheduleId, String title, LocalDateTime startDate, LocalDateTime endDate, String address, ScheduleCategory scheduleCategory, Boolean check) {
         this.projectId = projectId;
         this.scheduleId = scheduleId;
         this.title = title;
@@ -26,9 +24,6 @@ public class ScheduleMyDto {
         this.endDate = endDate;
         this.address = address;
         this.scheduleCategory = scheduleCategory;
-        this.check = check;
-    }
-    public void updateCheck(boolean check){
         this.check = check;
     }
 }

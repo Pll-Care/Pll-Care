@@ -31,19 +31,16 @@ public class FinalTermEvaluation {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "evaluator_id", nullable = false)
-//    private Member evaluator;
     private ProjectMember evaluator;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "evaluated_id", nullable = false)
-//    private Member evaluated;
     private ProjectMember evaluated;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "project_id")//? 삭제시 고려하여 NULL 허용
+    @JoinColumn(name = "project_id")
     private Project project;
-//    @Enumerated(EnumType.STRING)
-//    private State state;
+
 
     @Builder(builderMethodName = "createNewFinalEval")
     public FinalTermEvaluation(String content, Score score, ProjectMember evaluator, ProjectMember evaluated, Project project) {
@@ -52,14 +49,9 @@ public class FinalTermEvaluation {
         this.evaluator = evaluator;
         this.evaluated = evaluated;
         this.project = project;
-//        this.state = state;
     }
     public void update(FinalEvalUpdateRequest finalEvalUpdateRequest){
         this.content = finalEvalUpdateRequest.getContent();
         this.score = finalEvalUpdateRequest.getScore();
-//        this.state = finalEvalUpdateRequest.getState();
-    }
-    public void setProjectNull(){
-        this.project = null;
     }
 }

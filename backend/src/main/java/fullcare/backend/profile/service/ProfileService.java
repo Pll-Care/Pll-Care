@@ -32,6 +32,13 @@ public class ProfileService {
     private final MemberRepository memberRepository;
     private final S3Service s3Service;
 
+    // * VALIDATE
+    public ValidateMyProfileResponse validateMine(Long findMemberId, Long loginMemberId) {
+        memberRepository.findById(findMemberId).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
+        return new ValidateMyProfileResponse(findMemberId == loginMemberId);
+    }
+
+    // * READ
     @Transactional(readOnly = true)
     public ProfileBioResponse findBio(Long memberId, Member member) {
         Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
@@ -117,6 +124,13 @@ public class ProfileService {
                 .build();
     }
 
+    @Transactional(readOnly = true)
+    public ProfileImageResponse findProfileImage(Long memberId) {
+        Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
+        return new ProfileImageResponse(findMember.getId(), findMember.getImageUrl());
+    }
+
+    // * UPDATE
     public void updateProfile(Member member, ProfileUpdateRequest profileUpdateRequest) {
         Member findMember = memberRepository.findById(member.getId()).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
         Profile profile = findMember.getProfile();
@@ -131,14 +145,7 @@ public class ProfileService {
     }
 
 
-    @Transactional(readOnly = true)
-    public ProfileImageResponse findProfileImage(Long memberId) {
-        Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
-        return new ProfileImageResponse(findMember.getId(), findMember.getImageUrl());
-    }
 
-    public ValidateMyProfileResponse validateMine(Long findMemberId, Long loginMemberId) {
-        memberRepository.findById(findMemberId).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
-        return new ValidateMyProfileResponse(findMemberId == loginMemberId);
-    }
+
+
 }

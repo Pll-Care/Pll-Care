@@ -2,12 +2,9 @@ package fullcare.backend.evaluation.repository;
 
 import fullcare.backend.evaluation.domain.FinalTermEvaluation;
 import fullcare.backend.evaluation.dao.ScoreDao;
-import fullcare.backend.global.State;
-import fullcare.backend.member.domain.Member;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -26,5 +23,5 @@ public interface FinalEvaluationRepository extends JpaRepository<FinalTermEvalua
     List<FinalTermEvaluation> findByProjectIdAndEvaluatorId(Long projectId, Long evaluatorId);
 
     @Query("select fe from FinalTermEvaluation fe join fe.evaluated.member m where fe.project.id in :projectIds and m.id = :evaluatedId")
-    List<FinalTermEvaluation> findByProjectIdsAndEvaluatedIdAndState(List<Long> projectIds, Long evaluatedId);
+    List<FinalTermEvaluation> findByProjectIdsAndEvaluatedId(List<Long> projectIds, Long evaluatedId);
 }

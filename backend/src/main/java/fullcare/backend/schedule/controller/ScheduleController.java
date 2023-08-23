@@ -1,11 +1,10 @@
 package fullcare.backend.schedule.controller;
 
+import fullcare.backend.global.dto.ErrorResponse;
 import fullcare.backend.global.errorcode.ScheduleErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.NotFoundCategoryException;
 import fullcare.backend.global.exceptionhandling.exception.UnauthorizedAccessException;
 import fullcare.backend.member.domain.Member;
-import fullcare.backend.project.service.ProjectService;
-import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.schedule.ScheduleCategory;
 import fullcare.backend.schedule.ScheduleCondition;
 import fullcare.backend.schedule.dto.request.ScheduleCreateRequest;
@@ -44,14 +43,74 @@ public class ScheduleController {
     private final MeetingService meetingService;
     private final MilestoneService milestoneService;
     private final ScheduleService scheduleService;
-    private final ProjectService projectService;
-    private final ProjectMemberService projectMemberService;
 
+    // * READ API
+    @Operation(method = "get", summary = "일정 상세 조회")
+    @ApiResponses(value = {
+            @ApiResponse(description = "일정 상세 조회 성공", responseCode = "200", useReturnTypeSchema = true),
+            @ApiResponse(description = "일정 상세 조회 실패", responseCode = "400",  content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @GetMapping("/{scheduleId}")
+    public ResponseEntity<ScheduleDetailResponse> find(@PathVariable Long scheduleId, @Valid @RequestParam(name = "project_id") Long projectId, @CurrentLoginMember Member member) {
+        ScheduleDetailResponse response = scheduleService.findSchedule(scheduleId, projectId, member.getId());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Operation(method = "get", summary = "전체 일정 리스트 조회")
+    @ApiResponses(value = {
+            @ApiResponse(description = "전체 일정 리스트 조회 성공", responseCode = "200", useReturnTypeSchema = true),
+            @ApiResponse(description = "전체 일정 리스트 조회 실패", responseCode = "400",  content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @GetMapping("/list")
+    public ResponseEntity<OverallScheduleResponse> list(@RequestParam(name = "project_id") Long projectId, @CurrentLoginMember Member member) {
+        OverallScheduleResponse response = scheduleService.findScheduleList(projectId, member.getId());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Operation(method = "get", summary = "달력 조회")
+    @ApiResponses(value = {
+            @ApiResponse(description = "달력 조회 성공", responseCode = "200", useReturnTypeSchema = true),
+            @ApiResponse(description = "달력 조회 실패", responseCode = "400",  content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @GetMapping("/calenderlist")
+    public ResponseEntity<ScheduleCalenderMonthResponse> calenderViewList(@Valid @RequestParam("project_id") Long projectId, @CurrentLoginMember Member member) {
+        ScheduleCalenderMonthResponse response = scheduleService.findScheduleCalenderList(projectId, member.getId());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Operation(method = "get", summary = "오늘 일정 리스트 조회")
+    @ApiResponses(value = {
+            @ApiResponse(description = "오늘 일정 리스트 조회 성공", responseCode = "200", useReturnTypeSchema = true),
+            @ApiResponse(description = "오늘 일정 리스트 조회 실패", responseCode = "400",  content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @GetMapping("/daily")
+    public ResponseEntity<List<ScheduleDailyResponse>> dailyList(@Valid @RequestParam("project_id") Long projectId, @CurrentLoginMember Member member) {
+        List<ScheduleDailyResponse> response = scheduleService.findDailySchedule(projectId, member.getId());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Operation(method = "get", summary = "일정 필터 리스트 조회")
+    @ApiResponses(value = {
+            @ApiResponse(description = "일정 필터 리스트 조회 성공", responseCode = "200", useReturnTypeSchema = true),
+            @ApiResponse(description = "일정 필터 리스트 조회 실패", responseCode = "400",  content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @GetMapping("/search")
+    public ResponseEntity<CustomPageImpl<ScheduleSearchResponse>> searchList(CustomPageRequest pageRequest,
+                                                                             ScheduleCondition scheduleCondition,
+                                                                             @CurrentLoginMember Member member) {
+        PageRequest of = pageRequest.of("startDate");
+        Pageable pageable = (Pageable) of;
+        CustomPageImpl<ScheduleSearchResponse> response = scheduleService.searchScheduleList(pageable, member, scheduleCondition);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    // * CREATE API
     @Operation(method = "post", summary = "일정 생성")
     @ApiResponses(value = {
-            @ApiResponse(description = "일정 생성 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
+            @ApiResponse(description = "일정 생성 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)}),
+            @ApiResponse(description = "일정 생성 실패", responseCode = "400",  content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @PostMapping// 나중에 프로젝트 시작, 종료일정 밖에 있는 일정 생성을 못하게 해야함. 테스트 데이터 생성을 활용할 때는 사용 x
+    @PostMapping
     public ResponseEntity create(@Valid @RequestBody ScheduleCreateRequest scheduleCreateRequest, @CurrentLoginMember Member member) {
 
         if (scheduleCreateRequest.getCategory().equals(ScheduleCategory.MILESTONE)) {
@@ -64,19 +123,11 @@ public class ScheduleController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @Operation(method = "get", summary = "일정 상세 조회")
-    @ApiResponses(value = {
-            @ApiResponse(description = "일정 상세 조회 성공", responseCode = "200", useReturnTypeSchema = true)
-    })
-    @GetMapping("/{scheduleId}")
-    public ResponseEntity<ScheduleDetailResponse> find(@PathVariable Long scheduleId, @Valid @RequestParam(name = "project_id") Long projectId, @CurrentLoginMember Member member) {
-        ScheduleDetailResponse response = scheduleService.findSchedule(scheduleId, projectId, member.getId());
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
+    // * UPDATE API
     @Operation(method = "put", summary = "일정 변경")
     @ApiResponses(value = {
-            @ApiResponse(description = "일정 변경 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
+            @ApiResponse(description = "일정 변경 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)}),
+            @ApiResponse(description = "일정 변경 실패", responseCode = "400",  content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PutMapping("/{scheduleId}")
     public ResponseEntity update(@PathVariable Long scheduleId, @Valid @RequestBody ScheduleUpdateRequest scheduleUpdateRequest, @CurrentLoginMember Member member) {
@@ -84,13 +135,25 @@ public class ScheduleController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @Operation(method = "post", summary = "일정 상태 변경")
+    @ApiResponses(value = {
+            @ApiResponse(description = "일정 상태 변경 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)}),
+            @ApiResponse(description = "일정 상태 변경 실패", responseCode = "400",  content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @PostMapping("/{scheduleId}/state")
+    public ResponseEntity updateState(@PathVariable Long scheduleId, @Valid @RequestBody ScheduleStateUpdateRequest scheduleStateUpdateRequest, @CurrentLoginMember Member member) {
+        scheduleService.updateState(scheduleStateUpdateRequest, scheduleId, member.getId());
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    // * DELETE API
     @Operation(method = "delete", summary = "일정 삭제")
     @ApiResponses(value = {
-            @ApiResponse(description = "일정 삭제 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
+            @ApiResponse(description = "일정 삭제 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)}),
+            @ApiResponse(description = "일정 삭제 실패", responseCode = "400",  content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @DeleteMapping("/{scheduleId}")
     public ResponseEntity delete(@PathVariable Long scheduleId, @Valid @RequestBody ScheduleDeleteRequest scheduleDeleteRequest, @CurrentLoginMember Member member) {
-        //? 작성자 또는 팀 리더만 삭제 가능
         if (!scheduleService.validateDelete(scheduleId, scheduleDeleteRequest.getProjectId(), member.getId(), false)) {
             throw new UnauthorizedAccessException(ScheduleErrorCode.UNAUTHORIZED_DELETE);
         }
@@ -99,74 +162,7 @@ public class ScheduleController {
     }
 
 
-    // ?
-    @Operation(method = "get", summary = "전체 일정 리스트 조회")
-    @ApiResponses(value = {
-            @ApiResponse(description = "전체 일정 리스트 조회 성공", responseCode = "200", useReturnTypeSchema = true)
-    })
-    @GetMapping("/list")
-    public ResponseEntity<CustomResponseDto> list(@RequestParam(name = "project_id") Long projectId, @CurrentLoginMember Member member) {
-        CustomResponseDto response = scheduleService.findScheduleList(projectId, member.getId());
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
 
-    @Operation(method = "get", summary = "달력 조회")
-    @ApiResponses(value = {
-            @ApiResponse(description = "달력 조회 성공", responseCode = "200", useReturnTypeSchema = true)
-    })
-    @GetMapping("/calenderlist")
-    public ResponseEntity<ScheduleCalenderMonthResponse> calenderViewList(@Valid @RequestParam("project_id") Long projectId, @CurrentLoginMember Member member) {
-        ScheduleCalenderMonthResponse response = scheduleService.findScheduleCalenderList(projectId, member.getId());
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    @Operation(method = "get", summary = "오늘 일정 리스트 조회")
-    @ApiResponses(value = {
-            @ApiResponse(description = "오늘 일정 리스트 조회 성공", responseCode = "200", useReturnTypeSchema = true)
-    })
-    @GetMapping("/daily")
-    public ResponseEntity<List<ScheduleMonthResponse>> dailyList(@Valid @RequestParam("project_id") Long projectId, @CurrentLoginMember Member member) {
-        List<ScheduleMonthResponse> response = scheduleService.findDailySchedule(projectId, member.getId());
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    @Operation(method = "get", summary = "일정 필터 리스트 조회")
-    @ApiResponses(value = {
-            @ApiResponse(description = "일정 필터 리스트 조회 성공", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ScheduleSearchResponse.class)))
-    })
-    @GetMapping("/search")
-    public ResponseEntity<CustomPageImpl<ScheduleSearchResponse>> searchList(CustomPageRequest pageRequest,
-                                                                             ScheduleCondition scheduleCondition,
-                                                                             @CurrentLoginMember Member member) {
-        PageRequest of = pageRequest.of("startDate");
-        Pageable pageable = (Pageable) of;
-        CustomPageImpl<ScheduleSearchResponse> response = scheduleService.searchScheduleList(pageable, member, scheduleCondition);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    @Operation(method = "post", summary = "일정 상태 변경")
-    @ApiResponses(value = {
-            @ApiResponse(description = "일정 상태 변경 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
-    })
-    @PostMapping("/{scheduleId}/state")
-    public ResponseEntity updateState(@PathVariable Long scheduleId, @Valid @RequestBody ScheduleStateUpdateRequest scheduleStateUpdateRequest, @CurrentLoginMember Member member) {
-        scheduleService.updateState(scheduleStateUpdateRequest, scheduleId, member.getId());
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
-//    @Operation(method = "get", summary = "개인 일정 조회")
-//    @ApiResponses(value = {
-//            @ApiResponse(description = "개인 일정 조회 성공", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,  schema = @Schema(implementation = ScheduleMyListResponse.class))})
-//
-//    })
-//    @GetMapping("/mine")
-//    public ResponseEntity findMine(@Valid @RequestBody ScheduleMonthRequest scheduleMonthRequest,@CurrentLoginMember Member member){
-//        if (!(projectMemberService.validateProjectMember(scheduleMonthRequest.getProjectId(), member.getId()))) {
-//            throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
-//        }
-//        ScheduleMyListResponse response = scheduleService.findMySchedule(scheduleMonthRequest, member.getId());
-//        return new ResponseEntity<>(response, HttpStatus.OK);
-//    }
 
 
 }

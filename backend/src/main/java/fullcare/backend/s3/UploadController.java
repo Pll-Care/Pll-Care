@@ -33,12 +33,12 @@ public class UploadController {
     @PostMapping("/image")
     public ResponseEntity<UploadResponse> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("dir") String dir) {
         UploadResponse response = s3Service.upload(file, dir);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @Operation(method = "delete", summary = "이미지 삭제")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "이미지 삭제 성공", useReturnTypeSchema = true),
+            @ApiResponse(responseCode = "200", description = "이미지 삭제 성공", useReturnTypeSchema = true),
             @ApiResponse(responseCode = "400", description = "이미지 삭제 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
 
