@@ -13,12 +13,9 @@
   padding: 18px 12px 11px 12px;
   width: 100%;
 
-  @include displayFlex(row, space-between, center);
-  @include mobile {
-    padding: 0 14px;
-  }
-
   &-medium-col {
+    width: 35%;
+
     @include mobile {
       display: none;
     }
@@ -49,18 +46,20 @@
   }
 
   &-link {
-    @include displayFlex(row, space-around, center);
     gap: 89px;
 
     @include tablet {
       gap: 40px;
     }
+
+    @include displayFlex(row, space-around, center);
   }
 
   .nav_item {
     text-decoration: none;
-    @include heading_03;
     cursor: pointer;
+
+    @include heading_03;
   }
 
   .main-header-link-on {
@@ -138,9 +137,11 @@
   @include mobile {
     height: 65px;
     grid-template-columns: 45% 0% 55%;
-    padding: 7px;
+    padding: 0 14px;
     border-bottom: none;
   }
+
+  @include displayFlex(row, space-between, center);
 }
 
 .header-profile-bg {
