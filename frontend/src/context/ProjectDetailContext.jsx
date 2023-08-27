@@ -1,9 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { createContext, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { useRouter } from "../hooks/useRouter";
 import { getIsLeaderData } from "../lib/apis/managementApi";
-import { toast } from "react-toastify";
 
 const ProjectDetailContext = createContext(null);
 export const useProjectDetail = () => useContext(ProjectDetailContext);
@@ -14,9 +12,16 @@ export function ProjectDetailProvider({ children }) {
 
   useEffect(() => {
     const getIsLeader = async () => {
-      const isLeaderData = await getIsLeaderData(projectId);
-
-      setIsLeader((_) => isLeaderData);
+      try {
+        const response = await getIsLeaderData(projectId);
+        if (response.status === 200) setIsLeader((_) => response.data.leader);
+      } catch (error) {
+        if (error.response.data.status === 404) {
+          toast.error(error.response.data.message);
+          routeOptionTo("/management", { replace: true });
+        }
+        console.log(error);
+      }
     };
 
     getIsLeader();
