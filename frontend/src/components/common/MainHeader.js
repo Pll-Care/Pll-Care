@@ -1,13 +1,10 @@
-
 /* eslint-disable react-hooks/exhaustive-deps */
-
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "../../hooks/useRouter";
 import Button from "./Button";
 import ToggleMenuButton from "./ToggleMenuButton";
 import { authActions } from "../../redux/authSlice";
-import { isToken } from "../../utils/localstroageHandler";
 import profile_default from "../../assets/profile-default-img.png";
 import profile_isProfile from "../../assets/ranking-img.png";
 import logo from "../../assets/logo-with-text.svg";
@@ -16,6 +13,11 @@ import { useGeneralClient } from "../../context/Client/GeneralClientContext";
 import { userInfoActions } from "../../redux/userInfoSlice";
 
 import useLinkMenuClick from "../../hooks/useLinkMenuClick";
+
+const headerMenu = [
+  { id: 1, link: "/management", title: "프로젝트 관리" },
+  { id: 2, link: "/recruitment", title: "인원 모집" },
+];
 
 const MainHeader = () => {
   const [isToggleMenuOpen, setIsToggleMenuOpen] = useState(false);
@@ -167,8 +169,3 @@ const MainHeader = () => {
 };
 
 export default MainHeader;
-
-const headerMenu = [
-  { id: 1, link: "/management", title: "프로젝트 관리" },
-  { id: 2, link: "/recruitment", title: "인원 모집" },
-];

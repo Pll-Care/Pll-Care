@@ -16,13 +16,13 @@ const JWTToken = () => {
       localStorage.setItem("access_token", accessToken);
       localStorage.setItem("refresh_token", refreshToken);
 
-      window.opener?.postMessage("login", "*");
-
-      window.close();
-
       customAxios.defaults.headers.common["Authorization"] = accessToken
         ? `Bearer ${accessToken}`
         : null;
+
+      window.opener?.postMessage("login", "*");
+
+      window.close();
     }
   }, []);
 

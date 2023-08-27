@@ -1,77 +1,90 @@
 import { customAxios } from "./customAxios";
-
-export const getProjectList = async (pageNum = 1, state) => {
-  let response = null;
-
-  if (state === "ALL") {
-    response = await customAxios.get(
-      `/auth/project?page=${pageNum}&size=4&state=ONGOING&state=COMPLETE`
-    );
-  } else {
-    response = await customAxios.get(
-      `/auth/project?page=${pageNum}&size=4&state=${state}`
-    );
-  }
-
-  return {
-    projectList: response.data.content,
-    totalElements: response.data.totalElements,
-    totalPages: response.data.totalPages,
-  };
-};
-
-export const createProject = async (newProjectObj) => {
-  const response = await customAxios.post("/auth/project", newProjectObj);
-
-  return response.data.content;
-};
+import { toast } from "react-toastify";
 
 export const deleteProject = async (projectId) => {
-  const response = await customAxios.delete(`/auth/project/${projectId}`);
+  try {
+    const response = await customAxios.delete(`/auth/project/${projectId}`);
 
-  return response.data.content;
+    toast.success("삭제되었습니다!");
+
+    return response.data.content;
+  } catch (e) {
+    if (e.response.data.code === "PROJECT_001") {
+      toast.error("프로젝트를 찾을 수 없습니다.");
+    } else if (e.response.data.code === "PROJECT_004") {
+      toast.error("해당 프로젝트에 대한 접근 권한이 없습니다.");
+    } else if (e.response.data.code === "PROJECT_010") {
+      toast.error("완료된 프로젝트는 삭제할 수 없습니다.");
+    } else if (e.response.data.code === "PROJECT_006") {
+      toast.error("해당 프로젝트에 대한 삭제 권한이 없습니다.");
+    }
+  }
 };
 
 export const editProject = async (newProjectData) => {
-  const response = await customAxios.put(
-    `/auth/project/${newProjectData.projectId}`,
-    {
-      title: newProjectData.title,
-      description: newProjectData.description,
-      state: newProjectData.state,
-      startDate: newProjectData.startDate,
-      endDate: newProjectData.endDate,
-      imageUrl: newProjectData.imageUrl,
-    }
-  );
+  try {
+    const response = await customAxios.put(
+      `/auth/project/${newProjectData.projectId}`,
+      {
+        title: newProjectData.title,
+        description: newProjectData.description,
+        state: newProjectData.state,
+        startDate: newProjectData.startDate,
+        endDate: newProjectData.endDate,
+        imageUrl: newProjectData.imageUrl,
+      }
+    );
 
-  return response.data;
+    toast.success("수정되었습니다!");
+
+    return response.data;
+  } catch (e) {
+    if (e.response.data.code === "PROJECT_001") {
+      toast.error("프로젝트를 찾을 수 없습니다.");
+    } else if (e.response.data.code === "PROJECT_004") {
+      toast.error("해당 프로젝트에 대한 접근 권한이 없습니다.");
+    } else if (e.response.data.code === "PROJECT_009") {
+      toast.error("완료된 프로젝트는 수정할 수 없습니다.");
+    } else if (e.response.data.code === "PROJECT_005") {
+      toast.error("해당 프로젝트에 대한 수정 권한이 없습니다.");
+    } else if (e.response.data.code === "PROJECT_003") {
+      toast.error("시작일자와 종료일자가 올바르지 않습니다.");
+    }
+  }
 };
 
 export const completeProject = async (projectId) => {
-  const response = await customAxios.put(`/auth/project/${projectId}/state`, {
-    state: "COMPLETE",
-  });
+  try {
+    const response = await customAxios.post(`/auth/project/${projectId}/complete`, {
+      state: "COMPLETE",
+    });
 
-  return response.data;
-};
+    toast.success("완료 처리되었습니다!");
 
-export const uploadImage = async (imgData) => {
-  const response = await customAxios.post(
-    `/auth/upload/image?dir=${imgData.dir}`,
-    {
-      file: imgData.formData,
-    },
-    {
-      headers: { "Content-Type": "multipart/form-data" },
+    return response.data;
+  } catch (e) {
+    if (e.response.data.code === "PROJECT_001") {
+      toast.error("프로젝트를 찾을 수 없습니다.");
+    } else if (e.response.data.code === "PROJECT_004") {
+      toast.error("해당 프로젝트에 대한 접근 권한이 없습니다.");
+    } else if (e.response.data.code === "PROJECT_007") {
+      toast.error("해당 프로젝트에 대한 완료 권한이 없습니다.");
+    } else if (e.response.data.code === "PROJECT_014") {
+      toast.error("이미 완료된 프로젝트입니다.");
     }
-  );
-
-  return response.data.imageUrl;
+  }
 };
 
 export const getProjectData = async (projectId) => {
-  const response = await customAxios.get(`/auth/project/${projectId}`);
+  try {
+    const response = await customAxios.get(`/auth/project/${projectId}`);
 
-  return response.data;
+    return response.data;
+  } catch (e) {
+    if (e.response.data.code === "PROJECT_001") {
+      toast.error("프로젝트를 찾을 수 없습니다.");
+    } else if (e.response.data.code === "PROJECT_004") {
+      toast.error("해당 프로젝트에 대한 접근 권한이 없습니다.");
+    }
+  }
 };
