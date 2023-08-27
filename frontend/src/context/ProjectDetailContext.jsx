@@ -1,7 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { createContext, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { useRouter } from "../hooks/useRouter";
 import { getIsLeaderData } from "../lib/apis/managementApi";
+import { toast } from "react-toastify";
 
 const ProjectDetailContext = createContext(null);
 export const useProjectDetail = () => useContext(ProjectDetailContext);
