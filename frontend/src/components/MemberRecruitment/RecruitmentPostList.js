@@ -13,8 +13,6 @@ const RecruitmentPostList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = isMobile ? 6 : 9;
 
-  // 총 게시글 개수
-  let itemCount = 0;
   // 총 페이지 개수
   let pageCount = 0;
 
@@ -25,8 +23,7 @@ const RecruitmentPostList = () => {
   );
 
   if (data && !isLoading) {
-    itemCount = data.totalElements;
-    pageCount = Math.ceil(itemCount / itemsPerPage);
+    pageCount = data.totalPages;
   }
 
   return (
@@ -58,8 +55,7 @@ const RecruitmentPostList = () => {
         <Pagination
           currentPage={currentPage + 1}
           setCurrentPage={setCurrentPage}
-          recordDatasPerPage={itemsPerPage}
-          totalData={itemCount}
+          totalPages={pageCount}
         />
       )}
     </div>
