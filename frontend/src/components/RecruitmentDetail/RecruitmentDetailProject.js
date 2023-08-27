@@ -11,13 +11,13 @@ const RecruitmentDetailProject = ({
 }) => {
   return (
     <div className="recruitment-detail-content">
-      <h4>모집 작성자</h4>
+      <h4>모집작성자</h4>
 
       <div className="recruitment-detail-content-name">
         {data?.authorImageUrl ? (
-          <Avatar src={data?.authorImageUrl} />
+          <Avatar src={data?.authorImageUrl} className="mui-icon" />
         ) : (
-          <Avatar />
+          <Avatar className="mui-icon" />
         )}
 
         <h5>{data?.author}</h5>

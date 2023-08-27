@@ -49,10 +49,8 @@ const MemberOption = () => {
         clickHandler={WriteProjectHandler}
       />
       <div className="member-option">
-        <div className="member-option-title">
-          <h2>모집 중인 프로젝트 목록</h2>
-          <h3>Currently Recruiting</h3>
-        </div>
+        <h2>모집 중인 프로젝트 목록</h2>
+        <h3>Currently Recruiting</h3>
       </div>
       <div className="member-button">
         <Button
