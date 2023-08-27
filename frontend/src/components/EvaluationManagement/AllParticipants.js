@@ -46,7 +46,7 @@ const AllParticipants = ({ projectId, isCompleted }) => {
       <div className="evaluation-management-participants">
         {memberList.map((member) => (
           <ParticipantItem
-            key={member.id}
+            key={member.memberId}
             member={member}
             setBadgeQuantity={setBadgeQuantity}
             setParticipantId={setParticipantId}

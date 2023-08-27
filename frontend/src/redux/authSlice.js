@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { customAxios } from "../lib/apis/customAxios";
 
 const authInitialState = {
   accessToken: "",
@@ -19,6 +20,9 @@ const authSlice = createSlice({
       state.isLoginModalVisible = false;
       state.accessToken = accessToken;
       state.refreshToken = refreshToken;
+      customAxios.defaults.headers.common["Authorization"] = accessToken
+        ? `Bearer ${accessToken}`
+        : null;
     },
     logout(state) {
       localStorage.clear();
@@ -26,10 +30,11 @@ const authSlice = createSlice({
       state.accessToken = "";
       state.refreshToken = "";
       state.isLoggedIn = false;
+      customAxios.defaults.headers.common["Authorization"] = null;
     },
     setIsLoginModalVisible(state, action) {
       state.isLoginModalVisible = action.payload;
-    }
+    },
   },
 });
 

@@ -177,8 +177,8 @@ const ProjectManagement = () => {
               clickHandler={() => {
                 completeMutate(completeProjectId);
               }}
-                width={380}
-                height={210}
+              width={380}
+              height={210}
             />
           )}
           {deleteModalVisible && (
@@ -189,8 +189,8 @@ const ProjectManagement = () => {
               clickHandler={() => {
                 deleteMutate(deleteProjectId);
               }}
-                width={380}
-                height={210}
+              width={380}
+              height={210}
             />
           )}
           {editModalVisible && (

@@ -6,3 +6,12 @@ export const customAxios = axios.create({
     "Content-Type": "application/json",
   },
 });
+
+// customAxios.interceptors.response.use(
+//   (response) => {
+//     return response;
+//   },
+//   (error) => {
+
+//   }
+// )
