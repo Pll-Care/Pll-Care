@@ -9,8 +9,8 @@ const FinalEvaluationBox = ({ finalEvals = [] }) => {
       <div className="finalEvaluate_users">
         {finalEvals.map((evaluate, idx) => (
           <UserEvaluate
-            key={idx}
-            memberName={evaluate.memberName}
+            key={"finalEvals" + idx}
+            memberName={evaluate.name}
             imageUrl={evaluate.imageUrl}
             content={evaluate.content}
             score={evaluate.score}

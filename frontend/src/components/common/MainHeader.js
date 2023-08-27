@@ -44,7 +44,7 @@ const MainHeader = () => {
         const response = await getProfileAPI();
         if (response.status === 200) {
           const payload = {
-            memberId: response.data.id,
+            memberId: response.data.memberId,
             imageUrl: response.data.imageUrl,
           };
           dispatch(userInfoActions.setUserInfo(payload));
@@ -144,7 +144,6 @@ const MainHeader = () => {
             </div>
             <ToggleMenuButton
               isProfilePage={isProfilePage}
-
               isToggleMenuOpen={isToggleMenuOpen}
               setIsToggleMenuOpen={setIsToggleMenuOpen}
             />

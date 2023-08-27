@@ -122,20 +122,14 @@ const PositionBox = () => {
           memberId={memberId}
           deleteStack={deleteStack}
         />
-      ) : (
+      ) : positionAndStack.stack.length > 0 ? (
         <ul className="profile_body_introduce_positionBox_stack_bc_items_five">
-          {positionAndStack.stack.length > 0 ? (
-            positionAndStack.stack.map((stack, idx) => (
-              <StackItem
-                name={stack.name}
-                imageUrl={stack.imageUrl}
-                key={idx}
-              />
-            ))
-          ) : (
-            <div>기술 스택을 작성해주세요.</div>
-          )}
+          {positionAndStack.stack.map((stack, idx) => (
+            <StackItem name={stack.name} imageUrl={stack.imageUrl} key={idx} />
+          ))}
         </ul>
+      ) : (
+        <div className="no-stack-list">기술 스택을 작성해주세요.</div>
       )}
     </div>
   );

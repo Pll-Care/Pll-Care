@@ -171,10 +171,8 @@
 
       &_positionBox {
         &_position {
-          & > span {
-            color: $gray-600;
-            font-weight: bold;
-          }
+          @include heading_06;
+          color: $gray-500;
         }
 
         &_stack {
@@ -470,10 +468,8 @@
       min-height: 80px;
       @include displayFlex(row, center, center);
 
-      & > span {
-        font-size: 18px;
-        font-weight: bold;
-      }
+      font-size: 18px;
+      font-weight: bold;
     }
   }
 
@@ -806,8 +802,14 @@
 .badgeImage {
   width: 28px;
   height: 28px;
-  background-color: #cccccc;
   border-radius: 100%;
+  border: 1px solid $green-200;
+  @include displayFlex(row, center, center);
+
+  & > img {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 .badge_divide {
@@ -917,6 +919,11 @@
   font-weight: $weight-bold;
 
   @include displayFlex();
+}
+
+.no-stack-list {
+  color: $gray-500;
+  @include heading_06;
 }
 
 .w-f {
@@ -1283,6 +1290,11 @@
   .badgeImage {
     width: 15px;
     height: 15px;
+
+    & > img {
+      width: 10px;
+      height: 10px;
+    }
   }
 
   .finalEvaluate {
@@ -1375,5 +1387,14 @@
   .project-no-item {
     @include m_heading_02;
     min-height: 50px;
+  }
+
+  .no-stack-list {
+    @include m_body_01;
+  }
+  .project_list_blank {
+    min-height: 50px;
+
+    @include m_heading_02;
   }
 }

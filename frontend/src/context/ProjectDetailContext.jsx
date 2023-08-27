@@ -11,20 +11,12 @@ export const useProjectDetail = () => useContext(ProjectDetailContext);
 export function ProjectDetailProvider({ children }) {
   const [isLeader, setIsLeader] = useState(false);
   const { id: projectId } = useParams();
-  const { routeOptionTo } = useRouter();
 
   useEffect(() => {
     const getIsLeader = async () => {
-      try {
-        const response = await getIsLeaderData(projectId);
-        if (response.status === 200) setIsLeader((_) => response.data.leader);
-      } catch (error) {
-        if (error.response.data.status === 404) {
-          toast.error(error.response.data.message);
-          routeOptionTo("/management", { replace: true });
-        }
-        console.log(error);
-      }
+      const isLeaderData = await getIsLeaderData(projectId);
+
+      setIsLeader((_) => isLeaderData);
     };
 
     getIsLeader();

@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import {
   addLikeRecruitmentPost,
   addRecruitmentPost,
+  applyCancelRecruitmentPost,
   applyRecruitmentPost,
   deleteRecruitmentPost,
   modifyRecruitmentPost,
@@ -67,6 +68,18 @@ export const useApplyRecruitmentPostMutation = () => {
   return useMutation(applyRecruitmentPost, {
     onSuccess: () => {
       toast.success("모집글 지원하였습니다.");
+      queryClient.invalidateQueries("recruitmentDetail");
+    },
+  });
+};
+
+// 모집글 지원 취소
+export const useApplyCancelRecruitmentPostMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(applyCancelRecruitmentPost, {
+    onSuccess: () => {
+      toast.success("모집글 지원취소하였습니다.");
       queryClient.invalidateQueries("recruitmentDetail");
     },
   });
