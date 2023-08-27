@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { getIsLeaderData } from "../lib/apis/managementApi";
 import { useRouter } from "../hooks/useRouter";
-import toast from "react-toastify";
+import { toast } from "react-toastify";
 
 const ProjectDetailContext = createContext(null);
 export const useProjectDetail = () => useContext(ProjectDetailContext);
