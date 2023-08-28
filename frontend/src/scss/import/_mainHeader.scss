@@ -16,6 +16,10 @@
   &-medium-col {
     width: 35%;
 
+    @include tablet {
+      width: 40%;
+    }
+
     @include mobile {
       display: none;
     }
