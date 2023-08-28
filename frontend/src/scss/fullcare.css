@@ -4249,11 +4249,20 @@ a {
   background-color: #01e89e;
   padding: 10px;
 }
+@media (max-width: 767px) {
+  .member-write {
+    padding: 2px;
+  }
+}
 .member-write > Button {
   display: flex;
   justify-content: flex-end;
-  margin-left: auto;
-  margin-right: 20px;
+  margin: 0px 44px 69px auto;
+}
+@media (max-width: 767px) {
+  .member-write > Button {
+    margin: 0px 12px 46px auto;
+  }
 }
 .member-write h3 {
   color: #00aa72;
@@ -4270,25 +4279,26 @@ a {
   }
 }
 .member-write-card {
-  margin: 20px 30px;
+  margin: 0px 43px 30px 43px;
   border-radius: 10px;
-  padding: 30px;
+  padding: 46px 51px;
 }
 @media (max-width: 767px) {
   .member-write-card {
-    margin: 8px;
+    padding: 11px 14px;
+    margin: 13px 11px 6px 11px;
   }
 }
 .member-write .member-title {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin: 20px 15px;
+  margin: 69px 43px 14px 43px;
   color: white;
 }
 @media (max-width: 767px) {
   .member-write .member-title {
-    margin: 10px 5px;
+    margin: 46px 11px 0px 11px;
   }
 }
 .member-write .member-title .recruitment-direction {
@@ -4320,24 +4330,56 @@ a {
   }
 }
 .member-write .member-title img {
-  width: 50px;
-  height: 50px;
-  border-radius: 40px;
-  margin: 0px 10px;
+  width: 65px;
+  height: 65px;
+  border-radius: 32.5px;
+  margin-right: 15px;
 }
 @media (max-width: 767px) {
   .member-write .member-title img {
     margin: 0px 3px;
+    width: 24px;
+    height: 25px;
   }
 }
 
 .member-content .member-grid {
+  border-bottom: 2px solid #b4bcbd;
+  display: flex;
+  flex-direction: column;
+}
+.member-content .member-grid-item {
   display: grid;
   grid-template-columns: 20% 80%;
-  grid-gap: 27px;
   align-items: center;
-  border-bottom: 2px solid #b4bcbd;
-  padding-bottom: 20px;
+  margin-bottom: 27px;
+}
+@media (max-width: 767px) {
+  .member-content .member-grid-item {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+.member-content .member-grid-item-time {
+  display: flex;
+  align-items: center;
+}
+.member-content .member-grid-item-time input {
+  border-radius: 10px;
+  padding: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  color: #7a7a7a;
+  border: none;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+}
+@media (max-width: 767px) {
+  .member-content .member-grid-item-time input {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+  }
 }
 .member-content .member-grid .control-menu {
   color: #7a7a7a;
@@ -4356,35 +4398,13 @@ a {
     font-weight: 500;
   }
 }
-.member-content .member-grid-time {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-}
-.member-content .member-grid-time input {
-  border-radius: 10px;
-  padding: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  color: #7a7a7a;
-  border: none;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 18px;
-  font-weight: 600;
-}
-@media (max-width: 767px) {
-  .member-content .member-grid-time input {
-    font-family: "Noto Sans KR", sans-serif;
-    font-size: 8px;
-    font-weight: 500;
-  }
-}
 .member-content .member-grid-position {
   display: grid;
-  grid-template-columns: 15% 30% 50%;
+  grid-template-columns: 20% 30% 50%;
   grid-gap: 27px;
-  margin-top: 40px;
+  margin-top: 28px;
   border-bottom: 2px solid #b4bcbd;
-  padding-bottom: 40px;
+  padding-bottom: 36px;
 }
 @media (max-width: 767px) {
   .member-content .member-grid-position {
@@ -4413,7 +4433,7 @@ a {
 .member-content .member-grid-position .recruitment-positions {
   display: grid;
   grid-template-columns: repeat(2, 0.5fr);
-  grid-gap: 10px 10px;
+  grid-gap: 17px 10px;
   align-items: center;
 }
 .member-content .member-grid-position .recruitment-positions input {
@@ -4441,8 +4461,8 @@ a {
     width: 200px;
   }
 }
-.member-content .member-grid-position-stack h5 {
-  margin: 10px;
+.member-content .member-grid-position-stack h3 {
+  margin-bottom: 6px;
 }
 .member-content textarea {
   border-radius: 20px;
@@ -4468,21 +4488,21 @@ a {
 .member-content-description {
   display: flex;
   flex-direction: column;
-  margin: 20px 0px;
+  padding-bottom: 26px;
   border-bottom: 2px solid #b4bcbd;
-  padding-bottom: 40px;
 }
 .member-content-description h3 {
-  margin: 20px 0px;
+  margin: 23px 0px 16px 0px;
 }
 .member-content-description .react-quill {
   height: 100%;
+  margin-bottom: 7px;
 }
 .member-content-description .react-quill:hover, .member-content-description .react-quill:focus {
   border: 2px solid #01e89e;
 }
 .member-content-contact h3 {
-  margin: 20px 0px;
+  margin: 19px 0px 8px 0px;
 }
 
 .recruitment {
@@ -4628,15 +4648,13 @@ a {
 }
 
 .detail-title {
-  margin: 10px 5%;
   display: flex;
   justify-content: space-between;
-  padding: 1rem;
+  margin: 96px 41px 12px 41px;
 }
 @media (max-width: 767px) {
   .detail-title {
-    margin: 10px 0px;
-    padding: 0px;
+    margin: 50px 16px 6px 16px;
   }
 }
 .detail-title-content {
@@ -4648,15 +4666,14 @@ a {
   transform: scale(0.8);
 }
 .detail-title-content img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
-  margin-left: 10px;
+  width: 60px;
+  height: 60px;
+  border-radius: 32.5px;
 }
 @media (max-width: 767px) {
   .detail-title-content img {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     margin-left: 5px;
   }
 }
@@ -4664,7 +4681,7 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 38px;
   font-weight: 700;
-  margin-left: 10px;
+  margin-left: 26px;
   border-radius: 20px;
   color: #7a7a7a;
   padding: 7px;
@@ -4683,7 +4700,7 @@ a {
   font-size: 38px;
   font-weight: 700;
   color: #7a7a7a;
-  margin-left: 20px;
+  margin-left: 26px;
 }
 @media (max-width: 767px) {
   .detail-title-content h1 {
@@ -4696,7 +4713,7 @@ a {
 .detail-title-content h2 {
   margin-top: 10px;
   color: #7a7a7a;
-  margin-left: 10px;
+  margin-left: 12px;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
@@ -4716,15 +4733,15 @@ a {
 
 .recruitment-detail {
   border: 2px solid #01e89e;
-  border-radius: 20px;
+  border-radius: 15px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  padding: 2.5rem;
-  margin: 0px 7%;
+  padding: 36px 61px;
+  margin: 0px 41px;
 }
 @media (max-width: 767px) {
   .recruitment-detail {
-    margin: 0px 7px;
-    padding: 10px;
+    margin: 0px 16px;
+    padding: 17px 14px;
   }
 }
 .recruitment-detail input,
@@ -4777,52 +4794,55 @@ a {
   }
 }
 .recruitment-detail-content {
+  border-bottom: 1px solid rgb(204, 204, 204);
+  display: flex;
+  flex-direction: column;
+}
+.recruitment-detail-content-item {
   display: grid;
   grid-template-columns: 15% 85%;
-  grid-gap: 20px 0px;
   align-items: center;
-  border-bottom: 1px solid rgb(204, 204, 204);
-  padding-bottom: 30px;
+  margin-bottom: 17px;
 }
 @media (max-width: 767px) {
-  .recruitment-detail-content {
-    grid-template-columns: 27% 73%;
+  .recruitment-detail-content-item {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 10px;
   }
 }
-@media (min-width: 767px) and (max-width: 1024px) {
-  .recruitment-detail-content {
-    grid-template-columns: 20% 80%;
+.recruitment-detail-content-item-name {
+  display: flex;
+  align-items: center;
+}
+.recruitment-detail-content-item-name h5 {
+  margin-left: 9px;
+}
+@media (max-width: 767px) {
+  .recruitment-detail-content-item-name h5 {
+    margin-left: 5px;
   }
+}
+.recruitment-detail-content-item-name .mui-icon {
+  transform: scale(0.85);
+}
+@media (max-width: 767px) {
+  .recruitment-detail-content-item-name .mui-icon {
+    transform: scale(0.5);
+  }
+}
+.recruitment-detail-content-item-duration {
+  display: flex;
 }
 .recruitment-detail-content select {
   width: 70px;
 }
-.recruitment-detail-content-name {
-  display: flex;
-  align-items: center;
-}
-.recruitment-detail-content-name h5 {
-  margin-left: 10px;
-}
-@media (max-width: 767px) {
-  .recruitment-detail-content-name h5 {
-    margin-left: 5px;
-  }
-}
-@media (max-width: 767px) {
-  .recruitment-detail-content-name .mui-icon {
-    transform: scale(0.7);
-  }
-}
-.recruitment-detail-content-duration {
-  display: flex;
-}
 .recruitment-detail-container {
-  margin-top: 50px;
   border-bottom: 1px solid rgb(204, 204, 204);
-  padding-bottom: 50px;
+  padding-top: 20px;
+  padding-bottom: 33px;
   display: grid;
-  grid-template-columns: 20% 80%;
+  grid-template-columns: 15% 85%;
   grid-gap: 10px 0px;
   align-content: center;
 }

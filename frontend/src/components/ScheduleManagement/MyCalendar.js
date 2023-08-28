@@ -29,8 +29,15 @@ const MyCalendar = () => {
     }
   );
 
-  const { data: overview } = useQuery("overviewSchedule", () =>
-    getOverviewAllSchedule(projectId)
+  const { data: overview } = useQuery(
+    "overviewSchedule",
+    () => getOverviewAllSchedule(projectId),
+    {
+      retry: 0,
+      onError: (error) => {
+        toast.error(error.response.data.message);
+      },
+    }
   );
 
   // 달력에 표시할 모든 일정들을 저장할 배열
