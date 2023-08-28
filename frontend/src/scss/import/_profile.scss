@@ -756,11 +756,10 @@
   border: 2px solid $green-200;
   border-radius: 100%;
   color: $green-200;
-  font-size: 12px;
-  font-weight: 900;
+  width: 25px;
+  height: 25px;
 
-  width: 24px;
-  height: 24px;
+  @include body_02;
 
   @include displayFlex(row, center, center);
 }
@@ -883,14 +882,13 @@
 
     &_partTitle {
       color: $gray-500;
-      @include heading_05;
+      @include heading_06;
     }
 
     &_partScore {
       width: 26px;
       height: 26px;
       border: 2px solid $green-200;
-      padding: 3px;
       border-radius: 100%;
       color: $green-200;
       @include body_02;
@@ -928,6 +926,29 @@
 
 .w-f {
   width: 100%;
+}
+
+@include tablet {
+  .score-border {
+    font-size: 11px;
+    padding-bottom: 1px;
+  }
+
+  .projectEvaluate {
+    width: 90%;
+  }
+
+  .badges {
+    gap: 18px;
+  }
+
+  .badge {
+    gap: 6px;
+  }
+
+  .finalEvaluate_userScore {
+    width: 45%;
+  }
 }
 
 @include mobile {
@@ -1260,10 +1281,10 @@
   }
 
   .score-border {
-    width: 15px;
-    height: 15px;
     @include m_body_02;
     border: 1px solid $green-200;
+    padding: 0;
+    zoom: 0.6;
   }
 
   .projectEvaluate {
@@ -1279,7 +1300,7 @@
   }
 
   .badges {
-    gap: 7px;
+    gap: 12px;
   }
 
   .badge {

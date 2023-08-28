@@ -30,8 +30,6 @@ const ProjectList = () => {
     refetch();
   }, [page.currentPage]);
 
-  console.log(123, data);
-
   //title: string
   // projectId: number
   const clickProjectItem = (title, projectId) => {
@@ -52,9 +50,7 @@ const ProjectList = () => {
               <li
                 key={idx}
                 className="evaluate_project_item"
-                onClick={() =>
-                  clickProjectItem(item.projectTitle, item.projectId)
-                }
+                onClick={() => clickProjectItem(item.title, item.projectId)}
               >
                 <div className="evaluate_project_item_user">
                   <div className="evaluate_project_item_img">
@@ -69,13 +65,13 @@ const ProjectList = () => {
                     <div className="evaluate_project_item_score">
                       <span>성실도</span>
                       <span className="score-border">
-                        {Math.round(item.score.sincerity)}
+                        {item.score.sincerity}
                       </span>
                     </div>
                     <div className="evaluate_project_item_score">
                       <span>엄무 수행 능력</span>
                       <span className="score-border">
-                        {Math.round(item.score.jobPerformance)}
+                        {item.score.jobPerformance}
                       </span>
                     </div>
                   </div>
@@ -83,13 +79,13 @@ const ProjectList = () => {
                     <div className="evaluate_project_item_score">
                       <span>시간 엄수</span>
                       <span className="score-border">
-                        {Math.round(item.score.punctuality)}
+                        {item.score.punctuality}
                       </span>
                     </div>
                     <div className="evaluate_project_item_score">
                       <span>의사소통</span>
                       <span className="score-border">
-                        {Math.round(item.score.communication)}
+                        {item.score.communication}
                       </span>
                     </div>
                   </div>
