@@ -15,8 +15,12 @@ const CalendarList = () => {
   const projectId = getProjectId(useLocation());
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
-  const { data, isLoading, status } = useQuery(["todayAfterSchedule"], () =>
-    getTodayAfterSchedule(projectId)
+  const { data, isLoading, status } = useQuery(
+    ["todayAfterSchedule"],
+    () => getTodayAfterSchedule(projectId),
+    {
+      retry: 0,
+    }
   );
 
   const modalOpen = () => {

@@ -1,4 +1,4 @@
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useQuery } from "react-query";
 import {
   VerticalTimeline,
@@ -14,11 +14,23 @@ import Card from "../common/Card";
 import { getOverviewAllSchedule } from "../../lib/apis/scheduleManagementApi";
 import { getDateTimeDuration } from "../../utils/date";
 import { getProjectId } from "../../utils/getProjectId";
+import { toast } from "react-toastify";
 
 const OverviewChart = () => {
   const projectId = getProjectId(useLocation());
-  const { isLoading, data, status } = useQuery("overviewSchedule", () =>
-    getOverviewAllSchedule(projectId)
+  const navigate = useNavigate();
+  const { isLoading, data, status } = useQuery(
+    "overviewSchedule",
+    () => getOverviewAllSchedule(projectId),
+    {
+      retry: 0,
+      onError: (error) => {
+        if (error.response.data.code === "PROJECT_004") {
+          navigate("/management");
+          toast.error("해당 오버뷰 페이지 접근 권한이 없습니다.");
+        }
+      },
+    }
   );
 
   const months = [

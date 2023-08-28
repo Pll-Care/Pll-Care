@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 
@@ -18,12 +18,16 @@ import RecruitmentDetailStackName from "./RecruitmentDetailStackName";
 import RecruitmentDetailDescription from "./RecruitmentDetailDescription";
 
 import { isToken } from "../../utils/localstroageHandler";
-import { getRecruitmentPostDetail } from "../../lib/apis/memberRecruitmentApi";
+import {
+  getRecruitmentPostDetail,
+  modifyRecruitmentPost,
+} from "../../lib/apis/memberRecruitmentApi";
 import {
   useAddLikeRecruitmentMutation,
   useDeleteRecruitmentPostMutation,
-  useModifyRecruitmentPostMutation,
 } from "../../hooks/useRecruitmentMutation";
+import { useMediaQuery } from "@mui/material";
+import { query } from "../../utils/mediaQuery";
 
 const RecruitmentDetailContent = () => {
   const { id } = useParams();
@@ -31,6 +35,7 @@ const RecruitmentDetailContent = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const baseUrl = "https://fullcare.store";
+  const isMobile = useMediaQuery(query);
 
   // 수정 상태
   const [isEdit, setIsEdit] = useState(false);
@@ -56,6 +61,7 @@ const RecruitmentDetailContent = () => {
     () => getRecruitmentPostDetail(id),
     {
       enabled: !isEdit,
+      retry: 0,
       onSuccess: (data) => {
         if (!isEdit) {
           setFormValues({
@@ -72,12 +78,34 @@ const RecruitmentDetailContent = () => {
           });
         }
       },
+
+      onError: () => {
+        navigate("/recruitment");
+        toast.error("모집글을 찾을 수 없습니다");
+      },
     }
   );
 
   // 모집글 수정
-  const { mutate: modifyPostMutate } =
-    useModifyRecruitmentPostMutation(formValues);
+  const queryClient = useQueryClient();
+  const { mutate: modifyPostMutate } = useMutation(modifyRecruitmentPost, {
+    onSuccess: () => {
+      toast.success("모집글이 수정되었습니다.");
+      queryClient.invalidateQueries("recruitmentDetail");
+      queryClient.invalidateQueries("allRecruitmentPosts");
+      setIsEdit((prevState) => !prevState);
+    },
+
+    onError: (error) => {
+      if (error.response.data.status === 500) {
+        toast.error("서버 에러가 발생했습니다. 잠시후에 다시 시도해주세요");
+      } else {
+        let message;
+        message = error.response.data.message;
+        toast.error(message);
+      }
+    },
+  });
 
   // 모집글 삭제
   const { mutate: deletePostMutate } = useDeleteRecruitmentPostMutation(id);
@@ -85,7 +113,7 @@ const RecruitmentDetailContent = () => {
   // 모집글 좋아요
   const { mutate } = useAddLikeRecruitmentMutation(id);
 
-  const { title, description, recruitStartDate, recruitEndDate } = formValues;
+  const { title, description, reference, contact } = formValues;
 
   const inputRefs = {
     title: useRef(),
@@ -114,13 +142,6 @@ const RecruitmentDetailContent = () => {
       inputRefs.title.current.focus();
       return;
     }
-    const start = new Date(recruitStartDate);
-    const end = new Date(recruitEndDate);
-    if (start > end) {
-      toast.error("모집 기간 수정해주세요");
-      inputRefs.startDate.current.focus();
-      return;
-    }
     if (description.length < 2) {
       toast.error("모집글 설명을 입력해주세요");
       inputRefs.description.current.focus();
@@ -135,6 +156,20 @@ const RecruitmentDetailContent = () => {
       inputRefs.backendCnt.current.focus();
       return;
     }
+    if (techStack.length === 0) {
+      toast.error("프로젝트 기술 스택을 추가해주세요");
+      return;
+    }
+    if (reference.length < 2) {
+      toast.error("모집글 레퍼런스를 입력해주세요");
+      inputRefs.reference.current.focus();
+      return;
+    }
+    if (contact.length < 2) {
+      toast.error("모집글 컨택을 입력해주세요");
+      inputRefs.contact.current.focus();
+      return;
+    }
 
     const stacks = techStack.map((item) => item.name);
 
@@ -144,9 +179,7 @@ const RecruitmentDetailContent = () => {
       postId: id,
     };
 
-    console.log("수정후", body);
     modifyPostMutate(body);
-    setIsEdit((prevState) => !prevState);
   };
 
   // 삭제 버튼을 눌렀을 때
@@ -167,8 +200,12 @@ const RecruitmentDetailContent = () => {
   // url 복사 버튼을 눌렀을 때
   const handleCopyClipBoard = async (text) => {
     try {
-      await navigator.clipboard.writeText(text);
-      toast.success("클립보드에 링크가 복사되었어요.");
+      if (!isToken("access_token")) {
+        dispatch(authActions.setIsLoginModalVisible(true));
+      } else {
+        await navigator.clipboard.writeText(text);
+        toast.success("클립보드에 링크가 복사되었어요.");
+      }
     } catch (err) {
       toast.error("클립보드에 링크가 복사에 실패하였습니다");
     }
@@ -242,16 +279,19 @@ const RecruitmentDetailContent = () => {
             {data?.liked ? (
               <FavoriteIcon
                 className="post-icon"
+                fontSize={isMobile ? "small" : "medium"}
                 onClick={handleClickFavoriteIcon}
               />
             ) : (
               <FavoriteBorderIcon
                 className="post-icon"
+                fontSize={isMobile ? "small" : "medium"}
                 onClick={handleClickFavoriteIcon}
               />
             )}
             <ShareIcon
               className="post-icon"
+              fontSize={isMobile ? "small" : "medium"}
               onClick={() =>
                 handleCopyClipBoard(`${baseUrl}${location.pathname}`)
               }

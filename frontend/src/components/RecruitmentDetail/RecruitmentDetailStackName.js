@@ -9,7 +9,6 @@ const RecruitmentDetailStackName = ({
 }) => {
   // techStack 업데이트하는 함수
   const changeStack = (response) => {
-    console.log("수정전", formValues.techStack, response);
     setFormValues((prevValues) => ({
       ...prevValues,
       techStack: [...prevValues.techStack, response],

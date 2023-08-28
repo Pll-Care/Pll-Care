@@ -16,7 +16,6 @@ export const useAddNewScheduleMutation = () => {
       queryClient.invalidateQueries("filterSchedule");
       queryClient.invalidateQueries("overviewSchedule");
       queryClient.invalidateQueries("todayAfterSchedule");
-
       toast.success("일정이 생성되었습니다");
     },
   });

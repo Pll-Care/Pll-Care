@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
 import { useMediaQuery } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -11,8 +11,8 @@ import ModalContainer from "../common/ModalContainer";
 
 import { getTeamMember } from "../../lib/apis/teamMemberManagementApi";
 import { getProjectId } from "../../utils/getProjectId";
-import { useAddNewScheduleMutation } from "../../hooks/useScheduleManagementMutation";
 import { query } from "../../utils/mediaQuery";
+import { createNewSchedule } from "../../lib/apis/scheduleManagementApi";
 
 const ScheduleModal = ({
   open,
@@ -44,8 +44,43 @@ const ScheduleModal = ({
   });
 
   // 일정 생성하는 react query 문
-  const { mutate: addSchedule, isLoading: addIsLoading } =
-    useAddNewScheduleMutation(formValues);
+  const queryClient = useQueryClient();
+  const { mutate: addSchedule, isLoading: addIsLoading } = useMutation(
+    createNewSchedule,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("calendarSchedule");
+        queryClient.invalidateQueries("filterSchedule");
+        queryClient.invalidateQueries("overviewSchedule");
+        queryClient.invalidateQueries("todayAfterSchedule");
+        onClose();
+        setFormValues({
+          projectId: projectId,
+          scheduleId: editScheduleId,
+          startDate: initialDate,
+          endDate: initialDate,
+          state: scheduleState,
+          memberIds: [],
+          title: "",
+          content: "",
+          category: "MILESTONE",
+          location: "",
+        });
+
+        toast.success("일정이 생성되었습니다");
+      },
+
+      onError: (error) => {
+        if (error.response.data.code === "SCHEDULE_006") {
+          toast.error("해당 일정이 프로젝트 기간에 벗어났습니다");
+        } else if (error.response.data.code === "GLOBAL_003") {
+          toast.error("해당 일정의 기간이 현재 또는 미래 날짜여야 합니다");
+        } else {
+          toast.error("서버 에러가 발생했습니다. 잠시후에 시도해주세요");
+        }
+      },
+    }
+  );
 
   const { startDate, endDate, memberIds, title, content, category, address } =
     formValues;
@@ -56,6 +91,7 @@ const ScheduleModal = ({
     startDate: useRef(),
     endDate: useRef(),
     address: useRef(),
+    location: useRef(),
   };
 
   const handleChange = (e) => {
@@ -83,17 +119,12 @@ const ScheduleModal = ({
   // 일정 생성
   const submitNewPlan = () => {
     if (title.length < 2) {
-      toast.error("일정 제목을 더 작성해주세요.");
+      toast.error("일정 제목을 작성해주세요.");
       inputRefs.title.current.focus();
       return;
     }
     const start = new Date(startDate);
     const end = new Date(endDate);
-    if (start >= end) {
-      toast.error("일정 기간을 수정해주세요.");
-      inputRefs.endDate.current.focus();
-      return;
-    }
     if (category === "MEETING" && start.toDateString() !== end.toDateString()) {
       toast.error("모임의 일정은 같은 일로만 가능합니다.");
       inputRefs.startDate.current.focus();
@@ -102,7 +133,7 @@ const ScheduleModal = ({
     }
     if (category === "MEETING" && address.length < 2) {
       toast.error("모임 위치를 더 자세히 작성해주세요.");
-      inputRefs.location.current.focus();
+      inputRefs.address.current.focus();
       return;
     }
     if (memberIds.length < 1) {
@@ -117,21 +148,6 @@ const ScheduleModal = ({
     // 일정 생성하기
     const { state, scheduleId, ...formData } = formValues;
     addSchedule(formData);
-
-    setFormValues({
-      projectId: projectId,
-      scheduleId: editScheduleId,
-      startDate: initialDate,
-      endDate: initialDate,
-      state: scheduleState,
-      memberIds: [],
-      title: "",
-      content: "",
-      category: "MILESTONE",
-      location: "",
-    });
-
-    onClose();
   };
 
   return (

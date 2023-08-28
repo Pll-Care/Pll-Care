@@ -19,7 +19,10 @@ const MemberOption = () => {
   // 프로젝트 관리 리스트 react query
   const { data, isLoading } = useQuery(
     ["allProject"],
-    async () => await getRecruitmentProject()
+    async () => await getRecruitmentProject(),
+    {
+      retry: 0,
+    }
   );
 
   // 프로젝트 관리로 이동할 수 있게 하는 함수
@@ -45,7 +48,7 @@ const MemberOption = () => {
       <AlertCheckModal
         open={projectModal}
         onClose={() => setProjectModal(false)}
-        text={`프로젝트 관리탭에서 진행할 프로젝트 먼저 생성하셔야 합니다.\n 작성하시겠습니까??`}
+        text={`진행 중인 프로젝트가 없습니다.\n 프로젝트 관리탭에서 프로젝트를 생성하시겠습니까??`}
         clickHandler={WriteProjectHandler}
       />
       <div className="member-option">

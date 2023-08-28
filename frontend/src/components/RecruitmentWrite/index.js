@@ -2,6 +2,7 @@ import { useRef, useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 
 import Button from "../common/Button";
 import Card from "../common/Card";
@@ -13,8 +14,12 @@ import SearchStack from "../Profile/Introduce/PositionBox/SearchStack";
 
 import { useAddRecruitmentPostMutation } from "../../hooks/useRecruitmentMutation";
 import { getRecruitmentProject } from "../../lib/apis/memberRecruitmentApi";
+import { isToken } from "../../utils/localstroageHandler";
+
+import { authActions } from "../../redux/authSlice";
 
 const MemberRecruitmentWrite = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const initialDate = new Date().toISOString().split("T")[0];
 
@@ -64,12 +69,21 @@ const MemberRecruitmentWrite = () => {
           }));
           setImageUrl(data[0].imageUrl);
         }
+        if (data && data.length === 0) {
+          navigate("/management");
+          toast.error("프로젝트 관리에서 먼저 프로젝트를 생성하셔야 합니다.");
+        }
       },
       staleTime: 1000 * 60 * 20,
+      retry: 0,
     }
   );
 
   useEffect(() => {
+    if (!isToken("access_token")) {
+      navigate("/recruitment");
+      dispatch(authActions.setIsLoginModalVisible(true));
+    }
     if (data) {
       setImageUrl(data[0].imageUrl);
       setFormValues((prevState) => ({
@@ -77,7 +91,7 @@ const MemberRecruitmentWrite = () => {
         projectId: data[0].projectId,
       }));
     }
-  }, []);
+  }, [data, dispatch, navigate]);
 
   // 입력하는 모든 상태값 update
   const handleChange = useCallback((e) => {
@@ -89,7 +103,8 @@ const MemberRecruitmentWrite = () => {
   }, []);
 
   // 모집글 생성 react query문
-  const { mutate: addPostMutate } = useAddRecruitmentPostMutation(formValues);
+  const { mutate: addPostMutate, status } =
+    useAddRecruitmentPostMutation(formValues);
 
   // 생성하기
   const handleAddRecruitmetPost = () => {
@@ -107,13 +122,7 @@ const MemberRecruitmentWrite = () => {
       inputRefs.title.current.focus();
       return;
     }
-    const start = new Date(formValues.recruitStartDate);
-    const end = new Date(formValues.recruitEndDate);
-    if (start > end) {
-      toast.error("모집 기간 수정해주세요");
-      inputRefs.startDate.current.focus();
-      return;
-    }
+
     if (
       parseInt(backendCnt, 10) +
         parseInt(frontendCnt, 10) +
@@ -188,24 +197,26 @@ const MemberRecruitmentWrite = () => {
     };
     addPostMutate(body);
 
-    setFormValues({
-      projectId: "",
-      title: "",
-      concept: "IOS",
-      description: "",
-      recruitStartDate: initialDate,
-      recruitEndDate: initialDate,
-      reference: "",
-      contact: "",
-      region: "서울",
-      backendCnt: 0,
-      frontendCnt: 0,
-      managerCnt: 0,
-      designCnt: 0,
-      techStack: [],
-    });
+    if (status === "success") {
+      navigate("/recruitment");
 
-    navigate("/recruitment");
+      setFormValues({
+        projectId: "",
+        title: "",
+        concept: "IOS",
+        description: "",
+        recruitStartDate: initialDate,
+        recruitEndDate: initialDate,
+        reference: "",
+        contact: "",
+        region: "서울",
+        backendCnt: 0,
+        frontendCnt: 0,
+        managerCnt: 0,
+        designCnt: 0,
+        techStack: [],
+      });
+    }
   };
 
   // techStack 업데이트하는 함수

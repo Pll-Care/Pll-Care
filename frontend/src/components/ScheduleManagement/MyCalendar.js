@@ -1,5 +1,6 @@
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useQuery } from "react-query";
+import { toast } from "react-toastify";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 
@@ -9,9 +10,20 @@ import { getProjectId } from "../../utils/getProjectId";
 
 const MyCalendar = () => {
   const projectId = getProjectId(useLocation());
+  const navigate = useNavigate();
 
-  const { data, status } = useQuery(["calendarSchedule", projectId], () =>
-    getCalendarAllSchedule(projectId)
+  const { data, status } = useQuery(
+    ["calendarSchedule", projectId],
+    () => getCalendarAllSchedule(projectId),
+    {
+      retry: 0,
+      onError: (error) => {
+        if (error.response.data.code === "PROJECT_004") {
+          navigate("/management");
+          toast.error("해당 일정 접근 권한이 없습니다.");
+        }
+      },
+    }
   );
 
   // 달력에 표시할 모든 일정들을 저장할 배열
