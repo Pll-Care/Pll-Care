@@ -288,7 +288,7 @@ a {
   align-items: center;
 }
 .main-header-medium-col {
-  width: 35%;
+  width: 38%;
 }
 @media (max-width: 767px) {
   .main-header-medium-col {
