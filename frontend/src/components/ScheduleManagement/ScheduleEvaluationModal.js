@@ -43,16 +43,21 @@ const ScheduleEvaluationModal = (props) => {
   const { mutate } = useMutation(makeNewMidEvaluation, {
     onSuccess: () => {
       toast.success("중간평가 성공하였습니다");
-      const newEvaluation = {
-        ...evaluation,
-        isEvaluation: true,
-      };
-      console.log("newevaluation", newEvaluation);
-
       props.onClose();
     },
-    onError: () => {
-      toast.error("중간평가 다시 해주세요");
+    onError: (error) => {
+      if (error.response.data.status === 500) {
+        toast.error("서버 에러가 발생했습니다. 잠시후에 다시 시도해주세요");
+        props.onClose();
+      } else if (error.response.data.code === "EVAL_006") {
+        toast.error("자기 자신에게 중간평가할 수 없습니다");
+      } else if (error.response.data.code === "EVAL_007") {
+        toast.error("이미 평가를 진행한 일정입니다");
+      } else {
+        let message;
+        message = error.response.data.message;
+        toast.error(message);
+      }
     },
   });
 
@@ -72,7 +77,6 @@ const ScheduleEvaluationModal = (props) => {
     };
     setEvaluation(data);
 
-    console.log(data);
     openConfirmModalHandler();
   };
 

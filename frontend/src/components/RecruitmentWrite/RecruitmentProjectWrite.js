@@ -28,70 +28,81 @@ const RecruitmentProjectWrite = ({
   return (
     <Fragment>
       <div className="member-grid">
-        <h3>프로젝트 선택</h3>
-        {projectData?.length > 0 && (
+        <div className="member-grid-item">
+          <h3>프로젝트 선택</h3>
+          {projectData?.length > 0 && (
+            <ControlMenu
+              className="control-menu"
+              optionList={projectData?.map((project, index) => ({
+                id: index,
+                value: project.projectId,
+                name: project.title,
+              }))}
+              onChange={(value) =>
+                handleChangeProject({
+                  target: { name: "projectId", value },
+                })
+              }
+              value={formValues.projectId}
+            />
+          )}
+        </div>
+
+        <div className="member-grid-item">
+          <h3>주제/분야</h3>
           <ControlMenu
-            className="control-menu"
-            optionList={projectData?.map((project, index) => ({
+            optionList={concepts.map((concept, index) => ({
               id: index,
-              value: project.projectId,
-              name: project.title,
+              value: concept,
+              name: concept,
             }))}
             onChange={(value) =>
-              handleChangeProject({
-                target: { name: "projectId", value },
-              })
+              handleChange({ target: { name: "concept", value } })
             }
-            value={formValues.projectId}
-          />
-        )}
-        <h3>주제/분야</h3>
-        <ControlMenu
-          optionList={concepts.map((concept, index) => ({
-            id: index,
-            value: concept,
-            name: concept,
-          }))}
-          onChange={(value) =>
-            handleChange({ target: { name: "concept", value } })
-          }
-          value={formValues.concept || ""}
-        />
-        <h3>모집 기간</h3>
-        <div className="member-grid-time">
-          <input
-            className="member-select3"
-            type="date"
-            required
-            name="recruitStartDate"
-            value={formValues.recruitStartDate}
-            onChange={handleChange}
-            data-placeholder="시작 일자"
-            ref={inputRefs.startDate}
-          />
-          ~
-          <input
-            type="date"
-            required
-            name="recruitEndDate"
-            value={formValues.recruitEndDate}
-            onChange={handleChange}
-            data-placeholder="종료 일자"
-            ref={inputRefs.endDate}
+            value={formValues.concept || ""}
           />
         </div>
-        <h3>지역</h3>
-        <ControlMenu
-          optionList={location.map((place, index) => ({
-            id: index,
-            value: place,
-            name: place,
-          }))}
-          onChange={(value) =>
-            handleChange({ target: { name: "region", value } })
-          }
-          value={formValues.region || ""}
-        />
+
+        <div className="member-grid-item">
+          <h3>모집 기간</h3>
+          <div className="member-grid-item-time">
+            <input
+              className="member-select3"
+              type="date"
+              required
+              name="recruitStartDate"
+              value={formValues.recruitStartDate}
+              onChange={handleChange}
+              data-placeholder="시작 일자"
+              ref={inputRefs.startDate}
+            />
+            ~
+            <input
+              type="date"
+              required
+              name="recruitEndDate"
+              value={formValues.recruitEndDate}
+              onChange={handleChange}
+              data-placeholder="종료 일자"
+              ref={inputRefs.endDate}
+            />
+          </div>
+        </div>
+
+        <div className="member-grid-item">
+          <h3>지역</h3>
+          <ControlMenu
+            optionList={location.map((place, index) => ({
+              id: index,
+              value: place,
+              name: place,
+            }))}
+            onChange={(value) =>
+              handleChange({ target: { name: "region", value } })
+            }
+            value={formValues.region || ""}
+          />
+        </div>
       </div>
     </Fragment>
   );

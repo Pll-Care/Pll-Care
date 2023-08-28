@@ -29,9 +29,9 @@ const EvaluationContent = ({
         {badges.map((b) => (
           <Tooltip title={b.name} key={b.name}>
             <div
-              className={`modal-badge ${badge === b.name ? "selected" : ""}`}
+              className={`modal-badge ${badge === b.value ? "selected" : ""}`}
               key={b.name}
-              onClick={() => badgeClickHandler(b.name)}
+              onClick={() => badgeClickHandler(b.value)}
             >
               <img src={b.image} alt={b.name} key={b.name} />
             </div>

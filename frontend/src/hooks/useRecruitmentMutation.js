@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 import {
   addLikeRecruitmentPost,
@@ -27,11 +28,23 @@ export const useAddLikeRecruitmentMutation = () => {
 // 모집글 생성
 export const useAddRecruitmentPostMutation = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   return useMutation(addRecruitmentPost, {
     onSuccess: () => {
       toast.success("모집글이 생성되었습니다.");
       queryClient.invalidateQueries("allRecruitmentPosts");
+      navigate("/recruitment");
+    },
+
+    onError: (error) => {
+      if (error.response.data.status === 500) {
+        toast.error("서버 에러가 발생했습니다. 잠시후에 다시 시도해주세요");
+      } else {
+        let message;
+        message = error.response.data.message;
+        toast.error(message);
+      }
     },
   });
 };
@@ -46,6 +59,16 @@ export const useModifyRecruitmentPostMutation = () => {
       queryClient.invalidateQueries("recruitmentDetail");
       queryClient.invalidateQueries("allRecruitmentPosts");
     },
+
+    onError: (error) => {
+      if (error.response.data.status === 500) {
+        toast.error("서버 에러가 발생했습니다. 잠시후에 다시 시도해주세요");
+      } else {
+        let message;
+        message = error.response.data.message;
+        toast.error(message);
+      }
+    },
   });
 };
 
@@ -57,6 +80,16 @@ export const useDeleteRecruitmentPostMutation = () => {
     onSuccess: () => {
       toast.success("모집글이 삭제되었습니다.");
       queryClient.invalidateQueries("allRecruitmentPosts");
+    },
+
+    onError: (error) => {
+      if (error.response.data.status === 500) {
+        toast.error("서버 에러가 발생했습니다. 잠시후에 다시 시도해주세요");
+      } else {
+        let message;
+        message = error.response.data.message;
+        toast.error(message);
+      }
     },
   });
 };
@@ -70,6 +103,16 @@ export const useApplyRecruitmentPostMutation = () => {
       toast.success("모집글 지원하였습니다.");
       queryClient.invalidateQueries("recruitmentDetail");
     },
+
+    onError: (error) => {
+      if (error.response.data.status === 500) {
+        toast.error("서버 에러가 발생했습니다. 잠시후에 다시 시도해주세요");
+      } else {
+        let message;
+        message = error.response.data.message;
+        toast.error(message);
+      }
+    },
   });
 };
 
@@ -81,6 +124,16 @@ export const useApplyCancelRecruitmentPostMutation = () => {
     onSuccess: () => {
       toast.success("모집글 지원취소하였습니다.");
       queryClient.invalidateQueries("recruitmentDetail");
+    },
+
+    onError: (error) => {
+      if (error.response.data.status === 500) {
+        toast.error("서버 에러가 발생했습니다. 잠시후에 다시 시도해주세요");
+      } else {
+        let message;
+        message = error.response.data.message;
+        toast.error(message);
+      }
     },
   });
 };

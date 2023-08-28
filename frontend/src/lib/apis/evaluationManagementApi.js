@@ -92,10 +92,6 @@ export const getFinalEvaluation = async (finalEvalId, projectId) => {
 
 // 중간 평가 생성
 export const makeNewMidEvaluation = async (data) => {
-  try {
-    const res = await customAxios.post("/auth/evaluation/midterm", data);
-    return res;
-  } catch (err) {
-    return err;
-  }
+  const res = await customAxios.post("/auth/evaluation/midterm", data);
+  return res;
 };

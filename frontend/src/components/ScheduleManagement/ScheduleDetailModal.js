@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 
 import CloseIcon from "@mui/icons-material/Close";
@@ -8,15 +8,16 @@ import { useMediaQuery } from "@mui/material";
 import ModalContainer from "../common/ModalContainer";
 import Button from "../common/Button";
 import AlertCheckModal from "../common/AlertCheckModal";
-
-import { getDetailSchedule } from "../../lib/apis/scheduleManagementApi";
-import { getDateTimeDuration } from "../../utils/date";
-import {
-  useDeleteScheduleMutation,
-  useModifyScheduleMutation,
-} from "../../hooks/useScheduleManagementMutation";
-import { query } from "../../utils/mediaQuery";
 import ScheduleRemainDate from "./ScheduleRemainDate";
+
+import {
+  getDetailSchedule,
+  modifySchedule,
+} from "../../lib/apis/scheduleManagementApi";
+import { getDateTimeDuration } from "../../utils/date";
+import { useDeleteScheduleMutation } from "../../hooks/useScheduleManagementMutation";
+import { query } from "../../utils/mediaQuery";
+import { getCompleteProjectData } from "../../lib/apis/managementApi";
 
 const ScheduleDetailModal = ({
   open,
@@ -52,7 +53,26 @@ const ScheduleDetailModal = ({
   const { mutate: deleteSchedule } = useDeleteScheduleMutation(deleteBody);
 
   // 수정 처리하는 react query 문
-  const { mutate: modifySchedule } = useModifyScheduleMutation(formValues);
+  const queryClient = useQueryClient();
+  const { mutate: modifyScheduleMutate } = useMutation(modifySchedule, {
+    onSuccess: () => {
+      setIsEdit((prevState) => !prevState);
+      queryClient.invalidateQueries("calendarSchedule");
+      queryClient.invalidateQueries("filterSchedule");
+      queryClient.invalidateQueries("overviewSchedule");
+      queryClient.invalidateQueries("scheduleDetail");
+      queryClient.invalidateQueries("todayAfterSchedule");
+      toast.success("일정이 수정되었습니다");
+    },
+    onError: (error) => {
+      if (error.response.data.status === 500) {
+        toast.error("서버 에러가 발생했습니다. 잠시 후에 시도해주세요");
+        setIsEdit((prevState) => !prevState);
+      } else {
+        toast.error(error.response.data.message);
+      }
+    },
+  });
 
   // 삭제 모달
   const hideDeleteModalHandler = () => {
@@ -81,6 +101,13 @@ const ScheduleDetailModal = ({
       },
     }
   );
+
+  // 완료 확인 react query문
+  const { data: isCompleted } = useQuery(
+    ["completeProjectData", projectId],
+    () => getCompleteProjectData(projectId)
+  );
+
   const { title, content, category, address, startDate, endDate, memberIds } =
     formValues;
 
@@ -153,11 +180,6 @@ const ScheduleDetailModal = ({
     }
     const start = new Date(startDate);
     const end = new Date(endDate);
-    if (start >= end) {
-      toast.error("일정 기간을 수정해주세요.");
-      inputRefs.endDate.current.focus();
-      return;
-    }
     if (category === "MEETING" && start.toDateString() !== end.toDateString()) {
       toast.error("모임의 일정은 같은 일로만 가능합니다.");
       inputRefs.startDate.current.focus();
@@ -181,24 +203,7 @@ const ScheduleDetailModal = ({
 
     const body = { ...formData, memberIds: memberData };
 
-    modifySchedule(body);
-
-    setFormValues({
-      projectId: projectId,
-      scheduleId: scheduleId,
-      startDate: "",
-      endDate: "",
-      state: scheduleState,
-      memberIds: [],
-      title: "",
-      content: "",
-      category: "MILESTONE",
-      location: "",
-    });
-
-    setIsEdit((prevState) => !prevState);
-
-    onClose();
+    modifyScheduleMutate(body);
   };
 
   return (
@@ -334,24 +339,29 @@ const ScheduleDetailModal = ({
           )}
         </div>
         <div className="schedule-detail-modal-button">
-          {data?.deleteAuthorization && (
+          {data?.deleteAuthorization &&
+            scheduleState !== "COMPLETE" &&
+            !isCompleted && (
+              <Button
+                text="삭제하기"
+                type="underlined"
+                size="small"
+                onClick={() => setDeleteModalVisible((prevState) => !prevState)}
+              />
+            )}
+          {scheduleState !== "COMPLETE" && !isCompleted && (
             <Button
-              text="삭제하기"
-              type="underlined"
+              text={isEdit ? "수정완료" : "수정하기"}
               size="small"
-              onClick={() => setDeleteModalVisible((prevState) => !prevState)}
+              type="positive"
+              color="white"
+              onClick={
+                isEdit
+                  ? handleCompleteModify
+                  : () => setIsEdit((prevState) => !prevState)
+              }
             />
           )}
-          <Button
-            text={isEdit ? "수정완료" : "수정하기"}
-            size="small"
-            type="positive"
-            onClick={
-              isEdit
-                ? handleCompleteModify
-                : () => setIsEdit((prevState) => !prevState)
-            }
-          />
         </div>
       </div>
     </ModalContainer>

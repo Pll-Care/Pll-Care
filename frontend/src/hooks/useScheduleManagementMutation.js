@@ -16,7 +16,6 @@ export const useAddNewScheduleMutation = () => {
       queryClient.invalidateQueries("filterSchedule");
       queryClient.invalidateQueries("overviewSchedule");
       queryClient.invalidateQueries("todayAfterSchedule");
-
       toast.success("일정이 생성되었습니다");
     },
   });
@@ -34,6 +33,9 @@ export const useModifyScheduleMutation = () => {
       queryClient.invalidateQueries("todayAfterSchedule");
       toast.success("일정이 수정되었습니다");
     },
+    onError: (error) => {
+      toast.error(error.response.data.message);
+    },
   });
 };
 
@@ -48,6 +50,15 @@ export const useDeleteScheduleMutation = () => {
       queryClient.invalidateQueries("overviewSchedule");
       toast.success("일정이 삭제되었습니다");
     },
+    onError: (error) => {
+      if (error.response.data.status === 500) {
+        toast.error("서버 에러가 발생했습니다. 잠시후에 다시 시도해주세요");
+      } else {
+        let message;
+        message = error.response.data.message;
+        toast.error(message);
+      }
+    },
   });
 };
 
@@ -58,6 +69,15 @@ export const useCompleteScheduleMutation = () => {
     onSuccess: () => {
       queryClient.invalidateQueries("filterSchedule");
       toast.success("일정이 완료처리되었습니다");
+    },
+    onError: (error) => {
+      if (error.response.data.status === 500) {
+        toast.error("서버 에러가 발생했습니다. 잠시후에 다시 시도해주세요");
+      } else {
+        let message;
+        message = error.response.data.message;
+        toast.error(message);
+      }
     },
   });
 };

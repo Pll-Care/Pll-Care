@@ -8,16 +8,17 @@ import Button from "../common/Button";
 import AlertCheckModal from "../common/AlertCheckModal";
 import ScheduleEvaluationModal from "./ScheduleEvaluationModal";
 import ScheduleDetailModal from "./ScheduleDetailModal";
+import ScheduleRemainDate from "./ScheduleRemainDate";
 
 import {
   getDateTimeDuration,
   getEnglishWeekdays,
-  getRemainDate,
   getStringDate,
 } from "../../utils/date";
 import { getProjectId } from "../../utils/getProjectId";
 import { useCompleteScheduleMutation } from "../../hooks/useScheduleManagementMutation";
-import ScheduleRemainDate from "./ScheduleRemainDate";
+import { useQuery } from "react-query";
+import { getCompleteProjectData } from "../../lib/apis/managementApi";
 
 const ScheduleItem = (props) => {
   const projectId = getProjectId(useLocation());
@@ -63,13 +64,18 @@ const ScheduleItem = (props) => {
     setDetailModalVisible((prevState) => !prevState);
   };
 
+  // 완료 확인 react query문
+  const { data: isCompleted } = useQuery(
+    ["completeProjectData", projectId],
+    () => getCompleteProjectData(projectId)
+  );
+
   const time = getDateTimeDuration(
     props.data.startDate,
     props.data.endDate,
     props.data.scheduleCategory
   );
   const modifyDate = getStringDate(new Date(props.data.modifyDate));
-  //const remainDate = getRemainDate(props.data.startDate);
   const day = new Date(props.data.startDate).getDate();
 
   return (
@@ -88,7 +94,7 @@ const ScheduleItem = (props) => {
       <AlertCheckModal
         open={completeModalVisible}
         onClose={hideCompleteModalHandler}
-        text="일정이 완료되었습니까?"
+        text="예정된 종료 일자보다 먼저 일정이 완료되었습니까?"
         clickHandler={() => compeleteSchedule(completeBody)}
       />
 
@@ -105,16 +111,18 @@ const ScheduleItem = (props) => {
         <h2>{getEnglishWeekdays(props.data.startDate)}</h2>
 
         {props.option === "pastAll" && (
-          <Button text={"일정 완료"} size="small" />
+          <Button text={"일정 완료"} size="small" type={"positive_dark"} />
         )}
-        {props.option !== "pastAll" && props.data.state === "COMPLETE" && (
-          <Button
-            text={"✍평가 작성"}
-            size="small"
-            onClick={openModalHandler}
-          />
-        )}
-        {props.data.state === "ONGOING" && (
+        {props.option !== "pastAll" &&
+          props.data.state === "COMPLETE" &&
+          !isCompleted && (
+            <Button
+              text={"✍평가 작성"}
+              size="small"
+              onClick={openModalHandler}
+            />
+          )}
+        {props.data.state === "ONGOING" && !isCompleted && (
           <Button
             text={"🙂완료시키기"}
             size="small"

@@ -1,5 +1,8 @@
-import { useLocation } from "react-router";
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router";
 import { useQuery } from "react-query";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
@@ -14,12 +17,34 @@ import Card from "../common/Card";
 import { getOverviewAllSchedule } from "../../lib/apis/scheduleManagementApi";
 import { getDateTimeDuration } from "../../utils/date";
 import { getProjectId } from "../../utils/getProjectId";
+import { isToken } from "../../utils/localstroageHandler";
+import { authActions } from "../../redux/authSlice";
 
 const OverviewChart = () => {
   const projectId = getProjectId(useLocation());
-  const { isLoading, data, status } = useQuery("overviewSchedule", () =>
-    getOverviewAllSchedule(projectId)
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { isLoading, data, status } = useQuery(
+    "overviewSchedule",
+    () => getOverviewAllSchedule(projectId),
+    {
+      retry: 0,
+      onError: (error) => {
+        if (error.response.data.code === "PROJECT_004") {
+          navigate("/management");
+          toast.error("해당 오버뷰 페이지 접근 권한이 없습니다.");
+        }
+      },
+    }
   );
+
+  useEffect(() => {
+    if (!isToken("access_token")) {
+      navigate("/");
+      dispatch(authActions.setIsLoginModalVisible(true));
+    }
+  }, [dispatch, navigate]);
 
   const months = [
     "January",

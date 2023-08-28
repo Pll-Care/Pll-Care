@@ -1,21 +1,63 @@
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useQuery } from "react-query";
+import { toast } from "react-toastify";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 
 import CalendarList from "./CalendarList";
-import { getCalendarAllSchedule } from "../../lib/apis/scheduleManagementApi";
+import {
+  getCalendarAllSchedule,
+  getOverviewAllSchedule,
+} from "../../lib/apis/scheduleManagementApi";
 import { getProjectId } from "../../utils/getProjectId";
 
 const MyCalendar = () => {
   const projectId = getProjectId(useLocation());
+  const navigate = useNavigate();
 
-  const { data, status } = useQuery(["calendarSchedule", projectId], () =>
-    getCalendarAllSchedule(projectId)
+  const { data, status } = useQuery(
+    ["calendarSchedule", projectId],
+    () => getCalendarAllSchedule(projectId),
+    {
+      retry: 0,
+      onError: (error) => {
+        if (error.response.data.code === "PROJECT_004") {
+          toast.error("해당 일정 접근 권한이 없습니다.");
+        }
+        navigate("/management");
+      },
+    }
+  );
+
+  const { data: overview } = useQuery(
+    "overviewSchedule",
+    () => getOverviewAllSchedule(projectId),
+    {
+      retry: 0,
+      onError: (error) => {
+        navigate("/management");
+        toast.error(error.response.data.message);
+      },
+    }
   );
 
   // 달력에 표시할 모든 일정들을 저장할 배열
   const events = [];
+
+  //const start = {
+  //  title: "👏start",
+  //  date: overview.startDate,
+  //  color: "#bebebe",
+  //};
+  //events.push(start);
+
+  //const finish = {
+  //  title: "🏆finish",
+  //  date: overview.endDate,
+  //  color: "#bebebe",
+  //};
+  //events.push(finish);
+
   data?.meetings?.forEach((meetings) => {
     const meeting = {
       title: meetings.title,
@@ -38,7 +80,7 @@ const MyCalendar = () => {
   // 일정 표시하는 부분 커스텀
   const eventContent = (arg) => {
     return {
-      html: `<div>💻${arg.event.title}</div>`,
+      html: `<div>${arg.event.title}</div>`,
     };
   };
 
