@@ -8,13 +8,13 @@ import lombok.Getter;
 @Getter
 public class MidTermEvalCreateRequest {
 
-    @NotBlank
+    @NotNull
     private Long projectId;
 
-    @NotBlank
+    @NotNull
     private Long votedId;
 
-    @NotBlank
+    @NotNull
     private Long scheduleId;
 
     // ?
