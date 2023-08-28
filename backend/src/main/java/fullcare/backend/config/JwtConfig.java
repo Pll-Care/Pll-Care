@@ -41,6 +41,10 @@ public class JwtConfig {
         // ! session 미사용 설정
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+        // ! 그 외의 부가 설정
+        http.httpBasic().disable()
+//                .anonymous().disable()
+                .csrf().disable().headers().frameOptions().disable();
 
         // ! HTTP 경로 관련 설정
         http
@@ -59,12 +63,6 @@ public class JwtConfig {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);
 //                .accessDeniedHandler(jwtAccessDeniedHandler);
-
-
-        // ! 그 외의 부가 설정
-        http.httpBasic().disable()
-//                .anonymous().disable()
-                .csrf().disable().headers().frameOptions().disable();
 
 
         return http.build();

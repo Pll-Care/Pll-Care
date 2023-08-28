@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,9 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Key;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
-@Transactional(readOnly = true)
 @Service
 @Slf4j
 public class JwtTokenService {
@@ -52,27 +49,29 @@ public class JwtTokenService {
     }
 
     public String createAccessToken(CustomOAuth2User oAuth2User) {
-//        ConcurrentHashMap<String, Object> claims = new ConcurrentHashMap<>();
-//        HashMap<String, Object> claims = new HashMap<>();
-//        claims.put("sub", oAuth2User.getName());
-//        claims.put("role", oAuth2User.getAuthorities());
-//        claims.put("nickname", oAuth2User.getUsername());
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + accessTokenValidationMilliseconds);
 
         return Jwts.builder()
                 .setSubject(oAuth2User.getName())
                 .claim("role", oAuth2User.getAuthorities())
-                .claim("nickname", oAuth2User.getMember().getNickname())
-                .setExpiration(new Date(System.currentTimeMillis() + accessTokenValidationMilliseconds))
+                .claim("username", oAuth2User.getUsername())
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .setHeaderParam("typ", "JWT")
                 .compact();
     }
 
+
     public String createRefreshToken(CustomOAuth2User oAuth2User) {
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + refreshTokenValidationMilliseconds);
 
         return Jwts.builder()
                 .setSubject(oAuth2User.getName())
-                .setExpiration(new Date(System.currentTimeMillis() + refreshTokenValidationMilliseconds))
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .setHeaderParam("typ", "JWT")
                 .compact();
@@ -81,15 +80,14 @@ public class JwtTokenService {
 
     @Transactional
     public String[] reIssueTokens(String refreshToken) {
-        Authentication authentication = getAuthentication(refreshToken);
-        Member findMember = (Member) authentication.getPrincipal();
-
+        Member findMember = getMemberByJwtToken(refreshToken);
         String[] tokens = new String[2];
 
         if (findMember.getRefreshToken().equals(refreshToken)) {
             CustomOAuth2User findUser = CustomOAuth2User.create(findMember);
-            String newRefreshToken = createRefreshToken(findUser);
             String newAccessToken = createAccessToken(findUser);
+            String newRefreshToken = createRefreshToken(findUser);
+
             tokens[0] = newAccessToken;
             tokens[1] = newRefreshToken;
             findMember.updateRefreshToken(newRefreshToken);
@@ -121,7 +119,7 @@ public class JwtTokenService {
         }
     }
 
-    public Authentication getAuthentication(String jwtToken) {
+    private Member getMemberByJwtToken(String jwtToken) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
@@ -129,11 +127,14 @@ public class JwtTokenService {
                 .getBody();
 
         String memberId = claims.getSubject();
+        return memberRepository.findById(Long.valueOf(memberId)).orElseThrow(() -> new CustomJwtException(JwtErrorCode.NOT_FOUND_USER));
+    }
 
-        Member member = memberRepository.findById(Long.valueOf(memberId)).orElseThrow(() -> new CustomJwtException(JwtErrorCode.NOT_FOUND_USER));
-        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(member.getRole().getValue()));
 
-        return new UsernamePasswordAuthenticationToken(member, null, authorities);
+    public Authentication getAuthentication(String jwtToken) {
+        Member findMember = getMemberByJwtToken(jwtToken);
+
+        return new UsernamePasswordAuthenticationToken(findMember, null, Collections.singletonList(new SimpleGrantedAuthority(findMember.getRole().getValue())));
     }
 
 }

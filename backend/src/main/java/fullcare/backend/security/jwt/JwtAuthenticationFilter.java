@@ -28,7 +28,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        // todo 토큰이 없어도 모두가 접근이 가능한 API와 토큰을 이용해 인증을 해야만 접근 가능한 API를 어떻게 구분해야하는가?
         try {
             String refreshToken = getRefreshToken(request);
             String accessToken = getAccessToken(request);
