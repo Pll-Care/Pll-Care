@@ -12,7 +12,6 @@ import ScheduleDetailModal from "./ScheduleDetailModal";
 import {
   getDateTimeDuration,
   getEnglishWeekdays,
-  getRemainDate,
   getStringDate,
 } from "../../utils/date";
 import { getProjectId } from "../../utils/getProjectId";
@@ -88,7 +87,7 @@ const ScheduleItem = (props) => {
       <AlertCheckModal
         open={completeModalVisible}
         onClose={hideCompleteModalHandler}
-        text="일정이 완료되었습니까?"
+        text="예정된 종료 일자보다 먼저 일정이 완료되었습니까?"
         clickHandler={() => compeleteSchedule(completeBody)}
       />
 

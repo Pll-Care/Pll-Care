@@ -58,5 +58,14 @@ export const useCompleteScheduleMutation = () => {
       queryClient.invalidateQueries("filterSchedule");
       toast.success("일정이 완료처리되었습니다");
     },
+    onError: (error) => {
+      if (error.response.data.status === 500) {
+        toast.error("서버 에러가 발생했습니다. 잠시후에 다시 시도해주세요");
+      } else {
+        let message;
+        message = error.response.data.message;
+        toast.error(message);
+      }
+    },
   });
 };

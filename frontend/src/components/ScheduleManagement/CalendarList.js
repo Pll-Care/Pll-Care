@@ -39,8 +39,6 @@ const CalendarList = () => {
         <h5>오늘</h5>
         <h1>{calendar}</h1>
       </div>
-      {status === "error" && <h5>통신 오류났습니다.</h5>}
-
       {isLoading && <Loading />}
       {status === "success" && data && data?.length === 0 && (
         <h5>오늘 회의가 없습니다.</h5>
