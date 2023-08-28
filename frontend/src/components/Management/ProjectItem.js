@@ -40,13 +40,15 @@ const ProjectItem = ({ project, handleLeaveProjectClick }) => {
             </div>
           </div>
           {project.state === "ONGOING" && (
-            <div className="project-item-button-wrapper">
+            <div
+              className="project-item-button-wrapper"
+              onClick={(e) => {
+                handleLeaveProjectClick(e, project.projectId);
+              }}
+            >
               <figure
                 style={{
                   backgroundImage: `url(${leaveImgUrl})`,
-                }}
-                onClick={(e) => {
-                  handleLeaveProjectClick(e, project.projectId);
                 }}
               />
               <div className="leave-button-text">팀 나가기</div>

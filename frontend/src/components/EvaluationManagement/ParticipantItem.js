@@ -34,7 +34,7 @@ const ParticipantItem = ({
 
   return (
     <div
-      onClick={() => handleClickParticipant(member.id)}
+      onClick={() => handleClickParticipant(member.memberId)}
       className="evaluation-management-participant"
     >
       <div className="evaluation-management-participant-left-col">
@@ -79,7 +79,7 @@ const ParticipantItem = ({
             onClick={(e) => {
               e.stopPropagation();
               setBadgeQuantity(member.badgeDtos);
-              setParticipantId(member.id);
+              setParticipantId(member.memberId);
               handleFinalEvaluationModal("evaluation", member.name, -1);
             }}
           />
@@ -93,7 +93,7 @@ const ParticipantItem = ({
             onClick={(e) => {
               e.stopPropagation();
               setBadgeQuantity(member.badgeDtos);
-              setParticipantId(member.id);
+              setParticipantId(member.memberId);
               handleFinalEvaluationModal(
                 "showEvaluation",
                 member.name,

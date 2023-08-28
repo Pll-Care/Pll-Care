@@ -2,12 +2,17 @@ import { useState, Fragment } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
 
+import { Box } from "@mui/material";
+
 import { authActions } from "../../redux/authSlice";
 import Button from "../common/Button";
 import AlertCheckModal from "../common/AlertCheckModal";
 import { positions } from "../../utils/recruitment";
 import { isToken } from "../../utils/localstroageHandler";
-import { useApplyRecruitmentPostMutation } from "../../hooks/useRecruitmentMutation";
+import {
+  useApplyCancelRecruitmentPostMutation,
+  useApplyRecruitmentPostMutation,
+} from "../../hooks/useRecruitmentMutation";
 
 const RecruitmentDetailPosition = ({
   isEdit,
@@ -20,10 +25,18 @@ const RecruitmentDetailPosition = ({
   const { id } = useParams();
   // 지원하기 모달
   const [applyModal, setApplyModal] = useState(false);
-  const [position, setPostion] = useState("");
+  const [position, setPosition] = useState("");
+
+  // 지원취소하기 모달
+  const [applyCancelModal, setApplyCancelModal] = useState(false);
+  const [cancelPosition, setCancelPosition] = useState("");
 
   // 모집글 지원
   const { mutate: applyPostMutate } = useApplyRecruitmentPostMutation();
+
+  // 모집글 지원 취소
+  const { mutate: applyCancelPostMutate } =
+    useApplyCancelRecruitmentPostMutation();
 
   // 지원하기 버튼을 눌렀을 때
   const handlePositionApply = (pos) => {
@@ -31,9 +44,20 @@ const RecruitmentDetailPosition = ({
       dispatch(authActions.setIsLoginModalVisible(true));
     } else {
       setApplyModal(true);
-      setPostion(pos);
+      setPosition(pos);
     }
   };
+
+  // 지원 취소하기 버튼을 눌렀을 때
+  const handlePositionApplyCancel = (pos) => {
+    if (!isToken("access_token")) {
+      dispatch(authActions.setIsLoginModalVisible(true));
+    } else {
+      setApplyCancelModal(true);
+      setCancelPosition(pos);
+    }
+  };
+
   // 포지션 별로 인원수 수정 함수
   const handleChangePosition = (e) => {
     const { name, value } = e.target;
@@ -50,12 +74,22 @@ const RecruitmentDetailPosition = ({
   };
   return (
     <Fragment>
+      {/*지원하기 모달*/}
       <AlertCheckModal
         open={applyModal}
         onClose={() => setApplyModal(false)}
         text={`해당 모집글 ${position}에 지원하시겠습니까?`}
         clickHandler={() => {
           applyPostMutate({ postId: id, position: position });
+        }}
+      />
+      {/*지원 취소 모달*/}
+      <AlertCheckModal
+        open={applyCancelModal}
+        onClose={() => setApplyCancelModal(false)}
+        text={`해당 모집글 ${cancelPosition} 지원을 취소하시겠습니까?`}
+        clickHandler={() => {
+          applyCancelPostMutate(id);
         }}
       />
       <div className="recruitment-detail-container">
@@ -100,6 +134,25 @@ const RecruitmentDetailPosition = ({
                   text="지원"
                   onClick={() => handlePositionApply(pos)}
                 />
+              ))}
+            </div>
+          )}
+
+          {!data?.available && data?.applyPosition && (
+            <div className="recruitment-grid-row">
+              {positions.map((pos) => (
+                <Fragment>
+                  {data?.applyPosition === pos ? (
+                    <Button
+                      className="grid-item-three"
+                      size="small"
+                      text="지원취소"
+                      onClick={() => handlePositionApplyCancel(pos)}
+                    />
+                  ) : (
+                    <Box sx={{ backgroundColor: "white", height: "20px" }} />
+                  )}
+                </Fragment>
               ))}
             </div>
           )}

@@ -112,8 +112,7 @@ const Management = () => {
               setCurrentPage={
                 allProjectListVisible ? setCurrentPage : setOngoingCurrentPage
               }
-              recordDatasPerPage={recordDatasPerPage}
-              totalData={data.totalElements}
+              totalPages={data.totalPages}
             />
           </div>
           {isModalVisible ? (

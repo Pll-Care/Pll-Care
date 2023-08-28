@@ -1,97 +1,135 @@
 import { customAxios } from "./customAxios";
+import { toast } from "react-toastify";
 
 export const getProjectList = async (pageNum = 1, state) => {
   let response = null;
 
-  if (state === "ALL") {
-    response = await customAxios.get(
-      `/auth/project/list?page=${pageNum}&size=4&state=ONGOING&state=COMPLETE`
-    );
-  } else {
-    response = await customAxios.get(
-      `/auth/project/list?page=${pageNum}&size=4&state=${state}`
-    );
-  }
+  try {
+    if (state === "ALL") {
+      response = await customAxios.get(
+        `/auth/project/list?page=${pageNum}&size=4&state=ONGOING&state=COMPLETE`
+      );
+    } else {
+      response = await customAxios.get(
+        `/auth/project/list?page=${pageNum}&size=4&state=${state}`
+      );
+    }
 
-  return {
-    projectList: response.data.content,
-    totalElements: response.data.totalElements,
-    totalPages: response.data.totalPages,
-  };
+    return {
+      projectList: response.data.content,
+      totalElements: response.data.totalElements,
+      totalPages: response.data.totalPages,
+    };
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export const createProject = async (newProjectObj) => {
-  const response = await customAxios.post("/auth/project", newProjectObj);
+  try {
+    const response = await customAxios.post("/auth/project", newProjectObj);
 
-  return response.data.content;
-};
+    toast.success("생성되었습니다!");
 
-export const deleteProject = async (projectId) => {
-  const response = await customAxios.delete(`/auth/project/${projectId}`);
-
-  return response.data.projectId;
-};
-
-export const editProject = async (newProjectData) => {
-  const response = await customAxios.put(
-    `/auth/project/${newProjectData.projectId}`,
-    {
-      title: newProjectData.title,
-      description: newProjectData.description,
-      state: newProjectData.state,
-      startDate: newProjectData.startDate,
-      endDate: newProjectData.endDate,
-      imageUrl: newProjectData.imageUrl,
+    return response.data.content;
+  } catch (e) {
+    if (
+      e.response.data.code === "MEMBER_001" ||
+      e.response.data.code === "PROJECT_003"
+    ) {
+      toast.error(e.response.data.message);
     }
-  );
-
-  return response.data;
-};
-
-export const completeProject = async (projectId) => {
-  const response = await customAxios.post(
-    `/auth/project/${projectId}/complete`
-  );
-
-  return response.data;
+  }
 };
 
 export const leaveProject = async (projectId) => {
-  const response = await customAxios.delete(
-    `/auth/project/${projectId}/selfout`
-  );
+  try {
+    const response = await customAxios.delete(
+      `/auth/project/${projectId}/selfout`
+    );
 
-  return response.data;
+    toast.success("탈퇴되었습니다!");
+
+    return response.data;
+  } catch (e) {
+    if (
+      e.response.data.code === "PROJECT_001" ||
+      e.response.data.code === "PROJECT_004" ||
+      e.response.data.code === "PROJECT_011"
+    ) {
+      toast.error(e.response.data.message);
+    } else if (e.response.data.code === "PROJECT_012") {
+      toast.error(
+        "리더를 위임하고 탈퇴하세요."
+      );
+    }
+  }
 };
 
 export const uploadImage = async (imgData) => {
-  const response = await customAxios.post(
-    `/auth/upload/image?dir=${imgData.dir}`,
-    {
-      file: imgData.formData,
-    },
-    {
-      headers: { "Content-Type": "multipart/form-data" },
-    }
-  );
+  try {
+    const response = await customAxios.post(
+      `/auth/upload/image?dir=${imgData.dir}`,
+      {
+        file: imgData.formData,
+      },
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
 
-  return response.data.imageUrl;
+    return response.data.imageUrl;
+  } catch (e) {
+    if (e.response.data.code === "AWS_002") {
+      toast.error(e.response.data.message);
+    }
+  }
 };
 
 export const deleteImage = async (imgUrl) => {
-  const response = await customAxios.delete(`/auth/upload/image?url=${imgUrl}`);
+  try {
+    const response = await customAxios.delete(
+      `/auth/upload/image?url=${imgUrl}`
+    );
 
-  return response.data;
+    return response.data;
+  } catch (e) {
+    if (e.response.data.code === "AWS_001") {
+      toast.error(e.response.data.message);
+    }
+  }
 };
 
 export const getCompleteProjectData = async (projectId) => {
-  const response = await customAxios.get(
-    `/auth/project/${projectId}/iscompleted`
-  );
+  try {
+    const response = await customAxios.get(
+      `/auth/project/${projectId}/iscompleted`
+    );
 
-  return response.data.completed;
+    return response.data.completed;
+  } catch (e) {
+    if (
+      e.response.data.code === "PROJECT_001" ||
+      e.response.data.code === "PROJECT_004"
+    ) {
+      toast.error(e.response.data.message);
+    }
+  }
 };
 
-export const getIsLeaderData = (projectId) => {
-  return customAxios.get(`/auth/project/${projectId}/isleader`);
+export const getIsLeaderData = async (projectId) => {
+  try {
+    const response = await customAxios.get(
+      `/auth/project/${projectId}/isleader`
+    );
+
+    return response.data.leader;
+  } catch (e) {
+    if (
+      e.response.data.code === "PROJECT_001" ||
+      e.response.data.code === "PROJECT_004"
+    ) {
+      toast.error(e.response.data.message);
+    }
+  }
 };

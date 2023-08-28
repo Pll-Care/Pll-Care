@@ -2,16 +2,16 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { getIsLeaderData } from "../lib/apis/managementApi";
-import { toast } from "react-toastify";
 import { useRouter } from "../hooks/useRouter";
+import { toast } from "react-toastify";
 
 const ProjectDetailContext = createContext(null);
 export const useProjectDetail = () => useContext(ProjectDetailContext);
 
 export function ProjectDetailProvider({ children }) {
   const [isLeader, setIsLeader] = useState(false);
-  const { id: projectId } = useParams();
   const { routeOptionTo } = useRouter();
+  const { id: projectId } = useParams();
 
   useEffect(() => {
     const getIsLeader = async () => {

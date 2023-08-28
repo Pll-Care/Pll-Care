@@ -76,7 +76,7 @@
   margin: 0px 7%;
   @include mobile {
     margin: 0px 7px;
-    padding: 1rem;
+    padding: 10px;
   }
   input,
   textarea,
@@ -115,7 +115,7 @@
     display: grid;
     grid-template-columns: 15% 85%;
     @include mobile {
-      grid-template-columns: 30% 70%;
+      grid-template-columns: 27% 73%;
     }
     @include tablet {
       grid-template-columns: 20% 80%;
@@ -134,6 +134,14 @@
       align-items: center;
       h5 {
         margin-left: 10px;
+        @include mobile {
+          margin-left: 5px;
+        }
+      }
+      .mui-icon {
+        @include mobile {
+          transform: scale(0.7);
+        }
       }
     }
     &-duration {
@@ -147,15 +155,16 @@
     border-bottom: 1px solid rgb(204, 204, 204);
     padding-bottom: 50px;
     display: grid;
-    grid-template-columns: 15% 85%;
-    @include mobile {
-      grid-template-columns: 20% 80%;
-    }
+    grid-template-columns: 20% 80%;
+
     @include tablet {
       grid-template-columns: 20% 80%;
     }
-    grid-gap: 20px 0px;
+    grid-gap: 10px 0px;
     align-content: center;
+    @include mobile {
+      grid-template-columns: 20% 80%;
+    }
     &-select {
       display: flex;
     }
@@ -170,6 +179,11 @@
       grid-gap: 50px 0;
       align-items: center;
       margin-right: 30px;
+      margin-bottom: 0px;
+
+      @include mobile {
+        margin-right: 20px;
+      }
 
       &-item {
         display: flex;

@@ -4,7 +4,7 @@
   &-main-header {
     background-color: $green-200;
     color: white;
-    height: 254px;
+    height: 255px;
     border-radius: 0px 0px 35px 35px;
     padding: 25px 45px;
 
@@ -300,13 +300,15 @@
         border-radius: 10px;
         margin-bottom: 10px;
         height: 40px;
-        width: 85%;
+        width: 87%;
         color: $green-400;
 
         .project-editor-period {
           @include mobile {
             @include displayFlex(column);
           }
+
+          @include displayFlex;
         }
 
         input[type="date"] {
@@ -337,6 +339,7 @@
 
           @include m_heading_03;
         }
+
         @include heading_05;
         @include displayFlex(row, space-around);
       }

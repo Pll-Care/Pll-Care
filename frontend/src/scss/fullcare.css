@@ -288,7 +288,7 @@ a {
   align-items: center;
 }
 .main-header-medium-col {
-  width: 35%;
+  width: 38%;
 }
 @media (min-width: 767px) and (max-width: 1024px) {
   .main-header-medium-col {
@@ -733,9 +733,16 @@ a {
   width: -moz-max-content;
   width: max-content;
   height: 70px;
+  font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
-  font-family: "Noto Sans KR", sans-serif;
-  font-weight: bold;
+  font-weight: 600;
+}
+@media (max-width: 767px) {
+  .Toastify__toast-container {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
 }
 
 .Toastify__toast-icon {
@@ -764,15 +771,40 @@ a {
 
 .Toastify__toast.Toastify__toast--error::before,
 .Toastify__toast.Toastify__toast--success::before {
-  margin: auto 15px;
+  margin: auto 10px;
+  width: 30px;
+  height: 30px;
+  content: "";
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+@media (max-width: 767px) {
+  .Toastify__toast.Toastify__toast--error::before,
+  .Toastify__toast.Toastify__toast--success::before {
+    margin: auto 0;
+  }
 }
 
 .Toastify__toast.Toastify__toast--error::before {
-  content: url("../assets/toast-message-error-img.png");
+  background-image: url("../assets/toast-message-error-img.png");
 }
 
 .Toastify__toast.Toastify__toast--success::before {
-  content: url("../assets/toast-message-check-img.png");
+  background-image: url("../assets/toast-message-check-img.png");
+}
+
+@media (max-width: 767px) {
+  .toast-container {
+    top: 5px !important;
+    left: 5px !important;
+    height: 50px;
+  }
+}
+
+@media (max-width: 767px) {
+  .Toastify__close-button {
+    display: none;
+  }
 }
 
 .loading-indicator-container {
@@ -3265,7 +3297,7 @@ a {
 .management-main-header {
   background-color: #01e89e;
   color: white;
-  height: 254px;
+  height: 255px;
   border-radius: 0px 0px 35px 35px;
   padding: 25px 45px;
   display: flex;
@@ -3585,7 +3617,7 @@ a {
   border-radius: 10px;
   margin-bottom: 10px;
   height: 40px;
-  width: 85%;
+  width: 87%;
   color: #00aa72;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
@@ -3593,6 +3625,12 @@ a {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  align-items: center;
+}
+.MuiBox-root .project-editor-body .project-editor-right-col .project-editor-first-row .project-editor-period {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   align-items: center;
 }
 @media (max-width: 767px) {
@@ -4193,34 +4231,36 @@ a {
 
 .member-option {
   background-color: #01e89e;
-  padding: 2rem;
+  padding: 25px 45px;
   top: 0;
+  height: 254px;
+  border-radius: 35px 35px 0px 0px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  color: white;
 }
 @media (max-width: 767px) {
   .member-option {
-    padding: 20px;
+    padding: 8px;
+    height: 130px;
+    border-radius: 0px;
   }
 }
-.member-option-title {
-  display: flex;
-  align-items: center;
-  color: white;
-  margin-top: 80px;
-}
-.member-option-title h2 {
+.member-option h2 {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 38px;
   font-weight: 700;
 }
-.member-option-title h3 {
+.member-option h3 {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 32px;
   font-weight: 700;
   margin-left: 10px;
 }
 @media (max-width: 767px) {
-  .member-option-title h2,
-  .member-option-title h3 {
+  .member-option h2,
+  .member-option h3 {
     font-family: "IBM Plex Sans KR", sans-serif;
     font-size: 14px;
     font-weight: 700;
@@ -4727,7 +4767,7 @@ a {
 @media (max-width: 767px) {
   .recruitment-detail {
     margin: 0px 7px;
-    padding: 1rem;
+    padding: 10px;
   }
 }
 .recruitment-detail input,
@@ -4789,7 +4829,7 @@ a {
 }
 @media (max-width: 767px) {
   .recruitment-detail-content {
-    grid-template-columns: 30% 70%;
+    grid-template-columns: 27% 73%;
   }
 }
 @media (min-width: 767px) and (max-width: 1024px) {
@@ -4807,6 +4847,16 @@ a {
 .recruitment-detail-content-name h5 {
   margin-left: 10px;
 }
+@media (max-width: 767px) {
+  .recruitment-detail-content-name h5 {
+    margin-left: 5px;
+  }
+}
+@media (max-width: 767px) {
+  .recruitment-detail-content-name .mui-icon {
+    transform: scale(0.7);
+  }
+}
 .recruitment-detail-content-duration {
   display: flex;
 }
@@ -4815,16 +4865,16 @@ a {
   border-bottom: 1px solid rgb(204, 204, 204);
   padding-bottom: 50px;
   display: grid;
-  grid-template-columns: 15% 85%;
-  grid-gap: 20px 0px;
+  grid-template-columns: 20% 80%;
+  grid-gap: 10px 0px;
   align-content: center;
 }
-@media (max-width: 767px) {
+@media (min-width: 767px) and (max-width: 1024px) {
   .recruitment-detail-container {
     grid-template-columns: 20% 80%;
   }
 }
-@media (min-width: 767px) and (max-width: 1024px) {
+@media (max-width: 767px) {
   .recruitment-detail-container {
     grid-template-columns: 20% 80%;
   }
@@ -4845,6 +4895,12 @@ a {
   grid-gap: 50px 0;
   align-items: center;
   margin-right: 30px;
+  margin-bottom: 0px;
+}
+@media (max-width: 767px) {
+  .recruitment-detail-container .recruitment-grid-row {
+    margin-right: 20px;
+  }
 }
 .recruitment-detail-container .recruitment-grid-row-item {
   display: flex;

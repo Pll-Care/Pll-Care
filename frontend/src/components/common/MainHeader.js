@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "../../hooks/useRouter";
@@ -14,6 +13,11 @@ import { useGeneralClient } from "../../context/Client/GeneralClientContext";
 import { userInfoActions } from "../../redux/userInfoSlice";
 
 import useLinkMenuClick from "../../hooks/useLinkMenuClick";
+
+const headerMenu = [
+  { id: 1, link: "/management", title: "프로젝트 관리" },
+  { id: 2, link: "/recruitment", title: "인원 모집" },
+];
 
 const MainHeader = () => {
   const [isToggleMenuOpen, setIsToggleMenuOpen] = useState(false);
@@ -164,8 +168,3 @@ const MainHeader = () => {
 };
 
 export default MainHeader;
-
-const headerMenu = [
-  { id: 1, link: "/management", title: "프로젝트 관리" },
-  { id: 2, link: "/recruitment", title: "인원 모집" },
-];

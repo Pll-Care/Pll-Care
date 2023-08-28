@@ -3,12 +3,10 @@ import { useState } from "react";
 const Pagination = ({
   currentPage,
   setCurrentPage,
-  recordDatasPerPage,
-  totalData,
+  totalPages,
   color = "gray",
 }) => {
   let pageNumbers = [];
-  const totalPages = Math.ceil(totalData / recordDatasPerPage);
   const maxDataNumbers = 5;
 
   const [pageIndex, setPageIndex] = useState(0);
