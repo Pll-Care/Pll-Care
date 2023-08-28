@@ -8,6 +8,7 @@ import ScheduleItem from "./ScheduleItem";
 import { getProjectId } from "../../utils/getProjectId";
 import { Loading } from "../common/Loading";
 import Pagination from "../common/Pagination";
+import { toast } from "react-toastify";
 
 const ScheduleList = ({ nameId, option }) => {
   const projectId = getProjectId(useLocation());
@@ -28,7 +29,14 @@ const ScheduleList = ({ nameId, option }) => {
 
   const { isLoading, data: schedules } = useQuery(
     ["filterSchedule", projectId, nameId, option, currentPage[option]],
-    () => getFilterSchedule(projectId, nameId, option, currentPage[option])
+    () => getFilterSchedule(projectId, nameId, option, currentPage[option]),
+    {
+      onError: (error) => {
+        if (error.response.data.code === "MEMBER_001") {
+          toast.error("해당 멤버는 존재하지 않습니다");
+        }
+      },
+    }
   );
   if (schedules && !isLoading) {
     itemCount = schedules.totalElements;
@@ -41,9 +49,6 @@ const ScheduleList = ({ nameId, option }) => {
 
       {!isLoading && schedules?.content && schedules?.content.length === 0 && (
         <h1 className="check-schedule-gray">해당 일정이 없습니다</h1>
-      )}
-      {!schedules && !isLoading && (
-        <h1 className="check-schedule-gray">🥲 통신 오류났습니다.</h1>
       )}
       {schedules &&
         !isLoading &&

@@ -33,6 +33,9 @@ export const useModifyScheduleMutation = () => {
       queryClient.invalidateQueries("todayAfterSchedule");
       toast.success("일정이 수정되었습니다");
     },
+    onError: (error) => {
+      toast.error(error.response.data.message);
+    },
   });
 };
 
