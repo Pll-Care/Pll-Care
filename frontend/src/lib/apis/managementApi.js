@@ -60,7 +60,7 @@ export const leaveProject = async (projectId) => {
       toast.error(e.response.data.message);
     } else if (e.response.data.code === "PROJECT_012") {
       toast.error(
-        "프로젝트 리더는 사용할 수 없는 기능입니다. 리더를 위임하고 탈퇴하세요."
+        "리더를 위임하고 탈퇴하세요."
       );
     }
   }
