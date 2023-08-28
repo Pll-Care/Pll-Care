@@ -33,10 +33,11 @@ export const createProject = async (newProjectObj) => {
 
     return response.data.content;
   } catch (e) {
-    if (e.response.data.code === "MEMBER_001") {
-      toast.error("사용자를 찾을 수 없습니다.");
-    } else if (e.response.data.code === "PROJECT_003") {
-      toast.error("시작일자와 종료일자가 올바르지 않습니다.");
+    if (
+      e.response.data.code === "MEMBER_001" ||
+      e.response.data.code === "PROJECT_003"
+    ) {
+      toast.error(e.response.data.message);
     }
   }
 };
@@ -51,14 +52,16 @@ export const leaveProject = async (projectId) => {
 
     return response.data;
   } catch (e) {
-    if (e.response.data.code === "PROJECT_001") {
-      toast.error("프로젝트를 찾을 수 없습니다.");
-    } else if (e.response.data.code === "PROJECT_004") {
-      toast.error("해당 프로젝트에 대한 접근 권한이 없습니다.");
+    if (
+      e.response.data.code === "PROJECT_001" ||
+      e.response.data.code === "PROJECT_004" ||
+      e.response.data.code === "PROJECT_011"
+    ) {
+      toast.error(e.response.data.message);
     } else if (e.response.data.code === "PROJECT_012") {
-      toast.error("프로젝트 리더는 사용할 수 없는 기능입니다. 리더를 위임하고 탈퇴하세요.");
-    } else if (e.response.data.code === "PROJECT_011") {
-      toast.error("완료된 프로젝트에서는 해당 기능을 사용할  수 없습니다.");
+      toast.error(
+        "프로젝트 리더는 사용할 수 없는 기능입니다. 리더를 위임하고 탈퇴하세요."
+      );
     }
   }
 };
@@ -78,7 +81,7 @@ export const uploadImage = async (imgData) => {
     return response.data.imageUrl;
   } catch (e) {
     if (e.response.data.code === "AWS_002") {
-      toast.error("파일 업로드를 실패했습니다.");
+      toast.error(e.response.data.message);
     }
   }
 };
@@ -92,7 +95,7 @@ export const deleteImage = async (imgUrl) => {
     return response.data;
   } catch (e) {
     if (e.response.data.code === "AWS_001") {
-      toast.error("파일을 찾을 수 없습니다.");
+      toast.error(e.response.data.message);
     }
   }
 };
@@ -105,10 +108,11 @@ export const getCompleteProjectData = async (projectId) => {
 
     return response.data.completed;
   } catch (e) {
-    if (e.response.data.code === "PROJECT_001") {
-      toast.error("프로젝트를 찾을 수 없습니다.");
-    } else if (e.response.data.code === "PROJECT_004") {
-      toast.error("해당 프로젝트에 대한 접근 권한이 없습니다.");
+    if (
+      e.response.data.code === "PROJECT_001" ||
+      e.response.data.code === "PROJECT_004"
+    ) {
+      toast.error(e.response.data.message);
     }
   }
 };
@@ -121,10 +125,11 @@ export const getIsLeaderData = async (projectId) => {
 
     return response.data.leader;
   } catch (e) {
-    if (e.response.data.code === "PROJECT_001") {
-      toast.error("프로젝트를 찾을 수 없습니다.");
-    } else if (e.response.data.code === "PROJECT_004") {
-      toast.error("해당 프로젝트에 대한 접근 권한이 없습니다.");
+    if (
+      e.response.data.code === "PROJECT_001" ||
+      e.response.data.code === "PROJECT_004"
+    ) {
+      toast.error(e.response.data.message);
     }
   }
 };

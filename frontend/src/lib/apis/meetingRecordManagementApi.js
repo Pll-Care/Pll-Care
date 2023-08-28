@@ -17,10 +17,11 @@ export const getAllMeetingRecordList = async (
       totalPages: response.data.totalPages,
     };
   } catch (e) {
-    if (e.response.data.code === "PROJECT_001") {
-      toast.error("프로젝트를 찾을 수 없습니다.");
-    } else if (e.response.data.code === "PROJECT_004") {
-      toast.error("해당 프로젝트에 대한 접근 권한이 없습니다.");
+    if (
+      e.response.data.code === "PROJECT_001" ||
+      e.response.data.code === "PROJECT_004"
+    ) {
+      toast.error(e.response.data.message);
     }
   }
 };
@@ -37,10 +38,11 @@ export const getBookMarkMeetingRecordList = async (projectId, pageNum = 1) => {
       totalPages: response.data.totalPages,
     };
   } catch (e) {
-    if (e.response.data.code === "PROJECT_001") {
-      toast.error("프로젝트를 찾을 수 없습니다.");
-    } else if (e.response.data.code === "PROJECT_004") {
-      toast.error("해당 프로젝트에 대한 접근 권한이 없습니다.");
+    if (
+      e.response.data.code === "PROJECT_001" ||
+      e.response.data.code === "PROJECT_004"
+    ) {
+      toast.error(e.response.data.message);
     }
   }
 };
@@ -53,12 +55,12 @@ export const createMeetingRecord = async (newMeetingRecordObj) => {
 
     return response.data.memoId;
   } catch (e) {
-    if (e.response.data.code === "PROJECT_001") {
-      toast.error("프로젝트를 찾을 수 없습니다.");
-    } else if (e.response.data.code === "PROJECT_004") {
-      toast.error("해당 프로젝트에 대한 접근 권한이 없습니다.");
-    } else if (e.response.data.code === "MEMO_007") {
-      toast.error("완료된 프로젝트는 회의록을 생성할 수 없습니다.");
+    if (
+      e.response.data.code === "PROJECT_001" ||
+      e.response.data.code === "PROJECT_004" ||
+      e.response.data.code === "MEMO_007"
+    ) {
+      toast.error(e.response.data.message);
     }
   }
 };
@@ -73,12 +75,12 @@ export const getMeetingRecord = async (meetingRecordId, projectId) => {
       return response.data;
     }
   } catch (e) {
-    if (e.response.data.code === "PROJECT_001") {
-      toast.error("프로젝트를 찾을 수 없습니다.");
-    } else if (e.response.data.code === "PROJECT_004") {
-      toast.error("해당 프로젝트에 대한 접근 권한이 없습니다.");
-    } else if (e.response.data.code === "MEMO_001") {
-      toast.error("회의록을 찾을 수 없습니다.");
+    if (
+      e.response.data.code === "PROJECT_001" ||
+      e.response.data.code === "PROJECT_004" ||
+      e.response.data.code === "MEMO_001"
+    ) {
+      toast.error(e.response.data.message);
     }
   }
 };
@@ -96,12 +98,12 @@ export const deleteMeetingRecord = async (newMeetingRecordObj) => {
 
     return response.data;
   } catch (e) {
-    if (e.response.data.code === "PROJECT_001") {
-      toast.error("프로젝트를 찾을 수 없습니다.");
-    } else if (e.response.data.code === "PROJECT_004") {
-      toast.error("해당 프로젝트에 대한 접근 권한이 없습니다.");
-    } else if (e.response.data.code === "MEMO_007") {
-      toast.error("완료된 프로젝트는 회의록을 생성할 수 없습니다.");
+    if (
+      e.response.data.code === "PROJECT_001" ||
+      e.response.data.code === "PROJECT_004" ||
+      e.response.data.code === "MEMO_007"
+    ) {
+      toast.error(e.response.data.message);
     }
   }
 };
@@ -119,12 +121,12 @@ export const createBookMarkMeetingRecord = async (newMeetingRecordObj) => {
 
     return response.data;
   } catch (e) {
-    if (e.response.data.code === "PROJECT_001") {
-      toast.error("프로젝트를 찾을 수 없습니다.");
-    } else if (e.response.data.code === "PROJECT_004") {
-      toast.error("해당 프로젝트에 대한 접근 권한이 없습니다.");
-    } else if (e.response.data.code === "MEMO_010") {
-      toast.error("완료된 프로젝트는 회의록을 북마크할 수 없습니다.");
+    if (
+      e.response.data.code === "PROJECT_001" ||
+      e.response.data.code === "PROJECT_004" ||
+      e.response.data.code === "MEMO_010"
+    ) {
+      toast.error(e.response.data.message);
     }
   }
 };
@@ -144,12 +146,12 @@ export const editMeetingRecord = async (newMeetingRecordObj) => {
 
     return response.data.memoId;
   } catch (e) {
-    if (e.response.data.code === "PROJECT_001") {
-      toast.error("프로젝트를 찾을 수 없습니다.");
-    } else if (e.response.data.code === "PROJECT_004") {
-      toast.error("해당 프로젝트에 대한 접근 권한이 없습니다.");
-    } else if (e.response.data.code === "MEMO_008") {
-      toast.error("완료된 프로젝트는 회의록을 수정할 수 없습니다.");
+    if (
+      e.response.data.code === "PROJECT_001" ||
+      e.response.data.code === "PROJECT_004" ||
+      e.response.data.code === "MEMO_008"
+    ) {
+      toast.error(e.response.data.message);
     }
   }
 };
