@@ -103,8 +103,7 @@ const AllMeetingRecordList = () => {
         <Pagination
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
-          recordDatasPerPage={recordDatasPerPage}
-          totalData={data.totalElements}
+          totalPages={data.totalPages}
           color={"white"}
         />
       </div>

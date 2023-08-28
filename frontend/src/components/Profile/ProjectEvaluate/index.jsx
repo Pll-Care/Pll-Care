@@ -17,8 +17,6 @@ const ProjectEvaluate = () => {
     getEvaluationProjectDetailAPI(projectId)
   );
 
-  console.log(data);
-
   return (
     <div>
       <div>

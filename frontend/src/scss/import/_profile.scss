@@ -604,17 +604,7 @@
     display: flex;
     justify-content: space-between;
     margin: 0 auto;
-    position: relative;
 
-    &_line {
-      position: absolute;
-      bottom: 20px;
-
-      width: 100%;
-      height: 2px;
-      background-color: $gray-300;
-      border-radius: 10px;
-    }
     &_bars {
       width: 25%;
       height: 100%;
@@ -624,8 +614,13 @@
 
       &_title {
         font-weight: bold;
-        padding-top: 15px;
+        margin-top: 10px;
+        padding-top: 5px;
         color: $gray-500;
+        width: 100%;
+        border-top: 2px solid $gray-300;
+
+        @include displayFlex(row, center, center);
         @include heading_06;
       }
 
@@ -644,9 +639,14 @@
         color: $white-100;
         font-size: 12px;
         font-weight: $weight-bold;
+        z-index: 1000;
 
         @include displayFlex;
         gap: 3px;
+
+        @include tablet {
+          display: none;
+        }
       }
 
       &_score_title {
@@ -756,11 +756,10 @@
   border: 2px solid $green-200;
   border-radius: 100%;
   color: $green-200;
-  font-size: 12px;
-  font-weight: 900;
+  width: 25px;
+  height: 25px;
 
-  width: 24px;
-  height: 24px;
+  @include body_02;
 
   @include displayFlex(row, center, center);
 }
@@ -883,14 +882,13 @@
 
     &_partTitle {
       color: $gray-500;
-      @include heading_05;
+      @include heading_06;
     }
 
     &_partScore {
       width: 26px;
       height: 26px;
       border: 2px solid $green-200;
-      padding: 3px;
       border-radius: 100%;
       color: $green-200;
       @include body_02;
@@ -928,6 +926,29 @@
 
 .w-f {
   width: 100%;
+}
+
+@include tablet {
+  .score-border {
+    font-size: 11px;
+    padding-bottom: 1px;
+  }
+
+  .projectEvaluate {
+    width: 90%;
+  }
+
+  .badges {
+    gap: 18px;
+  }
+
+  .badge {
+    gap: 6px;
+  }
+
+  .finalEvaluate_userScore {
+    width: 45%;
+  }
 }
 
 @include mobile {
@@ -1212,6 +1233,15 @@
   .evaluate_chart_bars_title {
     @include m_body_01;
   }
+
+  .evaluate_chart_bars_bar {
+    @include displayFlex(row, center, flex-end);
+  }
+
+  .evaluate_chart_bars_score {
+    width: 60%;
+  }
+
   .evaluate_chart_bars_score_text {
     display: none;
   }
@@ -1251,10 +1281,10 @@
   }
 
   .score-border {
-    width: 15px;
-    height: 15px;
     @include m_body_02;
     border: 1px solid $green-200;
+    padding: 0;
+    zoom: 0.6;
   }
 
   .projectEvaluate {
@@ -1270,7 +1300,7 @@
   }
 
   .badges {
-    gap: 7px;
+    gap: 12px;
   }
 
   .badge {

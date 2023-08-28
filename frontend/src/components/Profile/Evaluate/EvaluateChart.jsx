@@ -32,7 +32,6 @@ const EvaluateChart = () => {
         {score.map((item) => (
           <ChartBar key={item.title} title={item.title} score={item.score} />
         ))}
-        <div className="evaluate_chart_line"></div>
       </div>
     </div>
   );

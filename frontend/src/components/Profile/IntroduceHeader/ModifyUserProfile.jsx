@@ -1,11 +1,11 @@
 import { useState } from "react";
 import profile_isProfile from "../../../assets/profile-default-img.png";
 import Button from "../../common/Button";
-import { uploadImage } from "../../../lib/apis/projectManagementApi";
 import { useProfileClient } from "../../../context/Client/ProfileClientContext";
 import ProfileInput from "../../common/ProfileInput";
 import { useDispatch } from "react-redux";
 import { userInfoActions } from "../../../redux/userInfoSlice";
+import { uploadImage } from "../../../lib/apis/managementApi";
 
 const ModifyUserProfile = ({
   memberId,

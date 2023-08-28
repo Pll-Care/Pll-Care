@@ -6,8 +6,8 @@ const ChartBar = ({ title, score }) => {
   const [chartScore, setChartScore] = useState(0);
   const handleMouseMove = (event) => {
     setCoordinate({
-      x: event.nativeEvent.offsetX + 20,
-      y: event.nativeEvent.offsetY,
+      x: event.nativeEvent.offsetX + 10,
+      y: event.nativeEvent.offsetY - (chartScore * 2 + 10),
     });
   };
 
@@ -20,8 +20,8 @@ const ChartBar = ({ title, score }) => {
   };
 
   useEffect(() => {
-    const roundSCore = Math.round(score);
-    setChartScore((_) => roundSCore);
+    const scorePercentage = Math.round((score / 5) * 100);
+    setChartScore((_) => scorePercentage);
   }, [score]);
 
   return (

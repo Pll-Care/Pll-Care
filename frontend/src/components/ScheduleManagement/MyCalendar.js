@@ -22,9 +22,9 @@ const MyCalendar = () => {
       retry: 0,
       onError: (error) => {
         if (error.response.data.code === "PROJECT_004") {
-          navigate("/management");
           toast.error("해당 일정 접근 권한이 없습니다.");
         }
+        navigate("/management");
       },
     }
   );
@@ -35,6 +35,7 @@ const MyCalendar = () => {
     {
       retry: 0,
       onError: (error) => {
+        navigate("/management");
         toast.error(error.response.data.message);
       },
     }
@@ -43,19 +44,19 @@ const MyCalendar = () => {
   // 달력에 표시할 모든 일정들을 저장할 배열
   const events = [];
 
-  const start = {
-    title: "👏start",
-    date: overview.startDate,
-    color: "#bebebe",
-  };
-  events.push(start);
+  //const start = {
+  //  title: "👏start",
+  //  date: overview.startDate,
+  //  color: "#bebebe",
+  //};
+  //events.push(start);
 
-  const finish = {
-    title: "🏆finish",
-    date: overview.endDate,
-    color: "#bebebe",
-  };
-  events.push(finish);
+  //const finish = {
+  //  title: "🏆finish",
+  //  date: overview.endDate,
+  //  color: "#bebebe",
+  //};
+  //events.push(finish);
 
   data?.meetings?.forEach((meetings) => {
     const meeting = {

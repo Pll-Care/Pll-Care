@@ -33,7 +33,13 @@ export function ProfileProvider({ children }) {
         }
       }
     };
-    getIdAndValidateProfile();
+
+    if (memberId === "undefined" || memberId === "null") {
+      toast.error("존재하지 않는 사용자입니다.");
+      routeOptionTo("/", { replace: true });
+    }
+
+    if (memberId) getIdAndValidateProfile();
 
     return () => {
       setIsMyProfile(false);

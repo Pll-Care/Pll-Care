@@ -129,6 +129,7 @@ const RecruitmentDetailPosition = ({
             <div className="recruitment-grid-row">
               {positions.map((pos) => (
                 <Button
+                  key={pos}
                   className="grid-item-three"
                   size="small"
                   text="지원"
@@ -147,6 +148,7 @@ const RecruitmentDetailPosition = ({
                       className="grid-item-three"
                       size="small"
                       text="지원취소"
+                      key={pos}
                       onClick={() => handlePositionApplyCancel(pos)}
                     />
                   ) : (

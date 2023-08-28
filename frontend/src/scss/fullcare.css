@@ -288,7 +288,12 @@ a {
   align-items: center;
 }
 .main-header-medium-col {
-  width: 35%;
+  width: 38%;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .main-header-medium-col {
+    width: 40%;
+  }
 }
 @media (max-width: 767px) {
   .main-header-medium-col {
@@ -728,9 +733,16 @@ a {
   width: -moz-max-content;
   width: max-content;
   height: 70px;
+  font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
-  font-family: "Noto Sans KR", sans-serif;
-  font-weight: bold;
+  font-weight: 600;
+}
+@media (max-width: 767px) {
+  .Toastify__toast-container {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
 }
 
 .Toastify__toast-icon {
@@ -759,15 +771,40 @@ a {
 
 .Toastify__toast.Toastify__toast--error::before,
 .Toastify__toast.Toastify__toast--success::before {
-  margin: auto 15px;
+  margin: auto 10px;
+  width: 30px;
+  height: 30px;
+  content: "";
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+@media (max-width: 767px) {
+  .Toastify__toast.Toastify__toast--error::before,
+  .Toastify__toast.Toastify__toast--success::before {
+    margin: auto 0;
+  }
 }
 
 .Toastify__toast.Toastify__toast--error::before {
-  content: url("../assets/toast-message-error-img.png");
+  background-image: url("../assets/toast-message-error-img.png");
 }
 
 .Toastify__toast.Toastify__toast--success::before {
-  content: url("../assets/toast-message-check-img.png");
+  background-image: url("../assets/toast-message-check-img.png");
+}
+
+@media (max-width: 767px) {
+  .toast-container {
+    top: 5px !important;
+    left: 5px !important;
+    height: 50px;
+  }
+}
+
+@media (max-width: 767px) {
+  .Toastify__close-button {
+    display: none;
+  }
 }
 
 .loading-indicator-container {
@@ -3260,7 +3297,7 @@ a {
 .management-main-header {
   background-color: #01e89e;
   color: white;
-  height: 254px;
+  height: 255px;
   border-radius: 0px 0px 35px 35px;
   padding: 25px 45px;
   display: flex;
@@ -3580,7 +3617,7 @@ a {
   border-radius: 10px;
   margin-bottom: 10px;
   height: 40px;
-  width: 85%;
+  width: 87%;
   color: #00aa72;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
@@ -3588,6 +3625,12 @@ a {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  align-items: center;
+}
+.MuiBox-root .project-editor-body .project-editor-right-col .project-editor-first-row .project-editor-period {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   align-items: center;
 }
 @media (max-width: 767px) {
@@ -5793,15 +5836,6 @@ a {
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
-  position: relative;
-}
-.evaluate_chart_line {
-  position: absolute;
-  bottom: 20px;
-  width: 100%;
-  height: 2px;
-  background-color: #d9d9d9;
-  border-radius: 10px;
 }
 .evaluate_chart_bars {
   width: 25%;
@@ -5812,8 +5846,15 @@ a {
 }
 .evaluate_chart_bars_title {
   font-weight: bold;
-  padding-top: 15px;
+  margin-top: 10px;
+  padding-top: 5px;
   color: #7a7a7a;
+  width: 100%;
+  border-top: 2px solid #d9d9d9;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 16px;
   font-weight: 500;
@@ -5832,11 +5873,17 @@ a {
   color: #ffffff;
   font-size: 12px;
   font-weight: 700;
+  z-index: 1000;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 3px;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .evaluate_chart_bars_score_text {
+    display: none;
+  }
 }
 .evaluate_chart_bars_score_title {
   font-size: 16px;
@@ -5949,10 +5996,11 @@ a {
   border: 2px solid #01e89e;
   border-radius: 100%;
   color: #01e89e;
+  width: 25px;
+  height: 25px;
+  font-family: "Noto Sans KR", sans-serif;
   font-size: 12px;
-  font-weight: 900;
-  width: 24px;
-  height: 24px;
+  font-weight: 500;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -6092,15 +6140,14 @@ a {
 }
 .finalEvaluate_userScore_partTitle {
   color: #7a7a7a;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 18px;
-  font-weight: 600;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
 }
 .finalEvaluate_userScore_partScore {
   width: 26px;
   height: 26px;
   border: 2px solid #01e89e;
-  padding: 3px;
   border-radius: 100%;
   color: #01e89e;
   font-family: "Noto Sans KR", sans-serif;
@@ -6147,6 +6194,24 @@ a {
   width: 100%;
 }
 
+@media (min-width: 767px) and (max-width: 1024px) {
+  .score-border {
+    font-size: 11px;
+    padding-bottom: 1px;
+  }
+  .projectEvaluate {
+    width: 90%;
+  }
+  .badges {
+    gap: 18px;
+  }
+  .badge {
+    gap: 6px;
+  }
+  .finalEvaluate_userScore {
+    width: 45%;
+  }
+}
 @media (max-width: 767px) {
   .profile_introduce_container {
     align-items: flex-end;
@@ -6419,6 +6484,15 @@ a {
     font-size: 8px;
     font-weight: 500;
   }
+  .evaluate_chart_bars_bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+  }
+  .evaluate_chart_bars_score {
+    width: 60%;
+  }
   .evaluate_chart_bars_score_text {
     display: none;
   }
@@ -6453,13 +6527,13 @@ a {
     line-height: 12px;
   }
   .score-border {
-    width: 15px;
-    height: 15px;
     font-family: "Noto Sans KR", sans-serif;
     font-size: 6px;
     font-weight: 500;
     line-height: 12px;
     border: 1px solid #01e89e;
+    padding: 0;
+    zoom: 0.6;
   }
   .projectEvaluate {
     width: 95%;
@@ -6475,7 +6549,7 @@ a {
     font-weight: 600;
   }
   .badges {
-    gap: 7px;
+    gap: 12px;
   }
   .badge {
     gap: 4px;
