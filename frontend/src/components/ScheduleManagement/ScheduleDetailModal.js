@@ -17,6 +17,7 @@ import {
 import { getDateTimeDuration } from "../../utils/date";
 import { useDeleteScheduleMutation } from "../../hooks/useScheduleManagementMutation";
 import { query } from "../../utils/mediaQuery";
+import { getCompleteProjectData } from "../../lib/apis/managementApi";
 
 const ScheduleDetailModal = ({
   open,
@@ -64,7 +65,12 @@ const ScheduleDetailModal = ({
       toast.success("일정이 수정되었습니다");
     },
     onError: (error) => {
-      toast.error(error.response.data.message);
+      if (error.response.data.status === 500) {
+        toast.error("서버 에러가 발생했습니다. 잠시 후에 시도해주세요");
+        setIsEdit((prevState) => !prevState);
+      } else {
+        toast.error(error.response.data.message);
+      }
     },
   });
 
@@ -94,6 +100,12 @@ const ScheduleDetailModal = ({
         });
       },
     }
+  );
+
+  // 완료 확인 react query문
+  const { data: isCompleted } = useQuery(
+    ["completeProjectData", projectId],
+    () => getCompleteProjectData(projectId)
   );
 
   const { title, content, category, address, startDate, endDate, memberIds } =
@@ -327,15 +339,17 @@ const ScheduleDetailModal = ({
           )}
         </div>
         <div className="schedule-detail-modal-button">
-          {data?.deleteAuthorization && scheduleState !== "COMPLETE" && (
-            <Button
-              text="삭제하기"
-              type="underlined"
-              size="small"
-              onClick={() => setDeleteModalVisible((prevState) => !prevState)}
-            />
-          )}
-          {scheduleState !== "COMPLETE" && (
+          {data?.deleteAuthorization &&
+            scheduleState !== "COMPLETE" &&
+            !isCompleted && (
+              <Button
+                text="삭제하기"
+                type="underlined"
+                size="small"
+                onClick={() => setDeleteModalVisible((prevState) => !prevState)}
+              />
+            )}
+          {scheduleState !== "COMPLETE" && !isCompleted && (
             <Button
               text={isEdit ? "수정완료" : "수정하기"}
               size="small"
