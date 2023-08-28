@@ -117,6 +117,9 @@
     &-item {
       display: grid;
       grid-template-columns: 15% 85%;
+      @include tablet {
+        grid-template-columns: 25% 85%;
+      }
       align-items: center;
       @include mobile {
         display: flex;
@@ -160,12 +163,12 @@
     grid-template-columns: 15% 85%;
 
     @include tablet {
-      grid-template-columns: 20% 80%;
+      grid-template-columns: 25% 85%;
     }
     grid-gap: 10px 0px;
     align-content: center;
     @include mobile {
-      grid-template-columns: 20% 80%;
+      grid-template-columns: 25% 85%;
     }
     &-select {
       display: flex;

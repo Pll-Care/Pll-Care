@@ -4227,7 +4227,12 @@ a {
 .member-button {
   display: flex;
   justify-content: flex-start;
-  margin: 10px;
+  margin: 25px;
+}
+@media (max-width: 767px) {
+  .member-button {
+    margin: 8px;
+  }
 }
 
 .recruitment h1 {
@@ -4540,11 +4545,11 @@ a {
 .recruitment-post {
   border: 1px solid rgb(249, 249, 249);
   box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1);
-  border-radius: 20px;
+  border-radius: 30px;
   margin: 15px;
   display: flex;
   flex-direction: column;
-  height: 400px;
+  height: 420px;
 }
 .recruitment-post:hover {
   transform: scale(1.011);
@@ -4556,7 +4561,7 @@ a {
   }
 }
 .recruitment-post img {
-  border-radius: 20px;
+  border-radius: 30px 30px 0px 0px;
   width: 100%;
   height: 200px;
 }
@@ -4804,6 +4809,11 @@ a {
   align-items: center;
   margin-bottom: 17px;
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .recruitment-detail-content-item {
+    grid-template-columns: 25% 85%;
+  }
+}
 @media (max-width: 767px) {
   .recruitment-detail-content-item {
     display: flex;
@@ -4848,12 +4858,12 @@ a {
 }
 @media (min-width: 767px) and (max-width: 1024px) {
   .recruitment-detail-container {
-    grid-template-columns: 20% 80%;
+    grid-template-columns: 25% 85%;
   }
 }
 @media (max-width: 767px) {
   .recruitment-detail-container {
-    grid-template-columns: 20% 80%;
+    grid-template-columns: 25% 85%;
   }
 }
 .recruitment-detail-container-select {
