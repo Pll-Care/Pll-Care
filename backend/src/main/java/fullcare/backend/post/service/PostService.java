@@ -113,7 +113,7 @@ public class PostService {
             Post findPost = findPostWithRecruitmentsAndProject(postId);
             ProjectMember findProjectMember = projectService.isProjectAvailable(findPost.getProject().getId(), memberId, false);
 
-            if (findPost.getAuthor().getId() != findProjectMember.getId() && !findProjectMember.isLeader()) {
+            if (!findPost.getAuthor().getId().equals(findProjectMember.getId()) && !findProjectMember.isLeader()) {
                 throw new UnauthorizedAccessException(PostErrorCode.UNAUTHORIZED_MODIFY);
             }
 
@@ -153,7 +153,7 @@ public class PostService {
             Post findPost = findPostWithProject(postId);
             ProjectMember findProjectMember = projectService.isProjectAvailable(findPost.getProject().getId(), memberId, false);
 
-            if (findPost.getAuthor().getId() != findProjectMember.getId() && !findProjectMember.isLeader()) {
+            if (!findPost.getAuthor().getId().equals(findProjectMember.getId()) && !findProjectMember.isLeader()) {
                 throw new UnauthorizedAccessException(PostErrorCode.UNAUTHORIZED_DELETE);
             }
 
@@ -186,7 +186,7 @@ public class PostService {
         findPostDetailResponse.setTechStackList(techStackList);
 
         List<Recruitment> recruitments = recruitmentRepository.findByPostId(findPostDetailResponse.getPostId());
-        findPostDetailResponse.setRecruitInfoList(recruitments.stream().map(r -> new RecruitInfo(r)).collect(Collectors.toList()));
+        findPostDetailResponse.setRecruitInfoList(recruitments.stream().map(RecruitInfo::new).collect(Collectors.toList()));
 
         // ! sql에 null값이 전달되었을 때 문제가 없는가?
         Optional<Apply> findApply = applyRepository.findByPostIdAndMemberId(findPostDetailResponse.getPostId(), memberId);
@@ -200,7 +200,7 @@ public class PostService {
         }
 
         // ! 작성자는 false
-        if (findPostDetailResponse.getAuthorId() == memberId) {
+        if (findPostDetailResponse.getAuthorId().equals(memberId)) {
             findPostDetailResponse.setAvailable(false);
         }
 
@@ -222,11 +222,11 @@ public class PostService {
                         .collect(Collectors.toList())));
 
 
-        List<Long> postIds = content.stream().map(p -> p.getPostId()).collect(Collectors.toList());
+        List<Long> postIds = content.stream().map(PostListResponse::getPostId).collect(Collectors.toList());
         List<Recruitment> recruitments = recruitmentRepository.findByPostIds(postIds);
         Map<Long, List<Recruitment>> recruitMap = recruitments.stream().collect(Collectors.groupingBy(r -> r.getPost().getId()));
 
-        content.forEach(postListResponse -> postListResponse.setRecruitInfoList(recruitMap.getOrDefault(postListResponse.getPostId(), new ArrayList<>()).stream().map(r -> new RecruitInfo(r)).collect(Collectors.toList())));
+        content.forEach(postListResponse -> postListResponse.setRecruitInfoList(recruitMap.getOrDefault(postListResponse.getPostId(), new ArrayList<>()).stream().map(RecruitInfo::new).collect(Collectors.toList())));
 
         return new CustomPageImpl<>(content, pageable, result.getTotalElements());
     }
@@ -236,7 +236,7 @@ public class PostService {
     public void likePost(Long memberId, Long postId) {
         Optional<Likes> findLikes = likesRepository.findByPostIdAndMemberId(postId, memberId);
 
-        if (!(findLikes.isPresent())) {
+        if (findLikes.isEmpty()) {
             Post findPost = findPost(postId);
             Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
 
@@ -263,7 +263,7 @@ public class PostService {
         } else {
             Optional<Apply> findApply = applyRepository.findByPostIdAndMemberId(findPost.getId(), memberId);
 
-            if (!findApply.isPresent()) {
+            if (findApply.isEmpty()) {
                 Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
 
                 Recruitment findRecruitment = findPost.getRecruitments().stream()

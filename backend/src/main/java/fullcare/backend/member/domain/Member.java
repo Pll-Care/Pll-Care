@@ -132,22 +132,20 @@ public class Member {
     }
 
     public Likes like(Post post) {
-        Likes likes = Likes.createNewLikes()
+
+        return Likes.createNewLikes()
                 .member(this)
                 .post(post)
                 .build();
-
-        return likes;
     }
 
     public Apply apply(Post post, ProjectMemberPositionType position) {
-        Apply apply = Apply.createNewApply()
+
+        return Apply.createNewApply()
                 .member(this)
                 .post(post)
                 .position(position)
                 .build();
-
-        return apply;
     }
 
 
