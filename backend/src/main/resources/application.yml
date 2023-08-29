@@ -24,7 +24,7 @@ spring:
   # JPA
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
     show-sql: false
     properties:
       hibernate:
