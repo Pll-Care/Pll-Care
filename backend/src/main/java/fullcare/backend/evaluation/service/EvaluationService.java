@@ -306,6 +306,7 @@ public class EvaluationService {
 
             MyEvalListResponse response = MyEvalListResponse.builder()
                     .projectId(pm.getProject().getId())
+                    .imageUrl(pm.getProject().getImageUrl())
                     .title(pm.getProject().getTitle())
                     .score(scoreDto)
                     .build();
