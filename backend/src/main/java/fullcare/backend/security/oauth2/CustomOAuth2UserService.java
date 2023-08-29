@@ -30,23 +30,14 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     public OAuth2User loadUser(OAuth2UserRequest userRequest) {
         log.info("CustomOAuth2UserService 진입");
 
-        // * access 토큰을 이용하여 사용자 정보 갖고오기
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
-        String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
         Map<String, Object> attributes = oAuth2User.getAttributes();
+        OAuth2Attributes oAuth2Attributes = OAuth2Attributes.of(registrationId, attributes);
 
-        // * OAuth2 사용자 정보를 토대로, Member 엔티티를 만드는데 필요한 정보만 추출
-        OAuth2Attributes oAuth2Attributes = OAuth2Attributes.of(registrationId, userNameAttributeName, attributes);
-
-        //  * OAuth2Attributes와 registrationId 를 이용하여 기존 사용자가 존재하는지 찾고, 없다면 새로 만들어서 반환
-        // todo 최초 로그인 회원과 기존 회원을 어떻게 구분할 것인가?
         Member loginMember = getMember(oAuth2Attributes, registrationId);
-
-        // todo loginMember를 CustomOAuth2User로 변환하여 반환
-        // * 여기서 반환한 객체가 OAuth2SuccessHandler의 authentication로 전달된다.
         return CustomOAuth2User.create(loginMember, attributes);
     }
 

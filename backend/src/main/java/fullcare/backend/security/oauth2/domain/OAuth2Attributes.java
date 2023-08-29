@@ -13,51 +13,42 @@ import java.util.Map;
 
 @Getter
 @Slf4j
-
 public class OAuth2Attributes {
 
-    private String nameAttributeKey; // * OAuth2 로그인 성공했을 때, Provider가 사용자를 식별하는 값을 가리키는 키 (goolge = sub, kakao = id, naver = response)
     private OAuth2UserInfo oAuth2UserInfo;
 
     @Builder
-    public OAuth2Attributes(String nameAttributeKey, OAuth2UserInfo oAuth2UserInfo) {
-        this.nameAttributeKey = nameAttributeKey;
+    public OAuth2Attributes(OAuth2UserInfo oAuth2UserInfo) {
         this.oAuth2UserInfo = oAuth2UserInfo;
     }
 
-    public static OAuth2Attributes of(String oAuth2ProviderName, String nameAttributeKey,
-                                      Map<String, Object> attributes) {
+    public static OAuth2Attributes of(String oAuth2ProviderName, Map<String, Object> attributes) {
 
         return switch (oAuth2ProviderName) {
-            case "google" -> ofGoogle(nameAttributeKey, attributes);
-            case "naver" -> ofNaver(nameAttributeKey, attributes);
-            case "kakao" -> ofKakao(nameAttributeKey, attributes);
+            case "google" -> ofGoogle(attributes);
+            case "naver" -> ofNaver(attributes);
+            case "kakao" -> ofKakao(attributes);
             default -> throw new IllegalArgumentException("Not Supported Provider");
         };
     }
 
-    private static OAuth2Attributes ofGoogle(String nameAttributeKey, Map<String, Object> attributes) {
+    private static OAuth2Attributes ofGoogle(Map<String, Object> attributes) {
 
         return OAuth2Attributes.builder()
-                .nameAttributeKey(nameAttributeKey)
                 .oAuth2UserInfo(new GoogleOAuthUser2Info(attributes))
                 .build();
-
     }
 
-    private static OAuth2Attributes ofNaver(String nameAttributeKey, Map<String, Object> attributes) {
+    private static OAuth2Attributes ofNaver(Map<String, Object> attributes) {
 
         return OAuth2Attributes.builder()
-                .nameAttributeKey(nameAttributeKey)
                 .oAuth2UserInfo(new NaverOAuthUser2Info(attributes))
                 .build();
-
     }
 
-    private static OAuth2Attributes ofKakao(String nameAttributeKey, Map<String, Object> attributes) {
+    private static OAuth2Attributes ofKakao(Map<String, Object> attributes) {
 
         return OAuth2Attributes.builder()
-                .nameAttributeKey(nameAttributeKey)
                 .oAuth2UserInfo(new KakaoOAuth2UserInfo(attributes))
                 .build();
     }

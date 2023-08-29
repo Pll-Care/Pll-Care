@@ -13,7 +13,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -36,14 +36,9 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     @Transactional
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+
         log.info("OAuth2 로그인 및 인증 성공! 이제 JWT 토큰을 생성하여 발급합니다.");
-        OAuth2AuthenticationToken token = (OAuth2AuthenticationToken) authentication;
-
-        // CustomOAuth2UserService에서 인증에 성공한 유저 정보
-        CustomOAuth2User oAuth2User = (CustomOAuth2User) token.getPrincipal();
-
-        log.info("oAuth2User = {}", oAuth2User);
-        log.info("name = {}", oAuth2User.getName());
+        CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
 
         //사용자에게 제공할 JWT TOKEN 생성해서 반환
         String accessToken = jwtTokenService.createAccessToken(oAuth2User);
@@ -52,11 +47,15 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         Member member = memberRepository.findById(Long.valueOf(oAuth2User.getName())).orElseThrow(() -> new EntityNotFoundException(MemberErrorCode.MEMBER_NOT_FOUND));
         member.updateRefreshToken(refreshToken);
 
-        // 프론트렌드로 토큰을 돌려줄 URL 경로
+        // 프론트엔드로 토큰을 돌려줄 URL 경로
         String successUrl = UriComponentsBuilder.fromUriString("https://fullcare.store/token")
                 .queryParam("access_token", accessToken)
                 .queryParam("refresh_token", refreshToken)
                 .build().toUriString();
+
+
+        super.clearAuthenticationAttributes(request);
+        SecurityContextHolder.clearContext();
 
         getRedirectStrategy().sendRedirect(request, response, successUrl);
     }
