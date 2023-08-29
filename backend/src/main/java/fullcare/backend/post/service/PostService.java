@@ -334,7 +334,7 @@ public class PostService {
     public List<MostLikedPostResponse> findMostLikedPost() {
         List<Post> mostLikedPostList = postRepository.findTop5ByRecruitEndDateAfterOrderByLikeCountDescRecruitEndDateAsc(LocalDate.now());
 
-        List<MostLikedPostResponse> content = mostLikedPostList.stream().map(p -> MostLikedPostResponse.builder()
+        return mostLikedPostList.stream().map(p -> MostLikedPostResponse.builder()
                         .postId(p.getId())
                         .projectId(p.getProject().getId())
                         .projectTitle(p.getProject().getTitle())
@@ -345,14 +345,12 @@ public class PostService {
                         .description(p.getProject().getDescription())
                         .build())
                 .collect(Collectors.toList());
-
-        return content;
     }
 
     public List<CloseDeadlinePostResponse> findCloseDeadlinePost() {
         List<Post> closeDeadlinePostList = postRepository.findTop5ByRecruitEndDateAfterOrderByRecruitEndDateAscCreatedDateAsc(LocalDate.now());
 
-        List<CloseDeadlinePostResponse> content = closeDeadlinePostList.stream().map(p -> CloseDeadlinePostResponse.builder()
+        return closeDeadlinePostList.stream().map(p -> CloseDeadlinePostResponse.builder()
                         .postId(p.getId())
                         .projectId(p.getProject().getId())
                         .projectTitle(p.getProject().getTitle())
@@ -362,14 +360,12 @@ public class PostService {
                         .description(p.getProject().getDescription())
                         .build())
                 .collect(Collectors.toList());
-
-        return content;
     }
 
     public List<UpToDatePostResponse> findUpToDateProject() {
         List<Post> upToDatePostList = postRepository.findTop5ByCreatedDateBeforeOrderByCreatedDateDescRecruitEndDateAsc(LocalDateTime.now());
 
-        List<UpToDatePostResponse> content = upToDatePostList.stream().map(p -> UpToDatePostResponse.builder()
+        return upToDatePostList.stream().map(p -> UpToDatePostResponse.builder()
                         .postId(p.getId())
                         .projectId(p.getProject().getId())
                         .projectTitle(p.getProject().getTitle())
@@ -379,7 +375,5 @@ public class PostService {
                         .description(p.getProject().getDescription())
                         .build())
                 .collect(Collectors.toList());
-
-        return content;
     }
 }
