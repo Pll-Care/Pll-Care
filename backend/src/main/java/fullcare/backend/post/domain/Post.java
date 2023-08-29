@@ -41,8 +41,8 @@ public class Post extends BaseEntity {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Lob
-    @Column(name = "description", nullable = false)
+
+    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "recruit_start_dt", nullable = false)
@@ -51,8 +51,8 @@ public class Post extends BaseEntity {
     @Column(name = "recruit_end_dt", nullable = false)
     private LocalDate recruitEndDate;
 
-    @Lob
-    @Column(name = "reference", nullable = false)
+
+    @Column(name = "reference", nullable = false, columnDefinition = "TEXT")
     private String reference;
 
     @Lob

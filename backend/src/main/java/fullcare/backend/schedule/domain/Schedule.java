@@ -51,8 +51,8 @@ public abstract class Schedule {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Lob
-    @Column(name = "content", nullable = false)
+
+    @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @Column(name = "start_date_time", nullable = false)

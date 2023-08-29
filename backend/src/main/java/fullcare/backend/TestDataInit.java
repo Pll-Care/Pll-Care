@@ -70,7 +70,7 @@ public class TestDataInit {
     private final ProfileService profileService;
     private final ProjectMemberService projectMemberService;
 
-    @EventListener(ApplicationReadyEvent.class)
+//    @EventListener(ApplicationReadyEvent.class)
     @Transactional
     public void initData() {
         createMember();
