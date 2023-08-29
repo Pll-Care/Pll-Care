@@ -5,7 +5,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import persistStore from "redux-persist/es/persistStore";
 
 import App from "./App";
-import store from "../src/redux/rootReducer";
+import store from "./redux/rootReducer";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

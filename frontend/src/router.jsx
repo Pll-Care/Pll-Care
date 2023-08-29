@@ -16,7 +16,7 @@ import Recruitment from "./pages/Recruitment";
 import RecruitmentDetailPage from "./pages/RecruitmentDetailPage";
 import RecruitmentWritePage from "./pages/RecruitmentWritePage";
 
-import ProjectManagement from "./components/ProjectManagement/ProjectManagement";
+import ProjectManagement from "./components/ProjectManagement/index";
 import Introduce from "./components/Profile/Introduce";
 import Evaluate from "./components/Profile/Evaluate";
 import MyProject from "./components/Profile/myproject";

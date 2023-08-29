@@ -1,11 +1,10 @@
 import PositionImage from "../../assets/exchange.png";
 import DeleteImage from "../../assets/ban-user.png";
 import DelegateImage from "../../assets/social-network.png";
-import AlertCheckModal from "../common/AlertCheckModal";
 import { useParams } from "react-router";
 import { useState } from "react";
 import useModalIsOpen from "../../hooks/useModalIsOpen";
-import ChagePositionModal from "../common/ChangePositionModal";
+import ChagePositionModal from "../common/Modal/ChangePositionModal";
 import {
   deleteKickoutAPI,
   putLeaderChangeAPI,
@@ -13,6 +12,7 @@ import {
 } from "../../lib/apis/teamMemberManagementApi";
 import { useRouter } from "../../hooks/useRouter";
 import { toast } from "react-toastify";
+import AlertCheckModal from "../common/Modal/AlertCheckModal";
 
 const EditTeamMember = ({ memberId, refetch, name, position }) => {
   const { id: projectId } = useParams();

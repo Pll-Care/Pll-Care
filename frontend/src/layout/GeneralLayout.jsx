@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../redux/authSlice";
 
 import Login from "../components/Login/Login";
-import MainHeader from "../components/common/MainHeader";
+import MainHeader from "../components/common/Header/MainHeader";
 import LocalTokenRepository from "../lib/repository/LocalTokenRepository";
 import GeneralClientProvider from "../context/Client/GeneralClientContext";
 import GeneralService from "../lib/service/GeneralService";
 import HttpClient from "../lib/service/HttpClient";
 import { baseURL } from "../utils/auth";
-import { getToken } from "../utils/localstroageHandler";
+import { getToken } from "../utils/localstorageHandler";
 import { customAxios } from "../lib/apis/customAxios";
 
 const GeneralLayout = ({ children }) => {
