@@ -3874,15 +3874,16 @@ a {
 
 .confirm-modal {
   text-align: center;
-  height: 50%;
+  height: 45%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
 }
 .confirm-modal h1 {
-  width: 50%;
-  line-height: 1.5;
+  width: 100%;
+  padding: 10px;
+  line-height: 1.8;
   color: white;
   margin-bottom: 40px;
   white-space: pre-line;
@@ -3895,7 +3896,6 @@ a {
 }
 @media (max-width: 767px) {
   .confirm-modal h1 {
-    width: 75%;
     line-height: 30px;
     font-family: "Noto Sans KR", sans-serif;
     font-size: 16px;
@@ -7107,15 +7107,16 @@ a {
 
 .confirm-modal {
   text-align: center;
-  height: 50%;
+  height: 45%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
 }
 .confirm-modal h1 {
-  width: 50%;
-  line-height: 1.5;
+  width: 100%;
+  padding: 10px;
+  line-height: 1.8;
   color: white;
   margin-bottom: 40px;
   white-space: pre-line;
@@ -7128,7 +7129,6 @@ a {
 }
 @media (max-width: 767px) {
   .confirm-modal h1 {
-    width: 75%;
     line-height: 30px;
     font-family: "Noto Sans KR", sans-serif;
     font-size: 16px;

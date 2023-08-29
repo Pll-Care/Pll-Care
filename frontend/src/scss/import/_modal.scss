@@ -49,18 +49,18 @@
 
 .confirm-modal {
   text-align: center;
-  height: 50%;
+  height: 45%;
 
   h1 {
-    width: 50%;
-    line-height: 1.5;
+    width: 100%;
+    padding: 10px;
+    line-height: 1.8;
     color: white;
     margin-bottom: 40px;
     white-space: pre-line;
     word-break: keep-all;
 
     @include mobile {
-      width: 75%;
       line-height: 30px;
 
       @include heading_06;
