@@ -43,6 +43,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -225,7 +226,7 @@ public class PostService {
         List<Recruitment> recruitments = recruitmentRepository.findByPostIds(postIds);
         Map<Long, List<Recruitment>> recruitMap = recruitments.stream().collect(Collectors.groupingBy(r -> r.getPost().getId()));
 
-        content.forEach(postListResponse -> postListResponse.setRecruitInfoList(recruitMap.get(postListResponse.getPostId()).stream().map(r -> new RecruitInfo(r)).collect(Collectors.toList())));
+        content.forEach(postListResponse -> postListResponse.setRecruitInfoList(recruitMap.getOrDefault(postListResponse.getPostId(), new ArrayList<>()).stream().map(r -> new RecruitInfo(r)).collect(Collectors.toList())));
 
         return new CustomPageImpl<>(content, pageable, result.getTotalElements());
     }

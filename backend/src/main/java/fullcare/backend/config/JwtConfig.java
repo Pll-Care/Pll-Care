@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -50,10 +49,10 @@ public class JwtConfig {
         http
                 .securityMatcher("/api/auth/**")
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET, "api/auth/main/**").hasAnyRole("USER", "ANONYMOUS")
-                        .requestMatchers(HttpMethod.GET, "/api/auth/post/list", "/api/auth/post/{postId:[\\d+]}").hasAnyRole("USER", "ANONYMOUS")
-                        .requestMatchers(HttpMethod.GET, "api/auth/util/techstack").hasAnyRole("USER", "ANONYMOUS")
-                        .requestMatchers(HttpMethod.GET, "/api/auth/profile/{memberId:[\\d+]}/rolestack",
+                        .requestMatchers("/api/auth/main/**").hasAnyRole("USER", "ANONYMOUS")
+                        .requestMatchers("/api/auth/post/list", "/api/auth/post/{postId:[\\d+]}").hasAnyRole("USER", "ANONYMOUS")
+                        .requestMatchers("/api/auth/util/techstack").hasAnyRole("USER", "ANONYMOUS")
+                        .requestMatchers("/api/auth/profile/{memberId:[\\d+]}/rolestack",
                                 "/api/auth/profile/{memberId:[\\d+]}/experience", "/api/auth/profile/{memberId:[\\d+]}/evaluation",
                                 "/api/auth/profile/{memberId:[\\d+]}/evaluation/{projectId:[\\d+]}", "/api/auth/profile/{memberId:[\\d+]}/evaluation/chart",
                                 "/api/auth/profile/{memberId:[\\d+]}/contact", "/api/auth/profile/{memberId:[\\d+]}/bio").hasAnyRole("USER", "ANONYMOUS")
