@@ -4068,6 +4068,7 @@ a {
 }
 @media (min-width: 767px) and (max-width: 1024px) {
   .home .description {
+    width: 90%;
     height: 100%;
   }
 }
@@ -4173,10 +4174,16 @@ a {
   height: 70px;
   border-radius: 50%;
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .home .project-container-wrapper .project .project-detail img {
+    width: 45px;
+    height: 45px;
+  }
+}
 @media (max-width: 767px) {
   .home .project-container-wrapper .project .project-detail img {
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
   }
 }
 .home .project-container-wrapper .project .project-detail .project-first-row {
@@ -4194,7 +4201,7 @@ a {
   margin-right: 5px;
 }
 .home .project-container-wrapper .project .project-detail .project-heading-wrapper {
-  padding: 10px;
+  padding: 2px;
   width: 100%;
   height: 100%;
   display: flex;
@@ -4204,6 +4211,17 @@ a {
 }
 .home .project-container-wrapper .project .project-detail .project-heading-wrapper h1 {
   word-break: keep-all;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .home .project-container-wrapper .project .project-detail .project-heading-wrapper h1 {
+    line-height: 1.3;
+    margin-right: 2px;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .home .project-container-wrapper .project .project-detail .project-heading-wrapper {
+    padding-right: 2px;
+  }
 }
 .home .project-container-wrapper .project .project-detail .project-heading-wrapper div {
   color: #7a7a7a;
@@ -4237,6 +4255,11 @@ a {
   font-family: "Noto Sans KR", sans-serif;
   font-size: 12px;
   font-weight: 500;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .home .project-container-wrapper .project .project-detail .project-like-count {
+    margin-right: 2px;
+  }
 }
 .home .project-container-wrapper .project .project-detail h1 {
   color: #7a7a7a;
@@ -4321,6 +4344,16 @@ a {
     font-family: "Noto Sans KR", sans-serif;
     font-size: 8px;
     font-weight: 500;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .home {
+    width: 100%;
+  }
+}
+@media (max-width: 767px) {
+  .home {
+    width: 100%;
   }
 }
 

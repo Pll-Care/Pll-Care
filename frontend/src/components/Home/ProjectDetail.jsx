@@ -1,4 +1,5 @@
 import Slider from "react-slick";
+import { useMediaQuery } from "@mui/material";
 
 import { Link } from "react-router-dom";
 
@@ -11,11 +12,13 @@ const settings = {
   speed: 500,
   slidesToShow: 1,
   slidesToScroll: 1,
-  autoplay: true,
+  autoplay: false,
   autoplaySpeed: 4000,
 };
 
 const ProjectDetail = ({ type, projectList }) => {
+  const isTablet = useMediaQuery("(min-width: 767px) and (max-width: 1024px)");
+
   return (
     projectList.length && (
       <div className="project-detail-wrapper">
@@ -35,7 +38,15 @@ const ProjectDetail = ({ type, projectList }) => {
                     />
                   </div>
                   <div className="project-heading-wrapper">
-                    <h1>{project.projectTitle}</h1>
+                    <h1>
+                      {isTablet
+                        ? project.projectTitle.length > 24
+                          ? project.projectTitle.slice(0, 24) + "..."
+                          : project.projectTitle
+                        : project.projectTitle.length > 27
+                        ? project.projectTitle.slice(0, 27) + "..."
+                        : project.projectTitle}
+                    </h1>
                     {type === "popular" && (
                       <div className="project-like-count">
                         <img src={heartImageUrl} alt="좋아요" />
@@ -44,13 +55,19 @@ const ProjectDetail = ({ type, projectList }) => {
                     )}
                     {type === "imminent" && (
                       <div>
-                        마감{" "}
+                        <div>마감</div>
                         {new Date(project.recruitEndDate).toLocaleDateString()}
                       </div>
                     )}
                   </div>
                 </div>
-                <div className="project-second-row">{project.description.length > 52 ? project.description.slice(0, 52) + "..." : project.description}</div>
+                <div className="project-second-row">
+                  {isTablet ? project.description.length > 35
+                    ? project.description.slice(0, 35) + "..."
+                    : project.description: project.description.length > 52
+                    ? project.description.slice(0, 52) + "..."
+                    : project.description}
+                </div>
               </Link>
             ))}
           </Slider>
