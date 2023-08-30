@@ -4075,6 +4075,7 @@ a {
 @media (max-width: 767px) {
   .home .description {
     height: 100%;
+    width: 100%;
     padding: 15px 30px;
   }
 }
