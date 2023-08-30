@@ -15,8 +15,6 @@ public interface FinalEvaluationRepository extends JpaRepository<FinalTermEvalua
     @Query("select new fullcare.backend.evaluation.dao.ScoreDao(fe.project.id, avg(fe.score.sincerity),  avg(fe.score.jobPerformance),  avg(fe.score.punctuality),  avg(fe.score.communication)) from FinalTermEvaluation fe where fe.evaluated.member.id = :memberId group by fe.evaluated.id, fe.project.id")
     List<ScoreDao> findMyAvgScore(Long memberId);
 
-    boolean existsByIdAndEvaluatorId(Long id, Long evaluatorId);
-    boolean existsById(Long id);
     boolean existsByEvaluatedIdAndEvaluatorIdAndProjectId(Long evaluatedId, Long evaluatorId,Long projectId);
 
     List<FinalTermEvaluation> findByProjectIdAndEvaluatedId(Long projectId, Long evaluatedId);

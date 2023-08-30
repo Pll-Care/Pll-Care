@@ -38,10 +38,8 @@ public abstract class Schedule {
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
-    // todo -> private ProjectMember author;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", nullable = false)
-//    private Member member;
     private ProjectMember author;
 
     @Enumerated(EnumType.STRING)

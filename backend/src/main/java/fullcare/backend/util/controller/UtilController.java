@@ -1,13 +1,17 @@
 package fullcare.backend.util.controller;
 
+import fullcare.backend.global.dto.ErrorResponse;
 import fullcare.backend.util.TechStackUtil;
 import fullcare.backend.util.dto.TechStackResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +29,7 @@ public class UtilController {
     @Operation(method = "get", summary = "기술스택 검색")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "기술스택 검색 성공", useReturnTypeSchema = true),
-//            @ApiResponse(responseCode = "400", description = "기술스택 검색 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+            @ApiResponse(responseCode = "400", description = "기술스택 검색 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping(value = "/techstack")
     public ResponseEntity<TechStackResponse> findTechStack(@RequestParam("tech") String tech) {
