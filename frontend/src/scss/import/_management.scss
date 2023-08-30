@@ -188,6 +188,7 @@
           }
 
           @include mobile {
+            grid-template-columns: 80% 20%;
             margin-left: 8px;
           }
         }
@@ -197,10 +198,10 @@
         }
 
         @include mobile {
-          grid-template-columns: 10% 90%;
-          width: 90%;
+          grid-template-columns: 12% 88%;
+          width: 260px;
           height: 125px;
-          padding: 25px 7px;
+          padding: 15px 7px;
           border-radius: 15px;
         }
 
@@ -210,6 +211,10 @@
   }
 
   @include tablet {
+    width: 100%;
+  }
+
+  @include mobile {
     width: 100%;
   }
 

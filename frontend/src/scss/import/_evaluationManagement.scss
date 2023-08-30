@@ -786,6 +786,10 @@
         padding: 10px;
         height: 140%;
 
+        @include mobile {
+          height: 140%;
+        }
+
         @media (orientation: landscape) {
           height: 220vh;
         }
@@ -807,6 +811,10 @@
     @include mobile {
       padding: 10px;
     }
+  }
+
+  @include mobile {
+    width: 100%;
   }
 
   @include tablet {

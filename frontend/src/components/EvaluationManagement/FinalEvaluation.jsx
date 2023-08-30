@@ -159,7 +159,7 @@ const FinalEvaluation = ({
       onClose={handleModalClose}
       type={"dark"}
       width={isMobile ? "95%" : isTablet ? 700 : 800}
-      height={"90%"}
+      height={isMobile ? "70%" : "90%"}
     >
       {type === "evaluation" ? (
         <div className="evaluation-management-final-evaluation">

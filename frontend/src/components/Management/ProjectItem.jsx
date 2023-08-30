@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
 
+import { useMediaQuery } from "@mui/material";
+
 import projectDefaultImgUrl from "../../assets/project-default-img.jpg";
 import leaveImgUrl from "../../assets/leave-button-img.png";
 
 const ProjectItem = ({ project, handleLeaveProjectClick }) => {
+  const isMobile = useMediaQuery("(max-width: 767px)");
+
   return (
     <div>
       <Link
@@ -34,7 +38,11 @@ const ProjectItem = ({ project, handleLeaveProjectClick }) => {
               <span className="project-item-description-heading">
                 프로젝트 설명:{" "}
               </span>
-              {project.description?.length > 132
+              {isMobile
+                ? project.description?.length > 48
+                  ? [project.description.slice(0, 48), "..."].join("")
+                  : project.description
+                : project.description?.length > 132
                 ? [project.description.slice(0, 132), "..."].join("")
                 : project.description}
             </div>
