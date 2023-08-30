@@ -1,7 +1,7 @@
 .meeting-record {
   &-management {
-    width: 100%;
-    height: 630px;
+    width: 840px;
+    height: 790px;
     display: flex;
     justify-content: space-between;
     border-radius: 35px;
@@ -22,6 +22,8 @@
       box-shadow: none;
       height: fit-content;
     }
+
+    @include putCenter;
   }
 
   &-list {
@@ -70,12 +72,12 @@
 
     .meeting-record-body {
       padding-top: 10px;
-      height: 210px;
+      height: 250px;
       padding-left: 10px;
       padding-right: 10px;
 
       .meeting-record-all-meeting-record-list-data {
-        height: 160px;
+        height: 100%;
         width: 100%;
 
         @include mobile {
@@ -117,7 +119,7 @@
     height: 47%;
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 25% 75%;
+    grid-template-rows: 20% 80%;
 
     .meeting-record-list-header {
       width: 100%;
@@ -126,7 +128,7 @@
 
       .header-left-col {
         width: 100%;
-        height: 60%;
+        height: fit-content;
 
         .meeting-record-heading {
           height: 40px;
@@ -146,7 +148,7 @@
 
       .header-right-col {
         margin-left: auto;
-        height: 40%;
+        height: fit-content;
         border-radius: 10px;
         Button {
           margin-right: 5px;
@@ -163,7 +165,7 @@
 
     .record-list-item-wrapper {
       padding-top: 10px;
-      height: 210px;
+      height: 100%;
       padding-left: 10px;
       padding-right: 10px;
 
@@ -177,7 +179,7 @@
 
     .meeting-record-all-meeting-record-list-data {
       width: 100%;
-      height: 160px;
+      height: 250px;
 
       @include mobile {
         height: 100px;
@@ -218,6 +220,12 @@
     background-color: $gray-100;
     padding: 50px 25px;
     color: $gray-500;
+    overflow: auto;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
 
     .meeting-record-initial-state {
       color: $green-200;
@@ -320,7 +328,7 @@
 
       .button {
         padding: 0;
-        margin-left: 4px;
+        margin-left: 15px;
       }
     }
 
@@ -354,7 +362,7 @@
     .selected-meeting-record-content,
     .created-meeting-record-content {
       width: 100%;
-      height: 85%;
+      height: fit-content;
       line-height: 1.5;
       padding: 10px;
 

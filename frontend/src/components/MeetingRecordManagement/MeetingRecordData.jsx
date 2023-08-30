@@ -35,7 +35,7 @@ const MeetingRecordData = ({ sortedMeetingRecordList }) => {
               {new Date(record.createdDate).toLocaleDateString()}
             </div>
             <div className="meeting-record-item-title" id={record.memoId}>
-              {record.title}
+              {record.title.length > 16 ? record.title.slice(0, 16) + "..." : record.title}
             </div>
             <div className="meeting-record-item-writer" id={record.memoId}>
               {record.author}
