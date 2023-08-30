@@ -3,7 +3,7 @@ import profile_default from "../../assets/profile-default-img.png";
 import Button from "../common/Button";
 import { Link } from "react-router-dom";
 import useModalIsOpen from "../../hooks/useModalIsOpen";
-import AlertCheckModal from "../common/AlertCheckModal";
+import AlertCheckModal from "../common/Modal/AlertCheckModal";
 import {
   postApplyAcceptAPI,
   postApplyRejectAPI,
