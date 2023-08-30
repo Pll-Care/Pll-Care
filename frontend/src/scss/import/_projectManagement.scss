@@ -2,6 +2,7 @@
   min-height: 65vh;
   display: flex;
   align-items: center;
+  width: 840px;
 
   .project-button-wrapper {
     figure {
@@ -64,4 +65,14 @@
       }
     }
   }
+
+  @include tablet {
+    width: 100%;
+  }
+
+  @include mobile {
+    width: 100%;
+  }
+
+  @include putCenter;
 }

@@ -1,7 +1,7 @@
 .meeting-record {
   &-management {
-    width: 100%;
-    height: 630px;
+    width: 840px;
+    height: 790px;
     display: flex;
     justify-content: space-between;
     border-radius: 35px;
@@ -16,12 +16,19 @@
       }
     }
 
+    @include tablet {
+      width: 690px;
+    }
+
     @include mobile {
+      width: 100%;
       background-color: white;
       flex-direction: column;
       box-shadow: none;
       height: fit-content;
     }
+
+    @include putCenter;
   }
 
   &-list {
@@ -42,7 +49,7 @@
       border-radius: 10px;
       margin-bottom: 30px;
       width: 100%;
-      height: 385px;
+      height: 465px;
     }
 
     @include displayFlex(column, space-around);
@@ -70,16 +77,16 @@
 
     .meeting-record-body {
       padding-top: 10px;
-      height: 210px;
+      height: 100%;
       padding-left: 10px;
       padding-right: 10px;
 
       .meeting-record-all-meeting-record-list-data {
-        height: 160px;
+        height: 100%;
         width: 100%;
 
         @include mobile {
-          height: 100px;
+          height: 150px;
         }
       }
 
@@ -108,7 +115,7 @@
       width: 100%;
       padding-top: 0px;
       margin-bottom: 0px;
-      height: 165px;
+      height: 220px;
     }
   }
 
@@ -117,7 +124,7 @@
     height: 47%;
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 25% 75%;
+    grid-template-rows: 20% 80%;
 
     .meeting-record-list-header {
       width: 100%;
@@ -126,7 +133,7 @@
 
       .header-left-col {
         width: 100%;
-        height: 60%;
+        height: fit-content;
 
         .meeting-record-heading {
           height: 40px;
@@ -146,7 +153,7 @@
 
       .header-right-col {
         margin-left: auto;
-        height: 40%;
+        height: fit-content;
         border-radius: 10px;
         Button {
           margin-right: 5px;
@@ -163,7 +170,7 @@
 
     .record-list-item-wrapper {
       padding-top: 10px;
-      height: 210px;
+      height: 100%;
       padding-left: 10px;
       padding-right: 10px;
 
@@ -177,10 +184,10 @@
 
     .meeting-record-all-meeting-record-list-data {
       width: 100%;
-      height: 160px;
+      height: 250px;
 
       @include mobile {
-        height: 100px;
+        height: 150px;
       }
     }
 
@@ -208,7 +215,7 @@
       display: flex;
       flex-direction: column;
       width: 100%;
-      height: 180px;
+      height: 230px;
     }
   }
 
@@ -218,6 +225,12 @@
     background-color: $gray-100;
     padding: 50px 25px;
     color: $gray-500;
+    overflow: auto;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
 
     .meeting-record-initial-state {
       color: $green-200;
@@ -320,7 +333,11 @@
 
       .button {
         padding: 0;
-        margin-left: 4px;
+        margin-left: 15px;
+
+        @include mobile {
+          margin-left: 5px;
+        }
       }
     }
 
@@ -354,7 +371,7 @@
     .selected-meeting-record-content,
     .created-meeting-record-content {
       width: 100%;
-      height: 85%;
+      height: fit-content;
       line-height: 1.5;
       padding: 10px;
 

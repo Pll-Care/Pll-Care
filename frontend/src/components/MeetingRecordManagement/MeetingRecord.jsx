@@ -112,14 +112,14 @@ const MeetingRecord = ({ state }) => {
                   <Button
                     size={"small"}
                     type={"underlined"}
-                    text={"삭제하기"}
+                    text={"삭제"}
                     onClick={handleDeleteMeetingRecord}
                   />
                 )}
                 <Button
                   size={"small"}
                   type={"underlined"}
-                  text={"수정하기"}
+                  text={"수정"}
                   onClick={handleEditMeetingRecord}
                 />
               </>
@@ -129,14 +129,14 @@ const MeetingRecord = ({ state }) => {
                 <Button
                   size={"small"}
                   type={"underlined"}
-                  text={"북마크 취소하기"}
+                  text={"북마크 취소"}
                   onClick={handleBookMarkMeetingRecord}
                 />
               ) : (
                 <Button
                   size={"small"}
                   type={"underlined"}
-                  text={"북마크하기"}
+                  text={"북마크"}
                   onClick={handleBookMarkMeetingRecord}
                 />
               )
@@ -164,28 +164,28 @@ const MeetingRecord = ({ state }) => {
                 <Button
                   size={"small"}
                   type={"underlined"}
-                  text={"삭제하기"}
+                  text={"삭제"}
                   onClick={handleDeleteMeetingRecord}
                 />
               )}
               <Button
                 size={"small"}
                 type={"underlined"}
-                text={"수정하기"}
+                text={"수정"}
                 onClick={handleEditMeetingRecord}
               />
               {createdData.bookmarked ? (
                 <Button
                   size={"small"}
                   type={"underlined"}
-                  text={"북마크 취소하기"}
+                  text={"북마크 취소"}
                   onClick={handleBookMarkMeetingRecord}
                 />
               ) : (
                 <Button
                   size={"small"}
                   type={"underlined"}
-                  text={"북마크하기"}
+                  text={"북마크"}
                   onClick={handleBookMarkMeetingRecord}
                 />
               )}

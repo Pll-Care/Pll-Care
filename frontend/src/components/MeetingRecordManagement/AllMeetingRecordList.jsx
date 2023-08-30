@@ -30,7 +30,6 @@ const filterOptionList = [
 const AllMeetingRecordList = () => {
   const [sortType, setSortType] = useState("DESC");
   const [currentPage, setCurrentPage] = useState(1);
-  const [recordDatasPerPage, setRecordDatasPerPage] = useState(3);
 
   const projectId = getProjectId(useLocation());
 
@@ -92,7 +91,7 @@ const AllMeetingRecordList = () => {
           {!isCompleted && (
             <Button
               size={"small"}
-              text={"새로운 회의록 작성하기"}
+              text={"새로운 회의록 작성"}
               onClick={handleCreateMeetingRecord}
             />
           )}

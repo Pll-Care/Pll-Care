@@ -1,8 +1,11 @@
 import { useDispatch } from "react-redux";
 import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
+import { useMediaQuery } from "@mui/material";
 
 const MeetingRecordData = ({ sortedMeetingRecordList }) => {
   const dispatch = useDispatch();
+
+  const isTablet = useMediaQuery("(min-width: 767px) and (max-width: 1024px)");
 
   const handleClickMeetingRecord = (e) => {
     if (e.target.id) {
@@ -35,7 +38,13 @@ const MeetingRecordData = ({ sortedMeetingRecordList }) => {
               {new Date(record.createdDate).toLocaleDateString()}
             </div>
             <div className="meeting-record-item-title" id={record.memoId}>
-              {record.title}
+              {isTablet
+                ? record.title.length > 10
+                  ? record.title.slice(0, 10) + "..."
+                  : record.title
+                : record.title.length > 16
+                ? record.title.slice(0, 16) + "..."
+                : record.title}
             </div>
             <div className="meeting-record-item-writer" id={record.memoId}>
               {record.author}

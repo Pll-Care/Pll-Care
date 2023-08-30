@@ -1,4 +1,5 @@
 .management {
+  width: 1280px;
   padding-bottom: 20px;
 
   &-main-header {
@@ -71,16 +72,16 @@
 
       .project-item {
         border: $border;
-        width: 650px;
+        width: 800px;
         height: 203px;
         border-radius: 33px;
         margin-bottom: 25px;
         text-decoration: none;
         box-shadow: 0px 10px 30px 5px #b5b5b533;
         display: grid;
-        grid-template-columns: 15% 85%;
+        grid-template-columns: 12% 88%;
         cursor: pointer;
-        padding: 45px 30px;
+        padding: 25px;
 
         &-left-col {
           figure {
@@ -102,7 +103,7 @@
 
         &-right-col {
           display: grid;
-          grid-template-columns: 80% 20%;
+          grid-template-columns: 85% 15%;
           grid-template-rows: 100%;
           color: #003b28;
           height: 100%;
@@ -133,7 +134,7 @@
 
           .project-item-description {
             line-height: 1.5;
-            overflow-wrap: break-word;
+            word-break: keep-all;
           }
 
           .project-item-period,
@@ -187,15 +188,20 @@
           }
 
           @include mobile {
+            grid-template-columns: 80% 20%;
             margin-left: 8px;
           }
         }
 
+        @include tablet {
+          width: 700px;
+        }
+
         @include mobile {
-          grid-template-columns: 10% 90%;
-          width: 90%;
+          grid-template-columns: 12% 88%;
+          width: 260px;
           height: 125px;
-          padding: 25px 7px;
+          padding: 15px 7px;
           border-radius: 15px;
         }
 
@@ -203,6 +209,16 @@
       }
     }
   }
+
+  @include tablet {
+    width: 100%;
+  }
+
+  @include mobile {
+    width: 100%;
+  }
+
+  @include putCenter;
 }
 
 .MuiBox-root {
@@ -406,13 +422,13 @@
 }
 
 .management_project_layout {
-  width: 72%;
+  width: 1076px;
   margin: 0 auto;
   padding-top: 25px;
   padding-bottom: 30px;
 
   @include tablet {
-    width: 90%;
+    width: 720px;
     padding-top: 60px;
     padding-bottom: 60px;
   }
