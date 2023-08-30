@@ -3292,7 +3292,10 @@ a {
 }
 
 .management {
+  width: 1280px;
   padding-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .management-main-header {
   background-color: #01e89e;
@@ -3378,14 +3381,14 @@ a {
 }
 .management .project-list-wrapper .project-list .project-item {
   border: 2px solid #01e89e;
-  width: 650px;
+  width: 800px;
   height: 203px;
   border-radius: 33px;
   margin-bottom: 25px;
   text-decoration: none;
   box-shadow: 0px 10px 30px 5px rgba(181, 181, 181, 0.2);
   display: grid;
-  grid-template-columns: 15% 85%;
+  grid-template-columns: 12% 88%;
   cursor: pointer;
   padding: 45px 30px;
   margin-left: auto;
@@ -3407,7 +3410,7 @@ a {
 }
 .management .project-list-wrapper .project-list .project-item-right-col {
   display: grid;
-  grid-template-columns: 80% 20%;
+  grid-template-columns: 85% 15%;
   grid-template-rows: 100%;
   color: #003b28;
   height: 100%;

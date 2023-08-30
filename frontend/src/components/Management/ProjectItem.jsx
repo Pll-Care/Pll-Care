@@ -34,8 +34,8 @@ const ProjectItem = ({ project, handleLeaveProjectClick }) => {
               <span className="project-item-description-heading">
                 프로젝트 설명:{" "}
               </span>
-              {project.description?.length > 40
-                ? [project.description.slice(0, 40), "..."].join("")
+              {project.description?.length > 132
+                ? [project.description.slice(0, 132), "..."].join("")
                 : project.description}
             </div>
           </div>
