@@ -50,7 +50,7 @@ const ProjectDetail = ({ type, projectList }) => {
                     )}
                   </div>
                 </div>
-                <div className="project-second-row">{project.description}</div>
+                <div className="project-second-row">{project.description.length > 52 ? project.description.slice(0, 52) + "..." : project.description}</div>
               </Link>
             ))}
           </Slider>
