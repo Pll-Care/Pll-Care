@@ -9,6 +9,7 @@ import {
   getFinalEvaluation,
 } from "../../lib/apis/evaluationManagementApi";
 import { useRouter } from "../../hooks/useRouter";
+import { getBadgeName } from "../../utils/getBadgeName";
 
 const AllParticipants = ({ projectId, isCompleted }) => {
   const [isFinalEvaluationVisible, setIsFinalEvaluationVisible] = useState("");
@@ -62,7 +63,7 @@ const AllParticipants = ({ projectId, isCompleted }) => {
         <FinalEvaluation
           isFinalEvaluationVisible={isFinalEvaluationVisible}
           type={finalEvaluationType}
-          badgeQuantity={badgeQuantity}
+          badgeQuantity={getBadgeName(badgeQuantity)}
           participantId={participantId}
           member={isFinalEvaluationVisible}
           setIsFinalEvaluationVisible={setIsFinalEvaluationVisible}
