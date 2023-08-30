@@ -140,11 +140,11 @@ const FinalEvaluation = ({
       case 0:
         return goodLeaderBadgeImgUrl;
       case 1:
-        return enthusiasticParticipantBadgeImgUrl;
-      case 2:
-        return bestSupporterBadgeImgUrl;
-      case 3:
         return ideaBankBadgeImgUrl;
+      case 2:
+        return enthusiasticParticipantBadgeImgUrl;
+      case 3:
+        return bestSupporterBadgeImgUrl;
       default:
         return "";
     }
@@ -157,7 +157,7 @@ const FinalEvaluation = ({
       open={isFinalEvaluationVisible}
       onClose={handleModalClose}
       type={"dark"}
-      width={isMobile ? "95%" : "80%"}
+      width={isMobile ? "95%" : 800}
       height={"90%"}
     >
       {type === "evaluation" ? (
