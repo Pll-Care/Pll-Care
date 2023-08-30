@@ -2,7 +2,6 @@
 /* eslint-disable no-unused-vars */
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { customAxios } from "../../lib/apis/customAxios";
 
 const JWTToken = () => {
   const [searchParams, _] = useSearchParams();
@@ -19,10 +18,6 @@ const JWTToken = () => {
       window.opener?.postMessage("login", "*");
 
       window.close();
-
-      customAxios.defaults.headers.common["Authorization"] = accessToken
-        ? `Bearer ${accessToken}`
-        : null;
     }
   }, []);
 
