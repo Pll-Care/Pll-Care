@@ -140,11 +140,11 @@ const FinalEvaluation = ({
       case 0:
         return goodLeaderBadgeImgUrl;
       case 1:
-        return ideaBankBadgeImgUrl;
-      case 2:
         return enthusiasticParticipantBadgeImgUrl;
-      case 3:
+      case 2:
         return bestSupporterBadgeImgUrl;
+      case 3:
+        return ideaBankBadgeImgUrl;
       default:
         return "";
     }
