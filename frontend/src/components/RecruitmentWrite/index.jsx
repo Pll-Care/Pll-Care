@@ -12,7 +12,7 @@ import RecruitmentPostionWrite from "./RecruitmentPositionWrite";
 import RecruitmentContentWrite from "./RecruitmentContentWrite";
 import SearchStack from "../Profile/Introduce/PositionBox/SearchStack";
 
-import { useAddRecruitmentPostMutation } from "../../hooks/Mutation/useRecruitmentMutation";
+import { useAddRecruitmentPostMutation } from "../../hooks/Mutations/useRecruitmentMutation";
 import { getRecruitmentProject } from "../../lib/apis/memberRecruitmentApi";
 import { isToken } from "../../utils/localstorageHandler";
 

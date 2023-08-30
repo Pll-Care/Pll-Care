@@ -14,7 +14,7 @@ import goodLeaderBadgeImgUrl from "../../assets/good-leader-badge-img.svg";
 import ideaBankBadgeImgUrl from "../../assets/idea-bank-badge-img.svg";
 import bestSupporterBadgeImgUrl from "../../assets/best-supporter-badge-img.svg";
 import { useMediaQuery } from "@mui/material";
-import useEvaluationManagementMutation from "../../hooks/mutation/useEvaluationManagementMutation";
+import useEvaluationManagementMutation from "../../hooks/Mutations/useEvaluationManagementMutation";
 
 const evaluationCriterion = [
   {
