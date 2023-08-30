@@ -16,6 +16,10 @@
       }
     }
 
+    @include tablet {
+      width: 690px;
+    }
+
     @include mobile {
       background-color: white;
       flex-direction: column;

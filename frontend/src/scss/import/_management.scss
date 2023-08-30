@@ -81,7 +81,7 @@
         display: grid;
         grid-template-columns: 12% 88%;
         cursor: pointer;
-        padding: 45px 30px;
+        padding: 25px;
 
         &-left-col {
           figure {
@@ -134,7 +134,7 @@
 
           .project-item-description {
             line-height: 1.5;
-            overflow-wrap: break-word;
+            word-break: keep-all;
           }
 
           .project-item-period,
@@ -192,6 +192,10 @@
           }
         }
 
+        @include tablet {
+          width: 700px;
+        }
+
         @include mobile {
           grid-template-columns: 10% 90%;
           width: 90%;
@@ -203,6 +207,10 @@
         @include putCenter;
       }
     }
+  }
+
+  @include tablet {
+    width: 100%;
   }
 
   @include putCenter;
@@ -415,7 +423,7 @@
   padding-bottom: 30px;
 
   @include tablet {
-    width: 90%;
+    width: 720px;
     padding-top: 60px;
     padding-bottom: 60px;
   }

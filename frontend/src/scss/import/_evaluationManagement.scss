@@ -462,6 +462,10 @@
             @include displayFlex(row, space-between);
           }
 
+          @include tablet {
+            margin-left: 30px;
+          }
+
           @include mobile {
             width: 100%;
             margin-left: 5px;
@@ -588,7 +592,7 @@
         }
 
         @include tablet {
-          width: 70%;
+          width: 80%;
           height: 100%;
           grid-template-rows: repeat(4, 1fr);
           grid-template-columns: 100%;
@@ -662,6 +666,9 @@
             }
 
             .badge-quantity {
+              @include tablet {
+                justify-self: center
+              }
               @include mobile {
                 justify-self: center;
               }
@@ -769,6 +776,10 @@
         }
       }
 
+      @include tablet {
+        height: 980px;
+      }
+
       @include mobile {
         grid-template-rows: 30% 30% 40%;
         border-radius: 10px;
@@ -796,6 +807,10 @@
     @include mobile {
       padding: 10px;
     }
+  }
+
+  @include tablet {
+    width: 690px;
   }
 
   @include putCenter;

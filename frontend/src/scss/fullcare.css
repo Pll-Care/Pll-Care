@@ -514,7 +514,6 @@ a {
 .control-menu {
   border-radius: 55px;
   border: none;
-  font-family: "IBM Plex Sans KR", sans-serif;
   color: #00aa72;
   text-align: center;
   cursor: pointer;
@@ -655,25 +654,26 @@ a {
 
 .toggle-menu-items {
   width: 100%;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 18px;
   margin-top: 15px;
+  gap: 15px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 15px;
 }
 
 .toggle-menu-button-wrapper {
   width: 100%;
   height: 80px;
+  border-bottom: 1px solid #b4bcbd;
+  padding: 0 10px 0 9px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
-  border-bottom: 1px solid #b4bcbd;
-  padding: 0 10px 0 9px;
 }
 
 .toggle-menu-button-logo {
@@ -1715,6 +1715,11 @@ a {
     font-family: "IBM Plex Sans KR", sans-serif;
     font-size: 10px;
     font-weight: 600;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .meeting-record-management {
+    width: 690px;
   }
 }
 @media (max-width: 767px) {
@@ -2941,6 +2946,11 @@ a {
     width: fit-content;
   }
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col {
+    margin-left: 30px;
+  }
+}
 @media (max-width: 767px) {
   .evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col {
     width: 100%;
@@ -3062,7 +3072,7 @@ a {
 }
 @media (min-width: 767px) and (max-width: 1024px) {
   .evaluation-management-final-evaluation .final-evaluation-body .evaluation-criterion {
-    width: 70%;
+    width: 80%;
     height: 100%;
     grid-template-rows: repeat(4, 1fr);
     grid-template-columns: 100%;
@@ -3135,6 +3145,11 @@ a {
   .evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges-body .badge figure {
     width: 15px;
     height: 15px;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .evaluation-management-final-evaluation .final-evaluation-body .evaluation-badges-body .badge .badge-quantity {
+    justify-self: center;
   }
 }
 @media (max-width: 767px) {
@@ -3271,6 +3286,11 @@ a {
     height: 280vh;
   }
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .evaluation-management-final-evaluation .final-evaluation-body {
+    height: 980px;
+  }
+}
 @media (max-width: 767px) {
   .evaluation-management-final-evaluation .final-evaluation-body {
     grid-template-rows: 30% 30% 40%;
@@ -3299,6 +3319,11 @@ a {
 @media (max-width: 767px) {
   .evaluation-management-final-evaluation {
     padding: 10px;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .evaluation-management {
+    width: 690px;
   }
 }
 
@@ -3401,7 +3426,7 @@ a {
   display: grid;
   grid-template-columns: 12% 88%;
   cursor: pointer;
-  padding: 45px 30px;
+  padding: 25px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -3458,7 +3483,7 @@ a {
 }
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-description {
   line-height: 1.5;
-  overflow-wrap: break-word;
+  word-break: keep-all;
 }
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-period-heading,
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-description-heading {
@@ -3514,6 +3539,11 @@ a {
     margin-left: 8px;
   }
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .management .project-list-wrapper .project-list .project-item {
+    width: 700px;
+  }
+}
 @media (max-width: 767px) {
   .management .project-list-wrapper .project-list .project-item {
     grid-template-columns: 10% 90%;
@@ -3521,6 +3551,11 @@ a {
     height: 125px;
     padding: 25px 7px;
     border-radius: 15px;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .management {
+    width: 100%;
   }
 }
 
@@ -3756,7 +3791,7 @@ a {
 }
 @media (min-width: 767px) and (max-width: 1024px) {
   .management_project_layout {
-    width: 90%;
+    width: 720px;
     padding-top: 60px;
     padding-bottom: 60px;
   }
@@ -3841,6 +3876,11 @@ a {
 }
 .project-management .completed-project .project-button-wrapper figure {
   pointer-events: none;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .project-management {
+    width: 100%;
+  }
 }
 
 .modal {

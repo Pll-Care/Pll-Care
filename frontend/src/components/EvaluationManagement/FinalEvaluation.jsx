@@ -151,13 +151,14 @@ const FinalEvaluation = ({
   };
 
   const isMobile = useMediaQuery("(max-width: 767px)");
+  const isTablet = useMediaQuery("(min-width: 767px) and (max-width: 1024px)");
 
   return (
     <ModalContainer
       open={isFinalEvaluationVisible}
       onClose={handleModalClose}
       type={"dark"}
-      width={isMobile ? "95%" : 800}
+      width={isMobile ? "95%" : isTablet ? 700 : 800}
       height={"90%"}
     >
       {type === "evaluation" ? (
@@ -246,7 +247,7 @@ const FinalEvaluation = ({
                       }}
                     />
                     <div>{badge.evaluationBadge}</div>
-                    <div>{badge.quantity} 개</div>
+                    <div className="badge-quantity">{badge.quantity} 개</div>
                   </div>
                 ))}
               </div>
