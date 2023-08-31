@@ -13,7 +13,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 
@@ -34,24 +33,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             if (refreshToken != null && jwtTokenService.validateJwtToken(refreshToken)) {
 
-                String[] newTokens = jwtTokenService.reIssueTokens(refreshToken); // * 리프레쉬 토큰이 DB와 일치 시 access, refresh 재발급
-                String requestURI = request.getRequestURI();
-                String successUrl = UriComponentsBuilder.fromUriString("https://fullcare.store/token")
-                        .queryParam("access_token", newTokens[0])
-                        .queryParam("refresh_token", newTokens[1])
-                        .queryParam("redirect_uri", requestURI)
-                        .build().toUriString();
-                System.out.println("successUrl = " + successUrl);
+//                String[] newTokens = jwtTokenService.reIssueTokens(refreshToken); // * 리프레쉬 토큰이 DB와 일치 시 access, refresh 재발급
+//                String requestURI = request.getRequestURI();
+//                String successUrl = UriComponentsBuilder.fromUriString("https://fullcare.store/token")
+//                        .queryParam("access_token", newTokens[0])
+//                        .queryParam("refresh_token", newTokens[1])
+//                        .queryParam("redirect_uri", requestURI)
+//                        .build().toUriString();
+//                System.out.println("successUrl = " + successUrl);
 
 
 //                response.setHeader(ACCESS_TOKEN_AUTHORIZATION_HEADER, newTokens[0]);
 //                response.setHeader(REFRESH_TOKEN_AUTHORIZATION_HEADER, newTokens[1]);
 //                response.setStatus(200);
-
-
-                response.sendRedirect(successUrl);
-
-                return;
+//
+//
+//                response.sendRedirect(successUrl);
+//
+//                return;
             } else if (accessToken != null && jwtTokenService.validateJwtToken(accessToken)) {
                 Authentication authentication = jwtTokenService.getAuthentication(accessToken);
                 SecurityContextHolder.getContext().setAuthentication(authentication);

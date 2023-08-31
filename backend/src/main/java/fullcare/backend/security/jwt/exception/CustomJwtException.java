@@ -12,5 +12,5 @@ public class CustomJwtException extends AuthenticationException {
         super(errorCode.getMessage());
         this.errorCode = errorCode;
     }
-    
+
 }

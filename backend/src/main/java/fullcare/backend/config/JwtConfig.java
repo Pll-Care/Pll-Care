@@ -52,6 +52,7 @@ public class JwtConfig {
                         .requestMatchers("/api/auth/main/**").hasAnyRole("USER", "ANONYMOUS")
                         .requestMatchers("/api/auth/post/list", "/api/auth/post/{postId:[\\d+]}").hasAnyRole("USER", "ANONYMOUS")
                         .requestMatchers("/api/auth/util/techstack").hasAnyRole("USER", "ANONYMOUS")
+                        .requestMatchers("/api/auth/util/reissuetoken").hasAnyRole("USER", "ANONYMOUS")
                         .requestMatchers("/api/auth/profile/{memberId:[\\d+]}/rolestack",
                                 "/api/auth/profile/{memberId:[\\d+]}/experience", "/api/auth/profile/{memberId:[\\d+]}/evaluation",
                                 "/api/auth/profile/{memberId:[\\d+]}/evaluation/{projectId:[\\d+]}", "/api/auth/profile/{memberId:[\\d+]}/evaluation/chart",

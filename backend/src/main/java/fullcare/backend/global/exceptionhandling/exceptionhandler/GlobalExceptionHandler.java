@@ -4,12 +4,14 @@ import com.fasterxml.jackson.databind.DatabindException;
 import fullcare.backend.global.dto.ErrorResponse;
 import fullcare.backend.global.errorcode.GlobalErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.RestApiException;
+import fullcare.backend.security.jwt.exception.CustomJwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -20,6 +22,12 @@ public class GlobalExceptionHandler {
     // * 모든 REST API 예외 발생 처리
     @ExceptionHandler(RestApiException.class)
     public ResponseEntity<?> handleRestApiException(RestApiException e, HttpServletRequest request) {
+        ErrorResponse errorResponse = ErrorResponse.getResponse(e.getErrorCode(), request);
+        return new ResponseEntity<>(errorResponse, e.getErrorCode().getStatus());
+    }
+
+    @ExceptionHandler(CustomJwtException.class)
+    public ResponseEntity<?> handleCustomJwtException(CustomJwtException e, HttpServletRequest request) {
         ErrorResponse errorResponse = ErrorResponse.getResponse(e.getErrorCode(), request);
         return new ResponseEntity<>(errorResponse, e.getErrorCode().getStatus());
     }
@@ -51,6 +59,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = {BindException.class})
     public ResponseEntity<?> handleBindException(BindException e, HttpServletRequest request) {
+        ErrorResponse errorResponse = ErrorResponse.getResponse(GlobalErrorCode.INVALID_REQUEST_DATA, e, request);
+        return new ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = {ServletRequestBindingException.class})
+    public ResponseEntity<?> handleServletRequestBindingException(ServletRequestBindingException e, HttpServletRequest request) {
         ErrorResponse errorResponse = ErrorResponse.getResponse(GlobalErrorCode.INVALID_REQUEST_DATA, e, request);
         return new ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST);
     }

@@ -1,6 +1,10 @@
 package fullcare.backend.util.controller;
 
+import fullcare.backend.security.jwt.JwtTokenService;
+import fullcare.backend.security.jwt.exception.CustomJwtException;
+import fullcare.backend.security.jwt.exception.JwtErrorCode;
 import fullcare.backend.util.TechStackUtil;
+import fullcare.backend.util.dto.ReissueTokenResponse;
 import fullcare.backend.util.dto.TechStackResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -9,10 +13,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @Tag(name = "유틸", description = "유틸 관련 API")
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UtilController {
 
     private final TechStackUtil techStackUtil;
+    private final JwtTokenService jwtTokenService;
 
     @Operation(method = "get", summary = "기술스택 검색")
     @ApiResponses(value = {
@@ -30,8 +33,25 @@ public class UtilController {
     @GetMapping(value = "/techstack")
     public ResponseEntity<TechStackResponse> findTechStack(@RequestParam("tech") String tech) {
 
-
         TechStackResponse response = techStackUtil.findTechStack(tech);
         return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @Operation(method = "get", summary = "토큰 재발급")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "토큰 재발급 성공", useReturnTypeSchema = true),
+//            @ApiResponse(responseCode = "400", description = "기술스택 검색 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+    })
+    @GetMapping(value = "/reissuetoken")
+    public ResponseEntity<TechStackResponse> reissueToken(@RequestHeader("Authorization_refresh") String refreshToken) {
+
+        if (!StringUtils.hasText(refreshToken) || !refreshToken.startsWith("Bearer ")) {
+            throw new CustomJwtException(JwtErrorCode.INVALID_REFRESH_TOKEN);
+        }
+
+        String[] reIssueTokens = jwtTokenService.reIssueTokens(refreshToken.substring(7));
+        ReissueTokenResponse reissueTokenResponse = new ReissueTokenResponse(reIssueTokens);
+
+        return new ResponseEntity(reissueTokenResponse, HttpStatus.OK);
     }
 }

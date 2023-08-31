@@ -95,7 +95,9 @@ public class JwtTokenService {
         }
 
         log.info("등록되지 않은 사용자입니다.");
-        throw new CustomJwtException(JwtErrorCode.NOT_FOUND_USER);
+
+        // ! RTR에 의해 이미 교체된 토큰일 경우 -> 즉, 이전에 한번 사용된 리프레시 토큰일 경우
+        throw new CustomJwtException(JwtErrorCode.INVALID_REFRESH_TOKEN);
     }
 
 
