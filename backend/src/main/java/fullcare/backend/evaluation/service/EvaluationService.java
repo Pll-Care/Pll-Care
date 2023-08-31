@@ -378,25 +378,30 @@ public class EvaluationService {
 
     // * INTERNAL METHOD
     // * 개수가 0인 뱃지 설정
-    private static void setBadge(List<BadgeDto> badgeDtoDtos) {
-        List<EvaluationBadge> evaluationBadges = new ArrayList<>();
-        evaluationBadges.add(EvaluationBadge.탁월한_리더);
-        evaluationBadges.add(EvaluationBadge.열정적인_참여자);
-        evaluationBadges.add(EvaluationBadge.최고의_서포터);
-        evaluationBadges.add(EvaluationBadge.아이디어_뱅크);
-        for (BadgeDto badgeDto : badgeDtoDtos) {
-            if (badgeDto.getEvaluationBadge().equals(EvaluationBadge.탁월한_리더)) {
-                evaluationBadges.remove(EvaluationBadge.탁월한_리더);
-            } else if (badgeDto.getEvaluationBadge().equals(EvaluationBadge.열정적인_참여자)) {
-                evaluationBadges.remove(EvaluationBadge.열정적인_참여자);
-            } else if (badgeDto.getEvaluationBadge().equals(EvaluationBadge.최고의_서포터)) {
-                evaluationBadges.remove(EvaluationBadge.최고의_서포터);
-            } else if (badgeDto.getEvaluationBadge().equals(EvaluationBadge.아이디어_뱅크)) {
-                evaluationBadges.remove(EvaluationBadge.아이디어_뱅크);
+    private static void setBadge(List<BadgeDto> badgeDtos) {
+        List<BadgeDto> newBadges = new ArrayList<>();
+        newBadges.add(new BadgeDto(EvaluationBadge.탁월한_리더, 0l));
+        newBadges.add(new BadgeDto(EvaluationBadge.열정적인_참여자, 0l));
+        newBadges.add(new BadgeDto(EvaluationBadge.최고의_서포터, 0l));
+        newBadges.add(new BadgeDto(EvaluationBadge.아이디어_뱅크, 0l));
+        for (BadgeDto badgeDto : badgeDtos) {
+            if (badgeDto.getEvaluationBadge().equals(EvaluationBadge.탁월한_리더)){
+                BadgeDto badge = newBadges.get(0);
+                badge.setQuantity(badgeDto.getQuantity());
+            }else if(badgeDto.getEvaluationBadge().equals(EvaluationBadge.열정적인_참여자)){
+                BadgeDto badge = newBadges.get(1);
+                badge.setQuantity(badgeDto.getQuantity());
+            }else if(badgeDto.getEvaluationBadge().equals(EvaluationBadge.최고의_서포터)){
+                BadgeDto badge = newBadges.get(2);
+                badge.setQuantity(badgeDto.getQuantity());
+            }else if(badgeDto.getEvaluationBadge().equals(EvaluationBadge.아이디어_뱅크)){
+                BadgeDto badge = newBadges.get(3);
+                badge.setQuantity(badgeDto.getQuantity());
             }
         }
-        for (EvaluationBadge evaluationBadge : evaluationBadges) { // * 없는 뱃지 추가
-            badgeDtoDtos.add(new BadgeDto(evaluationBadge, 0l));
+        badgeDtos.clear();
+        for (int i = 0; i < 4; i++) {
+            badgeDtos.add(newBadges.get(i));
         }
     }
 }
