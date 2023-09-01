@@ -21,7 +21,6 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     public static final String ACCESS_TOKEN_AUTHORIZATION_HEADER = "Authorization";
-    public static final String REFRESH_TOKEN_AUTHORIZATION_HEADER = "Authorization_refresh";
 
     private final JwtTokenService jwtTokenService;
 
@@ -54,5 +53,5 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         return null;
     }
-    
+
 }
