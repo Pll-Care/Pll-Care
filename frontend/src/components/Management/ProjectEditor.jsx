@@ -131,7 +131,7 @@ const ProjectEditor = ({
     <ModalContainer
       open={isModalVisible}
       onClose={handleModalClose}
-      width={isMobile ? 270 : 600}
+      width={isMobile ? 270 : 700}
       height={isMobile ? 270 : 350}
     >
       <div className="project-editor">
@@ -178,7 +178,7 @@ const ProjectEditor = ({
           </div>
           <div className="project-editor-right-col">
             <div className="project-editor-first-row">
-              <h1>진행 기간:</h1>
+              <h1>진행 기간</h1>
               <div className="project-editor-period">
                 <input
                   className="project-editor-period-start-date"
