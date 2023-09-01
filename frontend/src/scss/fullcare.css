@@ -2783,7 +2783,7 @@ a {
   background-size: 100% 100%;
 }
 .evaluation-management .evaluation-management-ranking-wrapper-non-evaluated::before {
-  background: url("../assets/evaluation-error-text.png") no-repeat center;
+  background: url("../assets/evaluation-error-text.png") no-repeat left;
 }
 @media (max-width: 767px) {
   .evaluation-management .evaluation-management-ranking-wrapper-non-evaluated::before {
@@ -2791,7 +2791,7 @@ a {
   }
 }
 .evaluation-management .final-evaluation-management-ranking-wrapper-non-evaluated::before {
-  background: url("../assets/final-evaluation-error-text.png") no-repeat center;
+  background: url("../assets/final-evaluation-error-text.png") no-repeat left;
 }
 @media (max-width: 767px) {
   .evaluation-management .final-evaluation-management-ranking-wrapper-non-evaluated::before {
