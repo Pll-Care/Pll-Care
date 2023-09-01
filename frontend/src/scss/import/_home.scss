@@ -120,7 +120,8 @@
 
       .project-detail-wrapper {
         width: 100%;
-        height: 90%;
+        height: 100%;
+        margin-top: 25px;
 
         @include displayFlex;
       }
@@ -175,7 +176,7 @@
         }
 
         .project-first-row {
-          height: 65%;
+          height: 50%;
 
           @include displayFlex(row, space-between, flex-start);
         }
@@ -253,8 +254,8 @@
 
         .project-second-row {
           padding: 10px;
-          height: 35%;
-          line-height: 1.3;
+          height: fit-content;
+          line-height: 27px;
           color: $gray-500;
 
           @include mobile {

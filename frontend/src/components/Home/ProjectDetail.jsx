@@ -43,8 +43,8 @@ const ProjectDetail = ({ type, projectList }) => {
                         ? project.projectTitle.length > 24
                           ? project.projectTitle.slice(0, 24) + "..."
                           : project.projectTitle
-                        : project.projectTitle.length > 27
-                        ? project.projectTitle.slice(0, 27) + "..."
+                        : project.projectTitle.length > 16
+                        ? project.projectTitle.slice(0, 16) + "..."
                         : project.projectTitle}
                     </h1>
                     {type === "popular" && (
@@ -55,16 +55,18 @@ const ProjectDetail = ({ type, projectList }) => {
                     )}
                     {type === "imminent" && (
                       <div>
-                        <div>마감</div>
-                        {new Date(project.recruitEndDate).toLocaleDateString()}
+                        마감
+                        {" " + new Date(project.recruitEndDate).toLocaleDateString()}
                       </div>
                     )}
                   </div>
                 </div>
                 <div className="project-second-row">
-                  {isTablet ? project.description.length > 35
-                    ? project.description.slice(0, 35) + "..."
-                    : project.description: project.description.length > 52
+                  {isTablet
+                    ? project.description.length > 35
+                      ? project.description.slice(0, 35) + "..."
+                      : project.description
+                    : project.description.length > 52
                     ? project.description.slice(0, 52) + "..."
                     : project.description}
                 </div>
