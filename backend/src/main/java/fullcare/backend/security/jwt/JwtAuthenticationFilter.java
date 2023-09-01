@@ -28,30 +28,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
-            String refreshToken = getRefreshToken(request);
             String accessToken = getAccessToken(request);
 
-            if (refreshToken != null && jwtTokenService.validateJwtToken(refreshToken)) {
-
-//                String[] newTokens = jwtTokenService.reIssueTokens(refreshToken); // * 리프레쉬 토큰이 DB와 일치 시 access, refresh 재발급
-//                String requestURI = request.getRequestURI();
-//                String successUrl = UriComponentsBuilder.fromUriString("https://fullcare.store/token")
-//                        .queryParam("access_token", newTokens[0])
-//                        .queryParam("refresh_token", newTokens[1])
-//                        .queryParam("redirect_uri", requestURI)
-//                        .build().toUriString();
-//                System.out.println("successUrl = " + successUrl);
-
-
-//                response.setHeader(ACCESS_TOKEN_AUTHORIZATION_HEADER, newTokens[0]);
-//                response.setHeader(REFRESH_TOKEN_AUTHORIZATION_HEADER, newTokens[1]);
-//                response.setStatus(200);
-//
-//
-//                response.sendRedirect(successUrl);
-//
-//                return;
-            } else if (accessToken != null && jwtTokenService.validateJwtToken(accessToken)) {
+            if (accessToken != null && jwtTokenService.validateJwtToken(accessToken)) {
                 Authentication authentication = jwtTokenService.getAuthentication(accessToken);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } else { // ! accessToken 값 자체가 제공 안된 경우, AnonymousAuthenticationToken 으로 AuthorizationFilter에서 걸러짐
@@ -75,14 +54,5 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         return null;
     }
-
-    private String getRefreshToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader(REFRESH_TOKEN_AUTHORIZATION_HEADER);
-
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
-        }
-        return null;
-    }
-
+    
 }

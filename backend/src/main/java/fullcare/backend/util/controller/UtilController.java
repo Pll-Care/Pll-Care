@@ -49,9 +49,19 @@ public class UtilController {
             throw new CustomJwtException(JwtErrorCode.INVALID_REFRESH_TOKEN);
         }
 
-        String[] reIssueTokens = jwtTokenService.reIssueTokens(refreshToken.substring(7));
-        ReissueTokenResponse reissueTokenResponse = new ReissueTokenResponse(reIssueTokens);
+        try {
+            String extractedRefreshToken = refreshToken.substring(7);
 
-        return new ResponseEntity(reissueTokenResponse, HttpStatus.OK);
+            jwtTokenService.validateJwtToken(extractedRefreshToken);
+            String[] reIssueTokens = jwtTokenService.reIssueTokens(extractedRefreshToken);
+            ReissueTokenResponse reissueTokenResponse = new ReissueTokenResponse(reIssueTokens);
+
+            return new ResponseEntity(reissueTokenResponse, HttpStatus.OK);
+
+        } catch (CustomJwtException e) {
+            throw new CustomJwtException(JwtErrorCode.INVALID_REFRESH_TOKEN);
+        }
+
+
     }
 }
