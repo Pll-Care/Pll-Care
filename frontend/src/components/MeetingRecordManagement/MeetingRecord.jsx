@@ -66,15 +66,17 @@ const MeetingRecord = ({ state }) => {
     dispatch(meetingRecordManagementActions.setInitialState(true));
   };
 
-  const handleBookMarkMeetingRecord = () => {
+  const handleBookMarkMeetingRecord = (type) => {
     state === "selectedMeetingRecord"
       ? createBookMarkMutate({
           meetingRecordId: selectedData.memoId,
           projectId,
+          type,
         })
       : createBookMarkMutate({
           meetingRecordId: createdData.memoId,
           projectId,
+          type,
         });
     dispatch(meetingRecordManagementActions.setInitialState(true));
   };
@@ -130,14 +132,14 @@ const MeetingRecord = ({ state }) => {
                   size={"small"}
                   type={"underlined"}
                   text={"북마크 취소"}
-                  onClick={handleBookMarkMeetingRecord}
+                  onClick={() => handleBookMarkMeetingRecord("cancel")}
                 />
               ) : (
                 <Button
                   size={"small"}
                   type={"underlined"}
                   text={"북마크"}
-                  onClick={handleBookMarkMeetingRecord}
+                  onClick={() => handleBookMarkMeetingRecord("bookmark")}
                 />
               )
             ) : null}
@@ -179,14 +181,14 @@ const MeetingRecord = ({ state }) => {
                   size={"small"}
                   type={"underlined"}
                   text={"북마크 취소"}
-                  onClick={handleBookMarkMeetingRecord}
+                  onClick={() => handleBookMarkMeetingRecord("cancel")}
                 />
               ) : (
                 <Button
                   size={"small"}
                   type={"underlined"}
                   text={"북마크"}
-                  onClick={handleBookMarkMeetingRecord}
+                  onClick={() => handleBookMarkMeetingRecord("bookmark")}
                 />
               )}
             </div>
