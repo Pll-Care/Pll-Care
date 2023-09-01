@@ -81,7 +81,7 @@
         display: grid;
         grid-template-columns: 12% 88%;
         cursor: pointer;
-        padding: 25px;
+        padding: 35px 25px;
 
         &-left-col {
           figure {
@@ -109,7 +109,7 @@
           height: 100%;
 
           .project-item-heading {
-            margin-bottom: 7px;
+            margin-bottom: 15px;
             color: $green-500;
 
             @include mobile {
@@ -123,7 +123,7 @@
 
           .project-item-period,
           .project-item-description {
-            margin-bottom: 7px;
+            margin-bottom: 15px;
 
             @include mobile {
               @include m_body_01;
