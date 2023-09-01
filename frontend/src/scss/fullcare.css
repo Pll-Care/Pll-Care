@@ -240,7 +240,7 @@ a {
 }
 .management-header a {
   text-decoration: none;
-  color: #7a7a7a;
+  color: #373E3B;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
   font-weight: 600;
@@ -348,7 +348,7 @@ a {
   color: #003b28;
 }
 .main-header .main-header-link-off {
-  color: #7a7a7a;
+  color: #373E3B;
 }
 .main-header-right-col {
   gap: 12px;
@@ -440,7 +440,7 @@ a {
 
 .button {
   background-color: white;
-  color: #7a7a7a;
+  color: #373E3B;
   border-radius: 45px;
   border: 2px solid #01e89e;
   padding: 5px 20px;
@@ -455,7 +455,7 @@ a {
   font-weight: 600;
 }
 .button_gray {
-  color: #7a7a7a;
+  color: #373E3B;
 }
 .button_white {
   color: white;
@@ -567,7 +567,7 @@ a {
   background-color: transparent;
   margin-top: auto;
   margin-bottom: auto;
-  color: #7a7a7a;
+  color: #373E3B;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
@@ -591,7 +591,7 @@ a {
 .pagination-wrapper ul .pagination-page-number {
   cursor: pointer;
   padding: 5px;
-  color: #7a7a7a;
+  color: #373E3B;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
@@ -849,7 +849,7 @@ a {
   font-family: "Noto Sans KR", sans-serif;
   font-size: 14px;
   font-weight: 900;
-  color: #7a7a7a;
+  color: #373E3B;
 }
 @media (max-width: 767px) {
   .schedule-calendar-schedulelist .fc-header-toolbar.fc-toolbar {
@@ -932,7 +932,7 @@ a {
   background-color: white;
   border-radius: 10px;
   padding: 1rem;
-  color: #7a7a7a;
+  color: #373E3B;
   margin-bottom: 20px;
 }
 @media (max-width: 767px) {
@@ -944,7 +944,7 @@ a {
   font-family: "Noto Sans KR", sans-serif;
   font-size: 12px;
   font-weight: 500;
-  color: #7a7a7a;
+  color: #373E3B;
   margin-bottom: 10px;
   margin-top: 5px;
 }
@@ -972,7 +972,7 @@ a {
   .calendar-list-item h4 {
     font-family: "Noto Sans KR", sans-serif;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
   }
 }
 .calendar-list-item-name {
@@ -1177,7 +1177,7 @@ a {
   font-family: "Noto Sans KR", sans-serif;
   font-size: 14px;
   font-weight: 500;
-  color: #7a7a7a;
+  color: #373E3B;
 }
 
 .simple {
@@ -1191,14 +1191,14 @@ a {
   font-family: "Noto Sans KR", sans-serif;
   font-size: 14px;
   font-weight: 500;
-  color: #7a7a7a;
+  color: #373E3B;
 }
 .simple h3 {
   margin-top: 10px;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 12px;
   font-weight: 500;
-  color: #7a7a7a;
+  color: #373E3B;
 }
 
 @media (max-width: 767px) {
@@ -1245,7 +1245,7 @@ a {
   }
 }
 .check-schedule-gray {
-  color: #7a7a7a;
+  color: #373E3B;
   margin: 20px;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
@@ -1312,14 +1312,14 @@ a {
   justify-content: center;
   align-items: center;
   font-style: normal;
-  color: #7a7a7a;
+  color: #373E3B;
   width: 15%;
 }
 .schedule-list-time h1 {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 38px;
   font-weight: 700;
-  color: #7a7a7a;
+  color: #373E3B;
 }
 @media (max-width: 767px) {
   .schedule-list-time h1 {
@@ -1331,7 +1331,7 @@ a {
 .schedule-list-time h2 {
   font-family: "Noto Sans KR", sans-serif;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 15px;
 }
 @media (max-width: 767px) {
@@ -1365,7 +1365,7 @@ a {
   font-family: "Noto Sans KR", sans-serif;
   font-size: 14px;
   font-weight: 500;
-  color: #7a7a7a;
+  color: #373E3B;
 }
 @media (max-width: 767px) {
   .schedule-list-content h5 {
@@ -1378,7 +1378,7 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 24px;
   font-weight: 700;
-  color: #7a7a7a;
+  color: #373E3B;
   margin: 10px 0px;
 }
 @media (max-width: 767px) {
@@ -1496,7 +1496,7 @@ a {
   font-weight: 600;
 }
 .schedule-modal-content h2 {
-  color: #7a7a7a;
+  color: #373E3B;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
@@ -1587,7 +1587,7 @@ a {
   margin: 15px;
 }
 .schedule-modal-mobile-badge-item h5 {
-  color: #7a7a7a;
+  color: #373E3B;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 10px;
   font-weight: 600;
@@ -1598,7 +1598,7 @@ a {
   border-radius: 17px;
   width: 100%;
   padding: 1.5rem;
-  color: #7a7a7a;
+  color: #373E3B;
 }
 @media (max-width: 767px) {
   .schedule-detail-modal {
@@ -1606,7 +1606,7 @@ a {
   }
 }
 .schedule-detail-modal input {
-  color: #7a7a7a;
+  color: #373E3B;
   border-radius: 20px;
 }
 .schedule-detail-modal-date {
@@ -1938,7 +1938,7 @@ a {
   border-radius: 35px;
   background-color: #fcfcfc;
   padding: 50px 25px;
-  color: #7a7a7a;
+  color: #373E3B;
   overflow: auto;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
@@ -2652,7 +2652,7 @@ a {
   }
 }
 .evaluation-management-ranking-wrapper .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col .score, .evaluation-management-ranking-wrapper-non-evaluated .evaluation-management-evaluation-ranking-body .evaluation-management-evaluation-ranking-item .evaluation-management-right-col .score {
-  color: #7a7a7a;
+  color: #373E3B;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 14px;
   font-weight: 500;
@@ -2872,7 +2872,7 @@ a {
 }
 .evaluation-management-participant-wrapper .evaluation-management-participants .evaluation-management-participant-right-col .name-badge-wrapper {
   height: 100%;
-  color: #7a7a7a;
+  color: #373E3B;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
   font-weight: 600;
@@ -3415,7 +3415,7 @@ a {
   margin-top: 30px;
 }
 .management .project-list-wrapper .project-list-description {
-  color: #7a7a7a;
+  color: #373E3B;
   margin-top: 80px;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
@@ -3997,7 +3997,7 @@ a {
     line-height: 30px;
     font-family: "Noto Sans KR", sans-serif;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
   }
 }
 .confirm-modal-button {
@@ -4063,7 +4063,7 @@ a {
 }
 .home .description p {
   width: 95%;
-  color: #7a7a7a;
+  color: #373E3B;
   line-height: 44px;
   word-break: keep-all;
   font-family: "Noto Sans KR", sans-serif;
@@ -4150,11 +4150,22 @@ a {
 }
 .home .project-container-wrapper .project .project-detail-wrapper {
   width: 100%;
-  height: 90%;
+  height: 100%;
+  margin-top: 25px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .home .project-container-wrapper .project .project-detail-wrapper {
+    margin-top: 20px;
+  }
+}
+@media (max-width: 767px) {
+  .home .project-container-wrapper .project .project-detail-wrapper {
+    margin-top: 5px;
+  }
 }
 .home .project-container-wrapper .project .project-detail {
   background-color: white;
@@ -4202,7 +4213,7 @@ a {
   }
 }
 .home .project-container-wrapper .project .project-detail .project-first-row {
-  height: 65%;
+  height: 50%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -4226,6 +4237,7 @@ a {
 }
 .home .project-container-wrapper .project .project-detail .project-heading-wrapper h1 {
   word-break: keep-all;
+  align-self: flex-start;
 }
 @media (min-width: 767px) and (max-width: 1024px) {
   .home .project-container-wrapper .project .project-detail .project-heading-wrapper h1 {
@@ -4239,9 +4251,9 @@ a {
   }
 }
 .home .project-container-wrapper .project .project-detail .project-heading-wrapper div {
-  color: #7a7a7a;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 18px;
+  color: #373E3B;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 16px;
   font-weight: 600;
 }
 @media (max-width: 767px) {
@@ -4277,7 +4289,7 @@ a {
   }
 }
 .home .project-container-wrapper .project .project-detail h1 {
-  color: #7a7a7a;
+  color: #373E3B;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 24px;
   font-weight: 700;
@@ -4291,15 +4303,17 @@ a {
 }
 .home .project-container-wrapper .project .project-detail .project-second-row {
   padding: 10px;
-  height: 35%;
-  line-height: 1.3;
-  color: #7a7a7a;
+  height: -moz-fit-content;
+  height: fit-content;
+  line-height: 27px;
+  color: #373E3B;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
 }
 @media (max-width: 767px) {
   .home .project-container-wrapper .project .project-detail .project-second-row {
+    line-height: 20px;
     font-family: "Noto Sans KR", sans-serif;
     font-size: 8px;
     font-weight: 500;
@@ -4425,7 +4439,7 @@ a {
   color: #b4bcbd;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
 }
 @media (max-width: 767px) {
   .recruitment h1 {
@@ -4559,7 +4573,7 @@ a {
   border-radius: 10px;
   padding: 5px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  color: #7a7a7a;
+  color: #373E3B;
   border: none;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
@@ -4573,7 +4587,7 @@ a {
   }
 }
 .member-content .member-grid .control-menu {
-  color: #7a7a7a;
+  color: #373E3B;
   border: none;
   height: 90%;
   font-family: "IBM Plex Sans KR", sans-serif;
@@ -4612,7 +4626,7 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
-  color: #7a7a7a;
+  color: #373E3B;
 }
 @media (max-width: 767px) {
   .member-content .member-grid-position h5 {
@@ -4636,7 +4650,7 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
-  color: #7a7a7a;
+  color: #373E3B;
 }
 @media (max-width: 767px) {
   .member-content .member-grid-position .recruitment-positions input {
@@ -4874,7 +4888,7 @@ a {
   font-weight: 700;
   margin-left: 26px;
   border-radius: 20px;
-  color: #7a7a7a;
+  color: #373E3B;
   padding: 7px;
 }
 @media (max-width: 767px) {
@@ -4890,7 +4904,7 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 38px;
   font-weight: 700;
-  color: #7a7a7a;
+  color: #373E3B;
   margin-left: 26px;
 }
 @media (max-width: 767px) {
@@ -4903,7 +4917,7 @@ a {
 }
 .detail-title-content h2 {
   margin-top: 10px;
-  color: #7a7a7a;
+  color: #373E3B;
   margin-left: 12px;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
@@ -4942,7 +4956,7 @@ a {
   font-size: 18px;
   font-weight: 600;
   border-radius: 20px;
-  color: #7a7a7a;
+  color: #373E3B;
 }
 @media (max-width: 767px) {
   .recruitment-detail input,
@@ -4975,7 +4989,7 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
-  color: #7a7a7a;
+  color: #373E3B;
 }
 @media (max-width: 767px) {
   .recruitment-detail h5 {
@@ -5094,7 +5108,7 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
-  color: #7a7a7a;
+  color: #373E3B;
 }
 .recruitment-detail-description-content img {
   max-width: 100%;
@@ -5556,8 +5570,8 @@ a {
 .profile_body_introduce_positionBox_position {
   font-family: "Noto Sans KR", sans-serif;
   font-size: 16px;
-  font-weight: 500;
-  color: #7a7a7a;
+  font-weight: 600;
+  color: #373E3B;
 }
 .profile_body_introduce_positionBox_stack_select {
   margin-top: 1rem;
@@ -5805,7 +5819,7 @@ a {
 }
 .project_list_item_input {
   border: none;
-  color: #7a7a7a;
+  color: #373E3B;
   outline: none;
 }
 .project_list_item_year_position {
@@ -5935,7 +5949,7 @@ a {
   color: #003b28;
 }
 .myProject_item_wrap_description {
-  color: #7a7a7a;
+  color: #373E3B;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 12px;
   font-weight: 500;
@@ -5957,7 +5971,7 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
   font-weight: 600;
-  color: #7a7a7a;
+  color: #373E3B;
   margin-bottom: 25px;
 }
 .evaluate_chart-warp {
@@ -5991,7 +6005,7 @@ a {
   font-weight: bold;
   margin-top: 10px;
   padding-top: 5px;
-  color: #7a7a7a;
+  color: #373E3B;
   width: 100%;
   border-top: 2px solid #d9d9d9;
   display: flex;
@@ -6000,7 +6014,7 @@ a {
   align-items: center;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
 }
 .evaluate_chart_bars_score {
   --custom-value: initial;
@@ -6109,7 +6123,7 @@ a {
   align-items: center;
 }
 .evaluate_project_item_score > :first-child {
-  color: #7a7a7a;
+  color: #373E3B;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 14px;
   font-weight: 500;
@@ -6210,7 +6224,7 @@ a {
 }
 
 .badge_divide {
-  color: #7a7a7a;
+  color: #373E3B;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
@@ -6221,7 +6235,7 @@ a {
 }
 
 .badge_quantity {
-  color: #7a7a7a;
+  color: #373E3B;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
@@ -6261,7 +6275,7 @@ a {
   padding: 15px 47px 15px 24px;
 }
 .finalEvaluate_userName {
-  color: #7a7a7a;
+  color: #373E3B;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
@@ -6282,10 +6296,10 @@ a {
   justify-content: space-between;
 }
 .finalEvaluate_userScore_partTitle {
-  color: #7a7a7a;
+  color: #373E3B;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
 }
 .finalEvaluate_userScore_partScore {
   width: 26px;
@@ -6302,7 +6316,7 @@ a {
   align-items: center;
 }
 .finalEvaluate_userContent {
-  color: #7a7a7a;
+  color: #373E3B;
   padding: 0 14px;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 14px;
@@ -6327,10 +6341,10 @@ a {
 }
 
 .no-stack-list {
-  color: #7a7a7a;
+  color: #373E3B;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .w-f {
@@ -6970,7 +6984,7 @@ a {
 
 .disabled {
   pointer-events: none;
-  color: #7a7a7a;
+  color: #373E3B;
 }
 
 .first_last {
@@ -7275,7 +7289,7 @@ a {
     line-height: 30px;
     font-family: "Noto Sans KR", sans-serif;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
   }
 }
 .confirm-modal-button {
