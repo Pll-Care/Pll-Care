@@ -2,11 +2,14 @@ import { Link } from "react-router-dom";
 
 import { useMediaQuery } from "@mui/material";
 
+import { query, tabletQuery } from "../../utils/mediaQuery";
+
 import projectDefaultImgUrl from "../../assets/project-default-img.jpg";
 import leaveImgUrl from "../../assets/leave-button-img.png";
 
 const ProjectItem = ({ project, handleLeaveProjectClick }) => {
-  const isMobile = useMediaQuery("(max-width: 767px)");
+  const isMobile = useMediaQuery(query);
+  const isTablet = useMediaQuery(tabletQuery);
 
   return (
     <div>
@@ -42,8 +45,12 @@ const ProjectItem = ({ project, handleLeaveProjectClick }) => {
                 ? project.description?.length > 48
                   ? [project.description.slice(0, 48), "..."].join("")
                   : project.description
-                : project.description?.length > 132
-                ? [project.description.slice(0, 132), "..."].join("")
+                : isTablet
+                ? project.description?.length > 120
+                  ? [project.description.slice(0, 120), "..."].join("")
+                  : project.description
+                : project.description?.length > 150
+                ? [project.description.slice(0, 150), "..."].join("")
                 : project.description}
             </div>
           </div>

@@ -3442,7 +3442,7 @@ a {
   display: grid;
   grid-template-columns: 12% 88%;
   cursor: pointer;
-  padding: 25px;
+  padding: 35px 25px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -3468,7 +3468,7 @@ a {
   height: 100%;
 }
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-heading {
-  margin-bottom: 7px;
+  margin-bottom: 15px;
   color: #003b28;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 24px;
@@ -3484,7 +3484,7 @@ a {
 }
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-period,
 .management .project-list-wrapper .project-list .project-item-right-col .project-item-description {
-  margin-bottom: 7px;
+  margin-bottom: 15px;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 14px;
   font-weight: 500;
