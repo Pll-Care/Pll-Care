@@ -43,7 +43,7 @@ public class UtilController {
 //            @ApiResponse(responseCode = "400", description = "기술스택 검색 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @GetMapping(value = "/reissuetoken")
-    public ResponseEntity<TechStackResponse> reissueToken(@RequestHeader("Authorization_refresh") String refreshToken) {
+    public ResponseEntity<ReissueTokenResponse> reissueToken(@RequestHeader("Authorization_refresh") String refreshToken) {
 
         if (!StringUtils.hasText(refreshToken) || !refreshToken.startsWith("Bearer ")) {
             throw new CustomJwtException(JwtErrorCode.INVALID_REFRESH_TOKEN);
