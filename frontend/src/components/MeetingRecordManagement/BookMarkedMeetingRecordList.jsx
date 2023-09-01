@@ -11,7 +11,6 @@ const BookMarkedMeetingRecordList = () => {
   const projectId = getProjectId(useLocation());
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [recordDatasPerPage, setRecordDatasPerPage] = useState(3);
 
   const queryClient = useQueryClient();
 

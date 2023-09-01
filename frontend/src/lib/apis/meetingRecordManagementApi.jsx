@@ -117,7 +117,9 @@ export const createBookMarkMeetingRecord = async (newMeetingRecordObj) => {
       }
     );
 
-    toast.success("북마크 / 북마크 취소되었습니다!");
+    newMeetingRecordObj.type === "cancel"
+      ? toast.success("북마크 취소되었습니다!")
+      : toast.success("북마크되었습니다!");
 
     return response.data;
   } catch (e) {
