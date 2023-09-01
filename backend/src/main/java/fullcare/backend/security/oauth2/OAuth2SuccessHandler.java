@@ -48,7 +48,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         member.updateRefreshToken(refreshToken);
 
         // 프론트엔드로 토큰을 돌려줄 URL 경로
-        String successUrl = UriComponentsBuilder.fromUriString("https://fullcare.store/token")
+        String successUrl = UriComponentsBuilder.fromUriString("http://localhost:3000/token")
                 .queryParam("access_token", accessToken)
                 .queryParam("refresh_token", refreshToken)
                 .build().toUriString();
