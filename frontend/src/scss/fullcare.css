@@ -3589,7 +3589,7 @@ a {
 }
 .MuiBox-root .project-editor {
   height: 90%;
-  width: 80%;
+  width: 90%;
   display: grid;
   grid-template-rows: 18% 70% 12%;
   grid-template-columns: 100%;
@@ -3630,7 +3630,6 @@ a {
   margin-right: 20px;
 }
 .MuiBox-root .project-editor-body .project-editor-left-col div figure {
-  border: 1px solid black;
   border-radius: 50%;
   width: 100px;
   height: 100px;
@@ -3654,6 +3653,18 @@ a {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+}
+.MuiBox-root .project-editor-body .project-editor-left-col .image-button-wrapper button {
+  min-width: 90px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+@media (max-width: 767px) {
+  .MuiBox-root .project-editor-body .project-editor-left-col .image-button-wrapper button {
+    min-width: 78px;
+  }
 }
 @media (max-width: 767px) {
   .MuiBox-root .project-editor-body .project-editor-left-col .image-button-wrapper {
@@ -3688,7 +3699,7 @@ a {
   border-radius: 10px;
   margin-bottom: 10px;
   height: 40px;
-  width: 87%;
+  width: 75%;
   color: #00aa72;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
@@ -3697,6 +3708,9 @@ a {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+}
+.MuiBox-root .project-editor-body .project-editor-right-col .project-editor-first-row h1 {
+  margin-left: 0px;
 }
 .MuiBox-root .project-editor-body .project-editor-right-col .project-editor-first-row .project-editor-period {
   display: flex;
@@ -3754,7 +3768,7 @@ a {
   max-width: 100%;
   min-height: 100%;
   max-height: 100%;
-  padding: 10px;
+  padding: 18px;
   border: none;
   border-radius: 10px;
   font-family: "IBM Plex Sans KR", sans-serif;
@@ -3788,7 +3802,7 @@ a {
 }
 @media (max-width: 767px) {
   .MuiBox-root .project-editor {
-    width: 95%;
+    width: 90%;
   }
 }
 
