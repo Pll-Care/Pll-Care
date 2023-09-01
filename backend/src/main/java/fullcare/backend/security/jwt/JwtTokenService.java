@@ -50,7 +50,7 @@ public class JwtTokenService {
 
     public String createAccessToken(CustomOAuth2User oAuth2User) {
         Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + accessTokenValidationMilliseconds);
+        Date expiryDate = new Date(System.currentTimeMillis() + accessTokenValidationMilliseconds);
 
         return Jwts.builder()
                 .setSubject(oAuth2User.getName())
@@ -66,7 +66,7 @@ public class JwtTokenService {
 
     public String createRefreshToken(CustomOAuth2User oAuth2User) {
         Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + refreshTokenValidationMilliseconds);
+        Date expiryDate = new Date(System.currentTimeMillis() + refreshTokenValidationMilliseconds);
 
         return Jwts.builder()
                 .setSubject(oAuth2User.getName())
