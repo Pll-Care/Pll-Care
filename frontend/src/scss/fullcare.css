@@ -972,7 +972,7 @@ a {
   .calendar-list-item h4 {
     font-family: "Noto Sans KR", sans-serif;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
   }
 }
 .calendar-list-item-name {
@@ -1331,7 +1331,7 @@ a {
 .schedule-list-time h2 {
   font-family: "Noto Sans KR", sans-serif;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 15px;
 }
 @media (max-width: 767px) {
@@ -3983,7 +3983,7 @@ a {
     line-height: 30px;
     font-family: "Noto Sans KR", sans-serif;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
   }
 }
 .confirm-modal-button {
@@ -4143,6 +4143,16 @@ a {
   justify-content: center;
   align-items: center;
 }
+@media (min-width: 767px) and (max-width: 1024px) {
+  .home .project-container-wrapper .project .project-detail-wrapper {
+    margin-top: 20px;
+  }
+}
+@media (max-width: 767px) {
+  .home .project-container-wrapper .project .project-detail-wrapper {
+    margin-top: 5px;
+  }
+}
 .home .project-container-wrapper .project .project-detail {
   background-color: white;
   border-radius: 10px;
@@ -4213,6 +4223,7 @@ a {
 }
 .home .project-container-wrapper .project .project-detail .project-heading-wrapper h1 {
   word-break: keep-all;
+  align-self: flex-start;
 }
 @media (min-width: 767px) and (max-width: 1024px) {
   .home .project-container-wrapper .project .project-detail .project-heading-wrapper h1 {
@@ -4227,8 +4238,8 @@ a {
 }
 .home .project-container-wrapper .project .project-detail .project-heading-wrapper div {
   color: #373E3B;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 18px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 16px;
   font-weight: 600;
 }
 @media (max-width: 767px) {
@@ -4288,6 +4299,7 @@ a {
 }
 @media (max-width: 767px) {
   .home .project-container-wrapper .project .project-detail .project-second-row {
+    line-height: 20px;
     font-family: "Noto Sans KR", sans-serif;
     font-size: 8px;
     font-weight: 500;
@@ -4413,7 +4425,7 @@ a {
   color: #b4bcbd;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
 }
 @media (max-width: 767px) {
   .recruitment h1 {
@@ -5544,7 +5556,7 @@ a {
 .profile_body_introduce_positionBox_position {
   font-family: "Noto Sans KR", sans-serif;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   color: #373E3B;
 }
 .profile_body_introduce_positionBox_stack_select {
@@ -5988,7 +6000,7 @@ a {
   align-items: center;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
 }
 .evaluate_chart_bars_score {
   --custom-value: initial;
@@ -6273,7 +6285,7 @@ a {
   color: #373E3B;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
 }
 .finalEvaluate_userScore_partScore {
   width: 26px;
@@ -6318,7 +6330,7 @@ a {
   color: #373E3B;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .w-f {
@@ -7263,7 +7275,7 @@ a {
     line-height: 30px;
     font-family: "Noto Sans KR", sans-serif;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
   }
 }
 .confirm-modal-button {

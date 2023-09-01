@@ -40,8 +40,8 @@ const ProjectDetail = ({ type, projectList }) => {
                   <div className="project-heading-wrapper">
                     <h1>
                       {isTablet
-                        ? project.projectTitle.length > 24
-                          ? project.projectTitle.slice(0, 24) + "..."
+                        ? project.projectTitle.length > 12
+                          ? project.projectTitle.slice(0, 12) + "..."
                           : project.projectTitle
                         : project.projectTitle.length > 16
                         ? project.projectTitle.slice(0, 16) + "..."
