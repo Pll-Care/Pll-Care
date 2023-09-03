@@ -44,24 +44,16 @@ public class UtilController {
     })
     @GetMapping(value = "/reissuetoken")
     public ResponseEntity<ReissueTokenResponse> reissueToken(@RequestHeader("Authorization_refresh") String refreshToken) {
-
         if (!StringUtils.hasText(refreshToken) || !refreshToken.startsWith("Bearer ")) {
-            throw new CustomJwtException(JwtErrorCode.INVALID_REFRESH_TOKEN);
+            throw new CustomJwtException(JwtErrorCode.TOKEN_NOT_FOUND);
         }
 
-        try {
-            String extractedRefreshToken = refreshToken.substring(7);
+        String extractedRefreshToken = refreshToken.substring(7);
 
-            jwtTokenService.validateJwtToken(extractedRefreshToken);
-            String[] reIssueTokens = jwtTokenService.reIssueTokens(extractedRefreshToken);
-            ReissueTokenResponse reissueTokenResponse = new ReissueTokenResponse(reIssueTokens);
+        jwtTokenService.validateJwtToken(extractedRefreshToken);
+        String[] reIssueTokens = jwtTokenService.reIssueTokens(extractedRefreshToken);
+        ReissueTokenResponse reissueTokenResponse = new ReissueTokenResponse(reIssueTokens);
 
-            return new ResponseEntity(reissueTokenResponse, HttpStatus.OK);
-
-        } catch (CustomJwtException e) {
-            throw new CustomJwtException(JwtErrorCode.INVALID_REFRESH_TOKEN);
-        }
-
-
+        return new ResponseEntity(reissueTokenResponse, HttpStatus.OK);
     }
 }
