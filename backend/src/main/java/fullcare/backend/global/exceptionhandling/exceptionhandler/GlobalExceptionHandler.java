@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
     }
 
     // * 스프링 프레임워크단에서 발생하는 예외 처리
-    @ExceptionHandler(value = {MethodArgumentNotValidException.class,})
+    @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     public ResponseEntity<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException e, HttpServletRequest request) {
         ErrorResponse errorResponse = ErrorResponse.getResponse(GlobalErrorCode.INVALID_REQUEST_DATA, e, request);
         return new ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST);

@@ -43,15 +43,25 @@ public class UtilController {
 //            @ApiResponse(responseCode = "400", description = "기술스택 검색 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
     })
     @GetMapping(value = "/reissuetoken")
-    public ResponseEntity<TechStackResponse> reissueToken(@RequestHeader("Authorization_refresh") String refreshToken) {
-
+    public ResponseEntity<ReissueTokenResponse> reissueToken(@RequestHeader("Authorization_refresh") String refreshToken) {
         if (!StringUtils.hasText(refreshToken) || !refreshToken.startsWith("Bearer ")) {
-            throw new CustomJwtException(JwtErrorCode.INVALID_REFRESH_TOKEN);
+            throw new CustomJwtException(JwtErrorCode.TOKEN_NOT_FOUND);
         }
 
-        String[] reIssueTokens = jwtTokenService.reIssueTokens(refreshToken.substring(7));
-        ReissueTokenResponse reissueTokenResponse = new ReissueTokenResponse(reIssueTokens);
+        String extractedRefreshToken = refreshToken.substring(7);
 
-        return new ResponseEntity(reissueTokenResponse, HttpStatus.OK);
+        try {
+            jwtTokenService.validateJwtToken(extractedRefreshToken);
+            String[] reIssueTokens = jwtTokenService.reIssueTokens(extractedRefreshToken);
+            ReissueTokenResponse reissueTokenResponse = new ReissueTokenResponse(reIssueTokens);
+            return new ResponseEntity(reissueTokenResponse, HttpStatus.OK);
+            
+        } catch (CustomJwtException e) {
+            if (e.getErrorCode().equals(JwtErrorCode.EXPIRED_TOKEN)) {
+                throw new CustomJwtException(JwtErrorCode.EXPIRED_REFRESH_TOKEN);
+            } else {
+                throw e;
+            }
+        }
     }
 }

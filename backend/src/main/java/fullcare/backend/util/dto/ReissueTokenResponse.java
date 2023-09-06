@@ -10,6 +10,6 @@ public class ReissueTokenResponse {
 
     public ReissueTokenResponse(String[] reIssueTokens) {
         this.accessToken = reIssueTokens[0];
-        this.refreshToken = reIssueTokens[0];
+        this.refreshToken = reIssueTokens[1];
     }
 }
