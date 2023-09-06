@@ -55,6 +55,8 @@ public class PostDetailResponse {
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
+    private int likeCount;
+
     @Builder
     public PostDetailResponse(Long postId,
                               Long projectId, String projectTitle, String projectImageUrl, State projectState,
@@ -62,7 +64,7 @@ public class PostDetailResponse {
                               String title, String description, LocalDate recruitStartDate, LocalDate recruitEndDate,
                               String reference, String contact, String region, String techStack,
                               boolean isLiked, boolean isEditable, boolean isDeletable,
-                              LocalDateTime createdDate, LocalDateTime modifiedDate) {
+                              LocalDateTime createdDate, LocalDateTime modifiedDate, int likeCount) {
 
         this.postId = postId;
         this.projectId = projectId;
@@ -85,6 +87,7 @@ public class PostDetailResponse {
         this.isDeletable = isDeletable;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
+        this.likeCount = likeCount;
     }
 
     public void setRecruitInfoList(List<RecruitInfo> recruitInfoList) {

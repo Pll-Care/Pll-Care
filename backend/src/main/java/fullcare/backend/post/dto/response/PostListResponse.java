@@ -35,11 +35,13 @@ public class PostListResponse {
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
+    private int likeCount;
+
     @Builder
     public PostListResponse(Long postId, String projectName, String projectImageUrl, String title,
                             LocalDate recruitStartDate, LocalDate recruitEndDate,
                             String techStack, boolean isLiked,
-                            LocalDateTime createdDate, LocalDateTime modifiedDate) {
+                            LocalDateTime createdDate, LocalDateTime modifiedDate, int likeCount) {
         this.postId = postId;
         this.projectName = projectName;
         this.projectImageUrl = projectImageUrl;
@@ -50,6 +52,7 @@ public class PostListResponse {
         this.isLiked = isLiked;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
+        this.likeCount = likeCount;
     }
 
     public void setRecruitInfoList(List<RecruitInfo> recruitInfoList) {

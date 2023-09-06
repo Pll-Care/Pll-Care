@@ -50,10 +50,18 @@ public class UtilController {
 
         String extractedRefreshToken = refreshToken.substring(7);
 
-        jwtTokenService.validateJwtToken(extractedRefreshToken);
-        String[] reIssueTokens = jwtTokenService.reIssueTokens(extractedRefreshToken);
-        ReissueTokenResponse reissueTokenResponse = new ReissueTokenResponse(reIssueTokens);
-
-        return new ResponseEntity(reissueTokenResponse, HttpStatus.OK);
+        try {
+            jwtTokenService.validateJwtToken(extractedRefreshToken);
+            String[] reIssueTokens = jwtTokenService.reIssueTokens(extractedRefreshToken);
+            ReissueTokenResponse reissueTokenResponse = new ReissueTokenResponse(reIssueTokens);
+            return new ResponseEntity(reissueTokenResponse, HttpStatus.OK);
+            
+        } catch (CustomJwtException e) {
+            if (e.getErrorCode().equals(JwtErrorCode.EXPIRED_TOKEN)) {
+                throw new CustomJwtException(JwtErrorCode.EXPIRED_REFRESH_TOKEN);
+            } else {
+                throw e;
+            }
+        }
     }
 }

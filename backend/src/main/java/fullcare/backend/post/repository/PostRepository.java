@@ -19,7 +19,7 @@ import java.util.Optional;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    @Query("select new fullcare.backend.post.dto.response.PostListResponse(p.id, pj.title, pj.imageUrl, p.title,p.recruitStartDate,p.recruitEndDate, p.techStack, case when l.id is null then false else true end, p.createdDate, p.modifiedDate) " +
+    @Query("select new fullcare.backend.post.dto.response.PostListResponse(p.id, pj.title, pj.imageUrl, p.title,p.recruitStartDate,p.recruitEndDate, p.techStack, case when l.id is null then false else true end, p.createdDate, p.modifiedDate, p.likeCount) " +
             "from Post p left join Likes l on l.post.id = p.id and l.member.id = :memberId " +
             "join p.author a join a.project pj")
     Page<PostListResponse> findListWithPaging(@Param("memberId") Long memberId, Pageable pageable);
@@ -31,7 +31,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Optional<Post> findPostWithRecruitmentsAndProjectById(@Param("postId") Long postId);
 
 
-    @Query("select new fullcare.backend.post.dto.response.PostDetailResponse(p.id, pj.id, pj.title, pj.imageUrl, pj.state, m.id, m.nickname, m.imageUrl, p.title, p.description,p.recruitStartDate, p.recruitEndDate, p.reference, p.contact, p.region, p.techStack, case when l.id is null then false else true end, case when m.id = :memberId then true else false end , case when m.id = :memberId then true else false end ,p.createdDate, p.modifiedDate)" +
+    @Query("select new fullcare.backend.post.dto.response.PostDetailResponse(p.id, pj.id, pj.title, pj.imageUrl, pj.state, m.id, m.nickname, m.imageUrl, p.title, p.description,p.recruitStartDate, p.recruitEndDate, p.reference, p.contact, p.region, p.techStack, case when l.id is null then false else true end, case when m.id = :memberId then true else false end , case when m.id = :memberId then true else false end ,p.createdDate, p.modifiedDate, p.likeCount)" +
             "from Post p left join Likes l on l.post.id = p.id and l.member.id = :memberId " +
             "join p.project pj join p.author a join a.member m where p.id = :postId")
     Optional<PostDetailResponse> findPostDetailResponse(@Param("memberId") Long memberId, @Param("postId") Long postId);
