@@ -6,9 +6,11 @@ import NewProject from "../components/Management/NewProject";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
-import { getProjectList } from "../lib/apis/managementApi";
+import { useManagementClient } from "../context/Client/ManagementClientContext";
 
 const Management = () => {
+  const { getProjectList } = useManagementClient();
+
   const [currentPage, setCurrentPage] = useState(1);
   const [ongoingCurrentPage, setOngoingCurrentPage] = useState(1);
   const [allProjectListVisible, setAllProjectListVisible] = useState(false);

@@ -22,6 +22,7 @@ import Evaluate from "./components/Profile/Evaluate";
 import MyProject from "./components/Profile/myproject";
 import LikeProject from "./components/Profile/LikeProject";
 import ProjectEvaluate from "./components/Profile/ProjectEvaluate";
+import ManagementLayout from "./layout/ManagementLayout";
 
 const routerData = [
   {
@@ -73,7 +74,11 @@ const routerData = [
   {
     id: 3,
     path: "/management",
-    element: <Management />,
+    element: (
+      <ManagementLayout>
+        <Management />
+      </ManagementLayout>
+    ),
     withLogin: true,
   },
   {

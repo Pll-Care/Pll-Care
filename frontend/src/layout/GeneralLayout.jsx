@@ -9,15 +9,17 @@ import MainHeader from "../components/common/Header/MainHeader";
 import LocalTokenRepository from "../lib/repository/LocalTokenRepository";
 import GeneralClientProvider from "../context/Client/GeneralClientContext";
 import GeneralService from "../lib/service/GeneralService";
-import HttpClient from "../lib/service/HttpClient";
 import { baseURL } from "../utils/auth";
 import { getToken } from "../utils/localstorageHandler";
 import { customAxios } from "../lib/apis/customAxios";
+import AxiosInstance from "../lib/service/AxiosInstance";
+import HttpClient from "../lib/service/HttpClient";
 
 const GeneralLayout = ({ children }) => {
   const dispatch = useDispatch();
   const localTokenRepository = new LocalTokenRepository();
-  const httpClient = new HttpClient(baseURL, localTokenRepository);
+  const axiosInstance = new AxiosInstance(baseURL, localTokenRepository);
+  const httpClient = new HttpClient(axiosInstance);
   const generalService = new GeneralService(httpClient);
 
   const isLoginModalVisible = useSelector(
@@ -31,10 +33,10 @@ const GeneralLayout = ({ children }) => {
       }
     });
 
-    const accessToken = getToken("access_token");
-    customAxios.defaults.headers.common[
-      "Authorization"
-    ] = `Bearer ${accessToken}`;
+    // const accessToken = getToken("access_token");
+    // customAxios.defaults.headers.common[
+    //   "Authorization"
+    // ] = `Bearer ${accessToken}`;
   }, []);
 
   useEffect(() => {
@@ -46,7 +48,10 @@ const GeneralLayout = ({ children }) => {
   }, []);
 
   return (
-    <GeneralClientProvider generalService={generalService}>
+    <GeneralClientProvider
+      generalService={generalService}
+      httpClient={httpClient}
+    >
       <MainHeader />
       <main>{children}</main>
       {isLoginModalVisible && <Login />}
