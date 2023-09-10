@@ -4,8 +4,8 @@ import MeetingRecordData from "./MeetingRecordData";
 import Pagination from "../common/Pagination";
 import { useLocation } from "react-router-dom";
 import { useQuery, useQueryClient } from "react-query";
-import { getBookMarkMeetingRecordList } from "../../lib/apis/meetingRecordManagementApi";
 import { getProjectId } from "../../utils/getProjectId";
+import { useManagementClient } from "../../context/Client/ManagementClientContext";
 
 const BookMarkedMeetingRecordList = () => {
   const projectId = getProjectId(useLocation());
@@ -13,6 +13,8 @@ const BookMarkedMeetingRecordList = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const queryClient = useQueryClient();
+
+  const { getBookMarkMeetingRecordList } = useManagementClient();
 
   const { data = { meetingRecordList: [] } } = useQuery(
     ["managementBookMarkMeetingRecordList", projectId, currentPage],
@@ -28,6 +30,7 @@ const BookMarkedMeetingRecordList = () => {
         () => getBookMarkMeetingRecordList(projectId, nextPage)
       );
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, data.totalPages, projectId, queryClient]);
 
   return (

@@ -12,13 +12,15 @@ import useMeetingRecordManagementMutation from "../../hooks/Mutations/useMeeting
 import { toast } from "react-toastify";
 import { getProjectId } from "../../utils/getProjectId";
 import { useQuery } from "react-query";
-import { getCompleteProjectData } from "../../lib/apis/managementApi";
+import { useManagementClient } from "../../context/Client/ManagementClientContext";
 
 const MeetingRecordEditor = () => {
   const content = useSelector((state) => state.meetingRecordManagement.content);
   const title = useSelector((state) => state.meetingRecordManagement.title);
 
   const projectId = getProjectId(useLocation());
+
+  const { getCompleteProjectData } = useManagementClient();
 
   const { data: isCompleted } = useQuery(
     ["completeProjectData", projectId],

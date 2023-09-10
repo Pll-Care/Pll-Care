@@ -4,12 +4,9 @@ import { useQuery } from "react-query";
 import FinalEvaluation from "./FinalEvaluation";
 import ParticipantItem from "./ParticipantItem";
 
-import {
-  getEvaluationMember,
-  getFinalEvaluation,
-} from "../../lib/apis/evaluationManagementApi";
 import { useRouter } from "../../hooks/useRouter";
 import { getBadgeName } from "../../utils/getBadgeName";
+import { useManagementClient } from "../../context/Client/ManagementClientContext";
 
 const AllParticipants = ({ projectId, isCompleted }) => {
   const [isFinalEvaluationVisible, setIsFinalEvaluationVisible] = useState("");
@@ -21,6 +18,8 @@ const AllParticipants = ({ projectId, isCompleted }) => {
   const [participantId, setParticipantId] = useState();
 
   const { routeTo } = useRouter();
+
+  const { getFinalEvaluation, getEvaluationMember } = useManagementClient();
 
   const handleFinalEvaluationModal = async (type, name, finalEvalId) => {
     if (finalEvalId !== -1) {
