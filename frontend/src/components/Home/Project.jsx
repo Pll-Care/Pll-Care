@@ -1,14 +1,12 @@
-import {
-  getImminentProjects,
-  getPopularProjects,
-  getUpToDateProjects,
-} from "../../lib/apis/homeApi";
-
 import { useQuery } from "react-query";
 
 import ProjectDetail from "./ProjectDetail";
+import { useHomeClient } from "../../context/Client/HomeClientContext";
 
 const Project = ({ type }) => {
+  const { getPopularProjects, getImminentProjects, getUpToDateProjects } =
+    useHomeClient();
+
   const { data: projectList = [] } = useQuery(
     type === "popular"
       ? "popularProjects"
