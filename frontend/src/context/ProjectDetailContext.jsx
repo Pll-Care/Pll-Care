@@ -9,19 +9,19 @@ export const useProjectDetail = () => useContext(ProjectDetailContext);
 export function ProjectDetailProvider({ children }) {
   const [isLeader, setIsLeader] = useState(false);
   const { id: projectId } = useParams();
-  const { getIsLeader } = useManagementClient();
+  const { getIsLeaderData } = useManagementClient();
 
   useEffect(() => {
-    const getIsLeaderData = async () => {
+    const getIsLeader = async () => {
       try {
-        const isLeaderData = await getIsLeader(projectId);
+        const isLeaderData = await getIsLeaderData(projectId);
         setIsLeader((_) => isLeaderData);
       } catch (error) {
         console.log(error);
       }
     };
 
-    getIsLeaderData();
+    getIsLeader();
 
     return () => {
       setIsLeader((_) => false);
