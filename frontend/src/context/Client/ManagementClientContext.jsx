@@ -9,8 +9,6 @@ const ManagementClientProvider = ({ children, managementService }) => {
     managementService.getProjectList.bind(managementService);
   const createProject = managementService.createProject.bind(managementService);
   const leaveProject = managementService.leaveProject.bind(managementService);
-  const uploadImage = managementService.uploadImage.bind(managementService);
-  const deleteImage = managementService.deleteImage.bind(managementService);
   const getCompleteProjectData =
     managementService.getCompleteProjectData.bind(managementService);
   const getIsLeaderData =
@@ -55,8 +53,6 @@ const ManagementClientProvider = ({ children, managementService }) => {
         getProjectList,
         createProject,
         leaveProject,
-        uploadImage,
-        deleteImage,
         getCompleteProjectData,
         getIsLeaderData,
         getMidEvaluationChartAndRanking,

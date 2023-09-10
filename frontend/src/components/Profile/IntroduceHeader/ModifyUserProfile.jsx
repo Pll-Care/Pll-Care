@@ -5,7 +5,7 @@ import { useProfileClient } from "../../../context/Client/ProfileClientContext";
 import ProfileInput from "../../common/ProfileInput";
 import { useDispatch } from "react-redux";
 import { userInfoActions } from "../../../redux/userInfoSlice";
-import { uploadImage } from "../../../lib/apis/managementApi";
+import { useGeneralClient } from "../../../context/Client/GeneralClientContext";
 
 const ModifyUserProfile = ({
   memberId,
@@ -24,6 +24,8 @@ const ModifyUserProfile = ({
   const { putBioAPI } = useProfileClient();
   const reqImageUrl = { url: "" };
   const dispatch = useDispatch();
+
+  const { uploadImage } = useGeneralClient();
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
