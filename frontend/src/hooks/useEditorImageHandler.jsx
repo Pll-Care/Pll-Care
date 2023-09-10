@@ -1,7 +1,7 @@
-import { useManagementClient } from "../context/Client/ManagementClientContext";
+import { useGeneralClient } from "../context/Client/GeneralClientContext";
 
 export const useEditorImageUploader = (ref) => {
-  const { uploadImage } = useManagementClient();
+  const { uploadImage } = useGeneralClient();
   
   const handleImage = async (file) => {
     const range = ref.getEditor().getSelection(true);
