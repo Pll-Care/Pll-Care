@@ -40,7 +40,7 @@ const ProjectList = ({ type, projectList, totalElements }) => {
             <AlertCheckModal
               text={getAlertText("팀 탈퇴")}
               onClose={() => setLeaveModalVisible(false)}
-              open={() => setLeaveModalVisible(true)}
+              open={leaveModalVisible}
               clickHandler={() => leaveMutate(leaveProjectId)}
               width={500}
             />

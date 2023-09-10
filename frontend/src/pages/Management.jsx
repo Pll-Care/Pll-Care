@@ -16,8 +16,6 @@ const Management = () => {
   const [allProjectListVisible, setAllProjectListVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const [recordDatasPerPage, setRecordDatasPerPage] = useState(4);
-
   const { data = { projectList: [] } } = useQuery(
     [
       allProjectListVisible

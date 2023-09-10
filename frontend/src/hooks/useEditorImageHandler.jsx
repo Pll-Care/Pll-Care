@@ -1,6 +1,8 @@
-import { uploadImage } from "../lib/apis/managementApi";
+import { useManagementClient } from "../context/Client/ManagementClientContext";
 
 export const useEditorImageUploader = (ref) => {
+  const { uploadImage } = useManagementClient();
+  
   const handleImage = async (file) => {
     const range = ref.getEditor().getSelection(true);
     const reader = new FileReader();

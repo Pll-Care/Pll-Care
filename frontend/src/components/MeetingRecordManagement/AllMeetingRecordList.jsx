@@ -8,11 +8,10 @@ import Button from "../common/Button";
 
 import { useQuery, useQueryClient } from "react-query";
 
-import { getAllMeetingRecordList } from "../../lib/apis/meetingRecordManagementApi";
+import { useManagementClient } from "../../context/Client/ManagementClientContext";
 import { getProjectId } from "../../utils/getProjectId";
 import { useLocation } from "react-router-dom";
 import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
-import { getCompleteProjectData } from "../../lib/apis/managementApi";
 
 const filterOptionList = [
   {
@@ -32,6 +31,8 @@ const AllMeetingRecordList = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const projectId = getProjectId(useLocation());
+
+  const { getCompleteProjectData, getAllMeetingRecordList } = useManagementClient();
 
   const { data: isCompleted } = useQuery(
     ["completeProjectData", projectId],
@@ -73,6 +74,7 @@ const AllMeetingRecordList = () => {
         () => getAllMeetingRecordList(projectId, nextPage, sortType)
       );
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, data.totalPages, projectId, queryClient, sortType]);
 
   return (

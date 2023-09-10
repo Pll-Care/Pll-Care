@@ -1,13 +1,12 @@
 import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
-import { getMeetingRecord } from "../../lib/apis/meetingRecordManagementApi";
 import useMeetingRecordManagementMutation from "../../hooks/Mutations/useMeetingRecordManagementMutation";
 import { meetingRecordManagementActions } from "../../redux/meetingRecordManagementSlice";
 import { useLayoutEffect } from "react";
 import Button from "../common/Button";
 import { getProjectId } from "../../utils/getProjectId";
 import { useLocation } from "react-router-dom";
-import { getCompleteProjectData } from "../../lib/apis/managementApi";
+import { useManagementClient } from "../../context/Client/ManagementClientContext";
 
 const MeetingRecord = ({ state }) => {
   const selectedMeetingRecordId = useSelector(
@@ -21,6 +20,8 @@ const MeetingRecord = ({ state }) => {
   const dispatch = useDispatch();
 
   const projectId = getProjectId(useLocation());
+
+  const { getCompleteProjectData, getMeetingRecord } = useManagementClient();
 
   const { data: completeData } = useQuery(
     ["completeProjectData", projectId],

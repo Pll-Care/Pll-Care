@@ -5,16 +5,17 @@ import AllParticipants from "../components/EvaluationManagement/AllParticipants"
 import EvaluationRanking from "../components/EvaluationManagement/EvaluationRanking";
 import ShowEvaluationChart from "../components/EvaluationManagement/ShowEvaluationChart";
 
-import {
-  getFinalEvaluationChartAndRanking,
-  getMidEvaluationChartAndRanking,
-} from "../lib/apis/evaluationManagementApi";
-
 import { getProjectId } from "../utils/getProjectId";
-import { getCompleteProjectData } from "../lib/apis/managementApi";
+import { useManagementClient } from "../context/Client/ManagementClientContext";
 
 const EvaluationManagement = () => {
   const projectId = getProjectId(useLocation());
+
+  const {
+    getCompleteProjectData,
+    getFinalEvaluationChartAndRanking,
+    getMidEvaluationChartAndRanking,
+  } = useManagementClient();
 
   const { data: isCompleted } = useQuery(
     ["completeProjectData", projectId],
