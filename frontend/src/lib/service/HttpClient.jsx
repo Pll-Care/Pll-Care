@@ -38,6 +38,15 @@ class HttpClient {
       },
     });
   }
+
+  delete(url, reqBody, options = {}) {
+    return this.axiosInstance.http_instance.delete(url, reqBody, {
+      ...options,
+      headers: {
+        ...options.headers,
+      },
+    });
+  }
 }
 
 export default HttpClient;

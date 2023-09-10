@@ -10,11 +10,13 @@ import { Loading } from "../common/Loading";
 import { getTodayDateEnglish } from "../../utils/date";
 import { getProjectId } from "../../utils/getProjectId";
 import { getTodayAfterSchedule } from "../../lib/apis/scheduleManagementApi";
-import { getCompleteProjectData } from "../../lib/apis/managementApi";
+import { useManagementClient } from "../../context/Client/ManagementClientContext";
 
 const CalendarList = () => {
   const projectId = getProjectId(useLocation());
   const [modalIsVisible, setModalIsVisible] = useState(false);
+
+  const { getCompleteProjectData } = useManagementClient();
 
   // 완료 확인 react query문
   const { data: isCompleted } = useQuery(

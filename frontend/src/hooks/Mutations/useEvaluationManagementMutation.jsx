@@ -1,19 +1,19 @@
 import { useMutation, useQueryClient } from "react-query";
 
-import { createFinalEvaluation } from "../../lib/apis/evaluationManagementApi";
+import { useManagementClient } from "../../context/Client/ManagementClientContext";
 
 const useEvaluationManagementMutation = () => {
   const queryClient = useQueryClient();
+
+  const { createFinalEvaluation } = useManagementClient();
 
   const { mutate: finalEvaluationMutate } = useMutation(createFinalEvaluation, {
     onSuccess: () => {
       queryClient.invalidateQueries([
         "managementFinalEvaluationChartAndRanking",
       ]);
-      queryClient.invalidateQueries([
-        "managementEvaluationAllParticipants",
-      ]);
-    }
+      queryClient.invalidateQueries(["managementEvaluationAllParticipants"]);
+    },
   });
 
   return { finalEvaluationMutate };

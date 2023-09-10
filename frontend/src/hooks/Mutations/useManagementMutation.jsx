@@ -1,16 +1,18 @@
 import { useQueryClient, useMutation } from "react-query";
 
 import { useRouter } from "../useRouter";
-import { createProject, leaveProject } from "../../lib/apis/managementApi";
-import {
-  completeProject,
-  deleteProject,
-  editProject,
-} from "../../lib/apis/projectManagementApi";
+import { useManagementClient } from "../../context/Client/ManagementClientContext";
 
 const useManagementMutation = () => {
   const queryClient = useQueryClient();
   const { routeTo, routeOptionTo } = useRouter();
+  const {
+    createProject,
+    deleteProject,
+    completeProject,
+    editProject,
+    leaveProject,
+  } = useManagementClient();
 
   const { mutate: createMutate } = useMutation(createProject, {
     onSuccess: () => {

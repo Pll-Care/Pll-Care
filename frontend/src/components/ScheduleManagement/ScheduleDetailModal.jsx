@@ -17,7 +17,7 @@ import {
 import { getDateTimeDuration } from "../../utils/date";
 import { useDeleteScheduleMutation } from "../../hooks/Mutations/useScheduleManagementMutation";
 import { query } from "../../utils/mediaQuery";
-import { getCompleteProjectData } from "../../lib/apis/managementApi";
+import { useManagementClient } from "../../context/Client/ManagementClientContext";
 
 const ScheduleDetailModal = ({
   open,
@@ -43,6 +43,8 @@ const ScheduleDetailModal = ({
 
   const [isEdit, setIsEdit] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+
+  const { getCompleteProjectData } = useManagementClient();
 
   const deleteBody = {
     scheduleId: scheduleId,

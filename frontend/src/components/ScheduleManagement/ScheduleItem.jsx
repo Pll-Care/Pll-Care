@@ -18,10 +18,12 @@ import {
 import { getProjectId } from "../../utils/getProjectId";
 import { useCompleteScheduleMutation } from "../../hooks/Mutations/useScheduleManagementMutation";
 import { useQuery } from "react-query";
-import { getCompleteProjectData } from "../../lib/apis/managementApi";
+import { useManagementClient } from "../../context/Client/ManagementClientContext";
 
 const ScheduleItem = (props) => {
   const projectId = getProjectId(useLocation());
+
+  const { getCompleteProjectData } = useManagementClient();
 
   // 평가 모달
   const [modalVisible, setModalVisible] = useState(false);

@@ -8,10 +8,10 @@ import Button from "../common/Button";
 import useManagementMutation from "../../hooks/Mutations/useManagementMutation";
 
 import { getStringDate } from "../../utils/date";
-import { deleteImage } from "../../lib/apis/managementApi";
 import { toast } from "react-toastify";
-import { handleImageUploader } from "../../utils/handleImageUploader";
 import { useMediaQuery } from "@mui/material";
+import { useGeneralClient } from "../../context/Client/GeneralClientContext";
+import useImageUploader from "../../hooks/useImageUploader";
 
 const ProjectEditor = ({
   isModalVisible,
@@ -31,6 +31,10 @@ const ProjectEditor = ({
   const descriptionRef = useRef(null);
 
   const inputRef = useRef(null);
+
+  const { deleteImage } = useGeneralClient();
+
+  const { handleImageUpload } = useImageUploader();
 
   const handleModalClose = () => {
     setIsModalVisible(false);
@@ -53,7 +57,7 @@ const ProjectEditor = ({
   };
 
   const handleChangeImage = async (e) => {
-    const imgUrl = await handleImageUploader(e.target.files);
+    const imgUrl = await handleImageUpload(e.target.files);
 
     setImgUrl(imgUrl);
     setResponseImgUrl(imgUrl);
