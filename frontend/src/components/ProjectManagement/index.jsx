@@ -12,11 +12,12 @@ import useManagementMutation from "../../hooks/Mutations/useManagementMutation";
 import { getAlertText } from "../../utils/getAlertText";
 import { getStringDate } from "../../utils/date";
 import { getProjectId } from "../../utils/getProjectId";
+import { useManagementClient } from "../../context/Client/ManagementClientContext";
 
 const ProjectManagement = () => {
   const projectId = getProjectId(useLocation());
 
-  const { getProjectData, getCompleteProjectData } = useManagementMutation();
+  const { getProjectData, getCompleteProjectData } = useManagementClient();
 
   const { data } = useQuery(["managementProject", projectId], () =>
     getProjectData(projectId)
@@ -111,7 +112,7 @@ const ProjectManagement = () => {
             <AlertCheckModal
               text={getAlertText("완료")}
               onClose={() => setCompleteModalVisible(false)}
-              open={() => setCompleteModalVisible(true)}
+              open={completeModalVisible}
               clickHandler={() => {
                 completeMutate(completeProjectId);
               }}
@@ -123,7 +124,7 @@ const ProjectManagement = () => {
             <AlertCheckModal
               text={getAlertText("삭제")}
               onClose={() => setDeleteModalVisible(false)}
-              open={() => setDeleteModalVisible(true)}
+              open={deleteModalVisible}
               clickHandler={() => {
                 deleteMutate(deleteProjectId);
               }}
@@ -173,7 +174,7 @@ const ProjectManagement = () => {
             <AlertCheckModal
               text={getAlertText("완료")}
               onClose={() => setCompleteModalVisible(false)}
-              open={() => setCompleteModalVisible(true)}
+              open={completeModalVisible}
               clickHandler={() => {
                 completeMutate(completeProjectId);
               }}
@@ -185,7 +186,7 @@ const ProjectManagement = () => {
             <AlertCheckModal
               text={getAlertText("삭제")}
               onClose={() => setDeleteModalVisible(false)}
-              open={() => setDeleteModalVisible(true)}
+              open={deleteModalVisible}
               clickHandler={() => {
                 deleteMutate(deleteProjectId);
               }}

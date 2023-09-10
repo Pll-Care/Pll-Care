@@ -65,16 +65,18 @@ const ManagementHeader = () => {
         menu.value === "project" ? (
           isLeader && (
             <Link
-              className={comparePath(menu.value) && `header-link-on`}
+              className={comparePath(menu.value) ? `header-link-on` : ""}
               to={menu.link}
+              key={menu.id}
             >
               {menu.title}
             </Link>
           )
         ) : (
           <Link
-            className={comparePath(menu.value) && `header-link-on`}
+            className={comparePath(menu.value) ? `header-link-on` : ""}
             to={menu.link}
+            key={menu.id}
           >
             {menu.title}
           </Link>
