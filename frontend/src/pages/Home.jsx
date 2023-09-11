@@ -2,17 +2,11 @@ import Banner from "../components/Home/Banner";
 import Description from "../components/Home/Description";
 import Footer from "../components/Home/Footer";
 import Project from "../components/Home/Project";
-import { useGeneralClient } from "../context/Client/GeneralClientContext";
-import HomeClientProvider from "../context/Client/HomeClientContext";
-import HomeService from "../lib/service/HomeService";
+import HomeLayout from "../layout/HomeLayout";
 
 const Home = () => {
-  const { generalHttpClient } = useGeneralClient();
-
-  const homeService = new HomeService(generalHttpClient);
-
   return (
-    <HomeClientProvider homeService={homeService}>
+    <HomeLayout>
       <div className="home">
         <Banner />
         <Description />
@@ -25,7 +19,7 @@ const Home = () => {
         </div>
         <Footer />
       </div>
-    </HomeClientProvider>
+    </HomeLayout>
   );
 };
 

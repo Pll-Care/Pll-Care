@@ -10,8 +10,6 @@ import LocalTokenRepository from "../lib/repository/LocalTokenRepository";
 import GeneralClientProvider from "../context/Client/GeneralClientContext";
 import GeneralService from "../lib/service/GeneralService";
 import { baseURL } from "../utils/auth";
-import { getToken } from "../utils/localstorageHandler";
-import { customAxios } from "../lib/apis/customAxios";
 import AxiosInstance from "../lib/service/AxiosInstance";
 import HttpClient from "../lib/service/HttpClient";
 
