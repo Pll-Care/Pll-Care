@@ -2,16 +2,20 @@ package fullcare.backend.project.domain;
 
 
 import fullcare.backend.evaluation.domain.FinalTermEvaluation;
+import fullcare.backend.evaluation.domain.MidtermEvaluation;
 import fullcare.backend.global.State;
 import fullcare.backend.global.entity.BaseEntity;
+import fullcare.backend.global.errorcode.ProjectErrorCode;
+import fullcare.backend.global.exceptionhandling.exception.InvalidDateRangeException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.memo.domain.Memo;
-import fullcare.backend.project.dto.request.ProjectUpdateRequest;
+import fullcare.backend.post.domain.Post;
 import fullcare.backend.projectmember.domain.ProjectMember;
-import fullcare.backend.projectmember.domain.ProjectMemberRole;
+import fullcare.backend.projectmember.domain.ProjectMemberType;
 import fullcare.backend.schedule.domain.Schedule;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -36,25 +40,27 @@ public class Project extends BaseEntity {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Lob
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
-//    @Column(name = "create_dt", nullable = false)
-//    private LocalDateTime createDate;
+    private String imageUrl;
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<FinalTermEvaluation> evaluations = new ArrayList<>();
+    private List<Memo> memos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MidtermEvaluation> midtermEvaluations = new ArrayList<>();
+
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FinalTermEvaluation> finalTermEvaluations = new ArrayList<>();
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Schedule> schedules = new ArrayList<>();
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Memo> memos = new ArrayList<>();
+    private List<Post> posts = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Post> posts = new ArrayList<>();
-
+    @BatchSize(size = 16)
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProjectMember> projectMembers = new ArrayList<>();
 
@@ -66,33 +72,49 @@ public class Project extends BaseEntity {
 
 
     @Builder(builderMethodName = "createNewProject")
-    public Project(State state, String title, String description, LocalDate startDate, LocalDate endDate) {
+    public Project(String title, String description, State state, LocalDate startDate, LocalDate endDate, String imageUrl) {
         this.title = title;
         this.description = description;
         this.state = state;
+
+        if (!startDate.isBefore(endDate)) {
+            throw new InvalidDateRangeException(ProjectErrorCode.INVALID_DATE_RANGE);
+        }
+
         this.startDate = startDate;
         this.endDate = endDate;
+        this.imageUrl = imageUrl;
+    }
+
+    public void complete() {
+        this.state = State.COMPLETE;
     }
 
     public void updateState(State state) {
         this.state = state;
     }
 
-    public void addMember(Member member, ProjectMemberRole role) {
+    public void addMember(Member member, ProjectMemberType projectMemberType) {
         ProjectMember pm = ProjectMember.createNewProjectMember()
                 .member(member)
                 .project(this)
-                .projectMemberRole(role).build();
+                .projectMemberType(projectMemberType)
+                .build();
 
-        projectMembers.add(pm); // ! project save시에 projectmember도 cascade 옵션으로 똑바로 저장되는지 확인 필요
-        member.getProjectMembers().add(pm); // ? member 엔티티에서 projectMembers 컬렉션은 필요없을듯?
+        projectMembers.add(pm);
     }
 
-    public void update(ProjectUpdateRequest projectUpdateRequest) {
-        this.title = projectUpdateRequest.getTitle();
-        this.description = projectUpdateRequest.getDescription();
-        this.startDate = projectUpdateRequest.getStartDate();
-        this.endDate = projectUpdateRequest.getEndDate();
-        this.state = projectUpdateRequest.getState();
+    public void updateAll(String title, String description, State state, LocalDate startDate, LocalDate endDate, String imageUrl) {
+        this.title = title;
+        this.description = description;
+        this.state = state;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.imageUrl = imageUrl;
+    }
+
+
+    public boolean isCompleted() {
+        return this.state.equals(State.COMPLETE) ? true : false;
     }
 }

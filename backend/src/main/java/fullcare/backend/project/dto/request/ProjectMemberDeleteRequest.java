@@ -7,8 +7,5 @@ import lombok.Getter;
 public class ProjectMemberDeleteRequest {
 
     @NotNull
-    private Long projectId;
-
-    @NotNull
     private Long memberId;
 }

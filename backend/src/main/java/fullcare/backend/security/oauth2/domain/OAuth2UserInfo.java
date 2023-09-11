@@ -2,7 +2,7 @@ package fullcare.backend.security.oauth2.domain;
 
 import java.util.Map;
 
-public abstract class OAuth2UserInfo  {
+public abstract class OAuth2UserInfo {
 
     protected Map<String, Object> attributes;
 
@@ -10,9 +10,15 @@ public abstract class OAuth2UserInfo  {
         this.attributes = attributes;
     }
 
-    public abstract String getId();
-    public abstract String getName();
-    public abstract String getEmail();
-    public abstract String getImageUrl();
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
 
+    public abstract String getId();
+
+    public abstract String getName();
+
+    public abstract String getEmail();
+
+    public abstract String getImageUrl();
 }

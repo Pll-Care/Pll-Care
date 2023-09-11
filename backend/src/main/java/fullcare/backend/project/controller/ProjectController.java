@@ -1,20 +1,15 @@
 package fullcare.backend.project.controller;
 
 import fullcare.backend.global.State;
-import fullcare.backend.global.dto.FailureResponse;
-import fullcare.backend.global.exception.InvalidAccessException;
+import fullcare.backend.global.dto.ErrorResponse;
+import fullcare.backend.global.dto.SuccessResponse;
 import fullcare.backend.member.domain.Member;
-import fullcare.backend.project.dto.request.ProjectCreateRequest;
-import fullcare.backend.project.dto.request.ProjectMemberDeleteRequest;
-import fullcare.backend.project.dto.request.ProjectStateUpdateRequest;
-import fullcare.backend.project.dto.request.ProjectUpdateRequest;
-import fullcare.backend.project.dto.response.ProjectListResponse;
-import fullcare.backend.project.dto.response.ProjectMemberListResponse;
+import fullcare.backend.project.dto.request.*;
+import fullcare.backend.project.dto.response.*;
 import fullcare.backend.project.service.ProjectService;
-import fullcare.backend.projectmember.domain.ProjectMember;
-import fullcare.backend.projectmember.domain.ProjectMemberRoleType;
 import fullcare.backend.projectmember.service.ProjectMemberService;
 import fullcare.backend.security.jwt.CurrentLoginMember;
+import fullcare.backend.util.CustomPageImpl;
 import fullcare.backend.util.CustomPageRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -24,7 +19,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -39,20 +33,76 @@ import java.util.List;
 @RequestMapping("/api/auth/project")
 @RestController
 public class ProjectController {
+
     private final ProjectService projectService;
     private final ProjectMemberService projectMemberService;
 
-
-    // * 특정 프로젝트의 멤버 목록
-    @Operation(method = "get", summary = "프로젝트 멤버 조회")
+    // * 새로운 프로젝트 생성
+    @Operation(method = "post", summary = "프로젝트 생성")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "프로젝트 멤버 조회 성공", useReturnTypeSchema = true),
-            @ApiResponse(responseCode = "400", description = "프로젝트 멤버 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+            @ApiResponse(responseCode = "201", description = "프로젝트 생성 성공", content = @Content),
+            @ApiResponse(responseCode = "400", description = "프로젝트 생성 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @GetMapping("/memberlist")
-    public ResponseEntity<List<ProjectMemberListResponse>> projectMemberList(@RequestParam(name = "project_id") Long projectId) {
-        List<ProjectMemberListResponse> response = projectService.findProjectMembers(projectId);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    @PostMapping
+    public ResponseEntity create(@Valid @RequestBody ProjectCreateRequest projectCreateRequest, @CurrentLoginMember Member member) {
+
+        projectService.createProject(member.getId(), projectCreateRequest);
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
+
+    // * 특정 프로젝트 내용 수정
+    @Operation(method = "put", summary = "프로젝트 수정")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "프로젝트 수정 성공", useReturnTypeSchema = true),
+            @ApiResponse(responseCode = "400", description = "프로젝트 수정 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @PutMapping("/{projectId}")
+    public ResponseEntity<ProjectUpdateResponse> update(@PathVariable Long projectId, @Valid @RequestBody ProjectUpdateRequest projectUpdateRequest, @CurrentLoginMember Member member) {
+
+
+        projectService.updateProject(projectId, member.getId(), projectUpdateRequest);
+        return new ResponseEntity<>(new ProjectUpdateResponse(projectUpdateRequest.getImageUrl()), HttpStatus.OK);
+    }
+
+    // * 특정 프로젝트 삭제
+    @Operation(method = "delete", summary = "프로젝트 삭제")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "프로젝트 삭제 성공", content = @Content),
+            @ApiResponse(responseCode = "400", description = "프로젝트 삭제 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @DeleteMapping("/{projectId}")
+    public ResponseEntity delete(@PathVariable Long projectId, @CurrentLoginMember Member member) {
+
+        projectService.deleteProject(projectId, member.getId());
+        return new ResponseEntity(HttpStatus.OK);
+
+    }
+
+    // * 특정 프로젝트 완료 처리
+    @Operation(method = "post", summary = "프로젝트 완료 처리")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "프로젝트 완료 처리 성공", useReturnTypeSchema = true),
+            @ApiResponse(responseCode = "400", description = "프로젝트 완료 처리 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @PostMapping("/{projectId}/complete")
+    public ResponseEntity<ProjectUpdateStateResponse> complete(@PathVariable Long projectId, @CurrentLoginMember Member member) {
+
+        projectService.completeProject(projectId, member.getId());
+        return new ResponseEntity<>(new ProjectUpdateStateResponse(projectId), HttpStatus.OK);
+    }
+
+    // * 특정 프로젝트 조회
+    @Operation(method = "get", summary = "프로젝트 단건 조회")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "프로젝트 단건 조회 성공", useReturnTypeSchema = true),
+            @ApiResponse(responseCode = "400", description = "프로젝트 단건 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @GetMapping("/{projectId}")
+    public ResponseEntity<ProjectDetailResponse> details(@PathVariable Long projectId,
+                                                         @CurrentLoginMember Member member) {
+
+        ProjectDetailResponse projectDetailResponse = projectService.findProjectDetail(projectId, member.getId());
+        return new ResponseEntity<>(projectDetailResponse, HttpStatus.OK);
     }
 
 
@@ -60,96 +110,165 @@ public class ProjectController {
     @Operation(method = "get", summary = "사용자 프로젝트 리스트 조회")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "사용자 프로젝트 리스트 조회 성공", useReturnTypeSchema = true),
-            @ApiResponse(responseCode = "400", description = "사용자 프로젝트 리스트 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+            @ApiResponse(responseCode = "400", description = "사용자 프로젝트 리스트 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @GetMapping
-    public ResponseEntity<Page<ProjectListResponse>> list(CustomPageRequest pageRequest, @Valid @RequestParam List<State> state, @CurrentLoginMember Member member) {
+    @GetMapping("/list")
+    public ResponseEntity<CustomPageImpl<ProjectListResponse>> list(CustomPageRequest pageRequest, @RequestParam List<State> state, @CurrentLoginMember Member member) {
+
         PageRequest of = pageRequest.of();
         Pageable pageable = (Pageable) of;
-        Page<ProjectListResponse> responses = projectService.findMyProjectList(pageable, member.getId(), state);
+        CustomPageImpl<ProjectListResponse> responses = projectService.findProjectList(pageable, member.getId(), state);
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
-
-    // * 새로운 프로젝트 생성
-    @Operation(method = "post", summary = "프로젝트 생성")
+    // * 사용자가 속한 프로젝트 목록(간단한 버전)
+    @Operation(method = "get", summary = "사용자 프로젝트 리스트 조회")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "프로젝트 생성 성공", content = @Content),
-            @ApiResponse(responseCode = "400", description = "프로젝트 생성 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+            @ApiResponse(responseCode = "200", description = "사용자 프로젝트 리스트 조회 성공", useReturnTypeSchema = true),
+            @ApiResponse(responseCode = "400", description = "사용자 프로젝트 리스트 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @PostMapping
-    public ResponseEntity create(@RequestBody ProjectCreateRequest projectCreateRequest, @CurrentLoginMember Member member) {
+    @GetMapping("/simplelist")
+    public ResponseEntity<SuccessResponse<List<ProjectSimpleListResponse>>> projectList(@CurrentLoginMember Member member) {
+        List<ProjectSimpleListResponse> result = projectService.findSimpleProjectList(member.getId());
+        SuccessResponse<List<ProjectSimpleListResponse>> responses = new SuccessResponse<>(result);
 
-        projectService.createProject(member.getId(), projectCreateRequest);
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
 
+    // ! ============================================== 여기부터는 프로젝트에 소속된 사용자와 관련된 API ==============================================
+
+    // * 프로젝트에 소속된 멤버의 역할 수정
+    @Operation(method = "put", summary = "프로젝트 멤버 역할 수정")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "프로젝트 멤버 역할 수정 성공", content = @Content),
+            @ApiResponse(responseCode = "400", description = "프로젝트 멤버 역할 수정 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @PutMapping("/{projectId}/positionchange")
+    public ResponseEntity updateProjectMemberPosition(@PathVariable Long projectId, @RequestBody ProjectMemberPositionUpdateRequest projectMemberPositionUpdateRequest, @CurrentLoginMember Member member) {
+
+        projectMemberService.updateProjectMemberPosition(projectId, member.getId(), projectMemberPositionUpdateRequest);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    // * 특정 프로젝트 내용 수정
-    @Operation(method = "put", summary = "프로젝트 수정")
+    // * 특정 프로젝트 멤버에게 리더 위임
+    @Operation(method = "put", summary = "프로젝트 리더 위임")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "프로젝트 수정 성공", content = @Content),
-            @ApiResponse(responseCode = "400", description = "프로젝트 수정 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+            @ApiResponse(responseCode = "200", description = "프로젝트 리더 위임 성공", content = @Content),
+            @ApiResponse(responseCode = "400", description = "프로젝트 리더 위임 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @PutMapping("/{projectId}")
-    public ResponseEntity update(@PathVariable Long projectId, @Valid @RequestBody ProjectUpdateRequest projectUpdateRequest, @CurrentLoginMember Member member) {
-        if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
-        }
-        projectService.update(projectId, projectUpdateRequest);
-        return new ResponseEntity(HttpStatus.OK);
-    }
+    @PutMapping("/{projectId}/leaderchange")
+    public ResponseEntity changeProjectLeader(@PathVariable Long projectId, @RequestBody ProjectLeaderChangeRequest projectLeaderChangeRequest, @CurrentLoginMember Member member) {
 
-    // * 특정 프로젝트 삭제
-    @Operation(method = "delete", summary = "프로젝트 삭제")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "프로젝트 삭제 성공", content = @Content),
-            @ApiResponse(responseCode = "400", description = "프로젝트 삭제 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
-    })
-    @DeleteMapping("{projectId}")
-    public ResponseEntity delete(@PathVariable Long projectId, @CurrentLoginMember Member member) {
-        // 삭제 권한이 있는지 검사
-
-        projectService.deleteProject(projectId);
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
-
-    // * 특정 프로젝트 상태 수정
-    @Operation(method = "put", summary = "프로젝트 상태 변경")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "프로젝트 상태 변경 성공", content = @Content),
-            @ApiResponse(responseCode = "400", description = "프로젝트 상태 변경실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
-    })
-    @PutMapping("/{projectId}/state") // ! 프로젝트 완료는 리더만, 모든 평가가 완료될 때 조건 필요
-    public ResponseEntity updateState(@PathVariable Long projectId, @Valid @RequestBody ProjectStateUpdateRequest projectStateUpdateRequest, @CurrentLoginMember Member member) {
-        if (!(projectMemberService.validateProjectMember(projectId, member.getId()))) {
-            throw new InvalidAccessException("프로젝트에 대한 권한이 없습니다.");
-        }
-        projectService.updateState(projectId, projectStateUpdateRequest);
+        projectMemberService.changeProjectLeader(projectId, member.getId(), projectLeaderChangeRequest);
         return new ResponseEntity(HttpStatus.OK);
     }
 
 
-    // * 특정 프로젝트 멤버 삭제(리더가 강퇴)
-    @Operation(method = "post", summary = "프로젝트 멤버 삭제")
+    // * 특정 프로젝트 멤버 탈퇴 (본인이 탈퇴)
+    @Operation(method = "delete", summary = "프로젝트 멤버 탈퇴")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "프로젝트 멤버 삭제 성공", content = @Content),
-            @ApiResponse(responseCode = "400", description = "프로젝트 멤버 삭제 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FailureResponse.class)))
+            @ApiResponse(responseCode = "200", description = "프로젝트 멤버 탈퇴 성공", content = @Content),
+            @ApiResponse(responseCode = "400", description = "프로젝트 멤버 탈퇴 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @PostMapping("/memberout")
-    public ResponseEntity deleteProjectMember(@RequestBody ProjectMemberDeleteRequest request, @CurrentLoginMember Member member) {
-        ProjectMember projectMember = projectMemberService.findProjectMember(request.getProjectId(), member.getId());
+    @DeleteMapping("/{projectId}/selfout")
+    public ResponseEntity selfOut(@PathVariable Long projectId, @CurrentLoginMember Member member) {
 
-        if (projectMember.getProjectMemberRole().getRole() != ProjectMemberRoleType.리더 || !(projectMemberService.validateProjectMember(request.getProjectId(), request.getMemberId()))) {
-            throw new InvalidAccessException("삭제 권한이 없습니다.");
-        }
-
-        projectMemberService.deleteProjectMember(request.getProjectId(), request.getMemberId());
+        projectMemberService.selfOutProjectMember(projectId, member.getId());
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    // ! 팀 탈퇴 기능 추가 필요
-    // 프로젝트 생성 썸네일 -> [새로운 프로젝트 생성, 특정 프로젝트 내용 수정] 에 들어가야함
-    // ? 프로젝트 멤버 영입 -> 그냥 모집글의 지원 기능으로 대체?
+
+    // * 특정 프로젝트 멤버 삭제 (리더가 강퇴)
+    @Operation(method = "delete", summary = "프로젝트 멤버 강퇴")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "프로젝트 멤버 강퇴 성공", content = @Content),
+            @ApiResponse(responseCode = "400", description = "프로젝트 멤버 강퇴 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @DeleteMapping("/{projectId}/kickout")
+    public ResponseEntity kickOut(@PathVariable Long projectId, @RequestBody ProjectMemberDeleteRequest projectMemberDeleteRequest, @CurrentLoginMember Member member) {
+
+        projectMemberService.kickOutProjectMember(projectId, member.getId(), projectMemberDeleteRequest);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+
+    // * 프로젝트 지원자 수락(리더가 수락)
+    @Operation(method = "post", summary = "프로젝트 지원자 수락")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "프로젝트 지원자 수락 성공", content = @Content),
+            @ApiResponse(responseCode = "400", description = "프로젝트 지원자 수락 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @PostMapping("/{projectId}/applyaccept")
+    public ResponseEntity acceptApply(@PathVariable Long projectId, @RequestBody ApplyMemberAcceptRequest applyMemberAcceptRequest, @CurrentLoginMember Member member) {
+
+        projectMemberService.acceptApplyMember(projectId, member.getId(), applyMemberAcceptRequest);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    // * 프로젝트 지원자 거절(리더가 거절)
+    @Operation(method = "post", summary = "프로젝트 지원자 거절")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "프로젝트 지원자 거절 성공", content = @Content),
+            @ApiResponse(responseCode = "400", description = "프로젝트 지원자 거절 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @PostMapping("/{projectId}/applyreject")
+    public ResponseEntity rejectApply(@PathVariable Long projectId, @RequestBody ApplyMemberRejectRequest applyMemberRejectRequest, @CurrentLoginMember Member member) {
+
+        projectMemberService.rejectApplyMember(projectId, member.getId(), applyMemberRejectRequest);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    // * 특정 프로젝트의 멤버 목록
+    @Operation(method = "get", summary = "프로젝트 멤버 조회")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "프로젝트 멤버 조회 성공", useReturnTypeSchema = true),
+            @ApiResponse(responseCode = "400", description = "프로젝트 멤버 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @GetMapping("/{projectId}/memberlist")
+    public ResponseEntity<List<ProjectMemberListResponse>> projectMemberList(@PathVariable Long projectId, @CurrentLoginMember Member member) {
+
+        List<ProjectMemberListResponse> response = projectMemberService.findProjectMembers(projectId, member.getId());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    // * 특정 프로젝트의 지원 목록
+    @Operation(method = "get", summary = "프로젝트 지원 현황 리스트 조회")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "프로젝트 지원 현황 리스트 조회 성공", useReturnTypeSchema = true),
+            @ApiResponse(responseCode = "400", description = "프로젝트 지원 현황 리스트 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @GetMapping("/{projectId}/applylist")
+    public ResponseEntity<List<ApplyMemberListResponse>> applyMemberList(@PathVariable Long projectId, @CurrentLoginMember Member member) {
+
+        List<ApplyMemberListResponse> response = projectMemberService.findApplyMembers(projectId, member.getId());
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+
+    // * 특정 프로젝트의 완료 여부
+    @Operation(method = "get", summary = "프로젝트 완료 여부 조회")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "프로젝트 완료 여부 조회 성공", useReturnTypeSchema = true),
+            @ApiResponse(responseCode = "400", description = "프로젝트 완료 여부 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @GetMapping("/{projectId}/iscompleted")
+    public ResponseEntity<ProjectCompleteResponse> isProjectCompleted(@PathVariable Long projectId, @CurrentLoginMember Member member) {
+
+        boolean isProjectCompleted = projectMemberService.checkProjectComplete(projectId, member.getId());
+        return new ResponseEntity<>(new ProjectCompleteResponse(isProjectCompleted), HttpStatus.OK);
+    }
+
+    // * 특정 프로젝트의 리더 여부
+    @Operation(method = "get", summary = "프로젝트 리더 여부 조회")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "프로젝트 리더 여부 조회 성공", useReturnTypeSchema = true),
+            @ApiResponse(responseCode = "400", description = "프로젝트 리더 여부 조회 실패", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @GetMapping("/{projectId}/isleader")
+    public ResponseEntity<ProjectLeaderResponse> isProjectLeader(@PathVariable Long projectId, @CurrentLoginMember Member member) {
+
+        boolean isLeader = projectMemberService.checkProjectLeader(projectId, member.getId());
+        return new ResponseEntity<>(new ProjectLeaderResponse(isLeader), HttpStatus.OK);
+    }
+
 }

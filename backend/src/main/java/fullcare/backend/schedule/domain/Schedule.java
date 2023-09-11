@@ -1,11 +1,13 @@
 package fullcare.backend.schedule.domain;
 
 
+import fullcare.backend.evaluation.domain.MidtermEvaluation;
 import fullcare.backend.global.State;
+import fullcare.backend.global.errorcode.ScheduleErrorCode;
+import fullcare.backend.global.exceptionhandling.exception.InvalidDateRangeException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.projectmember.domain.ProjectMember;
-import fullcare.backend.schedule.exceptionhandler.exception.ScheduleOutOfRangeException;
 import fullcare.backend.schedulemember.domain.ScheduleMember;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -29,14 +31,17 @@ public abstract class Schedule {
     @Column(name = "schedule_id")
     private Long id;
 
+    @Column(insertable = false, updatable = false)
+    private String dtype;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
-    // todo -> private ProjectMember author;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", nullable = false)
-    private ProjectMember projectMember;
+    private ProjectMember author;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false)
     private State state;
@@ -44,8 +49,8 @@ public abstract class Schedule {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Lob
-    @Column(name = "content", nullable = false)
+
+    @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @Column(name = "start_date_time", nullable = false)
@@ -57,6 +62,9 @@ public abstract class Schedule {
     @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ScheduleMember> scheduleMembers = new ArrayList<>();
 
+    @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MidtermEvaluation> midtermEvaluations = new ArrayList<>();
+
     @Column(name = "create_dt", nullable = false, updatable = false)
     private LocalDateTime createdDate;
 
@@ -64,9 +72,9 @@ public abstract class Schedule {
     private LocalDateTime modifiedDate;
 
 
-    public Schedule(Project project, ProjectMember projectMember, State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    public Schedule(Project project, ProjectMember author, State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.project = project;
-        this.projectMember = projectMember;
+        this.author = author;
         this.state = state;
         this.title = title;
         this.content = content;
@@ -80,27 +88,27 @@ public abstract class Schedule {
         if (pStartDate.isAfter(sStartDate) || pStartDate.isAfter(sEndDate) ||
                 pEndDate.isBefore(sStartDate) || pEndDate.isBefore(sEndDate)
         ) {
-            throw new ScheduleOutOfRangeException("프로젝트 일정 범위를 벗어났습니다.");
+            throw new InvalidDateRangeException(ScheduleErrorCode.INVALID_SCHEDULE_DATE_RANGE);
         }
         if (sStartDate.isAfter(sEndDate) || sEndDate.isBefore(sStartDate)) {
-            throw new ScheduleOutOfRangeException("시작일정과 종료일정이 올바르지 않습니다.");
+            throw new InvalidDateRangeException(ScheduleErrorCode.INVALID_DATE_RANGE);
         }
     }
 
-    public void addMemberList(List<Member> memberList) {
+    public void addMemberList(List<ProjectMember> memberList) {
         memberList.forEach(member -> {
             ScheduleMember sm = ScheduleMember.builder()
-                    .member(member)
+                    .projectMember(member)
                     .schedule(this)
                     .recentView(LocalDateTime.now()).build();
             scheduleMembers.add(sm);
         });
     }
 
-    public void addMember(Member member) {
+    public void addMember(ProjectMember member) {
 
         ScheduleMember sm = ScheduleMember.builder()
-                .member(member)
+                .projectMember(member)
                 .schedule(this)
                 .recentView(LocalDateTime.now()).build();
         scheduleMembers.add(sm);

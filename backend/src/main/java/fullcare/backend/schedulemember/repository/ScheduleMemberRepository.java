@@ -15,6 +15,6 @@ public interface ScheduleMemberRepository extends JpaRepository<ScheduleMember ,
     @Query("update schedule_member sc set sc.recentView = :recentView where sc.schedule.id = :scheduleId")
     int updateRecentView(LocalDateTime recentView, Long scheduleId);
 
-    @Query("select sm from schedule_member sm where sm.schedule.id = :scheduleId and sm.member.id = :memberId")
-    Optional<ScheduleMember> findByScheduleIdAndMemberId(@Param("scheduleId") Long scheduleId, @Param("memberId") Long memberId);
+    @Query("select sm from schedule_member sm where sm.schedule.id = :scheduleId and sm.projectMember.id = :pmId")
+    Optional<ScheduleMember> findByScheduleIdAndPmId(@Param("scheduleId") Long scheduleId, @Param("pmId") Long pmId);
 }

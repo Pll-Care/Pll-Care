@@ -1,22 +1,22 @@
 package fullcare.backend.evaluation.dto;
 
-import fullcare.backend.evaluation.domain.Score;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 public class FinalEvalDto {
     private Long memberId;
-    private String memberName;
-    private String imageUrl; // ? 사용자 이미지
+    private String name;
+    private String imageUrl;
     private String content;
-//    private Score score;
+    private ScoreDto score;
+
     @Builder
-    public FinalEvalDto(Long memberId, String memberName, String imageUrl, String content) {
+    public FinalEvalDto(Long memberId, String name, String imageUrl, String content, ScoreDto score) {
         this.memberId = memberId;
-        this.memberName = memberName;
+        this.name = name;
         this.imageUrl = imageUrl;
         this.content = content;
-//        this.score = score;
+        this.score = score;
     }
 }

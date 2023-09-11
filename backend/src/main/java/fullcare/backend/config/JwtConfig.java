@@ -33,31 +33,36 @@ public class JwtConfig {
 
         log.info("JwtConfig.jwtFilterChain");
 
-        // ! cors 설정
+        // ! cors 설정ㅓ
         http.cors(withDefaults());
 
 
         // ! session 미사용 설정
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+        // ! 그 외의 부가 설정
+        http.httpBasic().disable()
+//                .anonymous().disable()
+                .csrf().disable().headers().frameOptions().disable();
 
         // ! HTTP 경로 관련 설정
         http
-                .securityMatcher("/api/**")
+                .securityMatcher("/api/auth/**")
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/auth/main/**").hasAnyRole("USER", "ANONYMOUS")
+                        .requestMatchers("/api/auth/post/list", "/api/auth/post/{postId:[\\d+]}").hasAnyRole("USER", "ANONYMOUS")
+                        .requestMatchers("/api/auth/util/techstack").hasAnyRole("USER", "ANONYMOUS")
+                        .requestMatchers("/api/auth/util/reissuetoken").hasAnyRole("USER", "ANONYMOUS")
+                        .requestMatchers("/api/auth/profile/{memberId:[\\d+]}/roletechstack",
+                                "/api/auth/profile/{memberId:[\\d+]}/experience", "/api/auth/profile/{memberId:[\\d+]}/evaluation",
+                                "/api/auth/profile/{memberId:[\\d+]}/evaluation/{projectId:[\\d+]}", "/api/auth/profile/{memberId:[\\d+]}/evaluation/chart",
+                                "/api/auth/profile/{memberId:[\\d+]}/contact", "/api/auth/profile/{memberId:[\\d+]}/bio").hasAnyRole("USER", "ANONYMOUS")
                         .requestMatchers("/api/auth/**").hasRole("USER")
-                        .requestMatchers("/api/all/**").permitAll() // ? 개발 단계동안 swagger 임시 허용
                         .anyRequest().authenticated())
 
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);
 //                .accessDeniedHandler(jwtAccessDeniedHandler);
-
-
-        // ! 그 외의 부가 설정
-        http.httpBasic().disable()
-//                .anonymous().disable()
-                .csrf().disable().headers().frameOptions().disable();
 
 
         return http.build();

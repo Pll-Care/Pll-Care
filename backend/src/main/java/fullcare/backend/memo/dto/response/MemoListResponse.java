@@ -1,6 +1,5 @@
 package fullcare.backend.memo.dto.response;
 
-import fullcare.backend.memo.domain.Memo;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -23,15 +22,5 @@ public class MemoListResponse {
         this.title = title;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
-    }
-
-    public static MemoListResponse entityToDto(Memo memo) {
-        return MemoListResponse.builder()
-                .memoId(memo.getId())
-                .title(memo.getTitle())
-                .author(memo.getAuthor())
-                .createdDate(memo.getCreatedDate())
-                .modifiedDate(memo.getModifiedDate())
-                .build();
     }
 }

@@ -2,6 +2,7 @@ package fullcare.backend.schedule.domain;
 
 
 import fullcare.backend.global.State;
+import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import jakarta.persistence.Embedded;
@@ -19,20 +20,19 @@ import java.time.LocalDateTime;
 @Entity
 public class Meeting extends Schedule {
 
-    @Embedded
-    private Address address;
+    private String address;
 
-    public Meeting(Address address) {
+    public Meeting(String address) {
         this.address = address;
     }
 
     @Builder
-    public Meeting(Project project, ProjectMember projectMember, State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate, Address address, LocalDateTime createdDate, LocalDateTime modifiedDate) {
-        super(project, projectMember, state, title, content, startDate, endDate, createdDate, modifiedDate);
+    public Meeting(Project project, ProjectMember author, State state, String title, String content, LocalDateTime startDate, LocalDateTime endDate, String address, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+        super(project, author, state, title, content, startDate, endDate, createdDate, modifiedDate);
         this.address = address;
     }
 
-    public void updateAddress(Address address) {
+    public void updateAddress(String address) {
         this.address = address;
     }
 }
