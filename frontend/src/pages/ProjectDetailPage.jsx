@@ -9,6 +9,7 @@ import { useRouter } from "../hooks/useRouter";
 import { useGeneralClient } from "../context/Client/GeneralClientContext";
 import ManagementService from "../lib/service/ManagementService";
 import ManagementClientProvider from "../context/Client/ManagementClientContext";
+import ManagementLayout from "../layout/ManagementLayout";
 
 const ProjectDetailPage = () => {
   const { id: projectId } = useParams();
@@ -22,7 +23,7 @@ const ProjectDetailPage = () => {
   }, []);
 
   return (
-    <ManagementClientProvider managementService={managementService}>
+    <ManagementLayout>
       <ProjectDetailProvider>
         <PageRouterLayout
           passUrl={`/management/${projectId}`}
@@ -34,7 +35,7 @@ const ProjectDetailPage = () => {
           </div>
         </PageRouterLayout>
       </ProjectDetailProvider>
-    </ManagementClientProvider>
+    </ManagementLayout>
   );
 };
 
