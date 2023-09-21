@@ -1,12 +1,8 @@
-import { Link } from "react-router-dom";
-
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useMediaQuery } from "@mui/material";
-
 import projectDefaultImg from "../../assets/project-default-img.jpg";
 import { getStringDate } from "../../utils/date";
-import { query } from "../../utils/mediaQuery";
 import Button from "../common/Button";
+import { query } from "../../utils/mediaQuery";
 
 const RecruitmentDetailTitle = ({
   data,
@@ -19,7 +15,6 @@ const RecruitmentDetailTitle = ({
   setDeleteIsModalVisible,
 }) => {
   const time = data ? getStringDate(new Date(data.createdDate)) : "";
-
   const isMobile = useMediaQuery(query);
 
   // 수정 취소 버튼 눌렀을 때
@@ -42,18 +37,11 @@ const RecruitmentDetailTitle = ({
   return (
     <div className="detail-title">
       <div className="detail-title-content">
-        {isMobile && !isEdit && (
-          <Link to="/recruitment" className="mui-arrow">
-            <ArrowBackIosNewIcon />
-          </Link>
-        )}
-
         {data?.projectImageUrl ? (
           <img src={data?.projectImageUrl} alt="" />
         ) : (
           <img src={projectDefaultImg} alt="" />
         )}
-
         {isEdit ? (
           <input
             type="text"
@@ -66,7 +54,9 @@ const RecruitmentDetailTitle = ({
         ) : (
           <h1>{data?.title}</h1>
         )}
+
         {!isEdit && <h2>{time} 작성</h2>}
+        {!isEdit && !isMobile && <h2>좋아요 {data?.likeCount}</h2>}
       </div>
       <div className="detail-title-button">
         {isEdit ? (

@@ -42,12 +42,163 @@
 
 // RecruitmentPostList 컴포넌트
 .recruitment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   h1 {
     color: $gray-400;
     @include heading_06;
 
     @include mobile {
       @include m_heading_04;
+    }
+  }
+  &-grid {
+    display: grid;
+    grid-template-columns: 278px 278px 278px;
+    grid-gap: 23px;
+    margin-top: 23px;
+    margin-bottom: 19px;
+
+    @include mobile {
+      display: flex;
+      flex-direction: column;
+      width: 278px;
+      margin-top: 14px;
+    }
+
+    @include tablet {
+      display: grid;
+      grid-template-columns: 278px 278px;
+      grid-gap: 23px;
+    }
+  }
+}
+
+// RecruitmentPost 컴포넌트
+.recruitment-post-link {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.recruitment-post {
+  &:hover {
+    transform: scale(1.011);
+    transition: transform 0.2s ease-in-out;
+  }
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  height: 370px;
+  width: 281px;
+  @include mobile {
+    height: 341px;
+  }
+
+  img {
+    border-radius: 30px 30px 0px 0px;
+    width: 100%;
+    height: 200px;
+    @include mobile {
+      height: 190px;
+    }
+  }
+
+  &-stack {
+    margin-left: auto;
+    margin: 10px 17px 15px auto;
+    img {
+      width: 28px;
+      height: 27px;
+      border-radius: 18px;
+      margin-left: 7px;
+    }
+    @include mobile {
+      margin: 10px 17px 11px auto;
+    }
+  }
+
+  &-project {
+    display: flex;
+    flex-direction: column;
+    color: $gray-500;
+    text-decoration: none;
+    margin: 0px 9px 22px 13px;
+
+    h5 {
+      @include body_01;
+      @include mobile {
+        @include m_heading_01;
+      }
+    }
+    h6 {
+      @include body_01;
+      @include mobile {
+        @include m_heading_02;
+      }
+    }
+    &-title {
+      display: flex;
+      justify-content: space-between;
+      h2 {
+        text-decoration: none;
+
+        @include heading_04;
+        @include mobile {
+          @include m_heading_05;
+        }
+      }
+
+      .recruitment-post-like {
+        border: 2px solid $green-200;
+        display: flex;
+        width: 40px;
+        height: 40px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50px;
+        color: $green-200;
+        padding: 2px 9px;
+        @include mobile {
+          width: 37px;
+          height: 37px;
+        }
+        h5 {
+          @include button_03;
+          margin-bottom: 2px;
+          @include mobile {
+            @include m_button_00;
+          }
+        }
+
+        .post-icon {
+          margin: 0;
+        }
+      }
+    }
+
+    &-duration {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+
+    &-position {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 7px;
+      &-item {
+        display: flex;
+        .item {
+          margin-left: 5px;
+        }
+      }
     }
   }
 }
@@ -149,6 +300,7 @@
         display: flex;
         justify-content: space-between;
       }
+
       &-time {
         display: flex;
         align-items: center;
@@ -276,128 +428,6 @@
   &-contact {
     h3 {
       margin: 19px 0px 8px 0px;
-    }
-  }
-}
-
-// RecruitmentPostList 컴포넌트
-.recruitment {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 10px 10%;
-  h1 {
-    font-size: 27px;
-    font-family: $heading-font;
-    color: gray;
-    margin-left: 15px;
-    margin-top: 10px;
-  }
-  @include tablet {
-    margin: 5px 0px;
-  }
-  @include mobile {
-    margin: 5px 0px;
-  }
-}
-
-// RecruitmentPost 컴포넌트
-.recruitment-post-link {
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: none;
-  }
-}
-
-.recruitment-post {
-  &:hover {
-    transform: scale(1.011);
-    transition: transform 0.2s ease-in-out;
-  }
-  border: 1px solid rgb(249, 249, 249);
-  box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1);
-  border-radius: 30px;
-  margin: 15px;
-  display: flex;
-  flex-direction: column;
-  height: 420px;
-  @include mobile {
-    height: 350px;
-  }
-
-  img {
-    border-radius: 30px 30px 0px 0px;
-    width: 100%;
-    height: 200px;
-    @include mobile {
-      height: 150px;
-    }
-  }
-
-  &-stack {
-    margin-left: auto;
-    img {
-      width: 40px;
-      height: 40px;
-      @include mobile {
-        width: 30px;
-        height: 30px;
-      }
-    }
-  }
-
-  &-project {
-    padding: 1rem;
-    color: $body-font-color;
-    text-decoration: none;
-    h5 {
-      margin: 10px 0px;
-      @include body_01;
-      @include mobile {
-        @include m_heading_01;
-      }
-    }
-    h6 {
-      @include body_02;
-      @include mobile {
-        @include m_heading_02;
-      }
-    }
-    &-title {
-      display: flex;
-      justify-content: space-between;
-      h2 {
-        text-decoration: none;
-        @include heading_04;
-        @include mobile {
-          @include m_heading_05;
-        }
-      }
-
-      .post-icon {
-        color: $font-color;
-        border: 1px solid $font-color;
-        border-radius: 50px;
-        padding: 3px;
-        transform: scale(1.2);
-      }
-      .post-bordericon {
-        transform: scale(1.2);
-        color: $font-color;
-        border: 1px solid $font-color;
-        border-radius: 50px;
-        padding: 3px;
-      }
-    }
-
-    &-position {
-      display: flex;
-      flex-wrap: wrap;
-      .item {
-        margin-right: 5px;
-      }
     }
   }
 }
