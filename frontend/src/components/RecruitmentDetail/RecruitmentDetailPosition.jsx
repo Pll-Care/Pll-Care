@@ -2,10 +2,11 @@ import { useState, Fragment } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
 
-import { Box } from "@mui/material";
+import { Box, Tooltip } from "@mui/material";
 
 import { authActions } from "../../redux/authSlice";
 import Button from "../common/Button";
+import Card from "../common/Card";
 import AlertCheckModal from "../common/Modal/AlertCheckModal";
 import { positions } from "../../utils/recruitment";
 import { isToken } from "../../utils/localstorageHandler";
@@ -13,6 +14,7 @@ import {
   useApplyCancelRecruitmentPostMutation,
   useApplyRecruitmentPostMutation,
 } from "../../hooks/Mutations/useRecruitmentMutation";
+import SearchStack from "../Profile/Introduce/PositionBox/SearchStack";
 
 const RecruitmentDetailPosition = ({
   isEdit,
@@ -72,6 +74,25 @@ const RecruitmentDetailPosition = ({
       };
     });
   };
+
+  // techStack 업데이트하는 함수
+  const changeStack = (response) => {
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      techStack: [...prevValues.techStack, response],
+    }));
+  };
+
+  // techStack 삭제 함수
+  const deleteStack = (stackName) => {
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      techStack: prevValues.techStack.filter(
+        (stack) => stack.name !== stackName
+      ),
+    }));
+  };
+
   return (
     <Fragment>
       {/*지원하기 모달*/}
@@ -157,6 +178,30 @@ const RecruitmentDetailPosition = ({
                 </Fragment>
               ))}
             </div>
+          )}
+        </div>
+
+        <div className="recruitment-detail-container-tech">
+          <h4>요구 기술 스택</h4>
+          {isEdit ? (
+            <div className="recruitment-detail-container-tech-search">
+              <SearchStack
+                className="search-stack"
+                stackList={formValues.techStack}
+                changeStack={changeStack}
+                deleteStack={deleteStack}
+              />
+            </div>
+          ) : (
+            <Card className="recruitment-detail-container-tech-search-card">
+              <div className="recruitment-detail-container-tech-stacks">
+                {data?.techStackList?.map((stack, index) => (
+                  <Tooltip key={index} title={stack.name}>
+                    <img key={index} src={stack.imageUrl} alt="" />
+                  </Tooltip>
+                ))}
+              </div>
+            </Card>
           )}
         </div>
       </div>

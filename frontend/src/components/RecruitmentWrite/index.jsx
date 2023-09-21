@@ -15,7 +15,6 @@ import SearchStack from "../Profile/Introduce/PositionBox/SearchStack";
 import { useAddRecruitmentPostMutation } from "../../hooks/Mutations/useRecruitmentMutation";
 import { getRecruitmentProject } from "../../lib/apis/memberRecruitmentApi";
 import { isToken } from "../../utils/localstorageHandler";
-
 import { authActions } from "../../redux/authSlice";
 
 const MemberRecruitmentWrite = () => {
@@ -90,6 +89,9 @@ const MemberRecruitmentWrite = () => {
         ...prevState,
         projectId: data[0].projectId,
       }));
+    } else {
+      navigate("/recruitment");
+      toast.error("잠시후에 다시 시도해주세요");
     }
   }, [data, dispatch, navigate]);
 

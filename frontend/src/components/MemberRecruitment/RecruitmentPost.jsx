@@ -28,25 +28,32 @@ const RecruitmentPost = ({ data }) => {
         <div className="recruitment-post-project">
           <div className="recruitment-post-project-title">
             <h2>{data?.title}</h2>
-            {data?.liked ? (
-              <FavoriteIcon className="post-icon" />
-            ) : (
-              <FavoriteBorderIcon className="post-icon" />
-            )}
+            <div className="recruitment-post-like">
+              {data?.liked ? (
+                <FavoriteIcon className="post-icon" fontSize="small" />
+              ) : (
+                <FavoriteBorderIcon className="post-icon" fontSize="small" />
+              )}
+              <h5>{data?.likeCount}</h5>
+            </div>
           </div>
 
-          <h5>모집 기간 </h5>
-          <h6>
-            {data?.recruitStartDate} ~ {data?.recruitEndDate}
-          </h6>
+          <div className="recruitment-post-project-duration">
+            <h5>모집 기간: </h5>
+            <h6>
+              {data?.recruitStartDate} ~ {data?.recruitEndDate}
+            </h6>
+          </div>
 
-          <h5>모집 포지션 </h5>
           <div className="recruitment-post-project-position">
-            {filteredPositions?.map((item, index) => (
-              <h6 key={index} className="item">
-                {item}
-              </h6>
-            ))}
+            <h5>모집 포지션: </h5>
+            <div className="recruitment-post-project-position-item">
+              {filteredPositions?.map((item, index) => (
+                <h6 key={index} className="item">
+                  {item}
+                </h6>
+              ))}
+            </div>
           </div>
         </div>
       </div>
