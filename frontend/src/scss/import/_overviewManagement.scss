@@ -1,10 +1,30 @@
 // OverviewChart 컴포넌트 scss
+.overview-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.overview-wrapper {
+  width: 690px;
+  margin-top: 57px;
+  @include mobile {
+    margin-top: 12px;
+  }
+}
+.vertical-timeline-element-date {
+  @include m_heading_01;
+  color: $green-400;
+  margin-left: 10px;
+  @include mobile {
+    @include m_heading_05;
+    margin-left: 1px;
+  }
+}
 .schedule {
   h1 {
     @include heading_04;
     color: $green-400;
-    margin: 15px;
-    margin-left: 7%;
+    margin: 25px;
   }
   .overview-time {
     @include heading_05;
@@ -12,12 +32,18 @@
   }
   h3,
   h5 {
-    margin-top: 10px;
     @include body_01;
     color: $gray-500;
   }
 }
-
+.category {
+  margin-top: 5px;
+}
+@include mobile {
+  .plan {
+    margin-top: 7px;
+  }
+}
 .simple {
   background-color: white;
   color: black;
