@@ -128,7 +128,7 @@ const MainHeader = () => {
                   ? "main-header-user-profile-img header-profile-image-bg"
                   : "main-header-user-profile-img header-image-bg"
               }
-              onClick={() => routeTo(`/profile/${userInfo.memberId}`)}
+              onClick={() => routeTo(`/profile/${userInfo.memberId}/introduce`)}
             >
               <img
                 className="main-header_img"
