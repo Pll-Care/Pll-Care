@@ -6,7 +6,7 @@ const ChartBox = () => {
       <div className="evaluate_Box_title">
         <h2>평가 종합 차트</h2>
       </div>
-      <div>
+      <div className="evaluate_Box_content">
         <EvaluateChart />
       </div>
     </section>

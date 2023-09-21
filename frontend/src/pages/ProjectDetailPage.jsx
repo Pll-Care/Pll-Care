@@ -29,9 +29,11 @@ const ProjectDetailPage = () => {
           passUrl={`/management/${projectId}`}
           pageUrl={`/management/${projectId}/overview`}
         >
-          <div className="management_project_layout">
-            <ManagementHeader />
-            <Outlet />
+          <div className="header_under">
+            <div className="management_project_layout">
+              <ManagementHeader />
+              <Outlet />
+            </div>
           </div>
         </PageRouterLayout>
       </ProjectDetailProvider>

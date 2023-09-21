@@ -6,7 +6,7 @@ const ProjectBox = () => {
       <div className="evaluate_Box_title">
         <h2>받은 평가</h2>
       </div>
-      <div>
+      <div className="evaluate_Box_content">
         <ProjectList />
       </div>
     </section>

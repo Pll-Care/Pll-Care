@@ -6,12 +6,16 @@ const ProjectItem = ({ postId, title, description }) => {
     <li>
       <Link className="myProject_item" to={`/recruitment/${postId}`}>
         <div className="myProject_item_img">
-          <img src={PROJECT_DEFAULT_IMG} alt="프로젝트 이미지" />
+          <img
+            className="myProject_item_img"
+            src={PROJECT_DEFAULT_IMG}
+            alt="프로젝트 이미지"
+          />
         </div>
         <div className="myProject_item_wrap">
           <div className="myProject_item_wrap_title">{title}</div>
           <div className="myProject_item_wrap_description">
-            <div>{description}</div>
+            <p>{description}</p>
           </div>
         </div>
       </Link>

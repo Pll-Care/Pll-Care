@@ -22,7 +22,6 @@ const MemberManagement = () => {
   const editCompleted = useCallback(() => {
     setIsEdit(false);
   }, []);
-
   return (
     <section className="memberMangement">
       <div className="memberMangement_head">
@@ -45,7 +44,7 @@ const MemberManagement = () => {
             response.map((member) => (
               <MemberItem
                 key={member.id}
-                memberId={member.id}
+                memberId={member.memberId}
                 name={member.name}
                 position={member.position}
                 imageUrl={member.imageUrl}
