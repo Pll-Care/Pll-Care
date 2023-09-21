@@ -3,9 +3,10 @@
   border: none;
   background-color: $gray-100;
   border-radius: 5px;
+  color: $gray-400;
   box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.08);
 
-  padding: 4px 10px;
+  padding: 8px 10px;
   font-size: 14px;
 
   &:focus {
@@ -25,8 +26,8 @@
   }
 
   &-header {
-    color: $gray-400;
     text-align: center;
+    color: $gray-400;
 
     border: 1px solid $gray-100;
     background-color: $gray-100;
@@ -40,7 +41,13 @@
     outline: none;
   }
 }
+.profileInput::placeholder {
+  color: $gray-400;
+}
 
+.profileInput-header::placeholder {
+  color: $gray-400;
+}
 @include mobile {
   .profileInput-header {
     @include m_heading_03;

@@ -267,7 +267,6 @@ a {
 }
 
 .header {
-  border-bottom: 2px solid #01e89e;
   height: 80px;
 }
 @media (max-width: 767px) {
@@ -436,6 +435,10 @@ a {
 
 .header-image-bg {
   background-color: #01e89e;
+}
+
+.header_under {
+  border-top: 2px solid #01e89e;
 }
 
 .button {
@@ -2240,7 +2243,6 @@ a {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background-color: #01e89e;
   display: inline-block;
 }
 .member_item_infobox {
@@ -5213,7 +5215,6 @@ a {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background-color: #01e89e;
   display: inline-block;
 }
 .member_item_infobox {
@@ -5509,7 +5510,7 @@ a {
   display: flex;
 }
 .profile_body_sec {
-  padding: 30px 60px;
+  padding: 30px 90px;
   width: 100%;
   background-color: #ffffff;
 }
@@ -5531,6 +5532,9 @@ a {
 .profile_body_introduce_Box_title > h2 {
   font-size: 18px;
   font-weight: bold;
+}
+.profile_body_introduce_Box_title > Button {
+  border-radius: 47px;
 }
 .profile_body_introduce_Box_title_btnBox > button {
   margin-left: 15px;
@@ -5607,7 +5611,7 @@ a {
   align-items: center;
   gap: 48px;
   background-color: #fcfcfc;
-  box-shadow: 4px 0px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 4px 0px 30px rgba(0, 0, 0, 0);
 }
 .profile_nav_link {
   display: flex;
@@ -5931,10 +5935,6 @@ a {
 .myProject_item_img {
   width: 44px;
   height: 44px;
-}
-.myProject_item_img > img {
-  width: 100%;
-  height: 100%;
   border-radius: 50%;
 }
 .myProject_item_wrap {
@@ -5954,9 +5954,10 @@ a {
   font-size: 12px;
   font-weight: 500;
 }
-.myProject_item_wrap_description > :first-child {
+.myProject_item_wrap_description > p {
   font-weight: bold;
   padding-bottom: 5px;
+  line-height: 16px;
 }
 
 .evaluate {
@@ -5974,10 +5975,14 @@ a {
   color: #373E3B;
   margin-bottom: 25px;
 }
-.evaluate_chart-warp {
+.evaluate_Box_content {
   width: 761px;
   height: 330px;
   margin: 0 auto;
+}
+.evaluate_chart-warp {
+  width: 100%;
+  height: 100%;
   padding: 24px 45px;
   border: 2px solid #01e89e;
   border-radius: 15px;
@@ -6051,10 +6056,6 @@ a {
   display: flex;
   align-items: flex-end;
 }
-.evaluate_project {
-  width: 90%;
-  margin: 0 auto;
-}
 @media (min-width: 767px) and (max-width: 1024px) {
   .evaluate_project {
     width: 100%;
@@ -6069,11 +6070,9 @@ a {
   cursor: pointer;
 }
 .evaluate_project_item {
-  border: 1px solid #01e89e;
+  border: 2px solid #01e89e;
   border-radius: 15px;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   align-items: center;
   padding: 15px 24px;
 }
@@ -6083,27 +6082,17 @@ a {
   }
 }
 .evaluate_project_item_user {
-  width: 65%;
+  width: 50%;
   display: flex;
   align-items: center;
   gap: 23px;
 }
-@media (min-width: 767px) and (max-width: 1024px) {
-  .evaluate_project_item_user {
-    width: 50%;
-  }
-}
 .evaluate_project_item_scores {
-  width: 35%;
+  width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 10px;
-}
-@media (min-width: 767px) and (max-width: 1024px) {
-  .evaluate_project_item_scores {
-    width: 50%;
-  }
 }
 .evaluate_project_item_scores > div {
   display: flex;
@@ -6368,6 +6357,12 @@ a {
   .finalEvaluate_userScore {
     width: 45%;
   }
+  .evaluate_Box_content {
+    width: 480px;
+  }
+  .profile_content {
+    width: 100%;
+  }
 }
 @media (max-width: 767px) {
   .profile_introduce_container {
@@ -6631,9 +6626,11 @@ a {
     font-size: 10px;
     font-weight: 600;
   }
-  .evaluate_chart-warp {
+  .evaluate_Box_content {
     width: 279px;
     height: 184px;
+  }
+  .evaluate_chart-warp {
     padding: 12px 15px;
   }
   .evaluate_chart_bars_title {
@@ -6682,6 +6679,7 @@ a {
     font-size: 6px;
     font-weight: 500;
     line-height: 12px;
+    zoom: 0.8;
   }
   .score-border {
     font-family: "Noto Sans KR", sans-serif;
@@ -7028,8 +7026,9 @@ a {
   border: none;
   background-color: #fcfcfc;
   border-radius: 5px;
+  color: #b4bcbd;
   box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.08);
-  padding: 4px 10px;
+  padding: 8px 10px;
   font-size: 14px;
 }
 .profileInput:focus {
@@ -7045,8 +7044,8 @@ a {
   width: 45%;
 }
 .profileInput-header {
-  color: #b4bcbd;
   text-align: center;
+  color: #b4bcbd;
   border: 1px solid #fcfcfc;
   background-color: #fcfcfc;
   border-radius: 10px;
@@ -7057,6 +7056,22 @@ a {
 }
 .profileInput-header:focus {
   outline: none;
+}
+
+.profileInput::-moz-placeholder {
+  color: #b4bcbd;
+}
+
+.profileInput::placeholder {
+  color: #b4bcbd;
+}
+
+.profileInput-header::-moz-placeholder {
+  color: #b4bcbd;
+}
+
+.profileInput-header::placeholder {
+  color: #b4bcbd;
 }
 
 @media (max-width: 767px) {

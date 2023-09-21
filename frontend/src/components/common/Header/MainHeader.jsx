@@ -126,7 +126,7 @@ const MainHeader = () => {
               className={
                 isProfilePage
                   ? "main-header-user-profile-img header-profile-image-bg"
-                  : "main-header-user-profile-img header-image-bg"
+                  : "main-header-user-profile-img"
               }
               onClick={() => routeTo(`/profile/${userInfo.memberId}/introduce`)}
             >

@@ -1,5 +1,4 @@
 .header {
-  border-bottom: $border;
   height: 80px;
 
   @include mobile {
@@ -162,4 +161,8 @@
 
 .header-image-bg {
   background-color: $green-200;
+}
+
+.header_under {
+  border-top: $border;
 }
