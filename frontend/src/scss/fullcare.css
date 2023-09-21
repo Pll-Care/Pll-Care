@@ -1160,13 +1160,39 @@ a {
   }
 }
 
+.overview-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overview-wrapper {
+  width: 690px;
+  margin-top: 57px;
+}
+
+.vertical-timeline-element-date {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #00aa72;
+  margin-left: 10px;
+}
+@media (max-width: 767px) {
+  .vertical-timeline-element-date {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-left: 1px;
+  }
+}
+
 .schedule h1 {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
   font-weight: 600;
   color: #00aa72;
-  margin: 15px;
-  margin-left: 7%;
+  margin: 25px;
 }
 .schedule .overview-time {
   font-family: "IBM Plex Sans KR", sans-serif;
