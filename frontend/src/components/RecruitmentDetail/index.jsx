@@ -14,7 +14,6 @@ import AlertCheckModal from "../common/Modal/AlertCheckModal";
 import RecruitmentDetailTitle from "./RecruitmentDetailTitle";
 import RecruitmentDetailProject from "./RecruitmentDetailProject";
 import RecruitmentDetailPosition from "./RecruitmentDetailPosition";
-import RecruitmentDetailStackName from "./RecruitmentDetailStackName";
 import RecruitmentDetailDescription from "./RecruitmentDetailDescription";
 
 import { isToken } from "../../utils/localstorageHandler";
@@ -212,94 +211,96 @@ const RecruitmentDetailContent = () => {
   };
 
   return (
-    <>
-      {/*모집글 삭제 확인 모달*/}
-      <AlertCheckModal
-        open={deleteIsModalVisible}
-        onClose={() => setDeleteIsModalVisible(false)}
-        text="인원 모집글 삭제하시겠습니까?"
-        clickHandler={deleteRecruitmentPost}
-      />
-
-      {/*모집글 제목 컴포넌트*/}
-      <RecruitmentDetailTitle
-        data={data}
-        title={title}
-        formValues={formValues}
-        handleChange={handleChange}
-        inputRefs={inputRefs}
-        isEdit={isEdit}
-        setFormValues={setFormValues}
-        setIsEdit={setIsEdit}
-        setDeleteIsModalVisible={setDeleteIsModalVisible}
-      />
-
-      <div className="recruitment-detail">
-        {/*모집글 프로젝트 내용 컴포넌트*/}
-        <RecruitmentDetailProject
-          data={data}
-          isEdit={isEdit}
-          handleChange={handleChange}
-          formValues={formValues}
-          inputRefs={inputRefs}
+    <div className="recruitment-wrapper">
+      <div className="recruitment-wrapper-container">
+        {/*모집글 삭제 확인 모달*/}
+        <AlertCheckModal
+          open={deleteIsModalVisible}
+          onClose={() => setDeleteIsModalVisible(false)}
+          text="인원 모집글 삭제하시겠습니까?"
+          clickHandler={deleteRecruitmentPost}
         />
 
-        {/*모집글 포지션 컴포넌트*/}
-        <RecruitmentDetailPosition
-          isEdit={isEdit}
+        {/*모집글 제목 컴포넌트*/}
+        <RecruitmentDetailTitle
           data={data}
+          title={title}
           formValues={formValues}
-          setFormValues={setFormValues}
-          handleChange={handleChange}
-        />
-
-        {/*모집글 스택, 프로젝트 이름 컴포넌트*/}
-        <RecruitmentDetailStackName
-          isEdit={isEdit}
-          data={data}
-          formValues={formValues}
-          setFormValues={setFormValues}
-        />
-
-        {/*모집글 설명 컴포넌트*/}
-        <RecruitmentDetailDescription
-          data={data}
-          isEdit={isEdit}
-          formValues={formValues}
-          setFormValues={setFormValues}
           handleChange={handleChange}
           inputRefs={inputRefs}
+          isEdit={isEdit}
+          setFormValues={setFormValues}
+          setIsEdit={setIsEdit}
+          setDeleteIsModalVisible={setDeleteIsModalVisible}
         />
-      </div>
-      <div className="recruitment-detail-icon">
-        {isEdit ? (
-          <Button text="수정 완료" onClick={handleModifyPost} />
-        ) : (
-          <>
-            {data?.liked ? (
-              <FavoriteIcon
+
+        <div className="recruitment-detail">
+          {/*모집글 프로젝트 내용 컴포넌트*/}
+          <RecruitmentDetailProject
+            data={data}
+            isEdit={isEdit}
+            handleChange={handleChange}
+            formValues={formValues}
+            inputRefs={inputRefs}
+          />
+
+          {/*모집글 포지션 컴포넌트*/}
+          <RecruitmentDetailPosition
+            isEdit={isEdit}
+            data={data}
+            formValues={formValues}
+            setFormValues={setFormValues}
+            handleChange={handleChange}
+          />
+
+          {/*모집글 스택, 프로젝트 이름 컴포넌트
+          <RecruitmentDetailStackName
+            isEdit={isEdit}
+            data={data}
+            formValues={formValues}
+            setFormValues={setFormValues}
+          />*/}
+
+          {/*모집글 설명 컴포넌트*/}
+          <RecruitmentDetailDescription
+            data={data}
+            isEdit={isEdit}
+            formValues={formValues}
+            setFormValues={setFormValues}
+            handleChange={handleChange}
+            inputRefs={inputRefs}
+          />
+        </div>
+        <div className="recruitment-detail-icon">
+          {isEdit ? (
+            <Button text="수정 완료" onClick={handleModifyPost} />
+          ) : (
+            <>
+              {data?.liked ? (
+                <FavoriteIcon
+                  className="post-icon"
+                  fontSize={isMobile ? "small" : "medium"}
+                  onClick={handleClickFavoriteIcon}
+                />
+              ) : (
+                <FavoriteBorderIcon
+                  className="post-icon"
+                  fontSize={isMobile ? "small" : "medium"}
+                  onClick={handleClickFavoriteIcon}
+                />
+              )}
+              <ShareIcon
                 className="post-icon"
                 fontSize={isMobile ? "small" : "medium"}
-                onClick={handleClickFavoriteIcon}
+                onClick={() =>
+                  handleCopyClipBoard(`${baseUrl}${location.pathname}`)
+                }
               />
-            ) : (
-              <FavoriteBorderIcon
-                className="post-icon"
-                fontSize={isMobile ? "small" : "medium"}
-                onClick={handleClickFavoriteIcon}
-              />
-            )}
-            <ShareIcon
-              className="post-icon"
-              fontSize={isMobile ? "small" : "medium"}
-              onClick={() =>
-                handleCopyClipBoard(`${baseUrl}${location.pathname}`)
-              }
-            />
-          </>
-        )}
+            </>
+          )}
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 export default RecruitmentDetailContent;
