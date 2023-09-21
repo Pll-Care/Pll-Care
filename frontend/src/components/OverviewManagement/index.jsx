@@ -95,22 +95,16 @@ const OverviewChart = () => {
               {data && !isLoading && (
                 <VerticalTimelineElement
                   className="vertical-timeline-element--work"
-                  //contentStyle={{
-                  //  color: "#01E89E",
-                  //  fontFamily: "IBM Plex Sans KR",
-                  //  fontWeight: "700",
-                  //  fontSize: "32px",
-                  //}}
                   date={data.startDate}
                   iconStyle={{ background: "#01E89E", color: "white" }}
                   icon={<EmojiEventsIcon />}
                 >
                   <h3 className="endpoint">🙌 프로젝트 start</h3>
                   {data.dateCategory === "MONTH" && (
-                    <h5 className="endpoint">달별로 일정 미리보기</h5>
+                    <h5 className="category">달별로 일정 미리보기</h5>
                   )}
                   {data.dateCategory === "WEEK" && (
-                    <h5 className="endpoint">주별로 일정 미리보기</h5>
+                    <h5 className="category">주별로 일정 미리보기</h5>
                   )}
                 </VerticalTimelineElement>
               )}
@@ -131,7 +125,7 @@ const OverviewChart = () => {
                   }}
                   icon={<ComputerIcon />}
                 >
-                  <h5 className="endpoint" style={{ color: "white" }}>
+                  <h5 className="plan" style={{ color: "white" }}>
                     아직 계획이 없습니다.
                   </h5>
                 </VerticalTimelineElement>
@@ -193,12 +187,6 @@ const OverviewChart = () => {
               {data && !isLoading && (
                 <VerticalTimelineElement
                   className="vertical-timeline-element--work"
-                  //contentStyle={{
-                  //  color: "#01E89E",
-                  //  fontFamily: "IBM Plex Sans KR",
-                  //  fontWeight: "700",
-                  //  fontSize: "32px",
-                  //}}
                   date={data.endDate}
                   iconStyle={{ background: "#01E89E", color: "white" }}
                   icon={<FlagIcon />}

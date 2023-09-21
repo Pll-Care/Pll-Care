@@ -1170,6 +1170,11 @@ a {
   width: 690px;
   margin-top: 57px;
 }
+@media (max-width: 767px) {
+  .overview-wrapper {
+    margin-top: 12px;
+  }
+}
 
 .vertical-timeline-element-date {
   font-family: "IBM Plex Sans KR", sans-serif;
@@ -1202,13 +1207,21 @@ a {
 }
 .schedule h3,
 .schedule h5 {
-  margin-top: 10px;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 14px;
   font-weight: 500;
   color: #373E3B;
 }
 
+.category {
+  margin-top: 5px;
+}
+
+@media (max-width: 767px) {
+  .plan {
+    margin-top: 7px;
+  }
+}
 .simple {
   background-color: white;
   color: black;

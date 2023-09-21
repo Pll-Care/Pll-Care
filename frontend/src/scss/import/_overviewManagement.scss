@@ -7,6 +7,9 @@
 .overview-wrapper {
   width: 690px;
   margin-top: 57px;
+  @include mobile {
+    margin-top: 12px;
+  }
 }
 .vertical-timeline-element-date {
   @include m_heading_01;
@@ -29,12 +32,18 @@
   }
   h3,
   h5 {
-    margin-top: 10px;
     @include body_01;
     color: $gray-500;
   }
 }
-
+.category {
+  margin-top: 5px;
+}
+@include mobile {
+  .plan {
+    margin-top: 7px;
+  }
+}
 .simple {
   background-color: white;
   color: black;
