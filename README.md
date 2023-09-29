@@ -1,7 +1,87 @@
-# Main 브랜치는 프론트엔드와 백엔드 코드가 합쳐지는 곳이므로, 반드시 Pull-Request를 통해 Merge 해주시길 바랍니다.
+<img src="https://github.com/Pll-Care/Pll-Care/assets/81316050/152e42e0-3025-4a38-8565-7c5ced1d0f5f" width=100>
 
+<br/>
 
-## 각 파트의 브랜치 구조는 다음과 같은 형태로 구성해주세요.
+# 플케어
 
-- Main -> frontend -> frontend_featureName
-- Main -> backend -> backend_featureName
+## 📽️ 프로젝트 소개
+
+### 사이트: https://pll-care.store/
+
+IT 사이드 프로젝트 팀원을 모집하고 관리도 해보세요! <br />
+
+프로젝트 모집글을 작성해 팀원을 모집할 수 있어요 <br />
+원하는 프로젝트 모집글에서 지원하기 버튼을 누르면 해당 프로젝트 팀원들에게 지원서가 전송돼요
+모집 중인 프로젝트는 지원서를 열람할 수 있으며 팀원 수락, 거절의 기능도 있어요 <br />
+
+프로젝트 전체 일정을 오버뷰로 한눈에 볼 수 있어요 <br />
+팀원들과 프로젝트 회의록을 작성해 공유할 수 있고 북마크도 가능해요 <br />
+회의나 모임 이후 팀원들을 상호 평가하는 중간 평가와 프로젝트 완료 이후 최종 평가를 통해 상호 평가를 진행할 수 있어요 <br />
+
+프로필에서는 자신의 포트폴리오를 작성하고, 팀원들로부터 받은 평가들을 확인할 수 있어요!
+현재 모집 중인 모집글과 좋아요를 누른 모집글도 볼 수 있어요
+
+## 👨‍🔧 사용 기술 스택
+
+### BE
+
+### FE
+
+<img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"> <img src="https://img.shields.io/badge/Redux-764ABC?style=flat-square&logo=Redux&logoColor=white"> <img src="https://img.shields.io/badge/React Query-FF4154?style=flat-square&logo=React Query&logoColor=white"> <img src="https://img.shields.io/badge/Sass-CC6699?style=flat-square&logo=Sass&logoColor=white">
+
+### 기술 스택 구조도
+
+<img src="https://github.com/Pll-Care/Pll-Care/assets/81316050/29e7af78-3000-4865-940d-7874433bbc07">
+
+## 👨‍💻 참여자
+
+<table>
+    <tr align="center">
+        <td><B>BE<B></td>
+        <td><B>BE<B></td>
+        <td><B>FE<B></td>
+        <td><B>FE<B></td>
+        <td><B>FE<B></td>
+        <td><B>Designer<B></td>
+    </tr>
+    <tr align="center">
+        <td><B>김정현<B></td>
+        <td><B>표세승<B></td>
+        <td><B>홍서현<B></td>
+        <td><B>한수민<B></td>
+        <td><B>신동재<B></td>
+        <td><B>김희주<B></td>
+    </tr>
+    <tr align="center">
+        <td>
+            <img src="https://github.com/invent819.png?size=100" width="100">
+            <br>
+            <a href="https://github.com/invent819"><I>invent819</I></a>
+        </td>
+        <td>
+            <img src="https://github.com/L-ilac.png?size=100" width="100">
+            <br>
+            <a href="https://github.com/L-ilac"><I>L-ilac</I></a>
+        </td>
+        <td>
+            <img src="https://github.com/ghdtjgus76.png?size=100" width="100">
+            <br>
+            <a href="https://github.com/ghdtjgus76"><I>ghdtjgus76</I></a>
+        </td>
+        <td>
+            <img src="https://github.com/suminhan123.png?size=100" width="100">
+            <br>
+            <a href="https://github.com/suminhan123"><I>suminhan123</I></a>
+        </td>
+        <td>
+            <img src="https://github.com/lIIIlIIIlIIIl.png?size=100" width="100">
+            <br>
+            <a href="https://github.com/lIIIlIIIlIIIl"><I>lIIIlIIIlIIIl</I></a>
+        </td>
+        <td>
+            <img src="https://github.com/HJKUNST.png?size=100" width="100"/>
+            <br>
+            <a href="https://github.com/HJKUNST"><I>HJKUNST</I></a>
+        </td>
+    </tr>
+</table>
