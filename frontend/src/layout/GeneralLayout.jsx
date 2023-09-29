@@ -30,11 +30,6 @@ const GeneralLayout = ({ children }) => {
         dispatch(authActions.login());
       }
     });
-
-    // const accessToken = getToken("access_token");
-    // customAxios.defaults.headers.common[
-    //   "Authorization"
-    // ] = `Bearer ${accessToken}`;
   }, []);
 
   useEffect(() => {

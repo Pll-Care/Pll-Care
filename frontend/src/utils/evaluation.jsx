@@ -1,7 +1,7 @@
-import passion from "../assets/badge-passion.png";
-import idea from "../assets/badge-idea.png";
-import leader from "../assets/badge-leader.png";
-import supporter from "../assets/badge-supporter.png";
+import passion from "../assets/enthusiastic-participant-badge-img.svg";
+import idea from "../assets/idea-bank-badge-img.svg";
+import leader from "../assets/good-leader-badge-img.svg";
+import supporter from "../assets/best-supporter-badge-img.svg";
 
 export const badges = [
   { name: "열정적인 참여자", image: passion, value: "열정적인_참여자" },

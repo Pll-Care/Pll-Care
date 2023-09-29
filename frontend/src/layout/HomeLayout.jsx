@@ -6,6 +6,7 @@ const HomeLayout = ({ children }) => {
   const { generalHttpClient } = useGeneralClient();
 
   const homeService = new HomeService(generalHttpClient);
+  
   return (
     <HomeClientProvider homeService={homeService}>
       {children}

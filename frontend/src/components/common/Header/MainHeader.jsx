@@ -7,8 +7,8 @@ import ToggleMenuButton from "../ToggleMenuButton";
 import { authActions } from "../../../redux/authSlice";
 import profile_default from "../../../assets/profile-default-img.png";
 import profile_isProfile from "../../../assets/ranking-img.png";
-import logo from "../../../assets/logo-with-text.svg";
-import profileLogo from "../../../assets/logo-with-text-profile.png";
+import logo from "../../../assets/logo-with-text.jpg";
+import profileLogo from "../../../assets/logo-with-text-white.png";
 import { useGeneralClient } from "../../../context/Client/GeneralClientContext";
 import { userInfoActions } from "../../../redux/userInfoSlice";
 
