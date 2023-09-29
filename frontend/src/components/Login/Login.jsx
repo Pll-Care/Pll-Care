@@ -5,7 +5,7 @@ import { authActions } from "../../redux/authSlice";
 
 import { googleAuthUrl, kakaoAuthUrl, naverAuthUrl } from "../../utils/auth";
 
-import logo from "../../assets/logo.svg";
+import logo from "../../assets/logo.jpg";
 import ModalContainer from "../common/Modal/ModalContainer";
 import { useMediaQuery } from "@mui/material";
 

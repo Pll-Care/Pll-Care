@@ -1,4 +1,4 @@
-import logo from "../../assets/logo-with-text.svg";
+import logo from "../../assets/logo-with-text.jpg";
 
 const Footer = () => {
   return (
@@ -8,8 +8,8 @@ const Footer = () => {
           backgroundImage: `url(${logo})`,
         }}
       />
-      <div>풀케어 : FULL CARE, Project Manager</div>
-      <div>Copyright 2023. Team Full-Care. All rights reserved</div>
+      <div>플케어 : PLL CARE, Project Manager</div>
+      <div>Copyright 2023. Team PLL CARE. All rights reserved</div>
     </footer>
   );
 };
