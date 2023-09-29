@@ -1,8 +1,8 @@
 // badgeDtos : {evaluationBadge: string, quantity: number}[]
-import PassionImage from "../../../assets/badge-passion.png";
-import IdeaImage from "../../../assets/badge-idea.png";
-import LeaderImage from "../../../assets/badge-leader.png";
-import SupporterImage from "../../../assets/badge-supporter.png";
+import PassionImage from "../../../assets/enthusiastic-participant-badge-img.svg";
+import IdeaImage from "../../../assets/idea-bank-badge-img.svg";
+import LeaderImage from "../../../assets/good-leader-badge-img.svg";
+import SupporterImage from "../../../assets/best-supporter-badge-img.svg";
 
 const BadgeBox = ({ badges }) => {
   return (
