@@ -2,7 +2,7 @@ import { useRef } from "react";
 
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 
-import logoImgUrl from "../../assets/logo.svg";
+import logoImgUrl from "../../assets/logo.jpg";
 import managementIconImgUrl from "../../assets/management-icon.svg";
 import recruitmentIconImgUrl from "../../assets/recruitment-icon.svg";
 import useLinkMenuClick from "../../hooks/useLinkMenuClick";
