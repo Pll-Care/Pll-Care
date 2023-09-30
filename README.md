@@ -18,7 +18,7 @@ IT 사이드 프로젝트 팀원을 모집하고 관리도 해보세요! <br />
 팀원들과 프로젝트 회의록을 작성해 공유할 수 있고 북마크도 가능해요 <br />
 회의나 모임 이후 팀원들을 상호 평가하는 중간 평가와 프로젝트 완료 이후 최종 평가를 통해 상호 평가를 진행할 수 있어요 <br />
 
-프로필에서는 자신의 포트폴리오를 작성하고, 팀원들로부터 받은 평가들을 확인할 수 있어요!
+프로필에서는 자신의 포트폴리오를 작성하고, 팀원들로부터 받은 평가들을 확인할 수 있어요! <br />
 현재 모집 중인 모집글과 좋아요를 누른 모집글도 볼 수 있어요
 
 ## 👨‍🔧 사용 기술 스택
@@ -31,12 +31,15 @@ IT 사이드 프로젝트 팀원을 모집하고 관리도 해보세요! <br />
 #### DevOps
 <img src="https://img.shields.io/badge/AWS EC2-FF9900?style=flat-square&logo=amazonec2&logoColor=white"/> <img src="https://img.shields.io/badge/AWS RDS-527FFF?style=flat-square&logo=amazonrds&logoColor=white"/> <img src="https://img.shields.io/badge/AWS S3-569A31?style=flat-square&logo=amazons3&logoColor=white"/> <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white"/> <img src="https://img.shields.io/badge/GitHub Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white"/>
 
+<br/>
+
 ### FE
 
-<img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"> <img src="https://img.shields.io/badge/Redux-764ABC?style=flat-square&logo=Redux&logoColor=white"> <img src="https://img.shields.io/badge/React Query-FF4154?style=flat-square&logo=React Query&logoColor=white"> <img src="https://img.shields.io/badge/Sass-CC6699?style=flat-square&logo=Sass&logoColor=white">
+<img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"> <img src="https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=Vite&logoColor=white"> <img src="https://img.shields.io/badge/Redux-764ABC?style=flat-square&logo=Redux&logoColor=white"> <img src="https://img.shields.io/badge/React Query-FF4154?style=flat-square&logo=React Query&logoColor=white"> <img src="https://img.shields.io/badge/Sass-CC6699?style=flat-square&logo=Sass&logoColor=white">
+
+<br/>
 
 ### 기술 스택 구조도
-
 <img src="https://github.com/Pll-Care/Pll-Care/assets/81316050/29e7af78-3000-4865-940d-7874433bbc07">
 
 ## 👨‍💻 참여자
