@@ -47,18 +47,18 @@ public class JwtConfig {
 
         // ! HTTP 경로 관련 설정
         http
-                .securityMatcher("/api/auth/**")
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/main/**").hasAnyRole("USER", "ANONYMOUS")
-                        .requestMatchers("/api/auth/post/list", "/api/auth/post/{postId:[\\d+]}").hasAnyRole("USER", "ANONYMOUS")
-                        .requestMatchers("/api/auth/util/techstack").hasAnyRole("USER", "ANONYMOUS")
-                        .requestMatchers("/api/auth/util/reissuetoken").hasAnyRole("USER", "ANONYMOUS")
-                        .requestMatchers("/api/auth/profile/{memberId:[\\d+]}/roletechstack",
-                                "/api/auth/profile/{memberId:[\\d+]}/experience", "/api/auth/profile/{memberId:[\\d+]}/evaluation",
-                                "/api/auth/profile/{memberId:[\\d+]}/evaluation/{projectId:[\\d+]}", "/api/auth/profile/{memberId:[\\d+]}/evaluation/chart",
-                                "/api/auth/profile/{memberId:[\\d+]}/contact", "/api/auth/profile/{memberId:[\\d+]}/bio").hasAnyRole("USER", "ANONYMOUS")
-                        .requestMatchers("/api/auth/**").hasRole("USER")
-                        .anyRequest().authenticated())
+//                .securityMatcher("/api/auth/**")
+//                .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers("/api/auth/main/**").hasAnyRole("USER", "ANONYMOUS")
+//                        .requestMatchers("/api/auth/post/list", "/api/auth/post/{postId:[\\d+]}").hasAnyRole("USER", "ANONYMOUS")
+//                        .requestMatchers("/api/auth/util/techstack").hasAnyRole("USER", "ANONYMOUS")
+//                        .requestMatchers("/api/auth/util/reissuetoken").hasAnyRole("USER", "ANONYMOUS")
+//                        .requestMatchers("/api/auth/profile/{memberId:[\\d+]}/roletechstack",
+//                                "/api/auth/profile/{memberId:[\\d+]}/experience", "/api/auth/profile/{memberId:[\\d+]}/evaluation",
+//                                "/api/auth/profile/{memberId:[\\d+]}/evaluation/{projectId:[\\d+]}", "/api/auth/profile/{memberId:[\\d+]}/evaluation/chart",
+//                                "/api/auth/profile/{memberId:[\\d+]}/contact", "/api/auth/profile/{memberId:[\\d+]}/bio").hasAnyRole("USER", "ANONYMOUS")
+//                        .requestMatchers("/api/auth/**").hasRole("USER")
+//                        .anyRequest().authenticated())
 
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);
