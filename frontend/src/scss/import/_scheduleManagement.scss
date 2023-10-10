@@ -15,12 +15,25 @@
     }
   }
 }
-
+.schedule-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.schedule-option-container {
+  width: 828px;
+  @include tablet {
+    width: 768px;
+  }
+  @include mobile {
+    width: 100%;
+  }
+}
 .schedule-option {
   Button {
     margin-right: 8px;
   }
-  margin-top: 80px;
+  margin-top: 56px;
   margin-bottom: 20px;
   &-person {
     background-color: $green-200;
@@ -44,54 +57,92 @@
     }
   }
 }
+.check-schedule-gray-two {
+  color: $gray-500;
+  @include heading_06;
+  margin-bottom: 22px;
+  @include mobile {
+    @include m_heading_04;
+    margin-bottom: 12px;
+  }
+}
 // ScheduleList 컴포넌트
 .schedule-lists {
+  padding: 30px 36px 8px 35px;
   &-pagination {
     display: flex;
     justify-content: center;
+  }
+  @include mobile {
+    padding: 25px 20px 13px 20px;
   }
 }
 // scheduleItem컴포넌트
 .schedule-list {
   display: flex;
-  padding: 1rem;
-
+  margin-bottom: 25px;
   @include mobile {
-    padding: 10px;
+    margin-bottom: 10px;
   }
 
   &-time {
-    @include displayFlex(column);
+    width: 68px;
+    margin-right: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @include mobile {
+      margin-right: 13px;
+      width: 15%;
+    }
 
     font-style: normal;
     color: $gray-500;
-    width: 15%;
 
     h1 {
-      @include heading_01;
       color: $gray-500;
       @include mobile {
         @include m_heading_05;
+        margin-bottom: 5px;
       }
+      text-align: center;
+      font-family: IBM Plex Sans KR;
+      font-size: 48px;
+      font-style: normal;
+      font-weight: 700;
+      margin-top: 10px;
+      margin-bottom: 4px;
     }
     h2 {
       @include heading_06;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       @include mobile {
         @include m_body_01;
+        margin-bottom: 7px;
       }
     }
   }
 
   &-content {
+    width: 641px;
+    padding: 17px 24px 19px 22px;
     text-align: left;
-    border: 3px solid $green-200;
-    border-radius: 15px;
-    width: 85%;
-    padding: 1.5rem;
+    border: 2px solid $green-200;
+    border-radius: 10px;
+
     cursor: pointer;
     display: flex;
     flex-direction: column;
+
+    h5 {
+      @include body_01;
+      color: $gray-500;
+      line-height: 30px;
+      @include mobile {
+        @include m_heading_04;
+        line-height: 18px;
+      }
+    }
 
     &-title {
       display: flex;
@@ -100,28 +151,23 @@
     }
 
     @include mobile {
-      padding: 15px;
+      padding: 8px 10px 5px 14px;
+      width: 85%;
     }
 
-    h5 {
-      @include body_01;
-      color: $gray-500;
-      @include mobile {
-        @include m_heading_04;
-      }
-    }
     h4 {
       @include heading_03;
       color: $gray-500;
-      margin: 10px 0px;
+      margin-top: 3px;
       @include mobile {
         @include m_body_01;
       }
     }
 
     &-option {
+      margin-top: 27px;
       h5 {
-        margin-right: 20px;
+        margin-right: 68px;
         @include body_01;
         color: $green-400;
         @include mobile {
@@ -143,6 +189,7 @@
         }
       }
       @include mobile {
+        margin-top: 17px;
         .MuiAvatar-root {
           transform: scale(0.5);
           margin-left: -25px;
@@ -163,9 +210,9 @@
     background: #ffffff;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.05);
     border-radius: 30px;
-    padding: 0.5rem;
+    padding: 7px 20px;
     @include mobile {
-      padding: 5px;
+      padding: 3px 10px;
       @include m_button_03;
     }
   }
@@ -196,21 +243,25 @@
     background-color: white;
     box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1);
     border-radius: 14px;
-    padding: 1.5rem;
-    @include tablet {
-      padding: 20px;
-    }
+    padding: 34px 31px 27px 21px;
+
     @include mobile {
       padding: 30px 15px;
     }
     h1 {
       color: $green-400;
       @include heading_04;
+      @include mobile {
+        @include m_heading_02;
+      }
     }
     h2 {
       color: $gray-500;
       @include heading_05;
       margin-bottom: 10px;
+      @include mobile {
+        @include m_heading_03;
+      }
     }
 
     h3 {
@@ -221,6 +272,14 @@
 
       @include mobile {
         @include m_heading_02;
+      }
+    }
+
+    &-title {
+      @include mobile {
+        display: flex;
+
+        justify-content: space-between;
       }
     }
 
@@ -303,18 +362,21 @@
 
 // scheduleDetailModal 컴포넌트
 .schedule-detail-modal {
-  @include mobile {
-    height: 90%;
-  }
   border: $border;
-  border-radius: 17px;
-  width: 100%;
-  padding: 1.5rem;
-  color: $gray-500;
 
+  border-radius: 10px;
+  width: 100%;
+  padding: 30px 24px 15px 16px;
+  color: $gray-500;
+  @include mobile {
+    border: none;
+    height: 100%;
+    padding: 0px;
+  }
   input {
     color: $gray-500;
     border-radius: 20px;
+    outline: none;
   }
 
   &-date {
@@ -322,8 +384,22 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 30px;
+    @include mobile {
+      margin-bottom: 10px;
+    }
+    .schedule-title-text {
+      @include heading_03;
+      @include mobile {
+        @include m_heading_01;
+      }
+    }
     .schedule-title {
       @include heading_03;
+      box-shadow: 0px 4px 30px 3px rgba(0, 0, 0, 0.05);
+      outline: none;
+      border: none;
+      padding: 5px;
+      border-radius: 20px;
 
       @include mobile {
         @include m_heading_01;
@@ -334,6 +410,7 @@
     }
     input {
       width: 80%;
+      outline: none;
     }
 
     &-mobile {
@@ -356,17 +433,32 @@
     @include mobile {
       @include m_heading_03;
     }
+    input {
+      @include body_01;
+      outline: none;
+      border: none;
+      box-shadow: 0px 4px 30px 3px rgba(0, 0, 0, 0.05);
+      padding: 5px;
+      @include mobile {
+        @include m_heading_03;
+      }
+    }
     &-time {
       display: flex;
       align-items: center;
       input {
         @include body_01;
+        outline: none;
+        border: none;
+        box-shadow: 0px 4px 30px 3px rgba(0, 0, 0, 0.05);
+        padding: 5px;
       }
 
       @include mobile {
         flex-wrap: wrap;
         input {
           @include m_heading_03;
+          outline: none;
         }
       }
     }
@@ -378,13 +470,29 @@
   }
 
   &-button {
+    h5 {
+      @include body_02;
+      color: $green-400;
+    }
+
     display: flex;
-    justify-content: flex-end;
-    margin-top: 30px;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 80px;
     @include mobile {
       position: absolute;
       bottom: 10%;
       right: 10%;
+      margin-top: 0px;
     }
   }
+}
+.schedule-green {
+  color: $green-400;
+}
+.schedule-mobile-green {
+  border: $border;
+  border-radius: 10px;
+  padding: 21px 16px 0px 20px;
+  height: 90%;
 }

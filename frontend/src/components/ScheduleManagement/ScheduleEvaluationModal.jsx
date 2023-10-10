@@ -106,12 +106,10 @@ const ScheduleEvaluationModal = (props) => {
           )}
         </div>
         <div className="schedule-modal-content">
-          {!isMobile && (
-            <>
-              <h1>{props.title}</h1>
-              <h2>{time} 진행</h2>
-            </>
-          )}
+          <div className="schedule-modal-content-title">
+            <h1>{props.title}</h1>
+            <h2>{time} 진행</h2>
+          </div>
 
           {isMobile ? (
             <EvaluationMobileContent

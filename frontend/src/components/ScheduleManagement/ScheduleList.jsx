@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import { useLocation } from "react-router";
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import { toast } from "react-toastify";
 
 import Card from "../common/Card";
 import { getFilterSchedule } from "../../lib/apis/scheduleManagementApi";
@@ -8,7 +9,7 @@ import ScheduleItem from "./ScheduleItem";
 import { getProjectId } from "../../utils/getProjectId";
 import { Loading } from "../common/Loading";
 import Pagination from "../common/Pagination";
-import { toast } from "react-toastify";
+import { useCallback } from "react";
 
 const ScheduleList = ({ nameId, option }) => {
   const projectId = getProjectId(useLocation());
@@ -20,12 +21,9 @@ const ScheduleList = ({ nameId, option }) => {
     MEETING: 1,
     pastAll: 1,
   });
-  // 한 페이지당 5개씩 보여주기
-  const itemsPerPage = 5;
-  // 총 게시글 개수
-  let itemCount = 0;
+
   // 총 페이지 개수
-  let pageCount = 0;
+  const [pageCount, setPageCount] = useState(0);
 
   const { isLoading, data: schedules } = useQuery(
     ["filterSchedule", projectId, nameId, option, currentPage[option]],
@@ -38,17 +36,28 @@ const ScheduleList = ({ nameId, option }) => {
       },
     }
   );
-  if (schedules && !isLoading) {
-    itemCount = schedules.totalElements;
-    pageCount = Math.ceil(itemCount / itemsPerPage);
-  }
+  useMemo(() => {
+    if (!isLoading && schedules) {
+      setPageCount(schedules.totalPages);
+    }
+  }, [schedules, isLoading]);
+
+  const handlePaginationClick = useCallback(
+    (newPage) => {
+      setCurrentPage((prevCurrentPage) => ({
+        ...prevCurrentPage,
+        [option]: newPage,
+      }));
+    },
+    [option]
+  );
 
   return (
     <Card className="schedule-lists">
       {isLoading && <Loading />}
 
       {!isLoading && schedules?.content && schedules?.content.length === 0 && (
-        <h1 className="check-schedule-gray">해당 일정이 없습니다</h1>
+        <h1 className="check-schedule-gray-two">해당 일정이 없습니다</h1>
       )}
       {schedules &&
         !isLoading &&
@@ -60,14 +69,8 @@ const ScheduleList = ({ nameId, option }) => {
         {pageCount > 0 && (
           <Pagination
             currentPage={currentPage[option]}
-            setCurrentPage={(newPage) => {
-              setCurrentPage((prevCurrentPage) => ({
-                ...prevCurrentPage,
-                [option]: newPage,
-              }));
-            }}
-            recordDatasPerPage={itemsPerPage}
-            totalData={itemCount}
+            setCurrentPage={(newPage) => handlePaginationClick(newPage)}
+            totalPages={pageCount}
           />
         )}
       </div>

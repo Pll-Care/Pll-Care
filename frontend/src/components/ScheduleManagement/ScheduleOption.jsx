@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router";
 import { useQuery } from "react-query";
 
@@ -23,13 +23,19 @@ const ScheduleOption = () => {
   const [optionVisible, setOptionVisible] = useState(options[0].type);
   const [nameVisible, setNameVisible] = useState();
 
-  const optionClickHandler = (option) => {
-    setOptionVisible(option);
-  };
+  const optionClickHandler = useCallback(
+    (option) => {
+      setOptionVisible(option);
+    },
+    [setOptionVisible]
+  );
 
-  const nameClickHandler = (id) => {
-    setNameVisible(id);
-  };
+  const nameClickHandler = useCallback(
+    (id) => {
+      setNameVisible(id);
+    },
+    [setNameVisible]
+  );
 
   useEffect(() => {
     if (!isLoading && names && names.length > 0) {
@@ -38,37 +44,41 @@ const ScheduleOption = () => {
   }, [isLoading, names]);
 
   return (
-    <>
-      <div className="schedule-option">
-        {options.map((option, index) => (
-          <Button
-            key={index}
-            text={option.name}
-            type={optionVisible === option.type ? "positive_dark" : ""}
-            onClick={() => optionClickHandler(option.type)}
-          />
-        ))}
-      </div>
-      <Card className="schedule-option-person">
-        <h4>참여자</h4>
-        {isLoading && <Loading />}
-        {!names && !isLoading && (
-          <h1 className="check-schedule">🥲 통신 오류났습니다.</h1>
-        )}
-        {!isLoading &&
-          names?.map((data, index) => (
+    <div className="schedule-page-container">
+      <div className="schedule-option-container">
+        <div className="schedule-option">
+          {options.map((option, index) => (
             <Button
               key={index}
-              text={data.name}
-              type={nameVisible === data.memberId ? "positive_dark" : ""}
-              onClick={() => nameClickHandler(data.memberId)}
+              radius="big"
+              text={option.name}
+              color={optionVisible === option.type ? "white" : "green"}
+              type={optionVisible === option.type ? "positive_radius" : ""}
+              onClick={() => optionClickHandler(option.type)}
             />
           ))}
-      </Card>
-      {nameVisible && (
-        <ScheduleList option={optionVisible} nameId={nameVisible} />
-      )}
-    </>
+        </div>
+        <Card className="schedule-option-person">
+          <h4>참여자</h4>
+          {isLoading && <Loading />}
+          {!names && !isLoading && (
+            <h1 className="check-schedule">통신 오류났습니다.</h1>
+          )}
+          {!isLoading &&
+            names?.map((data, index) => (
+              <Button
+                key={index}
+                text={data.name}
+                type={nameVisible === data.memberId ? "positive_dark" : ""}
+                onClick={() => nameClickHandler(data.memberId)}
+              />
+            ))}
+        </Card>
+        {nameVisible && (
+          <ScheduleList option={optionVisible} nameId={nameVisible} />
+        )}
+      </div>
+    </div>
   );
 };
 export default ScheduleOption;

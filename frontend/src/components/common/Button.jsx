@@ -11,6 +11,7 @@ const Button = ({
   const btnType = [
     "positive",
     "positive_dark",
+    "positive_radius",
     "underlined",
     "profile",
   ].includes(type)

@@ -37,6 +37,10 @@
   &_positive {
     background-color: $green-200;
     border-radius: 10px;
+    &_radius {
+      background-color: $green-200;
+      border-radius: 50px;
+    }
   }
 
   &_positive_dark {
