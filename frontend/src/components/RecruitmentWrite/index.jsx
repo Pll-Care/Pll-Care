@@ -10,12 +10,13 @@ import RecruitmentProjectWrite from "./RecruitmentProjectWrite";
 import RecruitmentTitleWrite from "./RecruitmentTitleWrite";
 import RecruitmentPostionWrite from "./RecruitmentPositionWrite";
 import RecruitmentContentWrite from "./RecruitmentContentWrite";
-import SearchStack from "../Profile/Introduce/PositionBox/SearchStack";
+//import SearchStack from "../Profile/Introduce/PositionBox/SearchStack";
 
 import { useAddRecruitmentPostMutation } from "../../hooks/Mutations/useRecruitmentMutation";
 import { getRecruitmentProject } from "../../lib/apis/memberRecruitmentApi";
 import { isToken } from "../../utils/localstorageHandler";
 import { authActions } from "../../redux/authSlice";
+import RecruitmentSearchStack from "../MemberRecruitment/RecruitmentSearchStack";
 
 const MemberRecruitmentWrite = () => {
   const dispatch = useDispatch();
@@ -83,26 +84,29 @@ const MemberRecruitmentWrite = () => {
       navigate("/recruitment");
       dispatch(authActions.setIsLoginModalVisible(true));
     }
-    if (data) {
+    if (data && !isLoading) {
       setImageUrl(data[0].imageUrl);
       setFormValues((prevState) => ({
         ...prevState,
         projectId: data[0].projectId,
       }));
-    } else {
+    } else if (!data && !isLoading) {
       navigate("/recruitment");
       toast.error("잠시후에 다시 시도해주세요");
     }
-  }, [data, dispatch, navigate]);
+  }, [data, dispatch, navigate, isLoading]);
 
   // 입력하는 모든 상태값 update
-  const handleChange = useCallback((e) => {
-    const { name, value } = e.target;
-    setFormValues((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  }, []);
+  const handleChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+      setFormValues((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    },
+    [setFormValues]
+  );
 
   // 모집글 생성 react query문
   const { mutate: addPostMutate, status } =
@@ -222,20 +226,26 @@ const MemberRecruitmentWrite = () => {
   };
 
   // techStack 업데이트하는 함수
-  const changeStack = (response) => {
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      techStack: [...prevValues.techStack, response.name],
-    }));
-  };
+  const changeStack = useCallback(
+    (response) => {
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        techStack: [...prevValues.techStack, response.name],
+      }));
+    },
+    [setFormValues]
+  );
 
   // techStack 삭제 함수
-  const deleteStack = (stackName) => {
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      techStack: prevValues.techStack.filter((stack) => stack !== stackName),
-    }));
-  };
+  const deleteStack = useCallback(
+    (stackName) => {
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        techStack: prevValues.techStack.filter((stack) => stack !== stackName),
+      }));
+    },
+    [setFormValues]
+  );
 
   return (
     <div className="member-write">
@@ -276,15 +286,15 @@ const MemberRecruitmentWrite = () => {
               ref={inputRefs.techStack}
             >
               <h3>기술 스택</h3>
-              <SearchStack
-                className="search-stack"
-                stackList={formValues.techStack}
-                changeStack={changeStack}
-                deleteStack={deleteStack}
-              />
+              <div className="member-grid-position-stack-item">
+                <RecruitmentSearchStack
+                  stackList={formValues.techStack}
+                  changeStack={changeStack}
+                  deleteStack={deleteStack}
+                />
+              </div>
             </div>
           </div>
-
           {/*모집글 컨탠츠 입력*/}
           <RecruitmentContentWrite
             formValues={formValues}

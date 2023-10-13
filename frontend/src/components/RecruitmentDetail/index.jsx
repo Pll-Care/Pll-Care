@@ -33,7 +33,7 @@ const RecruitmentDetailContent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
-  const baseUrl = "https://fullcare.store";
+  const baseUrl = "https://pll-care.store";
   const isMobile = useMediaQuery(query);
 
   // 수정 상태

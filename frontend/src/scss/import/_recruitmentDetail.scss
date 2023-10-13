@@ -33,14 +33,11 @@
   &-content {
     display: flex;
     align-items: flex-end;
-    @include mobile {
-      width: 85%;
-    }
+    width: 100%;
 
     input {
       @include heading_01;
       margin-left: 26px;
-      border-radius: 20px;
       color: $gray-500;
       padding: 7px;
       @include mobile {
@@ -48,6 +45,10 @@
         padding: 3px;
         width: 50%;
       }
+      width: 80%;
+      outline: none;
+      border: none;
+      border-bottom: 1px solid gray;
     }
     .mui-arrow {
       color: black;
@@ -122,15 +123,23 @@
   textarea,
   select {
     @include heading_05;
-    border-radius: 20px;
+    border: none;
+    outline: none;
+    box-shadow: 0px 3px 20px 1px rgba(0, 0, 0, 0.1);
     color: $gray-500;
+    border-radius: 50px;
     @include mobile {
       @include m_body_01;
+      padding: 3px;
     }
   }
   textarea {
     padding: 10px;
     margin: 10px 0px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    box-shadow: 0px 3px 20px 1px rgba(0, 0, 0, 0.1);
   }
 
   h4 {
@@ -155,6 +164,7 @@
     border-bottom: 1px solid rgb(204, 204, 204);
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
 
     &-item-one {
       display: grid;
@@ -189,6 +199,7 @@
       display: grid;
       grid-template-columns: 20% 80%;
       margin-bottom: 20px;
+      align-items: center;
 
       @include mobile {
         display: flex;
@@ -213,16 +224,13 @@
     padding-bottom: 33px;
     @include mobile {
       padding-bottom: 18px;
+      grid-template-columns: 25% 75%;
     }
     display: grid;
     grid-template-columns: 20% 40% 40%;
 
     @include tablet {
       grid-template-columns: 20% 45% 35%;
-    }
-
-    @include mobile {
-      grid-template-columns: 25% 75%;
     }
 
     grid-gap: 10px 0px;
@@ -285,10 +293,13 @@
 
       //스택 검색 태그
       &-search {
-        @include mobile {
-          width: 230px;
+        ul {
+          display: flex;
+          flex-wrap: wrap;
+          grid-gap: 5px;
+          margin-top: 10px;
         }
-
+        width: 100%;
         &-card {
           padding: 10px;
         }
