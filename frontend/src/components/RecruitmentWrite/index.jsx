@@ -12,16 +12,18 @@ import RecruitmentPostionWrite from "./RecruitmentPositionWrite";
 import RecruitmentContentWrite from "./RecruitmentContentWrite";
 //import SearchStack from "../Profile/Introduce/PositionBox/SearchStack";
 
-import { useAddRecruitmentPostMutation } from "../../hooks/Mutations/useRecruitmentMutation";
-import { getRecruitmentProject } from "../../lib/apis/memberRecruitmentApi";
 import { isToken } from "../../utils/localstorageHandler";
 import { authActions } from "../../redux/authSlice";
 import RecruitmentSearchStack from "../MemberRecruitment/RecruitmentSearchStack";
+import { useRecruitmentClient } from "../../context/Client/RecruitmentClientContext";
+import { useAddRecruitmentPostMutation } from "../../hooks/Mutations/useRecruitmentMutation";
 
 const MemberRecruitmentWrite = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const initialDate = new Date().toISOString().split("T")[0];
+
+  const { getRecruitmentProject } = useRecruitmentClient();
 
   // 모집글 생성 입력값들
   const [formValues, setFormValues] = useState({

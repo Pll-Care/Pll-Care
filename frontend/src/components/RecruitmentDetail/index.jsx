@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 
+import { useMediaQuery } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShareIcon from "@mui/icons-material/Share";
@@ -18,15 +19,11 @@ import RecruitmentDetailDescription from "./RecruitmentDetailDescription";
 
 import { isToken } from "../../utils/localstorageHandler";
 import {
-  getRecruitmentPostDetail,
-  modifyRecruitmentPost,
-} from "../../lib/apis/memberRecruitmentApi";
-import {
   useAddLikeRecruitmentMutation,
   useDeleteRecruitmentPostMutation,
 } from "../../hooks/Mutations/useRecruitmentMutation";
-import { useMediaQuery } from "@mui/material";
 import { query } from "../../utils/mediaQuery";
+import { useRecruitmentClient } from "../../context/Client/RecruitmentClientContext";
 
 const RecruitmentDetailContent = () => {
   const { id } = useParams();
@@ -35,6 +32,9 @@ const RecruitmentDetailContent = () => {
   const location = useLocation();
   const baseUrl = "https://pll-care.store";
   const isMobile = useMediaQuery(query);
+
+  const { getRecruitmentPostDetail, modifyRecruitmentPost } =
+    useRecruitmentClient();
 
   // 수정 상태
   const [isEdit, setIsEdit] = useState(false);

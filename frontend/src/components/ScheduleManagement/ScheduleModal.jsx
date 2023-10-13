@@ -9,10 +9,9 @@ import { useMediaQuery } from "@mui/material";
 import Button from "../common/Button";
 import ModalContainer from "../common/Modal/ModalContainer";
 
-import { createNewSchedule } from "../../lib/apis/scheduleManagementApi";
-import { getTeamMember } from "../../lib/apis/teamMemberManagementApi";
 import { getProjectId } from "../../utils/getProjectId";
 import { query } from "../../utils/mediaQuery";
+import { useScheduleClient } from "../../context/Client/ScheduleClientContext";
 
 const ScheduleModal = ({
   open,
@@ -22,6 +21,8 @@ const ScheduleModal = ({
 }) => {
   const projectId = getProjectId(useLocation());
   const isMobile = useMediaQuery(query);
+
+  const { createNewSchedule, getTeamMember } = useScheduleClient();
   // 멤버 리스트 받아오기
   const { data: names } = useQuery(["members", projectId], () =>
     getTeamMember(projectId)

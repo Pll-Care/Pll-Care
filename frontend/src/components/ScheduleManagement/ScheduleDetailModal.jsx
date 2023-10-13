@@ -10,14 +10,11 @@ import Button from "../common/Button";
 import AlertCheckModal from "../common/Modal/AlertCheckModal";
 import ScheduleRemainDate from "./ScheduleRemainDate";
 
-import {
-  getDetailSchedule,
-  modifySchedule,
-} from "../../lib/apis/scheduleManagementApi";
 import { getDateTimeDuration } from "../../utils/date";
 import { useDeleteScheduleMutation } from "../../hooks/Mutations/useScheduleManagementMutation";
 import { query } from "../../utils/mediaQuery";
 import { useManagementClient } from "../../context/Client/ManagementClientContext";
+import { useScheduleClient } from "../../context/Client/ScheduleClientContext";
 
 const ScheduleDetailModal = ({
   open,
@@ -46,6 +43,8 @@ const ScheduleDetailModal = ({
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
   const { getCompleteProjectData } = useManagementClient();
+
+  const { getDetailSchedule, modifySchedule } = useScheduleClient();
 
   const deleteBody = {
     scheduleId: scheduleId,

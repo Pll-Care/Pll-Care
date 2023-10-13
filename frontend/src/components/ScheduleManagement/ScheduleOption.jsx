@@ -6,10 +6,12 @@ import Card from "../common/Card";
 import Button from "../common/Button";
 import { Loading } from "../common/Loading";
 import ScheduleList from "./ScheduleList";
-import { getTeamMember } from "../../lib/apis/teamMemberManagementApi";
+import { useScheduleClient } from "../../context/Client/ScheduleClientContext";
 
 const ScheduleOption = () => {
   const { id } = useParams();
+
+  const { getTeamMember } = useScheduleClient();
   const { data: names, isLoading } = useQuery(["members", id], () =>
     getTeamMember(id)
   );

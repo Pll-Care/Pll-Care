@@ -13,17 +13,19 @@ import ComputerIcon from "@mui/icons-material/Computer";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import FlagIcon from "@mui/icons-material/Flag";
 
-import { getOverviewAllSchedule } from "../../lib/apis/scheduleManagementApi";
 import { authActions } from "../../redux/authSlice";
 import { getDateTimeDuration } from "../../utils/date";
 import { getProjectId } from "../../utils/getProjectId";
 import { isToken } from "../../utils/localstorageHandler";
 import Card from "../common/Card";
+import { useScheduleClient } from "../../context/Client/ScheduleClientContext";
 
 const OverviewChart = () => {
   const projectId = getProjectId(useLocation());
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { getOverviewAllSchedule } = useScheduleClient();
 
   const { isLoading, data, status } = useQuery(
     "overviewSchedule",

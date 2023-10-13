@@ -8,15 +8,17 @@ import CalendarItem from "./CalendarItem";
 import ScheduleModal from "./ScheduleModal";
 
 import { useManagementClient } from "../../context/Client/ManagementClientContext";
-import { getTodayAfterSchedule } from "../../lib/apis/scheduleManagementApi";
 import { getTodayDateEnglish } from "../../utils/date";
 import { getProjectId } from "../../utils/getProjectId";
+import { useScheduleClient } from "../../context/Client/ScheduleClientContext";
 
 const CalendarList = () => {
   const projectId = getProjectId(useLocation());
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
   const { getCompleteProjectData } = useManagementClient();
+
+  const { getTodayAfterSchedule } = useScheduleClient();
 
   // 완료 확인 react query문
   const { data: isCompleted } = useQuery(

@@ -4866,14 +4866,18 @@ a {
   display: flex;
   justify-content: space-between;
 }
-.recruitment-post-project-title h2 {
-  text-decoration: none;
+.recruitment-post-project-title .recruitment-post-title {
+  width: 219px;
+}
+.recruitment-post-project-title .recruitment-post-title h2 {
+  width: 100%;
+  word-wrap: break-word;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
   font-weight: 600;
 }
 @media (max-width: 767px) {
-  .recruitment-post-project-title h2 {
+  .recruitment-post-project-title .recruitment-post-title h2 {
     font-family: "IBM Plex Sans KR", sans-serif;
     font-size: 18px;
     font-weight: 700;

@@ -14,7 +14,6 @@ import {
   useApplyCancelRecruitmentPostMutation,
   useApplyRecruitmentPostMutation,
 } from "../../hooks/Mutations/useRecruitmentMutation";
-import SearchStack from "../Profile/Introduce/PositionBox/SearchStack";
 import RecruitmentSearchStack from "../MemberRecruitment/RecruitmentSearchStack";
 
 const RecruitmentDetailPosition = ({

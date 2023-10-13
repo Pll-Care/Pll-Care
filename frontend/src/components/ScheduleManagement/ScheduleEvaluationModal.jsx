@@ -14,11 +14,13 @@ import EvaluationContent from "./EvaluationContent";
 
 import { getDateTimeDuration } from "../../utils/date";
 import { query } from "../../utils/mediaQuery";
-import { makeNewMidEvaluation } from "../../lib/apis/evaluationManagementApi";
+import { useScheduleClient } from "../../context/Client/ScheduleClientContext";
 
 const ScheduleEvaluationModal = (props) => {
   const { id } = useParams();
   const isMobile = useMediaQuery(query);
+
+  const { makeNewMidEvaluation } = useScheduleClient();
 
   const projectId = parseInt(id, 10);
   const scheduleId = parseInt(props.id, 10);

@@ -4,13 +4,15 @@ import { useQuery } from "react-query";
 import { useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 
-import { getCalendarAllSchedule } from "../../lib/apis/scheduleManagementApi";
 import { getProjectId } from "../../utils/getProjectId";
 import CalendarList from "./CalendarList";
+import { useScheduleClient } from "../../context/Client/ScheduleClientContext";
 
 const MyCalendar = () => {
   const projectId = getProjectId(useLocation());
   const navigate = useNavigate();
+
+  const { getCalendarAllSchedule } = useScheduleClient();
 
   const { data, status } = useQuery(
     ["calendarSchedule", projectId],

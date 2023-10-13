@@ -2,18 +2,12 @@ import { useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 
-import {
-  addLikeRecruitmentPost,
-  addRecruitmentPost,
-  applyCancelRecruitmentPost,
-  applyRecruitmentPost,
-  deleteRecruitmentPost,
-  modifyRecruitmentPost,
-} from "../../lib/apis/memberRecruitmentApi";
+import { useRecruitmentClient } from "../../context/Client/RecruitmentClientContext";
 
 // 특정 모집글 좋아요
 export const useAddLikeRecruitmentMutation = () => {
   const queryClient = useQueryClient();
+  const { addLikeRecruitmentPost } = useRecruitmentClient();
 
   return useMutation(addLikeRecruitmentPost, {
     onSuccess: () => {
@@ -29,6 +23,7 @@ export const useAddLikeRecruitmentMutation = () => {
 export const useAddRecruitmentPostMutation = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const { addRecruitmentPost } = useRecruitmentClient();
 
   return useMutation(addRecruitmentPost, {
     onSuccess: () => {
@@ -52,6 +47,7 @@ export const useAddRecruitmentPostMutation = () => {
 // 모집글 수정
 export const useModifyRecruitmentPostMutation = () => {
   const queryClient = useQueryClient();
+  const { modifyRecruitmentPost } = useRecruitmentClient();
 
   return useMutation(modifyRecruitmentPost, {
     onSuccess: () => {
@@ -75,6 +71,7 @@ export const useModifyRecruitmentPostMutation = () => {
 // 모집글 삭제
 export const useDeleteRecruitmentPostMutation = () => {
   const queryClient = useQueryClient();
+  const { deleteRecruitmentPost } = useRecruitmentClient();
 
   return useMutation(deleteRecruitmentPost, {
     onSuccess: () => {
@@ -97,6 +94,7 @@ export const useDeleteRecruitmentPostMutation = () => {
 // 모집글 지원
 export const useApplyRecruitmentPostMutation = () => {
   const queryClient = useQueryClient();
+  const { applyRecruitmentPost } = useRecruitmentClient();
 
   return useMutation(applyRecruitmentPost, {
     onSuccess: () => {
@@ -119,6 +117,7 @@ export const useApplyRecruitmentPostMutation = () => {
 // 모집글 지원 취소
 export const useApplyCancelRecruitmentPostMutation = () => {
   const queryClient = useQueryClient();
+  const { applyCancelRecruitmentPost } = useRecruitmentClient();
 
   return useMutation(applyCancelRecruitmentPost, {
     onSuccess: () => {

@@ -1,18 +1,20 @@
 import { useQuery } from "react-query";
 import { useLocation } from "react-router";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { toast } from "react-toastify";
 
 import Card from "../common/Card";
-import { getFilterSchedule } from "../../lib/apis/scheduleManagementApi";
 import ScheduleItem from "./ScheduleItem";
-import { getProjectId } from "../../utils/getProjectId";
 import { Loading } from "../common/Loading";
 import Pagination from "../common/Pagination";
-import { useCallback } from "react";
+
+import { useScheduleClient } from "../../context/Client/ScheduleClientContext";
+import { getProjectId } from "../../utils/getProjectId";
 
 const ScheduleList = ({ nameId, option }) => {
   const projectId = getProjectId(useLocation());
+
+  const { getFilterSchedule } = useScheduleClient();
 
   // 현재 페이지
   const [currentPage, setCurrentPage] = useState({

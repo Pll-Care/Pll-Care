@@ -149,12 +149,15 @@
     &-title {
       display: flex;
       justify-content: space-between;
-      h2 {
-        text-decoration: none;
-
-        @include heading_04;
-        @include mobile {
-          @include m_heading_05;
+      .recruitment-post-title {
+        width: 219px;
+        h2 {
+          width: 100%;
+          word-wrap: break-word;
+          @include heading_04;
+          @include mobile {
+            @include m_heading_05;
+          }
         }
       }
 

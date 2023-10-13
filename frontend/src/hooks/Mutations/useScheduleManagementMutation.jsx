@@ -1,15 +1,13 @@
 import { useMutation, useQueryClient } from "react-query";
-import {
-  createNewSchedule,
-  deleteSchedule,
-  modifySchedule,
-  updateDoneSchedule,
-} from "../../lib/apis/scheduleManagementApi";
+
 import { toast } from "react-toastify";
+import { useScheduleClient } from "../../context/Client/ScheduleClientContext";
 
 // 일정 생성
 export const useAddNewScheduleMutation = () => {
   const queryClient = useQueryClient();
+
+  const { createNewSchedule } = useScheduleClient();
   return useMutation(createNewSchedule, {
     onSuccess: () => {
       queryClient.invalidateQueries("calendarSchedule");
@@ -24,6 +22,7 @@ export const useAddNewScheduleMutation = () => {
 // 일정 수정
 export const useModifyScheduleMutation = () => {
   const queryClient = useQueryClient();
+  const { modifySchedule } = useScheduleClient();
   return useMutation(modifySchedule, {
     onSuccess: () => {
       queryClient.invalidateQueries("calendarSchedule");
@@ -42,6 +41,7 @@ export const useModifyScheduleMutation = () => {
 // 일정 삭제
 export const useDeleteScheduleMutation = () => {
   const queryClient = useQueryClient();
+  const { deleteSchedule } = useScheduleClient();
   return useMutation(deleteSchedule, {
     onSuccess: () => {
       queryClient.invalidateQueries("calendarSchedule");
@@ -65,6 +65,7 @@ export const useDeleteScheduleMutation = () => {
 // 일정 완료
 export const useCompleteScheduleMutation = () => {
   const queryClient = useQueryClient();
+  const { updateDoneSchedule } = useScheduleClient();
   return useMutation(updateDoneSchedule, {
     onSuccess: () => {
       queryClient.invalidateQueries("filterSchedule");
