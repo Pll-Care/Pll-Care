@@ -43,6 +43,7 @@ const RecruitmentProjectWrite = ({
                   target: { name: "projectId", value },
                 })
               }
+              size={"small"}
               value={formValues.projectId}
             />
           )}

@@ -106,6 +106,7 @@ const ScheduleItem = (props) => {
         scheduleId={props.data.scheduleId}
         projectId={projectId}
         scheduleState={props.data.state}
+        modifyTime={modifyDate}
       />
 
       <div className="schedule-list-time">
@@ -118,15 +119,13 @@ const ScheduleItem = (props) => {
         {props.option !== "pastAll" &&
           props.data.state === "COMPLETE" &&
           !isCompleted && (
-            <Button
-              text={"✍평가 작성"}
-              size="small"
-              onClick={openModalHandler}
-            />
+            <Button text={"평가하기"} size="small" onClick={openModalHandler} />
           )}
         {props.data.state === "ONGOING" && !isCompleted && (
           <Button
-            text={"🙂완료시키기"}
+            text={"완료하기"}
+            color="white"
+            type="positive_radius"
             size="small"
             onClick={openCompleteModalHandler}
           />

@@ -14,7 +14,7 @@ import {
   useApplyCancelRecruitmentPostMutation,
   useApplyRecruitmentPostMutation,
 } from "../../hooks/Mutations/useRecruitmentMutation";
-import SearchStack from "../Profile/Introduce/PositionBox/SearchStack";
+import RecruitmentSearchStack from "../MemberRecruitment/RecruitmentSearchStack";
 
 const RecruitmentDetailPosition = ({
   isEdit,
@@ -185,8 +185,7 @@ const RecruitmentDetailPosition = ({
           <h4>요구 기술 스택</h4>
           {isEdit ? (
             <div className="recruitment-detail-container-tech-search">
-              <SearchStack
-                className="search-stack"
+              <RecruitmentSearchStack
                 stackList={formValues.techStack}
                 changeStack={changeStack}
                 deleteStack={deleteStack}

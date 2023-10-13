@@ -480,6 +480,10 @@ a {
   background-color: #01e89e;
   border-radius: 10px;
 }
+.button_positive_radius {
+  background-color: #01e89e;
+  border-radius: 50px;
+}
 .button_positive_dark {
   color: white;
   background-color: #00aa72;
@@ -829,21 +833,51 @@ a {
 }
 @media (max-width: 767px) {
   .card {
-    padding: 1px;
+    padding: 0px;
+  }
+}
+
+.schedule-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 5px;
+}
+@media (max-width: 767px) {
+  .schedule-wrapper {
+    margin-top: 8px;
   }
 }
 
 .schedule-calendar {
   display: grid;
-  grid-template-columns: 60% 40%;
+  grid-template-columns: 530px 298px;
+  border-radius: 25px 25px 25px 0px;
+  box-shadow: 0px 10px 30px 5px rgba(181, 181, 181, 0.2);
+  height: 493px;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .schedule-calendar {
+    grid-template-columns: 500px 268px;
+    height: 493px;
+  }
 }
 @media (max-width: 767px) {
   .schedule-calendar {
-    height: 400px;
+    width: 100%;
+    height: 310px;
+    grid-template-columns: 60% 40%;
   }
 }
 .schedule-calendar-schedulelist {
   width: 100%;
+  height: 493px;
+}
+@media (max-width: 767px) {
+  .schedule-calendar-schedulelist {
+    height: 310px;
+  }
 }
 .schedule-calendar-schedulelist .fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {
   height: 100%;
@@ -884,21 +918,49 @@ a {
 }
 .calendar-list {
   width: 100%;
-  height: 100%;
+  height: 493px;
   background-color: #01e89e;
   border-radius: 20px;
   align-items: center;
-  padding: 2rem;
-  overflow-y: auto;
 }
 @media (max-width: 767px) {
   .calendar-list {
-    padding: 20px 10px;
+    height: 310px;
   }
+}
+.calendar-list .calendar-content {
+  max-height: 493px;
+  height: 95%;
+  overflow-y: auto;
+  padding: 20px 18px 30px 18px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+@media (max-width: 767px) {
+  .calendar-list .calendar-content {
+    padding: 10px 7px;
+  }
+}
+.calendar-list .calendar-content::-webkit-scrollbar {
+  display: none;
 }
 .calendar-list .button-container {
   display: flex;
+  width: 100%;
+  border-radius: 20px;
+  background-color: #01e89e;
   justify-content: flex-end;
+  position: relative;
+  transform: translateY(-99%);
+  margin-right: 18px;
+  bottom: 0;
+  padding-right: 18px;
+}
+@media (max-width: 767px) {
+  .calendar-list .button-container {
+    margin-top: 5px;
+    padding-right: 7px;
+  }
 }
 .calendar-list h5 {
   color: white;
@@ -912,6 +974,7 @@ a {
     font-family: "Noto Sans KR", sans-serif;
     font-size: 8px;
     font-weight: 500;
+    margin-bottom: 6px;
   }
 }
 .calendar-list-time {
@@ -934,9 +997,9 @@ a {
 .calendar-list-item {
   background-color: white;
   border-radius: 10px;
-  padding: 1rem;
+  padding: 12px 17px 15px 9px;
   color: #373E3B;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 @media (max-width: 767px) {
   .calendar-list-item {
@@ -948,8 +1011,7 @@ a {
   font-size: 12px;
   font-weight: 500;
   color: #373E3B;
-  margin-bottom: 10px;
-  margin-top: 5px;
+  margin-bottom: 13px;
 }
 @media (max-width: 767px) {
   .calendar-list-item h5 {
@@ -957,6 +1019,7 @@ a {
     font-size: 6px;
     font-weight: 500;
     line-height: 12px;
+    margin-bottom: 5px;
   }
 }
 .calendar-list-item h4 {
@@ -981,8 +1044,18 @@ a {
 .calendar-list-item-name {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
+  align-items: end;
+  margin-top: 3px;
+}
+.calendar-list-item-name h5 {
+  margin-bottom: 5px;
+}
+@media (max-width: 767px) {
+  .calendar-list-item-name {
+    align-items: center;
+    margin-top: 0px;
+    height: 35px;
+  }
 }
 .calendar-list-item-name-avatar {
   display: flex;
@@ -998,12 +1071,17 @@ a {
     transform: scale(0.5);
   }
 }
+@media (max-width: 767px) {
+  .calendar-list-item-name-avatar .MuiAvatar-root {
+    margin-left: 0px;
+  }
+}
 .calendar-list-item-name-avatar .MuiAvatar-root:hover {
   transform: scale(0.8);
 }
 
 .modal-container {
-  padding: 20px;
+  padding: 40px;
   width: 100%;
 }
 @media (max-width: 767px) {
@@ -1020,6 +1098,14 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 32px;
   font-weight: 700;
+  outline: none;
+  color: #373E3B;
+}
+.modal-container-title-input::-moz-placeholder {
+  color: #373E3B;
+}
+.modal-container-title-input::placeholder {
+  color: #373E3B;
 }
 @media (max-width: 767px) {
   .modal-container-title-input {
@@ -1060,7 +1146,11 @@ a {
   font-size: 14px;
   font-weight: 500;
   color: #00aa72;
-  border-radius: 10px;
+  border-radius: 47px;
+  border: none;
+  outline: none;
+  padding: 5px;
+  box-shadow: 0px 4px 30px 3px rgba(0, 0, 0, 0.1);
 }
 @media (max-width: 767px) {
   .modal-container select {
@@ -1071,12 +1161,13 @@ a {
 }
 .modal-container-content {
   background-color: white;
-  border-radius: 15px;
-  padding: 1rem;
+  border-radius: 10px;
+  padding: 23px 50px;
   margin-top: 15px;
   border: 2px solid #01e89e;
 }
 .modal-container-content textarea {
+  outline: none;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 8px;
   font-weight: 500;
@@ -1088,18 +1179,30 @@ a {
 @media (max-width: 767px) {
   .modal-container-content {
     height: 40%;
+    padding: 15px 20px;
   }
+}
+.modal-container-content input {
+  margin-top: 5px;
+  outline: none;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0px 4px 30px 3px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  padding: 7px;
 }
 .modal-container-description {
   background-color: white;
-  border-radius: 15px;
-  padding: 1rem;
+  border-radius: 10px;
+  padding: 24px 52px;
   margin-top: 15px;
   border: 2px solid #01e89e;
 }
 @media (max-width: 767px) {
   .modal-container-description {
     height: 40%;
+    padding: 20px;
   }
 }
 .modal-container-description input {
@@ -1110,7 +1213,7 @@ a {
 .modal-container-description .plan-option {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 17px;
 }
 .modal-container-description .plan-option-duration {
   display: flex;
@@ -1139,17 +1242,28 @@ a {
 .modal-container-description .plan-option-members {
   display: flex;
   flex-wrap: wrap;
+  margin-left: 17px;
 }
 .modal-container-description .plan-option-bottom {
   display: flex;
   align-items: center;
   border-bottom: 1.5px solid #b4bcbd;
+  padding-bottom: 16px;
   margin-bottom: 20px;
 }
 .modal-container-description .plan-option-bottom input {
   font-family: "Noto Sans KR", sans-serif;
   font-size: 14px;
   font-weight: 500;
+  color: #373E3B;
+  text-align: center;
+  outline: none;
+  box-shadow: 0px 4px 30px 3px rgba(0, 0, 0, 0.05);
+}
+.modal-container-description .plan-option-bottom input::-moz-placeholder {
+  color: #b4bcbd;
+}
+.modal-container-description .plan-option-bottom input::placeholder {
   color: #b4bcbd;
 }
 @media (max-width: 767px) {
@@ -1301,8 +1415,28 @@ a {
   }
 }
 
+.schedule-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.schedule-option-container {
+  width: 828px;
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .schedule-option-container {
+    width: 768px;
+  }
+}
+@media (max-width: 767px) {
+  .schedule-option-container {
+    width: 100%;
+  }
+}
+
 .schedule-option {
-  margin-top: 80px;
+  margin-top: 56px;
   margin-bottom: 20px;
 }
 .schedule-option Button {
@@ -1334,64 +1468,115 @@ a {
   }
 }
 
+.check-schedule-gray-two {
+  color: #373E3B;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 22px;
+}
+@media (max-width: 767px) {
+  .check-schedule-gray-two {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 7px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+}
+
+.schedule-lists {
+  padding: 30px 36px 8px 35px;
+}
 .schedule-lists-pagination {
   display: flex;
   justify-content: center;
 }
+@media (max-width: 767px) {
+  .schedule-lists {
+    padding: 25px 20px 13px 20px;
+  }
+}
 
 .schedule-list {
   display: flex;
-  padding: 1rem;
+  margin-bottom: 25px;
 }
 @media (max-width: 767px) {
   .schedule-list {
-    padding: 10px;
+    margin-bottom: 10px;
   }
 }
 .schedule-list-time {
+  width: 68px;
+  margin-right: 28px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   font-style: normal;
   color: #373E3B;
-  width: 15%;
+}
+@media (max-width: 767px) {
+  .schedule-list-time {
+    margin-right: 13px;
+    width: 15%;
+  }
 }
 .schedule-list-time h1 {
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 38px;
-  font-weight: 700;
   color: #373E3B;
+  text-align: center;
+  font-family: IBM Plex Sans KR;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 700;
+  margin-top: 10px;
+  margin-bottom: 4px;
 }
 @media (max-width: 767px) {
   .schedule-list-time h1 {
     font-family: "IBM Plex Sans KR", sans-serif;
     font-size: 18px;
     font-weight: 700;
+    margin-bottom: 5px;
   }
 }
 .schedule-list-time h2 {
   font-family: "Noto Sans KR", sans-serif;
   font-size: 16px;
   font-weight: 600;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 @media (max-width: 767px) {
   .schedule-list-time h2 {
     font-family: "Noto Sans KR", sans-serif;
     font-size: 8px;
     font-weight: 500;
+    margin-bottom: 7px;
   }
 }
 .schedule-list-content {
+  width: 641px;
+  padding: 17px 24px 19px 22px;
   text-align: left;
-  border: 3px solid #01e89e;
-  border-radius: 15px;
-  width: 85%;
-  padding: 1.5rem;
+  border: 2px solid #01e89e;
+  border-radius: 10px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
+}
+.schedule-list-content h5 {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #373E3B;
+  line-height: 30px;
+}
+@media (max-width: 767px) {
+  .schedule-list-content h5 {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 7px;
+    font-weight: 700;
+    line-height: 18px;
+  }
 }
 .schedule-list-content-title {
   display: flex;
@@ -1400,20 +1585,8 @@ a {
 }
 @media (max-width: 767px) {
   .schedule-list-content {
-    padding: 15px;
-  }
-}
-.schedule-list-content h5 {
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  color: #373E3B;
-}
-@media (max-width: 767px) {
-  .schedule-list-content h5 {
-    font-family: "Noto Sans KR", sans-serif;
-    font-size: 7px;
-    font-weight: 700;
+    padding: 8px 10px 5px 14px;
+    width: 85%;
   }
 }
 .schedule-list-content h4 {
@@ -1421,7 +1594,7 @@ a {
   font-size: 24px;
   font-weight: 700;
   color: #373E3B;
-  margin: 10px 0px;
+  margin-top: 3px;
 }
 @media (max-width: 767px) {
   .schedule-list-content h4 {
@@ -1431,11 +1604,12 @@ a {
   }
 }
 .schedule-list-content-option {
+  margin-top: 27px;
   align-items: center;
   display: flex;
 }
 .schedule-list-content-option h5 {
-  margin-right: 20px;
+  margin-right: 68px;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 14px;
   font-weight: 500;
@@ -1462,6 +1636,9 @@ a {
   transform: scale(0.8);
 }
 @media (max-width: 767px) {
+  .schedule-list-content-option {
+    margin-top: 17px;
+  }
   .schedule-list-content-option .MuiAvatar-root {
     transform: scale(0.5);
     margin-left: -25px;
@@ -1479,11 +1656,11 @@ a {
   background: #ffffff;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.05);
   border-radius: 30px;
-  padding: 0.5rem;
+  padding: 7px 20px;
 }
 @media (max-width: 767px) {
   .schedule-list-content-time h1 {
-    padding: 5px;
+    padding: 3px 10px;
     font-family: "IBM Plex Sans KR", sans-serif;
     font-size: 6px;
     font-weight: 600;
@@ -1519,12 +1696,7 @@ a {
   background-color: white;
   box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1);
   border-radius: 14px;
-  padding: 1.5rem;
-}
-@media (min-width: 767px) and (max-width: 1024px) {
-  .schedule-modal-content {
-    padding: 20px;
-  }
+  padding: 34px 31px 27px 21px;
 }
 @media (max-width: 767px) {
   .schedule-modal-content {
@@ -1537,12 +1709,26 @@ a {
   font-size: 20px;
   font-weight: 600;
 }
+@media (max-width: 767px) {
+  .schedule-modal-content h1 {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+  }
+}
 .schedule-modal-content h2 {
   color: #373E3B;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 10px;
+}
+@media (max-width: 767px) {
+  .schedule-modal-content h2 {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
 }
 .schedule-modal-content h3 {
   font-family: "IBM Plex Sans KR", sans-serif;
@@ -1557,6 +1743,12 @@ a {
     font-family: "IBM Plex Sans KR", sans-serif;
     font-size: 12px;
     font-weight: 700;
+  }
+}
+@media (max-width: 767px) {
+  .schedule-modal-content-title {
+    display: flex;
+    justify-content: space-between;
   }
 }
 .schedule-modal-content .modal-badge {
@@ -1637,19 +1829,22 @@ a {
 
 .schedule-detail-modal {
   border: 2px solid #01e89e;
-  border-radius: 17px;
+  border-radius: 10px;
   width: 100%;
-  padding: 1.5rem;
+  padding: 30px 24px 15px 16px;
   color: #373E3B;
 }
 @media (max-width: 767px) {
   .schedule-detail-modal {
-    height: 90%;
+    border: none;
+    height: 100%;
+    padding: 0px;
   }
 }
 .schedule-detail-modal input {
   color: #373E3B;
   border-radius: 20px;
+  outline: none;
 }
 .schedule-detail-modal-date {
   display: flex;
@@ -1657,10 +1852,32 @@ a {
   justify-content: space-between;
   margin-bottom: 30px;
 }
+@media (max-width: 767px) {
+  .schedule-detail-modal-date {
+    margin-bottom: 10px;
+  }
+}
+.schedule-detail-modal-date .schedule-title-text {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+}
+@media (max-width: 767px) {
+  .schedule-detail-modal-date .schedule-title-text {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+  }
+}
 .schedule-detail-modal-date .schedule-title {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 24px;
   font-weight: 700;
+  box-shadow: 0px 4px 30px 3px rgba(0, 0, 0, 0.05);
+  outline: none;
+  border: none;
+  padding: 5px;
+  border-radius: 20px;
 }
 @media (max-width: 767px) {
   .schedule-detail-modal-date .schedule-title {
@@ -1674,6 +1891,7 @@ a {
 }
 .schedule-detail-modal-date input {
   width: 80%;
+  outline: none;
 }
 .schedule-detail-modal-date-mobile {
   display: flex;
@@ -1700,6 +1918,22 @@ a {
     font-weight: 600;
   }
 }
+.schedule-detail-modal-content input {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  border: none;
+  box-shadow: 0px 4px 30px 3px rgba(0, 0, 0, 0.05);
+  padding: 5px;
+}
+@media (max-width: 767px) {
+  .schedule-detail-modal-content input {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+}
 .schedule-detail-modal-content-time {
   display: flex;
   align-items: center;
@@ -1708,6 +1942,10 @@ a {
   font-family: "Noto Sans KR", sans-serif;
   font-size: 14px;
   font-weight: 500;
+  outline: none;
+  border: none;
+  box-shadow: 0px 4px 30px 3px rgba(0, 0, 0, 0.05);
+  padding: 5px;
 }
 @media (max-width: 767px) {
   .schedule-detail-modal-content-time {
@@ -1717,6 +1955,7 @@ a {
     font-family: "IBM Plex Sans KR", sans-serif;
     font-size: 10px;
     font-weight: 600;
+    outline: none;
   }
 }
 .schedule-detail-modal-member-buttons {
@@ -1725,15 +1964,34 @@ a {
 }
 .schedule-detail-modal-button {
   display: flex;
-  justify-content: flex-end;
-  margin-top: 30px;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 80px;
+}
+.schedule-detail-modal-button h5 {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #00aa72;
 }
 @media (max-width: 767px) {
   .schedule-detail-modal-button {
     position: absolute;
     bottom: 10%;
     right: 10%;
+    margin-top: 0px;
   }
+}
+
+.schedule-green {
+  color: #00aa72;
+}
+
+.schedule-mobile-green {
+  border: 2px solid #01e89e;
+  border-radius: 10px;
+  padding: 21px 16px 0px 20px;
+  height: 90%;
 }
 
 .meeting-record-management {
@@ -4427,9 +4685,17 @@ a {
   }
 }
 
+.recruitment-container {
+  display: flex;
+  width: 1280px;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
 .member-option {
   background-color: #01e89e;
   padding: 25px 45px;
+  width: 100%;
   top: 0;
   height: 254px;
   border-radius: 35px 35px 0px 0px;
@@ -4466,8 +4732,6 @@ a {
 }
 
 .member-button {
-  display: flex;
-  justify-content: flex-start;
   margin: 25px;
 }
 @media (max-width: 767px) {
@@ -4602,14 +4866,18 @@ a {
   display: flex;
   justify-content: space-between;
 }
-.recruitment-post-project-title h2 {
-  text-decoration: none;
+.recruitment-post-project-title .recruitment-post-title {
+  width: 219px;
+}
+.recruitment-post-project-title .recruitment-post-title h2 {
+  width: 100%;
+  word-wrap: break-word;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 20px;
   font-weight: 600;
 }
 @media (max-width: 767px) {
-  .recruitment-post-project-title h2 {
+  .recruitment-post-project-title .recruitment-post-title h2 {
     font-family: "IBM Plex Sans KR", sans-serif;
     font-size: 18px;
     font-weight: 700;
@@ -4787,9 +5055,9 @@ a {
   align-items: center;
 }
 .member-content .member-grid-item-time input {
-  border-radius: 10px;
+  border-radius: 50px;
   padding: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 3px 20px 1px rgba(0, 0, 0, 0.1);
   color: #373E3B;
   border: none;
   font-family: "IBM Plex Sans KR", sans-serif;
@@ -4810,14 +5078,62 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
-  padding: 5px 0px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  padding: 5px 3px 7px 3px;
+  width: 160px;
+  box-shadow: 0px 3px 20px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 50px;
+}
+@media (max-width: 767px) {
+  .member-content .member-grid .control-menu {
+    width: 100px;
+  }
 }
 @media (max-width: 767px) {
   .member-content .member-grid .control-menu {
     font-family: "Noto Sans KR", sans-serif;
     font-size: 8px;
     font-weight: 500;
+  }
+}
+.member-content h5 {
+  white-space: nowrap;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #373E3B;
+}
+@media (max-width: 767px) {
+  .member-content h5 {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+  }
+}
+.member-content .recruitment-positions {
+  display: grid;
+  grid-template-columns: repeat(2, 0.5fr);
+  grid-gap: 17px 10px;
+  align-items: center;
+}
+.member-content .recruitment-positions input {
+  width: 40px;
+  outline: none;
+  height: 30px;
+  border: none;
+  border-radius: 40px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #373E3B;
+}
+@media (max-width: 767px) {
+  .member-content .recruitment-positions input {
+    width: 30px;
+    height: 20px;
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
   }
 }
 .member-content .member-grid-position {
@@ -4830,61 +5146,26 @@ a {
 }
 @media (max-width: 767px) {
   .member-content .member-grid-position {
-    grid-template-columns: 20% 80%;
+    grid-template-columns: 10% 35% 55%;
+    grid-gap: 10px;
   }
 }
-@media (min-width: 767px) and (max-width: 1024px) {
-  .member-content .member-grid-position {
-    grid-template-columns: 20% 80%;
-  }
-}
-.member-content .member-grid-position h5 {
-  white-space: nowrap;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 18px;
-  font-weight: 600;
-  color: #373E3B;
-}
-@media (max-width: 767px) {
-  .member-content .member-grid-position h5 {
-    font-family: "IBM Plex Sans KR", sans-serif;
-    font-size: 10px;
-    font-weight: 600;
-  }
-}
-.member-content .member-grid-position .recruitment-positions {
-  display: grid;
-  grid-template-columns: repeat(2, 0.5fr);
-  grid-gap: 17px 10px;
-  align-items: center;
-}
-.member-content .member-grid-position .recruitment-positions input {
-  width: 40px;
-  height: 30px;
-  border: none;
-  border-radius: 40px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 18px;
-  font-weight: 600;
-  color: #373E3B;
-}
-@media (max-width: 767px) {
-  .member-content .member-grid-position .recruitment-positions input {
-    width: 30px;
-    height: 20px;
-    font-family: "IBM Plex Sans KR", sans-serif;
-    font-size: 10px;
-    font-weight: 600;
-  }
-}
-@media (max-width: 767px) {
-  .member-content .member-grid-position-stack {
-    width: 200px;
-  }
+.member-content .member-grid-position-stack {
+  width: 80%;
 }
 .member-content .member-grid-position-stack h3 {
   margin-bottom: 6px;
+}
+.member-content .member-grid-position-stack-item {
+  width: 100%;
+}
+.member-content .recruitment-stackitems {
+  display: flex;
+  grid-gap: 5px;
+  flex-wrap: wrap;
+  padding: 5px;
+  margin-top: 10px;
+  width: 100%;
 }
 .member-content textarea {
   border-radius: 20px;
@@ -4893,6 +5174,7 @@ a {
   border: none;
   height: 200px;
   padding: 0.5rem;
+  outline: none;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
@@ -4964,20 +5246,19 @@ a {
 .detail-title-content {
   display: flex;
   align-items: flex-end;
-}
-@media (max-width: 767px) {
-  .detail-title-content {
-    width: 85%;
-  }
+  width: 100%;
 }
 .detail-title-content input {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 38px;
   font-weight: 700;
   margin-left: 26px;
-  border-radius: 20px;
   color: #373E3B;
   padding: 7px;
+  width: 80%;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid gray;
 }
 @media (max-width: 767px) {
   .detail-title-content input {
@@ -5077,8 +5358,11 @@ a {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-size: 18px;
   font-weight: 600;
-  border-radius: 20px;
+  border: none;
+  outline: none;
+  box-shadow: 0px 3px 20px 1px rgba(0, 0, 0, 0.1);
   color: #373E3B;
+  border-radius: 50px;
 }
 @media (max-width: 767px) {
   .recruitment-detail input,
@@ -5087,11 +5371,16 @@ a {
     font-family: "Noto Sans KR", sans-serif;
     font-size: 8px;
     font-weight: 500;
+    padding: 3px;
   }
 }
 .recruitment-detail textarea {
   padding: 10px;
   margin: 10px 0px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  box-shadow: 0px 3px 20px 1px rgba(0, 0, 0, 0.1);
 }
 .recruitment-detail h4 {
   color: #00aa72;
@@ -5124,6 +5413,7 @@ a {
   border-bottom: 1px solid rgb(204, 204, 204);
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
 }
 .recruitment-detail-content-item-one {
   display: grid;
@@ -5163,6 +5453,7 @@ a {
   display: grid;
   grid-template-columns: 20% 80%;
   margin-bottom: 20px;
+  align-items: center;
 }
 @media (max-width: 767px) {
   .recruitment-detail-content-item {
@@ -5189,16 +5480,12 @@ a {
 @media (max-width: 767px) {
   .recruitment-detail-container {
     padding-bottom: 18px;
+    grid-template-columns: 25% 75%;
   }
 }
 @media (min-width: 767px) and (max-width: 1024px) {
   .recruitment-detail-container {
     grid-template-columns: 20% 45% 35%;
-  }
-}
-@media (max-width: 767px) {
-  .recruitment-detail-container {
-    grid-template-columns: 25% 75%;
   }
 }
 .recruitment-detail-container-select {
@@ -5260,10 +5547,14 @@ a {
     margin-right: 10px;
   }
 }
-@media (max-width: 767px) {
-  .recruitment-detail-container-tech-search {
-    width: 230px;
-  }
+.recruitment-detail-container-tech-search {
+  width: 100%;
+}
+.recruitment-detail-container-tech-search ul {
+  display: flex;
+  flex-wrap: wrap;
+  grid-gap: 5px;
+  margin-top: 10px;
 }
 .recruitment-detail-container-tech-search-card {
   padding: 10px;

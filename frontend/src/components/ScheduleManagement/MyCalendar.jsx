@@ -1,19 +1,18 @@
-import { useLocation, useNavigate } from "react-router";
-import { useQuery } from "react-query";
-import { toast } from "react-toastify";
-import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import FullCalendar from "@fullcalendar/react";
+import { useQuery } from "react-query";
+import { useLocation, useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
-import CalendarList from "./CalendarList";
-import {
-  getCalendarAllSchedule,
-  getOverviewAllSchedule,
-} from "../../lib/apis/scheduleManagementApi";
 import { getProjectId } from "../../utils/getProjectId";
+import CalendarList from "./CalendarList";
+import { useScheduleClient } from "../../context/Client/ScheduleClientContext";
 
 const MyCalendar = () => {
   const projectId = getProjectId(useLocation());
   const navigate = useNavigate();
+
+  const { getCalendarAllSchedule } = useScheduleClient();
 
   const { data, status } = useQuery(
     ["calendarSchedule", projectId],
@@ -29,34 +28,8 @@ const MyCalendar = () => {
     }
   );
 
-  const { data: overview } = useQuery(
-    "overviewSchedule",
-    () => getOverviewAllSchedule(projectId),
-    {
-      retry: 0,
-      onError: (error) => {
-        navigate("/management");
-        toast.error(error.response.data.message);
-      },
-    }
-  );
-
   // 달력에 표시할 모든 일정들을 저장할 배열
   const events = [];
-
-  //const start = {
-  //  title: "👏start",
-  //  date: overview.startDate,
-  //  color: "#bebebe",
-  //};
-  //events.push(start);
-
-  //const finish = {
-  //  title: "🏆finish",
-  //  date: overview.endDate,
-  //  color: "#bebebe",
-  //};
-  //events.push(finish);
 
   data?.meetings?.forEach((meetings) => {
     const meeting = {
@@ -92,27 +65,29 @@ const MyCalendar = () => {
   };
 
   return (
-    <div className="schedule-calendar">
-      <div className="schedule-calendar-schedulelist">
-        {status === "success" && (
-          <FullCalendar
-            defaultView="dayGridMonth"
-            plugins={[dayGridPlugin]}
-            eventContent={eventContent}
-            events={events}
-            dayCellContent={dayCellContent}
-          />
-        )}
-        {status === "error" && (
-          <FullCalendar
-            defaultView="dayGridMonth"
-            plugins={[dayGridPlugin]}
-            eventContent={eventContent}
-            dayCellContent={dayCellContent}
-          />
-        )}
+    <div className="schedule-wrapper">
+      <div className="schedule-calendar">
+        <div className="schedule-calendar-schedulelist">
+          {status === "success" && (
+            <FullCalendar
+              defaultView="dayGridMonth"
+              plugins={[dayGridPlugin]}
+              eventContent={eventContent}
+              events={events}
+              dayCellContent={dayCellContent}
+            />
+          )}
+          {status === "error" && (
+            <FullCalendar
+              defaultView="dayGridMonth"
+              plugins={[dayGridPlugin]}
+              eventContent={eventContent}
+              dayCellContent={dayCellContent}
+            />
+          )}
+        </div>
+        <CalendarList />
       </div>
-      <CalendarList />
     </div>
   );
 };

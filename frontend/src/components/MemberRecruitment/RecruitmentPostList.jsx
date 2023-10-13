@@ -4,8 +4,8 @@ import { useQuery } from "react-query";
 import { useMediaQuery } from "@mui/material";
 
 import RecruitmentPost from "./RecruitmentPost";
-import { getAllRecruitmentPost } from "../../lib/apis/memberRecruitmentApi";
 import Pagination from "../common/Pagination";
+import { useRecruitmentClient } from "../../context/Client/RecruitmentClientContext";
 
 const RecruitmentPostList = () => {
   const isMobile = useMediaQuery("(max-width:1024px)");
@@ -15,6 +15,8 @@ const RecruitmentPostList = () => {
 
   // 총 페이지 개수
   let pageCount = 0;
+
+  const { getAllRecruitmentPost } = useRecruitmentClient();
 
   // 모집글 리스트 조회하는 함수
   const { data, isLoading } = useQuery(

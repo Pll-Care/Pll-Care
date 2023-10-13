@@ -2,10 +2,10 @@ import { Fragment, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 
+import { authActions } from "../../redux/authSlice";
+import { isToken } from "../../utils/localstorageHandler";
 import MyCalendar from "./MyCalendar";
 import ScheduleOption from "./ScheduleOption";
-import { isToken } from "../../utils/localstorageHandler";
-import { authActions } from "../../redux/authSlice";
 
 const ScheduleManagementPage = () => {
   const dispatch = useDispatch();

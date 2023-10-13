@@ -14,11 +14,13 @@ import EvaluationContent from "./EvaluationContent";
 
 import { getDateTimeDuration } from "../../utils/date";
 import { query } from "../../utils/mediaQuery";
-import { makeNewMidEvaluation } from "../../lib/apis/evaluationManagementApi";
+import { useScheduleClient } from "../../context/Client/ScheduleClientContext";
 
 const ScheduleEvaluationModal = (props) => {
   const { id } = useParams();
   const isMobile = useMediaQuery(query);
+
+  const { makeNewMidEvaluation } = useScheduleClient();
 
   const projectId = parseInt(id, 10);
   const scheduleId = parseInt(props.id, 10);
@@ -106,12 +108,10 @@ const ScheduleEvaluationModal = (props) => {
           )}
         </div>
         <div className="schedule-modal-content">
-          {!isMobile && (
-            <>
-              <h1>{props.title}</h1>
-              <h2>{time} 진행</h2>
-            </>
-          )}
+          <div className="schedule-modal-content-title">
+            <h1>{props.title}</h1>
+            <h2>{time} 진행</h2>
+          </div>
 
           {isMobile ? (
             <EvaluationMobileContent

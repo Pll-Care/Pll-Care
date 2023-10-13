@@ -20,14 +20,17 @@ const RecruitmentPost = ({ data }) => {
         )}
 
         <div className="recruitment-post-stack">
-          {data?.techStackList.map((tech) => (
+          {data?.techStackList.slice(0, 7).map((tech) => (
             <img key={tech.name} src={tech.imageUrl} alt={tech.name} />
           ))}
         </div>
 
         <div className="recruitment-post-project">
           <div className="recruitment-post-project-title">
-            <h2>{data?.title}</h2>
+            <div className="recruitment-post-title">
+              <h2>{data?.title}</h2>
+            </div>
+
             <div className="recruitment-post-like">
               {data?.liked ? (
                 <FavoriteIcon className="post-icon" fontSize="small" />

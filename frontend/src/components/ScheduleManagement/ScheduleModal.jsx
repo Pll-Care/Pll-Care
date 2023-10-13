@@ -1,18 +1,17 @@
-import React, { useState, useRef } from "react";
+import React, { useRef, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useMutation, useQuery, useQueryClient } from "react-query";
 
-import { useMediaQuery } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { useMediaQuery } from "@mui/material";
 
 import Button from "../common/Button";
 import ModalContainer from "../common/Modal/ModalContainer";
 
-import { getTeamMember } from "../../lib/apis/teamMemberManagementApi";
 import { getProjectId } from "../../utils/getProjectId";
 import { query } from "../../utils/mediaQuery";
-import { createNewSchedule } from "../../lib/apis/scheduleManagementApi";
+import { useScheduleClient } from "../../context/Client/ScheduleClientContext";
 
 const ScheduleModal = ({
   open,
@@ -22,6 +21,8 @@ const ScheduleModal = ({
 }) => {
   const projectId = getProjectId(useLocation());
   const isMobile = useMediaQuery(query);
+
+  const { createNewSchedule, getTeamMember } = useScheduleClient();
   // 멤버 리스트 받아오기
   const { data: names } = useQuery(["members", projectId], () =>
     getTeamMember(projectId)
@@ -155,7 +156,7 @@ const ScheduleModal = ({
       open={open}
       onClose={onClose}
       type="light"
-      width={isMobile ? "100%" : "70%"}
+      width={isMobile ? "100%" : "700px"}
       height={isMobile && "100%"}
       border={isMobile && "0px"}
     >
@@ -228,10 +229,9 @@ const ScheduleModal = ({
                 <Button
                   key={data.memberId}
                   text={data.name}
-                  size="small"
-                  type={
-                    memberIds.includes(data.memberId) ? "positive_dark" : ""
-                  }
+                  color={memberIds.includes(data.memberId) ? "white" : "green"}
+                  size="button_small"
+                  type={memberIds.includes(data.memberId) ? "positive" : ""}
                   onClick={() => handleButtonClick(data)}
                 />
               ))}{" "}
@@ -269,8 +269,23 @@ const ScheduleModal = ({
         </div>
         <div className="button-container">
           {isMobile && <Button text="취소" onClick={onClose} />}
-          {!addIsLoading && <Button text="생성 완료" onClick={submitNewPlan} />}
-          {addIsLoading && <Button text="로딩 중.." />}
+          {!addIsLoading && (
+            <Button
+              text="생성 완료"
+              color="white"
+              type="positive"
+              size="button_small"
+              onClick={submitNewPlan}
+            />
+          )}
+          {addIsLoading && (
+            <Button
+              text="로딩 중.."
+              color="white"
+              type="positive"
+              size="button_small"
+            />
+          )}
         </div>
       </div>
     </ModalContainer>
