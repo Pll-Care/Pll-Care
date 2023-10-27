@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { searchTechAPI } from "../lib/apis/profileApi";
 import getSearchKeywordWithCach from "../utils/searchStack/getSearchKeyWordWithCatche";
+import { useProfileClient } from "../context/Client/ProfileClientContext";
 
 const useSearchList = (keyword) => {
   const [searchList, sestSearchList] = useState([]);
+  const { searchTechAPI } = useProfileClient();
 
   useEffect(() => {
     const handleSearchData = async () => {
@@ -21,7 +22,7 @@ const useSearchList = (keyword) => {
       clearTimeout(delayTimer);
       sestSearchList([]);
     };
-  }, [keyword]);
+  }, [keyword, searchTechAPI]);
 
   return { searchList };
 };

@@ -6,9 +6,7 @@ const getSearchKeywordWithCach = (function () {
     if (cache[keyword] && cache[keyword].expiration > Date.now()) {
       return cache[keyword].data;
     } else {
-      return API(keyword).then((data) => {
-        // console.info("calling api");
-
+      return API(keyword).then(({ data }) => {
         if (data) {
           const expiration = Date.now() + EXPIRATION_TIME;
           const cacheData = { data: data.stackList, expiration };
