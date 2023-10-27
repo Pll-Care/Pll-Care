@@ -443,6 +443,49 @@ class ManagementService {
       }
     }
   }
+
+  getTeamMember(projectId) {
+    return this.httpClient.get(`/auth/project/${projectId}/memberlist`);
+  }
+
+  getApplicationUser(projectId) {
+    return this.httpClient.get(`/auth/project/${projectId}/applylist`);
+  }
+
+  postApplyAcceptAPI(projectId, memberId, postId) {
+    return this.httpClient.post(`/auth/project/${projectId}/applyaccept`, {
+      memberId,
+      postId,
+    });
+  }
+
+  postApplyRejectAPI(projectId, memberId, postId) {
+    return this.httpClient.post(`/auth/project/${projectId}/applyreject`, {
+      memberId,
+      postId,
+    });
+  }
+
+  putPositionChangeAPI(projectId, memberId, position) {
+    return this.httpClient.put(`/auth/project/${projectId}/positionchange`, {
+      memberId,
+      position,
+    });
+  }
+
+  putLeaderChangeAPI(projectId, memberId) {
+    return this.httpClient.put(`/auth/project/${projectId}/leaderchange`, {
+      memberId,
+    });
+  }
+
+  deleteKickoutAPI(projectId, memberId) {
+    return this.httpClient.delete(`/auth/project/${projectId}/kickout`, {
+      data: {
+        memberId,
+      },
+    });
+  }
 }
 
 export default ManagementService;

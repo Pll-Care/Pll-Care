@@ -2,16 +2,17 @@ import { useCallback, useState } from "react";
 import Button from "../common/Button";
 import MemberItem from "./MemberItem";
 import { useQuery } from "react-query";
-import { getTeamMember } from "../../lib/apis/teamMemberManagementApi";
 import { useProjectDetail } from "../../context/ProjectDetailContext";
+import { useManagementClient } from "../../context/Client/ManagementClientContext";
 
 const MemberManagement = () => {
   const [isEdit, setIsEdit] = useState(false);
   const { isLeader, projectId } = useProjectDetail();
+  const { getTeamMember } = useManagementClient();
 
   const {
     isLoading,
-    data: response = [],
+    data: { data } = [],
     refetch,
   } = useQuery(["members", projectId], () => getTeamMember(projectId));
 
@@ -38,12 +39,12 @@ const MemberManagement = () => {
         <ul className="memberMangement_members">
           {isLoading ? (
             <div>로딩중....</div>
-          ) : response.length === 0 ? (
+          ) : data.length === 0 ? (
             <p className="memberMangement_members_noMember">팀원이 없습니다.</p>
           ) : (
-            response.map((member) => (
+            data.map((member) => (
               <MemberItem
-                key={member.id}
+                key={member.memberId}
                 memberId={member.memberId}
                 name={member.name}
                 position={member.position}

@@ -46,6 +46,19 @@ const ManagementClientProvider = ({ children, managementService }) => {
     managementService.completeProject.bind(managementService);
   const getProjectData =
     managementService.getProjectData.bind(managementService);
+  const getTeamMember = managementService.getTeamMember.bind(managementService);
+  const getApplicationUser =
+    managementService.getApplicationUser.bind(managementService);
+  const postApplyAcceptAPI =
+    managementService.postApplyAcceptAPI.bind(managementService);
+  const postApplyRejectAPI =
+    managementService.postApplyRejectAPI.bind(managementService);
+  const putPositionChangeAPI =
+    managementService.putPositionChangeAPI.bind(managementService);
+  const putLeaderChangeAPI =
+    managementService.putLeaderChangeAPI.bind(managementService);
+  const deleteKickoutAPI =
+    managementService.deleteKickoutAPI.bind(managementService);
 
   return (
     <ManagementContext.Provider
@@ -71,6 +84,13 @@ const ManagementClientProvider = ({ children, managementService }) => {
         editProject,
         completeProject,
         getProjectData,
+        getTeamMember,
+        getApplicationUser,
+        postApplyAcceptAPI,
+        postApplyRejectAPI,
+        putPositionChangeAPI,
+        putLeaderChangeAPI,
+        deleteKickoutAPI,
       }}
     >
       {children}

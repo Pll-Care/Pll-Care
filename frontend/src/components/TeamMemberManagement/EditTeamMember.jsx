@@ -5,14 +5,10 @@ import { useParams } from "react-router";
 import { useState } from "react";
 import useModalIsOpen from "../../hooks/useModalIsOpen";
 import ChagePositionModal from "../common/Modal/ChangePositionModal";
-import {
-  deleteKickoutAPI,
-  putLeaderChangeAPI,
-  putPositionChangeAPI,
-} from "../../lib/apis/teamMemberManagementApi";
 import { useRouter } from "../../hooks/useRouter";
 import { toast } from "react-toastify";
 import AlertCheckModal from "../common/Modal/AlertCheckModal";
+import { useManagementClient } from "../../context/Client/ManagementClientContext";
 
 const EditTeamMember = ({ memberId, refetch, name, position }) => {
   const { id: projectId } = useParams();
@@ -20,6 +16,8 @@ const EditTeamMember = ({ memberId, refetch, name, position }) => {
   const { isOpen: openPositionModal, chageModalOpen: chagePositionModal } =
     useModalIsOpen();
   const { isOpen, chageModalOpen } = useModalIsOpen();
+  const { deleteKickoutAPI, putLeaderChangeAPI, putPositionChangeAPI } =
+    useManagementClient();
   const { routeTo } = useRouter();
 
   const openDeleteModal = () => {

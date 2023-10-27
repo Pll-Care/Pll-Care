@@ -4,11 +4,9 @@ import Button from "../common/Button";
 import { Link } from "react-router-dom";
 import useModalIsOpen from "../../hooks/useModalIsOpen";
 import AlertCheckModal from "../common/Modal/AlertCheckModal";
-import {
-  postApplyAcceptAPI,
-  postApplyRejectAPI,
-} from "../../lib/apis/teamMemberManagementApi";
+
 import { useProjectDetail } from "../../context/ProjectDetailContext";
+import { useManagementClient } from "../../context/Client/ManagementClientContext";
 
 const ApplicationItem = ({
   name,
@@ -21,6 +19,7 @@ const ApplicationItem = ({
   const [message, setMessage] = useState("");
   const { isOpen, chageModalOpen } = useModalIsOpen();
   const { projectId, isLeader } = useProjectDetail();
+  const { postApplyAcceptAPI, postApplyRejectAPI } = useManagementClient();
 
   const openAcceptModal = () => {
     setMessage("수락");
