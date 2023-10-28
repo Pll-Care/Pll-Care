@@ -20,7 +20,7 @@ const ApplicationStatus = () => {
       <div>
         {data && (
           <ul className="applicationStatus_users">
-            {data.length === 0 ? (
+            {data?.length === 0 ? (
               <p className="applicationStatus_users_noMember">
                 지원 인원이 없습니다.
               </p>

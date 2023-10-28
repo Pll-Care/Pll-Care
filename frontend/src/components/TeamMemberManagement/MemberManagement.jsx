@@ -39,7 +39,7 @@ const MemberManagement = () => {
         <ul className="memberMangement_members">
           {isLoading ? (
             <div>로딩중....</div>
-          ) : data.length === 0 ? (
+          ) : data?.length === 0 ? (
             <p className="memberMangement_members_noMember">팀원이 없습니다.</p>
           ) : (
             data.map((member) => (
