@@ -2,8 +2,7 @@ package fullcare.backend.security.oauth2.domain;
 
 import java.util.Map;
 
-// todo 각 getter별 NPE 방지용 검증코드가 필요함
-public class GoogleOAuthUser2Info extends OAuth2UserInfo{
+public class GoogleOAuthUser2Info extends OAuth2UserInfo {
 
     public GoogleOAuthUser2Info(Map<String, Object> attributes) {
         super(attributes);
@@ -11,7 +10,6 @@ public class GoogleOAuthUser2Info extends OAuth2UserInfo{
 
     @Override
     public String getId() {
-
         return (String) attributes.get("sub");
     }
 
@@ -23,5 +21,10 @@ public class GoogleOAuthUser2Info extends OAuth2UserInfo{
     @Override
     public String getEmail() {
         return (String) attributes.get("email");
+    }
+
+    @Override
+    public String getImageUrl() {
+        return (String) attributes.get("picture");
     }
 }
