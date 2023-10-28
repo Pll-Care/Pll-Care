@@ -67,7 +67,7 @@ const Schedule = (props) => {
 
         <div className="schedule-list-content-option">
           <h5>2023.04.23 수정</h5>
-          {members.map((member, index) => (
+          {members?.map((member, index) => (
             <Tooltip key={index} title={member}>
               <Avatar />
             </Tooltip>

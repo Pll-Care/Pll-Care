@@ -13,7 +13,7 @@ const EvaluationContent = ({
     <div className="schedule-modal-content-evaluation">
       <h3>참여자</h3>
       <div className="schedule-modal-content-evaluation-member">
-        {members.map((member, index) => (
+        {members?.map((member, index) => (
           <Button
             key={index}
             text={member.name}
@@ -26,7 +26,7 @@ const EvaluationContent = ({
 
       <h3>뱃지 선택</h3>
       <div className="schedule-modal-content-evaluation-badge">
-        {badges.map((b) => (
+        {badges?.map((b) => (
           <Tooltip title={b.name} key={b.name}>
             <div
               className={`modal-badge ${badge === b.value ? "selected" : ""}`}

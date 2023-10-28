@@ -132,7 +132,7 @@ const ScheduleDetailModal = ({
   // 멤버 클릭했을 때
   const handleMemberClick = (data) => {
     setFormValues((prevFormValues) => {
-      const updatedMemberIds = prevFormValues.memberIds.map((member) => {
+      const updatedMemberIds = prevFormValues.memberIds?.map((member) => {
         if (member.id === data.id) {
           return {
             ...member,
@@ -289,7 +289,7 @@ const ScheduleDetailModal = ({
             <div className="schedule-detail-modal-member">
               {isEdit && (
                 <div className="schedule-detail-modal-member-buttons">
-                  {memberIds.map((member, index) => (
+                  {memberIds?.map((member, index) => (
                     <Button
                       text={member.name}
                       key={index}
@@ -302,7 +302,7 @@ const ScheduleDetailModal = ({
               )}
               {!isEdit && (
                 <>
-                  {data?.members.map(
+                  {data?.members?.map(
                     (member) =>
                       member.in && <h6 key={member.id}>{member.name + " "} </h6>
                   )}

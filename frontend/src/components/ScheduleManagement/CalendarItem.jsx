@@ -14,7 +14,7 @@ const CalendarItem = ({ data }) => {
       <div className="calendar-list-item-name">
         <h5>{location}</h5>
         <div className="calendar-list-item-name-avatar">
-          {data.members.map((member, index) => (
+          {data.members?.map((member, index) => (
             <Tooltip key={index} title={member.name}>
               <Avatar src={member.imageUrl} />
             </Tooltip>

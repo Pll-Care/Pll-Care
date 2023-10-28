@@ -145,7 +145,7 @@ const ScheduleItem = (props) => {
         <div className="schedule-list-content-option">
           <h5>{modifyDate} 수정</h5>
           <div className="schedule-list-content-option-mui">
-            {props.data.members.map((member, index) => (
+            {props.data.members?.map((member, index) => (
               <Tooltip key={index} title={member.name}>
                 <Avatar src={member.imageUrl} />
               </Tooltip>

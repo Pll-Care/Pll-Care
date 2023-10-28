@@ -12,7 +12,7 @@ const EvaluationMobileContent = ({
     <div className="schedule-modal-mobile">
       <h3>참여자 선택</h3>
       <div className="schedule-modal-content-evaluation-member">
-        {members.map((member, index) => (
+        {members?.map((member, index) => (
           <Button
             key={index}
             text={member.name}
@@ -24,7 +24,7 @@ const EvaluationMobileContent = ({
       </div>
       <h3>뱃지 선택</h3>
       <div className="schedule-modal-mobile-badge">
-        {badges.map((b) => (
+        {badges?.map((b) => (
           <div className="schedule-modal-mobile-badge-item" key={b.name}>
             <div
               className={`modal-badge ${badge === b.value ? "selected" : ""}`}

@@ -49,7 +49,7 @@ const ScheduleOption = () => {
     <div className="schedule-page-container">
       <div className="schedule-option-container">
         <div className="schedule-option">
-          {options.map((option, index) => (
+          {options?.map((option, index) => (
             <Button
               key={index}
               radius="big"
