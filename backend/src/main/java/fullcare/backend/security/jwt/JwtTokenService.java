@@ -15,15 +15,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Key;
-import java.util.*;
+import java.util.Collections;
+import java.util.Date;
 
-@Transactional(readOnly = true)
 @Service
 @Slf4j
 public class JwtTokenService {
@@ -32,12 +31,8 @@ public class JwtTokenService {
     private final long accessTokenValidationMilliseconds;
     private final long refreshTokenValidationMilliseconds;
     private final MemberRepository memberRepository;
-    private Key key;
-    @Value(("${jwt.access.header}"))
-    private String accessHeader;
 
-    @Value(("${jwt.refresh.header}"))
-    private String refreshHeader;
+    private Key key;
 
     public JwtTokenService(@Value("${jwt.secret}") String secret, @Value("${jwt.access.token-validity-in-seconds}") long accessTokenValidationMilliseconds,
                            @Value("${jwt.refresh.token-validity-in-seconds}") long refreshTokenValidationMilliseconds, MemberRepository memberRepository) {
@@ -54,56 +49,56 @@ public class JwtTokenService {
     }
 
     public String createAccessToken(CustomOAuth2User oAuth2User) {
-
-        long now = new Date().getTime();
-        Date validity = new Date(now + accessTokenValidationMilliseconds);
-
-        HashMap<String, Object> claims = new HashMap<>();
-        claims.put("sub", oAuth2User.getName());
-        claims.put("role", oAuth2User.getAuthorities());
-        claims.put("nickname", oAuth2User.getUsername());
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + accessTokenValidationMilliseconds);
 
         return Jwts.builder()
-                .setExpiration(validity)
-                .addClaims(claims)
+                .setSubject(oAuth2User.getName())
+                .claim("role", oAuth2User.getAuthorities())
+                .claim("username", oAuth2User.getUsername())
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
                 .signWith(key, SignatureAlgorithm.HS512)
-                .compact();
-
-
-    }
-
-    public String createRefreshToken(CustomOAuth2User oAuth2User) {
-
-        long now = new Date().getTime();
-        Date validity = new Date(now + refreshTokenValidationMilliseconds);
-
-        HashMap<String, Object> claims = new HashMap<>();
-        claims.put("sub", oAuth2User.getName());
-
-        return Jwts.builder()
-                .setExpiration(validity)
-                .addClaims(claims)
-                .signWith(key, SignatureAlgorithm.HS512)
+                .setHeaderParam("typ", "JWT")
                 .compact();
     }
 
     public String[] reIssueTokens(String refreshToken, Authentication authentication) {
 
+    public String createRefreshToken(CustomOAuth2User oAuth2User) {
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + refreshTokenValidationMilliseconds);
+
+        return Jwts.builder()
+                .setSubject(oAuth2User.getName())
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
+                .signWith(key, SignatureAlgorithm.HS512)
+                .setHeaderParam("typ", "JWT")
+                .compact();
+    }
+
+
+    @Transactional
+    public String[] reIssueTokens(String refreshToken) {
+        Member findMember = getMemberByJwtToken(refreshToken);
         String[] tokens = new String[2];
-        CustomOAuth2User user = (CustomOAuth2User) authentication.getPrincipal();
-        Optional<Member> findMember = memberRepository.findById(Long.parseLong(user.getName()));
-        if (findMember.isPresent()) {
-            if (findMember.get().getRefreshToken().equals(refreshToken)) { // refreshToken이 동일할 경우
-                String newRefreshToken = createRefreshToken(user);
-                String newAccessToken = createAccessToken(user);
-                tokens[0] = newAccessToken;
-                tokens[1] = newRefreshToken;
-                findMember.get().updateRefreshToken(newRefreshToken);
-                return tokens;
-            }
+
+        if (findMember.getRefreshToken().equals(refreshToken)) {
+            CustomOAuth2User findUser = CustomOAuth2User.create(findMember);
+            String newAccessToken = createAccessToken(findUser);
+            String newRefreshToken = createRefreshToken(findUser);
+
+            tokens[0] = newAccessToken;
+            tokens[1] = newRefreshToken;
+            findMember.updateRefreshToken(newRefreshToken);
+            return tokens;
         }
+
         log.info("등록되지 않은 사용자입니다.");
-        throw new CustomJwtException("등록되지 않은 사용자입니다.", JwtErrorCode.NOT_FOUND_USER);
+
+        // ! RTR에 의해 이미 교체된 토큰일 경우 -> 즉, 이전에 한번 사용된 리프레시 토큰일 경우
+        throw new CustomJwtException(JwtErrorCode.INVALID_REFRESH_TOKEN);
     }
 
 
@@ -114,37 +109,35 @@ public class JwtTokenService {
             return true;
         } catch (SecurityException | MalformedJwtException e) {
             log.info("잘못된 JWT 서명입니다.");
-            throw new CustomJwtException("잘못된 JWT 서명입니다.");
+            throw new CustomJwtException(JwtErrorCode.MALFORMED_TOKEN);
         } catch (ExpiredJwtException e) {
             log.info("만료된 JWT 토큰입니다.");
-            throw new CustomJwtException("만료된 JWT 토큰입니다.");
+            throw new CustomJwtException(JwtErrorCode.EXPIRED_TOKEN);
         } catch (UnsupportedJwtException e) {
             log.info("지원되지 않는 JWT 서명입니다.");
-            throw new CustomJwtException("지원되지 않는 JWT 서명입니다.");
+            throw new CustomJwtException(JwtErrorCode.UNSUPPORTED_TOKEN);
         } catch (IllegalArgumentException e) {
             log.info("JWT 토큰이 잘못되었습니다.");
-            throw new CustomJwtException("JWT 토큰이 잘못되었습니다.");
+            throw new CustomJwtException(JwtErrorCode.ILLEGAL_TOKEN);
         }
     }
 
-    public Authentication getAuthentication(String accessToken) {
+    private Member getMemberByJwtToken(String jwtToken) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
-                .parseClaimsJws(accessToken)
+                .parseClaimsJws(jwtToken)
                 .getBody();
 
         String memberId = claims.getSubject();
+        return memberRepository.findById(Long.valueOf(memberId)).orElseThrow(() -> new CustomJwtException(JwtErrorCode.NOT_FOUND_USER));
+    }
 
-        Member member = memberRepository.findById(Long.valueOf(memberId)).orElseThrow(() -> new CustomJwtException("등록되지 않은 사용자입니다.", JwtErrorCode.NOT_FOUND_USER));
-        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(member.getRole().getValue()));
 
-        return new UsernamePasswordAuthenticationToken(member, null, authorities);
+    public Authentication getAuthentication(String jwtToken) {
+        Member findMember = getMemberByJwtToken(jwtToken);
 
-        // * 구버전
-//        int i = member.getOAuth2Id().indexOf('_');
-//        String providerName = member.getOAuth2Id().substring(0, i);
-//        return new OAuth2AuthenticationToken(oAuth2User, oAuth2User.getAuthorities(), providerName);
+        return new UsernamePasswordAuthenticationToken(findMember, null, Collections.singletonList(new SimpleGrantedAuthority(findMember.getRole().getValue())));
     }
 
 }

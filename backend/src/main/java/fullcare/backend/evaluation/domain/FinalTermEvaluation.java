@@ -5,6 +5,7 @@ import fullcare.backend.evaluation.dto.request.FinalEvalUpdateRequest;
 import fullcare.backend.global.State;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.project.domain.Project;
+import fullcare.backend.projectmember.domain.ProjectMember;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -21,8 +22,7 @@ public class FinalTermEvaluation {
     @Column(name = "final_eval_id")
     private Long id;
 
-    @Lob
-    @Column(name = "content", nullable = false)
+    @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @Embedded
@@ -30,26 +30,24 @@ public class FinalTermEvaluation {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "evaluator_id", nullable = false)
-    private Member evaluator;
+    private ProjectMember evaluator;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "evaluated_id", nullable = false)
-    private Member evaluated;
+    private ProjectMember evaluated;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "project_id", nullable = false)
+    @JoinColumn(name = "project_id")
     private Project project;
-    @Enumerated(EnumType.STRING)
-    private State state;
+
 
     @Builder(builderMethodName = "createNewFinalEval")
-    public FinalTermEvaluation(String content, Score score, Member evaluator, Member evaluated, Project project, State state) {
+    public FinalTermEvaluation(String content, Score score, ProjectMember evaluator, ProjectMember evaluated, Project project) {
         this.content = content;
         this.score = score;
         this.evaluator = evaluator;
         this.evaluated = evaluated;
         this.project = project;
-        this.state = state;
     }
     public void update(FinalEvalUpdateRequest finalEvalUpdateRequest){
         this.content = finalEvalUpdateRequest.getContent();

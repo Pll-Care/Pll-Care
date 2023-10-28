@@ -1,7 +1,6 @@
 package fullcare.backend.schedule.dto;
 
 import fullcare.backend.member.domain.Member;
-import fullcare.backend.schedule.domain.Address;
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +17,7 @@ public class MilestoneDto {
     private String content;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private List<MemberDto> members = new ArrayList<>();
+    private List<ScheduleMemberDto> members = new ArrayList<>();
 
     @Builder
     public MilestoneDto(Long scheduleId, String title, String content, LocalDateTime startDate, LocalDateTime endDate) {
@@ -29,7 +28,7 @@ public class MilestoneDto {
         this.endDate = endDate;
     }
     public void addMember(Member member){
-        members.add(MemberDto.builder()
+        members.add(ScheduleMemberDto.builder()
                 .id(member.getId())
                 .name(member.getName()).imageUrl(member.getImageUrl()).build());
     }

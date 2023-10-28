@@ -2,27 +2,37 @@ package fullcare.backend.project.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import fullcare.backend.global.State;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Lob;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
 
 @Getter
 public class ProjectUpdateRequest {
-    @NotNull
+
+    @NotBlank
+    @Length(min = 2, max = 20)
     private String title;
-    @NotNull
+
+    @NotEmpty
     private String description;
+
+    // ? NotBlank인가 NotEmpty인가?
     @NotNull
     private State state;
-    @NotNull
+
+
+    @FutureOrPresent
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate startDate;
-    @NotNull
+
+    @FutureOrPresent
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate endDate;
+    
+    private String imageUrl;
 }

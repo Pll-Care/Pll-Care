@@ -11,11 +11,6 @@ import java.util.List;
 public class ScheduleCalenderMonthResponse {
     List<MeetingDto> meetings = new ArrayList<>();
     List<MilestoneDto> milestones = new ArrayList<>();
-
-//    public ScheduleMonthResponse(List<MeetingDto> meetings, List<MilestoneDto> milestones) {
-//        this.meetings = meetings;
-//        this.milestones = milestones;
-//    }
     public void addMeeting(MeetingDto meetingDto){
         meetings.add(meetingDto);
     }

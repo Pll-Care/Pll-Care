@@ -1,29 +1,25 @@
 package fullcare.backend.schedule.dto;
 
-import fullcare.backend.schedule.domain.Address;
 import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+
 @Data
 public class ScheduleDto {
-    private Long projectId;
-    private Long scheduleId;
+    private Long id;
     private String title;
-    private String content;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private Address address;
+    private Long order;
+
     @Builder
-    public ScheduleDto(Long projectId, Long scheduleId, String title, String content, LocalDateTime startDate, LocalDateTime endDate, Address address) {
-        this.projectId = projectId;
-        this.scheduleId = scheduleId;
+    public ScheduleDto(Long id, String title, LocalDateTime startDate, LocalDateTime endDate, Long order) {
+        this.id = id;
         this.title = title;
-        this.content = content;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.address = address;
+        this.order = order;
     }
+
 }

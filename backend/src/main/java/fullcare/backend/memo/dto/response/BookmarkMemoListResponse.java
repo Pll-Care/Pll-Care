@@ -1,28 +1,26 @@
 package fullcare.backend.memo.dto.response;
 
-import fullcare.backend.memo.domain.BookmarkMemo;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.time.LocalDateTime;
 
 @Getter
 public class BookmarkMemoListResponse {
 
-    private MemoListResponse memoListResponse;
-    private boolean isBookmarked;
-
+    private Long memoId;
+    private String author;
+    private String title;
+    private LocalDateTime createdDate;
+    private LocalDateTime modifiedDate;
 
     @Builder
-    public BookmarkMemoListResponse(MemoListResponse memoListResponse, boolean isBookmarked) {
-        this.memoListResponse = memoListResponse;
-        this.isBookmarked = isBookmarked;
-    }
-
-    public static BookmarkMemoListResponse entityToDto(BookmarkMemo bookmarkMemo) {
-        MemoListResponse memoListResponse = MemoListResponse.entityToDto(bookmarkMemo.getMemo());
-
-        return BookmarkMemoListResponse.builder()
-                .memoListResponse(memoListResponse)
-                .isBookmarked(bookmarkMemo.isBookmarked())
-                .build();
+    public BookmarkMemoListResponse(Long memoId, String author, String title,
+                                    LocalDateTime createdDate, LocalDateTime modifiedDate) {
+        this.memoId = memoId;
+        this.author = author;
+        this.title = title;
+        this.createdDate = createdDate;
+        this.modifiedDate = modifiedDate;
     }
 }

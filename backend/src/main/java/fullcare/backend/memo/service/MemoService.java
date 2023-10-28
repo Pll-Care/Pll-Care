@@ -1,20 +1,26 @@
 package fullcare.backend.memo.service;
 
-import fullcare.backend.memo.domain.BookmarkMemo;
+import fullcare.backend.bookmarkmemo.domain.BookmarkMemo;
+import fullcare.backend.bookmarkmemo.repository.BookmarkMemoRepository;
+import fullcare.backend.global.errorcode.MemoErrorCode;
+import fullcare.backend.global.exceptionhandling.exception.CompletedProjectException;
+import fullcare.backend.global.exceptionhandling.exception.EntityNotFoundException;
+import fullcare.backend.global.exceptionhandling.exception.UnauthorizedAccessException;
 import fullcare.backend.memo.domain.Memo;
+import fullcare.backend.memo.dto.request.MemoBookmarkRequest;
 import fullcare.backend.memo.dto.request.MemoCreateRequest;
+import fullcare.backend.memo.dto.request.MemoDeleteRequest;
 import fullcare.backend.memo.dto.request.MemoUpdateRequest;
+import fullcare.backend.memo.dto.response.BookmarkMemoListResponse;
 import fullcare.backend.memo.dto.response.MemoDetailResponse;
 import fullcare.backend.memo.dto.response.MemoListResponse;
-import fullcare.backend.memo.repository.BookmarkMemoRepository;
 import fullcare.backend.memo.repository.MemoRepository;
-import fullcare.backend.project.domain.Project;
-import fullcare.backend.project.repository.ProjectRepository;
-import jakarta.persistence.EntityNotFoundException;
+import fullcare.backend.project.service.ProjectService;
+import fullcare.backend.projectmember.domain.ProjectMember;
+import fullcare.backend.util.CustomPageImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,61 +37,141 @@ public class MemoService {
 
     private final MemoRepository memoRepository;
     private final BookmarkMemoRepository bookmarkMemoRepository;
-    private final ProjectRepository projectRepository;
+
+    private final ProjectService projectService;
 
     @Transactional
-    public Memo createMemo(MemoCreateRequest request, String username) {
-        Project project = projectRepository.findById(request.getProjectId()).orElseThrow(() -> new EntityNotFoundException("해당 프로젝트가 존재하지 않습니다."));
+    public Long createMemo(Long memberId, MemoCreateRequest request) {
+        try {
+            ProjectMember findProjectMember = projectService.isProjectAvailable(request.getProjectId(), memberId, false);
 
-        Memo newMemo = Memo.createNewMemo()
-                .project(project)
-                .title(request.getTitle())
-                .content(request.getContent())
-                .author(username)
-                .build();
+            Memo newMemo = Memo.createNewMemo()
+                    .project(findProjectMember.getProject())
+                    .author(findProjectMember)
+                    .title(request.getTitle())
+                    .content(request.getContent())
+                    .build();
 
-        Memo memo = memoRepository.save(newMemo);
-        return memo;
+            return memoRepository.save(newMemo).getId();
+
+        } catch (CompletedProjectException completedProjectException) {
+            throw new CompletedProjectException(MemoErrorCode.INVALID_CREATE);
+        }
     }
 
     @Transactional
-    public void updateMemo(Long memoId, MemoUpdateRequest request, String username) {
-        Memo memo = memoRepository.findById(memoId).orElseThrow(() -> new EntityNotFoundException("해당 회의록이 존재하지 않습니다."));
+    public Long updateMemo(Long memberId, Long memoId, MemoUpdateRequest request) {
+        try {
+            projectService.isProjectAvailable(request.getProjectId(), memberId, false);
 
-        memo.updateAll(request.getTitle(), request.getContent(), username);
-        //        memoRepository.flush();
-        //        ! JPA Auditing으로 lastModified 저장할 때, flush를 해야 반영되는지 확인이 필요
+            Memo findMemo = findMemo(memoId);
+            findMemo.updateAll(request.getTitle(), request.getContent());
+
+            return findMemo.getId();
+
+        } catch (CompletedProjectException completedProjectException) {
+            throw new CompletedProjectException(MemoErrorCode.INVALID_MODIFY);
+        }
 
     }
 
     @Transactional
-    public void deleteMemo(Long memoId) {
-        // * 엔티티가 발견되지 않을 시, 예외 던지지 않음 (삭제가 실패되었음을 알려줄 필요는 없나?)
-        memoRepository.deleteById(memoId);
+    public void deleteMemo(Long memberId, Long memoId, MemoDeleteRequest request) {
+        try {
+            ProjectMember findProjectMember = projectService.isProjectAvailable(request.getProjectId(), memberId, false);
+            Memo findMemo = findMemo(memoId);
+
+            if (findMemo.getAuthor().getId() != findProjectMember.getId() && !findProjectMember.isLeader()) {
+                throw new UnauthorizedAccessException(MemoErrorCode.UNAUTHORIZED_DELETE);
+            }
+
+            memoRepository.delete(findMemo);
+
+        } catch (CompletedProjectException completedProjectException) {
+            throw new CompletedProjectException(MemoErrorCode.INVALID_DELETE);
+        }
+
+
     }
 
     public Memo findMemo(Long memoId) {
-        return memoRepository.findById(memoId).orElseThrow(() -> new EntityNotFoundException("해당 회의록이 존재하지 않습니다."));
+        return memoRepository.findById(memoId).orElseThrow(() -> new EntityNotFoundException(MemoErrorCode.MEMO_NOT_FOUND));
     }
 
-    public MemoDetailResponse findMemoDetailResponse(Long memberId, Long memoId) {
-        Optional<BookmarkMemo> findMemo = bookmarkMemoRepository.findByMemberIdAndMemoId(memberId, memoId);
+    public MemoDetailResponse findMemoDetailResponse(Long projectId, Long memberId, Long memoId) {
 
-        if (findMemo.isPresent()) {
-            log.info("findMemo.isPresent() : {}", findMemo.isPresent());
-            return MemoDetailResponse.entityToDto(findMemo.get().getMemo(), true);
+        ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, memberId, true);
+
+        MemoDetailResponse findMemoDetailResponse = memoRepository.findMemoDetailResponse(findProjectMember.getId(), memoId).orElseThrow(() -> new EntityNotFoundException(MemoErrorCode.MEMO_NOT_FOUND));
+
+        if (findMemoDetailResponse.getAuthorId() == findProjectMember.getId() || findProjectMember.isLeader()) {
+            findMemoDetailResponse.setDeletable(true);
+        } else {
+            findMemoDetailResponse.setDeletable(false);
         }
 
-        Memo memo = memoRepository.findById(memoId).orElseThrow(() -> new EntityNotFoundException("해당 회의록이 존재하지 않습니다."));
-        return MemoDetailResponse.entityToDto(memo, false);
+        if (findProjectMember.getProject().isCompleted()) {
+            findMemoDetailResponse.setEditable(false);
+            findMemoDetailResponse.setDeletable(false);
+        } else {
+            findMemoDetailResponse.setEditable(true);
+        }
+
+        return findMemoDetailResponse;
     }
 
 
-    public Page<MemoListResponse> findMemoList(Long projectId, Pageable pageable) {
-        Page<Memo> memoList = memoRepository.findList(projectId, pageable);
-        List<MemoListResponse> content = memoList.stream().map(MemoListResponse::entityToDto)
+    public CustomPageImpl<MemoListResponse> findMemoList(Long projectId, Long memberId, Pageable pageable) {
+        ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, memberId, true);
+
+        Page<Memo> result = memoRepository.findListByProjectId(findProjectMember.getProject().getId(), pageable);
+        List<MemoListResponse> content = result.stream().map(m -> MemoListResponse.builder()
+                        .memoId(m.getId())
+                        .title(m.getTitle())
+                        .author(m.getAuthor().getMember().getName())
+                        .createdDate(m.getCreatedDate())
+                        .modifiedDate(m.getModifiedDate())
+                        .build())
                 .collect(Collectors.toList());
 
-        return new PageImpl<>(content, pageable, content.size());
+        return new CustomPageImpl<>(content, pageable, result.getTotalElements());
+    }
+
+    public CustomPageImpl<BookmarkMemoListResponse> findBookmarkMemoList(Long projectId, Long memberId, Pageable pageable) {
+        ProjectMember findProjectMember = projectService.isProjectAvailable(projectId, memberId, true);
+
+        Page<BookmarkMemo> result = bookmarkMemoRepository.findList(findProjectMember.getId(), pageable);
+
+        List<BookmarkMemoListResponse> content = result.stream().map(bmm -> BookmarkMemoListResponse.builder()
+                        .memoId(bmm.getMemo().getId())
+                        .title(bmm.getMemo().getTitle())
+                        .author(bmm.getMemo().getAuthor().getMember().getName())
+                        .createdDate(bmm.getMemo().getCreatedDate())
+                        .modifiedDate(bmm.getMemo().getModifiedDate())
+                        .build())
+                .collect(Collectors.toList());
+
+        return new CustomPageImpl<>(content, pageable, result.getTotalElements());
+    }
+
+    @Transactional
+    public void bookmarkMemo(Long memberId, Long memoId, MemoBookmarkRequest request) {
+        try {
+            ProjectMember findProjectMember = projectService.isProjectAvailable(request.getProjectId(), memberId, false);
+            Memo findMemo = findMemo(memoId);
+
+            Optional<BookmarkMemo> findBookmarkMemo = bookmarkMemoRepository.findByMemoAndProjectMember(findMemo, findProjectMember);
+
+            if (!findBookmarkMemo.isPresent()) {
+                BookmarkMemo newBookmarkMemo = findProjectMember.bookmark(findMemo);
+                bookmarkMemoRepository.save(newBookmarkMemo);
+            } else {
+                bookmarkMemoRepository.delete(findBookmarkMemo.get());
+            }
+
+        } catch (CompletedProjectException completedProjectException) {
+            throw new CompletedProjectException(MemoErrorCode.INVALID_BOOKMARK);
+        }
+
     }
 }

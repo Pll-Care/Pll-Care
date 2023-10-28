@@ -2,16 +2,20 @@ package fullcare.backend.evaluation.domain;
 
 import fullcare.backend.evaluation.dto.ScoreDto;
 import jakarta.persistence.Embeddable;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Embeddable
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Score {
-    private double sincerity;
-    private double jobPerformance;
-    private double punctuality;
-    private double communication;
+    private int sincerity;
+    private int jobPerformance;
+    private int punctuality;
+    private int communication;
 
     public static double avg(ScoreDto score){
         return (score.getSincerity() + score.getJobPerformance() + score.getPunctuality() + score.getCommunication())/4;
@@ -26,4 +30,6 @@ public class Score {
         }
         return true;
     }
+
+
 }
