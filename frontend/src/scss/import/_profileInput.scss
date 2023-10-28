@@ -1,0 +1,55 @@
+.profileInput {
+  text-align: center;
+  border: none;
+  background-color: $gray-100;
+  border-radius: 5px;
+  color: $gray-400;
+  box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.08);
+
+  padding: 8px 10px;
+  font-size: 14px;
+
+  &:focus {
+    outline: none;
+  }
+
+  &_width100 {
+    width: 100%;
+  }
+
+  &_width50 {
+    width: 50%;
+  }
+
+  &_width45 {
+    width: 45%;
+  }
+
+  &-header {
+    text-align: center;
+    color: $gray-400;
+
+    border: 1px solid $gray-100;
+    background-color: $gray-100;
+    border-radius: 10px;
+
+    padding: 4px 10px;
+    @include button_02;
+  }
+
+  &-header:focus {
+    outline: none;
+  }
+}
+.profileInput::placeholder {
+  color: $gray-400;
+}
+
+.profileInput-header::placeholder {
+  color: $gray-400;
+}
+@include mobile {
+  .profileInput-header {
+    @include m_heading_03;
+  }
+}

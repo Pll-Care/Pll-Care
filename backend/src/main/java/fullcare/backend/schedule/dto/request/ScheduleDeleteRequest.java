@@ -6,7 +6,6 @@ import lombok.Data;
 
 @Data
 public class ScheduleDeleteRequest {
-
     @NotNull
     private Long projectId;
 

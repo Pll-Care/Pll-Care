@@ -1,75 +1,110 @@
-.login-modal-wrapper {
-    background:rgba(0,0,0,0.8); 
-    backdrop-filter: blur(5px);
-    opacity: 90%;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
+.login-modal {
+  border-radius: 20px;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  padding: 0;
 
-    .login-modal {
-        border-radius: 20px;
-        text-align: center;
-        width: 480px;
-        height: 480px;
-        position: absolute;
-        top: 50px;
-        left: calc(50% - 240px);
-        background-color: white;
-        @include putCenter;
-        @include displayFlex(column);
-    
-        .login-logo-img {
-            border: $border;
-            width: 80px;
-            height: 80px;
-            @include putCenter;
-        }
-    
-        .login-heading {
-            font: {
-                family: $heading-font;
-                size: $heading-font-size;
-            }
-            padding: 12px;
-        }
-    
-        .login-text {
-            font: {
-                family: $body-font;
-                size: $body-font-size;
-            }
-            color: #9AAD84;
-            line-height: $line-height;
-            padding: 12px;
-            margin-bottom: 30px;
-        }
-    
-        .login-button-wrapper {
-            width: 298px;
-            padding: 10px;
-            @include displayFlex(row, space-around);
-    
-            .login-button {
-                width: 70px;
-                height: 70px;
-                cursor: pointer;
-                border-radius: 10px;
-                border: none;
-                box-shadow: 2px 2px 9px rgb(189, 186, 186);
-            
-                &-google {
-                    @include backgroundImage('../assets/google-login-button-img.png', center, no-repeat, 100%, 100%);
-                }
-            
-                &-kakao {  
-                    @include backgroundImage('../assets/kakao-login-button-img.png', center, no-repeat, 100%, 100%); 
-                }
-            
-                &-naver {
-                    @include backgroundImage('../assets/naver-login-button-img.png', center, no-repeat, 100%, 100%);
-                }
-            }
-        }    
+  .login-logo-img {
+    position: absolute;
+    top: 8%;
+
+    figure {
+      width: 68px;
+      height: 68px;
+
+      background: {
+        position: center;
+        repeat: no-repeat;
+        size: 100%;
+      }
     }
+
+    @include putCenter;
+  }
+
+  .login-heading {
+    position: absolute;
+    top: 27%;
+    padding: 12px;
+
+    h1 {
+      @include heading_01;
+    }
+  }
+
+  .login-text {
+    color: #9aad84;
+    line-height: $line-height;
+    position: absolute;
+    top: 42%;
+    padding: 12px;
+    margin-bottom: 30px;
+
+    @include mobile {
+      @include m_heading_01;
+    }
+
+    @include body_04;
+  }
+
+  .login-button-wrapper {
+    width: 298px;
+    padding: 10px;
+    position: absolute;
+    top: 67%;
+
+    .login-button {
+      width: 70px;
+      height: 70px;
+      cursor: pointer;
+      border-radius: 10px;
+      border: none;
+      box-shadow: 2px 2px 9px rgb(189, 186, 186);
+
+      &-google {
+        @include backgroundImage(
+          "../assets/google-login-button-img.png",
+          center,
+          no-repeat,
+          100%,
+          100%
+        );
+      }
+
+      &-kakao {
+        @include backgroundImage(
+          "../assets/kakao-login-button-img.png",
+          center,
+          no-repeat,
+          100%,
+          100%
+        );
+      }
+
+      &-naver {
+        @include backgroundImage(
+          "../assets/naver-login-button-img.png",
+          center,
+          no-repeat,
+          100%,
+          100%
+        );
+      }
+
+      @include mobile {
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    @include mobile {
+      width: 250px;
+    }
+
+    @include displayFlex(row, space-around);
+  }
+
+  @include putCenter;
+  @include displayFlex(column);
 }

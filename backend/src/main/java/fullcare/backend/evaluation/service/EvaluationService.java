@@ -1,6 +1,5 @@
 package fullcare.backend.evaluation.service;
 
-
 import fullcare.backend.evaluation.dao.BadgeDao;
 import fullcare.backend.evaluation.dao.ScoreDao;
 import fullcare.backend.evaluation.domain.EvaluationBadge;

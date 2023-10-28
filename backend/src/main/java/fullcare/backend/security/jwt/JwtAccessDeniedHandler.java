@@ -15,7 +15,6 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-
 /*
     사용자 권한 없는 경우
  */

@@ -9,7 +9,7 @@ import fullcare.backend.global.errorcode.ProjectErrorCode;
 import fullcare.backend.global.exceptionhandling.exception.InvalidDateRangeException;
 import fullcare.backend.member.domain.Member;
 import fullcare.backend.memo.domain.Memo;
-import fullcare.backend.post.domain.Post;
+import fullcare.backend.project.dto.request.ProjectUpdateRequest;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import fullcare.backend.projectmember.domain.ProjectMemberType;
 import fullcare.backend.schedule.domain.Schedule;

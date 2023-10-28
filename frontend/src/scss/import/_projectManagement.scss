@@ -1,0 +1,78 @@
+.project-management {
+  min-height: 65vh;
+  display: flex;
+  align-items: center;
+  width: 840px;
+
+  .project-button-wrapper {
+    figure {
+      border-radius: 50%;
+      width: 210px;
+      height: 210px;
+      margin-bottom: 30px;
+      background: {
+        position: center;
+        repeat: no-repeat;
+        size: 100% 100%;
+      }
+      cursor: pointer;
+
+      @include mobile {
+        margin-bottom: 10px;
+        width: 180px;
+        height: 180px;
+      }
+    }
+
+    h1 {
+      color: $green-500;
+
+      @include mobile {
+        @include m_heading_02;
+      }
+
+      @include heading_04;
+    }
+
+    @include displayFlex(column, space-around);
+  }
+
+  .completed-project,
+  .ongoing-project {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+
+    @include tablet {
+      gap: 25px;
+
+      @include displayFlex(column);
+    }
+
+    @include mobile {
+      gap: 40px;
+
+      @include displayFlex(column);
+    }
+  }
+
+  .completed-project {
+    .project-button-wrapper {
+      figure {
+        pointer-events: none;
+      }
+    }
+  }
+
+  @include tablet {
+    width: 100%;
+  }
+
+  @include mobile {
+    width: 100%;
+  }
+
+  @include putCenter;
+}

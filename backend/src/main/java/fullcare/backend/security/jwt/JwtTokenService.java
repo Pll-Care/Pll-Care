@@ -63,6 +63,7 @@ public class JwtTokenService {
                 .compact();
     }
 
+    public String[] reIssueTokens(String refreshToken, Authentication authentication) {
 
     public String createRefreshToken(CustomOAuth2User oAuth2User) {
         Date now = new Date();

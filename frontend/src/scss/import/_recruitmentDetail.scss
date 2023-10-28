@@ -1,0 +1,367 @@
+.recruitment-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &-container {
+    width: 941px;
+
+    @include mobile {
+      width: 95%;
+    }
+    @include tablet {
+      width: auto;
+      margin: 0px 15px;
+    }
+  }
+}
+
+// RecruitmentDetailTitle 컴포넌트
+.detail-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 96px;
+  margin-bottom: 12px;
+
+  @include mobile {
+    margin-top: 50px;
+    margin-bottom: 6px;
+    width: 100%;
+  }
+
+  &-content {
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+
+    input {
+      @include heading_01;
+      margin-left: 26px;
+      color: $gray-500;
+      padding: 7px;
+      @include mobile {
+        @include m_heading_05;
+        padding: 3px;
+        width: 50%;
+      }
+      width: 80%;
+      outline: none;
+      border: none;
+      border-bottom: 1px solid gray;
+    }
+    .mui-arrow {
+      color: black;
+      transform: scale(0.8);
+    }
+    img {
+      width: 60px;
+      height: 60px;
+      border-radius: 32.5px;
+      @include mobile {
+        width: 25px;
+        height: 25px;
+        margin-left: 5px;
+      }
+    }
+
+    h1 {
+      @include heading_01;
+      color: $gray-500;
+      margin-left: 26px;
+      max-width: 492px;
+      overflow-wrap: break-word;
+
+      @include mobile {
+        @include m_heading_05;
+        margin-left: 7px;
+        width: 47%;
+      }
+
+      @include tablet {
+        max-width: 300px;
+      }
+    }
+    h2 {
+      margin-left: 9px;
+
+      color: $gray-400;
+      margin-bottom: 5px;
+      @include body_01;
+      @include mobile {
+        color: $gray-500;
+        @include m_body_01;
+        margin-bottom: 3px;
+        margin-right: 2px;
+        margin-left: 5px;
+      }
+    }
+  }
+  &-button {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: -6px;
+    @include mobile {
+      margin-bottom: -1px;
+      Button {
+        margin-left: -10px;
+      }
+    }
+  }
+}
+
+// index 컴포넌트
+.recruitment-detail {
+  border: $border;
+  border-radius: 15px;
+  padding: 36px 61px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  @include mobile {
+    padding: 17px 14px;
+  }
+  input,
+  textarea,
+  select {
+    @include heading_05;
+    border: none;
+    outline: none;
+    box-shadow: 0px 3px 20px 1px rgba(0, 0, 0, 0.1);
+    color: $gray-500;
+    border-radius: 50px;
+    @include mobile {
+      @include m_body_01;
+      padding: 3px;
+    }
+  }
+  textarea {
+    padding: 10px;
+    margin: 10px 0px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    box-shadow: 0px 3px 20px 1px rgba(0, 0, 0, 0.1);
+  }
+
+  h4 {
+    color: $green-400;
+    @include heading_04;
+    margin-right: 20px;
+    @include mobile {
+      @include m_heading_03;
+    }
+  }
+
+  h5 {
+    @include heading_05;
+    color: $gray-500;
+    @include mobile {
+      @include m_body_01;
+    }
+  }
+
+  // RecruitmentDetailProject 컴포넌트
+  &-content {
+    border-bottom: 1px solid rgb(204, 204, 204);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    &-item-one {
+      display: grid;
+      grid-template-columns: 20% 80%;
+      margin-bottom: 13px;
+      align-items: center;
+      &-name {
+        display: flex;
+        align-items: center;
+        h5 {
+          margin-left: 9px;
+          @include mobile {
+            margin-left: 5px;
+          }
+        }
+        .mui-icon {
+          width: 32px;
+          height: 32px;
+          @include mobile {
+            transform: scale(0.5);
+          }
+        }
+      }
+      @include mobile {
+        display: flex;
+        justify-content: space-between;
+        margin-right: 10px;
+      }
+    }
+
+    &-item {
+      display: grid;
+      grid-template-columns: 20% 80%;
+      margin-bottom: 20px;
+      align-items: center;
+
+      @include mobile {
+        display: flex;
+        justify-content: space-between;
+        margin-right: 10px;
+      }
+
+      &-duration {
+        display: flex;
+      }
+    }
+
+    select {
+      width: 70px;
+    }
+  }
+
+  // RecruitmentDetailPosition 컴포넌트
+  &-container {
+    border-bottom: 1px solid rgb(204, 204, 204);
+    padding-top: 20px;
+    padding-bottom: 33px;
+    @include mobile {
+      padding-bottom: 18px;
+      grid-template-columns: 25% 75%;
+    }
+    display: grid;
+    grid-template-columns: 20% 40% 40%;
+
+    @include tablet {
+      grid-template-columns: 20% 45% 35%;
+    }
+
+    grid-gap: 10px 0px;
+    align-content: center;
+
+    &-select {
+      display: flex;
+    }
+    h5 {
+      @include mobile {
+        @include m_heading_03;
+      }
+    }
+    .recruitment-grid-row {
+      display: grid;
+      grid-template-rows: repeat(4, auto);
+      grid-gap: 27px 0;
+      align-items: center;
+      margin-right: 30px;
+      margin-bottom: 0px;
+
+      @include mobile {
+        margin-right: 20px;
+      }
+
+      &-item {
+        display: flex;
+        align-items: center;
+        input {
+          width: 40px;
+          margin-left: 10px;
+        }
+      }
+    }
+
+    &-tech {
+      border-left: 1px solid $gray-400;
+      @include mobile {
+        border: none;
+        padding-left: 0px;
+        width: 230px;
+        margin-top: 10px;
+      }
+      padding-left: 22px;
+
+      &-stacks {
+        display: grid;
+        grid-template-columns: repeat(4, 0.7fr);
+        grid-gap: 10px;
+        img {
+          width: 30px;
+          height: 30px;
+          @include mobile {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+          }
+        }
+      }
+
+      //스택 검색 태그
+      &-search {
+        ul {
+          display: flex;
+          flex-wrap: wrap;
+          grid-gap: 5px;
+          margin-top: 10px;
+        }
+        width: 100%;
+        &-card {
+          padding: 10px;
+        }
+      }
+    }
+  }
+
+  &-description {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgb(204, 204, 204);
+    &-content {
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      padding-bottom: 15px;
+      @include heading_05;
+      color: $gray-500;
+
+      @include mobile {
+        @include m_body_01;
+      }
+    }
+    &-stacks {
+      flex-wrap: wrap;
+      gap: 10px;
+      img {
+        width: 50px;
+        height: 50px;
+        margin-right: 20px;
+        @include mobile {
+          width: 30px;
+          height: 30px;
+          margin-right: 10px;
+        }
+      }
+    }
+
+    h4 {
+      margin: 20px 0px;
+    }
+    h5 {
+      margin-bottom: 20px;
+    }
+  }
+}
+.recruitment-detail-icon {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 38px 0px;
+  .post-icon {
+    color: $background-color;
+    border: $border;
+    border-radius: 50px;
+    transform: scale(1.4);
+    padding: 1px;
+    margin-left: 35px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+}

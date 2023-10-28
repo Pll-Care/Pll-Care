@@ -1,0 +1,72 @@
+.Toastify__toast-container {
+  width: max-content;
+  height: 70px;
+
+  @include heading_05;
+
+  @include mobile {
+    @include m_heading_03;
+  }
+}
+
+.Toastify__toast-icon {
+  display: none;
+}
+
+.Toastify__toast.Toastify__toast--error,
+.Toastify__toast.Toastify__toast--success {
+  height: 25px;
+  border-radius: 10px;
+}
+
+.Toastify__toast.Toastify__toast--error {
+  .Toastify__toast-body {
+    color: $tomato-500;
+  }
+
+  background-color: #fee7e7;
+}
+
+.Toastify__toast.Toastify__toast--success {
+  .Toastify__toast-body {
+    color: $green-500;
+  }
+
+  background-color: #d7f8ed;
+}
+
+.Toastify__toast.Toastify__toast--error::before,
+.Toastify__toast.Toastify__toast--success::before {
+  margin: auto 10px;
+  width: 30px;
+  height: 30px;
+  content: "";
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  @include mobile {
+    margin: auto 0;
+  }
+}
+
+.Toastify__toast.Toastify__toast--error::before {
+  background-image: url("../assets/toast-message-error-img.png");
+}
+
+.Toastify__toast.Toastify__toast--success::before {
+  background-image: url("../assets/toast-message-check-img.png");
+}
+
+.toast-container {
+  @include mobile {
+    top: 5px !important;
+    left: 5px !important;
+    height: 50px;
+  }
+}
+
+.Toastify__close-button {
+  @include mobile {
+    display: none;
+  }
+}

@@ -1,18 +1,96 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@600&family=Open+Sans:wght@300&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Open+Sans:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@600&family=Open+Sans:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Open+Sans:wght@300&display=swap");
 
-$heading-font: 'IBM Plex Sans KR', sans-serif;
-$heading-font-size: 60px;
+// 수정 예정
+$heading-font: "IBM Plex Sans KR", sans-serif;
+$heading-font-size: 40px;
 
-$body-font: 'Noto Sans KR', sans-serif;
-$body-font-size: 20px;
+$sub-heading-font-size: 25px;
 
-$link-font: 'IBM Plex Sans KR', sans-serif;
+$body-font: "Noto Sans KR", sans-serif;
+$body-font-size: 18px;
+
+$sub-body-font-size: 15px;
+
+$link-font: "IBM Plex Sans KR", sans-serif;
 $link-font-size: 25px;
 
-$button-font: 'IBM Plex Sans KR', sans-serif;
+$button-font: "IBM Plex Sans KR", sans-serif;
 $button-font-size: 20px;
+$sub-button-font-size: 15px;
 
 $line-height: 1.7;
 
-$border: 2px solid #01E89E;
+$border: 2px solid #01e89e;
+
+$background-color: #01e89e;
+
+$font-color: #01e89e;
+
+$sub-heading-color: #00aa72;
+
+$body-font-color: #7a7a7a;
+
+// 태블릿 반응형 폰트 사이즈
+$heading-font-size-medium: 38px;
+
+$sub-heading-font-size-medium: 23px;
+
+$body-font-size-medium: 17px;
+
+$sub-body-font-size-medium: 15px;
+
+$link-font-size-medium: 22px;
+
+$button-font-size-medium: 17px;
+
+// 모바일 반응형 폰트 사이즈
+$heading-font-size-small: 33px;
+
+$sub-heading-font-size-small: 21px;
+
+$body-font-size-small: 12px;
+
+$sub-body-font-size-small: 11px;
+
+$link-font-size-small: 13px;
+
+$button-font-size-small: 14px;
+
+//bold
+$weight-regular: 400;
+$weight-medium: 500;
+$weight-semi-bold: 600;
+$weight-bold: 700;
+
+// 컬러 팔레트
+$white-100: #ffffff;
+$white-200: #f1f1f1;
+
+// green
+$green-200: #01e89e;
+$green-400: #00aa72;
+$green-500: #003b28;
+
+// gray
+$gray-100: #fcfcfc;
+$gray-300: #d9d9d9;
+$gray-400: #b4bcbd;
+$gray-500: #373E3B;
+$gray-600: #767676;
+$gray-800: #333333;
+
+$gray-light-100: #fbfbfb;
+$gray-light-200: #f0f2f3;
+$gray-light-300: #f6f7f8;
+$gray-light-400: #e0e4e8;
+$gray-light-500: #dedede;
+$gray-light-600: #bebebe;
+
+// tomato
+$tomato-100: #fee7e7;
+$tomato-500: #c9000c;
+
+//blue
+$blue-default: #024eee;
+$blue-light-100: #dbe1fd;

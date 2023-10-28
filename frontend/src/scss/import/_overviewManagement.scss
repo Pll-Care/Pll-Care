@@ -1,0 +1,87 @@
+// OverviewChart 컴포넌트 scss
+.overview-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.overview-wrapper {
+  width: 690px;
+  margin-top: 57px;
+  @include mobile {
+    margin-top: 12px;
+  }
+}
+.vertical-timeline-element-date {
+  @include m_heading_01;
+  color: $green-400;
+  margin-left: 10px;
+  @include mobile {
+    @include m_heading_05;
+    margin-left: 1px;
+  }
+}
+.schedule {
+  h1 {
+    @include heading_04;
+    color: $green-400;
+    margin: 25px;
+  }
+  .overview-time {
+    @include heading_05;
+    color: white;
+  }
+  h3,
+  h5 {
+    @include body_01;
+    color: $gray-500;
+  }
+}
+.category {
+  margin-top: 5px;
+}
+@include mobile {
+  .plan {
+    margin-top: 7px;
+  }
+}
+.simple {
+  background-color: white;
+  color: black;
+  border-radius: 15px;
+  padding: 1rem;
+  margin-top: 10px;
+  h2 {
+    @include body_01;
+    color: $gray-500;
+  }
+  h3 {
+    margin-top: 10px;
+    @include body_02;
+    color: $gray-500;
+  }
+}
+
+// 모바일 수정 예정
+@include mobile {
+  .schedule {
+    h1 {
+      @include m_heading_03;
+    }
+    h3,
+    h5 {
+      @include m_body_01;
+    }
+    .overview-time {
+      @include m_heading_03;
+    }
+  }
+
+  .simple {
+    h2 {
+      @include m_body_01;
+    }
+    h3 {
+      @include m_body_02;
+    }
+  }
+}

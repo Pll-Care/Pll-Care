@@ -23,5 +23,4 @@ public interface MidtermEvaluationRepository extends JpaRepository<MidtermEvalua
     List<MidTermRankProjectionInterface> findRank(Long projectId);
 
     boolean existsByScheduleIdAndVoterId(Long scheduleId, Long voterId);
-
 }

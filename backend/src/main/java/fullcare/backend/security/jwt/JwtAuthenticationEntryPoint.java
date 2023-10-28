@@ -14,7 +14,19 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
+import static fullcare.backend.security.jwt.exception.JwtErrorCode.*;
+
+/*
+    JWT 인증 실패 경우
+    1. 만료 토큰
+    2. 토큰 없음
+    3. 잘못된 토큰 서명
+ */
 @Slf4j
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {

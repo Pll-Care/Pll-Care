@@ -17,7 +17,6 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
-
 @RequiredArgsConstructor
 @EnableWebSecurity
 @Slf4j

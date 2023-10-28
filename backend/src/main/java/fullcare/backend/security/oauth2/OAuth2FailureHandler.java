@@ -15,10 +15,16 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Component
 public class OAuth2FailureHandler extends SimpleUrlAuthenticationFailureHandler {
+
+    /*
+     ? OAuth2 로그인이 실패하는 경우, 어떻게 처리할 것인가? -> 비정상적인 루트로 로그인을 시도하려고 하는 경우, 들어온 요청을 거부하고, localhost:3000/ 로 리다이렉션?
+     */
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {

@@ -1,0 +1,58 @@
+.pagination {
+  width: 100%;
+  margin-top: 30px;
+}
+
+.pageButtons {
+  width: 250px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+
+  font-weight: 600;
+
+  & > li {
+    cursor: pointer;
+  }
+}
+
+.disabled {
+  pointer-events: none;
+  color: $gray-500;
+}
+
+.first_last {
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+}
+
+.pageButton {
+  text-align: center;
+  line-height: 30px;
+  width: 30px;
+  height: 30px;
+}
+
+.current {
+  font-weight: $weight-bold;
+  font-size: 20px;
+}
+
+.pageNumber {
+  text-align: center;
+  line-height: 30px;
+}
+
+@include mobile {
+  .pagination {
+    margin-top: 7px;
+  }
+
+  .pageButton {
+    @include m_body_01;
+  }
+  .pageButtons {
+    width: 150px;
+  }
+}

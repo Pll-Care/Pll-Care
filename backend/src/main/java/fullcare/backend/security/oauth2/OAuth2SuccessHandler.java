@@ -51,6 +51,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         String successUrl = UriComponentsBuilder.fromUriString("https://pll-care.store/token")
                 .queryParam("access_token", accessToken)
                 .queryParam("refresh_token", refreshToken)
+//                .queryParam("redirect_uri", "test") // todo 원래 있던 페이지를 되돌려 받을 방법 고민
                 .build().toUriString();
 
 

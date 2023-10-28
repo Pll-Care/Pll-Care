@@ -13,8 +13,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+
+import static fullcare.backend.security.jwt.exception.JwtErrorCode.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -42,6 +45,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private void setRequestAttribute(HttpServletRequest request, String message) {
+        if (message.equals(MALFORMED_TOKEN.getMessage())) {
+            request.setAttribute("message", MALFORMED_TOKEN.getMessage());
+        }else if (message.equals(EXPIRED_TOKEN.getMessage())) {
+            request.setAttribute("message", EXPIRED_TOKEN.getMessage());
+        }else if (message.equals(UNSUPPORTED_TOKEN.getMessage())) {
+            request.setAttribute("message", UNSUPPORTED_TOKEN.getMessage());
+        }else if (message.equals(ILLEGAL_TOKEN.getMessage())) {
+            request.setAttribute("message", ILLEGAL_TOKEN.getMessage());
+        }else if (message.equals(NOT_FOUND_USER.getMessage())) {
+            request.setAttribute("message", NOT_FOUND_USER.getMessage());
+        }else if (message.equals(NOT_FOUND_TOKEN.getMessage())) {
+            request.setAttribute("message", NOT_FOUND_TOKEN.getMessage());
+        }
     }
 
     private String getAccessToken(HttpServletRequest request) {

@@ -1,0 +1,51 @@
+.pagination-wrapper {
+  width: 250px;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  height: 30px;
+
+  button {
+    border: none;
+    cursor: pointer;
+    color: white;
+    background-color: transparent;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: $gray-500;
+
+    @include mobile {
+      @include m_heading_02;
+    }
+
+    @include heading_05;
+    @include putCenter;
+  }
+
+  ul {
+    @include displayFlex(row, space-between);
+
+    .pagination-page-number-on,
+    .pagination-page-number {
+      cursor: pointer;
+      padding: 5px;
+      color: $gray-500;
+
+      @include mobile {
+        @include m_heading_02;
+      }
+
+      @include heading_05;
+    }
+  }
+
+  &-white {
+    button,
+    ul .pagination-page-number-on,
+    ul .pagination-page-number {
+      color: white;
+    }
+  }
+
+  @include putCenter;
+  @include displayFlex;
+}
