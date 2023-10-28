@@ -1,0 +1,459 @@
+// MemberOption 컴포넌트
+.recruitment-container {
+  display: flex;
+  width: 1280px;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.member-option {
+  background-color: $green-200;
+  padding: 25px 45px;
+  width: 100%;
+  top: 0;
+  height: 254px;
+  border-radius: 35px 35px 0px 0px;
+  display: flex;
+  flex-direction: row;
+
+  align-items: flex-end;
+  @include mobile {
+    padding: 8px;
+    height: 130px;
+    border-radius: 0px;
+  }
+
+  color: white;
+  h2 {
+    @include heading_01;
+  }
+  h3 {
+    @include heading_02;
+    margin-left: 10px;
+  }
+  @include mobile {
+    h2,
+    h3 {
+      @include m_heading_01;
+    }
+  }
+}
+.member-button {
+  margin: 25px;
+  @include mobile {
+    margin: 8px;
+  }
+}
+
+// RecruitmentPostList 컴포넌트
+.recruitment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  h1 {
+    color: $gray-400;
+    @include heading_06;
+
+    @include mobile {
+      @include m_heading_04;
+    }
+  }
+  &-grid {
+    display: grid;
+    grid-template-columns: 278px 278px 278px;
+    grid-gap: 23px;
+    margin-top: 23px;
+    margin-bottom: 19px;
+
+    @include mobile {
+      display: flex;
+      flex-direction: column;
+      width: 278px;
+      margin-top: 14px;
+    }
+
+    @include tablet {
+      display: grid;
+      grid-template-columns: 278px 278px;
+      grid-gap: 23px;
+    }
+  }
+}
+
+// RecruitmentPost 컴포넌트
+.recruitment-post-link {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.recruitment-post {
+  &:hover {
+    transform: scale(1.011);
+    transition: transform 0.2s ease-in-out;
+  }
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  height: 370px;
+  width: 281px;
+  @include mobile {
+    height: 341px;
+  }
+
+  img {
+    border-radius: 30px 30px 0px 0px;
+    width: 100%;
+    height: 200px;
+    @include mobile {
+      height: 190px;
+    }
+  }
+
+  &-stack {
+    margin-left: auto;
+    margin: 10px 17px 15px auto;
+    img {
+      width: 28px;
+      height: 27px;
+      border-radius: 18px;
+      margin-left: 7px;
+    }
+    @include mobile {
+      margin: 10px 17px 11px auto;
+    }
+  }
+
+  &-project {
+    display: flex;
+    flex-direction: column;
+    color: $gray-500;
+    text-decoration: none;
+    margin: 0px 9px 22px 13px;
+
+    h5 {
+      @include body_01;
+      @include mobile {
+        @include m_heading_01;
+      }
+    }
+    h6 {
+      @include body_01;
+      @include mobile {
+        @include m_heading_02;
+      }
+    }
+    &-title {
+      display: flex;
+      justify-content: space-between;
+      .recruitment-post-title {
+        width: 219px;
+        h2 {
+          width: 100%;
+          word-wrap: break-word;
+          @include heading_04;
+          @include mobile {
+            @include m_heading_05;
+          }
+        }
+      }
+
+      .recruitment-post-like {
+        border: 2px solid $green-200;
+        display: flex;
+        width: 40px;
+        height: 40px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50px;
+        color: $green-200;
+        padding: 2px 9px;
+        @include mobile {
+          width: 37px;
+          height: 37px;
+        }
+        h5 {
+          @include button_03;
+          margin-bottom: 2px;
+          @include mobile {
+            @include m_button_00;
+          }
+        }
+
+        .post-icon {
+          margin: 0;
+        }
+      }
+    }
+
+    &-duration {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+
+    &-position {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 7px;
+      &-item {
+        display: flex;
+        .item {
+          margin-left: 5px;
+        }
+      }
+    }
+  }
+}
+
+// MemberRecuritmentWrite 컴포넌트
+.member-write {
+  width: 100%;
+  background-color: $green-200;
+  padding: 10px;
+  @include mobile {
+    padding: 2px;
+  }
+
+  & > Button {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0px 44px 69px auto;
+
+    @include mobile {
+      margin: 0px 12px 46px auto;
+    }
+  }
+
+  h3 {
+    color: $green-400;
+    white-space: nowrap;
+    @include heading_04;
+    @include mobile {
+      @include m_heading_03;
+    }
+  }
+
+  &-card {
+    margin: 0px 43px 30px 43px;
+    border-radius: 10px;
+    padding: 46px 51px;
+    @include mobile {
+      padding: 11px 14px;
+      margin: 13px 11px 6px 11px;
+    }
+  }
+  // RecruitmentTitleWrite 컴포넌튼
+  .member-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 69px 43px 14px 43px;
+    color: white;
+    @include mobile {
+      margin: 46px 11px 0px 11px;
+    }
+    .recruitment-direction {
+      color: white;
+      transform: scale(0.8);
+    }
+    input {
+      border: none;
+      background-color: transparent;
+      color: white;
+
+      @include heading_01;
+      &:focus {
+        outline: none;
+      }
+      &::placeholder {
+        color: white;
+      }
+      @include mobile {
+        @include m_heading_05;
+      }
+    }
+    img {
+      width: 65px;
+      height: 65px;
+      border-radius: 32.5px;
+      margin-right: 15px;
+      @include mobile {
+        margin: 0px 3px;
+        width: 24px;
+        height: 25px;
+      }
+    }
+  }
+}
+
+.member-content {
+  // RecruitmentProjectWrite 컴포넌트
+  .member-grid {
+    border-bottom: 2px solid $gray-400;
+    display: flex;
+    flex-direction: column;
+
+    &-item {
+      display: grid;
+      grid-template-columns: 20% 80%;
+      align-items: center;
+      margin-bottom: 27px;
+      @include mobile {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      &-time {
+        display: flex;
+        align-items: center;
+        input {
+          border-radius: 50px;
+          padding: 5px;
+          box-shadow: 0px 3px 20px 1px rgba(0, 0, 0, 0.1);
+          color: $gray-500;
+          border: none;
+          @include heading_05;
+          @include mobile {
+            @include m_body_01;
+          }
+        }
+      }
+    }
+
+    .control-menu {
+      color: $gray-500;
+      border: none;
+      height: 90%;
+      @include heading_05;
+      padding: 5px 3px 7px 3px;
+      width: 160px;
+      @include mobile {
+        width: 100px;
+      }
+      box-shadow: 0px 3px 20px 1px rgba(0, 0, 0, 0.1);
+      border-radius: 50px;
+
+      @include mobile {
+        @include m_body_01;
+      }
+    }
+  }
+
+  h5 {
+    white-space: nowrap;
+    @include heading_05;
+    color: $gray-500;
+    @include mobile {
+      @include m_heading_03;
+    }
+  }
+  .recruitment-positions {
+    display: grid;
+    grid-template-columns: repeat(2, 0.5fr);
+    grid-gap: 17px 10px;
+    align-items: center;
+
+    input {
+      width: 40px;
+      outline: none;
+      height: 30px;
+      border: none;
+      border-radius: 40px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      @include heading_05;
+      color: $gray-500;
+
+      @include mobile {
+        width: 30px;
+        height: 20px;
+        @include m_heading_03;
+      }
+    }
+  }
+  .member-grid-position {
+    display: grid;
+    grid-template-columns: 20% 30% 50%;
+
+    @include mobile {
+      grid-template-columns: 10% 35% 55%;
+      grid-gap: 10px;
+    }
+
+    grid-gap: 27px;
+
+    margin-top: 28px;
+    border-bottom: 2px solid $gray-400;
+    padding-bottom: 36px;
+
+    &-stack {
+      width: 80%;
+      h3 {
+        margin-bottom: 6px;
+      }
+
+      &-item {
+        width: 100%;
+      }
+    }
+  }
+
+  // recruitment stack search 컴포넌트
+  .recruitment-stackitems {
+    display: flex;
+    grid-gap: 5px;
+    flex-wrap: wrap;
+    padding: 5px;
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  textarea {
+    border-radius: 20px;
+    width: 100%;
+    box-shadow: 0px 10px 10px 5px rgba(40, 40, 40, 0.1);
+    border: none;
+    height: 200px;
+    padding: 0.5rem;
+    outline: none;
+    @include heading_05;
+    &:hover,
+    &:focus {
+      border: 2px solid $green-200;
+    }
+    @include mobile {
+      @include m_heading_03;
+    }
+  }
+
+  // RecruitmentContentWrite 컴포넌트
+  &-description {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 26px;
+
+    h3 {
+      margin: 23px 0px 16px 0px;
+    }
+
+    border-bottom: 2px solid $gray-400;
+
+    .react-quill {
+      height: 100%;
+      margin-bottom: 7px;
+      &:hover,
+      &:focus {
+        border: 2px solid $green-200;
+      }
+    }
+  }
+  &-contact {
+    h3 {
+      margin: 19px 0px 8px 0px;
+    }
+  }
+}

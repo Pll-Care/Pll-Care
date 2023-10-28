@@ -1,0 +1,1437 @@
+.profile {
+  &_content {
+    width: 85%;
+    margin: 0 auto;
+  }
+
+  &_title {
+    @include heading_03;
+    margin-bottom: 15px;
+    color: $green-500;
+  }
+
+  &_introduce {
+    background-color: $green-200;
+
+    &_informationBox {
+      width: 80%;
+      margin: 0 auto;
+    }
+
+    &_container {
+      z-index: 3;
+      width: 95%;
+      margin: 0 auto;
+      min-height: 150px;
+
+      @include displayFlex(row, start, center);
+      gap: 30px;
+    }
+
+    &_image {
+      width: 90px;
+      height: 90px;
+
+      margin-bottom: 15px;
+
+      & > img {
+        width: 100%;
+        height: 100%;
+        border-radius: 80px;
+      }
+
+      &_change {
+        display: flex;
+        justify-content: center;
+
+        font-size: 18px;
+        color: $white-100;
+        font-weight: 700;
+      }
+    }
+
+    &_info {
+      color: $gray-100;
+
+      &_name {
+        height: 30px;
+        display: flex;
+        align-items: center;
+        gap: 36px;
+        margin-bottom: 10px;
+
+        & > :first-child {
+          height: 100%;
+        }
+        & > :last-child {
+          height: 100%;
+          display: flex;
+          align-items: end;
+        }
+
+        &_real {
+          @include heading_02;
+          line-height: 30px;
+        }
+        &_nick {
+          @include heading_03;
+        }
+      }
+      &_myself {
+        display: flex;
+        align-items: center;
+        gap: 31px;
+
+        &_bio {
+          @include heading_05;
+        }
+
+        Button {
+          @include button_02;
+          padding: 0px 14px 2px 14px;
+        }
+      }
+    }
+  }
+
+  &_body {
+    background-color: $green-200;
+
+    &_container {
+      height: 100%;
+      background-color: #f9f9f9;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+      display: flex;
+    }
+
+    &_sec {
+      padding: 30px 90px;
+      width: 100%;
+      background-color: $white-100;
+    }
+
+    &_introduce {
+      &_Box {
+        padding: 25px;
+        border: 2px solid $green-200;
+        border-radius: 10px;
+        margin-bottom: 18px;
+        min-height: 200px;
+
+        &_title {
+          width: 100%;
+          @include displayFlex(row, space-between, center);
+          padding-bottom: 8px;
+          & > h2 {
+            font-size: 18px;
+            font-weight: bold;
+          }
+
+          & > Button {
+            border-radius: 47px;
+          }
+
+          &_btnBox {
+            & > button {
+              margin-left: 15px;
+            }
+          }
+        }
+      }
+
+      &_contactBox {
+        &_items {
+          @include displayFlex(column, center, flex-start);
+          gap: 24px;
+
+          &_item {
+            width: 100%;
+            min-height: 30px;
+            display: flex;
+            align-items: center;
+
+            & > a,
+            p {
+              margin-left: 30px;
+              border: none;
+              color: $gray-600;
+            }
+          }
+
+          &_title {
+            display: inline-block;
+            min-width: 69px;
+            font-weight: bold;
+            font-size: 16px;
+          }
+
+          &_email {
+            width: 100%;
+            @include displayFlex(row, space-between, center);
+          }
+        }
+      }
+
+      &_positionBox {
+        &_position {
+          @include heading_06;
+          color: $gray-500;
+        }
+
+        &_stack {
+          &_select {
+            margin-top: 1rem;
+          }
+
+          &_bc_items_five {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-gap: 10px;
+
+            @include tablet {
+              grid-template-columns: repeat(3, 1fr);
+            }
+          }
+          &_bc_items_three {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px;
+
+            @include tablet {
+              grid-template-columns: repeat(1, 1fr);
+              grid-gap: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &_nav {
+    min-width: 90px;
+    padding-top: 30px;
+    border-top-left-radius: 24px;
+    @include displayFlex(column, flex-start, center);
+    gap: 48px;
+    background-color: $gray-100;
+    box-shadow: 4px 0px 30px rgba(0, 0, 0, 0);
+
+    &_link {
+      @include displayFlex(row, center, center);
+
+      width: 48px;
+      height: 48px;
+      background-color: $green-400;
+      border-radius: 15px;
+
+      & > img {
+        width: 27px;
+        height: 27px;
+      }
+    }
+
+    &_image_active {
+      background-color: $green-500;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  &_mr-t {
+    margin-top: 39px;
+  }
+
+  &_input {
+    border: none;
+    width: 70%;
+    font-size: 20px;
+    padding: 8px 16px 3px 16px;
+    outline: none;
+
+    background-color: $green-200;
+    color: white;
+    border-bottom: 2px solid $white-100;
+    font-weight: 700;
+
+    &::placeholder {
+      color: $white-200;
+    }
+
+    &:focus {
+      border-bottom: 2px solid;
+    }
+  }
+}
+
+////
+////
+.search_select {
+  width: 350px;
+
+  @include tablet {
+    width: 280px;
+  }
+}
+
+.select_list:hover {
+  outline: 2px solid $green-200;
+}
+
+.list_input {
+  width: 100%;
+  height: 100%;
+  & > input {
+    width: 100%;
+    height: 30px;
+  }
+  & > input:focus {
+    outline: none;
+  }
+}
+
+.search {
+  position: relative;
+
+  &_wrap {
+    width: 350px;
+    max-height: 200px;
+    box-shadow: 0 20px 60px -20px rgba(16, 16, 32, 0.4);
+    position: absolute;
+    overflow-y: auto;
+  }
+  &_list {
+    width: 100%;
+    height: 100%;
+    background-color: $white-100;
+    padding-top: 5px;
+
+    display: flex;
+    flex-direction: column;
+
+    z-index: 10000;
+  }
+  &_item {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    padding: 8px 16px;
+    border-bottom: 1px solid $gray-light-400;
+    cursor: pointer;
+
+    &_name {
+      padding-left: 25px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    &_image {
+      width: 25px;
+      height: 25px;
+      & > img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
+
+.highlighted {
+  background-color: $green-200;
+}
+
+.project {
+  width: 100%;
+
+  &_divide-year {
+    display: flex;
+    gap: 15px;
+    padding: 10px;
+
+    @include tablet {
+      display: block;
+    }
+  }
+
+  &_year {
+    padding-top: 10px;
+    font-weight: bold;
+    color: $gray-600;
+    @include tablet {
+      margin-bottom: 15px;
+    }
+  }
+  &_list {
+    width: 100%;
+
+    &_item {
+      border: 2px solid #dee2e6;
+      border-radius: 15px;
+
+      font-size: 14px;
+      color: $gray-600;
+      gap: 10px;
+      margin-bottom: 15px;
+      padding: 5px 10px;
+      @include displayFlex(row, space-between, center);
+
+      @include tablet {
+        padding: 5px 5px;
+      }
+
+      &_text {
+        @include body_02;
+        line-height: 24px;
+      }
+
+      &_box {
+        width: 100%;
+
+        @include tablet {
+          width: 80%;
+        }
+      }
+
+      &_year {
+        @include displayFlex(row, center, center);
+        gap: 8px;
+      }
+
+      &_title-date {
+        padding: 10px;
+        width: 100%;
+        @include displayFlex(row, space-between, center);
+        gap: 30px;
+
+        & > :first-child {
+          width: 50%;
+        }
+        & > :last-child {
+          width: 50%;
+        }
+
+        @include tablet {
+          padding-right: 0px;
+          @include displayFlex(column, space-between, flex-start);
+          gap: 20px;
+          & > :first-child {
+            width: 100%;
+          }
+          & > :last-child {
+            width: 100%;
+          }
+        }
+      }
+
+      &_input {
+        border: none;
+        color: $gray-500;
+        outline: none;
+      }
+
+      &_year_position {
+        position: relative;
+      }
+
+      &_stack {
+        width: 100%;
+        display: flex;
+        padding: 10px;
+      }
+
+      &_stack-list {
+        width: 90%;
+
+        & > ul {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          grid-gap: 10px;
+
+          @include tablet {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+      }
+
+      &_description {
+        display: flex;
+        padding: 10px;
+        @include tablet {
+          padding-right: 0px;
+        }
+      }
+    }
+
+    &_button {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    &_blank {
+      min-height: 80px;
+      @include displayFlex(row, center, center);
+
+      font-size: 18px;
+      font-weight: bold;
+    }
+  }
+
+  &_item_name {
+    @include displayFlex(row, flex-start, center);
+    min-width: 65px;
+    color: $green-500;
+    @include body_02;
+    line-height: 24px;
+  }
+
+  &_item_search {
+    width: 100%;
+
+    @include tablet {
+      width: 80%;
+    }
+  }
+}
+
+.fl_bw {
+  @include displayFlex(row, space-between, center);
+}
+
+.fl {
+  width: 100%;
+  display: flex;
+}
+
+/////
+/////
+/////
+
+.project_container {
+  display: flex;
+  flex-direction: column;
+
+  gap: 50px;
+}
+
+.myProject {
+  width: 100%;
+  &_selectContainer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    padding-bottom: 30px;
+  }
+
+  &_project {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &_item {
+    border: 2px solid $green-200;
+    border-radius: 20px;
+    width: 100%;
+    padding: 18px;
+
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    &_img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+    }
+
+    &_wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      &_title {
+        @include heading_05;
+        color: $green-500;
+      }
+
+      &_description {
+        color: $gray-500;
+        @include body_02;
+
+        & > p {
+          font-weight: bold;
+          padding-bottom: 5px;
+          line-height: 16px;
+        }
+      }
+    }
+  }
+}
+
+////
+////
+////
+
+.evaluate {
+  width: 95%;
+  margin: 0 auto;
+  padding: 15px 0;
+  &_Box {
+    margin-bottom: 43px;
+    &_title {
+      @include heading_04;
+      color: $gray-500;
+      margin-bottom: 25px;
+    }
+
+    &_content {
+      width: 761px;
+      height: 330px;
+      margin: 0 auto;
+    }
+  }
+  &_chart-warp {
+    width: 100%;
+    height: 100%;
+    padding: 24px 45px;
+    border: 2px solid $green-200;
+    border-radius: 15px;
+
+    @include tablet {
+      width: 480px;
+    }
+  }
+
+  &_chart {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+
+    &_bars {
+      width: 25%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+
+      &_title {
+        font-weight: bold;
+        margin-top: 10px;
+        padding-top: 5px;
+        color: $gray-500;
+        width: 100%;
+        border-top: 2px solid $gray-300;
+
+        @include displayFlex(row, center, center);
+        @include heading_06;
+      }
+
+      &_score {
+        --custom-value: initial;
+        height: var(--custom-value);
+        width: 100%;
+        background-color: $green-200;
+      }
+
+      &_score_text {
+        position: absolute;
+        padding: 10px 15px;
+        background-color: $green-400;
+        border-radius: 24px;
+        color: $white-100;
+        font-size: 12px;
+        font-weight: $weight-bold;
+        z-index: 1000;
+
+        @include displayFlex;
+        gap: 3px;
+
+        @include tablet {
+          display: none;
+        }
+      }
+
+      &_score_title {
+        font-size: 16px;
+      }
+
+      &_bar {
+        width: 28px;
+        height: 100%;
+        display: flex;
+        align-items: flex-end;
+      }
+    }
+  }
+
+  &_project {
+    @include tablet {
+      width: 100%;
+      margin: 0;
+    }
+
+    &_list {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 15px;
+      cursor: pointer;
+    }
+    &_item {
+      border: 2px solid $green-200;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      padding: 15px 24px;
+
+      @include tablet {
+        padding: 15px 15px;
+      }
+
+      &_user {
+        width: 50%;
+        display: flex;
+        align-items: center;
+        gap: 23px;
+      }
+      &_scores {
+        width: 50%;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 10px;
+
+        & > div {
+          display: flex;
+          justify-content: space-between;
+          gap: 37px;
+
+          @include tablet {
+            gap: 15px;
+          }
+        }
+      }
+
+      &_score {
+        width: 50%;
+        @include displayFlex(row, space-between, center);
+
+        & > :first-child {
+          color: $gray-500;
+          @include body_01;
+
+          @include tablet {
+            font-size: 12px;
+          }
+        }
+      }
+
+      &_img {
+        width: 45px;
+        height: 45px;
+        & > img {
+          width: 100%;
+          height: 100%;
+          border-radius: 100%;
+        }
+      }
+
+      &_title {
+        @include heading_04;
+        color: $green-500;
+      }
+    }
+  }
+}
+
+.score-border {
+  border: 2px solid $green-200;
+  border-radius: 100%;
+  color: $green-200;
+  width: 25px;
+  height: 25px;
+
+  @include body_02;
+
+  @include displayFlex(row, center, center);
+}
+
+///
+///
+.projectEvaluate {
+  width: 80%;
+  margin: 0 auto;
+  padding: 30px 0;
+
+  &_name {
+    color: $green-500;
+    @include heading_03;
+  }
+  &_title {
+    @include heading_04;
+    color: $green-400;
+  }
+}
+
+.badgeBox {
+  border: 2px solid $green-200;
+  border-radius: 25px;
+  padding: 21px;
+  @include displayFlex(row, space-between, center);
+}
+
+.badges {
+  @include displayFlex(row, space-between, center);
+  gap: 26px;
+}
+
+.badge {
+  @include displayFlex(row, space-between, center);
+  gap: 12px;
+}
+
+.badgeImage {
+  width: 28px;
+  height: 28px;
+  border-radius: 100%;
+  border: 1px solid $green-200;
+  @include displayFlex(row, center, center);
+
+  & > img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.badge_divide {
+  color: $gray-500;
+  @include heading_05;
+  @include displayFlex(row, center, center);
+}
+
+.badge_quantity {
+  color: $gray-500;
+  @include heading_05;
+
+  @include displayFlex(row, center, center);
+  height: 28px;
+}
+
+.finalEvaluate {
+  margin-top: 30px;
+  border: 2px solid $green-200;
+  border-radius: 25px;
+  padding: 21px;
+
+  &_users {
+    padding-top: 18px;
+  }
+
+  &_user {
+    display: flex;
+    margin-bottom: 16px;
+  }
+
+  &_userImageWrap {
+    padding: 5px;
+  }
+
+  &_userImage {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+  }
+
+  &_userEval {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px 47px 15px 24px;
+  }
+
+  &_userName {
+    color: $gray-500;
+    @include heading_05;
+  }
+
+  &_userScores {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 14px;
+  }
+
+  &_userScore {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    &_part {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &_partTitle {
+      color: $gray-500;
+      @include heading_06;
+    }
+
+    &_partScore {
+      width: 26px;
+      height: 26px;
+      border: 2px solid $green-200;
+      border-radius: 100%;
+      color: $green-200;
+      @include body_02;
+      @include displayFlex(row, center, center);
+    }
+  }
+
+  &_userContent {
+    color: $gray-500;
+    padding: 0 14px;
+    @include body_01;
+
+    & > p {
+      line-height: 200%;
+    }
+  }
+}
+
+.image_bg {
+  background-color: $green-200;
+  padding: 3px;
+}
+
+.project-no-item {
+  min-height: 200px;
+  font-weight: $weight-bold;
+
+  @include displayFlex();
+}
+
+.no-stack-list {
+  color: $gray-500;
+  @include heading_06;
+}
+
+.w-f {
+  width: 100%;
+}
+
+@include tablet {
+  .score-border {
+    font-size: 11px;
+    padding-bottom: 1px;
+  }
+
+  .projectEvaluate {
+    width: 90%;
+  }
+
+  .badges {
+    gap: 18px;
+  }
+
+  .badge {
+    gap: 6px;
+  }
+
+  .finalEvaluate_userScore {
+    width: 45%;
+  }
+
+  .evaluate_Box_content {
+    width: 480px;
+  }
+
+  .profile_content {
+    width: 100%;
+  }
+}
+
+@include mobile {
+  .profile_introduce_container {
+    align-items: flex-end;
+    padding-bottom: 22px;
+  }
+  .profile_introduce_image {
+    width: 42px;
+    height: 42px;
+  }
+
+  .profile_introduce_info_name {
+    height: 20px;
+    gap: 14px;
+
+    input {
+      height: 20px;
+    }
+  }
+
+  .profile_introduce_info_name_real {
+    @include m_heading_05;
+  }
+
+  .profile_introduce_info_name_nick {
+    @include m_heading_01;
+  }
+
+  .profile_introduce_info_myself {
+    height: 20px;
+    gap: 14px;
+
+    input {
+      height: 20px;
+    }
+
+    Button {
+      @include m_body_01;
+      padding: 0px 9px 1px 9px;
+      border: 1px solid $gray-100;
+      height: 15px;
+    }
+  }
+  .profile_introduce_info_myself_bio {
+    @include m_heading_03;
+  }
+
+  .profile_introduce_image {
+    margin-bottom: 8px;
+  }
+
+  .profile_introduce_image_change {
+    @include m_heading_03;
+  }
+
+  .profile_body_container {
+    display: block;
+  }
+
+  .profile_nav {
+    @include displayFlex(row, flex-start, center);
+    gap: 0;
+    height: 30px;
+    padding: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
+    border-top-right-radius: 24px;
+  }
+
+  .profile_nav_link {
+    width: 17px;
+    height: 17px;
+    border-radius: 6px;
+
+    & > img {
+      width: 10px;
+      height: 10px;
+    }
+  }
+
+  .profile_nav_box {
+    @include displayFlex(row, center, center);
+    width: 56px;
+    height: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .profile_nav_image_active {
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .profile_body_sec {
+    padding: 36px 23px;
+  }
+
+  .profile_title {
+    @include m_heading_03;
+  }
+  .profile_content {
+    width: 100%;
+  }
+
+  .profile_body_introduce_Box {
+    border: 1px solid $green-200;
+    padding: 13px 12px;
+    min-height: 119px;
+  }
+  .profile_body_introduce_Box_title {
+    & > h2 {
+      @include m_heading_03;
+    }
+  }
+
+  .profile_body_introduce_Box_title_btnBox {
+    Button {
+      @include m_body_01;
+      height: 16px;
+      padding: 0 7px 0 6px;
+      border: 1px solid $green-200;
+    }
+  }
+
+  .profile_body_introduce_contactBox_items {
+    gap: 6px;
+  }
+  .profile_body_introduce_contactBox_items_title {
+    @include m_body_01;
+  }
+
+  .profile_body_introduce_contactBox_items_item {
+    & > a,
+    p {
+      @include m_body_01;
+    }
+  }
+
+  .profile_body_introduce_contactBox_items_email {
+    input,
+    span {
+      @include m_body_01;
+    }
+  }
+
+  .profile_body_introduce_contactBox_items_item {
+    input {
+      @include m_body_01;
+    }
+  }
+
+  .profile_body_introduce_positionBox_position {
+    @include m_body_01;
+  }
+
+  .search_select {
+    width: 100%;
+  }
+
+  .list_input {
+    & > input {
+      @include m_body_01;
+      height: 18px;
+    }
+  }
+
+  .search_wrap {
+    width: 200px;
+    @include m_body_01;
+  }
+
+  .search_item {
+    padding: 3px 8px;
+  }
+  .search_item_name {
+    @include m_body_01;
+  }
+  .search_item_image {
+    width: 12px;
+    height: 12px;
+  }
+
+  .profile_body_introduce_positionBox_stack_bc_items_five {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .profile_body_introduce_Box_title {
+    Button {
+      @include m_body_01;
+      height: 16px;
+      padding: 0 5px;
+    }
+  }
+
+  .project_divide-year {
+    display: block;
+  }
+
+  .project_list_item {
+    padding: 5px;
+  }
+
+  .project_year {
+    @include m_body_01;
+    margin-bottom: 8px;
+  }
+
+  .project_list_item_title-date {
+    display: block;
+  }
+
+  .project_item_name {
+    @include m_body_01;
+  }
+  .project_list_item_text {
+    @include m_body_01;
+  }
+
+  .project_list_item_box {
+    width: 80%;
+  }
+
+  .project_list_item_title-date {
+    padding-right: 0px;
+    @include displayFlex(column, space-between, flex-start);
+    gap: 20px;
+    & > :first-child {
+      width: 100%;
+    }
+    & > :last-child {
+      width: 100%;
+    }
+  }
+
+  .project_list_item_stack-list {
+    & > ul {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+
+  .project_list_item_title-date {
+    input {
+      @include m_body_01;
+    }
+  }
+
+  .project_list_item_stack {
+    .search_wrap {
+      width: 130px;
+    }
+
+    .project_item_search {
+      width: 90%;
+    }
+  }
+
+  .profile_body_introduce_positionBox_stack_bc_items_three {
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 10px;
+  }
+
+  .project_list_item_description {
+    input {
+      @include m_body_01;
+    }
+  }
+
+  .project_list_item_year {
+    @include displayFlex(row, center, center);
+  }
+
+  .evaluate_Box_title {
+    color: $green-500;
+    @include m_heading_03;
+  }
+
+  .evaluate_Box_content {
+    width: 279px;
+    height: 184px;
+  }
+
+  .evaluate_chart-warp {
+    padding: 12px 15px;
+  }
+
+  .evaluate_chart_bars_title {
+    @include m_body_01;
+  }
+
+  .evaluate_chart_bars_bar {
+    @include displayFlex(row, center, flex-end);
+  }
+
+  .evaluate_chart_bars_score {
+    width: 60%;
+  }
+
+  .evaluate_chart_bars_score_text {
+    display: none;
+  }
+
+  .evaluate_project_item_user {
+    width: 40%;
+  }
+
+  .evaluate_project_item {
+    padding: 7px 10px;
+  }
+
+  .evaluate_project_item_scores {
+    width: 60%;
+    & > div {
+      gap: 10px;
+    }
+  }
+
+  .evaluate_project_item_img {
+    width: 23px;
+    height: 23px;
+  }
+
+  .evaluate_project_item_title {
+    @include m_body_01;
+  }
+
+  .evaluate_project_item_scores {
+    gap: 7px;
+  }
+
+  .evaluate_project_item_score {
+    & > :first-child {
+      @include m_body_02;
+      zoom: 0.8;
+    }
+  }
+
+  .score-border {
+    @include m_body_02;
+    border: 1px solid $green-200;
+    padding: 0;
+    zoom: 0.6;
+  }
+
+  .projectEvaluate {
+    width: 95%;
+  }
+
+  .projectEvaluate_name {
+    @include m_heading_03;
+  }
+
+  .projectEvaluate_title {
+    @include m_heading_03;
+  }
+
+  .badges {
+    gap: 12px;
+  }
+
+  .badge {
+    gap: 4px;
+  }
+
+  .badge_divide {
+    width: 3px;
+    height: 3px;
+  }
+
+  .badge_quantity,
+  .badge_divide {
+    @include m_body_01;
+  }
+
+  .badgeImage {
+    width: 15px;
+    height: 15px;
+
+    & > img {
+      width: 10px;
+      height: 10px;
+    }
+  }
+
+  .finalEvaluate {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  .finalEvaluate_user {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .finalEvaluate_userEval {
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+
+  .finalEvaluate_userScores {
+    @include displayFlex(column, center, start);
+    gap: 10px;
+
+    box-shadow: 0 10px 30px 5px rgba(181, 181, 181, 0.2);
+    border-radius: 10px;
+    padding: 10px 14px;
+  }
+
+  .finalEvaluate_userScore {
+    width: 100%;
+    gap: 10px;
+  }
+
+  .finalEvaluate_userName {
+    @include m_heading_03;
+  }
+
+  .finalEvaluate_userScore_partTitle {
+    @include m_body_01;
+  }
+
+  .finalEvaluate_userScore_partScore {
+    width: 15px;
+    height: 15px;
+
+    @include m_body_01;
+    background-color: $gray-100;
+    border: 1px solid $green-200;
+  }
+
+  .finalEvaluate_userContent {
+    @include m_body_01;
+  }
+
+  .project_container {
+    gap: 14px;
+  }
+
+  .myProject_selectContainer {
+    padding-bottom: 11px;
+    .select_small {
+      border: 1px solid $green-200;
+      @include m_button_01;
+      height: 22px;
+      padding-top: 0px;
+      padding-bottom: 0px;
+    }
+  }
+
+  .myProject_project {
+    gap: 10px;
+  }
+
+  .myProject_item {
+    padding: 13px 10px 10px 10px;
+    border: 1px solid $green-200;
+  }
+
+  .myProject_item_img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .myProject_item_wrap_title {
+    @include m_heading_03;
+  }
+
+  .myProject_item_wrap_description {
+    @include m_body_01;
+  }
+
+  .project-no-item {
+    @include m_heading_02;
+    min-height: 50px;
+  }
+
+  .no-stack-list {
+    @include m_body_01;
+  }
+  .project_list_blank {
+    min-height: 50px;
+
+    @include m_heading_02;
+  }
+}

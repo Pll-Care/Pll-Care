@@ -1,0 +1,498 @@
+// schedule option 컴포넌트
+.check-schedule {
+  @include heading_04;
+  color: white;
+  margin-bottom: 10px;
+  @include mobile {
+    @include m_body_01;
+  }
+  &-gray {
+    color: $gray-500;
+    margin: 20px;
+    @include heading_04;
+    @include mobile {
+      @include m_body_01;
+    }
+  }
+}
+.schedule-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.schedule-option-container {
+  width: 828px;
+  @include tablet {
+    width: 768px;
+  }
+  @include mobile {
+    width: 100%;
+  }
+}
+.schedule-option {
+  Button {
+    margin-right: 8px;
+  }
+  margin-top: 56px;
+  margin-bottom: 20px;
+  &-person {
+    background-color: $green-200;
+    margin-top: 20px;
+    padding: 1.5rem;
+
+    Button {
+      margin-right: 8px;
+    }
+
+    h4 {
+      color: white;
+      @include heading_05;
+      margin-bottom: 20px;
+    }
+    @include mobile {
+      padding: 20px;
+      h4 {
+        @include m_heading_03;
+      }
+    }
+  }
+}
+.check-schedule-gray-two {
+  color: $gray-500;
+  @include heading_06;
+  margin-bottom: 22px;
+  @include mobile {
+    @include m_heading_04;
+    margin-bottom: 12px;
+  }
+}
+// ScheduleList 컴포넌트
+.schedule-lists {
+  padding: 30px 36px 8px 35px;
+  &-pagination {
+    display: flex;
+    justify-content: center;
+  }
+  @include mobile {
+    padding: 25px 20px 13px 20px;
+  }
+}
+// scheduleItem컴포넌트
+.schedule-list {
+  display: flex;
+  margin-bottom: 25px;
+  @include mobile {
+    margin-bottom: 10px;
+  }
+
+  &-time {
+    width: 68px;
+    margin-right: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @include mobile {
+      margin-right: 13px;
+      width: 15%;
+    }
+
+    font-style: normal;
+    color: $gray-500;
+
+    h1 {
+      color: $gray-500;
+      @include mobile {
+        @include m_heading_05;
+        margin-bottom: 5px;
+      }
+      text-align: center;
+      font-family: IBM Plex Sans KR;
+      font-size: 48px;
+      font-style: normal;
+      font-weight: 700;
+      margin-top: 10px;
+      margin-bottom: 4px;
+    }
+    h2 {
+      @include heading_06;
+      margin-bottom: 10px;
+      @include mobile {
+        @include m_body_01;
+        margin-bottom: 7px;
+      }
+    }
+  }
+
+  &-content {
+    width: 641px;
+    padding: 17px 24px 19px 22px;
+    text-align: left;
+    border: 2px solid $green-200;
+    border-radius: 10px;
+
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+
+    h5 {
+      @include body_01;
+      color: $gray-500;
+      line-height: 30px;
+      @include mobile {
+        @include m_heading_04;
+        line-height: 18px;
+      }
+    }
+
+    &-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    @include mobile {
+      padding: 8px 10px 5px 14px;
+      width: 85%;
+    }
+
+    h4 {
+      @include heading_03;
+      color: $gray-500;
+      margin-top: 3px;
+      @include mobile {
+        @include m_body_01;
+      }
+    }
+
+    &-option {
+      margin-top: 27px;
+      h5 {
+        margin-right: 68px;
+        @include body_01;
+        color: $green-400;
+        @include mobile {
+          @include m_body_02;
+        }
+      }
+      align-items: center;
+      display: flex;
+      &-mui {
+        display: flex;
+      }
+      .MuiAvatar-root {
+        transform: scale(0.7);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-left: -10px;
+        &:hover {
+          transform: scale(0.8);
+        }
+      }
+      @include mobile {
+        margin-top: 17px;
+        .MuiAvatar-root {
+          transform: scale(0.5);
+          margin-left: -25px;
+          &:hover {
+            transform: scale(0.6);
+          }
+        }
+      }
+    }
+  }
+}
+
+// scheduleRemainDate 컴포넌트
+.schedule-list-content-time {
+  h1 {
+    color: $green-400;
+    @include button_02;
+    background: #ffffff;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.05);
+    border-radius: 30px;
+    padding: 7px 20px;
+    @include mobile {
+      padding: 3px 10px;
+      @include m_button_03;
+    }
+  }
+}
+
+// ScheduleEvaluationModal 컴포넌트 => 모바일 나중에 따로 처리
+.schedule-modal {
+  width: 100%;
+
+  &-title {
+    display: flex;
+    justify-content: space-between;
+    .mui-icon {
+      color: white;
+      cursor: pointer;
+    }
+  }
+
+  h1 {
+    color: white;
+    @include heading_03;
+    margin-bottom: 20px;
+    @include mobile {
+      @include m_heading_05;
+    }
+  }
+  &-content {
+    background-color: white;
+    box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 14px;
+    padding: 34px 31px 27px 21px;
+
+    @include mobile {
+      padding: 30px 15px;
+    }
+    h1 {
+      color: $green-400;
+      @include heading_04;
+      @include mobile {
+        @include m_heading_02;
+      }
+    }
+    h2 {
+      color: $gray-500;
+      @include heading_05;
+      margin-bottom: 10px;
+      @include mobile {
+        @include m_heading_03;
+      }
+    }
+
+    h3 {
+      @include heading_05;
+      color: $green-400;
+      margin-right: 20px;
+      margin-top: 5px;
+
+      @include mobile {
+        @include m_heading_02;
+      }
+    }
+
+    &-title {
+      @include mobile {
+        display: flex;
+
+        justify-content: space-between;
+      }
+    }
+
+    .modal-badge {
+      cursor: pointer;
+      border-radius: 80%;
+      border: 1px solid rgb(243, 243, 243);
+      padding: 0.5rem;
+      margin-right: 30px;
+      img {
+        width: 20px;
+        height: 20px;
+        @include mobile {
+          width: 15px;
+          height: 15px;
+        }
+      }
+    }
+    .selected {
+      border: 2px solid $green-200;
+    }
+
+    &-evaluation {
+      border: $border;
+      border-radius: 10px;
+      padding: 1.5rem;
+      @include tablet {
+        padding: 10px;
+      }
+      display: grid;
+      grid-template-columns: 20% 80%;
+      grid-gap: 30px 0px;
+      align-items: center;
+
+      &-member {
+        display: flex;
+        flex-wrap: wrap;
+        @include mobile {
+          margin: 20px 15px;
+        }
+        .selected {
+          border: 2px solid $green-200;
+        }
+      }
+
+      &-badge {
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
+  }
+  &-button {
+    margin-top: 15px;
+    text-align: right;
+  }
+}
+
+// EvaluationMobileContent 컴포넌트
+.schedule-modal-mobile {
+  border: $border;
+  border-radius: 10px;
+  padding: 10px;
+
+  &-badge {
+    display: flex;
+    flex-direction: column;
+
+    &-item {
+      display: flex;
+      align-items: center;
+      margin: 15px;
+
+      h5 {
+        color: $gray-500;
+        @include m_heading_03;
+      }
+    }
+  }
+}
+
+// scheduleDetailModal 컴포넌트
+.schedule-detail-modal {
+  border: $border;
+
+  border-radius: 10px;
+  width: 100%;
+  padding: 30px 24px 15px 16px;
+  color: $gray-500;
+  @include mobile {
+    border: none;
+    height: 100%;
+    padding: 0px;
+  }
+  input {
+    color: $gray-500;
+    border-radius: 20px;
+    outline: none;
+  }
+
+  &-date {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    @include mobile {
+      margin-bottom: 10px;
+    }
+    .schedule-title-text {
+      @include heading_03;
+      @include mobile {
+        @include m_heading_01;
+      }
+    }
+    .schedule-title {
+      @include heading_03;
+      box-shadow: 0px 4px 30px 3px rgba(0, 0, 0, 0.05);
+      outline: none;
+      border: none;
+      padding: 5px;
+      border-radius: 20px;
+
+      @include mobile {
+        @include m_heading_01;
+      }
+    }
+    .mui-icon {
+      cursor: pointer;
+    }
+    input {
+      width: 80%;
+      outline: none;
+    }
+
+    &-mobile {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &-content {
+    display: grid;
+    grid-template-columns: 20% 80%;
+
+    @include tablet {
+      grid-template-columns: 15% 85%;
+    }
+    align-items: center;
+    grid-gap: 20px 0px;
+    @include body_01;
+
+    @include mobile {
+      @include m_heading_03;
+    }
+    input {
+      @include body_01;
+      outline: none;
+      border: none;
+      box-shadow: 0px 4px 30px 3px rgba(0, 0, 0, 0.05);
+      padding: 5px;
+      @include mobile {
+        @include m_heading_03;
+      }
+    }
+    &-time {
+      display: flex;
+      align-items: center;
+      input {
+        @include body_01;
+        outline: none;
+        border: none;
+        box-shadow: 0px 4px 30px 3px rgba(0, 0, 0, 0.05);
+        padding: 5px;
+      }
+
+      @include mobile {
+        flex-wrap: wrap;
+        input {
+          @include m_heading_03;
+          outline: none;
+        }
+      }
+    }
+  }
+
+  &-member-buttons {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &-button {
+    h5 {
+      @include body_02;
+      color: $green-400;
+    }
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 80px;
+    @include mobile {
+      position: absolute;
+      bottom: 10%;
+      right: 10%;
+      margin-top: 0px;
+    }
+  }
+}
+.schedule-green {
+  color: $green-400;
+}
+.schedule-mobile-green {
+  border: $border;
+  border-radius: 10px;
+  padding: 21px 16px 0px 20px;
+  height: 90%;
+}

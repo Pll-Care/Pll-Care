@@ -1,11 +1,12 @@
 package fullcare.backend.member.domain;
 
-import fullcare.backend.evaluation.domain.Evaluation;
+import fullcare.backend.evaluation.domain.FinalTermEvaluation;
+import fullcare.backend.evaluation.domain.MidtermEvaluation;
 import fullcare.backend.likes.domain.Likes;
-import fullcare.backend.post.domain.Post;
 import fullcare.backend.projectmember.domain.ProjectMember;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,11 +18,13 @@ import java.util.Set;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DynamicUpdate // ! 더티 체킹할 때 바뀐 필드만 변경
 @Table(name = "member")
 @Entity
 public class Member {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
 
@@ -46,24 +49,39 @@ public class Member {
 
     @Column(name = "refreshToken")
     private String refreshToken;
+    private String imageUrl;
 
     //    @Column
 //    private String profileContent;
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Post> posts = new ArrayList<>();
+//    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Post> posts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Likes> likes = new HashSet<>();
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Evaluation> evaluations = new ArrayList<>();
+    @OneToMany(mappedBy = "evaluator", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FinalTermEvaluation> finalTermEvaluationsEvaluator = new ArrayList<>();
+    @OneToMany(mappedBy = "evaluated", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FinalTermEvaluation> finalTermEvaluationsEvaluated = new ArrayList<>();
+    @OneToMany(mappedBy = "voter", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MidtermEvaluation> midtermEvaluationsVoter = new ArrayList<>();
+    @OneToMany(mappedBy = "voted", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MidtermEvaluation> midtermEvaluationsVoted = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProjectMember> projectMembers = new ArrayList<>();
 
 
-
+    public Member(String oAuth2Id, String nickname, String name, String email, MemberRole role, LocalDateTime signupDate, String refreshToken) {
+        this.oAuth2Id = oAuth2Id;
+        this.nickname = nickname;
+        this.name = name;
+        this.email = email;
+        this.role = role;
+        this.signupDate = signupDate;
+        this.refreshToken = refreshToken;
+    }
 
     public void updateOAuth2Id(String oAuth2Id) {
         this.oAuth2Id = oAuth2Id;
@@ -76,6 +94,9 @@ public class Member {
     public void updateEmail(String email) {
         this.email = email;
     }
+    public void updateImageUrl(String imageUrl){this.imageUrl = imageUrl;}
 
-    public void updateRefreshToken(String refreshToken) { this.refreshToken = refreshToken; }
+    public void updateRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
 }

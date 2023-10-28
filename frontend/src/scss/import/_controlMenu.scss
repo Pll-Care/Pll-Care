@@ -1,0 +1,32 @@
+.control-menu {
+  border-radius: 55px;
+  border: none;
+  color: $green-400;
+  text-align: center;
+  cursor: pointer;
+  -webkit-appearance: none; /* for chrome */
+  -moz-appearance: none; /*for firefox*/
+  appearance: none;
+  width: 72px;
+  height: 30.8px;
+  border-radius: 10px;
+  border: $border;
+
+  @include heading_05;
+
+  &-small {
+    height: 25px;
+    padding: 2px 10px;
+
+    @include mobile {
+      height: 19px;
+      width: fit-content;
+      border-radius: 10px;
+      padding: 1px 15px;
+
+      @include m_heading_03;
+    }
+
+    @include button_03;
+  }
+}

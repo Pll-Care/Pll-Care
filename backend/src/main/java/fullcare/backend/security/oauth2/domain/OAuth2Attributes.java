@@ -14,7 +14,7 @@ import java.util.Map;
 @Builder
 public class OAuth2Attributes {
 
-    private String nameAttributeKey; // OAuth2 로그인 성공했을 때, Provider가 사용자를 식별하는 값을 가리키는 키
+    private String nameAttributeKey; // * OAuth2 로그인 성공했을 때, Provider가 사용자를 식별하는 값을 가리키는 키 (goolge = sub, kakao = id, naver = response)
     private OAuth2UserInfo oAuth2UserInfo;
 
     public static OAuth2Attributes of(String oAuth2ProviderName, String nameAttributeKey,
@@ -62,6 +62,7 @@ public class OAuth2Attributes {
                 .role(role)
                 .signupDate(LocalDateTime.now())
                 .email(this.oAuth2UserInfo.getEmail())
+                .imageUrl(this.oAuth2UserInfo.getImageUrl())
                 .build();
     }
 }

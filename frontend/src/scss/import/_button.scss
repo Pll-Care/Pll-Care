@@ -1,9 +1,80 @@
 .button {
-    font-family: $button-font;
-    font-size: $button-font-size;
+  background-color: white;
+  color: $gray-500;
+  border-radius: 45px;
+  border: 2px solid #01e89e;
+  padding: 5px 20px;
+  height: 37px;
+  cursor: pointer;
+  /* 텍스트 줄바꿈 방지 */
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+
+  &_gray {
+    color: $gray-500;
+  }
+
+  &_white {
     color: white;
-    background-color: #01E89E;
+  }
+
+  &_green {
+    color: $green-400;
+  }
+
+  &_black {
+    color: black;
+  }
+
+  &_small {
+    height: 25px;
+    padding: 2px 10px;
+
+    @include button_03;
+  }
+
+  &_positive {
+    background-color: $green-200;
     border-radius: 10px;
+    &_radius {
+      background-color: $green-200;
+      border-radius: 50px;
+    }
+  }
+
+  &_positive_dark {
+    color: white;
+    background-color: #00aa72;
+  }
+
+  &_underlined {
+    background-color: transparent;
     border: none;
-    padding: 5px 25px;
+    color: #7a7a7a;
+
+    @include body_01;
+  }
+
+  &_profile {
+    background-color: $green-200;
+    color: $gray-100;
+    border: 2px solid $gray-100;
+  }
+
+  &_profile_header {
+    background-color: $white-100;
+    color: $green-200;
+
+    @include heading_04;
+  }
+
+  @include mobile {
+    padding: 2px 9px;
+    height: 18px;
+
+    @include m_button_01;
+  }
+
+  @include button_01;
 }
