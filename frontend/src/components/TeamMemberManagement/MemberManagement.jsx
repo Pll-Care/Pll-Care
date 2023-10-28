@@ -42,7 +42,7 @@ const MemberManagement = () => {
           ) : data?.length === 0 ? (
             <p className="memberMangement_members_noMember">팀원이 없습니다.</p>
           ) : (
-            data.map((member) => (
+            data?.map((member) => (
               <MemberItem
                 key={member.memberId}
                 memberId={member.memberId}

@@ -25,7 +25,7 @@ const ApplicationStatus = () => {
                 지원 인원이 없습니다.
               </p>
             ) : (
-              data.map((user) => (
+              data?.map((user) => (
                 <ApplicationItem
                   key={user.memberId}
                   memberId={user.memberId}

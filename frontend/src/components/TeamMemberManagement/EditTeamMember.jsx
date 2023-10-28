@@ -97,7 +97,7 @@ const EditTeamMember = ({ memberId, refetch, name, position }) => {
       />
       <div className="member_item_delete">
         <ul className="edit_option">
-          {EditOptionData.map((option) => (
+          {EditOptionData?.map((option) => (
             <EditOption
               key={option.title}
               imageUrl={option.imageUrl}
