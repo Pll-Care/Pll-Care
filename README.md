@@ -49,7 +49,7 @@
 
 <br/>
 
-### 기술 스택 구조도
+### 기술 스택 구조
 <img src="https://github.com/Pll-Care/Pll-Care/assets/81316050/29e7af78-3000-4865-940d-7874433bbc07">
 
 <br />
